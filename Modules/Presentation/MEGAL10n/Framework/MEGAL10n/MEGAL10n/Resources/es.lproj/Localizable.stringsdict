@@ -3667,9 +3667,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Uploading: %u item left</string>
+        <string>Subiendo: %u elemento restante</string>
+        <key>many</key>
+        <string>Subiendo: %u de elementos restantes</string>
         <key>other</key>
-        <string>Uploading: %u items left</string>
+        <string>Subiendo: %u elementos restantes</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3683,9 +3685,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Paused: %u item left</string>
+        <string>En pausa: %u elemento restante</string>
+        <key>many</key>
+        <string>En pausa: %u de elementos restantes</string>
         <key>other</key>
-        <string>Paused: %u items left</string>
+        <string>En pausa: %u elementos restantes</string>
       </dict>
     </dict>
   </dict>

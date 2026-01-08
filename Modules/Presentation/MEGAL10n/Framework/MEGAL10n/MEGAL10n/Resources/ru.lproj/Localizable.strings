@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="В процессе";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ из %@ %@/с";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Предложение на Киберпонедельник: скидка %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */

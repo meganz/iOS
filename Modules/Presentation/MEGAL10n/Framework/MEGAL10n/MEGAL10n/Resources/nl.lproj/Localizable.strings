@@ -211,7 +211,7 @@
 /* folder link invalid */
 "cloudDrive.folderLink.unavailableReason3"="Ongeldige URL - de link die u probeert te openen bestaat niet";
 /* folder link has been removed */
-"cloudDrive.folderLink.unavailableReason4"="De maplink is verwijderd omdat het onze Algemene Voorwaarden schendt.";
+"cloudDrive.folderLink.unavailableReason4"="De maplink is verwijderd omdat het onze Algemene Voorwaarden schendt";
 /* folder link has expired */
 "cloudDrive.folderLink.hasExpired"="De link is verlopen";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -403,7 +403,7 @@
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
 "sharedItems.link.accessInfoPasswordProtected"="Alleen personen met het wachtwoord kunnen de link openen";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
-"sharedItems.link.linkUpdated"="Link bijgewerkt. Nogmaals kopiëren";
+"sharedItems.link.linkUpdated"="Link bijgewerkt. Nogmaals kopiëren.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(allen voor Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -899,7 +899,7 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Verwijdering bevestigen";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
-"sharedItems.rubbish.warning.message"="U staat op het punt om %@ permanent te verwijderen. Wilt u doorgaan?   (U kunt deze actie niet ongedaan maken.)";
+"sharedItems.rubbish.warning.message"="U staat op het punt om %@ permanent te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 bestand verwijderd van MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -1703,7 +1703,7 @@
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="De volgende keer dat u inlogt in uw account wordt u gevraagd een 6-cijferige code in te voeren die gegeven is door uw Authenticatie Applicatie.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Sla uw Herstelsleutel op op een veilige locatie";
+"pleaseSaveYourRecoveryKey"="Sla uw Herstelsleutel op, op een veilige locatie";
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="Als u toegang verliest tot uw account nadat u 2FA heeft ingeschakeld en u uw Herstelsleutel niet heeft opgeslagen, dan kan MEGA u niet helpen de toegang terug te krijgen.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
@@ -1817,7 +1817,7 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Aansluiten";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="U bent aangesloten tot  %@";
+"You have joined %@"="U bent aangesloten tot %@";
 /* Users previewing a public chat */
 "Observers"="Waarnemers";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
@@ -3171,19 +3171,19 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Verstuur uitnodiging";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Uw neergehaalde bestand “%@” is hersteld.";
+"notifications.message.takenDownReinstated.file"="Uw neergehaalde bestand “%@” is hersteld";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Uw neergehaalde map “%@” is hersteld.";
+"notifications.message.takenDownReinstated.folder"="Uw neergehaalde map “%@” is hersteld";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Uw openbaar gedeelde bestand “%@” is verwijderd.";
+"notifications.message.takenDownPubliclyShared.file"="Uw openbaar gedeelde bestand “%@” is verwijderd";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Uw openbaar gedeelde map “%@” is verwijderd.";
+"notifications.message.takenDownPubliclyShared.folder"="Uw openbaar gedeelde map “%@” is verwijderd";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Toestaan ​​dat non-hosts deelnemers kan toevoegen";
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Plan vergadering";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van schendingen van auteursrechten. Dit betekent dat u geen toegang hebt tot uw account of de gegevens die erin staan.\n\nKijk in uw  e-mailinbox voor meer informatie over hoe u een tegenmelding kunt indienen.";
+"account.suspension.message.copyright"="Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van schendingen van auteursrechten. Dit betekent dat u geen toegang hebt tot uw account of de gegevens die erin staan.\n\nKijk in uw e-mailinbox voor meer informatie over hoe u een tegenmelding kunt indienen.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA.\n\nU zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens of geautoriseerd worden om u aan te melden voor een nieuw MEGA-account.";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3579,7 +3579,7 @@
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Weet u zeker dat u de volledige berichtengeschiedenis van deze vergadering wilt wissen?";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="Iedereen met deze link kan aansluiten in de vergadering en het vergadergesprek weergeven.";
+"meetings.info.shareMeetingLink.explainLink"="Iedereen met deze link kan aansluiten in de vergadering en het vergadergesprek weergeven";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="Hernoem Vergadering";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3653,7 +3653,7 @@
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Overdracht: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
-"upgradeAccountPlan.footer.message.pricingPage"="U kunt uw huidige abonnement upgraden op onze [A]prijzen pagina.[/A]";
+"upgradeAccountPlan.footer.message.pricingPage"="U kunt uw huidige abonnement upgraden op onze [A]prijzen pagina[/A].";
 /* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
 "upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="U heeft al een herhalende inschrijving voor dit abonnement";
 /* Button title to cancel an scheduled meeting from context menu */
@@ -3825,7 +3825,7 @@
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Iedereen toelaten";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAccess"="%@  de toegang weigeren?";
+"chat.call.waitingRoom.alert.message.denyAccess"="%@ de toegang weigeren?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Toegang weigeren";
 /* Call waiting room alert button to allow access */
@@ -4195,7 +4195,7 @@
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="U zult deze functies missen";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
-"cancellation.subscription.header.message"="U heeft nog steeds toegang tot deze kenmerken tot uw MEGA-abonnement afloopt, dan word u overgezet naar een gratis account.\n U gebruikt momenteel %@ van de opslag, u loopt  het risico uw bestanden kwijt te raken";
+"cancellation.subscription.header.message"="U heeft nog steeds toegang tot deze kenmerken tot uw MEGA-abonnement afloopt, dan word u overgezet naar een gratis account.\n U gebruikt momenteel %@ van de opslag, u loopt het risico uw bestanden kwijt te raken";
 /* Cancellation Subscription flow, keep pro plan button title. %@ is the name of the user's current plan: PRO I, II, III, etc... */
 "cancellation.subscription.keep.pro.plan.button.title"="%@ behouden";
 /* Cancellation Subscription flow, continue cancellation button title */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Uitnodigen";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Probeer te zoeken naar mediabestanden";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Uw opslag is vol";
 /* Button title to upgrade when storage is full */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Extra veiligheid bij het delen";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
+"ads.adFree.content.additionalSecurity.message"="Maak uw online leven veiliger, sneller en gemakkelijker met onze wachtwoordmanager en supersnelle VPN";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Bekijk Pro abonnementen";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4575,15 +4575,15 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="Belangrijke bestanden en mappen verbergen";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy in één eenvoudige stap.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy in één eenvoudige stap";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Uit het zicht";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> „\" Gebruikersinterface \"” in uw applicatie-instellingen.”";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> „\" Gebruikersinterface \"” in uw applicatie-instellingen”.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Vervaging voor privacy";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Verborgen items met wazige miniaturen weergeven, zodat u ze kunt identificeren zonder dat de inhoud zichtbaar wordt.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Verborgen items met wazige miniaturen weergeven, zodat u ze kunt identificeren zonder dat de inhoud zichtbaar wordt";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Hou er rekening mee dat ik mezelf";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4713,7 +4713,7 @@
 /* Camera uploads status banner title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.title"="Het uploaden van de camera is gepauzeerd vanwege de hoge temperatuur van het apparaat";
 /* Camera uploads status banner sub title paused due to device heat */
-"cameraUploads.banner.status.paused.highThermalState.subheading"="Het uploaden wordt automatisch hervat wanneer uw apparaat is afgekoeld.";
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Het uploaden wordt automatisch hervat wanneer uw apparaat is afgekoeld";
 /* Local Notification Title for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.title"="Bescherm uw dierbare momenten!";
 /* Local Notification Body for Camera uploads backup reminder */
@@ -4741,7 +4741,7 @@
 /* General label for priority customer support */
 "general.prioritySupport"="Prioritaire ondersteuning";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@  gebruikt";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ gebruikt";
 /* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
 "sorting.name.title"="Naam";
 /* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="In Behandeling";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ van %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday-deal: %@ korting";
 /* Special Offer plan badge text shown in Upgrade plan screen */

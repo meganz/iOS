@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Si no tienes la contraseña, contacta con el creador del enlace.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Introduce la contraseña del enlace";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Sesión cerrada";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Oculta archivos y carpetas importantes";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puedes ocultar archivos y carpetas sensibles para proteger tu privacidad en un solo paso.";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Elementos ocultos";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Solo tú puedes revelar los archivos ocultos, ya sea de forma individual o mostrando temporalmente los elementos ocultos en los ajustes.";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Difuminar para mayor privacidad";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Muestra los elementos ocultos con sus miniaturas difuminadas, para que puedas identificarlos sin exponer su contenido.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mi cuenta";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ de transferencia ";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ facturado anualmente";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Quizás más tarde";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4753,13 +4753,13 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Tamaño";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Oferta de Black Friday: %@ de descuento";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ de descuento";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ para el primer año";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Ahorra al menos un %@ en un plan anual";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="Progreso";
 /* Camera Uploads Progress In Progress section title */
@@ -4767,9 +4767,9 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Oferta de Cyber Monday: %@ de descuento";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Oferta especial: %@ de descuento";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Vista de cuadrícula";
 /* Camera Uploads Progress In Queue section title */
@@ -4781,33 +4781,33 @@
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="Facturado anualmente";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Solo %@/mes";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Las subidas de la cámara están en pausa, el nivel de la batería es demasiado bajo. Carga la batería para reanudar las subidas de la cámara.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Las subidas de la cámara están en pausa, la temperatura del dispositivo es demasiado alta. Las subidas se reanudarán cuando el dispositivo se enfríe.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Las subidas de la cámara están pausadas, no hay conexión a internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Permitir datos móviles";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="El almacenamiento está lleno";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Para seguir subiendo datos, amplía ahora y obtén más almacenamiento";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Ampliar cuenta";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Para guardar todos tus recuerdos, MEGA necesita acceso completo a tu biblioteca de fotos";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Actualizar permisos";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Todo al día.";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="Las fotos y los vídeos nuevos se mostrarán aquí después de hacerlos";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="Las transferencias en curso aparecerán aquí";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="Las transferencias en cola aparecerán aquí";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Fecha de compartición";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,14 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Subidas de la cámara completadas";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Subidas de la cámara actualizadas";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Solo tú puedes revelar los archivos ocultos, ya sea de forma individual o mostrando temporalmente los elementos ocultos de [A]Ajustes[/A].";
 /* The title displayed in the empty view when Cloud Drive root is empty */
 "cloudDrive.emptyStateTitle.root"="Aún no hay nada en tu espacio privado";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
-"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+"cloudDrive.emptyStateTitle.nonRoot"="Esta carpeta está vacía";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+"cloudDrive.emptyStateSubtitle"="Protege tus datos de forma segura con el cifrado de conocimiento cero";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="La vista previa no está disponible para archivos no descifrados";

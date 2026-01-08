@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Zaproszenie";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Spróbuj wyszukać pliki multimedialne";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Pamięć jest pełna";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="W trakcie";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ z %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Oferta na Cyber Monday: %@ zniżki";
 /* Special Offer plan badge text shown in Upgrade plan screen */

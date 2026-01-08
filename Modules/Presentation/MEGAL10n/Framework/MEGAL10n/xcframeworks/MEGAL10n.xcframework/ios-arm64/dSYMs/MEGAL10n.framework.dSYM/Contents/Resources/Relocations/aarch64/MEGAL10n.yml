@@ -1,11 +1,11 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/banghuazhao/Library/Developer/Xcode/DerivedData/MEGAL10n-gapnmterlxhvnmfjpryoidfgltgv/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
+binary-path:     '/Users/mega-sx/Library/Developer/Xcode/DerivedData/MEGAL10n-heeogtizpvkhorangrrtuqfvitzz/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
 relocations:
   - { offset: 0x292E6, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionString, symObjAddr: 0x0, symBinAddr: 0x135270, symSize: 0x0 }
   - { offset: 0x2931D, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionNumber, symObjAddr: 0x30, symBinAddr: 0x1352A0, symSize: 0x0 }
   - { offset: 0x2935B, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n0A11BundleClassCfD', symObjAddr: 0x0, symBinAddr: 0x4000, symSize: 0x10 }
-  - { offset: 0x2937F, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6BundleABvpZ', symObjAddr: 0x5AB0, symBinAddr: 0x1B5220, symSize: 0x0 }
+  - { offset: 0x2937F, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6BundleABvpZ', symObjAddr: 0x5A80, symBinAddr: 0x1B5220, symSize: 0x0 }
   - { offset: 0x293B0, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6Bundle_WZ', symObjAddr: 0x10, symBinAddr: 0x4010, symSize: 0x50 }
   - { offset: 0x293F1, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO9localized_7commentS2S_SStFZ', symObjAddr: 0x60, symBinAddr: 0x4060, symSize: 0xF4 }
   - { offset: 0x29446, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n0A11BundleClassCMa', symObjAddr: 0x154, symBinAddr: 0x4154, symSize: 0x20 }

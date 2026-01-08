@@ -12,8 +12,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] en %d andere stak hun hand op</string>
         <key>one</key>
-        <string>[A] en %d anderen staken hun hand op</string>
+        <string>[A] en %d andere stak hun hand op</string>
         <key>other</key>
         <string>[A] en %d anderen staken hun hand op</string>
       </dict>
@@ -28,8 +30,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>U en %d andere staken hun hand op</string>
         <key>one</key>
-        <string>U en %d andere stak hun hand op</string>
+        <string>U en %d andere staken hun hand op</string>
         <key>other</key>
         <string>U en %d anderen staken hun hand op</string>
       </dict>
@@ -44,6 +48,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand</string>
         <key>one</key>
         <string>%d bestand</string>
         <key>other</key>
@@ -60,6 +66,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item verwijderd</string>
         <key>one</key>
         <string>%d item verwijderd</string>
         <key>other</key>
@@ -76,6 +84,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand</string>
         <key>one</key>
         <string>%d bestand</string>
         <key>other</key>
@@ -92,6 +102,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d map</string>
         <key>one</key>
         <string>%d map</string>
         <key>other</key>
@@ -108,6 +120,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>d map</string>
         <key>one</key>
         <string>%d map</string>
         <key>other</key>
@@ -124,10 +138,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Iedereen met deze link kan uw gegevens bekijken en downloaden</string>
         <key>one</key>
-        <string>Iedereen met deze link kan uw gegevens bekijken en downloaden.</string>
+        <string>Iedereen met deze link kan uw gegevens bekijken en downloaden</string>
         <key>other</key>
-        <string>Iedereen met deze links kan uw gegevens bekijken en downloaden.</string>
+        <string>Iedereen met deze links kan uw gegevens bekijken en downloaden</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -140,10 +156,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link gekopieerd naar klembord</string>
         <key>one</key>
-        <string>Koppeling gekopieerd naar klembord</string>
+        <string>Link gekopieerd naar klembord</string>
         <key>other</key>
-        <string>Koppelingen gekopieerd naar klembord</string>
+        <string>Links gekopieerd naar klembord</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -156,6 +174,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link gecreëerd en gekopieerd naar uw klembord</string>
         <key>one</key>
         <string>Link gecreëerd en gekopieerd naar uw klembord</string>
         <key>other</key>
@@ -172,6 +192,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Toepassen op de duplicaat</string>
         <key>one</key>
         <string>Toepassen op de duplicaat</string>
         <key>other</key>
@@ -188,6 +210,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>uur</string>
         <key>one</key>
         <string>uur</string>
         <key>other</key>
@@ -204,6 +228,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>dag</string>
         <key>one</key>
         <string>dag</string>
         <key>other</key>
@@ -220,6 +246,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>week</string>
         <key>one</key>
         <string>week</string>
         <key>other</key>
@@ -236,6 +264,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>maand</string>
         <key>one</key>
         <string>maand</string>
         <key>other</key>
@@ -252,6 +282,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>jaar</string>
         <key>one</key>
         <string>jaar</string>
         <key>other</key>
@@ -268,6 +300,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d uur</string>
         <key>one</key>
         <string>%d uur</string>
         <key>other</key>
@@ -284,6 +318,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dag</string>
         <key>one</key>
         <string>%d dag</string>
         <key>other</key>
@@ -300,6 +336,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d week</string>
         <key>one</key>
         <string>%d week</string>
         <key>other</key>
@@ -316,6 +354,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d maand</string>
         <key>one</key>
         <string>%d maand</string>
         <key>other</key>
@@ -332,6 +372,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d jaar</string>
         <key>one</key>
         <string>%d jaar</string>
         <key>other</key>
@@ -348,6 +390,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand</string>
         <key>one</key>
         <string>%d bestand</string>
         <key>other</key>
@@ -364,6 +408,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d map</string>
         <key>one</key>
         <string>%d map</string>
         <key>other</key>
@@ -380,6 +426,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d map</string>
         <key>one</key>
         <string>%d map</string>
         <key>other</key>
@@ -396,6 +444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %dbestand</string>
         <key>one</key>
         <string>• %dbestand</string>
         <key>other</key>
@@ -412,6 +462,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item</string>
         <key>one</key>
         <string>%d item</string>
         <key>other</key>
@@ -428,6 +480,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item</string>
         <key>one</key>
         <string>%d item</string>
         <key>other</key>
@@ -444,6 +498,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d afbeelding</string>
         <key>one</key>
         <string>%d afbeelding</string>
         <key>other</key>
@@ -460,6 +516,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d video</string>
         <key>one</key>
         <string>%d video</string>
         <key>other</key>
@@ -476,6 +534,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d afbeelding</string>
         <key>one</key>
         <string>%d afbeelding</string>
         <key>other</key>
@@ -492,6 +552,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>en %d video</string>
         <key>one</key>
         <string>en %d video</string>
         <key>other</key>
@@ -508,6 +570,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” en %d andere</string>
         <key>one</key>
         <string>“[A]” en %d andere</string>
         <key>other</key>
@@ -524,6 +588,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] van %d bestand</string>
         <key>one</key>
         <string>[A] van %d bestand</string>
         <key>other</key>
@@ -540,6 +606,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand</string>
         <key>one</key>
         <string>%d bestand</string>
         <key>other</key>
@@ -556,6 +624,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderen</string>
         <key>one</key>
         <string>Link verwijderen</string>
         <key>other</key>
@@ -572,6 +642,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderd</string>
         <key>one</key>
         <string>Link verwijderd</string>
         <key>other</key>
@@ -588,6 +660,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderen?</string>
         <key>one</key>
         <string>Link verwijderen?</string>
         <key>other</key>
@@ -604,10 +678,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Personen met wie u deze link heeft gedeeld, hebben er geen toegang meer toe.</string>
         <key>one</key>
-        <string>Personen met wie u deze link heeft gedeeld, hebben er geen toegang meer toe</string>
+        <string>Personen met wie u deze link heeft gedeeld, hebben er geen toegang meer toe.</string>
         <key>other</key>
-        <string>Personen met wie u deze links heeft gedeeld, hebben er geen toegang meer toe</string>
+        <string>Personen met wie u deze links heeft gedeeld, hebben er geen toegang meer toe.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -620,6 +696,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Map delen</string>
         <key>one</key>
         <string>Map delen</string>
         <key>other</key>
@@ -636,6 +714,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link delen</string>
         <key>one</key>
         <string>Link delen</string>
         <key>other</key>
@@ -652,6 +732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link beheren</string>
         <key>one</key>
         <string>Link beheren</string>
         <key>other</key>
@@ -668,6 +750,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bestand exporteren</string>
         <key>one</key>
         <string>Bestand exporteren</string>
         <key>other</key>
@@ -684,6 +768,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d seconden</string>
         <key>one</key>
         <string>%d seconden</string>
         <key>other</key>
@@ -700,6 +786,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minuut</string>
         <key>one</key>
         <string>%d minuut</string>
         <key>other</key>
@@ -716,6 +804,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d uur</string>
         <key>one</key>
         <string>%d uur</string>
         <key>other</key>
@@ -732,6 +822,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d uur</string>
         <key>one</key>
         <string>%d uur</string>
         <key>other</key>
@@ -748,6 +840,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>, %d minuut</string>
         <key>one</key>
         <string>, %d minuut</string>
         <key>other</key>
@@ -764,6 +858,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minuut</string>
         <key>one</key>
         <string>%d minuut</string>
         <key>other</key>
@@ -780,6 +876,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d uur</string>
         <key>one</key>
         <string>%d uur</string>
         <key>other</key>
@@ -796,6 +894,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minuut</string>
         <key>one</key>
         <string>%d minuut</string>
         <key>other</key>
@@ -812,10 +912,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Deze map kan als alleen-lezen worden gedeeld omdat het een back-upmap is. Wijzigingen in de inhoud ervan kunnen de back-ups uitschakelen.</string>
         <key>one</key>
-        <string>Deze map kan alleen als alleen-lezen worden gedeeld omdat het een back-upmap is. Wijzigingen in de inhoud ervan kunnen de back-ups uitschakelen.</string>
+        <string>Deze map kan als alleen-lezen worden gedeeld omdat het een back-upmap is. Wijzigingen in de inhoud ervan kunnen de back-ups uitschakelen.</string>
         <key>other</key>
-        <string>Deze mappen kunnen alleen als alleen-lezen worden gedeeld omdat het back-upmappen zijn. Wijzigingen in de inhoud ervan kunnen de back-ups uitschakelen.</string>
+        <string>Deze mappen kunnen als alleen-lezen worden gedeeld omdat het back-upmappen zijn. Wijzigingen in de inhoud ervan kunnen de back-ups uitschakelen.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>
@@ -828,6 +930,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d uur</string>
         <key>one</key>
         <string>%d uur</string>
         <key>other</key>
@@ -844,6 +948,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minuut</string>
         <key>one</key>
         <string>%d minuut</string>
         <key>other</key>
@@ -860,6 +966,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>uur</string>
         <key>one</key>
         <string>uur</string>
         <key>other</key>
@@ -876,6 +984,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>minuut</string>
         <key>one</key>
         <string>minuut</string>
         <key>other</key>
@@ -892,6 +1002,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ongelezen bericht</string>
         <key>one</key>
         <string>%d ongelezen bericht</string>
         <key>other</key>
@@ -908,6 +1020,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>U kunt alleen tot %d item tegelijk toevoegen tot een album.</string>
         <key>one</key>
         <string>U kunt alleen tot %d item tegelijk toevoegen tot een album.</string>
         <key>other</key>
@@ -924,6 +1038,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item toegevoegd tot “[A]”</string>
         <key>one</key>
         <string>%d item toegevoegd tot “[A]”</string>
         <key>other</key>
@@ -940,10 +1056,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Foto's geüpload. Video-uploads staan uit: video is niet geüpload</string>
         <key>one</key>
-        <string>Foto's geüpload. Video-uploads staan ​​uit: video is niet geüpload</string>
+        <string>Foto's geüpload. Video-uploads staan uit: video is niet geüpload</string>
         <key>other</key>
-        <string>Foto's geüpload. Video-uploads staan ​​uit: %dvideo's zijn niet geüpload</string>
+        <string>Foto's geüpload. Video-uploads staan uit: %dvideo's zijn niet geüpload</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -956,6 +1074,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand in behandeling</string>
         <key>one</key>
         <string>%d bestand in behandeling</string>
         <key>other</key>
@@ -972,6 +1092,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>(%d) verwijderen</string>
         <key>one</key>
         <string>(%d) verwijderen</string>
         <key>other</key>
@@ -988,6 +1110,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Album verwijderen?</string>
         <key>one</key>
         <string>Album verwijderen?</string>
         <key>other</key>
@@ -1004,6 +1128,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Album wordt verwijderd maar de inhoud blijft in uw Tijdlijn.</string>
         <key>one</key>
         <string>Album wordt verwijderd maar de inhoud blijft in uw Tijdlijn.</string>
         <key>other</key>
@@ -1020,6 +1146,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” verwijderd</string>
         <key>one</key>
         <string>“[A]” verwijderd</string>
         <key>other</key>
@@ -1036,6 +1164,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item verwijderd van “[A]”</string>
         <key>one</key>
         <string>%d item verwijderd van “[A]”</string>
         <key>other</key>
@@ -1052,6 +1182,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderen?</string>
         <key>one</key>
         <string>Link verwijderen?</string>
         <key>other</key>
@@ -1068,6 +1200,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderen</string>
         <key>one</key>
         <string>Link verwijderen</string>
         <key>other</key>
@@ -1084,6 +1218,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mensen met wie u deze link hebt gedeeld, verliezen de toegang tot de albums.</string>
         <key>one</key>
         <string>Mensen met wie u deze link hebt gedeeld, verliezen de toegang tot de albums.</string>
         <key>other</key>
@@ -1100,6 +1236,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Link verwijderd</string>
         <key>one</key>
         <string>Link verwijderd</string>
         <key>other</key>
@@ -1116,6 +1254,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Elke dag effectief [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>Elke dag effectief [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
@@ -1132,6 +1272,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Elke dag effectief [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>Elke dag effectief [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
@@ -1148,6 +1290,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] elke week van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDay] elke week van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
@@ -1164,10 +1308,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] elke week van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDay] elke week van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay]elke %d weken van kracht [B][StartDate]  [/B] van[B][StartTime] tot [EndTime][/B]</string>
+        <string>[WeekDay]elke %d weken van kracht [B][StartDate] [/B] van[B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -1180,6 +1326,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
@@ -1196,6 +1344,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDaysList], en [LastWeekDay] elke week van kracht op [B][StartDate][/B] van [B][StartTime] tot[EndTime][/B]</string>
         <key>other</key>
@@ -1212,6 +1362,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Dag [MonthDay] van elke maand van kracht [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>Dag [MonthDay] van elke maand van kracht [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
@@ -1228,6 +1380,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Dag [MonthDay] van elke maand van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>one</key>
         <string>Dag [MonthDay] van elke maand van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
         <key>other</key>
@@ -1244,6 +1398,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1260,6 +1416,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1276,6 +1434,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1292,6 +1452,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1308,6 +1470,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1324,6 +1488,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1340,6 +1506,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1356,6 +1524,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1372,6 +1542,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Maandag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1388,6 +1560,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Maandag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1404,6 +1578,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1420,6 +1596,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1436,6 +1614,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1452,6 +1632,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1468,6 +1650,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1484,6 +1668,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1500,6 +1686,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1516,6 +1704,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1532,6 +1722,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1548,6 +1740,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Dinsdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1564,6 +1758,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1580,6 +1776,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1596,6 +1794,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1612,6 +1812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1628,6 +1830,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1644,6 +1848,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1660,6 +1866,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1676,6 +1884,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1692,6 +1902,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Woensdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1708,6 +1920,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Woensdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1724,6 +1938,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1740,6 +1956,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1756,6 +1974,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1772,6 +1992,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1788,6 +2010,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1804,6 +2028,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1820,6 +2046,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1836,6 +2064,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1852,6 +2082,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Donderdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1868,6 +2100,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Donderdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1884,6 +2118,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1900,6 +2136,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1916,6 +2154,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1932,6 +2172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1948,6 +2190,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1964,6 +2208,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1980,6 +2226,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -1996,6 +2244,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2012,6 +2262,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2028,6 +2280,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Vrijdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2044,6 +2298,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2060,6 +2316,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2076,6 +2334,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2092,6 +2352,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2108,6 +2370,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2124,6 +2388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2140,6 +2406,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2156,6 +2424,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2172,6 +2442,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2188,6 +2460,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Zaterdag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2204,6 +2478,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2220,6 +2496,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De eerste Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De eerste Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2236,6 +2514,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2252,6 +2532,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De tweede Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De tweede Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2268,6 +2550,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2284,6 +2568,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De derde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De derde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2300,6 +2586,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2316,6 +2604,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vierde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vierde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2332,6 +2622,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Zondag van elke maand van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2348,6 +2640,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>De vijfde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>one</key>
         <string>De vijfde Zondag van elke maand van kracht [B][StartDate][/B] van [B][StartTime]tot[EndTime][/B]</string>
         <key>other</key>
@@ -2364,6 +2658,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[Ongecodeerd bestand]</string>
         <key>one</key>
         <string>[Ongecodeerd bestand]</string>
         <key>other</key>
@@ -2380,6 +2676,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dag over</string>
         <key>one</key>
         <string>%d dag over</string>
         <key>other</key>
@@ -2396,6 +2694,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Geldig voor %d dag.</string>
         <key>one</key>
         <string>Geldig voor %d dag.</string>
         <key>other</key>
@@ -2412,6 +2712,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>geldig voor %d dag</string>
         <key>one</key>
         <string>geldig voor %d dag</string>
         <key>other</key>
@@ -2428,6 +2730,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bonus verloopt over %d dag.</string>
         <key>one</key>
         <string>Bonus verloopt over %d dag.</string>
         <key>other</key>
@@ -2444,6 +2748,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Het bericht moet minstens %d teken zijn</string>
         <key>one</key>
         <string>Het bericht moet minstens %d teken zijn</string>
         <key>other</key>
@@ -2460,6 +2766,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]geüpload naar “[B]“</string>
         <key>one</key>
         <string>[A]geüpload naar “[B]“</string>
         <key>other</key>
@@ -2476,8 +2784,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]“ geüpload naar Cloud schijf</string>
         <key>one</key>
-        <string> “[A]“ geüpload naar Cloud schijf</string>
+        <string>“[A]“ geüpload naar Cloud schijf</string>
         <key>other</key>
         <string>%d items geüpload naar Cloud schijf</string>
       </dict>
@@ -2492,6 +2802,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” verstuurd naar gesprek</string>
         <key>one</key>
         <string>“[A]” verstuurd naar gesprek</string>
         <key>other</key>
@@ -2508,6 +2820,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] verstuurd naar gesprek</string>
         <key>one</key>
         <string>[A] verstuurd naar gesprek</string>
         <key>other</key>
@@ -2524,6 +2838,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dag</string>
         <key>one</key>
         <string>%d dag</string>
         <key>other</key>
@@ -2540,6 +2856,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d week</string>
         <key>one</key>
         <string>%d week</string>
         <key>other</key>
@@ -2556,6 +2874,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d week</string>
         <key>one</key>
         <string>%d maand</string>
         <key>other</key>
@@ -2572,10 +2892,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt elke dag.</string>
         <key>one</key>
         <string>Vergadering gebeurt elke dag.</string>
         <key>other</key>
-        <string>Vergadering gebeurt elke %d dagen</string>
+        <string>Vergadering gebeurt elke %d dagen.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2588,6 +2910,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt elke week op [weekDayName].</string>
         <key>one</key>
         <string>Vergadering gebeurt elke week op [weekDayName].</string>
         <key>other</key>
@@ -2604,6 +2928,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt elke week op [weekDayNames] en [lastWeekDayName].</string>
         <key>one</key>
         <string>Vergadering gebeurt elke week op [weekDayNames] en [lastWeekDayName].</string>
         <key>other</key>
@@ -2620,6 +2946,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt op elke maand op dag [cardinalDay].</string>
         <key>one</key>
         <string>Vergadering gebeurt op elke maand op dag [cardinalDay].</string>
         <key>other</key>
@@ -2636,6 +2964,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt elke maand op dag [cardinalDays] en dag [cardinalLastDay].</string>
         <key>one</key>
         <string>Vergadering gebeurt elke maand op dag [cardinalDays] en dag [cardinalLastDay].</string>
         <key>other</key>
@@ -2652,6 +2982,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vergadering gebeurt elke maand op [weekNumber][weekDayName].</string>
         <key>one</key>
         <string>Vergadering gebeurt elke maand op [weekNumber][weekDayName].</string>
         <key>other</key>
@@ -2668,6 +3000,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Elke week op [weekDayNames]</string>
         <key>one</key>
         <string>Elke week op [weekDayNames]</string>
         <key>other</key>
@@ -2684,6 +3018,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Elke maand op de [cardinalNumber]</string>
         <key>one</key>
         <string>Elke maand op de [cardinalNumber]</string>
         <key>other</key>
@@ -2700,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Elke maand, [ordinalNumber][weekDayName]</string>
         <key>one</key>
         <string>Elke maand, [ordinalNumber][weekDayName]</string>
         <key>other</key>
@@ -2716,6 +3054,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Sommige maanden hebben geen %d dag. Voor deze maanden wordt het evenement gepland op de laatste dag van de maand.</string>
         <key>one</key>
         <string>Sommige maanden hebben geen %d dag. Voor deze maanden wordt het evenement gepland op de laatste dag van de maand.</string>
         <key>other</key>
@@ -2732,6 +3072,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Dagelijks</string>
         <key>one</key>
         <string>Dagelijks</string>
         <key>other</key>
@@ -2748,6 +3090,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand opgeslagen naar Cloud schijf</string>
         <key>one</key>
         <string>%d bestand opgeslagen naar Cloud schijf</string>
         <key>other</key>
@@ -2764,6 +3108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Download gestart</string>
         <key>one</key>
         <string>Download gestart</string>
         <key>other</key>
@@ -2780,6 +3126,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[UserName] wacht op aansluiting van “[MeetingName]“</string>
         <key>one</key>
         <string>[UserName] wacht op aansluiting van “[MeetingName]“</string>
         <key>other</key>
@@ -2796,6 +3144,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[UserName] wacht op aansluiting van de oproep</string>
         <key>one</key>
         <string>[UserName] wacht op aansluiting van de oproep</string>
         <key>other</key>
@@ -2812,6 +3162,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d deelnemer</string>
         <key>one</key>
         <string>%d deelnemer</string>
         <key>other</key>
@@ -2828,8 +3180,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item geselecteerd</string>
         <key>one</key>
-        <string>%d item geselecteerd.</string>
+        <string>%d item geselecteerd</string>
         <key>other</key>
         <string>%d items geselecteerd</string>
       </dict>
@@ -2844,6 +3198,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bestand verstuurd naar gesprek</string>
         <key>one</key>
         <string>Bestand verstuurd naar gesprek</string>
         <key>other</key>
@@ -2860,6 +3216,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bestand verstuurd naar %d gesprek</string>
         <key>one</key>
         <string>Bestand verstuurd naar %d gesprek</string>
         <key>other</key>
@@ -2876,6 +3234,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bestand verzonden naar %d gesprek</string>
         <key>one</key>
         <string>Bestand verzonden naar %d gesprek</string>
         <key>other</key>
@@ -2892,6 +3252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d contact</string>
         <key>one</key>
         <string>%d contact</string>
         <key>other</key>
@@ -2908,6 +3270,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestand bijgevoegd</string>
         <key>one</key>
         <string>%d bestand bijgevoegd</string>
         <key>other</key>
@@ -2924,6 +3288,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d contact uitnodigen</string>
         <key>one</key>
         <string>%d contact uitnodigen</string>
         <key>other</key>
@@ -2940,6 +3306,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d deelnemer</string>
         <key>one</key>
         <string>%d deelnemer</string>
         <key>other</key>
@@ -2956,6 +3324,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Meldingen worden gedempt tot [Time]</string>
         <key>one</key>
         <string>Meldingen worden gedempt tot [Time]</string>
         <key>other</key>
@@ -2972,6 +3342,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Map gedeeld</string>
         <key>one</key>
         <string>Map gedeeld</string>
         <key>other</key>
@@ -2988,8 +3360,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Uw gratis gesprek eindigt over%d minuut</string>
         <key>one</key>
-        <string>Uw gratis gesprek eindigt oer%d minuut</string>
+        <string>Uw gratis gesprek eindigt over%d minuut</string>
         <key>other</key>
         <string>Uw gratis gesprek eindigt over%d minuten</string>
       </dict>
@@ -3004,6 +3378,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d video toegevoegd naar “[A]”</string>
         <key>one</key>
         <string>%d video toegevoegd naar “[A]”</string>
         <key>other</key>
@@ -3020,10 +3396,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Verwijderd %d video van “[A]”</string>
         <key>one</key>
         <string>Verwijderd %d video van “[A]”</string>
         <key>other</key>
-        <string>Verwijderd %d video's   van“[A]”</string>
+        <string>Verwijderd %d video's van“[A]”</string>
       </dict>
     </dict>
     <key>nodes.action.hideItems</key>
@@ -3036,10 +3414,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item verborgen</string>
         <key>one</key>
         <string>%d item verborgen</string>
         <key>other</key>
-        <string>%d  items verborgen</string>
+        <string>%d items verborgen</string>
       </dict>
     </dict>
     <key>nodes.action.unhideItems</key>
@@ -3052,6 +3432,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d item onverborgen</string>
         <key>one</key>
         <string>%d item onverborgen</string>
         <key>other</key>
@@ -3068,10 +3450,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Toegevoegd naar [A]</string>
         <key>one</key>
         <string>Toegevoegd naar [A]</string>
         <key>other</key>
-        <string> %d items naar[A] toegevoegd</string>
+        <string>%d items naar[A] toegevoegd</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -3084,6 +3468,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%dbestand toegevoegd</string>
         <key>one</key>
         <string>%dbestand toegevoegd</string>
         <key>other</key>
@@ -3100,10 +3486,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d map toegevoegd</string>
         <key>one</key>
         <string>%d map toegevoegd</string>
         <key>other</key>
-        <string> %d mappen toegevoegd</string>
+        <string>%d mappen toegevoegd</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3116,6 +3504,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%dbestand toegevoegd</string>
         <key>one</key>
         <string>%dbestand toegevoegd</string>
         <key>other</key>
@@ -3132,6 +3522,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>en %d map</string>
         <key>one</key>
         <string>en %d map</string>
         <key>other</key>
@@ -3148,10 +3540,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Hoewel we per e-mail contact hebben opgenomen met u opgenomen op [datum], is uw opslag nog steeds vol. U heeft %d bestand dat [storageSpace]beslag op uw Cloud-schijf neemt en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>one</key>
-        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft %d bestand die [storageSpace]beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft %d bestand die [storageSpace]beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
         <key>other</key>
-        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft%d bestanden die[storageSpace]  in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft%d bestanden die[storageSpace] in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3164,10 +3558,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
+        <key>zero</key>
         <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die[storageSpace] beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <key>one</key>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die[storageSpace] beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
         <key>other</key>
-        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace]  in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3180,10 +3576,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. U heeft %dbestanden die [storageSpace]beslag innemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
         <key>one</key>
-        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. U heeft %dbestanden die [storageSpace]beslag innemen  op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om je bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. U heeft %dbestanden die [storageSpace]beslag innemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
         <key>other</key>
-        <string>Hoewel we per e-mail contact met je hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen  op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3196,6 +3594,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d bestandsversie.</string>
         <key>one</key>
         <string>%d bestandsversie.</string>
         <key>other</key>
@@ -3212,6 +3612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Totale grootte gebruikt door de bestandsversie: [storageSpace]</string>
         <key>one</key>
         <string>Totale grootte gebruikt door de bestandsversie: [storageSpace]</string>
         <key>other</key>
@@ -3228,8 +3630,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Toegevoegd naar “[A]”</string>
         <key>one</key>
-        <string>Toegevoegd naar “[A]” </string>
+        <string>Toegevoegd naar “[A]”</string>
         <key>other</key>
         <string>%d items naar &quot;[A]” toegeoegd</string>
       </dict>
@@ -3244,6 +3648,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” verwijderd uit de wachtrij</string>
         <key>one</key>
         <string>“[A]” verwijderd uit de wachtrij</string>
         <key>other</key>
@@ -3260,6 +3666,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Uploaden: %u resterende item</string>
         <key>one</key>
         <string>Uploaden: %u resterende item</string>
         <key>other</key>
@@ -3276,6 +3684,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Gepauzeerd: %u resterende item</string>
         <key>one</key>
         <string>Gepauzeerd: %u resterende item</string>
         <key>other</key>
