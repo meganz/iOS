@@ -46,7 +46,15 @@ extension OfflineViewController {
                    || (updatedViewMode == .thumbnail && isListViewModeSelected()) else {
                 return
             }
+
+            let editingEnabled = isListViewModeSelected()
+            ? (offlineTableView?.tableView?.isEditing ?? false)
+            : (offlineCollectionView?.collectionView?.allowsMultipleSelection ?? false)
+
             changeViewModePreference()
+
+            guard editingEnabled else { return }
+            setEditMode(editingEnabled)
         }
     }
 
