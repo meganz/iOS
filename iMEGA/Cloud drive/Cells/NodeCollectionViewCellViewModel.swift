@@ -12,7 +12,8 @@ import MEGASwift
     @Published private(set) var videoDuration: String?
     
     var hasThumbnail: Bool { node?.hasThumbnail ?? false }
-    
+    let isFromFolderLink: Bool
+
     private let node: NodeEntity?
     private let isFromSharedItem: Bool
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
@@ -28,6 +29,7 @@ import MEGASwift
     
     init(node: NodeEntity?,
          isFromSharedItem: Bool,
+         isFromFolderLink: Bool,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
@@ -35,6 +37,7 @@ import MEGASwift
         
         self.node = node
         self.isFromSharedItem = isFromSharedItem
+        self.isFromFolderLink = isFromFolderLink
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
