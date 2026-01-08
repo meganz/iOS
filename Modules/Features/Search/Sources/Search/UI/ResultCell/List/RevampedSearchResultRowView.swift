@@ -76,32 +76,32 @@ struct RevampedSearchResultRowView: View {
             }
             .sensitive(viewModel.isSensitive ? .opacity : .none)
             .contentShape(Rectangle())
-            .onTapGesture {
-                // Here we only highlight for tap selection in non-Edit mode
-                // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
-                if editMode?.wrappedValue.isEditing != true {
-                    withAnimation(.easeInOut(duration: Constants.easeInOutDuration)) {
-                        highlighted = true
-                    }
-
-                    Task {
-                        try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
-                        withAnimation(.easeInOut(duration: 0.05)) {
-                            highlighted = false
-                        }
-                    }
-                }
-                viewModel.actions.selectionAction()
-            }
-            .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
-                viewModel.actions.revampLongPress()
-            }
             moreButton
         }
         .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity( isSelected || highlighted ? 1 : 0))
         .contentShape(Rectangle())
         .padding(.vertical, 10)
         .frame(minHeight: 58)
+        .onTapGesture {
+            // Here we only highlight for tap selection in non-Edit mode
+            // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
+            if editMode?.wrappedValue.isEditing != true {
+                withAnimation(.easeInOut(duration: Constants.easeInOutDuration)) {
+                    highlighted = true
+                }
+
+                Task {
+                    try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
+                    withAnimation(.easeInOut(duration: 0.05)) {
+                        highlighted = false
+                    }
+                }
+            }
+            viewModel.actions.selectionAction()
+        }
+        .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
+            viewModel.actions.revampLongPress()
+        }
     }
 
     // optional overlay property in placement .previewOverlay

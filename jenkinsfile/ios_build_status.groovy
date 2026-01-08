@@ -46,7 +46,7 @@ def executeFastlaneTask(taskCommand, checkRunUnitTestsStep = true) {
 }
 
 def postBuildWarnings() {
-    executeFastlaneTask("parse_and_upload_build_warnings")
+    // executeFastlaneTask("parse_and_upload_build_warnings")
 }
 
 def postCoverageReportToMR() {
