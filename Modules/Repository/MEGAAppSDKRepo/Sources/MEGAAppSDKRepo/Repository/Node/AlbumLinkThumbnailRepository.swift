@@ -90,7 +90,7 @@ public struct AlbumLinkThumbnailRepository: ThumbnailRepositoryProtocol {
     private func downloadThumbnail(for node: MEGANode, to url: URL) async throws -> URL {
         return try await withAsyncThrowingValue { completion in
             sdk.getThumbnailNode(node, destinationFilePath: url.path, delegate: ThumbnailRequestDelegate { result in
-                completion(result)
+                completion(result.map { _ in url })
             })
         }
     }

@@ -23,14 +23,6 @@ extension MEGARequest {
         )
     }
     
-    public func toFileURL() -> URL? {
-        guard let path = file else {
-            return nil
-        }
-        
-        return URL(string: path)
-    }
-    
     public func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
         sdk.node(forHandle: nodeHandle)
     }

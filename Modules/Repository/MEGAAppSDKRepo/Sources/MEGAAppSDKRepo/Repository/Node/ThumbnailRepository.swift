@@ -133,7 +133,7 @@ extension ThumbnailRepository {
     private func downloadThumbnail(for nodeHandle: HandleEntity, to url: URL) async throws -> URL {
         return try await withAsyncThrowingValue { completion in
             sdk.getThumbnailWithNodeHandle(nodeHandle, destinationFilePath: url.path, delegate: ThumbnailRequestDelegate { result in
-                completion(result)
+                completion(result.map { _ in url })
             })
         }
     }
@@ -144,7 +144,7 @@ extension ThumbnailRepository {
         }
         return try await withAsyncThrowingValue { completion in
             sdk.getPreviewNode(node, destinationFilePath: url.path, delegate: ThumbnailRequestDelegate { result in
-                completion(result)
+                completion(result.map { _ in url })
             })
         }
     }

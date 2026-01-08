@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-typealias ThumbnailRequestCompletion = (_ result: Result<URL, any Error>) -> Void
+typealias ThumbnailRequestCompletion = (_ result: Result<String, any Error>) -> Void
 
 final class ThumbnailRequestDelegate: NSObject, MEGARequestDelegate {
     private let completion: ThumbnailRequestCompletion
@@ -14,8 +14,8 @@ final class ThumbnailRequestDelegate: NSObject, MEGARequestDelegate {
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if error.type == .apiOk {
-            if let url = request.toFileURL() {
-                completion(.success(url))
+            if let filePath = request.file {
+                completion(.success(filePath))
             } else {
                 completion(.failure(GenericErrorEntity()))
             }

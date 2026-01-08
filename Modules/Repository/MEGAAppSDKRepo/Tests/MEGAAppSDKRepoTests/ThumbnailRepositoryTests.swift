@@ -51,15 +51,15 @@ final class ThumbnailRepositoryTests: XCTestCase {
         let node = NodeEntity(handle: 4, base64Handle: "node_4_not_cached_base_64_thumbnail",
                               hasThumbnail: true)
         let megaNode = MockNode(handle: 4, hasThumbnail: true)
-        let thumbnailFilePath = try imagePathURL(forNode: node, type: .thumbnail).path
+        let thumbnailURL = try imagePathURL(forNode: node, type: .thumbnail)
         
-        let sdk = MockSdk(file: thumbnailFilePath)
+        let sdk = MockSdk(file: thumbnailURL.path())
         let nodeProvider = MockMEGANodeProvider(node: megaNode)
         let sut = makeThumbnailRepository(sdk: sdk, nodeProvider: nodeProvider)
         
         let result = try await sut.loadThumbnail(for: node, type: .thumbnail)
         
-        XCTAssertEqual(result, URL(string: thumbnailFilePath))
+        XCTAssertEqual(result, thumbnailURL)
     }
     
     func testLoadThumbnail_downloadOfThumbnailFailsApiENoent_shouldThrowNoThumbnailError() async {
@@ -97,7 +97,7 @@ final class ThumbnailRepositoryTests: XCTestCase {
                               hasThumbnail: true)
         let megaNode = MockNode(handle: 4, hasThumbnail: true)
         
-        let sdk = MockSdk(file: "")
+        let sdk = MockSdk(file: nil)
         let nodeProvider = MockMEGANodeProvider(node: megaNode)
         let sut = makeThumbnailRepository(sdk: sdk, nodeProvider: nodeProvider)
         
@@ -113,15 +113,15 @@ final class ThumbnailRepositoryTests: XCTestCase {
         let node = NodeEntity(handle: 4, base64Handle: "node_5_preview_not_cached",
                               hasThumbnail: true)
         let megaNode = MockNode(handle: 4, hasPreview: true)
-        let previewFilePath = try imagePathURL(forNode: node, type: .preview).path
+        let previewURL = try imagePathURL(forNode: node, type: .preview)
         
-        let sdk = MockSdk(file: previewFilePath)
+        let sdk = MockSdk(file: previewURL.path())
         let nodeProvider = MockMEGANodeProvider(node: megaNode)
         let sut = makeThumbnailRepository(sdk: sdk, nodeProvider: nodeProvider)
         
         let result = try await sut.loadThumbnail(for: node, type: .preview)
         
-        XCTAssertEqual(result, URL(string: previewFilePath))
+        XCTAssertEqual(result, previewURL)
     }
     
     func testLoadThumbnail_withPreviewTypeNoPreview_shouldThrowNoThumbnailPreview() async throws {
@@ -143,15 +143,15 @@ final class ThumbnailRepositoryTests: XCTestCase {
     func testLoadThumbnail_withOriginal_shouldLoadURL() async throws {
         let node = NodeEntity(handle: 4, base64Handle: "node_5_original_not_cached")
         let megaNode = MockNode(handle: 4, hasPreview: true)
-        let orignalImagePath = try imagePathURL(forNode: node, type: .original).path
+        let orignalImageURL = try imagePathURL(forNode: node, type: .original)
         
-        let sdk = MockSdk(file: orignalImagePath)
+        let sdk = MockSdk(file: orignalImageURL.path())
         let nodeProvider = MockMEGANodeProvider(node: megaNode)
         let sut = makeThumbnailRepository(sdk: sdk, nodeProvider: nodeProvider)
         
         let result = try await sut.loadThumbnail(for: node, type: .original)
         
-        XCTAssertEqual(result, URL(string: orignalImagePath))
+        XCTAssertEqual(result, orignalImageURL)
     }
     
     func testCachedPreviewOrOriginalPath_forNoFileCached_shouldReturnNil() {
