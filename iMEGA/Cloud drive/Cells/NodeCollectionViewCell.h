@@ -36,9 +36,23 @@ NS_SWIFT_UI_ACTOR
                          sdk:(MEGASdk *)sdk
                     delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate
                  isSampleRow:(BOOL)isSampleRow;
-- (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection isFromSharedItem:(BOOL)isFromSharedItem sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
-- (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
-- (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
+
+- (void)configureCellForNode:(MEGANode *)node
+    allowedMultipleSelection:(BOOL)multipleSelection
+            isFromSharedItem:(BOOL)isFromSharedItem
+                         sdk:(MEGASdk *)sdk
+                    delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
+
+- (void)configureCellForFolderLinkNode:(MEGANode *)node
+              allowedMultipleSelection:(BOOL)multipleSelection
+                                   sdk:(MEGASdk *)sdk
+                              delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
+
+- (void)configureCellForOfflineItem:(NSDictionary *)item
+                           itemPath:(NSString *)pathForItem
+           allowedMultipleSelection:(BOOL)multipleSelection
+                                sdk:(MEGASdk *)sdk
+                           delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)setupAppearance;
 - (NSString *)itemName;
 

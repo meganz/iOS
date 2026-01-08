@@ -64,61 +64,14 @@ static NSString *kFileSize = @"kFileSize";
     self.node = node;
     self.delegate = delegate;
     
-    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem sdk:sdk]];
-        
-    if (node.isTakenDown) {
-        self.nameLabel.attributedText = [node attributedTakenDownName];
-        self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColor];
-    } else {
-        self.nameLabel.textColor = [UIColor primaryTextColor];
-        self.nameLabel.text = [node nameAfterDecryptionCheck];
-        if (node.isFile) {
-            self.infoLabel.text = [Helper sizeForNode:node api:sdk];
-        } else if (node.isFolder) {
-            if (isSampleRow) {
-                self.infoLabel.text = @"Sample Row";
-            } else {
-                self.infoLabel.text = nil;
-            }
-        }
-    }
-    
-    self.labelView.hidden = (node.label == MEGANodeLabelUnknown);
-    if (node.label != MEGANodeLabelUnknown) {
-        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
-        self.labelImageView.image = [UIImage megaImageWithNamed:labelString];
-    }
-    
-    BOOL favouriteIsHidden = !node.isFavourite;
-    self.favouriteView.hidden = favouriteIsHidden;
-    BOOL linkIsHidden = !node.isExported || node.mnz_isInRubbishBin;
-    self.linkView.hidden = linkIsHidden;
-    [MEGASdk.shared hasVersionsForNode:node completion:^(BOOL hasVersions) {
-        BOOL versionedIsHidden = !hasVersions;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.versionedView.hidden = versionedIsHidden;
-            self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
-        });
-    }];
-    
-    self.durationLabel.hidden = ![self.viewModel isNodeVideoWithValidDuration];
-    self.videoIconView.hidden = ![self.viewModel isNodeVideo];
-    if (!self.durationLabel.hidden) {
-        self.durationLabel.layer.cornerRadius = 4;
-        self.durationLabel.layer.masksToBounds = true;
-        self.durationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
-    }
+    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:isFromSharedItem isFromFolderLink:NO sdk:sdk]];
 
-    self.downloadedImageView.hidden = self.downloadedView.hidden = !([self hasDownloadedNode:node]) && !isSampleRow;
-    self.selectImageView.hidden = !multipleSelection;
-    self.moreButton.hidden = multipleSelection;
-    
-    [self setupAppearance];
+    [self configureCellForNode:node allowedMultipleSelection:multipleSelection sdk:sdk isSampleRow:isSampleRow];
 }
 
 - (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
     
-    [self bindWithViewModel:[self createViewModelWithNode:nil isFromSharedItem:NO sdk: sdk]];
+    [self bindWithViewModel:[self createViewModelWithNode:nil isFromSharedItem:NO isFromFolderLink: NO sdk: sdk]];
 
     self.favouriteView.hidden = self.linkView.hidden = self.versionedView.hidden = self.topNodeIconsView.hidden = YES;
     self.labelView.hidden = self.downloadedImageView.hidden = self.downloadedView.hidden = YES;
@@ -190,9 +143,66 @@ static NSString *kFileSize = @"kFileSize";
 }
 
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
-    [self configureCellForNode:node allowedMultipleSelection:multipleSelection isFromSharedItem:YES sdk:sdk delegate:delegate];
+    self.node = node;
+    self.delegate = delegate;
 
-    self.downloadedImageView.hidden = !([self hasDownloadedNode:node]);
+    [self bindWithViewModel:[self createViewModelWithNode:node isFromSharedItem:NO isFromFolderLink:YES sdk:sdk]];
+
+    [self configureCellForNode:node allowedMultipleSelection:multipleSelection sdk:sdk isSampleRow:NO];
+}
+
+- (void)configureCellForNode:(MEGANode *)node
+    allowedMultipleSelection:(BOOL)multipleSelection
+                         sdk:(nonnull MEGASdk *)sdk
+                 isSampleRow:(BOOL)isSampleRow {
+    if (node.isTakenDown) {
+        self.nameLabel.attributedText = [node attributedTakenDownName];
+        self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColor];
+    } else {
+        self.nameLabel.textColor = [UIColor primaryTextColor];
+        self.nameLabel.text = [node nameAfterDecryptionCheck];
+        if (node.isFile) {
+            self.infoLabel.text = [Helper sizeForNode:node api:sdk];
+        } else if (node.isFolder) {
+            if (isSampleRow) {
+                self.infoLabel.text = @"Sample Row";
+            } else {
+                self.infoLabel.text = nil;
+            }
+        }
+    }
+
+    self.labelView.hidden = (node.label == MEGANodeLabelUnknown);
+    if (node.label != MEGANodeLabelUnknown) {
+        NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
+        self.labelImageView.image = [UIImage megaImageWithNamed:labelString];
+    }
+
+    BOOL favouriteIsHidden = !node.isFavourite;
+    self.favouriteView.hidden = favouriteIsHidden;
+    BOOL linkIsHidden = !node.isExported || node.mnz_isInRubbishBin;
+    self.linkView.hidden = linkIsHidden;
+    [MEGASdk.shared hasVersionsForNode:node completion:^(BOOL hasVersions) {
+        BOOL versionedIsHidden = !hasVersions;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.versionedView.hidden = versionedIsHidden;
+            self.topNodeIconsView.hidden = favouriteIsHidden && versionedIsHidden && linkIsHidden;
+        });
+    }];
+
+    self.durationLabel.hidden = ![self.viewModel isNodeVideoWithValidDuration];
+    self.videoIconView.hidden = ![self.viewModel isNodeVideo];
+    if (!self.durationLabel.hidden) {
+        self.durationLabel.layer.cornerRadius = 4;
+        self.durationLabel.layer.masksToBounds = true;
+        self.durationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
+    }
+
+    self.downloadedImageView.hidden = self.downloadedView.hidden = !([self hasDownloadedNode:node]) && !isSampleRow;
+    self.selectImageView.hidden = !multipleSelection;
+    self.moreButton.hidden = multipleSelection;
+
+    [self setupAppearance];
 }
 
 - (NSString *)itemName {

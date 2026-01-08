@@ -43,10 +43,11 @@ extension NodeCollectionViewCell {
             .forEach { $0?.alpha = 1 }
     }
     
-    @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool, sdk: MEGASdk) -> NodeCollectionViewCellViewModel {
+    @objc func createViewModel(node: MEGANode?, isFromSharedItem: Bool, isFromFolderLink: Bool, sdk: MEGASdk) -> NodeCollectionViewCellViewModel {
         .init(
             node: node?.toNodeEntity(),
             isFromSharedItem: isFromSharedItem,
+            isFromFolderLink: isFromFolderLink,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
@@ -154,7 +155,8 @@ extension NodeCollectionViewCell {
     }
     
     @objc func updateSelection() {
-        if isCloudDriveRevampEnabled {
+        // For Folder link, we need to update the selection state with the revamped UI when CD revamp is enabled
+        if isCloudDriveRevampEnabled, viewModel.isFromFolderLink {
             updateSelectionForRevampedUI()
         } else {
             updateSelectionForLegacyUI()

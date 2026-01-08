@@ -28,13 +28,11 @@ extension NodeCollectionViewCell {
         usesRevampedUI: Bool
     ) {
         configureCell(
-            for: node,
+            forFolderLinkNode: node,
             allowedMultipleSelection: allowedMultipleSelection,
-            isFromSharedItem: true,
             sdk: sdk,
             delegate: delegate
         )
-
         downloadedImageView?.isHidden = !hasDownloaded(node: node)
 
         guard usesRevampedUI else { return }

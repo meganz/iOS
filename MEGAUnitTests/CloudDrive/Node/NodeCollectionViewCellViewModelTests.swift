@@ -319,6 +319,7 @@ extension NodeCollectionViewCellViewModelTests {
     @MainActor
     private func sut(node: NodeEntity? = nil,
                      isFromSharedItem: Bool = false,
+                     isFromFolderLinks: Bool = false,
                      sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
                      nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
                      thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
@@ -326,6 +327,7 @@ extension NodeCollectionViewCellViewModelTests {
         NodeCollectionViewCellViewModel(
             node: node,
             isFromSharedItem: isFromSharedItem,
+            isFromFolderLink: isFromFolderLinks,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
             nodeIconUseCase: nodeIconUseCase,
