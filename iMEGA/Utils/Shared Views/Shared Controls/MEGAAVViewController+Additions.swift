@@ -104,6 +104,9 @@ extension MEGAAVViewController {
             .sink { [weak self] state in
                 guard state.old != state.new else { return }
                 MEGALogInfo("Airplay active: \(state.new),\(self?.player?.isExternalPlaybackActive ?? false)")
+                if state.new {
+                    DIContainer.tracker.trackAnalyticsEvent(with: AirplayActivationInVideoPlaybackEvent())
+                }
                 guard let self, let player else { return }
                 let isPlaying = player.rate > 0
                 player.pause()
