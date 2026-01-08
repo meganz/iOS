@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -89,9 +90,19 @@ struct ReportIssueView: View {
     
     private var navigationBar: some View {
         NavigationBarView(leading: {
-            leftNavigationButton
+            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                leftNavigationButton
+                    .buttonStyle(.glass)
+            } else {
+                leftNavigationButton
+            }
         }, trailing: {
-            rightNavigationBarButton
+            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                rightNavigationBarButton
+                    .buttonStyle(.glass)
+            } else {
+                rightNavigationBarButton
+            }
         }, center: {
             NavigationTitleView(title: Strings.Localizable.Help.ReportIssue.title)
         }, backgroundColor: TokenColors.Background.surface1.swiftUI)

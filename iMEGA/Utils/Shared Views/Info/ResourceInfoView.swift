@@ -1,4 +1,5 @@
 import DeviceCenter
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -67,16 +68,25 @@ struct ResourceInfoView: View {
             
             HStack {
                 Spacer()
-                Button {
-                    viewModel.dismiss()
-                } label: {
-                    Text(Strings.Localizable.close)
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    dismissButton
+                        .buttonStyle(.glass)
+                } else {
+                    dismissButton
                 }
             }
         }
         .padding()
         .background(TokenColors.Background.surface1.swiftUI)
+    }
+    
+    private var dismissButton: some View {
+        Button {
+            viewModel.dismiss()
+        } label: {
+            Text(Strings.Localizable.close)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        }
     }
 }
 

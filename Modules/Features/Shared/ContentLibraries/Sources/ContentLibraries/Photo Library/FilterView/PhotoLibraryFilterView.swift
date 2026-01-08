@@ -49,8 +49,22 @@ struct PhotoLibraryFilterView: View {
                 .ignoresSafeArea()
             
             NavigationBarView(
-                leading: { btnCancel },
-                trailing: { btnDone },
+                leading: {
+                    if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+                        btnCancel
+                            .buttonStyle(.glass)
+                    } else {
+                        btnCancel
+                    }
+                },
+                trailing: {
+                    if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+                        btnDone
+                            .buttonStyle(.glass)
+                    } else {
+                        btnDone
+                    }
+                },
                 center: { NavigationTitleView(title: viewModel.filterTitle) },
                 backgroundColor: TokenColors.Background.surface1.swiftUI
             )

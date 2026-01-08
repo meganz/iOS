@@ -92,6 +92,10 @@ import UIKit
         dataSource?.configureDataSource()
         bindToSubscriptions()
         hideSeparatorsIfNeeded()
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            clearBackBarButton()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
