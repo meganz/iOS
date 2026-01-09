@@ -9,7 +9,7 @@ public struct BackupsRepository: BackupsRepositoryProtocol {
         BackupsRepository(sdk: MEGASdk.sharedSdk)
     }
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     

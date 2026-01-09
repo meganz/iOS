@@ -56,12 +56,13 @@ final class NewFolderLinkViewController: UIViewController {
         )
         
         let fileNodeOpener = FolderLinkFileNodeOpener(navigationController: navigationController)
-        
+        let nodeActionHandler = FolderLinkNodeActionHandler(navigationController: navigationController)
         return FolderLinkView.Dependency(
             link: link,
             folderLinkBuilder: MEGAFolderLinkBuilder(),
             searchResultMapper: searchResultMapper,
             fileNodeOpener: fileNodeOpener,
+            nodeActionHandler: nodeActionHandler,
             onClose: { [weak self] in
                 self?.dismiss(animated: true)
             }

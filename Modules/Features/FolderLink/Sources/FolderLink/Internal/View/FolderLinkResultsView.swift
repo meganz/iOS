@@ -9,6 +9,7 @@ struct FolderLinkResultsView: View {
     struct Dependency {
         let handle: HandleEntity
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
     }
     
@@ -60,6 +61,8 @@ struct FolderLinkResultsView: View {
             }
             .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
                 dependency.selectionHandler(selection)
+            }.onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
+                dependency.nodeActionHandler.handle(action: action)
             }
     }
     

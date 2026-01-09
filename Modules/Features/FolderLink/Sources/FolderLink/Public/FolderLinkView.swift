@@ -12,6 +12,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         let folderLinkBuilder: any FolderLinkBuilderProtocol
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
+        let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let onClose: @MainActor () -> Void
         
         public init(
@@ -19,12 +20,14 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             folderLinkBuilder: some FolderLinkBuilderProtocol,
             searchResultMapper: some FolderLinkSearchResultMapperProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
+            nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
             onClose: @escaping @MainActor () -> Void
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
             self.searchResultMapper = searchResultMapper
             self.fileNodeOpener = fileNodeOpener
+            self.nodeActionHandler = nodeActionHandler
             self.onClose = onClose
         }
     }
@@ -152,6 +155,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         FolderLinkResultsView.Dependency(
             handle: handle,
             searchResultMapper: dependency.searchResultMapper,
+            nodeActionHandler: dependency.nodeActionHandler,
             selectionHandler: { selection in
                 if selection.result.isFolder {
                     navigationPath.append(NavigationRoute.folder(selection.result.id))

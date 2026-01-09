@@ -1676,6 +1676,7 @@
 		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
+		A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */; };
 		A57DA72D2EB49EC800D3B486 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = A57DA72C2EB49EC800D3B486 /* MEGATest */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
@@ -4542,6 +4543,7 @@
 		A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
+		A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkNodeActionHandler.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A589D4F12F04EB7400A9B23C /* FolderLink */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FolderLink; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
@@ -11099,6 +11101,7 @@
 			isa = PBXGroup;
 			children = (
 				A5E273AF2F0D065B0045BC02 /* FolderLinkFileNodeOpener.swift */,
+				A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */,
 				A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */,
 				A5ECB60C2F0F909F003FEAA8 /* FolderLinkUnavailableView.swift */,
 				A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */,
@@ -15223,6 +15226,7 @@
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
 				A5E273B22F0D066D0045BC02 /* FolderLinkFileNodeOpener.swift in Sources */,
+				A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */,
 				A5EB72162F0BAF9000B9EDC0 /* FolderLinkSearchResultMapper.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */,

@@ -5,6 +5,7 @@ import MEGAUIComponent
 import MEGAUIKit
 import Search
 import SwiftUI
+import UIKit
 
 @MainActor
 final class FolderLinkResultsViewModel: ObservableObject {
@@ -18,6 +19,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
 
     @Published var searchText: String = ""
     @Published var selection: SearchResultSelection?
+    @Published var nodeAction: FolderLinkNodeAction?
     
     // IOS-11084 - handle edit mode
     var title: String {
@@ -48,8 +50,8 @@ extension FolderLinkResultsViewModel {
     var searchResultsContainerViewModel: SearchResultsContainerViewModel {
         let searchBridge = SearchBridge { [weak self] selection in
             self?.selection = selection
-        } context: { result, _ in
-            print(result)
+        } context: { [weak self] result, button in
+            self?.nodeAction = FolderLinkNodeAction(handle: result.id, sender: button)
         } chipTapped: { chip, selected in
             print(chip, selected)
         } sortingOrder: {

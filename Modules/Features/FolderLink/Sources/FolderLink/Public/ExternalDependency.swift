@@ -1,6 +1,7 @@
 import MEGADomain
 import Search
 import SwiftUI
+import UIKit
 
 public enum LinkUnavailableReason: Error, Sendable, Equatable {
     case downETD
@@ -8,6 +9,11 @@ public enum LinkUnavailableReason: Error, Sendable, Equatable {
     case copyrightSuspension
     case generic
     case expired
+}
+
+public struct FolderLinkNodeAction {
+    public let handle: HandleEntity
+    public let sender: UIButton
 }
 
 public protocol FolderLinkBuilderProtocol: Sendable {
@@ -21,4 +27,9 @@ public protocol FolderLinkSearchResultMapperProtocol: Sendable {
 @MainActor
 public protocol FolderLinkFileNodeOpenerProtocol: Sendable {
     func openNode(handle: HandleEntity, siblings: [HandleEntity])
+}
+
+@MainActor
+public protocol FolderLinkNodeActionHandlerProtocol: Sendable {
+    func handle(action: FolderLinkNodeAction)
 }
