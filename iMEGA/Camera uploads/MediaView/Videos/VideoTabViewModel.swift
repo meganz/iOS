@@ -164,6 +164,7 @@ extension VideoTabViewModel: MediaTabContextMenuProvider {
             isVideosRevampExplorer: true,
             isSelectHidden: false,
             isEmptyState: false,
+            showSortingOptionsAndViewModes: false,
             selectedVideoLocationFilter: selectedLocationFilter,
             selectedVideoDurationFilter: selectedDurationFilter
         )

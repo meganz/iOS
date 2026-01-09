@@ -8,9 +8,11 @@ enum MediaTabTimelineFactory {
     static func makeMediaTimelineTabContentViewModel(
         navigationController: UINavigationController?
     ) -> MediaTimelineTabContentViewModel {
+        let configuration = PhotoLibraryContentConfiguration()
         let photoLibraryContentViewModel = PhotoLibraryContentViewModel(
             library: PhotoLibrary(),
-            contentMode: .library)
+            contentMode: .library,
+            configuration: configuration)
         let photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(
             contentMode: .library)
         let cameraUploadsSettingsViewRouter = CameraUploadsSettingsViewRouter(presenter: navigationController) { }

@@ -63,13 +63,19 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
         VStack(spacing: 0) {
             tabButtons
             
-            TabView(selection: $selectedTab) {
-                ForEach(tabs) { tab in
-                    tab.content
-                        .tag(tab.id)
+            if isTabSwitchingDisabled {
+                if let selectedTabItem = tabs.first(where: { $0.id == selectedTab }) {
+                    selectedTabItem.content
                 }
+            } else {
+                TabView(selection: $selectedTab) {
+                    ForEach(tabs) { tab in
+                        tab.content
+                        .tag(tab.id)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
     

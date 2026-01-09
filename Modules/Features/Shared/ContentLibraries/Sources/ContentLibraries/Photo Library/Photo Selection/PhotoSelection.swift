@@ -55,4 +55,16 @@ public final class PhotoSelection: ObservableObject {
     func isPhotoSelected(_ photo: NodeEntity) -> Bool {
         photos[photo.handle] != nil
     }
+    
+    public func selectPhoto(_ photo: NodeEntity) {
+        if let selectLimit = selectLimit, photos.count >= selectLimit {
+            isItemSelectedAfterLimitReached = true
+            return
+        }
+        photos[photo.handle] = photo
+    }
+    
+    public func deselectPhoto(_ photo: NodeEntity) {
+        photos.removeValue(forKey: photo.handle)
+    }
 }

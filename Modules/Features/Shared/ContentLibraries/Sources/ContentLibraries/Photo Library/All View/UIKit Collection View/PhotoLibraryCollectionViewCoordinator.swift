@@ -30,6 +30,16 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private weak var globalHeaderView: UICollectionViewCell?
     private var visibleSectionHeaders: Set<Int> = []
     
+    private var dragInitialIndexPath: IndexPath?
+    private var dragLastIndexPath: IndexPath?
+    private var dragSelectionMode: DragSelectionMode?
+    private var initialSelectionHandles: Set<HandleEntity> = []
+
+    private enum DragSelectionMode {
+        case select
+        case deselect
+    }
+
     private var photoLibraryDataSource: [PhotoDateSection] {
         layoutChangesMonitor.photoLibraryDataSource
     }
@@ -107,6 +117,12 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         layoutChangesMonitor.configure(collectionView: collectionView)
         
+        if ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+            panGesture.delegate = self
+            collectionView.addGestureRecognizer(panGesture)
+        }
+
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -154,6 +170,86 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             delegate: self
         )
         scrollTracker.startTrackingScrolls()
+    }
+
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        guard viewModel.isEditing else { return }
+        
+        let location = gesture.location(in: collectionView)
+        
+        switch gesture.state {
+        case .began:
+            guard let indexPath = collectionView?.indexPathForItem(at: location),
+                  let photo = photoLibraryDataSource.photo(at: indexPath) else {
+                return
+            }
+            
+            collectionView?.isScrollEnabled = false
+            
+            dragInitialIndexPath = indexPath
+            dragLastIndexPath = indexPath
+            dragSelectionMode = viewModel.libraryViewModel.selection.isPhotoSelected(photo) ? .deselect : .select
+            initialSelectionHandles = Set(viewModel.libraryViewModel.selection.photos.keys)
+            if let dragSelectionMode {
+                applySelectionMode(dragSelectionMode, to: photo)
+            }
+            
+        case .changed:
+            guard let indexPath = collectionView?.indexPathForItem(at: location) else {
+                break
+            }
+            if indexPath != dragLastIndexPath {
+                updateSelection(at: indexPath)
+                dragLastIndexPath = indexPath
+            }
+            
+        case .ended, .cancelled, .failed:
+            collectionView?.isScrollEnabled = true
+            dragInitialIndexPath = nil
+            dragLastIndexPath = nil
+            dragSelectionMode = nil
+            initialSelectionHandles.removeAll()
+            
+        default:
+            break
+        }
+    }
+    
+    private func updateSelection(at currentIndexPath: IndexPath) {
+        guard let initialIndexPath = dragInitialIndexPath,
+              let lastIndexPath = dragLastIndexPath,
+              let selectionMode = dragSelectionMode else { return }
+        
+        let currentRange = Set(photoLibraryDataSource.indexPaths(from: initialIndexPath, to: currentIndexPath))
+        let previousRange = Set(photoLibraryDataSource.indexPaths(from: initialIndexPath, to: lastIndexPath))
+        
+        // Photos added to the range in this step
+        let addedToRange = currentRange.subtracting(previousRange)
+        for indexPath in addedToRange {
+            guard let photo = photoLibraryDataSource.photo(at: indexPath) else { continue }
+            applySelectionMode(selectionMode, to: photo)
+        }
+        
+        // Photos removed from the range in this step
+        let removedFromRange = previousRange.subtracting(currentRange)
+        for indexPath in removedFromRange {
+            guard let photo = photoLibraryDataSource.photo(at: indexPath) else { continue }
+            let wasSelected = initialSelectionHandles.contains(photo.handle)
+            if wasSelected {
+                viewModel.libraryViewModel.selection.selectPhoto(photo)
+            } else {
+                viewModel.libraryViewModel.selection.deselectPhoto(photo)
+            }
+        }
+    }
+    
+    private func applySelectionMode(_ mode: DragSelectionMode, to photo: NodeEntity) {
+        switch mode {
+        case .select:
+            viewModel.libraryViewModel.selection.selectPhoto(photo)
+        case .deselect:
+            viewModel.libraryViewModel.selection.deselectPhoto(photo)
+        }
     }
 }
 
@@ -251,5 +347,28 @@ extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrol
     
     func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
         photoLibraryDataSource.position(at: indexPath)
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension PhotoLibraryCollectionViewCoordinator: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer,
+              viewModel.isEditing else {
+            return false
+        }
+        
+        let velocity = panGesture.velocity(in: collectionView)
+        
+        guard abs(velocity.x) > abs(velocity.y) else {
+            return false
+        }
+        
+        let location = panGesture.location(in: collectionView)
+        return collectionView?.indexPathForItem(at: location) != nil
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

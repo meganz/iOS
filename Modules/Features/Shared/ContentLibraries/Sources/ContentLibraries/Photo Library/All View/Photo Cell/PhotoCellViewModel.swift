@@ -172,6 +172,14 @@ open class PhotoCellViewModel: ObservableObject {
             isSelected = selection.isPhotoSelected(photo)
         }
         
+        selection.$photos
+            .map { [handle = photo.handle] photos in
+                photos[handle] != nil
+            }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isSelected)
+        
         if let isSelectionLimitReachedPublisher = selection.isSelectionLimitReachedPublisher {
             isSelectionLimitReachedPublisher
                 .assign(to: &$isSelectionLimitReached)

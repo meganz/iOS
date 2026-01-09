@@ -26,4 +26,23 @@ extension Array where Element: PhotoDateSection {
     func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
         photo(at: indexPath)?.position
     }
+    
+    func indexPaths(from start: IndexPath, to end: IndexPath) -> [IndexPath] {
+        let isStartBeforeEnd = start.section < end.section || (start.section == end.section && start.item <= end.item)
+        let (first, last) = isStartBeforeEnd ? (start, end) : (end, start)
+        
+        var indexPaths = [IndexPath]()
+        for section in first.section...last.section {
+            guard let sectionContent = self[safe: section]?.contentList else { continue }
+            
+            let startItem = (section == first.section) ? first.item : 0
+            let endItem = (section == last.section) ? last.item : sectionContent.count - 1
+            
+            guard startItem <= endItem else { continue }
+            for item in startItem...endItem {
+                indexPaths.append(IndexPath(item: item, section: section))
+            }
+        }
+        return indexPaths
+    }
 }

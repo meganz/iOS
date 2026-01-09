@@ -62,3 +62,9 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
             .assign(to: &libraryViewModel.selection.$isHidden)
     }
 }
+
+extension PhotoLibraryModeAllViewModel {
+    var isEditing: Bool {
+        libraryViewModel.selection.editMode.isEditing
+    }
+}

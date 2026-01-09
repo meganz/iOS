@@ -827,7 +827,10 @@ public final class ContextMenuBuilder {
 
         displayActionsMenuChildren.append(videoLocationFilterMenu())
         displayActionsMenuChildren.append(videoDurationFilterMenu())
-        displayActionsMenuChildren.append(sortMenu())
+
+        if showSortingOptionsAndViewModes {
+            displayActionsMenuChildren.append(sortMenu())
+        }
 
         return CMEntity(
             displayInline: true,
