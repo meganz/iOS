@@ -12,6 +12,7 @@ enum OfflineViewAction: ActionType {
     case onViewWillDisappear
     case removeOfflineItems(_ items: [URL])
     case onSortHeaderViewPressed
+    case updateViewModeHeader(viewMode: SearchResultsViewMode)
 }
 
 @MainActor
@@ -92,6 +93,9 @@ final class OfflineViewModel: NSObject, ViewModelType {
             removeOfflineItems(items)
         case .onSortHeaderViewPressed:
             tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+        case .updateViewModeHeader(let newViewMode):
+            guard viewModeHeaderViewModel.selectedViewMode != newViewMode else { return }
+            viewModeHeaderViewModel.selectedViewMode = newViewMode
         }
     }
 
