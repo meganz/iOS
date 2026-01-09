@@ -53,7 +53,14 @@ public func sendRequest(
         )
     }
 
-    let (data, response) = try await URLSession.shared.data(for: request)
+    let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        return URLSession(configuration: config)
+    }()
+
+    let (data, response) = try await session.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse else {
         throw HTTPError.cannotParseResponse
