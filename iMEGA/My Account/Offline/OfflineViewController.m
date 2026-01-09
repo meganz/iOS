@@ -62,7 +62,9 @@ static NSString *kisDirectory = @"kisDirectory";
     self.currentContentInsetHeight = 0;
     
     [self determineViewMode];
-    
+
+    [self updateViewModeHeader];
+
     [self configureNavigationBar];
     
     [self configureNavigationBarButtons];

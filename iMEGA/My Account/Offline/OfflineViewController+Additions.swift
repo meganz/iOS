@@ -159,9 +159,14 @@ extension OfflineViewController {
     }
     
     @objc func observeViewMode() {
-        NotificationCenter.default.addObserver(self, selector: #selector(determineViewMode), name: .MEGAViewModePreferenceDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(viewModePreferenceChanged), name: .MEGAViewModePreferenceDidChange, object: nil)
     }
-    
+
+    @objc private func viewModePreferenceChanged() {
+        determineViewMode()
+        updateViewModeHeader()
+    }
+
     @objc func refreshMiniPlayerIfNeeded() {
         if AudioPlayerManager.shared.isPlayerAlive(),
            let mainTabBarController = UIApplication.mainTabBarRootViewController() as? MainTabBarController {
@@ -171,6 +176,10 @@ extension OfflineViewController {
     
     @objc func adjustSafeAreaBottomInset(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+
+    @objc func updateViewModeHeader() {
+        viewModel.dispatch(.updateViewModeHeader(viewMode: isListViewModeSelected() ? .list : .grid))
     }
 }
 
