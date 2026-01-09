@@ -5935,6 +5935,48 @@
           },
           {
             "kind": "Var",
+            "name": "zoomGrid",
+            "printedName": "zoomGrid",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Image",
+                "printedName": "SwiftUI.Image",
+                "usr": "s:7SwiftUI5ImageV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAImageB0V8zoomGrid7SwiftUI5ImageVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V8zoomGrid7SwiftUI5ImageVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Image",
+                    "printedName": "SwiftUI.Image",
+                    "usr": "s:7SwiftUI5ImageV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAImageB0V8zoomGrid7SwiftUI5ImageVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V8zoomGrid7SwiftUI5ImageVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "addContactMeetings",
             "printedName": "addContactMeetings",
             "children": [
@@ -23667,6 +23709,48 @@
           },
           {
             "kind": "Var",
+            "name": "zoomGrid",
+            "printedName": "zoomGrid",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UIImage",
+                "printedName": "UIKit.UIImage",
+                "usr": "c:objc(cs)UIImage"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle011MEGAUIImageB0V8zoomGridSo7UIImageCvpZ",
+            "mangledName": "$s16MEGAAssetsBundle011MEGAUIImageB0V8zoomGridSo7UIImageCvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIImage",
+                    "printedName": "UIKit.UIImage",
+                    "usr": "c:objc(cs)UIImage"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle011MEGAUIImageB0V8zoomGridSo7UIImageCvgZ",
+                "mangledName": "$s16MEGAAssetsBundle011MEGAUIImageB0V8zoomGridSo7UIImageCvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "versionedThumbnail",
             "printedName": "versionedThumbnail",
             "children": [
@@ -40832,6 +40916,13 @@
       "offset": 166931,
       "length": 14,
       "value": "\"yellowFolder\""
+    },
+    {
+      "filePath": "\/Users\/megaworking\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-gbnfuptxvplinobdfbrflallfadh\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
+      "kind": "StringLiteral",
+      "offset": 167071,
+      "length": 10,
+      "value": "\"zoomGrid\""
     }
   ]
 }

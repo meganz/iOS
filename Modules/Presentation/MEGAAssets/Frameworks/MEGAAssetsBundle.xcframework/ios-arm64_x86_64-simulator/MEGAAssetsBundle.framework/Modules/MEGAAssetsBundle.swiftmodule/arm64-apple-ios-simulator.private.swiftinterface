@@ -433,6 +433,9 @@ public struct MEGAImageBundle {
   public static var favouritePlaylistThumbnail: SwiftUICore.Image {
     get
   }
+  public static var zoomGrid: SwiftUICore.Image {
+    get
+  }
   public static var addContactMeetings: SwiftUICore.Image {
     get
   }
@@ -1698,6 +1701,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var deleteAlbum: UIKit.UIImage {
+    get
+  }
+  public static var zoomGrid: UIKit.UIImage {
     get
   }
   public static var versionedThumbnail: UIKit.UIImage {

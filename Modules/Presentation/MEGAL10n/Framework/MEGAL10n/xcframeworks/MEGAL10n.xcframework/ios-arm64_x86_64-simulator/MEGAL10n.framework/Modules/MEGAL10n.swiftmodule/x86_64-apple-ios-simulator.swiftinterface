@@ -3226,6 +3226,17 @@ public enum Strings {
             public static let title: Swift.String
           }
         }
+        public enum Zoom {
+          public enum Compact {
+            public static let title: Swift.String
+          }
+          public enum Large {
+            public static let title: Swift.String
+          }
+          public enum Smallest {
+            public static let title: Swift.String
+          }
+        }
       }
       public enum Quality {
         public static let automatic: Swift.String

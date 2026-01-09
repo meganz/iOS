@@ -60,10 +60,12 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
     private func invalidateLayoutIfNeeded(zoomState: PhotoLibraryZoomState,
                                           enableCameraUploadBannerVisible: Bool,
                                           previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?) {
-                
+        
+        let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         let newLayoutBuilder = PhotoLibraryCollectionLayoutBuilder(
             zoomState: zoomState,
-            enableCameraUploadBannerVisible: enableCameraUploadBannerVisible)
+            enableCameraUploadBannerVisible: enableCameraUploadBannerVisible,
+            isMediaRevampEnabled: isMediaRevampEnabled)
         
         guard previousLayoutBuilder != newLayoutBuilder else {
             return

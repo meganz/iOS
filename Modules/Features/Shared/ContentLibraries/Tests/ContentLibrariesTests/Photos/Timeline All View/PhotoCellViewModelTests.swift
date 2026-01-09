@@ -16,6 +16,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     private lazy var allViewModel: PhotoLibraryModeAllViewModel = {
+        ContentLibraries.configuration = .mockConfiguration()
         let library = try! testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
@@ -588,9 +589,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let exp = expectation(description: "Should emit shouldShowFavorite events")
         
-        allViewModel.zoomState = PhotoLibraryZoomState(scaleFactor: .one, maximumScaleFactor: .thirteen)
+        allViewModel.zoomState = PhotoLibraryZoomState(scaleFactor: .one, maximumScaleFactor: .five, supportedScaleFactors: [.one, .three, .five])
         
-        let zoomActions: [ZoomType] = [.out, .out, .out]
+        let zoomActions: [ZoomType] = [.out, .out]
         
         var events: [Bool] = []
         let subscription = sut

@@ -3,7 +3,12 @@ import MEGADomain
 import XCTest
 
 final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCase {
-    
+
+    override func setUpWithError() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        try super.setUpWithError()
+    }
+
     func testShouldRefresh_photoMonthSectionAndEmpty_noRefresh() throws {
         let testCategories = [PhotoMonthSection]()
         let newCategories = [PhotoMonthSection]()

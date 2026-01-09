@@ -135,10 +135,14 @@ struct AlbumContentRouter: AlbumContentRouting {
     
     func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
         let nodeRepository = NodeRepository.newRepo
+        let isMediaRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         let vm = AlbumCoverPickerPhotoCellViewModel(
             albumPhoto: albumPhoto,
             photoSelection: photoSelection,
-            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary()),
+                isMediaRevampEnabled: isMediaRevampEnabled
+            ),
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,

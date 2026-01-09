@@ -190,6 +190,7 @@ extension MEGAAssets {
         public static var enableCameraUploadsBannerIcon: SwiftUI.Image { MEGAImageBundle.enableCameraUploadsBannerIcon }
         public static var cuBannerChevronRevamp: SwiftUI.Image { MEGAImageBundle.cuBannerChevronRevamp }
         public static var favouritePlaylistThumbnail: SwiftUI.Image { MEGAImageBundle.favouritePlaylistThumbnail }
+        public static var zoomGrid: SwiftUI.Image { MEGAImageBundle.zoomGrid }
         public static var filetypeWebData: SwiftUI.Image { MEGAImageBundle.filetypeWebData }
         public static var filetypeImages: SwiftUI.Image { MEGAImageBundle.filetypeImages }
         // MARK: - DeviceCenter

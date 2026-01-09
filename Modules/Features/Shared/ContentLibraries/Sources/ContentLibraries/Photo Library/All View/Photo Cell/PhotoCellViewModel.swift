@@ -187,10 +187,9 @@ open class PhotoCellViewModel: ObservableObject {
     
     private func subscribeToPhotoFavouritesChange(with zoomStatePublisher: some Publisher<PhotoLibraryZoomState, Never>) {
         zoomStatePublisher
-            .map(\.scaleFactor)
-            .compactMap { [weak self] currentZoomScale -> Bool? in
+            .compactMap { [weak self] zoomState -> Bool? in
                 guard let self else { return nil }
-                return canShowFavorite(photo: photo, atCurrentZoom: currentZoomScale)
+                return canShowFavorite(photo: photo, atCurrentZoom: zoomState.scaleFactor, withMaximumZoom: zoomState.maximumScaleFactor)
             }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)

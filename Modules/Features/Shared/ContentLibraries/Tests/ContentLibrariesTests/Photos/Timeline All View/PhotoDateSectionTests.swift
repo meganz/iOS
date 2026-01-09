@@ -4,6 +4,11 @@ import XCTest
 
 final class PhotoDateSectionTests: XCTestCase {
 
+    override func setUpWithError() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        try super.setUpWithError()
+    }
+
     func testAllPhotos_monthSection_equal() throws {
         let (dateSections, testNodes) =  try makeSut(path: \.photoMonthSections)
         

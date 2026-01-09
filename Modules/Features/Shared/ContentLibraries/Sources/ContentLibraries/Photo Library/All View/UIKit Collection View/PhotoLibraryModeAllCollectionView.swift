@@ -13,12 +13,18 @@ struct PhotoLibraryModeAllCollectionView: View {
         }
     }
 
+    private var isMediaRevampEnabled: Bool {
+        ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+    }
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
             PhotoLibraryCollectionViewRepresenter(viewModel: viewModel, router: router)
                 .ignoresSafeArea(edges: isLiquidGlassEnabled ? .vertical : .bottom)
-            PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
-                .offset(by: viewModel.photoZoomControlPositionTracker)
+            if !isMediaRevampEnabled {
+                PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
+                    .offset(by: viewModel.photoZoomControlPositionTracker)
+            }
         }
     }
 }

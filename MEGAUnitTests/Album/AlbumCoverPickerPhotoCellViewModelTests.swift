@@ -1,4 +1,4 @@
-import ContentLibraries
+@testable import ContentLibraries
 @testable import MEGA
 import MEGAAppPresentationMock
 import MEGADomain
@@ -6,6 +6,16 @@ import MEGADomainMock
 import XCTest
 
 final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
+
+    override func setUpWithError() throws {
+        ContentLibraries.configuration = ContentLibraries.Configuration(
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+            nodeUseCase: MockNodeUseCase(),
+            isAlbumPerformanceImprovementsEnabled: { false }
+        )
+        try super.setUpWithError()
+    }
 
     @MainActor
     func testOnPhotoSelect_whenDifferentPhotoSelected_shouldSetIsSelectedToTrue() throws {

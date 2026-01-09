@@ -4828,3 +4828,9 @@
 "cloudDrive.emptyStateSubtitle"="เก็บรักษาข้อมูลให้ปลอดภัยด้วยการเข้ารหัสวิธีซีโร่-นอว์เลจ";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
+/* Title of Photo's large zoom scale title */
+"media.photoLibrary.zoom.large.title"="Large";
+/* Title of Photo's compact zoom scale title */
+"media.photoLibrary.zoom.compact.title"="Compact";
+/* Title of Photo's smallest zoom scale title */
+"media.photoLibrary.zoom.smallest.title"="Smallest";

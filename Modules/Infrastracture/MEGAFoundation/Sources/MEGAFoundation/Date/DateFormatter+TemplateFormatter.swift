@@ -29,6 +29,23 @@ public extension DateFormatter {
                             locale: locale)
     }
     
+    /// Return a date formatting object using month component template only
+    /// - Parameters:
+    ///   - calendar: The calendar for the date format
+    ///   - timeZone: The time zone for the date fomat
+    ///   - locale: The locale for the date format
+    /// - Returns: A date formatting object to format date to a string like "January"
+    static func monthOnlyTemplate(
+        calendar: Calendar? = nil,
+        timeZone: TimeZone? = nil,
+        locale: Locale? = nil
+    ) -> some DateFormatting {
+        return fromTemplate("MMMM",
+                            calendar: calendar,
+                            timeZone: timeZone,
+                            locale: locale)
+    }
+
     /// Return a date formatting object using year and month components template
     /// - Parameters:
     ///   - calendar: The calendar for the date format

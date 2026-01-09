@@ -4828,3 +4828,9 @@
 "cloudDrive.emptyStateSubtitle"="使用零知識加密技術保護資料安全";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="無法預覽未解密的檔案";
+/* Title of Photo's large zoom scale title */
+"media.photoLibrary.zoom.large.title"="Large";
+/* Title of Photo's compact zoom scale title */
+"media.photoLibrary.zoom.compact.title"="Compact";
+/* Title of Photo's smallest zoom scale title */
+"media.photoLibrary.zoom.smallest.title"="Smallest";

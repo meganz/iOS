@@ -9,16 +9,17 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
         shouldTrackScrollOffsetPublisher: $showEnableCameraUpload,
         baseOffset: 0)
     
-    override init(libraryViewModel: PhotoLibraryContentViewModel,
-                  preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
-        
-        super.init(libraryViewModel: libraryViewModel, preferenceUseCase: preferenceUseCase)
-        
-        zoomState = PhotoLibraryZoomState(
-            scaleFactor: libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor,
-            maximumScaleFactor: .thirteen
+    override init(
+        libraryViewModel: PhotoLibraryContentViewModel,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        isMediaRevampEnabled: Bool = false
+    ) {
+        super.init(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: preferenceUseCase,
+            isMediaRevampEnabled: isMediaRevampEnabled
         )
-        
+
         subscribeToLibraryChange()
         subscribeToZoomStateChange()
     }

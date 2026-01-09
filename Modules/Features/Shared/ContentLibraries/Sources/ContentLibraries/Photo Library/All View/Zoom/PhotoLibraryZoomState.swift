@@ -12,22 +12,32 @@ public struct PhotoLibraryZoomState: Equatable, Sendable {
         case five = 5
         case thirteen = 13
     }
-    
+
     var isSingleColumn: Bool { scaleFactor == .one }
-    
-    private let supportedScaleFactors = ScaleFactor.allCases
-    
+
+    private let supportedScaleFactors: [ScaleFactor]
+
     public static let defaultScaleFactor: ScaleFactor = .three
 
-    var scaleFactor: ScaleFactor = .three
-    var maximumScaleFactor: ScaleFactor = .five
+    var scaleFactor: ScaleFactor
+    var maximumScaleFactor: ScaleFactor
+
+    public init(
+        scaleFactor: ScaleFactor = .three,
+        maximumScaleFactor: ScaleFactor = .thirteen,
+        supportedScaleFactors: [ScaleFactor] = ScaleFactor.allCases
+    ) {
+        self.scaleFactor = scaleFactor
+        self.maximumScaleFactor = maximumScaleFactor
+        self.supportedScaleFactors = supportedScaleFactors
+    }
     
     func canZoom(_ type: ZoomType) -> Bool {
         switch type {
         case .in:
             return scaleFactor != supportedScaleFactors.first
         case .out:
-            return scaleFactor != maximumScaleFactor
+            return scaleFactor != maximumScaleFactor && scaleFactor != supportedScaleFactors.last
         }
     }
     

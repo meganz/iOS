@@ -4828,3 +4828,9 @@
 "cloudDrive.emptyStateSubtitle"="Protege tus datos de forma segura con el cifrado de conocimiento cero";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="La vista previa no está disponible para archivos no descifrados";
+/* Title of Photo's large zoom scale title */
+"media.photoLibrary.zoom.large.title"="Large";
+/* Title of Photo's compact zoom scale title */
+"media.photoLibrary.zoom.compact.title"="Compact";
+/* Title of Photo's smallest zoom scale title */
+"media.photoLibrary.zoom.smallest.title"="Smallest";
