@@ -34,7 +34,7 @@ package final class FolderLinkViewModel: ObservableObject {
     
     package enum ViewState: Sendable, Equatable {
         case loading
-        case error
+        case error(LinkUnavailableReason)
         case results(HandleEntity)
     }
     
@@ -89,8 +89,8 @@ package final class FolderLinkViewModel: ObservableObject {
             notifyInvalidDecryptionKey = true
         case .missingDecryptionKey:
             askingForDecryptionKey = true
-        case .linkUnavailable:
-            viewState = .error
+        case let .linkUnavailable(reason):
+            viewState = .error(reason)
         }
     }
 }

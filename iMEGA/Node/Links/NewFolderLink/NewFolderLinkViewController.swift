@@ -23,7 +23,14 @@ final class NewFolderLinkViewController: UIViewController {
     
     private func attachFolderLinkView() {
         navigationController?.navigationBar.isHidden = true
-        let folderLinkViewController = UIHostingController(rootView: FolderLinkView(dependency: buildDependency(link: link)))
+        let folderLinkViewController = UIHostingController(
+            rootView: FolderLinkView(
+                dependency: buildDependency(link: link),
+                linkUnavailableContent: { reason in
+                    FolderLinkUnavailableView(reason: reason)
+                }
+            )
+        )
         addChild(folderLinkViewController)
         let folderLinkView: UIView = folderLinkViewController.view
         view.addSubview(folderLinkView)
@@ -37,7 +44,7 @@ final class NewFolderLinkViewController: UIViewController {
         folderLinkViewController.didMove(toParent: self)
     }
     
-    private func buildDependency(link: String) -> FolderLinkView.Dependency {
+    private func buildDependency(link: String) -> FolderLinkView<FolderLinkUnavailableView>.Dependency {
         let sdk = MEGASdk.sharedFolderLink
         
         let searchResultMapper = FolderLinkSearchResultMapper(

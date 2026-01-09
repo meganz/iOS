@@ -1,13 +1,5 @@
 import MEGADomain
 
-package enum LinkUnavailableReason: Error, Sendable, Equatable {
-    case downETD
-    case userETDSuspension
-    case copyrightSuspension
-    case generic
-    case expired
-}
-
 package enum FolderLinkFlowErrorEntity: Error, Sendable, Equatable {
     case linkUnavailable(LinkUnavailableReason) // to show error page
     case invalidDecryptionKey // to show alert saying decryption key is invalid

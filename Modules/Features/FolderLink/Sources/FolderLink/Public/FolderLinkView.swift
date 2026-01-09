@@ -6,7 +6,7 @@ import MEGAUIComponent
 import Search
 import SwiftUI
 
-public struct FolderLinkView: View {
+public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View {
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
@@ -37,9 +37,14 @@ public struct FolderLinkView: View {
     @State private var navigationPath = NavigationPath()
     
     private let dependency: Dependency
+    @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
     
-    public init(dependency: Dependency) {
+    public init(
+        dependency: Dependency,
+        @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable
+    ) {
         self.dependency = dependency
+        self.linkUnavailableContent = linkUnavailableContent
         _viewModel = StateObject(
             wrappedValue: FolderLinkViewModel(
                 dependency: FolderLinkViewModel.Dependency(
@@ -63,15 +68,8 @@ public struct FolderLinkView: View {
                             dependency.onClose()
                         } label: {
                             Text(Strings.Localizable.close)
-                                .font(.body)
                                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         }
-                    }
-                    
-                    ToolbarItem(placement: .principal) {
-                        Text(Strings.Localizable.folderLink)
-                            .font(.headline)
-                            .lineLimit(1)
                     }
                 }
                 .navigationDestination(for: NavigationRoute.self) { route in
@@ -104,9 +102,31 @@ public struct FolderLinkView: View {
                 .invalidDecryptionKeyAlert(isPresented: $viewModel.notifyInvalidDecryptionKey) {
                     viewModel.acknowledgeInvalidDecryptionKey()
                 }
-        case .error:
-            // IOS-11082
-            Text("Error")
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text(Strings.Localizable.folderLink)
+                            .font(.headline)
+                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                            .lineLimit(1)
+                    }
+                }
+        case let .error(reason):
+            linkUnavailableContent(reason)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        VStack {
+                            Text(Strings.Localizable.folderLink)
+                                .font(.headline)
+                                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                                .lineLimit(1)
+                            Text(Strings.Localizable.unavailable)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                                .lineLimit(1)
+                        }
+                    }
+                }
         case let .results(nodeHandle):
             folderLinkResultsView(for: nodeHandle)
         }

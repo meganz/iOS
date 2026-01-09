@@ -33,7 +33,7 @@ struct FolderLinkViewModelTests {
         
         await sut.startLoadingFolderLink()
         
-        #expect(sut.viewState == .error)
+        #expect(sut.viewState == .error(.generic))
     }
 
     @Test("confirmDecryptionKey success sets results state")
@@ -64,7 +64,7 @@ struct FolderLinkViewModelTests {
         
         await sut.confirmDecryptionKey("some-key")
         
-        #expect(sut.viewState == .error)
+        #expect(sut.viewState == .error(.generic))
     }
 
     @Test("cancelConfirmingDecryptionKey calls stop on flow use case")

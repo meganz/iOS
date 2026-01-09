@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import Search
 import SwiftUI
@@ -39,9 +40,12 @@ struct FolderLinkResultsView: View {
                     VStack {
                         Text(viewModel.title)
                             .font(.headline)
+                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
                             .lineLimit(1)
                         Text(viewModel.subtitle)
-                            .font(.subheadline)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                             .lineLimit(1)
                     }
                 }
