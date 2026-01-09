@@ -11,7 +11,7 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
     
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
+    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
     }

@@ -89,7 +89,7 @@ package final class FolderLinkViewModel: ObservableObject {
             notifyInvalidDecryptionKey = true
         case .missingDecryptionKey:
             askingForDecryptionKey = true
-        case let .linkUnavailable(reason):
+        case .linkUnavailable:
             viewState = .error
         }
     }

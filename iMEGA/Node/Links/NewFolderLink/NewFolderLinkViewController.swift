@@ -1,4 +1,6 @@
 import FolderLink
+import MEGAAppSDKRepo
+import MEGASdk
 import SwiftUI
 import UIKit
 
@@ -21,15 +23,7 @@ final class NewFolderLinkViewController: UIViewController {
     
     private func attachFolderLinkView() {
         navigationController?.navigationBar.isHidden = true
-        
-        let dependency = FolderLinkView.Dependency(
-            link: link,
-            folderLinkBuilder: MEGAFolderLinkBuilder(),
-            onClose: { [weak self] in
-                self?.dismiss(animated: true)
-            }
-        )
-        let folderLinkViewController = UIHostingController(rootView: FolderLinkView(dependency: dependency))
+        let folderLinkViewController = UIHostingController(rootView: FolderLinkView(dependency: buildDependency(link: link)))
         addChild(folderLinkViewController)
         let folderLinkView: UIView = folderLinkViewController.view
         view.addSubview(folderLinkView)
@@ -41,5 +35,29 @@ final class NewFolderLinkViewController: UIViewController {
             folderLinkView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         folderLinkViewController.didMove(toParent: self)
+    }
+    
+    private func buildDependency(link: String) -> FolderLinkView.Dependency {
+        let sdk = MEGASdk.sharedFolderLink
+        
+        let searchResultMapper = FolderLinkSearchResultMapper(
+            sdk: sdk,
+            nodeValidationRepository: NodeValidationRepository.folderLink,
+            nodeDataRepository: NodeDataRepository.newRepo,
+            thumbnailRepository: ThumbnailRepository.folderLinkThumbnailRepository(),
+            nodeIconRepository: NodeAssetsManager.shared
+        )
+        
+        let fileNodeOpener = FolderLinkFileNodeOpener(navigationController: navigationController)
+        
+        return FolderLinkView.Dependency(
+            link: link,
+            folderLinkBuilder: MEGAFolderLinkBuilder(),
+            searchResultMapper: searchResultMapper,
+            fileNodeOpener: fileNodeOpener,
+            onClose: { [weak self] in
+                self?.dismiss(animated: true)
+            }
+        )
     }
 }

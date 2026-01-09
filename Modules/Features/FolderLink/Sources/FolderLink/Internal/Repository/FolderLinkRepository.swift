@@ -7,6 +7,9 @@ package protocol FolderLinkRepositoryProtocol: RepositoryProtocol, Sendable {
     func logout()
     func fetchNodes() async throws
     func getRootNode() -> HandleEntity
+    func children(of nodeHandle: HandleEntity) async -> [NodeEntity]
+    func children(of nodeHandle: HandleEntity) -> [NodeEntity]
+    func node(for handle: HandleEntity) -> NodeEntity?
 }
 
 struct FolderLinkRepository: FolderLinkRepositoryProtocol {
@@ -96,5 +99,19 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
     
     func logout() {
         sdk.logout()
+    }
+    
+    func children(of nodeHandle: HandleEntity) async -> [NodeEntity] {
+        guard let node = await sdk.node(for: nodeHandle) else { return [] }
+        return sdk.children(forParent: node).toNodeEntities()
+    }
+    
+    func children(of nodeHandle: HandleEntity) -> [NodeEntity] {
+        guard let node = sdk.node(forHandle: nodeHandle) else { return [] }
+        return sdk.children(forParent: node).toNodeEntities()
+    }
+    
+    func node(for handle: HandleEntity) -> NodeEntity? {
+        sdk.node(forHandle: handle)?.toNodeEntity()
     }
 }

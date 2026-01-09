@@ -22,4 +22,11 @@ extension NodeValidationRepository: @retroactive RepositoryProtocol {
             sdk: .shared,
             offlineStore: OfflineStoreBridge(store: .shareInstance()))
     }
+    
+    static var folderLink: Self {
+        NodeValidationRepository(
+            sdk: .sharedFolderLink,
+            offlineStore: OfflineStoreBridge(store: .shareInstance())
+        )
+    }
 }

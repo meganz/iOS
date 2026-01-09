@@ -1692,7 +1692,9 @@
 		A5E1368C2EB50586004BDD4F /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A5E1368B2EB50586004BDD4F /* MEGADomain */; };
 		A5E1368F2EB505AB004BDD4F /* MEGAIntentDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A5E1368E2EB505AB004BDD4F /* MEGAIntentDomain */; };
 		A5E136932EB50614004BDD4F /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A5E136922EB50614004BDD4F /* MEGAPickerFileProviderDomain */; };
+		A5E273B22F0D066D0045BC02 /* FolderLinkFileNodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E273AF2F0D065B0045BC02 /* FolderLinkFileNodeOpener.swift */; };
 		A5EA94152EB5EC43009778D3 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A5EA94142EB5EC43009778D3 /* MEGAPickerFileProviderRepo */; };
+		A5EB72162F0BAF9000B9EDC0 /* FolderLinkSearchResultMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */; };
 		A5EEF3FF2DCCF56700CA3227 /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = A5EEF3FE2DCCF56700CA3227 /* MEGAAssets */; };
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
@@ -4544,6 +4546,8 @@
 		A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrimaryAppIcon.xcassets; sourceTree = "<group>"; };
 		A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CopyableLabel+Additions.swift"; sourceTree = "<group>"; };
 		A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+FeatureFlagProvider.swift"; sourceTree = "<group>"; };
+		A5E273AF2F0D065B0045BC02 /* FolderLinkFileNodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkFileNodeOpener.swift; sourceTree = "<group>"; };
+		A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkSearchResultMapper.swift; sourceTree = "<group>"; };
 		A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SaveNode.swift"; sourceTree = "<group>"; };
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -11075,6 +11079,8 @@
 		A5472CBC2F04EE0E00A49688 /* NewFolderLink */ = {
 			isa = PBXGroup;
 			children = (
+				A5E273AF2F0D065B0045BC02 /* FolderLinkFileNodeOpener.swift */,
+				A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */,
 				A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */,
 				A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */,
 				A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */,
@@ -15196,6 +15202,8 @@
 				C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */,
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
+				A5E273B22F0D066D0045BC02 /* FolderLinkFileNodeOpener.swift in Sources */,
+				A5EB72162F0BAF9000B9EDC0 /* FolderLinkSearchResultMapper.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */,
 				0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */,

@@ -14,6 +14,9 @@ let package = Package(
         )
     ],
     dependencies: [
+        // Features
+        .package(path: "../Search"),
+        
         // UI
         .package(path: "../../UI/MEGASwiftUI"),
         
@@ -36,6 +39,7 @@ let package = Package(
         .target(
             name: "FolderLink",
             dependencies: [
+                "Search",
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGADomain",

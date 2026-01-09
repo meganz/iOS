@@ -20,10 +20,6 @@ package protocol FolderLinkFlowUseCaseProtocol: Sendable {
     func stop()
 }
 
-public protocol FolderLinkBuilderProtocol: Sendable {
-    func build(link: String, with key: String) async -> String
-}
-
 /// This handle the folder link flow: Login in to folder link -> fetchNodes to have the nodes are available -> get the root folder link node
 /// When first opening the folder link, the initialStart(with:) is used. If missingDecryptionKey error is returned, confirmDecryptionKey(with:decryptionKey:) is used
 package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {

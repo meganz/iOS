@@ -1,26 +1,41 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
+import Search
 import SwiftUI
 
 public struct FolderLinkView: View {
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
+        let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
         let onClose: @MainActor () -> Void
         
         public init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
+            searchResultMapper: some FolderLinkSearchResultMapperProtocol,
+            fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             onClose: @escaping @MainActor () -> Void
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
+            self.searchResultMapper = searchResultMapper
+            self.fileNodeOpener = fileNodeOpener
             self.onClose = onClose
         }
     }
     
+    enum NavigationRoute: Hashable {
+        case folder(HandleEntity)
+    }
+    
     @StateObject private var viewModel: FolderLinkViewModel
+    @State private var navigationPath = NavigationPath()
+    
     private let dependency: Dependency
     
     public init(dependency: Dependency) {
@@ -36,10 +51,11 @@ public struct FolderLinkView: View {
     }
     
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             content
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(Strings.Localizable.folderLink)
+                .navigationBarBackButtonHidden(true)
+                .toolbarRole(.editor)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
@@ -51,8 +67,18 @@ public struct FolderLinkView: View {
                                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         }
                     }
+                    
+                    ToolbarItem(placement: .principal) {
+                        Text(Strings.Localizable.folderLink)
+                            .font(.headline)
+                            .lineLimit(1)
+                    }
+                }
+                .navigationDestination(for: NavigationRoute.self) { route in
+                    navigationDestinationBuilder(with: route)
                 }
         }
+        .tint(TokenColors.Icon.primary.swiftUI)
     }
     
     @ViewBuilder
@@ -64,47 +90,53 @@ public struct FolderLinkView: View {
                 .onFirstLoad {
                     await viewModel.startLoadingFolderLink()
                 }
-                .alert(isPresented: $viewModel.askingForDecryptionKey, askingForDecryptionKeyAlertViewModel)
-                .alert(
-                    Strings.Localizable.decryptionKeyNotValid,
-                    isPresented: $viewModel.notifyInvalidDecryptionKey, actions: {
-                        Button(Strings.Localizable.ok) {
-                            viewModel.acknowledgeInvalidDecryptionKey()
+                .askingForDecryptionKeyAlert(
+                    isPresented: $viewModel.askingForDecryptionKey,
+                    confirm: { text in
+                        Task {
+                            await viewModel.confirmDecryptionKey(text)
                         }
+                    }, cancel: {
+                        viewModel.cancelConfirmingDecryptionKey()
+                        dependency.onClose()
                     }
                 )
+                .invalidDecryptionKeyAlert(isPresented: $viewModel.notifyInvalidDecryptionKey) {
+                    viewModel.acknowledgeInvalidDecryptionKey()
+                }
         case .error:
             // IOS-11082
             Text("Error")
-        case let .results(handleEntity):
-            // IOS-11075
-            Text("Results: \(handleEntity)")
+        case let .results(nodeHandle):
+            folderLinkResultsView(for: nodeHandle)
         }
     }
     
-    private var askingForDecryptionKeyAlertViewModel: TextFieldAlertViewModel {
-        TextFieldAlertViewModel(
-            title: Strings.Localizable.decryptionKeyAlertTitle,
-            placeholderText: Strings.Localizable.decryptionKey,
-            affirmativeButtonTitle: Strings.Localizable.decrypt,
-            affirmativeButtonInitiallyEnabled: false,
-            destructiveButtonTitle: Strings.Localizable.cancel,
-            message: Strings.Localizable.decryptionKeyAlertMessage,
-            action: { text in
-                if let text {
-                    Task {
-                        await viewModel.confirmDecryptionKey(text)
-                    }
+    private func folderLinkResultsView(for nodeHandle: HandleEntity) -> some View {
+        FolderLinkResultsView(
+            dependency: folderLinkResultsDependency(handle: nodeHandle)
+        )
+    }
+    
+    @ViewBuilder
+    private func navigationDestinationBuilder(with route: NavigationRoute) -> some View {
+        switch route {
+        case let .folder(nodeHandle):
+            FolderLinkResultsView(
+                dependency: folderLinkResultsDependency(handle: nodeHandle)
+            )
+        }
+    }
+    
+    private func folderLinkResultsDependency(handle: HandleEntity) -> FolderLinkResultsView.Dependency {
+        FolderLinkResultsView.Dependency(
+            handle: handle,
+            searchResultMapper: dependency.searchResultMapper,
+            selectionHandler: { selection in
+                if selection.result.isFolder {
+                    navigationPath.append(NavigationRoute.folder(selection.result.id))
                 } else {
-                    viewModel.cancelConfirmingDecryptionKey()
-                    dependency.onClose()
-                }
-            },
-            validator: { text in
-                if let text, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
-                    nil
-                } else {
-                    TextFieldAlertError(title: "", description: "")
+                    dependency.fileNodeOpener.openNode(handle: selection.result.id, siblings: selection.siblings())
                 }
             }
         )
