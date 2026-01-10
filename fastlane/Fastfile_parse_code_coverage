@@ -1,5 +1,3 @@
-import("Fastfile_parse_warnings_and_errors")
-
   private_lane :post_code_coverage_markdown_to_mr do |options|
     mr_number = options[:mr]
     merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"

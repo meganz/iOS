@@ -46,7 +46,7 @@ def executeFastlaneTask(taskCommand, checkRunUnitTestsStep = true) {
 }
 
 def postBuildWarnings() {
-    // executeFastlaneTask("parse_and_upload_build_warnings")
+    executeFastlaneTask("post_build_warnings")
 }
 
 def postCoverageReportToMR() {
@@ -94,6 +94,9 @@ pipeline {
         failure {
             script {
                 statusNotifier.postFailure(":x: Build failed", env.MEGA_IOS_PROJECT_ID)
+                dir("scripts/WarningParsingKit/") {
+                    sh 'swift run'
+                }
                 postBuildWarnings()
                 dir("scripts/ErrorParsingKit/") {
                     sh 'swift run ErrorParsingKit --is-main-app-target true'
@@ -118,12 +121,9 @@ pipeline {
         success {
             script {
                 envInjector.injectEnvs {
-                    statusNotifier.postSuccess(":white_check_mark: Build status check succeeded", env.MEGA_IOS_PROJECT_ID)
-                    postBuildWarnings()
                     dir("scripts/CodeCoverageParserKit/") {
                         sh 'swift run CodeCoverageParserKit --should-include-header true --targets \"MEGA.app,MEGAIntent.appex,MEGANotifications.appex,MEGAPicker.appex,MEGAPickerFileProvider.appex,MEGAWidgetExtension.appex\"'
                     }
-
                     artifactStasher.unstashArtifact('swift-packages-coverage')
                     if (fileExists('fastlane/code_coverage_packages.md')) {
                         def packagesCoverage = readFile('fastlane/code_coverage_packages.md')
@@ -133,7 +133,12 @@ pipeline {
                         writeFile file: 'fastlane/code_coverage.md', 
                                  text: "${mainCoverage}${packagesCoverage}"
                     }
-
+                    dir("scripts/WarningParsingKit/") {
+                        sh 'swift run'
+                    }
+                    
+                    statusNotifier.postSuccess(":white_check_mark: Build status check succeeded", env.MEGA_IOS_PROJECT_ID)
+                    postBuildWarnings()
                     postCoverageReportToMR()
                     postAppSizeToMR()
                 }

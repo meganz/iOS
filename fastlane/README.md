@@ -21,30 +21,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### parse_and_upload_build_warnings
-
-```sh
-[bundle exec] fastlane parse_and_upload_build_warnings
-```
-
-
-
-### get_latest_xcresult_file
-
-```sh
-[bundle exec] fastlane get_latest_xcresult_file
-```
-
-
-
-### post_errors
-
-```sh
-[bundle exec] fastlane post_errors
-```
-
-
-
 ### post_coverage_report_to_mr
 
 ```sh

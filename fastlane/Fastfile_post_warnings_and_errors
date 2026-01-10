@@ -1,0 +1,39 @@
+  lane :post_build_warnings do | options |
+    post_markdown_to_gitlab_mr_note(
+      markdown_path: ENV["WARNINGS_MARKDOWN_PATH"],
+      mr: options[:mr],
+      token: options[:token],
+      kind: "warnings"
+    )
+  end
+
+  lane :post_errors do | options |
+    post_markdown_to_gitlab_mr_note(
+      markdown_path: ENV["ERRORS_MARKDOWN_PATH"],
+      mr: options[:mr],
+      token: options[:token],
+      kind: "errors"
+    )
+  end
+
+  private_lane :post_markdown_to_gitlab_mr_note do |options|
+    markdown_path      = options[:markdown_path]
+    mr_number = options[:mr]
+    token     = options[:token]
+    kind      = options[:kind] 
+
+    merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"
+    
+    project_root = File.expand_path('..', __dir__)
+    file_path = File.join(project_root, markdown_path)
+
+    if File.exist?(file_path)
+      post_markdown_to_mr(
+        merge_request_url: merge_request_url,
+        token: token,
+        markdown_path: file_path
+      )
+    else
+      UI.message("No #{kind} markdown file found at: #{file_path}")
+    end
+  end
