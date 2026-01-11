@@ -423,7 +423,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func hideSearchBar() {
-        searchController.searchBar.setShowsCancelButton(false, animated: true)
         navigationItem.searchController = nil
     }
     
