@@ -20,7 +20,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         let library = try! testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        return PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+        return PhotoLibraryModeAllViewModel(
+            libraryViewModel: libraryViewModel,
+            configuration: .mockConfiguration())
     }()
     
     private var testNodes: [NodeEntity] {
@@ -682,7 +684,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -700,7 +704,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -721,7 +727,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
         )
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -738,7 +746,9 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
         )
         XCTAssertFalse(sut.shouldApplyContentOpacity)
         sut.editMode = .active
@@ -1020,12 +1030,15 @@ final class PhotoCellViewModelTests: XCTestCase {
         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
+        configuration: ContentLibraries.Configuration = .mockConfiguration(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotoCellViewModel {
         let sut = PhotoCellViewModel(
             photo: photo,
-            viewModel: viewModel ?? PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
+            viewModel: viewModel ?? PhotoLibraryModeAllViewModel(
+                libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: [])),
+                configuration: configuration),
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,

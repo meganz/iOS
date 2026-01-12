@@ -22,7 +22,14 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
         let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        let viewModel = PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+        let viewModel = PhotoLibraryModeAllViewModel(
+            libraryViewModel: libraryViewModel,
+            configuration: .init(
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+                featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+                nodeUseCase: MockNodeUseCase(),
+                isAlbumPerformanceImprovementsEnabled: { true }
+            ))
         
         let sut = AlbumCoverPickerPhotoCellViewModel(
             albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: 1)),

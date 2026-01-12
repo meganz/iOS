@@ -6,18 +6,16 @@ import SwiftUI
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
     
     private(set) lazy var photoZoomControlPositionTracker = PhotoZoomControlPositionTracker(
-        shouldTrackScrollOffsetPublisher: $showEnableCameraUpload,
+        shouldTrackScrollOffsetPublisher: $bannerType.map { $0 != nil },
         baseOffset: 0)
     
-    override init(
+    init(
         libraryViewModel: PhotoLibraryContentViewModel,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        isMediaRevampEnabled: Bool = false
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
         super.init(
             libraryViewModel: libraryViewModel,
-            preferenceUseCase: preferenceUseCase,
-            isMediaRevampEnabled: isMediaRevampEnabled
+            preferenceUseCase: preferenceUseCase
         )
 
         subscribeToLibraryChange()

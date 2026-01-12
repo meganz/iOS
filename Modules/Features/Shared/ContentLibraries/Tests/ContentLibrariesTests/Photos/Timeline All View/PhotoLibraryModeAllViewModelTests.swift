@@ -3,10 +3,14 @@
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPermissions
+import MEGAPermissionsMock
 import MEGAPreference
 import MEGAPreferenceMocks
 import MEGASwift
+import Photos
 import SwiftUI
+import Testing
 import XCTest
 
 final class PhotoLibraryModeAllViewModelTests: XCTestCase {
@@ -17,7 +21,9 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     }
 
     @MainActor
-    private func makeSUT() throws -> PhotoLibraryModeAllViewModel {
+    private func makeSUT(
+        configuration: ContentLibraries.Configuration = .mockConfiguration()
+    ) throws -> PhotoLibraryModeAllViewModel {
         let nodes =  [
             NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2022-09-01T22:01:04Z".date),
             NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
@@ -29,12 +35,28 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        return PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+        return makeSUT(
+            libraryViewModel: libraryViewModel,
+            configuration: configuration)
+    }
+    
+    @MainActor
+    private func makeSUT(
+        libraryViewModel: PhotoLibraryContentViewModel = .init(library: PhotoLibrary()),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        configuration: ContentLibraries.Configuration = .mockConfiguration()
+    ) -> PhotoLibraryModeAllViewModel {
+        .init(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: preferenceUseCase,
+            devicePermissionHandler: devicePermissionHandler,
+            configuration: configuration)
     }
     
     @MainActor
     func testInit_defaultValue() throws {
-        let sut = try makeSUT()
+        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
         XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-09-01T22:01:04Z".date.removeDay(timeZone: .GMT))
         XCTAssertEqual(sut.photoCategoryList[0].contentList,
@@ -57,7 +79,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomInOneTime_daySection() throws {
-        let sut = try makeSUT()
+        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
         sut.zoomState.zoom(.in)
 
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -82,7 +104,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomInTwoTimes_daySection() throws {
-        let sut = try makeSUT()
+        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
         sut.zoomState.zoom(.in)
         sut.zoomState.zoom(.in)
 
@@ -108,7 +130,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomOutOneTime_monthSection() throws {
-        let sut = try makeSUT()
+        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
         sut.zoomState.zoom(.out)
 
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -133,7 +155,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomOutTwoTimes_monthSection() throws {
-        let sut = try makeSUT()
+        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
         sut.zoomState.zoom(.out)
         sut.zoomState.zoom(.out)
 
@@ -160,7 +182,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     @MainActor
     func testZoomState_onChangeToThirteenScaleFactor_shouldChangeSelectionIsHidden() {
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
-        let viewModel = PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
+        let viewModel = makeSUT(libraryViewModel: libraryViewModel)
         XCTAssertFalse(libraryViewModel.selection.isHidden)
         viewModel.zoomState.scaleFactor = .thirteen
         XCTAssertTrue(libraryViewModel.selection.isHidden)
@@ -172,21 +194,20 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         // Arrange
         let mockPreferences = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
-        let sut = PhotoLibraryModeAllViewModel(
+        let sut = makeSUT(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: mockPreferences)
         
-        // Act
-        mockPreferences.dict[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = true
-        sut.invalidateCameraUploadEnabledSetting()
-        
         let resultExpectation = expectation(description: "Expect showEnableCameraUpload to emit correct value")
-        let subscription = sut.$showEnableCameraUpload
-            .first { !$0 }
+        let subscription = sut.$bannerType
+            .dropFirst(2)
             .sink { result in
-                XCTAssertFalse(result)
+                XCTAssertNil(result)
                 resultExpectation.fulfill()
             }
+        mockPreferences.dict[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = true
+        
+        sut.invalidateCameraUploadEnabledSetting()
         
         // Assert
         await fulfillment(of: [resultExpectation], timeout: 1)
@@ -194,25 +215,205 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async {
+    func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async throws {
         
         // Arrange
         let mockPreferences = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
-        let sut = PhotoLibraryModeAllViewModel(
+        let sut = makeSUT(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: mockPreferences)
+        
+        let resultExpectation = expectation(description: "Expect banner type")
+        resultExpectation.isInverted = true
+        let subscription = sut.$bannerType
+            .dropFirst(2)
+            .sink { _ in
+                resultExpectation.fulfill()
+            }
         
         // Act
         sut.invalidateCameraUploadEnabledSetting()
         
-        let results: Bool? = await sut.$showEnableCameraUpload
-            .timeout(.seconds(1), scheduler: DispatchQueue.main)
-            .last()
-            .values
-            .first(where: { @Sendable _ in true })
+        await fulfillment(of: [resultExpectation], timeout: 1)
+        subscription.cancel()
+        XCTAssertEqual(sut.bannerType, .enableCameraUploads)
+    }
+}
+
+struct PhotoLibraryModeAllViewModelTestsSuite {
+    @MainActor
+    @Suite("Banners")
+    struct Banners {
+        @Test(arguments: [
+            (true, Optional<PhotoLibraryBannerType>.none),
+            (false, .enableCameraUploads)
+        ])
+        func mediaRevampDisabled(
+            isCameraUploadsEnabled: Bool,
+            expectedBanner: PhotoLibraryBannerType?
+        ) async throws {
+            let mockPreferences = MockPreferenceUseCase(
+                dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: isCameraUploadsEnabled])
+            let sut = makeSUT(
+                preferenceUseCase: mockPreferences,
+                configuration: .mockConfiguration(featureFlags: [.mediaRevamp: false]))
+            
+            try await confirmation { confirmation in
+                let subscription = sut.$bannerType
+                    .dropFirst()
+                    .sink { result in
+                        #expect(result == expectedBanner)
+                        confirmation()
+                    }
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
         
-        // Assert
-        XCTAssertEqual(results, true)
+        @Test
+        func cameraUploadsDisabled() async throws {
+            let mockPreferences = MockPreferenceUseCase(
+                dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
+            let sut = makeSUT(
+                preferenceUseCase: mockPreferences,
+                configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+            
+            try await confirmation { confirmation in
+                let subscription = sut.$bannerType
+                    .dropFirst()
+                    .sink { result in
+                        #expect(result == .enableCameraUploads)
+                        confirmation()
+                    }
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test(arguments: [
+            (Date.now, Optional<PhotoLibraryBannerType>.none),
+            (Date.now.addingTimeInterval(-(16 * 24 * 60 * 60)), .enableCameraUploads)
+        ])
+        func storedDate(
+            storedDate: Date,
+            expectedBanner: PhotoLibraryBannerType?
+        ) async throws {
+            let mockPreferences = MockPreferenceUseCase(dict: [
+                PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false,
+                PreferenceKeyEntity.lastEnableCameraUploadBannerDismissedDate.rawValue: storedDate])
+            let sut = makeSUT(
+                preferenceUseCase: mockPreferences,
+                configuration: .mockConfiguration(
+                    featureFlags: [.mediaRevamp: true]))
+            
+            try await confirmation { confirmation in
+                let subscription = sut.$bannerType
+                    .dropFirst()
+                    .sink { result in
+                        #expect(result == expectedBanner)
+                        confirmation()
+                    }
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test(arguments: [
+            (PHAuthorizationStatus.authorized, Optional<PhotoLibraryBannerType>.none),
+            (.limited, .limitedPermissions)
+        ])
+        func limitedPermission(
+            photoAuthorization: PHAuthorizationStatus,
+            expectedBanner: PhotoLibraryBannerType?
+        ) async throws {
+            let mockPreferences = MockPreferenceUseCase(dict: [
+                PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
+            let sut = makeSUT(
+                preferenceUseCase: mockPreferences,
+                devicePermissionHandler: MockDevicePermissionHandler(
+                    photoAuthorization: photoAuthorization),
+                configuration: .mockConfiguration(
+                    featureFlags: [.mediaRevamp: true]))
+            
+            try await confirmation { confirmation in
+                let subscription = sut.$bannerType
+                    .dropFirst()
+                    .sink { result in
+                        #expect(result == expectedBanner)
+                        confirmation()
+                    }
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test(arguments: [
+            (Date.now, Optional<PhotoLibraryBannerType>.none),
+            (Date.now.addingTimeInterval(-(16 * 24 * 60 * 60)), .limitedPermissions)
+        ])
+        func limitedAccessBannerContainsDismissedDate(
+            storedDate: Date,
+            expectedBanner: PhotoLibraryBannerType?
+        ) async throws {
+            let mockPreferences = MockPreferenceUseCase(dict: [
+                PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true,
+                PreferenceKeyEntity.limitedPhotoAccessBannerDismissedDate.rawValue: storedDate
+            ])
+            let sut = makeSUT(
+                preferenceUseCase: mockPreferences,
+                devicePermissionHandler: MockDevicePermissionHandler(
+                    photoAuthorization: .limited),
+                configuration: .mockConfiguration(
+                    featureFlags: [.mediaRevamp: true]))
+            
+            try await confirmation { confirmation in
+                let subscription = sut.$bannerType
+                    .dropFirst()
+                    .sink { result in
+                        #expect(result == expectedBanner)
+                        confirmation()
+                    }
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test
+        func dismissEnableCameraUploadBanner() async throws {
+            let sut = makeSUT()
+            
+            sut.dismissEnableCameraUploadBanner()
+            
+            #expect(sut.lastEnableCameraUploadBannerDismissedDate != nil)
+        }
+        
+        @Test
+        func dismissLimitedAccessBanner() async throws {
+            let sut = makeSUT()
+            
+            sut.dismissLimitedAccessBanner()
+            
+            #expect(sut.limitedPhotoAccessBannerDismissedDate != nil)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        libraryViewModel: PhotoLibraryContentViewModel = .init(library: PhotoLibrary()),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        configuration: ContentLibraries.Configuration = .mockConfiguration()
+    ) -> PhotoLibraryModeAllViewModel {
+        .init(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: preferenceUseCase,
+            devicePermissionHandler: devicePermissionHandler,
+            configuration: configuration)
     }
 }

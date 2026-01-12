@@ -31,7 +31,8 @@ let package = Package(
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(path: "../../../MEGASharedRepo/MEGAPreference")
+        .package(path: "../../../MEGASharedRepo/MEGAPreference"),
+        .package(path: "../../../Infrastracture/MEGAPermissions")
     ],
     targets: [
         .target(
@@ -46,6 +47,7 @@ let package = Package(
                 "MEGARepo",
                 "MEGAAppSDKRepo",
                 "MEGAUIComponent",
+                "MEGAPermissions",
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],
@@ -61,7 +63,8 @@ let package = Package(
                 .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")
+                .product(name: "MEGAPreferenceMocks", package: "MEGAPreference"),
+                .product(name: "MEGAPermissionsMock", package: "MEGAPermissions")
             ],
             swiftSettings: settings)
     ],

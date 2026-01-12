@@ -7,11 +7,30 @@ import UIKit
 
 enum PhotoLibrarySupplementaryElementKind: String {
     case photoDateSectionHeader = "photo-date-section-header-kind"
-    case layoutHeader = "layout-header-element-kind"
+    case layoutHeaderEnableCameraUploads = "layout-header-enable-camera-uploads-kind"
+    case layoutHeaderLimitedPermissions = "layout-header-limited-permissions-kind"
     case globalZoomHeader = "global-zoom-header-kind"
-
+    
     var elementKind: String { rawValue }
     static var globalHeaderHeight: CGFloat { 44 }
+    
+    var zPosition: CGFloat {
+        switch self {
+        case .layoutHeaderEnableCameraUploads, .layoutHeaderLimitedPermissions: 4
+        case .globalZoomHeader: 3
+        case .photoDateSectionHeader: 2
+        }
+    }
+    
+    static func layoutHeader(for bannerType: PhotoLibraryBannerType?) -> PhotoLibrarySupplementaryElementKind? {
+        guard let bannerType else { return nil }
+        switch bannerType {
+        case .enableCameraUploads:
+            return .layoutHeaderEnableCameraUploads
+        case .limitedPermissions:
+            return .layoutHeaderLimitedPermissions
+        }
+    }
 }
 
 @MainActor
@@ -20,7 +39,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private let representer: PhotoLibraryCollectionViewRepresenter
     private var collectionView: UICollectionView?
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
-    private var bannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
+    private var enableCameraUploadsBannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
+    private var limitedPermissionsBannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var globalZoomHeaderRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var photoCellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
     private typealias PhotoLibraryEnableCameraUploadCollectionCell = UICollectionViewCell
@@ -56,11 +76,11 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     
     func configureDataSource(for collectionView: UICollectionView) {
         self.collectionView = collectionView
-
+        
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
             let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
             let isFirstSection = isMediaRevampEnabled && indexPath.section == 0
-
+            
             header.contentConfiguration = UIHostingConfiguration {
                 // First section uses a placeholder header (invisible) when media revamp is enabled
                 if isFirstSection {
@@ -72,33 +92,45 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             .margins(.all, 0)
         }
         
-        bannerRegistration =  UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.layoutHeader.elementKind) { [unowned self] header, _, _ in
+        enableCameraUploadsBannerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.layoutHeaderEnableCameraUploads.elementKind) { [unowned self] header, _, _ in
             header.contentConfiguration = UIHostingConfiguration {
-                EnableCameraUploadsBannerButtonView { [weak self] in
+                EnableCameraUploadsBannerButtonView({ [weak self] in
                     guard let self else { return }
                     router.openCameraUploadSettings(viewModel: viewModel)
-                }
+                }, closeButtonAction: viewModel.dismissEnableCameraUploadBanner)
                 .determineViewSize { [weak self] size in
                     Task { @MainActor in
-                        self?.viewModel
-                            .photoZoomControlPositionTracker
-                            .update(viewSpace: size.height)
+                        self?.viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height)
                     }
                 }
             }
             .margins(.all, 0)
         }
-
+        
+        limitedPermissionsBannerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.layoutHeaderLimitedPermissions.elementKind) { [unowned self] header, _, _ in
+            header.contentConfiguration = UIHostingConfiguration {
+                LimitedAccessBannerView { [weak self] in
+                    self?.viewModel.dismissLimitedAccessBanner()
+                }
+                .determineViewSize { [weak self] size in
+                    Task { @MainActor in
+                        self?.viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height)
+                    }
+                }
+            }
+            .margins(.all, 0)
+        }
+        
         globalZoomHeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.globalZoomHeader.elementKind) { [unowned self] header, _, _ in
             self.globalHeaderView = header
             let monthTitle = currentVisibleMonthTitle.isEmpty ? (photoLibraryDataSource.first?.title ?? "") : currentVisibleMonthTitle
             header.contentConfiguration = createGlobalHeaderConfiguration(monthTitle: monthTitle)
         }
-
+        
         photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
-                viewModel: viewModel, 
+                viewModel: viewModel,
                 thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: representer.contentMode),
                 nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: representer.contentMode),
                 sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: representer.contentMode)
@@ -126,13 +158,13 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-        
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         viewModel
             .photoZoomControlPositionTracker
             .trackContentOffset(scrollView.contentOffset.y)
     }
-
+    
     private func createGlobalHeaderConfiguration(monthTitle: String) -> any UIContentConfiguration {
         UIHostingConfiguration {
             PhotoLibraryGlobalHeaderView(
@@ -146,7 +178,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         .margins(.all, 0)
         .background(TokenColors.Background.page.swiftUI)
     }
-
+    
     private func updateGlobalHeaderMonthTitle() {
         guard ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp),
               let globalHeaderView = globalHeaderView,
@@ -154,15 +186,15 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
               topSection < photoLibraryDataSource.count else {
             return
         }
-
+        
         let newMonthTitle = photoLibraryDataSource[topSection].title
-
+        
         if currentVisibleMonthTitle != newMonthTitle {
             currentVisibleMonthTitle = newMonthTitle
             globalHeaderView.contentConfiguration = createGlobalHeaderConfiguration(monthTitle: newMonthTitle)
         }
     }
-
+    
     private func configureScrollTracker(for collectionView: UICollectionView) {
         scrollTracker = PhotoLibraryCollectionViewScrollTracker(
             libraryViewModel: viewModel.libraryViewModel,
@@ -275,8 +307,10 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch PhotoLibrarySupplementaryElementKind(rawValue: kind) {
-        case .layoutHeader:
-            return collectionView.dequeueConfiguredReusableSupplementary(using: bannerRegistration, for: indexPath)
+        case .layoutHeaderEnableCameraUploads:
+            return collectionView.dequeueConfiguredReusableSupplementary(using: enableCameraUploadsBannerRegistration, for: indexPath)
+        case .layoutHeaderLimitedPermissions:
+            return collectionView.dequeueConfiguredReusableSupplementary(using: limitedPermissionsBannerRegistration, for: indexPath)
         case .photoDateSectionHeader:
             return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         case .globalZoomHeader:
@@ -292,32 +326,31 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
-
+        
         if photo.isTakenDown {
             router.showTakenDownNodeAlert()
         } else {
             router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.allPhotos)
         }
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplaySupplementaryView view: UICollectionReusableView,
         forElementKind elementKind: String,
         at indexPath: IndexPath
     ) {
-        if elementKind == PhotoLibrarySupplementaryElementKind.globalZoomHeader.elementKind {
-            view.layer.zPosition = 3
-        }
+        guard let kind = PhotoLibrarySupplementaryElementKind(rawValue: elementKind) else { return }
+        
+        view.layer.zPosition = kind.zPosition
         
         // Track visible section headers to update the global header with the topmost section
-        if elementKind == PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind {
-            view.layer.zPosition = 2
+        if kind == .photoDateSectionHeader {
             visibleSectionHeaders.insert(indexPath.section)
             updateGlobalHeaderMonthTitle()
         }
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         didEndDisplayingSupplementaryView view: UICollectionReusableView,

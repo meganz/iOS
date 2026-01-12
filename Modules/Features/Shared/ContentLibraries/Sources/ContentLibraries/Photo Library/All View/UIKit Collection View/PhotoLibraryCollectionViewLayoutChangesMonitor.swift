@@ -27,10 +27,10 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
         
         Publishers.CombineLatest(
             sectionDataChangesPublisher,
-            representer.viewModel.$showEnableCameraUpload
+            representer.viewModel.$bannerType
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] sectionDataChanges, showEnableCameraUpload in
+        .sink { [weak self] sectionDataChanges, bannerType in
             
             guard let self else {
                 return
@@ -51,20 +51,21 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
             // Update layout
             invalidateLayoutIfNeeded(
                 zoomState: zoomState,
-                enableCameraUploadBannerVisible: showEnableCameraUpload,
+                bannerType: bannerType,
                 previousLayoutBuilder: currentLayoutBuilder)
         }
         .store(in: &subscriptions)
     }
         
-    private func invalidateLayoutIfNeeded(zoomState: PhotoLibraryZoomState,
-                                          enableCameraUploadBannerVisible: Bool,
-                                          previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?) {
-        
+    private func invalidateLayoutIfNeeded(
+        zoomState: PhotoLibraryZoomState,
+        bannerType: PhotoLibraryBannerType?,
+        previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?
+    ) {
         let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         let newLayoutBuilder = PhotoLibraryCollectionLayoutBuilder(
             zoomState: zoomState,
-            enableCameraUploadBannerVisible: enableCameraUploadBannerVisible,
+            bannerType: bannerType,
             isMediaRevampEnabled: isMediaRevampEnabled)
         
         guard previousLayoutBuilder != newLayoutBuilder else {
