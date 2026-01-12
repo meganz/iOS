@@ -942,10 +942,15 @@ struct CloudDriveViewControllerFactory {
                 )
             },
             context: { result, button in
+                // For non-recents displayMode, we use `config.displayMode?.carriedOverDisplayMode`, which renders `.recents` as nil
+                // which makes context menu build incorrectly build the actions for .recents displayMode.
+                // To workaround this, for `.recents` we need to pass it as-is
+                let contextMenuDisplayMode = config.displayMode == .recents ? .recents
+                : config.displayMode?.carriedOverDisplayMode
                 router.didTapMoreAction(
                     on: result.id,
                     button: button,
-                    displayMode: config.displayMode?.carriedOverDisplayMode,
+                    displayMode: contextMenuDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
                 if isCloudDriveRevampEnabled {
