@@ -587,18 +587,21 @@ final class NodeActionBuilder {
         case .videoPlaylistContent:
             return videoPlaylistContentActions()
         default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
+            var actions = [NodeAction]()
             switch accessLevel {
             case .accessUnknown:
-                return unknownAccessLevelNodeActions()
+                actions = unknownAccessLevelNodeActions()
             case .accessRead, .accessReadWrite:
-                return readAndWriteAccessLevelNodeActions()
+                actions = readAndWriteAccessLevelNodeActions()
             case .accessFull:
-                return fullAccessLevelNodeActions()
+                actions = fullAccessLevelNodeActions()
             case .accessOwner:
-                return ownerAccessLevelNodeActions()
+                actions = ownerAccessLevelNodeActions()
             default:
-                return []
+                actions = []
             }
+            // We don't allow "select" for .recents
+            return displayMode != .recents ? actions : actions.filter { $0 != .selectAction() }
         }
     }
 
