@@ -73,7 +73,8 @@ public struct AlbumCell: View {
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
-            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI,
+            isMediaRevamp: viewModel.isMediaRevampEnabled
         )
     }
     
@@ -82,7 +83,7 @@ public struct AlbumCell: View {
         if viewModel.selection.mode == .multiple, viewModel.isSelected {
             RoundedRectangle(cornerRadius: TokenRadius.small)
                 .strokeBorder(
-                    TokenColors.Border.strongSelected.swiftUI,
+                    TokenColors.Icon.accent.swiftUI,
                     lineWidth: 2
                 )
         } else if viewModel.isDisabled {
@@ -96,7 +97,8 @@ public struct AlbumCell: View {
                 markedSelected: viewModel.isSelected,
                 foregroundColor:
                     TokenColors.Components.selectionControlAlt.swiftUI,
-                showBorder: false
+                showBorder: false,
+                isMediaRevamp: viewModel.isMediaRevampEnabled
             )
             .opacity(viewModel.isSelected ? 1.0 : 0.0)
             .padding(.top, 6)

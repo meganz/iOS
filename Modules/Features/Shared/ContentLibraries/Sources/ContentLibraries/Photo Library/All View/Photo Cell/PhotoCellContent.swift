@@ -10,17 +10,21 @@ struct PhotoCellContent: View {
         viewModel.select()
     }}
     
+    private var isMediaRevampEnabled: Bool {
+        viewModel.isMediaRevamp
+    }
+    
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack(alignment: isMediaRevampEnabled ? .topLeading : .bottomTrailing) {
             image()
             /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
                 .overlay(Color.black.opacity(viewModel.isSelected ? 0.2 : 0.0))
             
             checkMarkView
-                .offset(x: -5, y: -5)
+                .offset(x: isMediaRevampEnabled ? 5 : -5, y: isMediaRevampEnabled ? 5 : -5)
                 .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
-        .favorite(viewModel.shouldShowFavorite)
+        .favorite(viewModel.shouldShowFavorite, isMediaRevamp: isMediaRevampEnabled)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
@@ -34,10 +38,19 @@ struct PhotoCellContent: View {
         }
     }
     
+    private var checkMarkForegroundColor: Color {
+        if viewModel.isSelected {
+            return isMediaRevampEnabled ? TokenColors.Icon.accent.swiftUI : TokenColors.Support.success.swiftUI
+        } else {
+            return TokenColors.Icon.onColor.swiftUI
+        }
+    }
+
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
-            foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
+            foregroundColor: checkMarkForegroundColor,
+            isMediaRevamp: isMediaRevampEnabled
         )
     }
     

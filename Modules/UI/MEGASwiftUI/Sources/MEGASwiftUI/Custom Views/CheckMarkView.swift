@@ -6,6 +6,7 @@ public struct CheckMarkView: View {
     let foregroundColor: Color
     let showBorder: Bool
     let borderColor: Color
+    let isMediaRevamp: Bool
     
     var iconForegroundColor: Color?
     
@@ -18,26 +19,27 @@ public struct CheckMarkView: View {
     public init(markedSelected: Bool,
                 foregroundColor: Color,
                 showBorder: Bool = true,
-                borderColor: Color = Color.white) {
+                borderColor: Color = Color.white,
+                isMediaRevamp: Bool = false) {
         self.markedSelected = markedSelected
         self.foregroundColor = foregroundColor
         self.showBorder = showBorder
         self.borderColor = borderColor
+        self.isMediaRevamp = isMediaRevamp
     }
     
     private var imageName: String {
         markedSelected ? "checkmark.circle.fill" : "circle"
     }
     
-    private var backgroundView: some View {
-        markedSelected && showBorder ? Color.white.mask(Circle()) : nil
-    }
-    
     public var body: some View {
         Image(systemName: imageName)
             .font(.system(size: 23))
-            .foregroundStyle(foregroundColor)
-            .background(backgroundView)
+            .foregroundStyle(isMediaRevamp ? Color.white : foregroundColor, foregroundColor)
+            .if(!isMediaRevamp && markedSelected && showBorder) { view in
+                view.background(Color.white.mask(Circle()))
+            }
+            .opacity(isMediaRevamp && !markedSelected ? 0 : 1)
     }
     
     private var designTokenCheckMarkView: some View {

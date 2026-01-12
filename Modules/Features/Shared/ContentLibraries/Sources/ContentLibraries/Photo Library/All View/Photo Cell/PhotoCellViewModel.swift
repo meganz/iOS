@@ -31,6 +31,7 @@ open class PhotoCellViewModel: ObservableObject {
         editMode.isEditing && currentZoomScaleFactor != .thirteen
     }
     
+    public let isMediaRevamp: Bool
     @Published public private(set) var shouldShowFavorite: Bool = false
     
     var shouldApplyContentOpacity: Bool {
@@ -44,6 +45,7 @@ open class PhotoCellViewModel: ObservableObject {
     private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let selection: PhotoSelection
+    private let configuration: ContentLibraries.Configuration
     private var subscriptions = Set<AnyCancellable>()
     
     public init(photo: NodeEntity,
@@ -51,13 +53,16 @@ open class PhotoCellViewModel: ObservableObject {
                 thumbnailLoader: some ThumbnailLoaderProtocol,
                 nodeUseCase: (any NodeUseCaseProtocol)?,
                 sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
-                remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+                remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+                configuration: ContentLibraries.Configuration = ContentLibraries.configuration) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.configuration = configuration
+        self.isMediaRevamp = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
