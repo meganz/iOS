@@ -1,4 +1,5 @@
 import Combine
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -25,7 +26,12 @@ extension PhotoAlbumContainerViewController {
     }
     
     var cancelBarButton: UIBarButtonItem {
-        let cancelBarButton = UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
+        let style = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            UIBarButtonItem.Style.plain
+        } else {
+            UIBarButtonItem.Style.done
+        }
+        let cancelBarButton = UIBarButtonItem(title: Strings.Localizable.cancel, style: style, target: self, action: #selector(toggleEditing))
         let normalForegroundColor = TokenColors.Text.primary
         cancelBarButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
         
