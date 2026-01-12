@@ -47,9 +47,21 @@ struct MediaTabView: View {
                 set: { _ in }
             )
         )
-        .navigationTitle(viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack(spacing: 0) {
+                    Text(viewModel.navigationTitle)
+                        .font(.headline)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    if let subtitle = viewModel.navigationSubtitle {
+                        Text(subtitle)
+                            .font(.system(.caption, design: .default, weight: .semibold))
+                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    }
+                }
+            }
+            
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 ForEach(viewModel.leadingNavigationBarViewModels) { viewModel in
                     NavigationBarItemViewBuilder.makeView(for: viewModel)
@@ -77,7 +89,7 @@ struct MediaTabView: View {
                 viewModel: albumTabViewModel.albumListViewModel,
                 router: albumTabViewModel.albumListViewRouter)
         case let timelineTabViewModel as MediaTimelineTabContentViewModel:
-            NewTimelineView(viewModel: timelineTabViewModel.timelineViewModel)
+            TimelineMediaTabContentView(viewModel: timelineTabViewModel)
         case let playlistTabViewModel as PlaylistTabViewModel:
             playlistView(playlistTabViewModel: playlistTabViewModel)
         default:

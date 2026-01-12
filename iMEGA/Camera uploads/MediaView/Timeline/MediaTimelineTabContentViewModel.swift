@@ -1,5 +1,7 @@
 import Combine
 import MEGADomain
+import MEGAL10n
+import MEGAPreference
 import SwiftUI
 
 @MainActor
@@ -14,11 +16,74 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
    
     let timelineViewModel: NewTimelineViewModel
 
+    private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
+    private let subtitleUpdatePassthroughSubject = CurrentValueSubject<String?, Never>(nil)
+    private let idleWaitTimeNanoSeconds: UInt64
+    private let uploadStateDebounceDuration: Duration
     private var subscriptions = Set<AnyCancellable>()
     
-    init(timelineViewModel: NewTimelineViewModel) {
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
+    private(set) var isCameraUploadsEnabled: Bool
+    private(set) var delayedUploadUpToDateTask: Task<Void, any Error>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    init(
+        timelineViewModel: NewTimelineViewModel,
+        monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
+        uploadStateDebounceDuration: Duration = .milliseconds(300)
+    ) {
         self.timelineViewModel = timelineViewModel
+        self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
+        self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
+        self.uploadStateDebounceDuration = uploadStateDebounceDuration
+        $isCameraUploadsEnabled.useCase = preferenceUseCase
         setupEditModeSubscription()
+    }
+
+    func monitorCameraUploads() async {
+        guard isCameraUploadsEnabled else {
+            subtitleUpdatePassthroughSubject.send(nil)
+            return
+        }
+        
+        subtitleUpdatePassthroughSubject.send(Strings.Localizable.CameraUploads.checkingForUploads)
+        
+        for await state in monitorCameraUploadUseCase.cameraUploadState.debounce(for: uploadStateDebounceDuration) {
+            handleCameraUploadState(state: state)
+        }
+    }
+    
+    private func handleCameraUploadState(state: CameraUploadStateEntity) {
+        let pendingFilesCount = state.stats.pendingFilesCount
+        let isPaused = state.pausedReason != nil
+        
+        let subtitle: String
+        if pendingFilesCount == 0 {
+            subtitle = Strings.Localizable.CameraUploads.complete
+            delayedUploadCompleteSubtitle()
+        } else {
+            let key = isPaused ? "cameraUploads.progress.paused.items" : "cameraUploads.progress.uploading.items"
+            
+            subtitle = String(
+                format: Strings.localized(key, comment: ""),
+                locale: .current,
+                pendingFilesCount
+            )
+        }
+        
+        subtitleUpdatePassthroughSubject.send(subtitle)
+    }
+    
+    private func delayedUploadCompleteSubtitle() {
+        delayedUploadUpToDateTask = Task { [weak self] in
+            guard let self else { return }
+            try await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
+            
+            subtitleUpdatePassthroughSubject.send(Strings.Localizable.CameraUploads.upToDate)
+        }
     }
     
     private func setupEditModeSubscription() {
@@ -147,5 +212,11 @@ extension MediaTimelineTabContentViewModel: MediaTabToolbarActionHandler {
         guard !nodes.isEmpty else { return }
 
         toolbarCoordinator?.handleToolbarAction(action, with: nodes)
+    }
+}
+
+extension MediaTimelineTabContentViewModel: MediaTabNavigationSubtitleProvider {
+    var subtitleUpdatePublisher: AnyPublisher<String?, Never> {
+        subtitleUpdatePassthroughSubject.eraseToAnyPublisher()
     }
 }

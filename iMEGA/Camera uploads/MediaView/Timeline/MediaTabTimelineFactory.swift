@@ -2,6 +2,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 
 enum MediaTabTimelineFactory {
     @MainActor
@@ -42,6 +43,12 @@ enum MediaTabTimelineFactory {
             nodeRepository: NodeRepository.newRepo
         )
         
+        let monitorCameraUploadUseCase = MonitorCameraUploadUseCase(
+            cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            preferenceUseCase: PreferenceUseCase.default
+        )
+        
         let timelineViewModel = NewTimelineViewModel(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
             photoLibraryContentViewRouter: photoLibraryContentViewRouter,
@@ -50,6 +57,7 @@ enum MediaTabTimelineFactory {
             nodeUseCase: nodeUseCase)
         
         return MediaTimelineTabContentViewModel(
-            timelineViewModel: timelineViewModel)
+            timelineViewModel: timelineViewModel,
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase)
     }
 }

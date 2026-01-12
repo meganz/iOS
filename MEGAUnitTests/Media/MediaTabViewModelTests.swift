@@ -153,6 +153,73 @@ struct MediaTabViewModelTests {
     }
     
     @MainActor
+    @Suite
+    struct NavigationSubtitle {
+        @Test
+        func subtitleUpdates() async throws {
+            let displayMode = DisplayMode.photosTimeline
+            let contentViewModel = MockMediaTabContentViewModel(
+                nodeActionDisplayMode: displayMode)
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            try await confirmation { confirmation in
+                let expectedSubtitle = "Updated subtitle"
+                
+                let subscription = sut.$navigationSubtitle
+                    .dropFirst()
+                    .sink {
+                        #expect($0 == expectedSubtitle)
+                        confirmation()
+                    }
+                
+                contentViewModel.navigationSubtitleUpdateSubject.send(expectedSubtitle)
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                
+                subscription.cancel()
+            }
+        }
+        
+        @Test
+        func editingShouldSetSubtitleToNil() async throws {
+            let displayMode = DisplayMode.photosTimeline
+            let contentViewModel = MockMediaTabContentViewModel(
+                nodeActionDisplayMode: displayMode)
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            try await confirmation(expectedCount: 1) { confirmation in
+                let subscription = sut.$navigationSubtitle
+                    .dropFirst(2)
+                    .sink {
+                        #expect($0 == nil)
+                        confirmation()
+                    }
+                
+                contentViewModel.navigationSubtitleUpdateSubject.send("update")
+                sut.editMode = .active
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                
+                subscription.cancel()
+            }
+        }
+        
+        @Test
+        func noProtocolConformanceShouldSetToNil() async throws {
+            let contentViewModel = MockMediaTabEmptyContentViewModel()
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            #expect(sut.navigationSubtitle == nil)
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         tabViewModels: [MediaTab: any MediaTabContentViewModel] = [:],
         visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel = makeVisualMediaSearchResultsViewModel(),
@@ -215,6 +282,7 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
     let navigationBarUpdateSubject = PassthroughSubject<Void, Never>()
     let titleUpdateSubject = PassthroughSubject<String, Never>()
     let toolbarUpdateSubject = PassthroughSubject<Void, Never>()
+    let navigationSubtitleUpdateSubject = PassthroughSubject<String?, Never>()
     
     var toolBarActions: [MediaBottomToolbarAction]?
     var itemViewModels: [NavigationBarItemViewModel]
@@ -296,6 +364,12 @@ extension MockMediaTabContentViewModel: MediaTabToolbarActionHandler {
 extension MockMediaTabContentViewModel: MediaTabNavigationTitleProvider {
     var titleUpdatePublisher: AnyPublisher<String, Never> {
         titleUpdateSubject.eraseToAnyPublisher()
+    }
+}
+
+extension MockMediaTabContentViewModel: MediaTabNavigationSubtitleProvider {
+    var subtitleUpdatePublisher: AnyPublisher<String?, Never> {
+        navigationSubtitleUpdateSubject.eraseToAnyPublisher()
     }
 }
 

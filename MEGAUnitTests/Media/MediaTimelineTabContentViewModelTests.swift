@@ -4,8 +4,10 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPreference
 import MEGAPreferenceMocks
+import MEGASwift
 import Testing
 
 struct MediaTimelineTabContentViewModelTests {
@@ -177,11 +179,178 @@ struct MediaTimelineTabContentViewModelTests {
     }
     
     @MainActor
+    struct NavigationSubtitle {
+        let state = CameraUploadStateEntity(
+            stats: .init(progress: 50, pendingFilesCount: 80, pendingVideosCount: 0),
+            pausedReason: nil)
+        
+        @Test()
+        func updateNavigationTitleViewToCheckForUploads() async throws {
+            let sut = makeSUTWithCameraUploads()
+            
+            await confirmation { confirmation in
+                await confirmSubtitleUpdate(
+                    sut: sut,
+                    expectedSubtitle: Strings.Localizable.CameraUploads.checkingForUploads,
+                    dropFirst: 1,
+                    confirmation: confirmation
+                )
+            }
+        }
+        
+        @Test(arguments: [
+            (true, String(format: Strings.localized("cameraUploads.progress.uploading.items", comment: ""), locale: .current, 80)),
+            (false, nil)
+        ]) func uploading(
+            isCameraUploadsEnabled: Bool,
+            expectedSubtitle: String?
+        ) async {
+            let sut = makeSUTWithCameraUploads(
+                state: state,
+                isCameraUploadsEnabled: isCameraUploadsEnabled
+            )
+            
+            await confirmation { confirmation in
+                let dropCount = expectedSubtitle != nil ? 2 : 1
+                await confirmSubtitleUpdate(
+                    sut: sut,
+                    expectedSubtitle: expectedSubtitle,
+                    dropFirst: dropCount,
+                    confirmation: confirmation
+                )
+            }
+        }
+        
+        @Test(arguments: [
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0),
+                    pausedReason: nil
+                ),
+                Strings.Localizable.CameraUploads.complete
+            ),
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 0.8, pendingFilesCount: 5, pendingVideosCount: 0),
+                    pausedReason: nil
+                ),
+                String(
+                    format: Strings.localized("cameraUploads.progress.uploading.items", comment: ""),
+                    locale: .current, 5
+                )
+            ),
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 0.8, pendingFilesCount: 5, pendingVideosCount: 0),
+                    pausedReason: .networkIssue(.noConnection)
+                ),
+                String(
+                    format: Strings.localized("cameraUploads.progress.paused.items", comment: ""),
+                    locale: .current, 5
+                )
+            )
+        ])
+        func uploadState(
+            state: CameraUploadStateEntity,
+            expectedSubtitle: String
+        ) async {
+            let sut = makeSUTWithCameraUploads(state: state)
+            
+            await confirmation { confirmation in
+                await confirmSubtitleUpdate(
+                    sut: sut,
+                    expectedSubtitle: expectedSubtitle,
+                    confirmation: confirmation
+                )
+            }
+        }
+        
+        @Test
+        func completeToUpToDate() async throws {
+            let completeState = CameraUploadStateEntity(
+                stats: .init(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0),
+                pausedReason: nil
+            )
+            
+            let sut = makeSUTWithCameraUploads(state: completeState)
+            
+            try await confirmation(expectedCount: 3) { confirmation in
+                var expectations = [
+                    Strings.Localizable.CameraUploads.checkingForUploads,
+                    Strings.Localizable.CameraUploads.complete,
+                    Strings.Localizable.CameraUploads.upToDate
+                ]
+                let subscription = sut.subtitleUpdatePublisher
+                    .dropFirst()
+                    .sink {
+                        #expect($0 == expectations.removeFirst())
+                        confirmation()
+                    }
+                
+                await sut.monitorCameraUploads()
+                try await sut.delayedUploadUpToDateTask?.value
+                subscription.cancel()
+            }
+        }
+        
+        private func makeSUTWithCameraUploads(
+            state: CameraUploadStateEntity? = nil,
+            isCameraUploadsEnabled: Bool = true
+        ) -> MediaTimelineTabContentViewModel {
+            let preferenceUseCase = makePreferenceUseCase(isCameraUploadsEnabled: isCameraUploadsEnabled)
+            
+            if let state {
+                let monitorCameraUploadUseCase = makeMonitorCameraUploadUseCase(state: state)
+                return makeSUT(
+                    monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+                    preferenceUseCase: preferenceUseCase
+                )
+            } else {
+                return makeSUT(preferenceUseCase: preferenceUseCase)
+            }
+        }
+        
+        private func makePreferenceUseCase(isCameraUploadsEnabled: Bool) -> MockPreferenceUseCase {
+            MockPreferenceUseCase(
+                dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: isCameraUploadsEnabled]
+            )
+        }
+        
+        private func makeMonitorCameraUploadUseCase(
+            state: CameraUploadStateEntity
+        ) -> MockMonitorCameraUploadUseCase {
+            let sequence = SingleItemAsyncSequence(item: state)
+                .eraseToAnyAsyncSequence()
+            return MockMonitorCameraUploadUseCase(cameraUploadState: sequence)
+        }
+        
+        private func confirmSubtitleUpdate(
+            sut: MediaTimelineTabContentViewModel,
+            expectedSubtitle: String?,
+            dropFirst: Int = 2,
+            confirmation: Confirmation
+        ) async {
+            let subscription = sut.subtitleUpdatePublisher
+                .dropFirst(dropFirst)
+                .sink {
+                    #expect($0 == expectedSubtitle)
+                    confirmation()
+                }
+            await sut.monitorCameraUploads()
+            subscription.cancel()
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
-        timelineViewModel: NewTimelineViewModel = makeTimelineViewModel()
+        timelineViewModel: NewTimelineViewModel = makeTimelineViewModel(),
+        monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase()
     ) -> MediaTimelineTabContentViewModel {
         .init(
-            timelineViewModel: timelineViewModel)
+            timelineViewModel: timelineViewModel,
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+            preferenceUseCase: preferenceUseCase)
     }
     
     @MainActor

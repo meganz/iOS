@@ -145,6 +145,7 @@
 		0EAF3FB32D680100007D4E9C /* OverDiskQuotaChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FB22D6800EF007D4E9C /* OverDiskQuotaChecker.swift */; };
 		0EAF3FB82D68086E007D4E9C /* MockOverDiskQuotaChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FB72D680869007D4E9C /* MockOverDiskQuotaChecker.swift */; };
 		0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF73242A6786D9008F939D /* BrowserView.swift */; };
+		0EB0F0C62F0DDB930061EEA0 /* TimelineMediaTabContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0F0C52F0DDB930061EEA0 /* TimelineMediaTabContentView.swift */; };
 		0EB5847C2C3CACBF00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
 		0EB584822C3CC0AD00EEBD99 /* BrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */; };
 		0EB584852C3CC5B900EEBD99 /* BrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */; };
@@ -2987,6 +2988,7 @@
 		0EAF3FB22D6800EF007D4E9C /* OverDiskQuotaChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaChecker.swift; sourceTree = "<group>"; };
 		0EAF3FB72D680869007D4E9C /* MockOverDiskQuotaChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOverDiskQuotaChecker.swift; sourceTree = "<group>"; };
 		0EAF73242A6786D9008F939D /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		0EB0F0C52F0DDB930061EEA0 /* TimelineMediaTabContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMediaTabContentView.swift; sourceTree = "<group>"; };
 		0EB5847B2C3CACBF00EEBD99 /* BrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModel.swift; sourceTree = "<group>"; };
 		0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModelTests.swift; sourceTree = "<group>"; };
 		0EB608C02EA9DAF600FDC5DB /* CameraUploadInQueueRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInQueueRowView.swift; sourceTree = "<group>"; };
@@ -6039,6 +6041,7 @@
 				0E7533A22EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift */,
 				0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */,
 				0E7533A42EF1ECDC002BEE1E /* NewTimelineViewModel.swift */,
+				0EB0F0C52F0DDB930061EEA0 /* TimelineMediaTabContentView.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -16168,6 +16171,7 @@
 				25CF5EB92BDBACD3005608F7 /* ThumbnailViewerTableViewCellViewModel.swift in Sources */,
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
+				0EB0F0C62F0DDB930061EEA0 /* TimelineMediaTabContentView.swift in Sources */,
 				25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */,
 				25A990FC2C8968AA00992256 /* TimeLineViewModel.swift in Sources */,
 				834B518E2C9D8ADC002E46FB /* TimerSequenceFactory.swift in Sources */,

@@ -139,3 +139,8 @@ protocol MediaTabSharedResourceConsumer: AnyObject {
 protocol MediaTabNavigationTitleProvider {
     var titleUpdatePublisher: AnyPublisher<String, Never> { get }
 }
+
+@MainActor
+protocol MediaTabNavigationSubtitleProvider {
+    var subtitleUpdatePublisher: AnyPublisher<String?, Never> { get }
+}

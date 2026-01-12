@@ -27,6 +27,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     }
 
     @Published var navigationTitle: String = Strings.Localizable.Photos.SearchResults.Media.Section.title
+    @Published var navigationSubtitle: String?
 
     @Published var contextMenuConfig: CMConfigEntity?
     
@@ -171,6 +172,16 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
                 self?.handleTitleUpdate(update)
             }
             .store(in: &subscriptions)
+        
+        $selectedTab.combineLatest($editMode)
+            .map { [weak self] selectedTab, editMode in
+                guard !editMode.isEditing else { return Just<String?>(nil).eraseToAnyPublisher() }
+                return (self?.tabViewModels[selectedTab] as? any MediaTabNavigationSubtitleProvider)?.subtitleUpdatePublisher ?? Just(nil).eraseToAnyPublisher()
+            }
+            .switchToLatest()
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$navigationSubtitle)
     }
 
     private func toggleEditMode() {
