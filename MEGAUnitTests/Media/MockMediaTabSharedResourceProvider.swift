@@ -22,4 +22,8 @@ final class MockMediaTabSharedResourceProvider: @MainActor MediaTabSharedResourc
     var contextMenuManager: ContextMenuManager?
     @Published var editMode: SwiftUI.EditMode = .inactive
     var editModePublisher: Published<SwiftUI.EditMode>.Publisher { $editMode }
+    
+    func toggleSearch() {
+        
+    }
 }

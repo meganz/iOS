@@ -55,8 +55,8 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
                     viewModel: cameraUploadStatusButtonViewModel
                 ))
             }
-            items.append(MediaNavigationBarItemFactory.searchButton {
-                
+            items.append(MediaNavigationBarItemFactory.searchButton { [weak self] in
+                self?.sharedResourceProvider?.toggleSearch()
             })
             if let config = sharedResourceProvider?.contextMenuConfig,
                let manager = sharedResourceProvider?.contextMenuManager {

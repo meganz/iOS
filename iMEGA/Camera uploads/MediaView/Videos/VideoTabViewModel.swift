@@ -92,8 +92,8 @@ extension VideoTabViewModel: MediaTabNavigationBarItemProvider {
         ))
 
         // Search button
-        items.append(MediaNavigationBarItemFactory.searchButton {
-
+        items.append(MediaNavigationBarItemFactory.searchButton { [weak self] in
+            self?.sharedResourceProvider?.toggleSearch()
         })
 
         // Context menu button (trailing)

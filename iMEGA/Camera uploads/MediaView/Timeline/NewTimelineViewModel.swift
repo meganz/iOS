@@ -145,6 +145,8 @@ final class NewTimelineViewModel: ObservableObject {
             .lazy
             .filter(\.hasThumbnail)
         
+        try Task.checkCancellation()
+        
         showEmptyStateView = photos.isEmpty
         
         try Task.checkCancellation()

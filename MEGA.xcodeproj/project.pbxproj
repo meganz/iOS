@@ -108,6 +108,7 @@
 		0E7533A82EF1ECDC002BEE1E /* NewTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */; };
 		0E7533A92EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7533A12EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift */; };
 		0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */; };
+		0E76C0AE2F1065AF004745A7 /* View+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E76C0AC2F1065A5004745A7 /* View+Search.swift */; };
 		0E80B3162DC47AB400582D55 /* LoginRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */; };
 		0E80B31D2DC4834100582D55 /* LoginRoutingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */; };
 		0E80B3212DC4884700582D55 /* MockLoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B3202DC4884600582D55 /* MockLoginRouter.swift */; };
@@ -167,6 +168,7 @@
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
 		0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */ = {isa = PBXBuildFile; productRef = 0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */; };
+		0EDC301E2F107BC500AD8EB1 /* VisualMediaSearchFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDC301D2F107BB500AD8EB1 /* VisualMediaSearchFactory.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift */; };
 		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
 		0EDF33382BC7371800EEF8F8 /* Preview_NodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */; };
@@ -2948,6 +2950,7 @@
 		0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTimelineView.swift; sourceTree = "<group>"; };
 		0E7533A42EF1ECDC002BEE1E /* NewTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTimelineViewModel.swift; sourceTree = "<group>"; };
 		0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Additions.swift"; sourceTree = "<group>"; };
+		0E76C0AC2F1065A5004745A7 /* View+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Search.swift"; sourceTree = "<group>"; };
 		0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModel.swift; sourceTree = "<group>"; };
 		0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModelTests.swift; sourceTree = "<group>"; };
 		0E80B3202DC4884600582D55 /* MockLoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginRouter.swift; sourceTree = "<group>"; };
@@ -3005,6 +3008,7 @@
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
+		0EDC301D2F107BB500AD8EB1 /* VisualMediaSearchFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualMediaSearchFactory.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModel.swift; sourceTree = "<group>"; };
 		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
 		0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_NodeUseCase.swift; sourceTree = "<group>"; };
@@ -6039,6 +6043,15 @@
 			path = Timeline;
 			sourceTree = "<group>";
 		};
+		0E76C0A92F106574004745A7 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0E76C0AC2F1065A5004745A7 /* View+Search.swift */,
+				0EDC301D2F107BB500AD8EB1 /* VisualMediaSearchFactory.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		0E80B31A2DC4832600582D55 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -7810,6 +7823,7 @@
 				0E2658082EE9019F00AC3EF0 /* Albums */,
 				0E42E3332EEF4DDC00C3E524 /* Extensions */,
 				4C3ECC4A2EF39590005830F9 /* Playlists */,
+				0E76C0A92F106574004745A7 /* Search */,
 				0E7533A52EF1ECDC002BEE1E /* Timeline */,
 				4C6C8FFA2ED991F600095F34 /* Toolbar */,
 				4C1A206F2EE2CF6C00E41A44 /* Videos */,
@@ -16263,9 +16277,11 @@
 				94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				94F3B7572DB00B4D00C285A5 /* VideoUploadsViewModel.swift in Sources */,
+				0E76C0AE2F1065AF004745A7 /* View+Search.swift in Sources */,
 				94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */,
 				BF9BBB692EAA14C600A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,
+				0EDC301E2F107BC500AD8EB1 /* VisualMediaSearchFactory.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
 				83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */,
 				99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */,

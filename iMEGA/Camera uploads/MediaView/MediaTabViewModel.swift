@@ -5,6 +5,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPhotos
 import MEGAPreference
 import SwiftUI
 
@@ -28,6 +29,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     @Published var navigationTitle: String = Strings.Localizable.Photos.SearchResults.Media.Section.title
 
     @Published var contextMenuConfig: CMConfigEntity?
+    
+    @Published var isSearching = false
 
     @Published private(set) var navigationBarItemViewModels: [NavigationBarItemViewModel] = []
     
@@ -58,6 +61,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     @Published private(set) var toolbarConfig: MediaBottomToolbarConfig?
 
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
+    let visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel
 
     var contextMenuManager: ContextMenuManager?
     var editModePublisher: Published<EditMode>.Publisher { $editMode }
@@ -69,6 +73,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
 
     init(
         tabViewModels: [MediaTab: any MediaTabContentViewModel],
+        visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         devicePermissionHandler: some DevicePermissionsHandling,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
@@ -76,6 +81,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         cameraUploadProgressRouter: some CameraUploadProgressRouting
     ) {
         self.tabViewModels = tabViewModels
+        self.visualMediaSearchResultsViewModel = visualMediaSearchResultsViewModel
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
@@ -273,5 +279,19 @@ extension MediaTabViewModel: PhotoFilterOptionDelegate {
         }
 
         updateNavigationBarForCurrentTab()
+    }
+}
+
+extension MediaTabViewModel {
+    var searchText: Binding<String> {
+        Binding { [weak self] in
+            self?.visualMediaSearchResultsViewModel.searchText ?? ""
+        } set: { [weak self] in
+            self?.visualMediaSearchResultsViewModel.searchText = $0
+        }
+    }
+    
+    func toggleSearch() {
+        isSearching.toggle()
     }
 }

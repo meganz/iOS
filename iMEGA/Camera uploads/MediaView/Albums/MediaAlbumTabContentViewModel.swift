@@ -80,8 +80,8 @@ extension MediaAlbumTabContentViewModel: MediaTabNavigationBarItemProvider {
                     viewModel: cameraUploadStatusButtonViewModel
                 ))
             }
-            items.append(MediaNavigationBarItemFactory.searchButton {
-                
+            items.append(MediaNavigationBarItemFactory.searchButton { [weak self] in
+                self?.sharedResourceProvider?.toggleSearch()
             })
             if albumListViewModel.albums.contains(where: { $0.type == .user }) {
                 items.append(.init(

@@ -4,6 +4,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPhotos
 import MEGAPreference
 import MEGASwift
 import SwiftUI
@@ -85,9 +86,11 @@ struct MediaTabViewControllerFactory {
         let devicePermissionHandler = self.devicePermissionHandler ?? Self.makeDefaultDevicePermissionHandler()
         let cameraUploadsSettingsViewRouter = self.cameraUploadsSettingsViewRouter ?? CameraUploadsSettingsViewRouter(presenter: navigationController) {}
         let cameraUploadProgressRouter = self.cameraUploadProgressRouter ?? CameraUploadProgressRouter(presenter: navigationController)
-
+        
         return MediaTabViewModel(
             tabViewModels: tabViewModels,
+            visualMediaSearchResultsViewModel: VisualMediaSearchFactory.makeVisualMediaSearchResultsViewModel(
+                presenter: navigationController),
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,

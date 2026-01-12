@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
@@ -7,6 +8,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPhotos
 import MEGAPreference
 import MEGAPreferenceMocks
 import SwiftUI
@@ -153,6 +155,7 @@ struct MediaTabViewModelTests {
     @MainActor
     private static func makeSUT(
         tabViewModels: [MediaTab: any MediaTabContentViewModel] = [:],
+        visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel = makeVisualMediaSearchResultsViewModel(),
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
@@ -161,10 +164,49 @@ struct MediaTabViewModelTests {
     ) -> MediaTabViewModel {
         .init(
             tabViewModels: tabViewModels,
+            visualMediaSearchResultsViewModel: visualMediaSearchResultsViewModel,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             cameraUploadProgressRouter: cameraUploadProgressRouter)
+    }
+    
+    @MainActor
+    private static func makeVisualMediaSearchResultsViewModel(
+        photoAlbumContainerInteractionManager: PhotoAlbumContainerInteractionManager = PhotoAlbumContainerInteractionManager(),
+        visualMediaSearchHistoryUseCase: some VisualMediaSearchHistoryUseCaseProtocol = MockVisualMediaSearchHistoryUseCase(),
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        monitorPhotosUseCase: some MonitorPhotosUseCaseProtocol = MockMonitorPhotosUseCase(),
+        photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter(),
+        contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
+            nodeUseCase: MockNodeUseCase(),
+            isAlbumPerformanceImprovementsEnabled: { true }),
+        searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> VisualMediaSearchResultsViewModel {
+        .init(
+            photoAlbumContainerInteractionManager: photoAlbumContainerInteractionManager,
+            visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
+            monitorAlbumsUseCase: monitorAlbumsUseCase,
+            thumbnailLoader: thumbnailLoader,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            albumCoverUseCase: albumCoverUseCase,
+            monitorPhotosUseCase: monitorPhotosUseCase,
+            photoSearchResultRouter: photoSearchResultRouter,
+            contentLibrariesConfiguration: contentLibrariesConfiguration,
+            searchDebounceTime: searchDebounceTime)
     }
 }
 
@@ -259,4 +301,18 @@ extension MockMediaTabContentViewModel: MediaTabNavigationTitleProvider {
 
 final class MockMediaTabEmptyContentViewModel: MediaTabContentViewModel {
     
+}
+
+struct MockPhotoSearchResultRouter: PhotoSearchResultRouterProtocol {
+    func didTapMoreAction(on node: HandleEntity, button: UIButton) {
+        
+    }
+    
+    func didSelectAlbum(_ album: AlbumEntity) {
+        
+    }
+    
+    func didSelectPhoto(_ photo: NodeEntity, otherPhotos: [NodeEntity]) {
+
+    }
 }

@@ -4,15 +4,32 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAPermissions
+import MEGAPhotos
 import MEGAPreference
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 import Video
 
 struct MediaTabView: View {
     @ObservedObject var viewModel: MediaTabViewModel
-
+    
     var body: some View {
+        tabs
+            .searchableVisible(
+                text: viewModel.searchText,
+                isPresented: $viewModel.isSearching,
+                placement: .navigationBarDrawer(displayMode: .always))
+            .overlay {
+                if viewModel.isSearching {
+                    VisualMediaSearchResultsView(
+                        viewModel: viewModel.visualMediaSearchResultsViewModel
+                    )
+                }
+            }
+    }
+    
+    private var tabs: some View {
         MEGASwiftUI.PageTabView(
             tabs: MediaTab.allCases.map { tab in
                 MEGASwiftUI.PageTabView.TabItem(id: tab, title: tab.title) {
@@ -38,7 +55,7 @@ struct MediaTabView: View {
                     NavigationBarItemViewBuilder.makeView(for: viewModel)
                 }
             }
-
+            
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 ForEach(viewModel.trailingNavigationBarViewModels) { viewModel in
                     NavigationBarItemViewBuilder.makeView(for: viewModel)
@@ -47,9 +64,9 @@ struct MediaTabView: View {
         }
         .environment(\.editMode, $viewModel.editMode)
     }
-
+    
     // MARK: - Tab Content
-
+    
     @ViewBuilder
     private func contentView(for tab: MediaTab) -> some View {
         switch viewModel.tabViewModels[tab] {
@@ -67,7 +84,7 @@ struct MediaTabView: View {
             placeholderView(for: tab)
         }
     }
-
+    
     @ViewBuilder
     private func videoListView(videoTabViewModel: VideoTabViewModel) -> some View {
         VideoListView(
@@ -76,7 +93,7 @@ struct MediaTabView: View {
             router: videoTabViewModel.router
         )
     }
-
+    
     @ViewBuilder
     private func playlistView(playlistTabViewModel: PlaylistTabViewModel) -> some View {
         PlaylistView(
@@ -85,9 +102,9 @@ struct MediaTabView: View {
             router: playlistTabViewModel.router
         )
     }
-
+    
     // MARK: - Placeholder Views (WIP)
-
+    
     @ViewBuilder
     private func placeholderView(for tab: MediaTab) -> some View {
         VStack {

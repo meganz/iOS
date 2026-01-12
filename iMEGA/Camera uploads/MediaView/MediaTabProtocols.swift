@@ -123,6 +123,7 @@ protocol MediaTabSharedResourceProvider: AnyObject {
     var contextMenuManager: ContextMenuManager? { get }
     var editMode: EditMode { get }
     var editModePublisher: Published<EditMode>.Publisher { get }
+    func toggleSearch()
 }
 
 // MARK: - Shared Resource Consumer

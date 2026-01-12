@@ -17,7 +17,7 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
         case searchResults(VisualMediaSearchResults)
     }
     @Published private(set) var viewState: ViewState = .loading
-    @Published private(set) var searchText = ""
+    @Published public var searchText = ""
     @Published var selectedRecentlySearched: String?
     @Published var selectedVisualMediaResult: VisualMediaSearchResultSelection?
     

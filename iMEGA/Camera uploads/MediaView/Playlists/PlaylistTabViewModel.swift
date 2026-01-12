@@ -43,8 +43,9 @@ extension PlaylistTabViewModel: MediaTabNavigationBarItemProvider {
                 viewModel: sharedResourceProvider.cameraUploadStatusButtonViewModel
             ),
             // Search button (trailing/right)
-            MediaNavigationBarItemFactory.searchButton {
-            }
+            MediaNavigationBarItemFactory.searchButton(action: { [weak self] in
+                self?.sharedResourceProvider?.toggleSearch()
+            })
         ]
     }
 }

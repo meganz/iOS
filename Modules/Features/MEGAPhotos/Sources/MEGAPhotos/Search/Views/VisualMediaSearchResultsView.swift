@@ -5,7 +5,7 @@ import SwiftUI
 public struct VisualMediaSearchResultsView: View {
     @StateObject private var viewModel: VisualMediaSearchResultsViewModel
     
-    init(
+    public init(
         viewModel: @autoclosure @escaping () -> VisualMediaSearchResultsViewModel
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
