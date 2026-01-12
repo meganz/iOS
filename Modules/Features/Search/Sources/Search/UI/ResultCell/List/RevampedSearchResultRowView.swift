@@ -59,7 +59,7 @@ struct RevampedSearchResultRowView: View {
                     top: -4,
                     leading: 12,
                     bottom: -4,
-                    trailing: 16
+                    trailing: 0
                 )
             )
     }
@@ -77,6 +77,8 @@ struct RevampedSearchResultRowView: View {
             .sensitive(viewModel.isSensitive ? .opacity : .none)
             .contentShape(Rectangle())
             moreButton
+            Spacer()
+                .frame(width: 16)
         }
         .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity( isSelected || highlighted ? 1 : 0))
         .contentShape(Rectangle())
