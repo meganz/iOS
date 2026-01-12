@@ -12,9 +12,7 @@ final class GetNodeLinkViewModel: ViewModelType {
     var link: String = ""
     var separateKey: Bool = false {
         didSet {
-            if let nodeType = nodeTypes.first, separateKey {
-                getLinkAnalyticsUseCase.sendDecriptionKey(nodeType: nodeType)
-            }
+            triggerDecryptionKeyEvent()
         }
     }
     var linkWithoutKey: String {
@@ -112,6 +110,7 @@ final class GetNodeLinkViewModel: ViewModelType {
         nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
         nodes.notContains { !$0.isExported() } ? trackGetLink() : trackShareLink()
         updateViewConfiguration()
+        triggerDecryptionKeyEvent()
     }
     
     private func trackShareLink() {
@@ -208,5 +207,10 @@ final class GetNodeLinkViewModel: ViewModelType {
         invokeCommand?(.enableLinkActions)
         invokeCommand?(.dismissHud)
         invokeCommand?(.processNodes)
+    }
+
+    private func triggerDecryptionKeyEvent() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.sendDecryptionKey(nodeType: nodeType, isOn: separateKey)
     }
 }

@@ -3,10 +3,14 @@ import MEGADomain
 extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
     var code: Int {
         switch self {
-        case .sendDecriptionKeySeparateForFolder:
-            return 402001
-        case .sendDecriptionKeySeparateForFile:
-            return 402002
+        case .sendDecryptionKeySeparateForFolderEnabled:
+            return 402361
+        case .sendDecryptionKeySeparateForFileEnabled:
+            return 402362
+        case .sendDecryptionKeySeparateForFolderDisabled:
+            return 402363
+        case .sendDecryptionKeySeparateForFileDisabled:
+            return 402364
         case .setExpiryDateForFolder:
             return 402003
         case .setExpiryDateForFile:
@@ -52,10 +56,14 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
 
     var description: String {
         switch self {
-        case .sendDecriptionKeySeparateForFolder:
-            return "Send decryption key separately folder"
-        case .sendDecriptionKeySeparateForFile:
-            return "Send decryption key separately file"
+        case .sendDecryptionKeySeparateForFolderEnabled:
+            return "Send decryption key separately folder enabled"
+        case .sendDecryptionKeySeparateForFileEnabled:
+            return "Send decryption key separately file enabled"
+        case .sendDecryptionKeySeparateForFolderDisabled:
+            return "Send decryption key separately folder disabled"
+        case .sendDecryptionKeySeparateForFileDisabled:
+            return "Send decryption key separately file disabled"
         case .setExpiryDateForFolder:
             return "Set expiry date for folder"
         case .setExpiryDateForFile:

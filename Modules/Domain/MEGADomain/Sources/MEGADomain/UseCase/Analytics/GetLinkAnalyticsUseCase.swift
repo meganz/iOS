@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol GetLinkAnalyticsUseCaseProtocol {
-    func sendDecriptionKey(nodeType: NodeTypeEntity)
+    func sendDecryptionKey(nodeType: NodeTypeEntity, isOn: Bool)
     func setExpiryDate(nodeType: NodeTypeEntity)
     func setPassword(nodeType: NodeTypeEntity)
     func confirmPassword(nodeType: NodeTypeEntity)
@@ -20,11 +20,13 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
         repo = repository
     }
 
-    public func sendDecriptionKey(nodeType: NodeTypeEntity) {
-        if nodeType == .file {
-            repo.sendAnalyticsEvent(.getLink(.sendDecriptionKeySeparateForFile))
-        } else if nodeType == .folder {
-            repo.sendAnalyticsEvent(.getLink(.sendDecriptionKeySeparateForFolder))
+    public func sendDecryptionKey(nodeType: NodeTypeEntity, isOn: Bool) {
+        switch (nodeType, isOn) {
+        case (.folder, true): repo.sendAnalyticsEvent(.getLink(.sendDecryptionKeySeparateForFolderEnabled))
+        case (.file, true): repo.sendAnalyticsEvent(.getLink(.sendDecryptionKeySeparateForFileEnabled))
+        case (.folder, false): repo.sendAnalyticsEvent(.getLink(.sendDecryptionKeySeparateForFolderDisabled))
+        case (.file, false): repo.sendAnalyticsEvent(.getLink(.sendDecryptionKeySeparateForFileDisabled))
+        default: break
         }
     }
 

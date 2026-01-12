@@ -4,22 +4,40 @@ import XCTest
 
 final class GetLinkAnalyticsUseCaseTests: XCTestCase {
 
-    func testSendEvent_setDecriptionKeyForFolder_shouldReturnTrue() throws {
+    func testSendEvent_setDecryptionKeyForFolderEnabled_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.sendDecriptionKey(nodeType: .folder)
+        usecase.sendDecryptionKey(nodeType: .folder, isOn: true)
 
-        XCTAssertTrue(repo.type == .getLink(.sendDecriptionKeySeparateForFolder))
+        XCTAssertTrue(repo.type == .getLink(.sendDecryptionKeySeparateForFolderEnabled))
     }
 
-    func testSendEvent_setDecriptionKeyForFile_shouldReturnTrue() throws {
+    func testSendEvent_setDecryptionKeyForFileEnabled_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.sendDecriptionKey(nodeType: .file)
+        usecase.sendDecryptionKey(nodeType: .file, isOn: true)
 
-        XCTAssertTrue(repo.type == .getLink(.sendDecriptionKeySeparateForFile))
+        XCTAssertTrue(repo.type == .getLink(.sendDecryptionKeySeparateForFileEnabled))
+    }
+
+    func testSendEvent_setDecryptionKeyForFolderDisabled_shouldReturnTrue() throws {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.sendDecryptionKey(nodeType: .folder, isOn: false)
+
+        XCTAssertTrue(repo.type == .getLink(.sendDecryptionKeySeparateForFolderDisabled))
+    }
+
+    func testSendEvent_setDecryptionKeyForFileDisabled_shouldReturnTrue() throws {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.sendDecryptionKey(nodeType: .file, isOn: false)
+
+        XCTAssertTrue(repo.type == .getLink(.sendDecryptionKeySeparateForFileDisabled))
     }
 
     func testSendEvent_setExpiryDateForFolder_shouldReturnTrue() throws {
