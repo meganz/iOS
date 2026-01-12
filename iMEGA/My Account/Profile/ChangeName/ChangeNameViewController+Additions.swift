@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -53,6 +54,16 @@ extension ChangeNameViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    @objc func saveBarButtonStyle() -> UIBarButtonItem.Style {
+        let style = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            UIBarButtonItem.Style.plain
+        } else {
+            UIBarButtonItem.Style.done
+        }
+
+        return style
     }
     
     @objc func validateAndSaveUpdatedName() {

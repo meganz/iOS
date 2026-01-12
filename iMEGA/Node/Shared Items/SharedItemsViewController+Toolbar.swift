@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import UIKit
 
@@ -6,7 +7,14 @@ extension SharedItemsViewController {
     func setupToolbar() {
         let newToolbar = UIToolbar()
         newToolbar.translatesAutoresizingMaskIntoConstraints = false
-        newToolbar.backgroundColor = UIColor.surface1Background()
+        
+        let toobarBackgroundColor = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            UIColor.clear
+        } else {
+            UIColor.surface1Background()
+        }
+        
+        newToolbar.backgroundColor = toobarBackgroundColor
         newToolbar.alpha = 0
         newToolbar.isHidden = true
         

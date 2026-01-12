@@ -50,6 +50,8 @@
     [self.saveButton setTitle:LocalizedString(@"save", @"Button title to 'Save' the selected option")];
     [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     
+    [self.saveButton setStyle:[self saveBarButtonStyle]];
+    
     self.firstNameLabel.text = LocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.lastNameLabel.text = LocalizedString(@"lastName", @"Hint text for the first name (Placeholder)");
     

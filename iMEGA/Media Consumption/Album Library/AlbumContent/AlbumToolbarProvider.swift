@@ -1,5 +1,6 @@
 import ChatRepo
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -44,7 +45,15 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         let trailingAnchor: NSLayoutXAxisAnchor = view.safeAreaLayoutGuide.trailingAnchor
         
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.backgroundColor = TokenColors.Background.surface1
+        
+        let toolbarBackgroundColor = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            UIColor.clear
+        } else {
+           TokenColors.Background.surface1
+        }
+        
+        toolbar.backgroundColor = toolbarBackgroundColor
+        
         toolbar.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
         toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         toolbar.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
