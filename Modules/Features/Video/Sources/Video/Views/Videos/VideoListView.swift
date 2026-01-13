@@ -121,7 +121,8 @@ public struct VideoListView: View {
         VideoListEmptyView(
             videoConfig: .preview,
             image: VideoConfig.preview.videoListAssets.noResultVideoImage,
-            text: Strings.Localizable.Videos.Tab.All.Content.emptyState
+            text: Strings.Localizable.Videos.Tab.All.Content.emptyState,
+            backgroundColor: .clear
         )
     }
     
