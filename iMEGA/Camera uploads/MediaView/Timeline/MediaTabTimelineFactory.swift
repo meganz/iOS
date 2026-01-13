@@ -21,12 +21,14 @@ enum MediaTabTimelineFactory {
         let photoLibraryRepository = PhotoLibraryRepository(
             cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
         
+        let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
+            repo: UserAttributeRepository.newRepo)
+        
         let sensitiveDisplayPreferenceUseCase = SensitiveDisplayPreferenceUseCase(
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
-            contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
         
         let photoLibraryUseCase =  PhotoLibraryUseCase(
@@ -54,7 +56,8 @@ enum MediaTabTimelineFactory {
             photoLibraryContentViewRouter: photoLibraryContentViewRouter,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             photoLibraryUseCase: photoLibraryUseCase,
-            nodeUseCase: nodeUseCase)
+            nodeUseCase: nodeUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
         
         return MediaTimelineTabContentViewModel(
             timelineViewModel: timelineViewModel,

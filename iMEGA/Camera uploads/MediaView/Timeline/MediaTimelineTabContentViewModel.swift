@@ -18,6 +18,7 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
 
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     private let subtitleUpdatePassthroughSubject = CurrentValueSubject<String?, Never>(nil)
+    private let updateNavigationBarButtonsPassthroughSubject = PassthroughSubject<Void, Never>()
     private let idleWaitTimeNanoSeconds: UInt64
     private let uploadStateDebounceDuration: Duration
     private var subscriptions = Set<AnyCancellable>()
@@ -105,6 +106,7 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
             .removeDuplicates()
             .dropFirst()
             .map { _ in () }
+            .merge(with: updateNavigationBarButtonsPassthroughSubject.eraseToAnyPublisher())
             .eraseToAnyPublisher()
     }
     
@@ -172,6 +174,7 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
         timelineViewModel.updatePhotoFilter(option: option)
+        updateNavigationBarButtonsPassthroughSubject.send()
     }
 }
 

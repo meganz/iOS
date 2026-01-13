@@ -18,6 +18,7 @@ final class NewTimelineViewModel: ObservableObject {
     private let cameraUploadsSettingsViewRouter: any Routing
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -37,24 +38,30 @@ final class NewTimelineViewModel: ObservableObject {
         cameraUploadsSettingsViewRouter: some Routing,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol
     ) {
         self.photoLibraryContentViewModel = photoLibraryContentViewModel
         self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.photoLibraryUseCase = photoLibraryUseCase
         self.nodeUseCase = nodeUseCase
+        self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
     
-    func onViewDisappear() {
+    func onViewDisappear() async {
         currentNodeUpdateTask = nil
         sortPhotoLibraryTask = nil
+        await saveFilters()
     }
     
     func loadPhotos() async {
         defer { isInitialLoadComplete = true }
         do {
+            if !isInitialLoadComplete {
+                try await loadSavedFilters()
+            }
             photoLibraryContentViewModel.library = try await timelinePhotoLibrary()
         } catch is CancellationError {
             MEGALogError("[\(type(of: self))] loadPhotos cancelled")
@@ -128,6 +135,25 @@ final class NewTimelineViewModel: ObservableObject {
     
     func updateEditMode(_ mode: EditMode) {
         photoLibraryContentViewModel.selection.editMode = mode
+    }
+    
+    func saveFilters() async {
+        guard let mediaType = photoFilterOptions.mediaSelection.toTimelineUserAttributeMediaTypeEntity(),
+              let location = photoFilterOptions.locationSelection.toTimelineUserAttributeMediaLocationEntity() else { return }
+        
+        do {
+            let timeline = TimelineUserAttributeEntity(
+                mediaType: mediaType,
+                location: location,
+                usePreference: true)
+            
+            try await contentConsumptionUserAttributeUseCase.save(timeline: timeline)
+            
+        } catch let error as JSONCodingErrorEntity {
+            MEGALogError("[Timeline] Unable to save timeline filter. \(error.localizedDescription)")
+        } catch {
+            MEGALogError(error.localizedDescription)
+        }
     }
     
     private func shouldShowEnableCameraUploadsBanner(filterLocation: PhotosFilterOptions) -> Bool {
@@ -223,5 +249,18 @@ final class NewTimelineViewModel: ObservableObject {
         let nodesToProcess = pendingNodeUpdates
         pendingNodeUpdates.removeAll()
         processNodeUpdates(nodesToProcess)
+    }
+    
+    private func loadSavedFilters() async throws {
+        let timelineAttributes = await contentConsumptionUserAttributeUseCase.fetchTimelineAttribute()
+        
+        try Task.checkCancellation()
+        
+        guard timelineAttributes.usePreference else { return }
+        
+        let savedFilters = timelineAttributes.toPhotoFilterOptionsEntity()
+        
+        guard photoFilterOptions != savedFilters else { return }
+        photoFilterOptions = savedFilters
     }
 }

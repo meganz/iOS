@@ -360,7 +360,8 @@ struct MediaTimelineTabContentViewModelTests {
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase()
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
     ) -> NewTimelineViewModel {
         .init(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
@@ -368,7 +369,8 @@ struct MediaTimelineTabContentViewModelTests {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             preferenceUseCase: preferenceUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
         )
     }
 }

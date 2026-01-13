@@ -27,6 +27,28 @@ struct NewTimelineViewModelTests {
             #expect(sut.photoLibraryContentViewModel.library.allPhotos == photos)
         }
         
+        @Test
+        func savedFilters() async throws {
+            let photos = [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)]
+            let photoLibraryUseCase = MockPhotoLibraryUseCase(
+                allPhotos: photos
+            )
+            let timelineUserAttribute = TimelineUserAttributeEntity(
+                mediaType: .images,
+                location: .cameraUploads,
+                usePreference: true)
+            let contentConsumptionUseCase = MockContentConsumptionUserAttributeUseCase(
+                timelineUserAttributeEntity: timelineUserAttribute
+            )
+            let sut = makeSUT(
+                photoLibraryUseCase: photoLibraryUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
+            
+            await sut.loadPhotos()
+            
+            #expect(sut.photoFilterOptions == timelineUserAttribute.toPhotoFilterOptionsEntity())
+        }
+        
         @Test func empty() async throws {
             let photoLibraryUseCase = MockPhotoLibraryUseCase()
             let sut = makeSUT(photoLibraryUseCase: photoLibraryUseCase)
@@ -199,13 +221,29 @@ struct NewTimelineViewModelTests {
     }
     
     @MainActor
+    @Test
+    func saveFilters() async throws {
+        let contentConsumption = MockContentConsumptionUserAttributeUseCase()
+        let sut = Self.makeSUT(
+            contentConsumptionUserAttributeUseCase: contentConsumption
+        )
+        let newFilter: PhotosFilterOptionsEntity = [.images, .cameraUploads]
+        sut.updatePhotoFilter(option: newFilter)
+        
+        await sut.saveFilters()
+        
+        #expect(contentConsumption.savedTimelineUserAttribute == .init(mediaType: .images, location: .cameraUploads, usePreference: true))
+    }
+    
+    @MainActor
     private static func makeSUT(
         photoLibraryContentViewModel: PhotoLibraryContentViewModel = .init(library: PhotoLibrary()),
         photoLibraryContentViewRouter: PhotoLibraryContentViewRouter = PhotoLibraryContentViewRouter(),
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase()
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
     ) -> NewTimelineViewModel {
         .init(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
@@ -213,7 +251,8 @@ struct NewTimelineViewModelTests {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             preferenceUseCase: preferenceUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
         )
     }
 }

@@ -111,9 +111,7 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
         
         await sut.saveFilters()
         
-        let result = await useCase.fetchTimelineAttribute()
-        
-        XCTAssertEqual(result, .init(mediaType: .images, location: .cloudDrive, usePreference: false))
+        XCTAssertEqual(useCase.savedTimelineUserAttribute, .init(mediaType: .images, location: .cloudDrive, usePreference: false))
     }
     
     @MainActor
