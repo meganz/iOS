@@ -31,14 +31,12 @@ final class GetNodeLinkViewModel: ViewModelType {
             link.components(separatedBy: "!")[safe: 2] ?? ""
         }
     }
-    var expiryDate: Bool = false
-    var date: Date? {
+    var expiryDate: Bool = false {
         didSet {
-            if let nodeType = nodeTypes.first, date != nil {
-                getLinkAnalyticsUseCase.setExpiryDate(nodeType: nodeType)
-            }
+            triggerExpiryDateToggleEvent()
         }
     }
+    var date: Date?
     var selectDate: Bool = false
     var passwordProtect: Bool = false
     var password: String?
@@ -111,6 +109,7 @@ final class GetNodeLinkViewModel: ViewModelType {
         nodes.notContains { !$0.isExported() } ? trackGetLink() : trackShareLink()
         updateViewConfiguration()
         triggerDecryptionKeyEvent()
+        triggerExpiryDateToggleEvent()
     }
     
     private func trackShareLink() {
@@ -212,5 +211,10 @@ final class GetNodeLinkViewModel: ViewModelType {
     private func triggerDecryptionKeyEvent() {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.sendDecryptionKey(nodeType: nodeType, isOn: separateKey)
+    }
+
+    private func triggerExpiryDateToggleEvent() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.setExpiryDate(nodeType: nodeType, isOn: expiryDate)
     }
 }

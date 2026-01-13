@@ -5,8 +5,10 @@ public enum GetLinkAnalyticsEventEntity: Sendable {
     case sendDecryptionKeySeparateForFileEnabled
     case sendDecryptionKeySeparateForFolderDisabled
     case sendDecryptionKeySeparateForFileDisabled
-    case setExpiryDateForFolder
-    case setExpiryDateForFile
+    case setExpiryDateForFolderEnabled
+    case setExpiryDateForFileEnabled
+    case setExpiryDateForFolderDisabled
+    case setExpiryDateForFileDisabled
     case setPasswordForFolder
     case setPasswordForFile
     case confirmPaswordForFolder

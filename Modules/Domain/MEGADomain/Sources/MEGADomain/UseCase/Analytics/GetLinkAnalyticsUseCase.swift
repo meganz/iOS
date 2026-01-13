@@ -2,7 +2,7 @@ import Foundation
 
 public protocol GetLinkAnalyticsUseCaseProtocol {
     func sendDecryptionKey(nodeType: NodeTypeEntity, isOn: Bool)
-    func setExpiryDate(nodeType: NodeTypeEntity)
+    func setExpiryDate(nodeType: NodeTypeEntity, isOn: Bool)
     func setPassword(nodeType: NodeTypeEntity)
     func confirmPassword(nodeType: NodeTypeEntity)
     func resetPassword(nodeType: NodeTypeEntity)
@@ -30,11 +30,13 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
         }
     }
 
-    public func setExpiryDate(nodeType: NodeTypeEntity) {
-        if nodeType == .file {
-            repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFile))
-        } else if nodeType == .folder {
-            repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFolder))
+    public func setExpiryDate(nodeType: NodeTypeEntity, isOn: Bool) {
+        switch (nodeType, isOn) {
+        case (.folder, true): repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFolderEnabled))
+        case (.file, true): repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFileEnabled))
+        case (.folder, false): repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFolderDisabled))
+        case (.file, false): repo.sendAnalyticsEvent(.getLink(.setExpiryDateForFileDisabled))
+        default: break
         }
     }
 

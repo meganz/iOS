@@ -40,22 +40,40 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .getLink(.sendDecryptionKeySeparateForFileDisabled))
     }
 
-    func testSendEvent_setExpiryDateForFolder_shouldReturnTrue() throws {
+    func testSendEvent_setExpiryDateForFolderEnabled_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.setExpiryDate(nodeType: .folder)
+        usecase.setExpiryDate(nodeType: .folder, isOn: true)
 
-        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFolder))
+        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFolderEnabled))
     }
 
-    func testSendEvent_setExpiryDateForFile_shouldReturnTrue() throws {
+    func testSendEvent_setExpiryDateForFileEnabled_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.setExpiryDate(nodeType: .file)
+        usecase.setExpiryDate(nodeType: .file, isOn: true)
 
-        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFile))
+        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFileEnabled))
+    }
+
+    func testSendEvent_setExpiryDateForFolderDisabled_shouldReturnTrue() throws {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.setExpiryDate(nodeType: .folder, isOn: false)
+
+        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFolderDisabled))
+    }
+
+    func testSendEvent_setExpiryDateForFileDisabled_shouldReturnTrue() throws {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.setExpiryDate(nodeType: .file, isOn: false)
+
+        XCTAssertTrue(repo.type == .getLink(.setExpiryDateForFileDisabled))
     }
 
     func testSendEvent_setPasswordForFolder_shouldReturnTrue() throws {

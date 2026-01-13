@@ -11,10 +11,14 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return 402363
         case .sendDecryptionKeySeparateForFileDisabled:
             return 402364
-        case .setExpiryDateForFolder:
-            return 402003
-        case .setExpiryDateForFile:
-            return 402004
+        case .setExpiryDateForFolderEnabled:
+            return 402365
+        case .setExpiryDateForFileEnabled:
+            return 402366
+        case .setExpiryDateForFolderDisabled:
+            return 402367
+        case .setExpiryDateForFileDisabled:
+            return 402368
         case .setPasswordForFolder:
             return 402005
         case .setPasswordForFile:
@@ -64,10 +68,14 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return "Send decryption key separately folder disabled"
         case .sendDecryptionKeySeparateForFileDisabled:
             return "Send decryption key separately file disabled"
-        case .setExpiryDateForFolder:
-            return "Set expiry date for folder"
-        case .setExpiryDateForFile:
-            return "Set expiry date for file"
+        case .setExpiryDateForFolderEnabled:
+            return "Set expiry date for folder enabled"
+        case .setExpiryDateForFileEnabled:
+            return "Set expiry date for file enabled"
+        case .setExpiryDateForFolderDisabled:
+            return "Set expiry date for folder disabled"
+        case .setExpiryDateForFileDisabled:
+            return "Set expiry date for file disabled"
         case .setPasswordForFolder:
             return "Set password for folder"
         case .setPasswordForFile:
