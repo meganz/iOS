@@ -11,6 +11,7 @@ enum GetLinkAction: ActionType {
     case copyLink
     case copyKey
     case didSelectRow(indexPath: IndexPath)
+    case trackEncryptButtonPressed
 }
 
 enum GetLinkViewModelCommand: CommandType {

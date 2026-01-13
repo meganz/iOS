@@ -237,4 +237,22 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
 
         XCTAssertTrue(repo.type == .getLink(.proFeaturesNotNowFile))
     }
+
+    func testSendEvent_encryptButtonPressedForFile_shouldReturnTrue() {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.encrypt(nodeType: .file)
+
+        XCTAssertTrue(repo.type == .getLink(.encryptFile))
+    }
+
+    func testSendEvent_encryptButtonPressedForFolder_shouldReturnTrue() {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.encrypt(nodeType: .folder)
+
+        XCTAssertTrue(repo.type == .getLink(.encryptFolder))
+    }
 }

@@ -1138,6 +1138,7 @@ extension GetLinkViewController: MEGARequestDelegate {
 
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
+        getLinkVM.dispatch(.trackEncryptButtonPressed)
         setLinkPassword.dismissView()
         showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.Link.linkUpdated)
         if let publicLink = getLinkVM.nodes[0].publicLink {

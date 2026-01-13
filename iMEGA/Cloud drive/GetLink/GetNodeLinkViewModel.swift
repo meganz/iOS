@@ -98,6 +98,8 @@ final class GetNodeLinkViewModel: ViewModelType {
             onViewReady()
         case .onViewDidAppear where loadingTask == nil:
             loadingTask = Task { await startGetLinksCoordinatorStream() }
+        case .trackEncryptButtonPressed:
+            trackEncryptButtonTapped()
         default:
             break
         }
@@ -108,8 +110,6 @@ final class GetNodeLinkViewModel: ViewModelType {
         nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
         nodes.notContains { !$0.isExported() } ? trackGetLink() : trackShareLink()
         updateViewConfiguration()
-        triggerDecryptionKeyEvent()
-        triggerExpiryDateToggleEvent()
     }
     
     private func trackShareLink() {
@@ -216,5 +216,10 @@ final class GetNodeLinkViewModel: ViewModelType {
     private func triggerExpiryDateToggleEvent() {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.setExpiryDate(nodeType: nodeType, isOn: expiryDate)
+    }
+
+    private func trackEncryptButtonTapped() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.encrypt(nodeType: nodeType)
     }
 }

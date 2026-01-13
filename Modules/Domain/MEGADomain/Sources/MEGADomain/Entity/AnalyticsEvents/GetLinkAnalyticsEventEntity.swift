@@ -27,4 +27,6 @@ public enum GetLinkAnalyticsEventEntity: Sendable {
     case proFeaturesNotNowFolder
     case proFeaturesSeePlansFile
     case proFeaturesNotNowFile
+    case encryptFolder
+    case encryptFile
 }

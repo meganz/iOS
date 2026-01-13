@@ -55,6 +55,10 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return 402018
         case .proFeaturesNotNowFile:
             return 402020
+        case .encryptFolder:
+            return 402369
+        case .encryptFile:
+            return 402370
         }
     }
 
@@ -112,6 +116,10 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return "Pro feature see plans tapped for file"
         case .proFeaturesNotNowFile:
             return "Pro feature see plans not now tapped for file"
+        case .encryptFolder:
+            return "Encrypt button tapped for folder"
+        case .encryptFile:
+            return "Encrypt button tapped for File"
         }
     }
 }

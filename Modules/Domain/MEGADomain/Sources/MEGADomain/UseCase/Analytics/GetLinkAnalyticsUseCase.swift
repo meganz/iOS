@@ -11,6 +11,7 @@ public protocol GetLinkAnalyticsUseCaseProtocol {
     func getLink(nodeTypes: [NodeTypeEntity])
     func proFeatureSeePlans(nodeType: NodeTypeEntity)
     func proFeatureNotNow(nodeType: NodeTypeEntity)
+    func encrypt(nodeType: NodeTypeEntity)
 }
 
 public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAnalyticsUseCaseProtocol {
@@ -127,6 +128,14 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
             repo.sendAnalyticsEvent(.getLink(.proFeaturesNotNowFile))
         } else if nodeType == .folder {
             repo.sendAnalyticsEvent(.getLink(.proFeaturesNotNowFolder))
+        }
+    }
+
+    public func encrypt(nodeType: NodeTypeEntity) {
+        if nodeType == .file {
+            repo.sendAnalyticsEvent(.getLink(.encryptFile))
+        } else if nodeType == .folder {
+            repo.sendAnalyticsEvent(.getLink(.encryptFolder))
         }
     }
 }
