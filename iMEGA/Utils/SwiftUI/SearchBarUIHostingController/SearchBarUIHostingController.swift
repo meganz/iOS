@@ -71,10 +71,21 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         selectionHandler?.onSelectionModeChange = { [weak self] enabled, config in
             guard let self else { return }
             
+            let shouldSwitchTabbarVisibility = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                config.displayMode == .cloudDrive
+            } else {
+                false
+            }
             if enabled {
                 addToolbar(for: config, animated: true)
+                if shouldSwitchTabbarVisibility {
+                    tabBarController?.tabBar.isHidden = true
+                }
             } else {
                 removeToolbar(animated: true)
+                if shouldSwitchTabbarVisibility {
+                    tabBarController?.tabBar.isHidden = false
+                }
             }
             if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
                 audioPlayerManager.playerHidden(enabled)
