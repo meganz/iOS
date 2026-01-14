@@ -133,6 +133,7 @@ class FolderLinkCollectionViewController: UIViewController {
     private func reloadDataForRevampUI() {
         if MEGAReachabilityManager.isReachable(), let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray,
            !listOfNodes.isEmpty {
+            removeErrorViewIfRequired()
             // For revamp UI, we display one single section for listOfNodes instead of 2 sections for folders and files.
             // [SAO-3147] Refactor the data source to fully remove .folder and .file separation.
             diffableDataSource.load(data: [.folder: listOfNodes], keys: [.folder])

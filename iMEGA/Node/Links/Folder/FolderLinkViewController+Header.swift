@@ -70,7 +70,7 @@ extension FolderLinkViewController {
         let hostingViewController = UIHostingController(rootView: headerContentView)
         headerView.wrap(hostingViewController.view)
         controller.addChild(hostingViewController)
-        controller.headerContainerView = hostingViewController.view
+        controller.headerContainerView = headerView
         hostingViewController.view.backgroundColor = TokenColors.Background.page
         return headerView
     }
