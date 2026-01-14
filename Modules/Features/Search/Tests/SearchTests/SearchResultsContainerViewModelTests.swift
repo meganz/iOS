@@ -268,9 +268,9 @@ struct SearchResultsContainerViewModelTests {
         #expect(sortOption.sortOrder == .init(key: .name, direction: .descending))
     }
 
-    @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() async {
+    @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() {
         let sut = makeSUT(headerType: .dynamic)
-        let updatedQuery = await sut.updateQuery(
+        let updatedQuery = sut.updateQuery(
             .userSupplied(
                 .init(
                     query: "test",
@@ -284,9 +284,9 @@ struct SearchResultsContainerViewModelTests {
         #expect(updatedQuery.chips == [])
     }
 
-    @Test func testUpdateQuery_whenChipsAreEnabled_shouldUpdateSortingOrder() async {
+    @Test func testUpdateQuery_whenChipsAreEnabled_shouldUpdateSortingOrder() {
         let sut = makeSUT(headerType: .chips)
-        let updatedQuery = await sut.updateQuery(
+        let updatedQuery = sut.updateQuery(
             .userSupplied(
                 .init(
                     query: "test",

@@ -68,9 +68,8 @@ public class SearchResultsContainerViewModel: ObservableObject {
         self.sortHeaderViewPressedEvent = sortHeaderViewPressedEvent
         self.sortHeaderCoordinator = .init(
             sortOptionsViewModel: sortOptionsViewModel,
-            currentSortOrderProvider: { [weak searchResultsViewModel] in
-                guard let searchResultsViewModel else { return .init(key: .name) }
-                return searchResultsViewModel.currentQuery.sorting
+            currentSortOrderProvider: { [weak bridge] in
+                bridge?.sortingOrder() ?? .init(key: .name)
             },
             sortOptionSelectionHandler: { @MainActor [weak searchResultsViewModel, weak bridge] sortOption in
                 guard let searchResultsViewModel, let bridge else { return }
@@ -275,11 +274,11 @@ extension SearchResultsContainerViewModel: SearchResultsInteractor {
         lastAvailableChips = []
     }
 
-    func updateQuery(_ currentQuery: SearchQuery) async -> SearchQuery {
+    func updateQuery(_ currentQuery: SearchQuery) -> SearchQuery {
         if displayedHeaderSection == .sortingAndViewMode {
             currentQuery.clearingChips()
         } else {
-            await currentQuery.withUpdatedSortOrder(bridge.sortingOrder())
+            currentQuery.withUpdatedSortOrder(bridge.sortingOrder())
         }
     }
 
