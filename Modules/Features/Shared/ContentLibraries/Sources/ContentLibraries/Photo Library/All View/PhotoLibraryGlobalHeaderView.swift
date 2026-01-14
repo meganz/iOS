@@ -4,7 +4,7 @@ import SwiftUI
 
 struct PhotoLibraryGlobalHeaderView: View {
     let monthTitle: String
-    @Binding var zoomState: PhotoLibraryZoomState
+    @ObservedObject var viewModel: PhotoLibraryModeAllCollectionViewModel
 
     var body: some View {
         ResultsHeaderView(
@@ -14,7 +14,7 @@ struct PhotoLibraryGlobalHeaderView: View {
                     .foregroundColor(TokenColors.Text.primary.swiftUI)
             },
             rightView: {
-                PhotoLibraryZoomMenuControl(zoomState: $zoomState)
+                PhotoLibraryZoomMenuControl(zoomState: $viewModel.zoomState)
             }
         )
         .padding(.horizontal, TokenSpacing._5)

@@ -10,6 +10,17 @@ struct PhotoLibraryZoomMenuControl: View {
         zoomState.scaleFactor
     }
 
+    private var zoomImage: SwiftUI.Image {
+        switch selectedScaleFactor {
+        case .one:
+            return MEGAAssets.Image.zoomSquare
+        case .three:
+            return MEGAAssets.Image.zoomGrid
+        case .five, .thirteen:
+            return MEGAAssets.Image.zoomNineGrid
+        }
+    }
+
     private func displayName(for scaleFactor: PhotoLibraryZoomState.ScaleFactor) -> String {
         switch scaleFactor {
         case .one:
@@ -38,7 +49,7 @@ struct PhotoLibraryZoomMenuControl: View {
                 }
             }
         } label: {
-            MEGAAssets.Image.zoomGrid
+            zoomImage
                 .imageScale(.large)
                 .foregroundColor(TokenColors.Icon.primary.swiftUI)
                 .frame(width: 44, height: 44)

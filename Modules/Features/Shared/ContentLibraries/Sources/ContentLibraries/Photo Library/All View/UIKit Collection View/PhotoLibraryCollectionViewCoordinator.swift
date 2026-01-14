@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGAAppPresentation
 import MEGADesignToken
@@ -49,7 +50,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var currentVisibleMonthTitle: String = ""
     private weak var globalHeaderView: UICollectionViewCell?
     private var visibleSectionHeaders: Set<Int> = []
-    
+
     private var dragInitialIndexPath: IndexPath?
     private var dragLastIndexPath: IndexPath?
     private var dragSelectionMode: DragSelectionMode?
@@ -158,7 +159,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         viewModel
             .photoZoomControlPositionTracker
@@ -166,13 +167,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
     
     private func createGlobalHeaderConfiguration(monthTitle: String) -> any UIContentConfiguration {
-        UIHostingConfiguration {
+        return UIHostingConfiguration {
             PhotoLibraryGlobalHeaderView(
                 monthTitle: monthTitle,
-                zoomState: Binding(
-                    get: { self.viewModel.zoomState },
-                    set: { self.viewModel.zoomState = $0 }
-                )
+                viewModel: self.viewModel
             )
         }
         .margins(.all, 0)

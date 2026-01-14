@@ -191,6 +191,8 @@ extension MEGAAssets {
         public static var cuBannerChevronRevamp: SwiftUI.Image { MEGAImageBundle.cuBannerChevronRevamp }
         public static var favouritePlaylistThumbnail: SwiftUI.Image { MEGAImageBundle.favouritePlaylistThumbnail }
         public static var zoomGrid: SwiftUI.Image { MEGAImageBundle.zoomGrid }
+        public static var zoomNineGrid: SwiftUI.Image { MEGAImageBundle.zoomNineGrid }
+        public static var zoomSquare: SwiftUI.Image { MEGAImageBundle.zoomSquare }
         public static var filetypeWebData: SwiftUI.Image { MEGAImageBundle.filetypeWebData }
         public static var filetypeImages: SwiftUI.Image { MEGAImageBundle.filetypeImages }
         // MARK: - DeviceCenter
@@ -575,6 +577,9 @@ extension MEGAAssets {
         public static var contactGroups: UIKit.UIImage { MEGAUIImageBundle.contactGroups }
         public static var selectAlbumCover: UIKit.UIImage { MEGAUIImageBundle.selectAlbumCover }
         public static var deleteAlbum: UIKit.UIImage { MEGAUIImageBundle.deleteAlbum }
+        public static var zoomGrid: UIKit.UIImage { MEGAUIImageBundle.zoomGrid }
+        public static var zoomNineGrid: UIKit.UIImage { MEGAUIImageBundle.zoomNineGrid }
+        public static var zoomSquare: UIKit.UIImage { MEGAUIImageBundle.zoomSquare }
         public static var versionedThumbnail: UIKit.UIImage { MEGAUIImageBundle.versionedThumbnail }
         public static var linkedThumbnail: UIKit.UIImage { MEGAUIImageBundle.linkedThumbnail }
         public static var proLabel: UIKit.UIImage { MEGAUIImageBundle.proLabel }

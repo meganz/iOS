@@ -135,6 +135,8 @@ public struct MEGAImageBundle {
     public static var cuBannerChevronRevamp: Image { Image(.cuBannerChevronRevamp) }
     public static var favouritePlaylistThumbnail: Image { Image(.favouritePlaylistThumbnail) }
     public static var zoomGrid: Image { Image(.zoomGrid) }
+    public static var zoomNineGrid: Image { Image(.zoomNineGrid) }
+    public static var zoomSquare: Image { Image(.zoomSquare) }
     public static var addContactMeetings: Image { Image(.addContactMeetings) }
     public static var filetypeFolder: Image { Image(.filetypeFolder) }
     public static var filetype3D: Image { Image(.filetype3D) }

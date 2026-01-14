@@ -224,6 +224,8 @@ public struct MEGAUIImageBundle {
     public static var selectAlbumCover: UIImage { UIImage.selectAlbumCover }
     public static var deleteAlbum: UIImage { UIImage.deleteAlbum }
     public static var zoomGrid: UIImage { UIImage.zoomGrid }
+    public static var zoomNineGrid: UIImage { UIImage.zoomNineGrid }
+    public static var zoomSquare: UIImage { UIImage.zoomSquare }
     public static var versionedThumbnail: UIImage { UIImage.versionedThumbnail }
     public static var linkedThumbnail: UIImage { UIImage.linkedThumbnail }
     public static var proLabel: UIImage { UIImage.proLabel }
