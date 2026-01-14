@@ -55,6 +55,7 @@ public struct VideoListView: View {
                 chipsView()
                     .frame(height: viewModel.showFilterChips ? 60 : 0)
                     .clipped()
+                    .background(videoConfig.colorAssets.pageBackgroundColor)
             }
             content
                 .overlay(placeholder)
