@@ -259,7 +259,7 @@ public final class SearchResultsViewModel: ObservableObject {
         // This is using a different method in the SDK
         // hence an enum is needed to reliably tell the difference
         await showLoadingPlaceholderIfNeeded()
-        await queryChanged(with: await bridge.sortingOrder(), shouldForceRefresh: true)
+        await queryChanged(with: bridge.sortingOrder(), shouldForceRefresh: true)
     }
     
     private func cancelSearchTask() {
@@ -299,7 +299,7 @@ public final class SearchResultsViewModel: ObservableObject {
     }
 
     func queryChanged(to query: String, isSearchActive: Bool) async {
-        guard let updatedQuery = await interactor?.updateQuery(currentQuery) else { return }
+        guard let updatedQuery = interactor?.updateQuery(currentQuery) else { return }
         updateCurrentQuery(to: updatedQuery)
         await queryChanged(
             to: .userSupplied(

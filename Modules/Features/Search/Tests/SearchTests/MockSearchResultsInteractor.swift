@@ -9,7 +9,7 @@ final class MockSearchResultsInteractor: SearchResultsInteractor {
 
     func resetLastAvailableChips() {}
 
-    func updateQuery(_ currentQuery: SearchQuery) async -> SearchQuery {
+    func updateQuery(_ currentQuery: SearchQuery) -> SearchQuery {
         currentQuery
     }
 

@@ -8,7 +8,7 @@ import UIKit
 public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
     let context: (SearchResult, UIButton) -> Void
-    let sortingOrder: () async -> MEGAUIComponent.SortOrder
+    let sortingOrder: () -> MEGAUIComponent.SortOrder
     let updateSortOrder: (MEGAUIComponent.SortOrder) -> Void
     private let chipTapped: (SearchChipEntity, Bool) -> Void
     private let chipPickerShowedHandler: @Sendable (SearchChipEntity) -> Void
@@ -17,7 +17,7 @@ public class SearchBridge {
         selection: @escaping (SearchResultSelection) -> Void,
         context: @escaping (SearchResult, UIButton) -> Void,
         chipTapped: @escaping (SearchChipEntity, Bool) -> Void,
-        sortingOrder: @escaping () async -> MEGAUIComponent.SortOrder,
+        sortingOrder: @escaping () -> MEGAUIComponent.SortOrder,
         updateSortOrder: @escaping (MEGAUIComponent.SortOrder) -> Void,
         chipPickerShowedHandler: @Sendable @escaping (SearchChipEntity) -> Void
     ) {
