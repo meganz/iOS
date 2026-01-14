@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -76,7 +77,12 @@ extension PhotosViewController {
     }
     
     @objc func makeCancelBarButton() -> UIBarButtonItem {
-        UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
+        let style = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            UIBarButtonItem.Style.plain
+        } else {
+            UIBarButtonItem.Style.done
+        }
+        return UIBarButtonItem(title: Strings.Localizable.cancel, style: style, target: self, action: #selector(toggleEditing))
     }
     
     @objc func makeEditBarButton() -> UIBarButtonItem {

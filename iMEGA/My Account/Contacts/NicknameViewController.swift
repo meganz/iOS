@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGAL10n
@@ -135,6 +136,9 @@ class NicknameViewController: UIViewController {
         cancelBarButtonItem.title = Strings.Localizable.cancel
         saveBarButtonItem.title = Strings.Localizable.save
         nicknameLabel.text = Strings.Localizable.aliasNickname
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            saveBarButtonItem.style = .plain
+        }
         
         setupColors()
     }
