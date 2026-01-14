@@ -5,6 +5,7 @@ import MEGAL10n
 
 class FolderLinkCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewBottomConstraint: NSLayoutConstraint!
 
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
@@ -42,6 +43,11 @@ class FolderLinkCollectionViewController: UIViewController {
         setupCollectionView()
         setupDataSource()
         addLongPressGestureIfNeeded()
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            collectionViewBottomConstraint.priority = .defaultLow
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

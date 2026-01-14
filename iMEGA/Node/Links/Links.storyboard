@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -108,7 +108,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mXD-0f-xGC">
-                                                <rect key="frame" x="16" y="261.33333333333331" width="343" height="58.666666666666686"/>
+                                                <rect key="frame" x="16" y="263.33333333333331" width="343" height="56.666666666666686"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="International Modern Archit ec ture.pdf dafs dsdaf" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP0-wf-1Tc" userLabel="Name Label" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="307" height="38.333333333333336"/>
@@ -121,7 +121,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500MB" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-5Q-P3K" userLabel="Info Label">
-                                                        <rect key="frame" x="0.0" y="42.333333333333371" width="41" height="16.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="42.333333333333371" width="41" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -690,6 +690,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="r5M-H2-FW5" id="SWl-Dt-rd0"/>
+                        <outlet property="collectionViewBottomConstraint" destination="UbH-1U-M5m" id="WEB-ZR-pTn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sFm-P5-3OQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
