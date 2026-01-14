@@ -10,12 +10,12 @@ public struct CheckMarkView: View {
     
     var iconForegroundColor: Color?
     
-    /// Legacy  initializer
     /// - Parameters:
     ///   - markedSelected: a boolean indicates selected state
-    ///   - foregroundColor: view background color
+    ///   - foregroundColor: circle fill color, controlled by caller based on selection state
     ///   - showBorder: a boolean indicates border
     ///   - borderColor: a border color
+    ///   - isMediaRevamp: enables media revamp styling (inverse checkmark color, hidden when unselected)
     public init(markedSelected: Bool,
                 foregroundColor: Color,
                 showBorder: Bool = true,
@@ -32,10 +32,14 @@ public struct CheckMarkView: View {
         markedSelected ? "checkmark.circle.fill" : "circle"
     }
     
+    private var checkmarkColor: Color {
+        isMediaRevamp ? TokenColors.Icon.inverse.swiftUI : borderColor
+    }
+    
     public var body: some View {
         Image(systemName: imageName)
             .font(.system(size: 23))
-            .foregroundStyle(isMediaRevamp ? Color.white : foregroundColor, foregroundColor)
+            .foregroundStyle(checkmarkColor, foregroundColor)
             .if(!isMediaRevamp && markedSelected && showBorder) { view in
                 view.background(Color.white.mask(Circle()))
             }

@@ -2,9 +2,12 @@ import AsyncAlgorithms
 import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import MEGAUIComponent
 
 @MainActor
@@ -41,6 +44,7 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var showFilterChips = true
     @Published private(set) var showSortHeader = true
     @Published private(set) var viewState: ViewState = .partial
+    @Published var emptyViewModel: ContentUnavailableViewModel?
 
     var actionSheetTitle: String {
         newlySelectedChip?.type.description ?? ""
@@ -203,14 +207,32 @@ public final class VideoListViewModel: ObservableObject {
                 try Task.checkCancellation()
                 
                 viewState = videos.isNotEmpty ? .loaded : .empty
+                updateEmptyViewModel()
             } catch is CancellationError {
                 // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
             } catch {
                 viewState = videos.isEmpty ? .error : .loaded
+                updateEmptyViewModel()
             }
         }
     }
         
+    private func updateEmptyViewModel() {
+        guard viewState == .empty || viewState == .error else {
+            emptyViewModel = nil
+            return
+        }
+
+        emptyViewModel = ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassVideo,
+            title: Strings.Localizable.Videos.Tab.All.Content.emptyState,
+            subtitle: nil,
+            font: .body,
+            titleTextColor: TokenColors.Text.primary.swiftUI,
+            actions: []
+        )
+    }
+
     func toggleSelectAllVideos() {
         let allSelectedCurrently = selection.videos.count == videos.count
         selection.allSelected = !allSelectedCurrently

@@ -70,6 +70,14 @@ public struct AlbumCell: View {
         viewModel.onAlbumTap()
     }}
     
+    private var checkMarkForegroundColor: Color {
+        if viewModel.isSelected {
+            return viewModel.isMediaRevampEnabled ? TokenColors.Icon.accent.swiftUI : TokenColors.Support.success.swiftUI
+        } else {
+            return TokenColors.Border.strong.swiftUI
+        }
+    }
+    
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
@@ -96,7 +104,7 @@ public struct AlbumCell: View {
             CheckMarkView(
                 markedSelected: viewModel.isSelected,
                 foregroundColor:
-                    TokenColors.Components.selectionControlAlt.swiftUI,
+                    checkMarkForegroundColor,
                 showBorder: false,
                 isMediaRevamp: viewModel.isMediaRevampEnabled
             )

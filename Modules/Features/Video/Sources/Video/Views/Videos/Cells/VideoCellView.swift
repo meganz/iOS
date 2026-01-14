@@ -175,13 +175,22 @@ struct VideoCellViewContent: View {
             .onTapGesture { onTappedMoreOptions() }
     }
     
+    private var checkMarkForegroundColor: Color {
+        if isSelected.wrappedValue {
+            return isMediaRevampEnabled ? TokenColors.Icon.accent.swiftUI : TokenColors.Support.success.swiftUI
+        } else {
+            return TokenColors.Border.strong.swiftUI
+        }
+    }
+
     private var checkMarkView: some View {
         Button {
             onTappedCheckMark()
         } label: {
             CheckMarkView(
                 markedSelected: isSelected.wrappedValue,
-                foregroundColor: isMediaRevampEnabled ? (isSelected.wrappedValue ? TokenColors.Icon.accent.swiftUI : TokenColors.Border.strong.swiftUI) : (isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI)
+                foregroundColor: checkMarkForegroundColor,
+                isMediaRevamp: isMediaRevampEnabled
             )
         }
     }

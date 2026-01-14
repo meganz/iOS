@@ -77,13 +77,9 @@ public struct VideoListView: View {
     
     @ViewBuilder
     private var content: some View {
-        switch viewModel.viewState {
-        case .loading, .loaded, .partial:
-            listView()
-        case .empty, .error:
-            videoEmptyView()
-                .frame(maxHeight: .infinity, alignment: .center)
-        }
+        listView()
+            .emptyState(viewModel.emptyViewModel, usesRevampLayout: true)
+            .background(videoConfig.colorAssets.pageBackgroundColor)
     }
     
     @ViewBuilder
@@ -116,15 +112,6 @@ public struct VideoListView: View {
         } else {
             EmptyView()
         }
-    }
-    
-    private func videoEmptyView() -> some View {
-        VideoListEmptyView(
-            videoConfig: .preview,
-            image: VideoConfig.preview.videoListAssets.noResultVideoImage,
-            text: Strings.Localizable.Videos.Tab.All.Content.emptyState,
-            backgroundColor: .clear
-        )
     }
     
     private func listView() -> some View {
