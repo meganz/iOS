@@ -93,13 +93,9 @@
 
 - (void)configUI {
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
-    self.enableCameraUploadsSwitch.onTintColor = [UIColor supportSuccessColor];
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
-    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
-    
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
     self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
-    self.includeGPSTagsSwitch.onTintColor = [UIColor supportSuccessColor];
     
     [self configTargetFolder];
     [self configPhotoFormatUI];
@@ -117,6 +113,13 @@
     
     self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
+    
+    // Set onTintColor once here to avoid interrupting UISwitch animation on iOS 26 liquid glass
+    self.enableCameraUploadsSwitch.onTintColor = [UIColor supportSuccessColor];
+    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
+    self.includeGPSTagsSwitch.onTintColor = [UIColor supportSuccessColor];
+    self.useCellularConnectionSwitch.onTintColor = [UIColor supportSuccessColor];
+    self.useCellularConnectionForVideosSwitch.onTintColor = [UIColor supportSuccessColor];
 }
 
 - (void)configTargetFolder {

@@ -68,7 +68,6 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 - (void)configUI {
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
-    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
     
     [self configVideoFormatUI];
     [self configVideoQualityUI];
@@ -111,6 +110,9 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     
     self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
+    
+    // Set onTintColor once here to avoid interrupting UISwitch animation on iOS 26 liquid glass
+    self.uploadVideosSwitch.onTintColor = [UIColor supportSuccessColor];
 }
 
 #pragma mark - UI Actions
