@@ -30,8 +30,8 @@ struct SortOrderPreferenceRepository: SortOrderPreferenceRepositoryProtocol {
         preference(for: key.appearancePreferenceKeyEntity)?.sortOrder
     }
     
-    func sortOrder(for node: NodeEntity) -> SortOrderEntity? {
-        preference(for: node)?.sortOrder
+    func sortOrder(for nodeHandle: HandleEntity) -> SortOrderEntity? {
+        preference(for: nodeHandle)?.sortOrder
     }
         
     func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) {
@@ -40,8 +40,8 @@ struct SortOrderPreferenceRepository: SortOrderPreferenceRepositoryProtocol {
             sortType: sortOrder.toMEGASortOrderType().rawValue)
     }
     
-    func save(sortOrder: SortOrderEntity, for node: NodeEntity) {
-        store.insertOrUpdateCloudSortType(handle: node.handle, sortType: sortOrder.toMEGASortOrderType().rawValue)
+    func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) {
+        store.insertOrUpdateCloudSortType(handle: nodeHandle, sortType: sortOrder.toMEGASortOrderType().rawValue)
     }
 }
 
@@ -57,8 +57,8 @@ private extension SortOrderPreferenceRepository {
             viewModePreference: offlineAppearancePreference.viewModeEntity)
     }
     
-    func preference(for node: NodeEntity) -> AppearancePreferenceEntity? {
-        guard let cloudAppearancePreference = store.fetchCloudAppearancePreference(handle: node.handle) else {
+    func preference(for nodeHandle: HandleEntity) -> AppearancePreferenceEntity? {
+        guard let cloudAppearancePreference = store.fetchCloudAppearancePreference(handle: nodeHandle) else {
             return nil
         }
         

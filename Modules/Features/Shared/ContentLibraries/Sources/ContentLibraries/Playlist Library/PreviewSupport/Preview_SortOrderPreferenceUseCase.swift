@@ -7,19 +7,19 @@ struct Preview_SortOrderPreferenceUseCase: SortOrderPreferenceUseCaseProtocol {
         .creationAsc
     }
     
-    func sortOrder(for node: NodeEntity?) -> SortOrderEntity {
+    func sortOrder(for nodeHandle: HandleEntity?) -> SortOrderEntity {
         .creationAsc
     }
     
     func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) { }
     
-    func save(sortOrder: SortOrderEntity, for node: NodeEntity) { }
+    func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) { }
     
     func monitorSortOrder(for key: SortOrderPreferenceKeyEntity) -> AnyPublisher<SortOrderEntity, Never> {
         Empty().eraseToAnyPublisher()
     }
     
-    func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never> {
+    func monitorSortOrder(for nodeHandle: HandleEntity) -> AnyPublisher<SortOrderEntity, Never> {
         Empty().eraseToAnyPublisher()
     }
 }

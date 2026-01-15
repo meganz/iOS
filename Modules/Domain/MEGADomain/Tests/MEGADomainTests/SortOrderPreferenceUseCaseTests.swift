@@ -74,10 +74,10 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
             let nodeEntity = NodeEntity(handle: 1)
             let sut = makeSut(
                 sortingPreference: .perFolder,
-                nodeSortOrderPreferenceValues: [nodeEntity: repoSortOrderValue])
+                nodeSortOrderPreferenceValues: [nodeEntity.handle: repoSortOrderValue])
             
             // Act
-            let result = sut.sortOrder(for: nodeEntity)
+            let result = sut.sortOrder(for: nodeEntity.handle)
             
             // Assert
             XCTAssertEqual(result, repoSortOrderValue)
@@ -90,7 +90,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
             sortingPreference: .perFolder)
 
         // Act
-        let result = sut.sortOrder(for: NodeEntity(handle: 1))
+        let result = sut.sortOrder(for: 1)
 
         // Assert
         XCTAssertEqual(result, .defaultAsc)
@@ -104,12 +104,12 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
             let sut = makeSut(
                 sortingPreference: .sameForAll,
                 sortingPreferenceTypeRawValue: sortingPreferenceRawType,
-                nodeSortOrderPreferenceValues: [nodeEntity: repoSortOrderValue],
+                nodeSortOrderPreferenceValues: [nodeEntity.handle: repoSortOrderValue],
                 megaSortOrderTypeCodes: [repoSortOrderValue: sortingPreferenceRawType]
             )
 
             // Act
-            let result = sut.sortOrder(for: nodeEntity)
+            let result = sut.sortOrder(for: nodeEntity.handle)
 
             // Assert
             XCTAssertEqual(result, repoSortOrderValue)
@@ -122,7 +122,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
             sortingPreference: .sameForAll)
 
         // Act
-        let result = sut.sortOrder(for: NodeEntity(handle: 1))
+        let result = sut.sortOrder(for: 1)
         
         // Assert
         XCTAssertEqual(result, .defaultAsc)
@@ -204,12 +204,12 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         let savedValue: SortOrderEntity = .favouriteDesc
         let nodeEntity = NodeEntity(handle: 1)
         // Act
-        sut.save(sortOrder: savedValue, for: nodeEntity)
+        sut.save(sortOrder: savedValue, for: nodeEntity.handle)
         
         // Arrange
         XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, 2)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 0)
-        XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity], nil)
+        XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity.handle], nil)
     }
     
     func testSaveSortOrderForNode_whenUsersSortingPreferenceEqualsPerFolder_shouldSaveInSortOrderRepoOnly() {
@@ -231,12 +231,12 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         let nodeEntity = NodeEntity(handle: 1)
 
         // Act
-        sut.save(sortOrder: savedValue, for: nodeEntity)
+        sut.save(sortOrder: savedValue, for: nodeEntity.handle)
         
         // Arrange
         XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, nil)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 0)
-        XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity], savedValue)
+        XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity.handle], savedValue)
     }
     
     // MARK: Monitor
@@ -276,7 +276,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         var wantedResults: [SortOrderEntity] = []
         var unwantedResults: [SortOrderEntity] = []
         var subscriptions = Set<AnyCancellable>()
-        sut.monitorSortOrder(for: nodeEntity)
+        sut.monitorSortOrder(for: nodeEntity.handle)
             .collect(.byTime(DispatchQueue.main, .seconds(0.5)))
             .sink { values in
                 wantedResults = values
@@ -284,13 +284,13 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        sut.monitorSortOrder(for: NodeEntity(handle: 2))
+        sut.monitorSortOrder(for: 2)
             .sink { unwantedResults.append($0) }
             .store(in: &subscriptions)
         
-        sut.save(sortOrder: .labelAsc, for: nodeEntity)
-        sut.save(sortOrder: .labelAsc, for: nodeEntity)
-        sut.save(sortOrder: .favouriteAsc, for: nodeEntity)
+        sut.save(sortOrder: .labelAsc, for: nodeEntity.handle)
+        sut.save(sortOrder: .labelAsc, for: nodeEntity.handle)
+        sut.save(sortOrder: .favouriteAsc, for: nodeEntity.handle)
         
         await fulfillment(of: [exp], timeout: 1.0)
 
@@ -302,7 +302,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         sortingPreference: SortingPreferenceBasisEntity,
         sortingPreferenceTypeRawValue: Int? = nil,
         keyedSortOrderPreferenceValues: [SortOrderPreferenceKeyEntity: SortOrderEntity] = [:],
-        nodeSortOrderPreferenceValues: [NodeEntity: SortOrderEntity] = [:],
+        nodeSortOrderPreferenceValues: [HandleEntity: SortOrderEntity] = [:],
         megaSortOrderTypeCodes: [SortOrderEntity: Int] = [:]) -> SortOrderPreferenceUseCase<MockPreferenceUseCase, MockSortOrderPreferenceRepository> {
             
             let sortOrderPreferenceBasisCodes: [SortingPreferenceBasisEntity: Int] = SortingPreferenceBasisEntity.allCases
@@ -338,7 +338,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
     
     func makeMockSortOrderPreferenceRepository(
         keyedSortOrderPreferenceValues: [SortOrderPreferenceKeyEntity: SortOrderEntity] = [:],
-        nodeSortOrderPreferenceValues: [NodeEntity: SortOrderEntity] = [:],
+        nodeSortOrderPreferenceValues: [HandleEntity: SortOrderEntity] = [:],
         megaSortOrderTypeCodes: [SortOrderEntity: Int] = [:],
         sortOrderPreferenceBasisCodes: [SortingPreferenceBasisEntity: Int] = [:]) -> MockSortOrderPreferenceRepository {
             

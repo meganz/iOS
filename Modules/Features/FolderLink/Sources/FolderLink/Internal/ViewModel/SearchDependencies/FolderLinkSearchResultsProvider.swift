@@ -10,7 +10,7 @@ struct FolderLinkSearchResultsProvider: SearchResultsProviding {
     
     init(
         nodeHandle: HandleEntity,
-        folderLinkSearchUseCase: some FolderLinkSearchUseCaseProtocol = FolderLinkSearchUseCase(),
+        folderLinkSearchUseCase: some FolderLinkSearchUseCaseProtocol,
         folderSearchResultMapper: some FolderLinkSearchResultMapperProtocol
     ) {
         self.nodeHandle = nodeHandle
@@ -27,7 +27,7 @@ struct FolderLinkSearchResultsProvider: SearchResultsProviding {
             return SearchResultsEntity.empty
         }
         
-        let children = await folderLinkSearchUseCase.children(of: nodeHandle)
+        let children = await folderLinkSearchUseCase.children(of: nodeHandle, order: queryRequest.sorting.toDomainSortOrderEntity())
         
         let searchResultEntity = apply(searchQuery: queryRequest, for: children)
         $allResultIds.mutate { $0 = searchResultEntity.results.map(\.id) }

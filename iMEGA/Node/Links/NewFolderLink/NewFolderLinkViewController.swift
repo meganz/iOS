@@ -1,5 +1,7 @@
 import FolderLink
 import MEGAAppSDKRepo
+import MEGADomain
+import MEGAPreference
 import MEGASdk
 import SwiftUI
 import UIKit
@@ -55,12 +57,18 @@ final class NewFolderLinkViewController: UIViewController {
             nodeIconRepository: NodeAssetsManager.shared
         )
         
+        let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+        )
+        
         let fileNodeOpener = FolderLinkFileNodeOpener(navigationController: navigationController)
         let nodeActionHandler = FolderLinkNodeActionHandler(navigationController: navigationController)
         return FolderLinkView.Dependency(
             link: link,
             folderLinkBuilder: MEGAFolderLinkBuilder(),
             searchResultMapper: searchResultMapper,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,
             nodeActionHandler: nodeActionHandler,
             onClose: { [weak self] in

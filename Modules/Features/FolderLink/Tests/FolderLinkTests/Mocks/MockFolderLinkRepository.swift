@@ -38,7 +38,7 @@ final class MockFolderLinkRepository: FolderLinkRepositoryProtocol, @unchecked S
         logoutCalled = true
     }
     
-    func children(of nodeHandle: MEGADomain.HandleEntity) async -> [NodeEntity] {
+    func children(of nodeHandle: MEGADomain.HandleEntity, order: SortOrderEntity) async -> [NodeEntity] {
         []
     }
     

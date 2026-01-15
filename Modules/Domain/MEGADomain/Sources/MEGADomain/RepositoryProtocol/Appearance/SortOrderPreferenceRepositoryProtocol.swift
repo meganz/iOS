@@ -22,9 +22,9 @@ public protocol SortOrderPreferenceRepositoryProtocol: RepositoryProtocol {
     func sortOrder(for key: SortOrderPreferenceKeyEntity) -> SortOrderEntity?
     
     /// Fetches the desired sort order for the given NodeEntity/Folder, if an appearance model exists for the given node. Depending on users desired setting for applying sort logic. This may not fetch based on the passed node but instead use a global sort order.
-    /// - Parameter node: NodeEntity associated with a parent folder node
+    /// - Parameter nodeHandle: HandleEntity of the node associated with a parent folder node
     /// - Returns: SortOrderEntity that describes the order in which the contents of a parent folder should be sorted
-    func sortOrder(for node: NodeEntity) -> SortOrderEntity?
+    func sortOrder(for nodeHandle: HandleEntity) -> SortOrderEntity?
     
     /// Save the given sortOrder appearance information associated to the given key. Depending on users desired setting for applying sort logic. This may not save  on the passed key but instead save at a global associated level.
     /// - Parameters:
@@ -35,6 +35,6 @@ public protocol SortOrderPreferenceRepositoryProtocol: RepositoryProtocol {
     /// Save the given sortOrder appearance information associated to the given key. Depending on users desired setting for applying sort logic. This may not save  on the passed node but instead save at a global associated level.
     /// - Parameters:
     ///   - sortOrder: The desired sort order appearance to save against the associated key value.
-    ///   - node: Node identifying on which target to save this sort order preference against.
-    func save(sortOrder: SortOrderEntity, for node: NodeEntity)
+    ///   - nodeHandle: HandleEntity of the node identifying on which target to save this sort order preference against.
+    func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity)
 }

@@ -11,6 +11,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let onClose: @MainActor () -> Void
@@ -19,6 +20,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
             searchResultMapper: some FolderLinkSearchResultMapperProtocol,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
             onClose: @escaping @MainActor () -> Void
@@ -26,6 +28,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
             self.searchResultMapper = searchResultMapper
+            self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
             self.nodeActionHandler = nodeActionHandler
             self.onClose = onClose
@@ -155,6 +158,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         FolderLinkResultsView.Dependency(
             handle: handle,
             searchResultMapper: dependency.searchResultMapper,
+            sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
             nodeActionHandler: dependency.nodeActionHandler,
             selectionHandler: { selection in
                 if selection.result.isFolder {

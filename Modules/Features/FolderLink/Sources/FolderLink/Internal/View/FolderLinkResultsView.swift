@@ -2,6 +2,8 @@ import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
+import MEGAPreference
 import Search
 import SwiftUI
 
@@ -9,6 +11,7 @@ struct FolderLinkResultsView: View {
     struct Dependency {
         let handle: HandleEntity
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
     }
@@ -26,7 +29,9 @@ struct FolderLinkResultsView: View {
                     searchResultMapper: dependency.searchResultMapper,
                     titleUseCase: FolderLinkTitleUseCase(),
                     viewModeUseCase: FolderLinkViewModeUseCase(),
-                    isCloudDriveRevampEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
+                    searchUseCase: FolderLinkSearchUseCase(),
+                    quickActionUseCase: FolderLinkQuickActionUseCase(),
+                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
                 )
             )
         )
@@ -52,7 +57,15 @@ struct FolderLinkResultsView: View {
                 }
                 
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    moreOptions
+                    if viewModel.editMode.isEditing {
+                        Button {
+                            viewModel.editMode = .inactive
+                        } label: {
+                            Text(Strings.Localizable.cancel)
+                        }
+                    } else {
+                        moreOptions
+                    }
                 }
                 
                 ToolbarItemGroup(placement: .bottomBar) {
@@ -64,11 +77,24 @@ struct FolderLinkResultsView: View {
             }.onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
+            .environment(\.editMode, $viewModel.editMode)
     }
     
+    @ViewBuilder
     private var moreOptions: some View {
-        Button {
-            // todo moreOptions
+        Menu {
+            Section {
+                EditModeMenu(editMode: $viewModel.editMode)
+            }
+            
+            if !viewModel.quickActions.isEmpty {
+                Section {
+                    QuickActionMenu(
+                        quickActions: viewModel.quickActions,
+                        selection: $viewModel.quickAction
+                    )
+                }
+            }
         } label: {
             Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
         }

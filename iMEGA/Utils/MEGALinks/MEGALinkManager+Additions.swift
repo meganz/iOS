@@ -363,8 +363,12 @@ extension MEGALinkManager {
         NewFolderLinkViewController(link: link)
     }
     
+    /// We will only enable New Folder Link once Cloud Drive Revamp is fully released to all users
+    /// For now, we are using local feature flag for New Folder Link so we will need to constraint it Cloud Drive Revamp
+    /// This logic will be replaced with Remote feature flag for new Folder Link which will be added later once it is ready to release.
     @objc static func shouldUseNewFolderLink() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFolderLink)
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else { return false }
+        return DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFolderLink)
     }
     
     static func buildFolderLink(_ link: String, with key: String) -> String {

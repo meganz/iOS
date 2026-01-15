@@ -2,7 +2,7 @@ import MEGADomain
 
 package protocol FolderLinkSearchUseCaseProtocol: Sendable {
     func rootFolderLink() -> HandleEntity
-    func children(of nodeHandle: HandleEntity) async -> [NodeEntity]
+    func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity]
 }
 
 package struct FolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
@@ -16,7 +16,7 @@ package struct FolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
         folderLinkRepository.getRootNode()
     }
     
-    package func children(of nodeHandle: HandleEntity) async -> [NodeEntity] {
-        await folderLinkRepository.children(of: nodeHandle)
+    package func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity] {
+        await folderLinkRepository.children(of: nodeHandle, order: order)
     }
 }

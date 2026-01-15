@@ -437,7 +437,7 @@ struct CloudDriveViewControllerFactory {
                 nodeBrowserViewModel?.changeViewMode($0)
             }, changeSortOrder: { [weak nodeBrowserViewModel] sortOrder in
                 if let parentNode = nodeSource.parentNode {
-                    sortOrderPreferenceUseCase.save(sortOrder: sortOrder.toSortOrderEntity(), for: parentNode)
+                    sortOrderPreferenceUseCase.save(sortOrder: sortOrder.toSortOrderEntity(), for: parentNode.handle)
                 }
 
                 nodeBrowserViewModel?.changeSortOrder(sortOrder)
@@ -753,7 +753,7 @@ struct CloudDriveViewControllerFactory {
             nodeActionsBridge: nodeActionsBridge,
             onSelectionModeChange: onSelectionModeChange,
             sortOrderProvider: {
-                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
+                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode?.handle)
             },
             onNodeStructureChanged: onNodeStructureChanged,
             onMoreOptionsButtonTapped: moreOptionsButtonTapHandler
@@ -963,7 +963,7 @@ struct CloudDriveViewControllerFactory {
                 }
             },
             sortingOrder: { @MainActor in
-                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toUIComponentSortOrderEntity()
+                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode?.handle).toUIComponentSortOrderEntity()
             },
             updateSortOrder: { @MainActor sortOrder in
                 guard let node = nodeSource.parentNode else { return }
@@ -971,7 +971,7 @@ struct CloudDriveViewControllerFactory {
                 triggerEvent(for: sortOrder)
                 sortOrderPreferenceUseCase.save(
                     sortOrder: sortOrder,
-                    for: node
+                    for: node.handle
                 )
             },
             chipPickerShowedHandler: {

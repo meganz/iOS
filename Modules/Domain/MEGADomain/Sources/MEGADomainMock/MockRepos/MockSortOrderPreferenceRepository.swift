@@ -6,7 +6,7 @@ public final class MockSortOrderPreferenceRepository: SortOrderPreferenceReposit
     }
     
     public var keySortedEntity: [SortOrderPreferenceKeyEntity: SortOrderEntity] = [:]
-    public var nodeSortedEntity: [NodeEntity: SortOrderEntity] = [:]
+    public var nodeSortedEntity: [HandleEntity: SortOrderEntity] = [:]
     
     public var saveSortOrderForKey_calledCount: Int = 0
     public var saveSortOrderForNode_calledCount: Int = 0
@@ -18,7 +18,7 @@ public final class MockSortOrderPreferenceRepository: SortOrderPreferenceReposit
         megaSortOrderTypeCodes: [SortOrderEntity: Int] = [:],
         sortOrderPreferenceBasisCodes: [SortingPreferenceBasisEntity: Int] = [:],
         keySortedEntity: [SortOrderPreferenceKeyEntity: SortOrderEntity] = [:],
-        nodeSortedEntity: [NodeEntity: SortOrderEntity] = [:]) {
+        nodeSortedEntity: [HandleEntity: SortOrderEntity] = [:]) {
             self.megaSortOrderTypeCodes = megaSortOrderTypeCodes
             self.sortOrderPreferenceBasisCodes = sortOrderPreferenceBasisCodes
             self.keySortedEntity = keySortedEntity
@@ -41,8 +41,8 @@ public final class MockSortOrderPreferenceRepository: SortOrderPreferenceReposit
         keySortedEntity[key]
     }
     
-    public func sortOrder(for node: NodeEntity) -> SortOrderEntity? {
-        nodeSortedEntity[node]
+    public func sortOrder(for nodeHandle: HandleEntity) -> SortOrderEntity? {
+        nodeSortedEntity[nodeHandle]
     }
     
     public func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) {
@@ -50,8 +50,8 @@ public final class MockSortOrderPreferenceRepository: SortOrderPreferenceReposit
         keySortedEntity[key] = sortOrder
     }
     
-    public func save(sortOrder: SortOrderEntity, for node: NodeEntity) {
+    public func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) {
         saveSortOrderForNode_calledCount += 1
-        nodeSortedEntity[node] = sortOrder
+        nodeSortedEntity[nodeHandle] = sortOrder
     }
 }

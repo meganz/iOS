@@ -3,6 +3,7 @@ import Search
 
 protocol FolderLinkViewModeUseCaseProtocol: Sendable {
     func viewModeForOpeningFolder(_ handle: HandleEntity) -> SearchResultsViewMode
+    func shouldEnableMediaDiscoveryMode(for handle: HandleEntity) -> Bool
 }
 
 struct FolderLinkViewModeUseCase: FolderLinkViewModeUseCaseProtocol {
@@ -25,5 +26,10 @@ struct FolderLinkViewModeUseCase: FolderLinkViewModeUseCaseProtocol {
         }
         
         return withThumbnail > withoutThumbnail ? .grid : .list
+    }
+    
+    func shouldEnableMediaDiscoveryMode(for handle: HandleEntity) -> Bool {
+        let children = folderLinkRepository.children(of: handle)
+        return children.contains(where: { $0.mediaType != nil })
     }
 }

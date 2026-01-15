@@ -20,7 +20,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
         return sortOrderEntity
     }
     
-    public func sortOrder(for node: NodeEntity?) -> SortOrderEntity {
+    public func sortOrder(for nodeHandle: HandleEntity?) -> SortOrderEntity {
         sortOrderEntity
     }
     
@@ -30,7 +30,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
         messages.append(.save(sortOrder: sortOrder, for: key))
     }
     
-    public func save(sortOrder: SortOrderEntity, for node: NodeEntity) {
+    public func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) {
         sortOrderEntity = sortOrder
     }
     
@@ -40,7 +40,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
         return Just(sortOrderEntity).eraseToAnyPublisher()
     }
     
-    public func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never> {
+    public func monitorSortOrder(for nodeHandle: HandleEntity) -> AnyPublisher<SortOrderEntity, Never> {
         Just(sortOrderEntity).eraseToAnyPublisher()
     }
 }

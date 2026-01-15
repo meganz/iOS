@@ -10,7 +10,7 @@ final class MockFolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
     
     func rootFolderLink() -> HandleEntity { root }
     
-    func children(of nodeHandle: HandleEntity) async -> [NodeEntity] {
+    func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity] {
         []
     }
 }

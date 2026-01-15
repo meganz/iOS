@@ -11,9 +11,9 @@ public protocol SortOrderPreferenceUseCaseProtocol {
     func sortOrder(for key: SortOrderPreferenceKeyEntity) -> SortOrderEntity
     
     /// Fetches the desired sort order for the given NodeEntity/Folder, if an appearance model exists for the given node. Depending on users desired setting for applying sort logic. This may not fetch based on the passed node but instead use a global sort order.
-    /// - Parameter node: NodeEntity associated with a parent folder node.
+    /// - Parameter nodeHandle: HandleEntity of the node associated with a parent folder node.
     /// - Returns: SortOrderEntity that describes the order in which the contents of a parent folder should be sorted. If nil node provided it will return either the global sort order or the default sort type based on users SortingPreferenceBasisEntity preference
-    func sortOrder(for node: NodeEntity?) -> SortOrderEntity
+    func sortOrder(for nodeHandle: HandleEntity?) -> SortOrderEntity
     
     /// Save the given sortOrder appearance information associated to the given key. Depending on users desired setting for applying sort logic. This may not save  on the passed key but instead save at a global associated level.
     /// - Parameters:
@@ -24,8 +24,8 @@ public protocol SortOrderPreferenceUseCaseProtocol {
     /// Save the given sortOrder appearance information associated to the given key. Depending on users desired setting for applying sort logic. This may not save  on the passed node but instead save at a global associated level.
     /// - Parameters:
     ///   - sortOrder: The desired sort order appearance to save against the associated key value.
-    ///   - node: Node identifying on which target to save this sort order preference against.
-    func save(sortOrder: SortOrderEntity, for node: NodeEntity)
+    ///   - nodeHandle: HandleEntity of the node identifying on which target to save this sort order preference against.
+    func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity)
     
     /// Monitor and emit SortOrderEntity changes for the given key only. This publisher will only emit new SortOrderEntity values without emitting duplicates when the value for the given key changes only.
     /// - Parameter key: SortOrderPreferenceKeyEntity associated with a feature or context of the application
@@ -33,9 +33,9 @@ public protocol SortOrderPreferenceUseCaseProtocol {
     func monitorSortOrder(for key: SortOrderPreferenceKeyEntity) -> AnyPublisher<SortOrderEntity, Never>
 
     /// Monitor and emit SortOrderEntity changes for the given node only. This publisher will only emit new SortOrderEntity values without emitting duplicates when the value for the given key changes only.
-    /// - Parameter node: NodeEntity associated with a parent folder node
+    /// - Parameter nodeHandle: HandleEntity of the node associated with a parent folder node
     /// - Returns: A publisher that emits the SortOrderEntity for the given key, upon subscription it will emit the current value assigned to the node
-    func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never>
+    func monitorSortOrder(for nodeHandle: HandleEntity) -> AnyPublisher<SortOrderEntity, Never>
 }
 
 public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOrderPreferenceRepositoryProtocol>: SortOrderPreferenceUseCaseProtocol {
@@ -82,11 +82,11 @@ public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOr
         }
     }
     
-    public func sortOrder(for node: NodeEntity?) -> SortOrderEntity {
+    public func sortOrder(for nodeHandle: HandleEntity?) -> SortOrderEntity {
         switch userSortingAssignmentPreference {
         case .perFolder:
-            guard let node else { return .defaultAsc }
-            return sortOrderPreferenceRepository.sortOrder(for: node) ?? .defaultAsc
+            guard let nodeHandle else { return .defaultAsc }
+            return sortOrderPreferenceRepository.sortOrder(for: nodeHandle) ?? .defaultAsc
         case .sameForAll:
             return usersSortOrderPreferenceType
         }
@@ -102,10 +102,10 @@ public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOr
         notificationCenter.post(name: .sortingPreferenceChanged, object: nil)
     }
     
-    public func save(sortOrder: SortOrderEntity, for node: NodeEntity) {
+    public func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) {
         switch userSortingAssignmentPreference {
         case .perFolder:
-            sortOrderPreferenceRepository.save(sortOrder: sortOrder, for: node)
+            sortOrderPreferenceRepository.save(sortOrder: sortOrder, for: nodeHandle)
         case .sameForAll:
             usersSortOrderPreferenceRawType =  sortOrderPreferenceRepository.megaSortOrderTypeCode(for: sortOrder)
         }
@@ -121,11 +121,11 @@ public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOr
             .eraseToAnyPublisher()
     }
     
-    public func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never> {
+    public func monitorSortOrder(for nodeHandle: HandleEntity) -> AnyPublisher<SortOrderEntity, Never> {
         notificationCenter
             .publisher(for: .sortingPreferenceChanged)
-            .compactMap { _ in sortOrder(for: node) }
-            .prepend(sortOrder(for: node))
+            .compactMap { _ in sortOrder(for: nodeHandle) }
+            .prepend(sortOrder(for: nodeHandle))
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

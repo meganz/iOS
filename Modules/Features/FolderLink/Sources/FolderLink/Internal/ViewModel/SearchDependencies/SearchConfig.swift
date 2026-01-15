@@ -5,9 +5,9 @@ import Search
 import SwiftUI
 
 extension SearchConfig {
-    static func folderLink(_ isCloudDriveRevampEnabled: Bool) -> SearchConfig {
+    static var folderLink: SearchConfig {
         let contextPreviewFactory = SearchConfig.ContextPreviewFactory { _ in
-            .init(actions: [], previewMode: .noPreview) // todo handle contextPreview
+            .init(actions: [], previewMode: .noPreview)
         }
         
         let emptyViewAssets = SearchConfig.EmptyViewAssets(
@@ -17,7 +17,6 @@ extension SearchConfig {
         )
         
         return SearchConfig.searchConfig(
-            isCloudDriveRevampEnabled: isCloudDriveRevampEnabled,
             contextPreviewFactory: contextPreviewFactory,
             defaultEmptyViewAsset: { emptyViewAssets }
         )
@@ -26,7 +25,6 @@ extension SearchConfig {
     /// Folder Link currently only cares about context preview and empty assets
     /// The rest of config are either not supported or same as CloudDrive, so they are copied over from CloudDriveViewControllerFactory
     private static func searchConfig(
-        isCloudDriveRevampEnabled: Bool,
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
@@ -49,9 +47,7 @@ extension SearchConfig {
                 playImage: MEGAAssets.UIImage.videoList,
                 downloadedImage: MEGAAssets.UIImage.downloaded,
                 moreList: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                moreGrid: isCloudDriveRevampEnabled
-                ? MEGAAssets.UIImage.moreHorizontal
-                : MEGAAssets.UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                moreGrid: MEGAAssets.UIImage.moreHorizontal
             ),
             colorAssets: .init(
                 unselectedBorderColor: TokenColors.Border.strong.swiftUI,
@@ -62,8 +58,8 @@ extension SearchConfig {
                 tagsTextColor: TokenColors.Text.primary.swiftUI,
                 textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
-                verticalThumbnailFooterText: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI: TokenColors.Text.primary.swiftUI,
-                verticalThumbnailFooterBackground: isCloudDriveRevampEnabled ? TokenColors.Background.surfaceTransparent.swiftUI :  TokenColors.Background.surface1.swiftUI,
+                verticalThumbnailFooterText: TokenColors.Icon.onColor.swiftUI,
+                verticalThumbnailFooterBackground: TokenColors.Background.surfaceTransparent.swiftUI,
                 verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
                 listRowSeparator: TokenColors.Border.strong.swiftUI,
