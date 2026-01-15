@@ -169,10 +169,10 @@ extension MainTabBarController {
         // in case of device orientation change. 
         Task { [self] in
             let chatTabIndex = TabManager.chatTabIndex()
-            let tabBarButtons = tabBar.subviews
-                .filter { type(of: $0) == NSClassFromString("UITabBarButton") }
+            
+            guard let tabBarItem = tabBar.items?[safe: chatTabIndex] else { return }
+            guard let button = tabBarItem.value(forKey: "view") as? UIView else { return }
 
-            guard let button = tabBarButtons[safe: chatTabIndex] else { return }
             phoneBadgeImageView?.frame = frameForPhoneImageBadge(in: button)
         }
     }
