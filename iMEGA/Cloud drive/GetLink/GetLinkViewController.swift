@@ -163,13 +163,8 @@ class GetLinkViewController: UIViewController {
     // MARK: - Private
     
     private func configureNavigation() {
-        let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
+        let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: UIViewController.doneBarButtonStyle, target: self, action: #selector(doneBarButtonTapped))
         navigationItem.rightBarButtonItem = doneBarButtonItem
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
-            doneBarButtonItem.setTitleTextAttributes([
-                .foregroundColor: UIColor.white
-            ], for: .normal)
-        }
     }
     
     private func setupColors() {

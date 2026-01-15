@@ -13,7 +13,7 @@ class DecryptionKeysViewController: UIViewController {
         title = Strings.Localizable.decryptionKey.localizedCapitalized
         titleLabel.text = Strings.Localizable.decryptionKey.localizedCapitalized
         descriptionLabel.text = Strings.Localizable.OurEndToEndEncryptionSystemRequiresAUniqueKeyAutomaticallyGeneratedForThisFile.aLinkWithThisKeyIsCreatedByDefaultButYouCanExportTheDecryptionKeySeparatelyForAnAddedLayerOfSecurity
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(dismissView))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: UIViewController.doneBarButtonStyle, target: self, action: #selector(dismissView))
         imageView.image = MEGAAssets.UIImage.image(named: "decryptionKeyIllustration")
     }
 }

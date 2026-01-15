@@ -47,27 +47,27 @@ class ChatViewController: MessagesViewController {
     var startOrJoinButtonIsHiddenSubscription: AnyCancellable?
     
     lazy var exportBarButtonItem: UIBarButtonItem = {
-        let exportBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.export.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
+        let exportBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.export.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.exportSelectedMessages))
         return exportBarButtonItem
     }()
     lazy var forwardBarButtonItem: UIBarButtonItem = {
-        let forwardBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.forwardToolbar.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+        let forwardBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.forwardToolbar.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
         return forwardBarButtonItem
     }()
     lazy var copyBarButtonItem: UIBarButtonItem = {
-        let copyBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.copy.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
+        let copyBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.copy.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.copySelectedMessages))
         return copyBarButtonItem
     }()
     lazy var offlineBarButtonItem: UIBarButtonItem = {
-        let offlineBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.offline.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
+        let offlineBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.offline.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
         return offlineBarButtonItem
     }()
     lazy var saveToPhotosButtonItem: UIBarButtonItem = {
-        let saveToPhotosButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.saveToPhotos.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
+        let saveToPhotosButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.saveToPhotos.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
         return saveToPhotosButtonItem
     }()
     lazy var importButtonItem: UIBarButtonItem = {
-        let importButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.import.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
+        let importButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.import.imageFlippedForRightToLeftLayoutDirection(), style: UIViewController.doneBarButtonStyle, target: self, action: #selector(ChatViewController.importSelectedMessages))
         return importButtonItem
     }()
     

@@ -107,3 +107,13 @@ extension UIViewController {
         return MEGAChatSdk.shared.chatListItem(forChatId: noteToSelfChat.chatId)
     }
 }
+
+extension UIViewController {
+    static var doneBarButtonStyle: UIBarButtonItem.Style {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            return UIBarButtonItem.Style.plain
+        } else {
+            return UIBarButtonItem.Style.done
+        }
+    }
+}

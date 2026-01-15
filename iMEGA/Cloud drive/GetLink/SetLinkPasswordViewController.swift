@@ -35,7 +35,7 @@ class SetLinkPasswordViewController: UIViewController {
 
         title = Strings.Localizable.setPassword
 
-        let cancelBarButtonItem = UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(cancelBarButtonTapped))
+        let cancelBarButtonItem = UIBarButtonItem(title: Strings.Localizable.cancel, style: UIViewController.doneBarButtonStyle, target: self, action: #selector(cancelBarButtonTapped))
         navigationItem.rightBarButtonItem = cancelBarButtonItem
         
         passwordView.passwordTextField.returnKeyType = .next
