@@ -257,6 +257,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
         await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
+        await test(viewModel: sut, action: .viewDidDisappear, expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
         XCTAssertEqual(handler.pause_calledTimes, 1)
         XCTAssertEqual(handler.closePlayer_calledTimes, 1)

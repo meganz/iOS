@@ -18,6 +18,7 @@ enum AudioPlayerAction: ActionType {
     
     case onViewDidLoad
     case viewWillDisappear(reason: ViewWillDisappearReason)
+    case viewDidDisappear
     case removeDelegates
     case initMiniPlayer
     case updateCurrentTime(percentage: Float)
@@ -108,6 +109,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private var allNodes: [MEGANode]?
+    private var shouldRequestStopAudioPlayerSession = false
     
     private var repeatItemsState: RepeatMode {
         didSet {
@@ -573,9 +575,13 @@ final class AudioPlayerViewModel: ViewModelType {
                     initMiniPlayer()
                     return
                 }
-                accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
+                accountUseCase.isLoggedIn() ? initMiniPlayer() : (shouldRequestStopAudioPlayerSession = true)
             case .systemPushedAnotherView:
                 break
+            }
+        case .viewDidDisappear:
+            if shouldRequestStopAudioPlayerSession {
+                requestStopAudioPlayerSession()
             }
         case .removeDelegates:
             removeDelegates()

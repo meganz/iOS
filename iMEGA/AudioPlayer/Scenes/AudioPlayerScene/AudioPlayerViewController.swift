@@ -82,6 +82,11 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.dispatch(.viewDidDisappear)
+    }
+    
     /// Overriding dismiss function to detect dismissal of current view controller triggered from navigation controller's dismissal
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag, completion: completion)
