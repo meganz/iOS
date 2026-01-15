@@ -51,6 +51,7 @@ final class AlbumContentViewModel: ViewModelType {
         case showRemoveLinkAlert
         case showSharePhotoLinks
         case updateAddToAlbumButton(Bool)
+        case showEmptyView(isEmpty: Bool, isRevampEnabled: Bool)
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -166,7 +167,8 @@ final class AlbumContentViewModel: ViewModelType {
         case .deletePhotosTap:
             invokeCommand?(overDiskQuotaChecker.showOverDiskQuotaIfNeeded() ? .endEditingMode : .deletePhotos)
         case .deletePhotos(let photos):
-            deletePhotosTask = Task {
+            deletePhotosTask = Task { [weak self] in
+                guard let self else { return}
                 await deletePhotos(photos)
             }
         case .deleteAlbum:
@@ -194,7 +196,9 @@ final class AlbumContentViewModel: ViewModelType {
             guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
             showRenameAlbumAlert()
         case .onEditModeChange(let isEditing):
-            updateAddToAlbumFloatingActionButton(isEditing: isEditing)
+            Task {
+                await updateAddToAlbumFloatingActionButton(isEditing: isEditing)
+            }
         default:
             break
         }
@@ -237,7 +241,8 @@ final class AlbumContentViewModel: ViewModelType {
         tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
         invokeCommand?(.configureRightBarButtons(
             contextMenuConfiguration: nil, canAddPhotosToAlbum: shouldAddContextMenuAddButton))
-        loadingTask = Task {
+        loadingTask = Task { [weak self] in
+            guard let self else { return }
             await addNewAlbumPhotosIfNeeded()
             guard !Task.isCancelled else { return }
             await loadNodes()
@@ -277,6 +282,8 @@ final class AlbumContentViewModel: ViewModelType {
         guard !Task.isCancelled else { return }
         let shouldDismissAlbum = photos.isEmpty && [AlbumEntityType.raw, .gif].contains(album.type)
         await shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
+        guard !shouldDismissAlbum else { return }
+        invokeCommand?(.showEmptyView(isEmpty: photos.isEmpty, isRevampEnabled: isMediaRevampEnabled))
     }
     
     private func addNewAlbumPhotosIfNeeded() async {
@@ -286,8 +293,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func addAdditionalPhotos(_ photos: [NodeEntity]) {
-        addAdditionalPhotosTask = Task {
-            await addPhotos(photos)
+        addAdditionalPhotosTask = Task { [weak self] in
+            await self?.addPhotos(photos)
         }
     }
     
@@ -311,8 +318,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showAlbumPhotos() {
-        showAlbumPhotosTask = Task {
-            await showAlbumPhotos()
+        showAlbumPhotosTask = Task { [weak self] in
+            await self?.showAlbumPhotos()
         }
     }
     
@@ -332,17 +339,18 @@ final class AlbumContentViewModel: ViewModelType {
         await invokeCommand?(.showAlbumPhotos(photos: albumContentDataProvider.photos(for: selectedFilter), sortOrder: selectedSortOrder))
         guard !Task.isCancelled else { return }
         await updateRightBarButtons()
-        updateAddToAlbumFloatingActionButton()
+        await updateAddToAlbumFloatingActionButton()
     }
     
     private func reloadAlbum() {
-        reloadAlbumTask = Task {
-            await loadNodes()
+        reloadAlbumTask = Task { [weak self] in
+            await self?.loadNodes()
         }
     }
     
     private func setupAlbumMonitoring() {
-        setupSubscriptionTask = Task {
+        setupSubscriptionTask = Task { [weak self] in
+            guard let self else { return }
             if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
                 await monitorAlbumPhotos()
             } else {
@@ -428,7 +436,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func deleteAlbum() {
-        deleteAlbumTask = Task {
+        deleteAlbumTask = Task { [weak self] in
+            guard let self else { return }
             let albumIds = await albumModificationUseCase.delete(albums: [album.id])
             guard !Task.isCancelled else { return }
             
@@ -462,8 +471,9 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func retrieveNewUserAlbumCover(photoId: HandleEntity) {
-        retrieveUserAlbumCover = Task {
-            guard let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId),
+        retrieveUserAlbumCover = Task {  [weak self] in
+            guard let self,
+                  let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId),
                   !Task.isCancelled else { return }
             
             album.coverNode = newCover
@@ -502,8 +512,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func updateRightBarButtons() {
-        updateRightBarButtonsTask = Task {
-            await updateRightBarButtons()
+        updateRightBarButtonsTask = Task { [weak self] in
+            await self?.updateRightBarButtons()
         }
     }
     
@@ -544,7 +554,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func showRenameAlbumAlert() {
-        retrieveAlbumNamesTask = Task { @MainActor in
+        retrieveAlbumNamesTask = Task { @MainActor [weak self] in
+            guard let self else { return }
             let userAlbumNames = await albumNameUseCase.userAlbumNames()
             
             guard !Task.isCancelled else { return }
@@ -574,7 +585,8 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func renameAlbum(with name: String) {
-        renameAlbumNamesTask = Task {
+        renameAlbumNamesTask = Task { [weak self, albumModificationUseCase] in
+            guard let self else { return }
             do {
                 let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
                 guard !Task.isCancelled else { return }
@@ -591,13 +603,13 @@ final class AlbumContentViewModel: ViewModelType {
         invokeCommand?(command)
     }
     
-    private func updateAddToAlbumFloatingActionButton(isEditing: Bool = false) {
+    private func updateAddToAlbumFloatingActionButton(isEditing: Bool = false) async {
         guard isMediaRevampEnabled else { return }
         
         let isButtonVisible = if isEditing {
             false
         } else {
-            canAddPhotosToAlbum
+            await !albumContentDataProvider.isEmpty() && canAddPhotosToAlbum
         }
         invokeCommand?(.updateAddToAlbumButton(isButtonVisible))
     }

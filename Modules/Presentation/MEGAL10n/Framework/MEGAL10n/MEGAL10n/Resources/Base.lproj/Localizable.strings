@@ -4834,3 +4834,5 @@
 "cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
+/* Add items */
+"general.addItems"="Add items";

@@ -453,4 +453,5 @@ public struct MEGAUIImageBundle {
     public static var linkGear: UIImage { UIImage.linkGear }
     public static var link02SmallThin: UIImage { UIImage.link02SmallThin }
     public static var image04Solid: UIImage { UIImage.image04Solid }
+    public static var glassAlbum: UIImage { UIImage.glassAlbum }
 }

@@ -31,7 +31,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         assertTrackAnalyticsEventCalled(
@@ -57,7 +58,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -69,7 +71,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -100,7 +103,8 @@ final class AlbumContentViewModelTests: XCTestCase {
             .finishLoading,
             .showResultMessage(.success("Added 2 items to “\(self.albumEntity.name)”")),
             .showAlbumPhotos(photos: nodesToAdd, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
@@ -123,7 +127,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
         await test(viewModel: sut, trigger: { albumReloadPublisher.send() }, expectedCommands: [
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], expectationValidation: ==)
     }
     
@@ -152,7 +157,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -172,7 +178,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: images, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -191,7 +198,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: videos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -212,7 +220,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -232,7 +241,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -252,7 +262,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -273,7 +284,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: expectedImages, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         test(viewModel: sut, action: .changeFilter(.images), expectedCommands: [
@@ -299,7 +311,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: expectedVideos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         test(viewModel: sut, action: .changeFilter(.videos), expectedCommands: [
@@ -323,7 +336,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -375,7 +389,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: expectedNodes, sortOrder: expectedSortOrders.removeFirst()),
-            .configureRightBarButtons(contextMenuConfiguration: initialConfiguration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: initialConfiguration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let updatedConfiguration = makeContextConfiguration(
@@ -424,7 +439,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: allMedia, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let testCases = [
@@ -460,7 +476,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -477,7 +494,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -544,7 +562,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: expectedAddedPhotos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let exp = expectation(description: "Should not show added message or add items")
@@ -580,7 +599,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let exp = expectation(description: "Should only show loading then finish loading")
@@ -675,7 +695,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: nodesToRemove, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
@@ -700,7 +721,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         let exp = expectation(description: "Should not invoke any commands")
@@ -731,7 +753,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: allPhotos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
         
         await sut.setupSubscriptionTask?.value
@@ -754,7 +777,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         await test(viewModel: sut, trigger: { albumReloadPublisher.send() }, expectedCommands: [
             .showAlbumPhotos(photos: expectedVideos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: videoFilterConfiguration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: videoFilterConfiguration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -929,7 +953,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
             .showAlbumPhotos(photos: photoNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
+            .showEmptyView(isEmpty: false, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -973,7 +998,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
+            .showEmptyView(isEmpty: true, isRevampEnabled: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -1296,21 +1322,38 @@ struct AlbumContentViewModelTestSuite {
         }
         
         @Test(arguments: [
-            (AlbumEntityType.favourite, false, false),
-            (AlbumEntityType.favourite, true, false),
-            (AlbumEntityType.user, false, true),
-            (AlbumEntityType.user, true, false)
+            (AlbumEntityType.favourite, false, false, false),
+            (AlbumEntityType.user, false, false, true),
+            (AlbumEntityType.favourite, false, true, false),
+            (AlbumEntityType.user, false, true, false),
+            // Editing
+            (AlbumEntityType.favourite, true, false, false),
+            (AlbumEntityType.user, true, false, false)
         ])
         func onEditModeChange(
             type: AlbumEntityType,
             isEditing: Bool,
+            isPhotosEmpty: Bool,
             isAddFloatingActionBarButtonVisible: Bool
         ) async throws {
+            let photoNodes = [
+                NodeEntity(handle: 65),
+                NodeEntity(handle: 89)
+            ]
+            let albumPhotos: [AlbumPhotoEntity] = isPhotosEmpty ? [] : photoNodes.toAlbumPhotoEntities()
+            let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+                item: Result<[AlbumPhotoEntity], any Error>.success(albumPhotos))
+            let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
+                monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
             let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: true])
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
                 albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
                 featureFlagProvider: featureFlagProvider)
+            
+            sut.dispatch(.onViewWillAppear)
+            await sut.setupSubscriptionTask?.value
             
             try await confirmation { confirmation in
                 sut.invokeCommand = { command in
@@ -1443,6 +1486,8 @@ private extension AlbumContentViewModel.Command {
                 lhsCanAddPhotosToAlbum == rhsCanAddPhotosToAlbum
         case (.showRenameAlbumAlert(let lhsViewModel), .showRenameAlbumAlert(let rhsViewModel)):
             lhsViewModel == rhsViewModel
+        case (.showEmptyView(let lhsIsEmpty, let lshIsRevampEnabled), .showEmptyView(let rhsIsEmpty, let rshIsRevampEnabled)):
+            lhsIsEmpty == rhsIsEmpty && lshIsRevampEnabled == rshIsRevampEnabled
         case (.dismissAlbum, .dismissAlbum),
             (.updateNavigationTitle, .updateNavigationTitle),
             (.startLoading, .startLoading),

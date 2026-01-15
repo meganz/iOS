@@ -41,6 +41,17 @@ final class AlbumContentViewController: UIViewController, ViewType {
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
     private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
+    private lazy var emptyAlbumHostingController: UIHostingController<RevampedContentUnavailableView> = {
+        let view = RevampedContentUnavailableView(
+            viewModel: .emptyAlbum { [weak viewModel] in
+                viewModel?.dispatch(.addToAlbumTap)
+            }
+        )
+
+        let controller = UIHostingController(rootView: view)
+        controller.view.backgroundColor = .clear
+        return controller
+    }()
     private var floatingActionButtonController: UIHostingController<RoundedPrimaryImageButton>?
     
     var contextMenuManager: ContextMenuManager?
@@ -150,12 +161,6 @@ final class AlbumContentViewController: UIViewController, ViewType {
             SVProgressHUD.dismiss()
         case .showAlbumPhotos(let nodes, let sortOrder):
             updatePhotoLibrary(by: nodes, withSortType: sortOrder.toSortOrderEntity())
-            
-            if nodes.isEmpty {
-                showEmptyView()
-            } else {
-                removeEmptyView()
-            }
         case .dismissAlbum:
             presentedViewController?.dismiss(animated: false)
             dismiss(animated: true)
@@ -189,6 +194,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
             showSharePhotoLinks()
         case .updateAddToAlbumButton(let isVisible):
             isVisible ? addFloatingAddButton() : removeAddToAlbumFloatingActionButton()
+        case .showEmptyView(let isEmpty, let isRevampEnabled):
+            isEmpty ? showEmptyView(isRevampEnabled: isRevampEnabled) : removeEmptyView(isRevampEnabled: isRevampEnabled)
         }
     }
     
@@ -224,7 +231,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
         }
     }
     
-    private func showEmptyView() {
+    private func showEmptyView(isRevampEnabled: Bool) {
+        guard !isRevampEnabled else {
+            showRevampEmptyView()
+            return
+        }
         view.addSubview(emptyView)
         
         emptyView.translatesAutoresizingMaskIntoConstraints = false
@@ -232,8 +243,35 @@ final class AlbumContentViewController: UIViewController, ViewType {
         emptyView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
     
-    private func removeEmptyView() {
+    private func showRevampEmptyView() {
+        guard let emptyView = emptyAlbumHostingController.view else { return }
+        
+        addChild(emptyAlbumHostingController)
+        view.addSubview(emptyView)
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            emptyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            emptyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            emptyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        emptyAlbumHostingController.didMove(toParent: self)
+    }
+    
+    private func removeEmptyView(isRevampEnabled: Bool) {
+        guard !isRevampEnabled else {
+            removeRevampEmptyView()
+            return
+        }
         emptyView.removeFromSuperview()
+    }
+    
+    private func removeRevampEmptyView() {
+        emptyAlbumHostingController.willMove(toParent: nil)
+        emptyAlbumHostingController.view.removeFromSuperview()
+        emptyAlbumHostingController.removeFromParent()
     }
     
     private func showAlbumDeleteConfirmation() {
@@ -378,5 +416,23 @@ final class AlbumContentViewController: UIViewController, ViewType {
         controller.view.removeFromSuperview()
         controller.removeFromParent()
         floatingActionButtonController = nil
+    }
+}
+
+private extension ContentUnavailableViewModel {
+    static func emptyAlbum(addItemsAction: @escaping () -> Void) -> Self {
+        .init(
+            image: MEGAAssets.Image.glassAlbum,
+            title: Strings.Localizable.CameraUploads.Albums.Empty.title,
+            font: .callout,
+            titleTextColor: TokenColors.Text.secondary.swiftUI,
+            actions: [
+                ContentUnavailableViewModel.ButtonAction(
+                    title: Strings.Localizable.General.addItems,
+                    image: MEGAAssets.Image.plus,
+                    handler: addItemsAction
+                )
+            ]
+        )
     }
 }

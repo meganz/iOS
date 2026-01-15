@@ -4834,3 +4834,5 @@
 "media.photoLibrary.zoom.compact.title"="Compact";
 /* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Add items */
+"general.addItems"="Add items";
