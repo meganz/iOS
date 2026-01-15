@@ -108,7 +108,9 @@ enum ChatContentRoutingStyle: Int {
         switch chatContentRoutingStyle {
         case .push:
             guard let navigationPresenter = presenter as? UINavigationController else { return }
-            navigationPresenter.pushViewController(chatViewController, animated: true)
+            DispatchQueue.main.async {
+                navigationPresenter.pushViewController(chatViewController, animated: true)
+            }
         case .present:
             let nc = MEGANavigationController(rootViewController: chatViewController)
             nc.modalPresentationStyle = .fullScreen
