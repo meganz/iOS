@@ -169,9 +169,31 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             return fillResults(query: query)
         }
     }
-    
-    private func nodeListEntity(from searchQuery: SearchQuery) async throws -> NodeListEntity? {
+
+    /// Description: Fetch the NodeListEntity from SDK.
+    /// - Parameters:
+    ///   - searchQuery: The search query
+    ///   - maxRetries: In certain circumstances (e.g: SDK hasn't finished initial nodes fetching), filesSearchUseCase will not be able to fetch nodes correctly.
+    ///   Therefore we allow delayed retry attempts to request for nodes again. After <maxRetries> attempts are are made,, we will return nil
+    /// - Returns: The fetched NodeListEntity
+    private func nodeListEntity(from searchQuery: SearchQuery, maxRetries: Int = 10) async throws -> NodeListEntity? {
+        MEGALogDebug("nodeListEntity fetching started with retries \(maxRetries)")
+        guard let parentNode = parentNodeProvider() else {
+            if maxRetries < 0 {
+                MEGALogDebug("nodeListEntity ran out of retries, returning nil")
+                return nil
+            }
+            MEGALogDebug("nodeListEntity without parentNode, retrying...")
+            // Allow 0.1s delay between retries
+            try await Task.sleep(nanoseconds: 100_000_000)
+            MEGALogDebug("==> nodeListEntity about to retry with \(maxRetries - 1)")
+            try Task.checkCancellation()
+            return try await nodeListEntity(from: searchQuery, maxRetries: maxRetries - 1)
+        }
+
+        MEGALogDebug("nodeListEntity found parentNodeProvider: \(parentNode.handle)")
         guard let searchFilterEntity = await buildSearchFilterEntity(from: searchQuery) else {
+            MEGALogDebug("nodeListEntity could not build buildSearchFilterEntity")
             return nil
         }
     

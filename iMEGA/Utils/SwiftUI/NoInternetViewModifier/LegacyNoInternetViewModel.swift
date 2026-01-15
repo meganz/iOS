@@ -5,7 +5,7 @@ import MEGASwift
 final class LegacyNoInternetViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
 
-    @Published private(set) var isConnected = true
+    @Published private(set) var isConnected: Bool
     typealias NetworkConnectionStateChanged = (Bool) -> Void
     var networkConnectionStateChanged: NetworkConnectionStateChanged?
 
@@ -15,6 +15,7 @@ final class LegacyNoInternetViewModel: ObservableObject {
     ) {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.networkConnectionStateChanged = networkConnectionStateChanged
+        self.isConnected = networkMonitorUseCase.isConnected()
     }
     
     @MainActor
