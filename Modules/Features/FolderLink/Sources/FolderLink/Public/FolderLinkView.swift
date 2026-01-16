@@ -70,11 +70,6 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        closeButton
-                    }
-                }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
     }
@@ -103,6 +98,10 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                     viewModel.acknowledgeInvalidDecryptionKey()
                 }
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        closeButton
+                    }
+                    
                     ToolbarItem(placement: .principal) {
                         Text(Strings.Localizable.folderLink)
                             .font(.headline)
@@ -113,6 +112,10 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         case let .error(reason):
             linkUnavailableContent(reason)
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        closeButton
+                    }
+                    
                     ToolbarItem(placement: .principal) {
                         VStack {
                             Text(Strings.Localizable.folderLink)
@@ -129,7 +132,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                 }
         case let .results(nodeHandle):
             FolderLinkResultsView(
-                dependency: folderLinkResultsDependency(handle: nodeHandle)
+                dependency: folderLinkResultsDependency(isRoot: true, handle: nodeHandle)
             )
         }
     }
@@ -139,13 +142,8 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         switch route {
         case let .folder(nodeHandle):
             FolderLinkResultsView(
-                dependency: folderLinkResultsDependency(handle: nodeHandle)
+                dependency: folderLinkResultsDependency(isRoot: false, handle: nodeHandle)
             )
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    backButton
-                }
-            }
         }
     }
     
@@ -159,16 +157,9 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         }
     }
     
-    private var backButton: some View {
-        Button {
-            navigationPath.removeLast()
-        } label: {
-            Image(uiImage: MEGAAssets.UIImage.backArrow)
-        }
-    }
-    
-    private func folderLinkResultsDependency(handle: HandleEntity) -> FolderLinkResultsView.Dependency {
+    private func folderLinkResultsDependency(isRoot: Bool, handle: HandleEntity) -> FolderLinkResultsView.Dependency {
         FolderLinkResultsView.Dependency(
+            isRoot: isRoot,
             handle: handle,
             link: dependency.link,
             searchResultMapper: dependency.searchResultMapper,
@@ -179,6 +170,13 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                     navigationPath.append(NavigationRoute.folder(selection.result.id))
                 } else {
                     dependency.fileNodeOpener.openNode(handle: selection.result.id, siblings: selection.siblings())
+                }
+            },
+            onDismiss: { isRoot in
+                if isRoot {
+                    dependency.onClose()
+                } else {
+                    navigationPath.removeLast()
                 }
             }
         )

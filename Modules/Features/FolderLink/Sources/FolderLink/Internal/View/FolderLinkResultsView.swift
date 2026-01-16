@@ -9,12 +9,14 @@ import SwiftUI
 
 struct FolderLinkResultsView: View {
     struct Dependency {
+        let isRoot: Bool
         let handle: HandleEntity
         let link: String
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
+        let onDismiss: @MainActor (Bool) -> Void
     }
     
     @StateObject private var viewModel: FolderLinkResultsViewModel
@@ -46,6 +48,10 @@ struct FolderLinkResultsView: View {
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden(true)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    topBarLeadingItem
+                }
+                
                 ToolbarItem(placement: .principal) {
                     FolderLinkNavigationTitleView(title: viewModel.title, subtitle: viewModel.subtitle)
                 }
@@ -68,6 +74,30 @@ struct FolderLinkResultsView: View {
                 dependency.nodeActionHandler.handle(action: action)
             }
             .environment(\.editMode, $viewModel.editMode)
+    }
+    
+    @ViewBuilder
+    private var topBarLeadingItem: some View {
+        if viewModel.editMode.isEditing {
+            Button {
+                viewModel.toggleSelectAll()
+            } label: {
+                MEGAAssets.Image.checkStack
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+            }
+        } else {
+            Button {
+                dependency.onDismiss(dependency.isRoot)
+            } label: {
+                if dependency.isRoot {
+                    Text(Strings.Localizable.close)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                } else {
+                    Image(uiImage: MEGAAssets.UIImage.backArrow)
+                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                }
+            }
+        }
     }
     
     @ViewBuilder

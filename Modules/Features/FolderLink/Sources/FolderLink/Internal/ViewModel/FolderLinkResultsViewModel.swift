@@ -31,24 +31,8 @@ final class FolderLinkResultsViewModel: ObservableObject {
     @Published var bottomBarAction: FolderLinkBottomBarAction?
     @Published var bottomBarDisabled: Bool = true
     @Published var shouldIncludeSaveToPhotosBottomAction: Bool = false
-    
-    // IOS-11084 - handle edit mode
-    var title: String {
-        switch dependency.titleUseCase.title(for: dependency.nodeHandle) {
-        case let .named(value):
-            value
-        case .file:
-            Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
-        case .folder:
-            Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
-        case .unknown:
-            Strings.Localizable.folderLink
-        }
-    }
-    
-    var subtitle: String {
-        Strings.Localizable.folderLink
-    }
+    @Published var title: String = ""
+    @Published var subtitle: String?
     
     var shouldShowQuickActionsMenu: Bool {
         dependency.quickActionUseCase.shouldEnableQuickActions(for: dependency.nodeHandle)
@@ -225,5 +209,37 @@ final class FolderLinkResultsViewModel: ObservableObject {
                 }
             }
             .assign(to: &$nodesAction)
+        
+        $selectedNodes
+            .combineLatest($editMode)
+            .map { nodes, editMode in
+                dependency.titleUseCase.title(
+                    for: dependency.nodeHandle,
+                    editingState: editMode.isEditing ? .active(nodes) : .inactive
+                )
+            }.sink { [weak self] type in
+                switch type {
+                case .askForSelecting:
+                    self?.title = Strings.Localizable.selectTitle
+                    self?.subtitle = nil
+                case let .folderNodeName(name):
+                    self?.title = name
+                    self?.subtitle = Strings.Localizable.folderLink
+                case let .selectedItems(count):
+                    self?.title = Strings.Localizable.General.Format.itemsSelected(count)
+                    self?.subtitle = nil
+                case .undecryptedFolder:
+                    self?.title = Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+                    self?.subtitle = Strings.Localizable.folderLink
+                case .generic:
+                    self?.title = Strings.Localizable.folderLink
+                    self?.subtitle = nil
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func toggleSelectAll() {
+        searchResultsContainerViewModel.toggleSelectAll()
     }
 }

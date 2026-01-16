@@ -1,14 +1,7 @@
 import MEGADomain
 
-enum FolderLinkTitleType {
-    case file
-    case folder
-    case named(String)
-    case unknown
-}
-
 protocol FolderLinkTitleUseCaseProtocol: Sendable {
-    func title(for nodeHandle: HandleEntity) -> FolderLinkTitleType
+    func title(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState) -> FolderLinkTitleType
 }
 
 struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
@@ -18,14 +11,20 @@ struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func title(for nodeHandle: HandleEntity) -> FolderLinkTitleType {
-        guard let node = folderLinkRepository.node(for: nodeHandle) else { return .unknown }
-        return if node.isNodeKeyDecrypted {
-            .named(node.name)
-        } else if node.isFile {
-            .file
-        } else {
-            .folder
+    func title(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState) -> FolderLinkTitleType {
+        switch editingState {
+        case let .active(nodeHandles):
+            if nodeHandles.isEmpty {
+                .askForSelecting
+            } else {
+                .selectedItems(nodeHandles.count)
+            }
+        case .inactive:
+            if let node = folderLinkRepository.node(for: nodeHandle) {
+                node.isNodeKeyDecrypted ? .folderNodeName(node.name) : .undecryptedFolder
+            } else {
+                .generic
+            }
         }
     }
 }
