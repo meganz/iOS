@@ -12,6 +12,7 @@ import MEGAPermissionsMock
 import MEGAPreference
 import MEGAPreferenceMocks
 import MEGASwift
+import MEGATest
 import Testing
 import XCTest
 
@@ -582,7 +583,18 @@ struct PhotosViewModelTestSuite {
 
             #expect(sut.navigationSubtitle == Strings.Localizable.CameraUploads.upToDate)
         }
-        
+
+        @Test
+        func testTrackAddToAlbumMenuItemEvent() {
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
+            sut.trackAddToAlbumMenuItemEvent()
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [AddToAlbumMenuItemEvent()]
+            )
+        }
+
         private func makeAndStartSUT(
             state: CameraUploadStateEntity,
             isCameraUploadProgress: Bool = true,
@@ -640,6 +652,7 @@ struct PhotosViewModelTestSuite {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             nodeUseCase: nodeUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
+            tracker: tracker,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
             uploadStateDebounceDuration: uploadStateDebounceDuration)

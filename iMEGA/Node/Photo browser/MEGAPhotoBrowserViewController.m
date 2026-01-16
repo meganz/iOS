@@ -1253,6 +1253,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self unhideWithNode:node];
             break;
         case MegaNodeActionTypeAddToAlbum:
+            [self.viewModel trackAddToAlbumMenuItemEvent];
             [self addToAlbumWithNode:node];
             break;
         case MegaNodeActionTypeAddTo:

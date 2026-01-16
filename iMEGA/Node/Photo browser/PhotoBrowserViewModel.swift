@@ -68,4 +68,8 @@ import MEGADomain
     @objc func trackHideNodeMenuEvent() {
         tracker.trackAnalyticsEvent(with: ImagePreviewHideNodeMenuToolBarEvent())
     }
+
+    @objc func trackAddToAlbumMenuItemEvent() {
+        tracker.trackAnalyticsEvent(with: AddToAlbumMenuItemEvent())
+    }
 }

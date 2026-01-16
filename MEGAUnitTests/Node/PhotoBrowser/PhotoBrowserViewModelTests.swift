@@ -4,6 +4,7 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import XCTest
 
 @MainActor
@@ -79,7 +80,17 @@ final class PhotoBrowserViewModelTests: XCTestCase {
         sut.dispatch(.onViewWillAppear)
         XCTAssertNotNil(sut.monitorNodeUpdatesTask)
     }
-    
+
+    func testTrackAddToAlbumMenuItemEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        sut.trackAddToAlbumMenuItemEvent()
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AddToAlbumMenuItemEvent()]
+        )
+    }
+
     private func makeSUT(
         tracker: any AnalyticsTracking = MockTracker(),
         photoBrowserUseCase: any PhotoBrowserUseCaseProtocol = MockPhotoBrowserUseCase()

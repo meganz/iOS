@@ -183,6 +183,7 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
         case .unhide:
             unhide(nodes: nodes.toNodeEntities())
         case .addToAlbum:
+            viewModel.trackAddToAlbumMenuItemEvent()
             addToAlbum(nodes: nodes.toNodeEntities())
         default:
             break

@@ -209,7 +209,11 @@ final class PhotosViewModel: NSObject {
     func trackHideNodeMenuEvent() {
         tracker.trackAnalyticsEvent(with: TimelineHideNodeMenuItemEvent())
     }
-    
+
+    func trackAddToAlbumMenuItemEvent() {
+        tracker.trackAnalyticsEvent(with: AddToAlbumMenuItemEvent())
+    }
+
     // MARK: - Sort
     func update(sortOrderType: SortOrderType) {
         sortOrderPreferenceUseCase.save(

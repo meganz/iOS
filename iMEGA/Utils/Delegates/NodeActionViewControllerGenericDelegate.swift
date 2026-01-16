@@ -167,6 +167,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         case .unhide:
             unhide(nodes: [node.toNodeEntity()])
         case .addToAlbum:
+            tracker.trackAnalyticsEvent(with: AddToAlbumMenuItemEvent())
             addTo(mode: .album, nodes: [node.toNodeEntity()])
         case .addTo:
             addTo(mode: .collection, nodes: [node.toNodeEntity()])
