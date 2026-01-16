@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGAFoundation
 import MEGAInfrastructure
 import MEGASwift
@@ -729,9 +729,16 @@ extension SearchResultsViewModel {
 public extension SearchResultsViewModel {
     /// Async sequence to expose the count of list items to comsumers from outside
     var itemCountSequence: AnyAsyncSequence<Int> {
-        $listItems
-            .values
-            .map { $0.count }
-            .eraseToAnyAsyncSequence()
+        AsyncStream(Int.self, bufferingPolicy: .bufferingNewest(1)) { continuation in
+
+            let cancellable = $listItems.sink { items in
+                continuation.yield(items.count)
+            }
+
+            continuation.onTermination = { _ in
+                cancellable.cancel()
+            }
+        }.eraseToAnyAsyncSequence()
+
     }
 }
