@@ -1277,14 +1277,14 @@ struct CloudDriveViewControllerFactory {
 
         let actionProvider = NodeUploadAddActionsProvider(actionHandler: uploadAddMenuDelegateHandler)
 
-        let emptyStateProvider = SearchResultsEmptyStateProvider(viewModel: searchResultsViewModel)
+        let viewStateProvider = SearchResultsViewStateProvider(viewModel: searchResultsViewModel)
 
         let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
             parentNode: nodeSource.parentNode,
             nodeBrowserConfig: config,
             nodeUpdatesProvider: nodeUpdatesProvider,
             nodeUseCase: nodeUseCase,
-            searchResultsEmptyStateProvider: emptyStateProvider
+            searchResultsViewStateProvider: viewStateProvider
         )
 
         return FloatingAddButtonViewModel(

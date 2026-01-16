@@ -11,20 +11,20 @@ struct FloatingAddButtonVisibilityDataSource {
     private let nodeBrowserConfig: NodeBrowserConfig
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let searchResultsEmptyStateProvider: any SearchResultsEmptyStateProviding
+    private let searchResultsViewStateProvider: any SearchResultsViewStateProviding
 
     init(
         parentNode: NodeEntity?,
         nodeBrowserConfig: NodeBrowserConfig,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        searchResultsEmptyStateProvider: some SearchResultsEmptyStateProviding
+        searchResultsViewStateProvider: some SearchResultsViewStateProviding
     ) {
         self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeBrowserConfig = nodeBrowserConfig
         self.parentNode = parentNode
         self.nodeUseCase = nodeUseCase
-        self.searchResultsEmptyStateProvider = searchResultsEmptyStateProvider
+        self.searchResultsViewStateProvider = searchResultsViewStateProvider
     }
 
     private func visibilityValue(for node: NodeEntity) -> Bool {
@@ -57,7 +57,7 @@ extension FloatingAddButtonVisibilityDataSource: FloatingAddButtonVisibilityData
             .prepend(visibilityValue(for: parentNode))
             .eraseToAnyAsyncSequence()
 
-        let emptyResultsSequence = searchResultsEmptyStateProvider.emptyStateSequence
+        let emptyResultsSequence = searchResultsViewStateProvider.isEditingOrEmpty
             .map { !$0 }
             .eraseToAnyAsyncSequence()
 

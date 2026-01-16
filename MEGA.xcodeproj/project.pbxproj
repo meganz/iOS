@@ -2653,7 +2653,7 @@
 		C48F4A5B2DB88E0300FD8E4E /* LegacySlideShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F4A5A2DB88DFE00FD8E4E /* LegacySlideShowViewController.swift */; };
 		C48F4A612DB88FBE00FD8E4E /* LegacySlideShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F4A602DB88FBA00FD8E4E /* LegacySlideShowViewModel.swift */; };
 		C48F4A662DB8904F00FD8E4E /* LegacySlideShowCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F4A652DB8904A00FD8E4E /* LegacySlideShowCollectionView.swift */; };
-		C48F794A2EDD7C5300186A6D /* SearchResultsEmptyStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F79492EDD7C4E00186A6D /* SearchResultsEmptyStateProvider.swift */; };
+		C48F794A2EDD7C5300186A6D /* SearchResultsViewStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F79492EDD7C4E00186A6D /* SearchResultsViewStateProvider.swift */; };
 		C4944FE82C339F6800A2C082 /* MockDownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
 		C499498A2E2F6628002B2F2B /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49949892E2F6621002B2F2B /* AppDelegate+Notifications.swift */; };
@@ -5513,7 +5513,7 @@
 		C48F4A5A2DB88DFE00FD8E4E /* LegacySlideShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySlideShowViewController.swift; sourceTree = "<group>"; };
 		C48F4A602DB88FBA00FD8E4E /* LegacySlideShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySlideShowViewModel.swift; sourceTree = "<group>"; };
 		C48F4A652DB8904A00FD8E4E /* LegacySlideShowCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySlideShowCollectionView.swift; sourceTree = "<group>"; };
-		C48F79492EDD7C4E00186A6D /* SearchResultsEmptyStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsEmptyStateProvider.swift; sourceTree = "<group>"; };
+		C48F79492EDD7C4E00186A6D /* SearchResultsViewStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewStateProvider.swift; sourceTree = "<group>"; };
 		C4944FE72C339F6800A2C082 /* MockDownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadedNodesListener.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
 		C49949892E2F6621002B2F2B /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
@@ -13420,7 +13420,7 @@
 			isa = PBXGroup;
 			children = (
 				C4B0F7A42E8E3BF6007C4E0B /* FloatingAddButtonVisibilityDataSource.swift */,
-				C48F79492EDD7C4E00186A6D /* SearchResultsEmptyStateProvider.swift */,
+				C48F79492EDD7C4E00186A6D /* SearchResultsViewStateProvider.swift */,
 			);
 			path = FloatingAddButton;
 			sourceTree = "<group>";
@@ -16024,8 +16024,8 @@
 				949829CF2B470AB500D1686F /* SearchResultMapper.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
 				94B09E5D2B84CC87007D6B84 /* SearchResultSelection+NonEmptySiblings.swift in Sources */,
-				C48F794A2EDD7C5300186A6D /* SearchResultsEmptyStateProvider.swift in Sources */,
 				BF5302972E9DFE450002A9C6 /* SearchResultsSortOptionFactory.swift in Sources */,
+				C48F794A2EDD7C5300186A6D /* SearchResultsViewStateProvider.swift in Sources */,
 				94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
