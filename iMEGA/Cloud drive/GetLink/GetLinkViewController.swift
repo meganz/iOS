@@ -426,7 +426,8 @@ class GetLinkViewController: UIViewController {
                 self?.getLinkVM.trackProFeatureNotNow()
             }
         )
-        
+
+        getLinkVM.trackUpgradeToProScreenShown()
         UIApplication.mnz_presentingViewController().present(upgradeToProCustomModalAlert, animated: true, completion: nil)
     }
     

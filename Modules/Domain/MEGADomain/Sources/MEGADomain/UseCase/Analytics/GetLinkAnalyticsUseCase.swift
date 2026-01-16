@@ -12,6 +12,7 @@ public protocol GetLinkAnalyticsUseCaseProtocol {
     func proFeatureSeePlans(nodeType: NodeTypeEntity)
     func proFeatureNotNow(nodeType: NodeTypeEntity)
     func encrypt(nodeType: NodeTypeEntity)
+    func viewUpgradeToProScreen(nodeType: NodeTypeEntity)
 }
 
 public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAnalyticsUseCaseProtocol {
@@ -136,6 +137,14 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
             repo.sendAnalyticsEvent(.getLink(.encryptFile))
         } else if nodeType == .folder {
             repo.sendAnalyticsEvent(.getLink(.encryptFolder))
+        }
+    }
+
+    public func viewUpgradeToProScreen(nodeType: NodeTypeEntity) {
+        if nodeType == .file {
+            repo.sendAnalyticsEvent(.getLink(.viewUpgradeToProScreenFile))
+        } else if nodeType == .folder {
+            repo.sendAnalyticsEvent(.getLink(.viewUpgradeToProScreenFolder))
         }
     }
 }

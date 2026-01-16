@@ -91,7 +91,12 @@ final class GetNodeLinkViewModel: ViewModelType {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.proFeatureNotNow(nodeType: nodeType)
     }
-    
+
+    func trackUpgradeToProScreenShown() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.viewUpgradeToProScreen(nodeType: nodeType)
+    }
+
     func dispatch(_ action: GetLinkAction) {
         switch action {
         case .onViewReady:

@@ -255,4 +255,22 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
 
         XCTAssertTrue(repo.type == .getLink(.encryptFolder))
     }
+
+    func testSendEvent_viewUpgradeToProScreenForFolder_shouldReturnTrue() {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.viewUpgradeToProScreen(nodeType: .folder)
+
+        XCTAssertTrue(repo.type == .getLink(.viewUpgradeToProScreenFolder))
+    }
+
+    func testSendEvent_viewUpgradeToProScreenForFile_shouldReturnTrue() {
+        let repo = MockAnalyticsRepository.newRepo
+        let usecase = GetLinkAnalyticsUseCase(repository: repo)
+
+        usecase.viewUpgradeToProScreen(nodeType: .file)
+
+        XCTAssertTrue(repo.type == .getLink(.viewUpgradeToProScreenFile))
+    }
 }

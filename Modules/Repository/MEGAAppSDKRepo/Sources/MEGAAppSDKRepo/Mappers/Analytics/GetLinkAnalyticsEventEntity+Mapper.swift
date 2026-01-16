@@ -59,6 +59,10 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return 402369
         case .encryptFile:
             return 402370
+        case .viewUpgradeToProScreenFolder:
+            return 407121
+        case .viewUpgradeToProScreenFile:
+            return 407120
         }
     }
 
@@ -120,6 +124,10 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return "Encrypt button tapped for folder"
         case .encryptFile:
             return "Encrypt button tapped for File"
+        case .viewUpgradeToProScreenFolder:
+            return "View Upgrade to Pro Screen for folder"
+        case .viewUpgradeToProScreenFile:
+            return "View Upgrade to Pro Screen for file"
         }
     }
 }

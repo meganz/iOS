@@ -29,4 +29,6 @@ public enum GetLinkAnalyticsEventEntity: Sendable {
     case proFeaturesNotNowFile
     case encryptFolder
     case encryptFile
+    case viewUpgradeToProScreenFile
+    case viewUpgradeToProScreenFolder
 }
