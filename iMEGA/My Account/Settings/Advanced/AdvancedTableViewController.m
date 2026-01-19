@@ -24,6 +24,8 @@
     [self checkAuthorizationStatus];
 
     [self setupColors];
+    
+    [self setupForLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -36,10 +38,10 @@
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
 
-    BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"];
+    BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:AdvancedTableViewController.savePhotoToGalleryKey];
     [self.saveImagesSwitch setOn:isSavePhotoToGalleryEnabled];
 
-    BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
+    BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:AdvancedTableViewController.saveVideoToGalleryKey];
     [self.saveVideosSwitch setOn:isSaveVideoToGalleryEnabled];
 
     [self.saveMediaInGallerySwitch setOn:[self getIsSaveMediaCapturedToGalleryEnabled]];
@@ -62,8 +64,8 @@
         case PHAuthorizationStatusRestricted:
         case PHAuthorizationStatusDenied: {
             //If the app doesn't have access to Photos (Or the permission has been revoked), update the settings associated with Photos accordingly.
-            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSavePhotoToGalleryEnabled"];
-            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSaveVideoToGalleryEnabled"];
+            [NSUserDefaults.standardUserDefaults setBool:NO forKey:AdvancedTableViewController.savePhotoToGalleryKey];
+            [NSUserDefaults.standardUserDefaults setBool:NO forKey:AdvancedTableViewController.saveVideoToGalleryKey];
             if ([self getIsSaveMediaCapturedToGalleryEnabled]) {
                 [self setIsSaveMediaCapturedToGalleryEnabled:NO];
             }
@@ -126,11 +128,11 @@
 }
 
 - (IBAction)downloadOptionsSaveImagesSwitchTouchUpInside:(UIButton *)sender {
-    [self checkPhotosPermissionForUserDefaultSetting:@"IsSavePhotoToGalleryEnabled" settingSwitch:self.saveImagesSwitch];
+    [self checkPhotosPermissionForUserDefaultSetting:AdvancedTableViewController.savePhotoToGalleryKey settingSwitch:self.saveImagesSwitch];
 }
 
 - (IBAction)downloadOptionsSaveVideosSwitchTouchUpInside:(UIButton *)sender {
-    [self checkPhotosPermissionForUserDefaultSetting:@"IsSaveVideoToGalleryEnabled" settingSwitch:self.saveVideosSwitch];
+    [self checkPhotosPermissionForUserDefaultSetting:AdvancedTableViewController.saveVideoToGalleryKey settingSwitch:self.saveVideosSwitch];
 }
 
 - (IBAction)saveInLibrarySwitchTouchUpInside:(UIButton *)sender {

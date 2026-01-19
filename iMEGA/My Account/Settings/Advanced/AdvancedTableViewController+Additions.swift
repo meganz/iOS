@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPermissions
 import MEGAPreference
 import UIKit
 
@@ -89,5 +90,61 @@ extension AdvancedTableViewController {
     
     @objc func getIsSaveMediaCapturedToGalleryEnabled() -> Bool {
         Self.isSaveMediaCapturedToGalleryEnabled
+    }
+}
+
+extension AdvancedTableViewController {
+    @objc static let savePhotoToGalleryKey: String = PreferenceKeyEntity.savePhotoToGallery.rawValue
+    @objc static let saveVideoToGalleryKey: String = PreferenceKeyEntity.saveVideoToGallery.rawValue
+    
+    @objc func setupForLiquidGlass() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return
+        }
+        saveImagesButton.isHidden = true
+        saveVideosButton.isHidden = true
+        saveMediaInGalleryButton.isHidden = true
+        saveImagesSwitch.isUserInteractionEnabled = true
+        saveVideosSwitch.isUserInteractionEnabled = true
+        saveMediaInGallerySwitch.isUserInteractionEnabled = true
+    }
+    
+    func checkPhotosPermission(on switchControl: UISwitch, with persistenceCallback: @escaping (Bool) -> Void) {
+        let isOn = switchControl.isOn
+        guard isOn else {
+            persistenceCallback(false)
+            return
+        }
+        let permissionHandler = DevicePermissionsHandler.makeHandler()
+        permissionHandler.photosPermissionWithCompletionHandler {[weak switchControl] granted in
+            persistenceCallback(granted)
+            
+            guard !granted else { return }
+            PermissionAlertRouter
+                .makeRouter(deviceHandler: permissionHandler)
+                .alertPhotosPermission()
+            
+            guard let switchControl else { return }
+            switchControl.setOn(false, animated: true)
+        }
+    }
+    
+    @IBAction func saveImagesSwitchValueChanged(_ sender: UISwitch) {
+        checkPhotosPermission(on: sender) { enabled in
+            UserDefaults.standard.set(enabled, forKey: AdvancedTableViewController.savePhotoToGalleryKey)
+        }
+    }
+
+    @IBAction func saveVideosSwitchValueChanged(_ sender: UISwitch) {
+        checkPhotosPermission(on: sender) { enabled in
+            UserDefaults.standard.set(enabled, forKey: AdvancedTableViewController.saveVideoToGalleryKey)
+        }
+    }
+    
+    @IBAction func saveInLibrarySwitchValueChanged(_ sender: UISwitch) {
+        checkPhotosPermission(on: sender) { [weak self] enabled in
+            guard let self else { return }
+            setIsSaveMediaCapturedToGalleryEnabled(enabled)
+        }
     }
 }
