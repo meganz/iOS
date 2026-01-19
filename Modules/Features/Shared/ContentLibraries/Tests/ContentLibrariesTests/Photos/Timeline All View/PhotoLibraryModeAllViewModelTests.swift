@@ -417,3 +417,123 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
             configuration: configuration)
     }
 }
+
+// MARK: - PhotoLibraryModeAllCollectionViewModel Tests
+
+final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
+
+    override func setUpWithError() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        try super.setUpWithError()
+    }
+
+    @MainActor
+    private func makeSUT(
+        libraryViewModel: PhotoLibraryContentViewModel,
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        configuration: ContentLibraries.Configuration = .mockConfiguration()
+    ) -> PhotoLibraryModeAllCollectionViewModel {
+        .init(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: preferenceUseCase,
+            configuration: configuration
+        )
+    }
+
+    // MARK: - Tests for masonry layout section selection
+
+    @MainActor
+    func testInit_whenMediaRevampEnabledAndAlbumMode_usesMasonrySection() throws {
+        // Arrange
+        let nodes = [
+            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date),
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2026-01-18T22:01:04Z".date)
+        ]
+        let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
+
+        // Act
+        let sut = makeSUT(
+            libraryViewModel: libraryViewModel,
+            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+        )
+
+        // Assert
+        XCTAssertEqual(sut.photoCategoryList.count, 1, "Should use single masonry section for album mode with media revamp")
+    }
+
+    @MainActor
+    func testInit_whenMediaRevampDisabledAndAlbumMode_usesDateSections() throws {
+        // Arrange
+        let nodes = [
+            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date),
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2026-01-18T22:01:04Z".date)
+        ]
+        let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
+
+        // Act
+        let sut = makeSUT(
+            libraryViewModel: libraryViewModel,
+            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: false])
+        )
+
+        // Assert
+        XCTAssertGreaterThan(sut.photoCategoryList.count, 1, "Should use date sections when media revamp is disabled")
+    }
+
+    @MainActor
+    func testInit_whenMediaRevampEnabledButLibraryMode_usesDateSections() throws {
+        // Arrange
+        let nodes = [
+            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date),
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2026-01-18T22:01:04Z".date)
+        ]
+        let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .library)
+
+        // Act
+        let sut = makeSUT(
+            libraryViewModel: libraryViewModel,
+            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+        )
+
+        // Assert
+        XCTAssertGreaterThan(sut.photoCategoryList.count, 1, "Should use date sections for library mode even with media revamp enabled")
+    }
+
+    @MainActor
+    func testSubscribeToLibraryChange_whenLibraryUpdates_usesMasonrySection() async throws {
+        // Arrange
+        let nodes = [
+            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date)
+        ]
+        let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
+
+        let sut = makeSUT(
+            libraryViewModel: libraryViewModel,
+            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+        )
+
+        // Act - update library to trigger subscription
+        let newNodes = [
+            NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2026-01-02T22:01:04Z".date)
+        ]
+        let newLibrary = newNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+
+        let expectation = expectation(description: "Wait for library change")
+        let subscription = sut.$photoCategoryList
+            .dropFirst()
+            .sink { sections in
+                XCTAssertEqual(sections.count, 1, "Should still use single masonry section after library update")
+                expectation.fulfill()
+            }
+
+        libraryViewModel.library = newLibrary
+
+        await fulfillment(of: [expectation], timeout: 1)
+        subscription.cancel()
+    }
+}

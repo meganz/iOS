@@ -36,4 +36,12 @@ extension PhotoLibrary {
     func photoDateSections(for factor: PhotoLibraryZoomState.ScaleFactor) -> [PhotoDateSection] {
         factor == .one ? photoDaySections : photoMonthSections
     }
+
+    var photoMasonrySection: PhotoDateSection {
+        PhotoDateSection(
+            contentList: allPhotos,
+            photoByDayList: photosByDayList,
+            categoryDate: photoByYearList.first?.categoryDate ?? Date()
+        )
+    }
 }

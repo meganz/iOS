@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="招待";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="メディアファイルを検索してみてください";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="ストレージがいっぱいです";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="進行中";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ / %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="サイバーマンデーセール：%@OFF";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4828,9 +4828,13 @@
 "cloudDrive.emptyStateSubtitle"="データはゼロ知識暗号化で安全に保管できます。";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="復号化されていないファイルではプレビューは利用できません";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="大";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="コンパクト";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="最小";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="項目を追加";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

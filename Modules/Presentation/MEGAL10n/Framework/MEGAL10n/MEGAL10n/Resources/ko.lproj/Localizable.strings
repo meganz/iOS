@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="이 계정과 연결된 모든 데이터를 잃게 됩니다. 진행하시겠습니까?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="당신의 이메일 수신함에 접근할 수 없다면, support@mega.io로 연락주세요.";
+"ifYouCantAccessYourEmailAccount"="당신의 이메일 수신함에 접근할 수 없다면, support@mega.io로 연락주세요";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1065,7 +1065,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="모바일 앱을 설치하여 %@의 추가 저장 공간을 받았습니다";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 %@의 무료 저장 공간을 받게 되며, %2$@. MEGA 모바일 앱은 iOS와 Android에서 이용 가능합니다.";
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 %@의 무료 저장 공간을 받게 되며, %2$@. MEGA 모바일 앱은 iOS와 Android에서 이용 가능합니다. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.freeTrial.detail.complete.label"="%1$@ 보너스 적용됨. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
@@ -1213,7 +1213,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="복구 중지됨";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="요청이 취소되었거나 이전 결제가 복구되지 않았습니다. 다시 시도하거나 ios@mega.io로 연락하세요.";
+"failedRestore_message"="요청이 취소되었거나 이전 결제가 복원되지 않았습니다. 다시 시도하거나 ios@mega.io로 연락하세요";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Pro로 업그레이드";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2149,7 +2149,7 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="코드를 받지 못 했나요?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="당신의 휴대 전화 번호는 인증되었습니다.";
+"Your phone number has been verified successfully"="휴대 전화 번호가 인증되었습니다";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="당신의 안전을 위해 계정을 일시적으로 잠갔습니다.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -3023,7 +3023,7 @@
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="이어서 들을까요?";
 /* Description of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.description"="“%@”은/는 %@부터 재개됩니다";
+"media.audio.playbackContinuation.dialog.description"="“%@”은/는 %@부터 재개됩니다.";
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="재개";
 /* Restart option for Audio Player dialog for Playback Continuation */
@@ -3199,7 +3199,7 @@
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="회의 링크";
 /* Label to inform user about privacy of sharing a chat link */
-"meetings.info.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+"meetings.info.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다.";
 /* HUD message to inform user that the link is in the clipboard */
 "meetings.info.shareOptions.shareLink.linkCopied"="클립보드에 링크 복사됨";
 /* Chat Meetings tab - Section header title for the chat listing screen */
@@ -3369,7 +3369,7 @@
 /* Schedule meeting link field */
 "meetings.scheduleMeeting.link"="회의 링크";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.link.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+"meetings.scheduleMeeting.link.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다.";
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="참여자 추가";
 /* Schedule meeting send calendar invite field */
@@ -3535,7 +3535,7 @@
 /* Device Center backup error: Can't read sync location */
 "device.center.backup.error.cantReadSyncLocation"="동기화 위치를 읽을 수 없습니다. 위치에 접근 가능한지 여부와 폴더 위치에 대한 권한이 승인 되었는지 확인하세요.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.insufficientDownloadSpace"="다운로드에 필요한 공간 부족";
+"device.center.backup.error.insufficientDownloadSpace"="다운로드에 필요한 공간 부족.";
 /* Device Center backup error: Unable to add filesystem watch */
 "device.center.backup.error.addFilesystemWatch"="파일 시스템 감시를 추가할 수 없습니다. 충분한 여유 공간과 메모리가 있고, 폴더 위치에 대하여 권한을 승인 받았는지 확인하세요.";
 /* Device Center backup error: Couldn't communicate with folder location */
@@ -3743,7 +3743,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="대기실";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="호스트가 승인한 참여자만 회의에 참여할 수 있습니다";
+"meetings.scheduleMeeting.waitingRoom.description"="호스트가 승인한 참여자만 회의에 참여할 수 있습니다.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="통화 중에 호스트가 아닌 사람으로부터 추가된 참여자들은 대기실에 보내질 수 없습니다.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3785,7 +3785,7 @@
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="이 계정에 남은 전송 할당량이 없어서 다운로드를 계속할 수 없습니다. 더 많은 할당량을 받으려면, 새 요금제를 결제하거나, MEGA에 반복 구독이 있다면, 요금제가 갱신될 때까지 기다릴 수 있습니다.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="이 IP 주소에 남은 전송 할당량이 없어서 미디어 재생을 멈추었습니다. 더 많은 할당량을 받으려면, Pro 요금제로 업그레이드 하거나 IP 주소에 무료 할당량이 이용 가능해질 때까지 %@ 동안 기다리세요. 전송 할당량에 대해 [A]더 알아보기[/A]";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="이 IP 주소에 남은 전송 할당량이 없어서 미디어 재생을 멈추었습니다. 더 많은 할당량을 받으려면, Pro 요금제로 업그레이드 하거나 IP 주소에 무료 할당량이 이용 가능해질 때까지 %@ 동안 기다리세요. 전송 할당량에 대해 [A]더 알아보기[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="이 계정에 남은 전송 할당량이 없어서 미디어 재생을 멈추었습니다. 더 많은 할당량을 받으려면, 새 요금제를 결제하거나, MEGA에 반복 구독이 있다면, 요금제가 갱신될 때까지 기다릴 수 있습니다.";
 /* Meeting waiting room leave button */
@@ -3915,7 +3915,7 @@
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.title"="공유할 때 추가 보안";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
-"onboarding.upgradeAccount.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
+"onboarding.upgradeAccount.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="오늘 Pro로 업그레이드";
 /* Camera uploads banner enable state title */
@@ -4071,7 +4071,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
 "chat.message.leftTheMeeting"="[A] 님이 회의를 떠났습니다.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] 님은 [B] 님에 의해 회의에서 제거되었습니다";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] 님은 [B] 님에 의해 회의에서 제거되었습니다.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
 "chat.message.joinedTheMeetingByInvitationFrom"="[A] 님이 [B] 님의 초대에 의해 회의에 참여하였습니다.";
 /* Meeting subject text for sharing a meeting link through email */
@@ -4203,7 +4203,7 @@
 /* Feature title */
 "feature.title"="기능";
 /* Cancellation Subscription manage by Google Play title */
-"accounts.cancelSubscriptionSteps.googlePlay.title"="당신의 구독은 Apple에 의해 관리되지 않습니다";
+"accounts.cancelSubscriptionSteps.googlePlay.title"="당신의 구독은 Apple에 의해 관리되지 않습니다.";
 /* Cancellation Subscription manage by Google Play message */
 "accounts.cancelSubscriptionSteps.googlePlay.message"="이것은 당신이 Google Play를 통해 MEGA를 구독하였기 때문입니다. 구독을 취소하려면, 다음을 하세요:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
@@ -4249,7 +4249,7 @@
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="웹 브라우저를 이용하여 구독을 취소하여야 합니다";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="당신이 웹 브라우저에서 MEGA를 구독하였기 때문입니다.\n구독을 취소 하려면, 다음을 해야 합니다:";
+"accounts.cancelSubscriptionSteps.webClient.message"="당신이 웹 브라우저에서 MEGA를 구독하였기 때문입니다. 구독을 취소 하려면, 다음을 해야 합니다:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="컴퓨터에서";
 /* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
@@ -4363,7 +4363,7 @@
 /* Title for invite participants button in Empty meeting share options dialog */
 "call.meeting.empty.shareOptionsDialog.inviteParticipants"="참여자 초대";
 /* Label to inform user about privacy of sharing a chat link */
-"call.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+"call.shareOptions.title"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다.";
 /* Title for a button to send a chat link to a chat */
 "call.shareOptions.sendToChat"="대화에 보내기";
 /* Title for a button to copy a chat link */
@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="설명 수정됨";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="변경을 취소할까요?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="설명에 대한 변경사항을 저장하시겠습니까?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="초대";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="미디어 파일을 검색해보세요";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="저장소가 가득 찼습니다";
 /* Button title to upgrade when storage is full */
@@ -4449,7 +4449,7 @@
 /* Modal title when sharing a meeting link */
 "chat.meetings.shareLink.main"="회의 확정됨: 다른 사람들을 초대하세요";
 /* Modal description when sharing a meeting link */
-"chat.meetings.shareLink.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+"chat.meetings.shareLink.description"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다.";
 /* Button title to send to chat in modal shown when sharing a meeting link */
 "chat.meetings.shareLink.sendToChat"="대화에 링크 보내기";
 /* Button title to share link in modal shown when sharing a meeting link */
@@ -4503,7 +4503,7 @@
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="넉넉한 저장소";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
-"ads.adFree.content.generousStorage.message"="무제한 데이터 보관, %@부터 시작";
+"ads.adFree.content.generousStorage.message"="무제한 데이터 보관, %@부터 시작.";
 /* Ad-free experience screen content title about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.title"="전송 공유";
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
@@ -4575,7 +4575,7 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="중요한 파일과 폴더 숨기기";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="프라이버시를 위해 쉬운 한 단계로 민감한 파일과 폴더를 감출 수 있습니다.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="프라이버시를 위해 쉬운 한 단계로 민감한 파일과 폴더를 감출 수 있습니다";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="시야에서 벗어남";
 /* Hidden files and folders onboarding content item two message */
@@ -4583,7 +4583,7 @@
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="프라이버시를 위한 흐리게 하기";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="숨긴 항목을 썸네일을 흐리게 하여, 내용물을 노출하지 않고 식별할 수 있도록 할 수 있습니다.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="숨긴 항목을 썸네일을 흐리게 하여, 내용물을 노출하지 않고 식별할 수 있도록 할 수 있습니다";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="나에게 쓴 노트";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4597,11 +4597,11 @@
 /* Onboarding USP carousel second page title */
 "onboarding.uniqueSellingProposition.carousel.page.second.title"="모든 순간을 안전하게 보관";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGA Cloud 자동 카메라 업로드 기능과 넉넉한 용량으로 절대 소중한 추억을 잃지 않습니다.";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGA Cloud 자동 카메라 업로드 기능과 넉넉한 용량으로 절대 소중한 추억을 잃지 않습니다";
 /* Onboarding USP carousel third page title */
 "onboarding.uniqueSellingProposition.carousel.page.third.title"="당신의 데이터. 당신의 공간.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="충분한 저장소와 간편한 파일 전송, 공유, 정리 방법을 통해 어떤 용도로든 MEGA를 안전하게 사용할 수 있습니다.";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="충분한 저장소와 간편한 파일 전송, 공유, 정리 방법을 통해 어떤 용도로든 MEGA를 안전하게 사용할 수 있습니다";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="비공개로 말하기";
 /* Onboarding USP carousel fourth page subtitle */
@@ -4755,7 +4755,7 @@
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="블랙 프라이데이 할인: %@ 할인";
 /* General deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ off";
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ 할인";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
 "subscriptionPurchase.plan.firstYearOffer"="첫 1년만 %@";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="진행중";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ 중 %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="사이버 먼데이 할인: %@ 할인";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4834,3 +4834,5 @@
 "media.photoLibrary.zoom.compact.title"="Compact";
 /* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

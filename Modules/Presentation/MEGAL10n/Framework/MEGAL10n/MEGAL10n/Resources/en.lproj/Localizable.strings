@@ -4836,3 +4836,5 @@
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Add items */
 "general.addItems"="Add items";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

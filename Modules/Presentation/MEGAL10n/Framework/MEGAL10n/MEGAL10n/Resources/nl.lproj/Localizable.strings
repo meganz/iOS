@@ -4579,13 +4579,13 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Uit het zicht";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> „\" Gebruikersinterface \"” in uw applicatie-instellingen”.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> “Gebruikersinterface” in uw applicatie-instellingen.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Vervaging voor privacy";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Vervagen voor privacy";
 /* Hidden files and folders onboarding content item three message */
 "onboarding.hiddenFilesAndFolders.content.item.three.message"="Verborgen items met wazige miniaturen weergeven, zodat u ze kunt identificeren zonder dat de inhoud zichtbaar wordt";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
-"chat.messages.noteToSelf.title"="Hou er rekening mee dat ik mezelf";
+"chat.messages.noteToSelf.title"="Opmerking voor mezelf";
 /* Title for note to self chat messages view header, at the top the chat room */
 "chat.messages.noteToSelf.header.title"="Hou het voor uzelf";
 /* Description text for note to self chat messages view header, at the top of the chat room */
@@ -4675,7 +4675,7 @@
 /* Title for the Menu tab bar item */
 "tabbarTitle.menu"="Menu";
 /* Storage benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.storage"="%@ Opslag";
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ opslag";
 /* Title shown for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.title.upgrade"="Ga verder met uw gratis abonnement";
 /* Button title for the free plan card for upgrading */
@@ -4828,9 +4828,13 @@
 "cloudDrive.emptyStateSubtitle"="Bewaar iets veilig met zero-knowledge codering";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Voorvertoningen zijn niet beschikbaar voor niet-gedecodeerde bestanden";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="Groot";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Kleinste";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Items toevoegen";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

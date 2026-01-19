@@ -20,7 +20,7 @@ public class PhotoDateSection: PhotoSection {
     public let categoryDate: Date
     public let title: String
     
-    init(contentList: [NodeEntity], photoByDayList: [PhotoByDay], categoryDate: Date, title: String) {
+    init(contentList: [NodeEntity], photoByDayList: [PhotoByDay], categoryDate: Date, title: String = "") {
         self.contentList = contentList
         self.photoByDayList = photoByDayList
         self.categoryDate = categoryDate

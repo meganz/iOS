@@ -5,15 +5,34 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import MEGAUIKit
 import SwiftUI
 import UIKit
 
 final class AlbumContentViewController: UIViewController, ViewType {
-    
+
     let viewModel: AlbumContentViewModel
-    
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
+
+    lazy var photoLibraryContentViewModel: PhotoLibraryContentViewModel = {
+        let configuration = PhotoLibraryContentConfiguration(
+            globalHeaderLeftViewProvider: { [weak viewModel] in
+                guard let viewModel else { return AnyView(EmptyView()) }
+                return AnyView(
+                    SortHeaderView(
+                        viewModel: viewModel.sortHeaderViewModel,
+                        horizontalPadding: 0
+                    )
+                    .frame(height: 36)
+                )
+            }
+        )
+        return PhotoLibraryContentViewModel(
+            library: PhotoLibrary(),
+            contentMode: PhotoLibraryContentMode.album,
+            configuration: configuration
+        )
+    }()
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: .shared)
     lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
@@ -31,11 +50,21 @@ final class AlbumContentViewController: UIViewController, ViewType {
         action: #selector(addToAlbumButtonPressed(_:))
     )
     
-    lazy var leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
-                                                 style: .plain,
-                                                 target: self,
-                                                 action: #selector(exitButtonTapped(_:))
-    )
+    lazy var leftBarButtonItem: UIBarButtonItem = {
+        if viewModel.isMediaRevampEnabled {
+            return UIBarButtonItem(image: MEGAAssets.UIImage.backArrow,
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(exitButtonTapped(_:))
+            )
+        } else {
+            return UIBarButtonItem(title: Strings.Localizable.close,
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(exitButtonTapped(_:))
+            )
+        }
+    }()
     
     lazy var toolbar = UIToolbar()
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
@@ -75,8 +104,9 @@ final class AlbumContentViewController: UIViewController, ViewType {
 
         configPhotoLibraryView(
             in: view,
-            router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode))
-        
+            router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode),
+            onFilterUpdate: nil)
+
         setupPhotoLibrarySubscriptions()
         contextMenuManager = contextMenuManagerConfiguration()
         
@@ -200,7 +230,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     }
     
     // MARK: - Private
-    
+
     private func buildNavigationBar() {
         if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
             navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
@@ -226,7 +256,9 @@ final class AlbumContentViewController: UIViewController, ViewType {
             selectAllItemsBarButtonItem.tintColor = TokenColors.Text.primary
             navigationItem.leftBarButtonItem = selectAllItemsBarButtonItem
         } else {
-            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
+            if !viewModel.isMediaRevampEnabled {
+                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
+            }
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }

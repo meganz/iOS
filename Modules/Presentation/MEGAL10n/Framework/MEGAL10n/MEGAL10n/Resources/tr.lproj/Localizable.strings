@@ -293,7 +293,7 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="Bulut depolama";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Sırada";
+"queued"="Sıraya alındı";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Duraklatıldı";
 /* Possible state of a transfer. When the transfer was cancelled */
@@ -499,7 +499,7 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Yükleme devam ediyor, %lu dosya beklemede";
 /* Timeline title within CU tab */
-"cameraUploads.timeline.title"="Zaman akışı";
+"cameraUploads.timeline.title"="Zaman çizelgesi";
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Medya bulunamadı";
 /* Alert title shown when adding photos once photo selection limit reached. */
@@ -4043,7 +4043,7 @@
 /* Videos: video playlist delete playlist alert title */
 "videos.tab.playlist.content.alert.title.deletePlaylist"="Oynatma listesi silinsin mi?";
 /* Videos: video playlist delete playlist alert subtitle */
-"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Oynatma listesi silinecek ancak içeriği Zaman akışınızda kalacaktır.";
+"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline"="Oynatma listesi silinecek ancak içeriği Zaman çizelgenizde kalacaktır.";
 /* Videos: video playlist delete playlist snack bar message */
 "videos.tab.playlist.content.snackbar.playlistNameDeleted"="\"[A]\" silindi";
 /* Videos: video playlist remove video from video playlist */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Devam ediyor";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ / %@ (%@/sn)";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Siber Pazartesi fırsatı: %@ indirim";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4828,9 +4828,13 @@
 "cloudDrive.emptyStateSubtitle"="Sıfır bilgi şifrelemesi ile bir şeyleri güvende tutun";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Şifresi çözülmemiş dosyalar için ön izlemeler kullanılamıyor";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="Büyük";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Kompakt";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="En küçük";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Öğe ekle";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

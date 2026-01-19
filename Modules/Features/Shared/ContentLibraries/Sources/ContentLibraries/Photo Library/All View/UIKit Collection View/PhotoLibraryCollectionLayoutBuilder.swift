@@ -8,9 +8,16 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     let zoomState: PhotoLibraryZoomState
     let bannerType: PhotoLibraryBannerType?
     let isMediaRevampEnabled: Bool
+    let contentMode: PhotoLibraryContentMode
+
+    private var isAlbumMode: Bool {
+        contentMode == .album
+    }
     
     func buildLayout() -> UICollectionViewLayout {
-        if zoomState.isSingleColumn {
+        if isAlbumMode && isMediaRevampEnabled && !zoomState.isSingleColumn {
+            return buildMasonryLayout()
+        } else if zoomState.isSingleColumn {
             return buildSingleColumnLayout()
         } else {
             return buildMultipleColumnsLayout()
@@ -44,7 +51,16 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             sectionProvider: { sectionIndex, layoutEnvironment in makeMultiColumnPhotoDateSection(sectionIndex: sectionIndex, layoutEnvironment: layoutEnvironment) },
             configuration: layoutConfiguration)
     }
-    
+
+    private func buildMasonryLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout(
+            sectionProvider: { sectionIndex, layoutEnvironment in
+                self.makeMasonryPhotoSection(sectionIndex: sectionIndex, layoutEnvironment: layoutEnvironment)
+            },
+            configuration: layoutConfiguration
+        )
+    }
+
     private func makeSingleColumnPhotoDateSection(sectionIndex: Int) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -125,5 +141,14 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         globalHeader.pinToVisibleBounds = true
         globalHeader.zIndex = 3
         return globalHeader
+    }
+
+    private func makeMasonryPhotoSection(
+        sectionIndex: Int,
+        layoutEnvironment: some NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection {
+        let section = MasonrySectionLayoutFactory.makeMasonrySection(layoutEnvironment: layoutEnvironment)
+        configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: true)
+        return section
     }
 }

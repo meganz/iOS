@@ -14,16 +14,21 @@ struct PhotoCellContent: View {
         viewModel.isMediaRevamp
     }
     
+    private var shouldShowSelectionBorder: Bool {
+        isMediaRevampEnabled && viewModel.isSelected && viewModel.shouldShowEditState
+    }
+
     var body: some View {
         ZStack(alignment: isMediaRevampEnabled ? .topLeading : .bottomTrailing) {
             image()
             /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black.opacity(viewModel.isSelected ? 0.2 : 0.0))
-            
+                .overlay(Color.black.opacity(viewModel.isSelected && !isMediaRevampEnabled ? 0.2 : 0.0))
+
             checkMarkView
                 .offset(x: isMediaRevampEnabled ? 5 : -5, y: isMediaRevampEnabled ? 5 : -5)
                 .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
+        .border(shouldShowSelectionBorder ? TokenColors.Icon.accent.swiftUI : .clear, width: 2)
         .favorite(viewModel.shouldShowFavorite, isMediaRevamp: isMediaRevampEnabled)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)

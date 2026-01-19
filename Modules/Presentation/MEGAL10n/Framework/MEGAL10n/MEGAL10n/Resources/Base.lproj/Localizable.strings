@@ -678,12 +678,6 @@
 "media.photoLibrary.category.days.title"="Days";
 /* Title of Photo's All date tab */
 "media.photoLibrary.category.all.title"="All";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Rubbish bin";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -4834,5 +4828,13 @@
 "cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
+/* Title of Photo's large zoom scale title */
+"media.photoLibrary.zoom.large.title"="Large";
+/* Title of Photo's compact zoom scale title */
+"media.photoLibrary.zoom.compact.title"="Compact";
+/* Title of Photo's smallest zoom scale title */
+"media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Add items */
 "general.addItems"="Add items";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

@@ -124,8 +124,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         globalZoomHeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.globalZoomHeader.elementKind) { [unowned self] header, _, _ in
             self.globalHeaderView = header
-            let monthTitle = currentVisibleMonthTitle.isEmpty ? (photoLibraryDataSource.first?.title ?? "") : currentVisibleMonthTitle
-            header.contentConfiguration = createGlobalHeaderConfiguration(monthTitle: monthTitle)
+            let title = currentVisibleMonthTitle.isEmpty ? (photoLibraryDataSource.first?.title ?? "") : currentVisibleMonthTitle
+            header.contentConfiguration = createGlobalHeaderConfiguration(title: title)
         }
         
         photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
@@ -150,6 +150,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         layoutChangesMonitor.configure(collectionView: collectionView)
         
+        layoutChangesMonitor.onLayoutChange = { [weak self] in
+            self?.refreshGlobalHeader()
+        }
+        
         if ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
             panGesture.delegate = self
@@ -166,12 +170,23 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             .trackContentOffset(scrollView.contentOffset.y)
     }
     
-    private func createGlobalHeaderConfiguration(monthTitle: String) -> any UIContentConfiguration {
+    private func createGlobalHeaderConfiguration(title: String) -> any UIContentConfiguration {
+        let isAlbumMode = representer.contentMode == .album
+
         return UIHostingConfiguration {
-            PhotoLibraryGlobalHeaderView(
-                monthTitle: monthTitle,
-                viewModel: self.viewModel
-            )
+            if isAlbumMode, let customLeftView = viewModel.libraryViewModel.configuration?.globalHeaderLeftViewProvider?() {
+                // Album mode with custom sort header
+                PhotoLibraryGlobalHeaderView(leftContent: { customLeftView })
+            } else {
+                // Timeline mode with month title and zoom control
+                PhotoLibraryGlobalHeaderView(
+                    title: title,
+                    zoomState: Binding(
+                        get: { self.viewModel.zoomState },
+                        set: { self.viewModel.zoomState = $0 }
+                    )
+                )
+            }
         }
         .margins(.all, 0)
         .background(TokenColors.Background.page.swiftUI)
@@ -179,8 +194,18 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     
     private func updateGlobalHeaderMonthTitle() {
         guard ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp),
-              let globalHeaderView = globalHeaderView,
-              let topSection = visibleSectionHeaders.min(),
+              let globalHeaderView = globalHeaderView else {
+            return
+        }
+
+        // In album mode with custom header, don't update the title dynamically
+        let isAlbumMode = representer.contentMode == .album
+        guard !isAlbumMode || viewModel.libraryViewModel.configuration?.globalHeaderLeftViewProvider == nil else {
+            return
+        }
+
+        // For timeline mode, update the month title based on visible sections
+        guard let topSection = visibleSectionHeaders.min(),
               topSection < photoLibraryDataSource.count else {
             return
         }
@@ -189,8 +214,17 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         if currentVisibleMonthTitle != newMonthTitle {
             currentVisibleMonthTitle = newMonthTitle
-            globalHeaderView.contentConfiguration = createGlobalHeaderConfiguration(monthTitle: newMonthTitle)
+            globalHeaderView.contentConfiguration = createGlobalHeaderConfiguration(title: newMonthTitle)
         }
+    }
+    
+    /// Force refresh the global header's content configuration.
+    /// This is needed when zoom state changes between non-single-column states (e.g., default ↔ compact),
+    /// because the UIHostingConfiguration won't automatically re-render when the Binding value changes.
+    func refreshGlobalHeader() {
+        guard let globalHeaderView = globalHeaderView else { return }
+        let title = currentVisibleMonthTitle.isEmpty ? (photoLibraryDataSource.first?.title ?? "") : currentVisibleMonthTitle
+        globalHeaderView.contentConfiguration = createGlobalHeaderConfiguration(title: title)
     }
     
     private func configureScrollTracker(for collectionView: UICollectionView) {

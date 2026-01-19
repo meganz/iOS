@@ -797,17 +797,25 @@ public final class ContextMenuBuilder {
         let deleteMenu = CMEntity(displayInline: true, children: [deleteVideoPlaylist])
         
         if isVideoPlaylistContent {
-            displayActionsMenuChildren.append(CMEntity(
-                displayInline: true,
-                children: [
-                    isVideoPlaylistSharingFeatureFlagEnabled ? shareLink : nil,
-                    rename,
-                    isEmptyState ? nil : select,
-                    isMediaRevampEnabled ? nil : addVideosToVideoPlaylistContent
-                ].compactMap { $0 }
-            ))
-            displayActionsMenuChildren.append(isEmptyState || isMediaRevampEnabled ? nil : sortMenu())
-            displayActionsMenuChildren.append(deleteMenu)
+            if isMediaRevampEnabled {
+                if !isEmptyState {
+                    displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [select]))
+                }
+                displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [rename]))
+                displayActionsMenuChildren.append(deleteMenu)
+            } else {
+                displayActionsMenuChildren.append(CMEntity(
+                    displayInline: true,
+                    children: [
+                        isVideoPlaylistSharingFeatureFlagEnabled ? shareLink : nil,
+                        rename,
+                        isEmptyState ? nil : select,
+                        addVideosToVideoPlaylistContent
+                    ].compactMap { $0 }
+                ))
+                displayActionsMenuChildren.append(isEmptyState ? nil : sortMenu())
+                displayActionsMenuChildren.append(deleteMenu)
+            }
         }
         
         return CMEntity(

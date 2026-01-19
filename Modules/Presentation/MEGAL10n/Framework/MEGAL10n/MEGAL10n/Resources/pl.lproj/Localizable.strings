@@ -4828,9 +4828,13 @@
 "cloudDrive.emptyStateSubtitle"="Chroń swoje dane dzięki szyfrowaniu z zerową wiedzą";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Podglądy niedostępne dla nieodszyfrowanych plików";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="Duży";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Kompaktowy";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Najmnieszy";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Dodaj elementy";
+/* Header title for the Date field in the album content sorting controls */
+"media.photoLibrary.album.sorting.date"="Date";

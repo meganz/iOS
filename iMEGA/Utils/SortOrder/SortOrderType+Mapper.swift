@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAUIComponent
 
 extension SortOrderType {
     func toSortOrderEntity() -> SortOrderEntity {
@@ -22,6 +23,10 @@ extension SortOrderType {
         case .none:
             return .none
         }
+    }
+
+    func toUIComponentSortOrder() -> MEGAUIComponent.SortOrder {
+        toSortOrderEntity().toUIComponentSortOrderEntity()
     }
 }
 

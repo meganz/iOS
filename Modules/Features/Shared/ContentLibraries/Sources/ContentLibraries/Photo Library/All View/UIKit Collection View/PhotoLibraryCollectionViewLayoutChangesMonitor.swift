@@ -10,6 +10,9 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
     private var subscriptions = Set<AnyCancellable>()
     private var currentLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?
     
+    /// Called when the layout changes due to zoom state changes (without data reload).
+    var onLayoutChange: (() -> Void)?
+    
     init(_ representer: PhotoLibraryCollectionViewRepresenter) {
         self.representer = representer
     }
@@ -42,7 +45,7 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
             
             // Update our local datasource
             photoLibraryDataSource = photoDateSections
-                    
+
             // Update Sections and Cells
             if shouldRefresh {
                 collectionView?.reloadData()
@@ -52,7 +55,8 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
             invalidateLayoutIfNeeded(
                 zoomState: zoomState,
                 bannerType: bannerType,
-                previousLayoutBuilder: currentLayoutBuilder)
+                previousLayoutBuilder: currentLayoutBuilder,
+                didReloadData: shouldRefresh)
         }
         .store(in: &subscriptions)
     }
@@ -60,13 +64,15 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
     private func invalidateLayoutIfNeeded(
         zoomState: PhotoLibraryZoomState,
         bannerType: PhotoLibraryBannerType?,
-        previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?
+        previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?,
+        didReloadData: Bool
     ) {
         let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         let newLayoutBuilder = PhotoLibraryCollectionLayoutBuilder(
             zoomState: zoomState,
             bannerType: bannerType,
-            isMediaRevampEnabled: isMediaRevampEnabled)
+            isMediaRevampEnabled: isMediaRevampEnabled,
+            contentMode: representer.contentMode)
         
         guard previousLayoutBuilder != newLayoutBuilder else {
             return
@@ -75,6 +81,13 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
         collectionView?.setCollectionViewLayout(newLayoutBuilder.buildLayout(), animated: true)
         collectionView?.collectionViewLayout.invalidateLayout()
         currentLayoutBuilder = newLayoutBuilder
+        
+        // When layout changes without data reload (e.g., default ↔ compact zoom switch),
+        // we need to manually refresh the global header since UIHostingConfiguration
+        // won't automatically re-render when the Binding value changes.
+        if !didReloadData {
+            onLayoutChange?()
+        }
     }
     
     private func shouldRefresh(to sections: [PhotoDateSection]) -> Bool {
