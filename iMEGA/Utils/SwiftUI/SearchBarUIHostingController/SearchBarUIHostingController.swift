@@ -63,6 +63,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             self.searchBarVisible = isVisible
             if isVisible {
                 wrapper.attachToViewController(self)
+                self.navigationItem.hidesSearchBarWhenScrolling = false
             } else {
                 navigationItem.searchController = nil
             }
