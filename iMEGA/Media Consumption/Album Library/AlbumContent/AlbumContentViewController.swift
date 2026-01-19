@@ -11,9 +11,9 @@ import SwiftUI
 import UIKit
 
 final class AlbumContentViewController: UIViewController, ViewType {
-
+    
     let viewModel: AlbumContentViewModel
-
+    
     lazy var photoLibraryContentViewModel: PhotoLibraryContentViewModel = {
         let configuration = PhotoLibraryContentConfiguration(
             globalHeaderLeftViewProvider: { [weak viewModel] in
@@ -76,7 +76,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
                 viewModel?.dispatch(.addToAlbumTap)
             }
         )
-
+        
         let controller = UIHostingController(rootView: view)
         controller.view.backgroundColor = .clear
         return controller
@@ -101,12 +101,12 @@ final class AlbumContentViewController: UIViewController, ViewType {
         
         buildNavigationBar()
         setupLiquidGlassNavigationBar()
-
+        
         configPhotoLibraryView(
             in: view,
             router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode),
             onFilterUpdate: nil)
-
+        
         setupPhotoLibrarySubscriptions()
         contextMenuManager = contextMenuManagerConfiguration()
         
@@ -133,15 +133,15 @@ final class AlbumContentViewController: UIViewController, ViewType {
         
         viewModel.dispatch(.onViewWillDisappear)
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
+        
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             setupLiquidGlassNavigationBar()
         }
     }
-
+    
     // MARK: - Internal
     
     func selectedNodes() -> [MEGANode]? {
@@ -155,13 +155,13 @@ final class AlbumContentViewController: UIViewController, ViewType {
         enablePhotoLibraryEditMode(isEditing)
         configureBarButtons()
         hideNavigationEditBarButton(photoLibraryContentViewModel.library.isEmpty)
-
+        
         if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
             navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
         } else {
             navigationItem.title = viewModel.albumName
         }
-
+        
         hideToolbar()
     }
     
@@ -230,7 +230,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     }
     
     // MARK: - Private
-
+    
     private func buildNavigationBar() {
         if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
             navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
@@ -420,7 +420,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
         guard floatingActionButtonController == nil else { return }
         
         let button = RoundedPrimaryImageButton(
-            image: MEGAAssets.Image.plus) { [weak viewModel] in
+            image: MEGAAssets.Image.plus,
+            isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled()) { [weak viewModel] in
                 viewModel?.dispatch(.addToAlbumTap)
             }
         

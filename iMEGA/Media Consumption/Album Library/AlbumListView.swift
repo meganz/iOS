@@ -74,6 +74,7 @@ struct AlbumListView: View {
             if viewModel.isMediaRevampEnabled {
                 RoundedPrimaryImageButton(
                     image: MEGAAssets.Image.plus,
+                    isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                     action: viewModel.onCreateAlbum)
                 .padding(TokenSpacing._5)
                 .opacity($editMode.wrappedValue.isEditing ? 0 : 1)

@@ -29,6 +29,8 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         case reinitialise
     }
     
+    let featureFlagProvider: any FeatureFlagProviderProtocol
+    
     public let thumbnailLoader: any ThumbnailLoaderProtocol
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     public private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
@@ -38,7 +40,6 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
 
     private let syncModel: VideoRevampSyncModel
     private let monitorSortOrderChangedDispatchQueue: DispatchQueue
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videoRevampRouter: any VideoRevampRouting
     
     public let setSelection = SetSelection()

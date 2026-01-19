@@ -34,6 +34,7 @@ public struct PlaylistView: View {
             if viewModel.isMediaRevampEnabled {
                 RoundedPrimaryImageButton(
                     image: MEGAAssets.Image.plus,
+                    isLiquidGlassEnabled: viewModel.featureFlagProvider.isLiquidGlassEnabled(),
                     action: { viewModel.addPlaylistButtonTap() })
                 .padding(TokenSpacing._5)
             }

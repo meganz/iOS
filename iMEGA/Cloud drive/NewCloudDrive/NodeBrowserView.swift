@@ -70,7 +70,9 @@ struct NodeBrowserView: View {
         .background()
         .overlay(alignment: .bottomTrailing) {
             if floatingAddButtonViewModel.showsFloatingAddButton, viewModel.viewModeAwareMediaDiscoveryViewModel == nil {
-                RoundedPrimaryImageButton(image: MEGAAssets.Image.plus, action: { floatingAddButtonViewModel.addButtonTapAction() })
+                RoundedPrimaryImageButton(image: MEGAAssets.Image.plus,
+                                          isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+                                          action: { floatingAddButtonViewModel.addButtonTapAction() })
                     .padding(TokenSpacing._5)
             }
         }

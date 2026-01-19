@@ -156,7 +156,7 @@ struct PlaylistContentView: View {
         _sortHeaderViewModel = StateObject(wrappedValue: sortHeaderViewModel())
         self.onTapAddButton = onTapAddButton
     }
-
+    
     private var isMediaRevampEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
     }
@@ -180,6 +180,7 @@ struct PlaylistContentView: View {
         .overlay(alignment: .bottomTrailing) {
             RoundedPrimaryImageButton(
                 image: MEGAAssets.Image.plus,
+                isLiquidGlassEnabled: featureFlagProvider.isLiquidGlassEnabled(),
                 action: { onTapAddButton() }
             )
             .padding(TokenSpacing._5)
