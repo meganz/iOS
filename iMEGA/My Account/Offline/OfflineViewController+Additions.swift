@@ -140,7 +140,13 @@ extension OfflineViewController {
         }
         return Strings.Localizable.General.Format.itemsSelected(selectedCount)
     }
-    
+
+    @objc func configSearchBarBackgroundColor(_ searchBar: UISearchBar) {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
+        searchBar.backgroundImage = UIImage()
+        searchBar.barTintColor = UIColor.pageBackgroundColor()
+    }
+
     // MARK: - Private
     
     private var screenTitle: String {

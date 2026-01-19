@@ -79,6 +79,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self configSearchBarBackgroundColor:self.searchController.searchBar];
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     self.serialQueue = dispatch_queue_create("nz.mega.offlineviewcontroller.reloadui", DISPATCH_QUEUE_SERIAL);
