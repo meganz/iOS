@@ -16,6 +16,13 @@ public struct FolderLinkNodeAction {
     public let sender: UIButton
 }
 
+public enum FolderLinkNodesAction {
+    case addToCloudDrive(Set<HandleEntity>)
+    case makeAvailableOffline(Set<HandleEntity>)
+    case sendToChat(String)
+    case saveToPhotos(Set<HandleEntity>)
+}
+
 public protocol FolderLinkBuilderProtocol: Sendable {
     func build(link: String, with key: String) async -> String
 }
@@ -25,11 +32,12 @@ public protocol FolderLinkSearchResultMapperProtocol: Sendable {
 }
 
 @MainActor
-public protocol FolderLinkFileNodeOpenerProtocol: Sendable {
+public protocol FolderLinkFileNodeOpenerProtocol {
     func openNode(handle: HandleEntity, siblings: [HandleEntity])
 }
 
 @MainActor
-public protocol FolderLinkNodeActionHandlerProtocol: Sendable {
+public protocol FolderLinkNodeActionHandlerProtocol {
     func handle(action: FolderLinkNodeAction)
+    func handle(action: FolderLinkNodesAction)
 }

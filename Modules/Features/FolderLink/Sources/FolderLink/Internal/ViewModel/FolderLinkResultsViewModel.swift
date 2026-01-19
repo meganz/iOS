@@ -11,10 +11,13 @@ import UIKit
 final class FolderLinkResultsViewModel: ObservableObject {
     struct Dependency {
         let nodeHandle: HandleEntity
+        let link: String
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
         let viewModeUseCase: any FolderLinkViewModeUseCaseProtocol
         let searchUseCase: any FolderLinkSearchUseCaseProtocol
+        let editModeUseCase: any FolderLinkEditModeUseCaseProtocol
+        let bottomBarUseCase: any FolderLinkBottomBarUseCaseProtocol
         let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     }
@@ -23,9 +26,11 @@ final class FolderLinkResultsViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var selection: SearchResultSelection?
     @Published var nodeAction: FolderLinkNodeAction?
+    @Published var nodesAction: FolderLinkNodesAction?
     @Published var quickAction: FolderLinkQuickAction?
-    @Published private var sortOrder: MEGAUIComponent.SortOrder
-    @Published private var viewMode: SearchResultsViewMode
+    @Published var bottomBarAction: FolderLinkBottomBarAction?
+    @Published var bottomBarDisabled: Bool = true
+    @Published var shouldIncludeSaveToPhotosBottomAction: Bool = false
     
     // IOS-11084 - handle edit mode
     var title: String {
@@ -45,12 +50,16 @@ final class FolderLinkResultsViewModel: ObservableObject {
         Strings.Localizable.folderLink
     }
     
-    var quickActions: [FolderLinkQuickAction] {
-        dependency.quickActionUseCase.quickActions(for: dependency.nodeHandle)
+    var shouldShowQuickActionsMenu: Bool {
+        dependency.quickActionUseCase.shouldEnableQuickActions(for: dependency.nodeHandle)
     }
     
     var shouldEnableMediaDiscoveryMode: Bool {
         dependency.viewModeUseCase.shouldEnableMediaDiscoveryMode(for: dependency.nodeHandle)
+    }
+    
+    var shouldEnableMoreOptionsMenu: Bool {
+        dependency.editModeUseCase.canEnterEditModeWhenOpeningFolder(dependency.nodeHandle)
     }
     
     lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
@@ -71,6 +80,14 @@ final class FolderLinkResultsViewModel: ObservableObject {
         searchBridge.viewModeChanged = { [weak self] viewMode in
             guard let self, self.viewMode != viewMode else { return }
             self.viewMode = viewMode
+        }
+        
+        searchBridge.selectionChanged = { [weak self] results in
+            self?.selectedNodes = results
+        }
+        
+        searchBridge.editingChanged = { [weak self] editing in
+            self?.editMode = editing ? .active : .inactive
         }
         
         let searchResultsProvider = FolderLinkSearchResultsProvider(
@@ -108,6 +125,10 @@ final class FolderLinkResultsViewModel: ObservableObject {
     
     private let dependency: FolderLinkResultsViewModel.Dependency
     private var cancellables: Set<AnyCancellable> = []
+    
+    @Published private var sortOrder: MEGAUIComponent.SortOrder
+    @Published private var viewMode: SearchResultsViewMode
+    @Published private var selectedNodes: Set<HandleEntity> = []
     
     init(dependency: FolderLinkResultsViewModel.Dependency) {
         self.dependency = dependency
@@ -152,6 +173,57 @@ final class FolderLinkResultsViewModel: ObservableObject {
                 dependency.sortOrderPreferenceUseCase.save(sortOrder: order.toDomainSortOrderEntity(), for: dependency.nodeHandle)
                 searchResultsContainerViewModel.changeSortOrder(order)
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables)    
+        
+        /// Disable the bottom bar when editMode is active, and no nodes is selected
+        $selectedNodes
+            .combineLatest($editMode)
+            .map { nodes, editMode in
+                dependency.bottomBarUseCase.shouldDisableBottomBar(
+                    handle: dependency.nodeHandle,
+                    editingState: editMode.isEditing ? .active(nodes) : .inactive
+                )
+            }
+            .assign(to: &$bottomBarDisabled)
+        
+        $selectedNodes
+            .combineLatest($editMode)
+            .map { nodes, editMode in
+                dependency.bottomBarUseCase.shouldIncludeSaveToPhotosAction(
+                    handle: dependency.nodeHandle,
+                    editingState: editMode.isEditing ? .active(nodes) : .inactive
+                )
+            }
+            .assign(to: &$shouldIncludeSaveToPhotosBottomAction)
+        
+        $quickAction
+            .compactMap { $0 }
+            .map { action in
+                switch action {
+                case .addToCloudDrive:
+                    FolderLinkNodesAction.addToCloudDrive([dependency.nodeHandle])
+                case .makeAvailableOffline:
+                    FolderLinkNodesAction.makeAvailableOffline([dependency.nodeHandle])
+                case .sendToChat:
+                    FolderLinkNodesAction.sendToChat(dependency.link)
+                }
+            }
+            .assign(to: &$nodesAction)
+        
+        $bottomBarAction
+            .compactMap { $0 }
+            .compactMap { [weak self] action in
+                guard let self else { return nil }
+                let nodes = editMode.isEditing ? selectedNodes : [dependency.nodeHandle]
+                return switch action {
+                case .addToCloudDrive:
+                    FolderLinkNodesAction.addToCloudDrive(nodes)
+                case .makeAvailableOffline:
+                    FolderLinkNodesAction.makeAvailableOffline(nodes)
+                case .saveToPhotos:
+                    FolderLinkNodesAction.saveToPhotos(nodes)
+                }
+            }
+            .assign(to: &$nodesAction)
     }
 }

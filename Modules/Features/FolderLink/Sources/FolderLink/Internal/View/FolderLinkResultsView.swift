@@ -10,6 +10,7 @@ import SwiftUI
 struct FolderLinkResultsView: View {
     struct Dependency {
         let handle: HandleEntity
+        let link: String
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
@@ -26,10 +27,13 @@ struct FolderLinkResultsView: View {
             wrappedValue: FolderLinkResultsViewModel(
                 dependency: FolderLinkResultsViewModel.Dependency(
                     nodeHandle: dependency.handle,
+                    link: dependency.link,
                     searchResultMapper: dependency.searchResultMapper,
                     titleUseCase: FolderLinkTitleUseCase(),
                     viewModeUseCase: FolderLinkViewModeUseCase(),
                     searchUseCase: FolderLinkSearchUseCase(),
+                    editModeUseCase: FolderLinkEditModeUseCase(),
+                    bottomBarUseCase: FolderLinkBottomBarUseCase(),
                     quickActionUseCase: FolderLinkQuickActionUseCase(),
                     sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
                 )
@@ -40,36 +44,19 @@ struct FolderLinkResultsView: View {
     var body: some View {
         SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
-            .toolbarRole(.editor)
+            .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    VStack {
-                        Text(viewModel.title)
-                            .font(.headline)
-                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                            .lineLimit(1)
-                        Text(viewModel.subtitle)
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                            .lineLimit(1)
-                    }
+                    FolderLinkNavigationTitleView(title: viewModel.title, subtitle: viewModel.subtitle)
                 }
                 
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    if viewModel.editMode.isEditing {
-                        Button {
-                            viewModel.editMode = .inactive
-                        } label: {
-                            Text(Strings.Localizable.cancel)
-                        }
-                    } else {
-                        moreOptions
-                    }
+                ToolbarItem(placement: .topBarTrailing) {
+                    moreOptionsButton
                 }
                 
                 ToolbarItemGroup(placement: .bottomBar) {
-                    bottomToolbar
+                    bottomBar
+                        .disabled(viewModel.bottomBarDisabled)
                 }
             }
             .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
@@ -77,59 +64,66 @@ struct FolderLinkResultsView: View {
             }.onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
+            .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
+                dependency.nodeActionHandler.handle(action: action)
+            }
             .environment(\.editMode, $viewModel.editMode)
     }
     
     @ViewBuilder
-    private var moreOptions: some View {
-        Menu {
-            Section {
-                EditModeMenu(editMode: $viewModel.editMode)
+    private var moreOptionsButton: some View {
+        if viewModel.editMode.isEditing {
+            Button {
+                viewModel.editMode = .inactive
+            } label: {
+                Text(Strings.Localizable.cancel)
             }
-            
-            if !viewModel.quickActions.isEmpty {
+        } else {
+            Menu {
                 Section {
-                    QuickActionMenu(
-                        quickActions: viewModel.quickActions,
-                        selection: $viewModel.quickAction
-                    )
+                    Button {
+                        viewModel.editMode = .active
+                    } label: {
+                        Label {
+                            Text(Strings.Localizable.select)
+                        } icon: {
+                            Image(uiImage: MEGAAssets.UIImage.selectItem)
+                        }
+                    }
+                }
+                
+                if viewModel.shouldShowQuickActionsMenu {
+                    Section {
+                        FolderLinkQuickActionButton(action: .addToCloudDrive, selection: $viewModel.quickAction)
+                        FolderLinkQuickActionButton(action: .makeAvailableOffline, selection: $viewModel.quickAction)
+                        ShareLinkButton(link: dependency.link)
+                        FolderLinkQuickActionButton(action: .sendToChat, selection: $viewModel.quickAction)
+                    }
+                }
+            } label: {
+                Label {
+                    Text(Strings.Localizable.more)
+                } icon: {
+                    Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
                 }
             }
-        } label: {
-            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+            .disabled(!viewModel.shouldEnableMoreOptionsMenu)
         }
     }
     
     @ViewBuilder
-    private var bottomToolbar: some View {
-        Button {
-            // todo import
-        } label: {
-            MEGAAssets.Image.import
+    private var bottomBar: some View {
+        FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
+        
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .makeAvailableOffline, selection: $viewModel.bottomBarAction)
+        
+        if viewModel.shouldIncludeSaveToPhotosBottomAction {
+            Spacer()
+            FolderLinkBottomBarActionButton(action: .saveToPhotos, selection: $viewModel.bottomBarAction)
         }
         
         Spacer()
-        
-        Button {
-            // todo download
-        } label: {
-            MEGAAssets.Image.offline
-        }
-        
-        Spacer()
-        
-        Button {
-            // todo save to photos
-        } label: {
-            MEGAAssets.Image.saveToPhotos
-        }
-        
-        Spacer()
-        
-        Button {
-            // todo share link
-        } label: {
-            MEGAAssets.Image.link
-        }
+        ShareLinkButton(link: dependency.link)
     }
 }

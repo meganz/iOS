@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -66,20 +67,13 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             content
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
-                .toolbarRole(.editor)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            viewModel.stopLoadingFolderLink()
-                            dependency.onClose()
-                        } label: {
-                            Text(Strings.Localizable.close)
-                                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                        }
-                    }
-                }
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        closeButton
+                    }
                 }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
@@ -134,14 +128,10 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                     }
                 }
         case let .results(nodeHandle):
-            folderLinkResultsView(for: nodeHandle)
+            FolderLinkResultsView(
+                dependency: folderLinkResultsDependency(handle: nodeHandle)
+            )
         }
-    }
-    
-    private func folderLinkResultsView(for nodeHandle: HandleEntity) -> some View {
-        FolderLinkResultsView(
-            dependency: folderLinkResultsDependency(handle: nodeHandle)
-        )
     }
     
     @ViewBuilder
@@ -151,12 +141,36 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             FolderLinkResultsView(
                 dependency: folderLinkResultsDependency(handle: nodeHandle)
             )
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    backButton
+                }
+            }
+        }
+    }
+    
+    private var closeButton: some View {
+        Button {
+            viewModel.stopLoadingFolderLink()
+            dependency.onClose()
+        } label: {
+            Text(Strings.Localizable.close)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        }
+    }
+    
+    private var backButton: some View {
+        Button {
+            navigationPath.removeLast()
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.backArrow)
         }
     }
     
     private func folderLinkResultsDependency(handle: HandleEntity) -> FolderLinkResultsView.Dependency {
         FolderLinkResultsView.Dependency(
             handle: handle,
+            link: dependency.link,
             searchResultMapper: dependency.searchResultMapper,
             sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
             nodeActionHandler: dependency.nodeActionHandler,

@@ -1,7 +1,7 @@
 import MEGADomain
 
 protocol FolderLinkQuickActionUseCaseProtocol: Sendable {
-    func quickActions(for nodeHandle: HandleEntity) -> [FolderLinkQuickAction]
+    func shouldEnableQuickActions(for nodeHandle: HandleEntity) -> Bool
 }
 
 struct FolderLinkQuickActionUseCase: FolderLinkQuickActionUseCaseProtocol {
@@ -11,14 +11,8 @@ struct FolderLinkQuickActionUseCase: FolderLinkQuickActionUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func quickActions(for nodeHandle: HandleEntity) -> [FolderLinkQuickAction] {
-        guard let node = folderLinkRepository.node(for: nodeHandle), node.isNodeKeyDecrypted else { return [] }
-        return [
-            .importToCloudDrive,
-            .downloadToOffline,
-            .shareLink,
-            .sendToChat
-        ]
+    func shouldEnableQuickActions(for nodeHandle: HandleEntity) -> Bool {
+        guard let node = folderLinkRepository.node(for: nodeHandle) else { return false }
+        return node.isNodeKeyDecrypted
     }
-    
 }

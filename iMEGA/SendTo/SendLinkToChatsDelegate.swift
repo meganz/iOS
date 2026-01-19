@@ -1,24 +1,17 @@
 import MEGAL10n
 
 class SendLinkToChatsDelegate: NSObject {
-
     private let link: String
-    private let navigationController: UINavigationController?
     
-    @objc init(link: String, navigationController: UINavigationController?) {
+    @objc init(link: String) {
         self.link = link
-        self.navigationController = navigationController
         super.init()
     }
 }
 
 extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
     func send(_ viewController: SendToViewController!, toChats chats: [MEGAChatListItem]!, andUsers users: [MEGAUser]!) {
-        if navigationController?.viewControllers.first?.isKind(of: FolderLinkViewController.self) == true {
-            navigationController?.popViewController(animated: true)
-        } else {
-            viewController.dismiss(animated: true, completion: nil)
-        }
+        viewController.dismiss(animated: true, completion: nil)
         
         chats.forEach {
             MEGAChatSdk.shared.sendMessage(toChat: $0.chatId, message: link)

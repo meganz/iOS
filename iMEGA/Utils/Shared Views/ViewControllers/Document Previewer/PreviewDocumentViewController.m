@@ -231,7 +231,7 @@
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
         SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
         sendToViewController.sendMode = SendModeFileAndFolderLink;
-        self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.fileLink navigationController:self.navigationController];
+        self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.fileLink];
         sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
         [self presentViewController:navigationController animated:YES completion:nil];
     } else {

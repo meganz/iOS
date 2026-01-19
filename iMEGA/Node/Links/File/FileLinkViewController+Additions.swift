@@ -11,23 +11,20 @@ extension FileLinkViewController {
     
     @objc func showSendToChat() {
         if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
-            guard let navigationController =
+            guard let sendToChatNavigationController =
                     UIStoryboard(
                         name: "Chat",
                         bundle: nil
                     ).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
-                  let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
+                  let sendToViewController = sendToChatNavigationController.viewControllers.first as? SendToViewController else {
                 return
             }
             
             sendToViewController.sendMode = .fileAndFolderLink
-            self.sendLinkDelegate = SendLinkToChatsDelegate(
-                link: linkEncryptedString ?? publicLinkString ?? "",
-                navigationController: navigationController
-            )
+            self.sendLinkDelegate = SendLinkToChatsDelegate(link: linkEncryptedString ?? publicLinkString ?? "")
             sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
             
-            self.navigationController?.pushViewController(sendToViewController, animated: true)
+            self.navigationController?.pushViewController(sendToChatNavigationController, animated: true)
             viewModel.dispatch(.trackSendToChatFileLink)
         } else {
             MEGALinkManager.linkSavedString = linkEncryptedString ?? publicLinkString ?? ""
