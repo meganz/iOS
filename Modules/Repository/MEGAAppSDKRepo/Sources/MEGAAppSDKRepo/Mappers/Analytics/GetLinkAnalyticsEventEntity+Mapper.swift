@@ -60,9 +60,9 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
         case .encryptFile:
             return 402370
         case .viewUpgradeToProScreenFolder:
-            return 407121
+            return 403218
         case .viewUpgradeToProScreenFile:
-            return 407120
+            return 403219
         }
     }
 
