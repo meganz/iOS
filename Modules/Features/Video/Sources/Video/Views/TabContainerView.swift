@@ -5,7 +5,7 @@ import SwiftUI
 
 struct TabContainerView: View {
     @State private var currentTab: VideosTab = .all
-    @State private var orientation = UIDeviceOrientation.unknown
+    @State private var orientation = UIDevice.current.orientation
     @State private var layoutID = UUID()
     
     @StateObject private var videoListViewModel: VideoListViewModel
@@ -69,6 +69,10 @@ struct TabContainerView: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
             .id(layoutID)
+            .onChange(of: geometry.safeAreaInsets) { _ in
+                guard videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() else { return }
+                refreshLayoutID()
+            }
         }
         .ignoresSafeArea(edges: .bottom)
         .onRotate { newOrientation in
@@ -86,6 +90,10 @@ struct TabContainerView: View {
         }
         .onChange(of: currentTab) {
             didChangeCurrentTab($0)
+        }
+        .onAppear {
+            guard videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() else { return }
+            refreshLayoutID()
         }
     }
     
