@@ -58,6 +58,10 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             setMenuCapableBackButtonWith(menuTitle: backButtonTitle)
         }
         self.navigationItem.searchController = searchBarVisible ? wrapper?.searchController : nil
+        if !searchBarVisible, let navVC = navigationController, !navVC.navigationBar.isHidden {
+            navVC.setNavigationBarHidden(true, animated: false)
+            navVC.setNavigationBarHidden(false, animated: false)
+        }
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }
             self.searchBarVisible = isVisible
