@@ -19,11 +19,12 @@ struct RevampedSearchResultRowView: View {
         static let easeInOutDuration = 0.05
         static let longPressMininumDuration = 0.5
         static let tapHighlightDurationNs: UInt64 = 100_000_000
+        static let defaultThumbnailSize: Double = 32
     }
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    @ScaledMetric var thumbnailSize = Constants.defaultThumbnailSize
 
     @Binding var selected: Set<ResultId>
 
@@ -108,18 +109,24 @@ struct RevampedSearchResultRowView: View {
 
     // optional overlay property in placement .previewOverlay
     private var thumbnail: some View {
-        Image(uiImage: viewModel.thumbnailImage)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 32, height: 32)
-            .background(
-                TokenColors.Background.surface1.swiftUI.cornerRadius(TokenRadius.small)
-                    .opacity(viewModel.hasThumbnail ? 1 : 0)
-            )
-            .padding(.horizontal, TokenSpacing._2)
-            .animatedAppearance(isContentLoaded: viewModel.isThumbnailLoadedOnce)
-            .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
-            .overlay(propertyViewsFor(placement: .previewOverlay))
+        // Capping the thumbnail's size to 1.5x growth so it won't push the other contents of the row too much
+        let cappedThumbnailSize = min(thumbnailSize, Constants.defaultThumbnailSize * 1.5)
+        // The image need to be nested inside the VStack so it can be centered horizontally
+        return VStack(alignment: .center) {
+                Image(uiImage: viewModel.thumbnailImage)
+                    .resizable()
+                    .scaledToFit()
+                    .background(
+                        TokenColors.Background.surface1.swiftUI.cornerRadius(TokenRadius.small)
+                            .opacity(viewModel.hasThumbnail ? 1 : 0)
+                    )
+                    .frame(width: cappedThumbnailSize, height: cappedThumbnailSize)
+                    .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+                    .padding(.horizontal, TokenSpacing._2)
+                    .animatedAppearance(isContentLoaded: viewModel.isThumbnailLoadedOnce)
+                    .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
+                    .overlay(propertyViewsFor(placement: .previewOverlay))
+        }
     }
 
     @ViewBuilder
