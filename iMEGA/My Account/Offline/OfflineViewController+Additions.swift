@@ -119,6 +119,7 @@ extension OfflineViewController {
         let title = screenTitle
         setMenuCapableBackButtonWith(menuTitle: title)
         navigationItem.title = title
+        setupLiquidGlassNavigationBar()
     }
     
     @objc func dispatchOnViewAppearAction() {
