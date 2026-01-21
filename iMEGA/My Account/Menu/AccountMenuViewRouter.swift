@@ -233,6 +233,9 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         )
         if let cloudDriveVC {
             cloudDriveVC.hidesBottomBarWhenPushed = true
+            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                AppearanceManager.setupLiquidGlassNavigationBar(navigationController.navigationBar)
+            }
             navigationController.pushViewController(cloudDriveVC, animated: true)
         }
     }
