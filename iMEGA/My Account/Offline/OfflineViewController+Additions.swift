@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGARepo
@@ -119,7 +120,7 @@ extension OfflineViewController {
         let title = screenTitle
         setMenuCapableBackButtonWith(menuTitle: title)
         navigationItem.title = title
-        setupLiquidGlassNavigationBar()
+        setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
     }
     
     @objc func dispatchOnViewAppearAction() {
@@ -145,7 +146,15 @@ extension OfflineViewController {
     @objc func configSearchBarBackgroundColor(_ searchBar: UISearchBar) {
         guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
         searchBar.backgroundImage = UIImage()
-        searchBar.barTintColor = UIColor.pageBackgroundColor()
+        searchBar.barTintColor = TokenColors.Background.surface1
+    }
+
+    @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
+           #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            configureNavigationBar()
+        }
     }
 
     // MARK: - Private

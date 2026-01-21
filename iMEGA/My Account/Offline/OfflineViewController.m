@@ -149,6 +149,11 @@ static NSString *kisDirectory = @"kisDirectory";
     [self refreshMiniPlayerIfNeeded];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [self handleTraitCollectionDidChange:previousTraitCollection];
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     

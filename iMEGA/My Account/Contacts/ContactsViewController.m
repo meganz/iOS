@@ -114,7 +114,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
-    [self setupLiquidGlassNavigationBar];
+    [self configureLiquidGlassNavigationBar];
 
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
     
@@ -196,6 +196,11 @@
             self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [self handleTraitCollectionDidChange:previousTraitCollection];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

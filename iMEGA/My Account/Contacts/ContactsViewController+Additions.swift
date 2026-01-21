@@ -333,6 +333,18 @@ extension ContactsViewController: BottomOverlayPresenterProtocol {
 // MARK: Liquid Glass
 
 extension ContactsViewController {
+    @objc func configureLiquidGlassNavigationBar() {
+        setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
+    }
+
+    @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
+           #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            configureLiquidGlassNavigationBar()
+        }
+    }
+
     @objc func markNavigationBarNeedsLayoutForLiquidGlass() {
         guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
             return

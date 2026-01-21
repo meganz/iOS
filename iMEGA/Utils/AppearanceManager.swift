@@ -218,16 +218,17 @@ final class AppearanceManager: NSObject {
 
     @available(iOS 26.0, *)
     class func setupLiquidGlassNavigationBar(
-        _ navigationBar: UINavigationBar
+        _ navigationBar: UINavigationBar,
+        backgroundColor: UIColor = .clear
     ) {
         let appearance = makeNavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
+        appearance.backgroundColor = backgroundColor
         appearance.shadowColor = nil
         appearance.shadowImage = nil
 
         navigationBar.isTranslucent = true
-        navigationBar.backgroundColor = .clear
+        navigationBar.backgroundColor = backgroundColor
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
