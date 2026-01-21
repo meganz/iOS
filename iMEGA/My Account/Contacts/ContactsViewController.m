@@ -114,6 +114,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
+    [self setupLiquidGlassNavigationBar];
 
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
     
