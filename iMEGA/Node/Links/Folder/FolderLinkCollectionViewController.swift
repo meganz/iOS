@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGAAssets
+import MEGAInfrastructure
 import MEGAL10n
 
 class FolderLinkCollectionViewController: UIViewController {
@@ -26,6 +27,8 @@ class FolderLinkCollectionViewController: UIViewController {
     private var displayNodes: [MEGANode]? {
         folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
     }
+
+    private let hapticFeedbackUsecase = HapticFeedbackUseCase()
 
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
@@ -313,6 +316,7 @@ extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfall
         guard !collectionView.isEditing,
               let indexPath = collectionView.indexPathForItem(at: point),
               getNode(at: indexPath) != nil else { return }
+        hapticFeedbackUsecase.generateHapticFeedback(.light)
         folderLink.setEditMode(true)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         collectionView(collectionView, didSelectItemAt: indexPath)

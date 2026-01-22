@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
 
 class FolderLinkTableViewController: UIViewController {
@@ -12,6 +13,7 @@ class FolderLinkTableViewController: UIViewController {
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
     private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
+    private let hapticFeedbackUsecase = HapticFeedbackUseCase()
 
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
         guard let folderLinkTableVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkTableViewControllerID") as? FolderLinkTableViewController else {
@@ -87,12 +89,12 @@ class FolderLinkTableViewController: UIViewController {
 
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard gesture.state == .began else { return }
-
         let point = gesture.location(in: tableView)
 
         guard !tableView.isEditing,
               let indexPath = tableView.indexPathForRow(at: point),
               getNode(at: indexPath) != nil else { return }
+        hapticFeedbackUsecase.generateHapticFeedback(.light)
         folderLink.setEditMode(true)
         tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         tableView(tableView, didSelectRowAt: indexPath)
