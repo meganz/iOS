@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] และคนอื่น ๆ อีก %d คนได้ยกมือ</string>
         <key>other</key>
         <string>[A] และคนอื่น ๆ อีก %d คนได้ยกมือ</string>
       </dict>
@@ -26,6 +28,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>คุณและคนอื่น ๆ อีก %d คนได้ยกมือ</string>
         <key>other</key>
         <string>คุณและคนอื่น ๆ อีก %d คนได้ยกมือ</string>
       </dict>
@@ -40,6 +44,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ไฟล์</string>
         <key>other</key>
         <string>%d ไฟล์</string>
       </dict>
@@ -68,6 +74,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ไฟล์</string>
         <key>other</key>
         <string>%d ไฟล์</string>
       </dict>
@@ -82,6 +90,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d โฟลเดอร์</string>
         <key>other</key>
         <string>%d โฟลเดอร์</string>
       </dict>
@@ -96,6 +106,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d โฟลเดอร์</string>
         <key>other</key>
         <string>%d โฟลเดอร์</string>
       </dict>
@@ -110,6 +122,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ใครก็ตามที่มีลิงก์เหล่านี้ สามารถดูและดาวน์โหลดข้อมูลของคุณได้</string>
         <key>other</key>
         <string>ใครก็ตามที่มีลิงก์เหล่านี้ สามารถดูและดาวน์โหลดข้อมูลของคุณได้</string>
       </dict>
@@ -124,6 +138,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>คัดลอกลิงก์ไปที่คลิปบอร์ดแล้ว</string>
         <key>other</key>
         <string>คัดลอกลิงก์ไปที่คลิปบอร์ดแล้ว</string>
       </dict>
@@ -138,6 +154,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ทำการสร้างลิงก์และคัดลอกไปที่คลิปบอร์ดของคุณแล้ว</string>
         <key>other</key>
         <string>ทำการสร้างลิงก์และคัดลอกไปที่คลิปบอร์ดของคุณแล้ว</string>
       </dict>
@@ -152,6 +170,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>นำไปใช้กับรายการที่ซ้ำกันทั้งหมด %d รายการ</string>
         <key>other</key>
         <string>นำไปใช้กับรายการที่ซ้ำกันทั้งหมด %d รายการ</string>
       </dict>
@@ -166,6 +186,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ชั่วโมง</string>
         <key>other</key>
         <string>ชั่วโมง</string>
       </dict>
@@ -180,6 +202,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>วัน</string>
         <key>other</key>
         <string>วัน</string>
       </dict>
@@ -194,6 +218,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>สัปดาห์</string>
         <key>other</key>
         <string>สัปดาห์</string>
       </dict>
@@ -208,6 +234,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เดือน</string>
         <key>other</key>
         <string>เดือน</string>
       </dict>
@@ -222,6 +250,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ปี</string>
         <key>other</key>
         <string>ปี</string>
       </dict>
@@ -236,6 +266,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ชั่วโมง</string>
         <key>other</key>
         <string>%d ชั่วโมง</string>
       </dict>
@@ -250,6 +282,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d วัน</string>
         <key>other</key>
         <string>%d วัน</string>
       </dict>
@@ -264,6 +298,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d สัปดาห์</string>
         <key>other</key>
         <string>%d สัปดาห์</string>
       </dict>
@@ -278,6 +314,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d เดือน</string>
         <key>other</key>
         <string>%d เดือน</string>
       </dict>
@@ -292,6 +330,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ปี</string>
         <key>other</key>
         <string>%d ปี</string>
       </dict>
@@ -306,6 +346,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ไฟล์</string>
         <key>other</key>
         <string>%d ไฟล์</string>
       </dict>
@@ -320,6 +362,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d โฟลเดอร์</string>
         <key>other</key>
         <string>%d โฟลเดอร์</string>
       </dict>
@@ -334,6 +378,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d โฟลเดอร์</string>
         <key>other</key>
         <string>%d โฟลเดอร์</string>
       </dict>
@@ -348,6 +394,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d ไฟล์</string>
         <key>other</key>
         <string>• %d ไฟล์</string>
       </dict>
@@ -362,6 +410,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d รายการ</string>
         <key>other</key>
         <string>%d รายการ</string>
       </dict>
@@ -376,6 +426,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d รายการ</string>
         <key>other</key>
         <string>%d รายการ</string>
       </dict>
@@ -390,6 +442,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d รูปภาพ</string>
         <key>other</key>
         <string>%d รูปภาพ</string>
       </dict>
@@ -404,6 +458,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d วิดีโอ</string>
         <key>other</key>
         <string>%d วิดีโอ</string>
       </dict>
@@ -418,6 +474,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d รูปภาพ</string>
         <key>other</key>
         <string>%d รูปภาพ</string>
       </dict>
@@ -432,6 +490,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>และ %d วิดีโอ</string>
         <key>other</key>
         <string>และ %d วิดีโอ</string>
       </dict>
@@ -446,6 +506,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” และอื่น ๆ อีก %d รายการ</string>
         <key>other</key>
         <string>“[A]” และอื่น ๆ อีก %d รายการ</string>
       </dict>
@@ -460,6 +522,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] จาก %d ไฟล์</string>
         <key>other</key>
         <string>[A] จาก %d ไฟล์</string>
       </dict>
@@ -474,6 +538,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ไฟล์</string>
         <key>other</key>
         <string>%d ไฟล์</string>
       </dict>
@@ -488,6 +554,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เอาลิงก์ออก</string>
         <key>other</key>
         <string>เอาลิงก์ออก</string>
       </dict>
@@ -502,6 +570,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เอาลิงก์ออกแล้ว</string>
         <key>other</key>
         <string>เอาลิงก์ออกแล้ว</string>
       </dict>
@@ -516,6 +586,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบลิงก์หรือไม่</string>
         <key>other</key>
         <string>ลบลิงก์หรือไม่</string>
       </dict>
@@ -530,6 +602,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>คนที่คุณแชร์ลิงก์เหล่านี้ด้วยจะไม่สามารถเข้าถึงได้อีกต่อไป</string>
         <key>other</key>
         <string>คนที่คุณแชร์ลิงก์เหล่านี้ด้วยจะไม่สามารถเข้าถึงได้อีกต่อไป</string>
       </dict>
@@ -544,6 +618,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>แชร์โฟลเดอร์</string>
         <key>other</key>
         <string>แชร์โฟลเดอร์</string>
       </dict>
@@ -558,6 +634,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>แชร์ลิงก์</string>
         <key>other</key>
         <string>แชร์ลิงก์</string>
       </dict>
@@ -572,6 +650,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>จัดการลิงก์</string>
         <key>other</key>
         <string>จัดการลิงก์</string>
       </dict>
@@ -586,6 +666,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ส่งออกไฟล์</string>
         <key>other</key>
         <string>ส่งออกไฟล์</string>
       </dict>
@@ -600,6 +682,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d วินาที</string>
         <key>other</key>
         <string>%d วินาที</string>
       </dict>
@@ -614,6 +698,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d นาที</string>
         <key>other</key>
         <string>%d นาที</string>
       </dict>
@@ -628,6 +714,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ชั่วโมง</string>
         <key>other</key>
         <string>%d ชั่วโมง</string>
       </dict>
@@ -642,6 +730,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ชั่วโมง</string>
         <key>other</key>
         <string>%d ชั่วโมง</string>
       </dict>
@@ -656,8 +746,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d นาที</string>
         <key>other</key>
-        <string> %d นาที</string>
+        <string>%d นาที</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -670,6 +762,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d นาที</string>
         <key>other</key>
         <string>%d นาที</string>
       </dict>
@@ -684,6 +778,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ชั่วโมง</string>
         <key>other</key>
         <string>%d ชั่วโมง</string>
       </dict>
@@ -698,6 +794,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d นาที</string>
         <key>other</key>
         <string>%d นาที</string>
       </dict>
@@ -712,6 +810,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เนื่องจากโฟลเดอร์เหล่านี้เป็นโฟลเดอร์สำเนาสำรอง จึงแชร์ได้เฉพาะแบบอ่านอย่างเดียว การเปลี่ยนแปลงเนื้อหาอาจทำให้การสำรองข้อมูลไม่ถูกต้อง</string>
         <key>other</key>
         <string>เนื่องจากโฟลเดอร์เหล่านี้เป็นโฟลเดอร์สำเนาสำรอง จึงแชร์ได้เฉพาะแบบอ่านอย่างเดียว การเปลี่ยนแปลงเนื้อหาอาจทำให้การสำรองข้อมูลไม่ถูกต้อง</string>
       </dict>
@@ -726,6 +826,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ชั่วโมง</string>
         <key>other</key>
         <string>%d ชั่วโมง</string>
       </dict>
@@ -740,6 +842,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d นาที</string>
         <key>other</key>
         <string>%d นาที</string>
       </dict>
@@ -754,6 +858,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ชั่วโมง</string>
         <key>other</key>
         <string>ชั่วโมง</string>
       </dict>
@@ -768,6 +874,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>นาที</string>
         <key>other</key>
         <string>นาที</string>
       </dict>
@@ -782,6 +890,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ข้อความที่ยังไม่ได้อ่าน</string>
         <key>other</key>
         <string>%d ข้อความที่ยังไม่ได้อ่าน</string>
       </dict>
@@ -796,6 +906,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>คุณสามารถเพิ่มรายการลงในอัลบั้มได้ครั้งละไม่เกิน %d รายการ</string>
         <key>other</key>
         <string>คุณสามารถเพิ่มรายการลงในอัลบั้มได้ครั้งละไม่เกิน %d รายการ</string>
       </dict>
@@ -810,6 +922,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เพิ่ม %d รายการไปยัง “[A]” แล้ว</string>
         <key>other</key>
         <string>เพิ่ม %d รายการไปยัง “[A]” แล้ว</string>
       </dict>
@@ -824,8 +938,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>อัปโหลดรูปภาพเสร็จสมบูรณ์ การอัปโหลดวิดีโอปิดอยู่: วิดีโอ %d รายการยังไม่ได้อัปโหลด</string>
         <key>other</key>
-        <string>การอัปโหลดรูปภาพเสร็จสมบูรณ์ การอัปโหลดวิดีโอปิดอยู่: วิดีโอ %d รายการยังไม่ได้อัปโหลด</string>
+        <string>อัปโหลดรูปภาพเสร็จสมบูรณ์ การอัปโหลดวิดีโอปิดอยู่: วิดีโอ %d รายการยังไม่ได้อัปโหลด</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -838,6 +954,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ไฟล์ %d รายการที่รออยู่</string>
         <key>other</key>
         <string>ไฟล์ %d รายการที่รออยู่</string>
       </dict>
@@ -852,6 +970,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบ (%d)</string>
         <key>other</key>
         <string>ลบ (%d)</string>
       </dict>
@@ -866,6 +986,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบอัลบั้มหรือไม่</string>
         <key>other</key>
         <string>ลบอัลบั้มหรือไม่</string>
       </dict>
@@ -880,6 +1002,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>อัลบั้มจะถูกลบออก แต่เนื้อหายังคงอยู่ในไทม์ไลน์ของคุณ</string>
         <key>other</key>
         <string>อัลบั้มจะถูกลบออก แต่เนื้อหายังคงอยู่ในไทม์ไลน์ของคุณ</string>
       </dict>
@@ -894,6 +1018,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบออก %d อัลบั้มแล้ว</string>
         <key>other</key>
         <string>ลบออก %d อัลบั้มแล้ว</string>
       </dict>
@@ -908,6 +1034,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบ %d รายการออกจาก “[A]” แล้ว</string>
         <key>other</key>
         <string>ลบ %d รายการออกจาก “[A]” แล้ว</string>
       </dict>
@@ -922,6 +1050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ลบลิงก์หรือไม่</string>
         <key>other</key>
         <string>ลบลิงก์หรือไม่</string>
       </dict>
@@ -936,6 +1066,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เอาลิงก์ออก</string>
         <key>other</key>
         <string>เอาลิงก์ออก</string>
       </dict>
@@ -950,6 +1082,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>คนที่คุณแชร์ลิงก์เหล่านี้ด้วยจะไม่สามารถเข้าถึงอัลบั้มได้</string>
         <key>other</key>
         <string>คนที่คุณแชร์ลิงก์เหล่านี้ด้วยจะไม่สามารถเข้าถึงอัลบั้มได้</string>
       </dict>
@@ -964,6 +1098,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>เอาลิงก์ออกแล้ว</string>
         <key>other</key>
         <string>เอาลิงก์ออกแล้ว</string>
       </dict>
@@ -978,6 +1114,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ทุกวัน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
         <key>other</key>
         <string>ทุก %d วัน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
@@ -992,6 +1130,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ทุก %d วัน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
         <key>other</key>
         <string>ทุก %d วัน มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
@@ -1006,6 +1146,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] ทุกสัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay] ทุก %d สัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
@@ -1020,6 +1162,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] ทุกสัปดาห์ มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay] ทุก %d สัปดาห์ มีผล [B][StartDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>
@@ -1034,6 +1178,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList] และ [LastWeekDay] ทุกสัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDaysList] และ [LastWeekDay] ทุก %d สัปดาห์ มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]</string>
       </dict>

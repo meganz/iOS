@@ -525,9 +525,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d dosyadan [A]. </string>
+        <string>%d dosyadan [A].</string>
         <key>other</key>
-        <string>%d dosyadan [A]. </string>
+        <string>%d dosyadan [A].</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -1005,9 +1005,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Albüm silinecek ancak içeriği Zaman Tünelinizde kalacaktır.</string>
+        <string>Albüm silinecek ancak içeriği Zaman çizelgenizde kalacaktır.</string>
         <key>other</key>
-        <string>Albümler silinecek ancak içerikleri Zaman Tünelinizde kalacaktır.</string>
+        <string>Albümler silinecek ancak içerikleri Zaman çizelgenizde kalacaktır.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumSuccess</key>
@@ -3149,7 +3149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
+        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
         <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
@@ -3165,7 +3165,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
+        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
         <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
@@ -3181,7 +3181,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
+        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
         <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
       </dict>

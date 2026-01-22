@@ -745,7 +745,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Pamięć urządzenia prawie pełna";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze Przesyłanie z kamery.  Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę. Możesz zarządzać swoją pamięcią w %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze Przesyłanie z kamery. Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę. Możesz zarządzać swoją pamięcią w %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ustawienia > Ogólne > %@ Powierzchnia";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -1217,7 +1217,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Wybierz Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Dostęp tylko do funkcji Pro, takich jak ustawianie ochrony hasłem i dat wygaśnięcia linków publicznych.\n\n";
+"Access Pro only features like setting password protection and expiry dates for public files."="Dostęp tylko do funkcji Pro, takich jak ustawianie ochrony hasłem i dat wygaśnięcia linków publicznych.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Odblokuj tryb debug";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -2637,7 +2637,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nowe spotkanie";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="Spotkanie %@ ";
+"meetings.createMeeting.defaultMeetingName"="Spotkanie %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Rozpocznij spotkanie";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2955,7 +2955,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Brak urządzeń";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="W tym miejscu są przechowywane pliki i foldery, których kopie zapasowe zostały utworzone. Kopie zapasowe są dostępne „tylko do odczytu”, co chroni je przed przypadkową modyfikacją na dysku w chmurze.\nKopię zapasową elementów z komputera możesz utworzyć na MEGA za pomocą naszej aplikacji desktopowej.";
+"backups.empty.state.description"="W tym miejscu są przechowywane pliki i foldery, których kopie zapasowe zostały utworzone. Kopie zapasowe są dostępne „tylko do odczytu”, co chroni je przed przypadkową modyfikacją na dysku w chmurze. Kopię zapasową elementów z komputera możesz utworzyć na MEGA za pomocą naszej aplikacji desktopowej.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Anulować przesyłanie?";
 /* Message for action of cancelling a transfer */
@@ -4836,5 +4836,5 @@
 "media.photoLibrary.zoom.smallest.title"="Najmnieszy";
 /* Undecrypted file open error snackBar message */
 "general.addItems"="Dodaj elementy";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Data";

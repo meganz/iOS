@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]さんとその他%d人が挙手しました</string>
         <key>other</key>
         <string>[A]さんとその他%d人が挙手しました</string>
       </dict>
@@ -26,6 +28,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>あなたとその他%d人が挙手しました</string>
         <key>other</key>
         <string>あなたとその他%d人が挙手しました</string>
       </dict>
@@ -40,6 +44,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイル</string>
         <key>other</key>
         <string>%d個のファイル</string>
       </dict>
@@ -54,6 +60,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個の項目が削除されました</string>
         <key>other</key>
         <string>%d個の項目が削除されました</string>
       </dict>
@@ -68,6 +76,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイル</string>
         <key>other</key>
         <string>%d個のファイル</string>
       </dict>
@@ -82,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のフォルダ</string>
         <key>other</key>
         <string>%d個のフォルダ</string>
       </dict>
@@ -96,6 +108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のフォルダ</string>
         <key>other</key>
         <string>%d個のフォルダ</string>
       </dict>
@@ -110,6 +124,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>このリンクを知っている人は誰でも、あなたのデータを表示およびダウンロードできます</string>
         <key>other</key>
         <string>これらのリンクを知っている人は誰でも、あなたのデータを表示およびダウンロードできます</string>
       </dict>
@@ -124,6 +140,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクがクリップボードにコピーされました</string>
         <key>other</key>
         <string>リンクがクリップボードにコピーされました</string>
       </dict>
@@ -138,6 +156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクが作成され、クリップボードにコピーされました</string>
         <key>other</key>
         <string>リンクが作成され、クリップボードにコピーされました</string>
       </dict>
@@ -152,6 +172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>重複に適用</string>
         <key>other</key>
         <string>%d個の重複すべてに適用</string>
       </dict>
@@ -166,6 +188,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>時間</string>
         <key>other</key>
         <string>時間</string>
       </dict>
@@ -180,6 +204,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>日</string>
         <key>other</key>
         <string>日</string>
       </dict>
@@ -194,6 +220,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>週</string>
         <key>other</key>
         <string>週</string>
       </dict>
@@ -208,6 +236,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>月</string>
         <key>other</key>
         <string>月</string>
       </dict>
@@ -222,6 +252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>年</string>
         <key>other</key>
         <string>年</string>
       </dict>
@@ -236,6 +268,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d時間</string>
         <key>other</key>
         <string>%d時間</string>
       </dict>
@@ -250,6 +284,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d日</string>
         <key>other</key>
         <string>%d日</string>
       </dict>
@@ -264,6 +300,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d週</string>
         <key>other</key>
         <string>%d週</string>
       </dict>
@@ -278,6 +316,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%dか月</string>
         <key>other</key>
         <string>%dか月</string>
       </dict>
@@ -292,6 +332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d年</string>
         <key>other</key>
         <string>%d年</string>
       </dict>
@@ -306,6 +348,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイル</string>
         <key>other</key>
         <string>%d個のファイル</string>
       </dict>
@@ -320,6 +364,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のフォルダ</string>
         <key>other</key>
         <string>%d個のフォルダ</string>
       </dict>
@@ -334,6 +380,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のフォルダ</string>
         <key>other</key>
         <string>%d個のフォルダ</string>
       </dict>
@@ -348,6 +396,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d個のファイル</string>
         <key>other</key>
         <string>• %d個のファイル</string>
       </dict>
@@ -362,6 +412,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目</string>
         <key>other</key>
         <string>%d項目</string>
       </dict>
@@ -376,6 +428,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目</string>
         <key>other</key>
         <string>%d項目</string>
       </dict>
@@ -390,6 +444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個の画像</string>
         <key>other</key>
         <string>%d個の画像</string>
       </dict>
@@ -404,6 +460,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個の動画</string>
         <key>other</key>
         <string>%d個の動画</string>
       </dict>
@@ -418,6 +476,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個の画像</string>
         <key>other</key>
         <string>%d個の画像</string>
       </dict>
@@ -432,6 +492,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>と%d個の動画</string>
         <key>other</key>
         <string>と%d個の動画</string>
       </dict>
@@ -446,6 +508,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」とその他%d件</string>
         <key>other</key>
         <string>「[A]」とその他%d件</string>
       </dict>
@@ -460,6 +524,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]/%dファイル</string>
         <key>other</key>
         <string>[A]/%dファイル</string>
       </dict>
@@ -474,6 +540,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイル</string>
         <key>other</key>
         <string>%d個のファイル</string>
       </dict>
@@ -488,6 +556,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクを削除</string>
         <key>other</key>
         <string>リンクを削除</string>
       </dict>
@@ -502,6 +572,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクが削除されました</string>
         <key>other</key>
         <string>リンクが削除されました</string>
       </dict>
@@ -516,6 +588,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクを削除しますか？</string>
         <key>other</key>
         <string>リンクを削除しますか？</string>
       </dict>
@@ -530,6 +604,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>このリンクを共有したユーザーは、そのリンクにアクセスできなくなります.</string>
         <key>other</key>
         <string>これらのリンクを共有したユーザーは、それらのリンクにアクセスできなくなります.</string>
       </dict>
@@ -544,6 +620,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>フォルダの共有</string>
         <key>other</key>
         <string>フォルダの共有</string>
       </dict>
@@ -558,6 +636,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクの共有</string>
         <key>other</key>
         <string>リンクの共有</string>
       </dict>
@@ -572,6 +652,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクの管理</string>
         <key>other</key>
         <string>リンクの管理</string>
       </dict>
@@ -586,6 +668,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ファイルのエクスポート</string>
         <key>other</key>
         <string>ファイルのエクスポート</string>
       </dict>
@@ -600,6 +684,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d秒</string>
         <key>other</key>
         <string>%d秒</string>
       </dict>
@@ -614,6 +700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d分</string>
         <key>other</key>
         <string>%d分</string>
       </dict>
@@ -628,6 +716,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d時間</string>
         <key>other</key>
         <string>%d時間</string>
       </dict>
@@ -642,6 +732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d時間</string>
         <key>other</key>
         <string>%d時間</string>
       </dict>
@@ -656,6 +748,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>、%d分</string>
         <key>other</key>
         <string>、%d分</string>
       </dict>
@@ -670,6 +764,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d分</string>
         <key>other</key>
         <string>%d分</string>
       </dict>
@@ -684,6 +780,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d時間</string>
         <key>other</key>
         <string>%d時間</string>
       </dict>
@@ -698,6 +796,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d分</string>
         <key>other</key>
         <string>%d分</string>
       </dict>
@@ -712,6 +812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>このフォルダはバックアップフォルダであるため、読み取り専用でしか共有できません。その内容が変更されると、バックアップが無効になる可能性があります。</string>
         <key>other</key>
         <string>これらのフォルダはバックアップフォルダであるため、読み取り専用でしか共有できません。その内容が変更されると、バックアップが無効になる可能性があります。</string>
       </dict>
@@ -726,6 +828,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d時間</string>
         <key>other</key>
         <string>%d時間</string>
       </dict>
@@ -740,6 +844,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d分</string>
         <key>other</key>
         <string>%d分</string>
       </dict>
@@ -754,6 +860,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>時間</string>
         <key>other</key>
         <string>時間</string>
       </dict>
@@ -768,6 +876,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>分</string>
         <key>other</key>
         <string>分</string>
       </dict>
@@ -782,6 +892,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d件の未読メッセージ</string>
         <key>other</key>
         <string>%d件の未読メッセージ</string>
       </dict>
@@ -796,8 +908,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>一度に最大%d個の項目のみをアルバムに追加できます。</string>
         <key>other</key>
-        <string>一度に最大%d個のアイテムのみをアルバムに追加できます。</string>
+        <string>一度に最大%d個の項目のみをアルバムに追加できます。</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -810,6 +924,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目を「[A]」に追加しました</string>
         <key>other</key>
         <string>%d項目を「[A]」に追加しました</string>
       </dict>
@@ -824,6 +940,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>写真がアップロードされましたが、動画のアップロードはオフです。動画がアップロードされていません</string>
         <key>other</key>
         <string>写真がアップロードされましたが、動画のアップロードはオフです。%d本の動画がアップロードされていません</string>
       </dict>
@@ -838,6 +956,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルが保留中です</string>
         <key>other</key>
         <string>%d個のファイルが保留中です</string>
       </dict>
@@ -852,6 +972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>削除 (%d)</string>
         <key>other</key>
         <string>削除 (%d)</string>
       </dict>
@@ -866,6 +988,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>アルバムを削除しますか？</string>
         <key>other</key>
         <string>アルバムを削除しますか？</string>
       </dict>
@@ -880,6 +1004,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>アルバムは削除されますが、その内容はタイムラインに残ります。</string>
         <key>other</key>
         <string>アルバムは削除されますが、その内容はタイムラインに残ります。</string>
       </dict>
@@ -894,6 +1020,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」が削除されました</string>
         <key>other</key>
         <string>%d個のアルバムが削除されました</string>
       </dict>
@@ -908,6 +1036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」から%d個の項目を削除しました</string>
         <key>other</key>
         <string>「[A]」から%d個の項目を削除しました</string>
       </dict>
@@ -922,6 +1052,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクを削除しますか？</string>
         <key>other</key>
         <string>リンクを削除しますか？</string>
       </dict>
@@ -936,6 +1068,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクを削除</string>
         <key>other</key>
         <string>リンクを削除</string>
       </dict>
@@ -950,8 +1084,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>このリンクを共有した人はそのアルバムにアクセスできなくなります。</string>
         <key>other</key>
-        <string>これらのリンクを共有した人はアルバムにアクセスできなくなります。</string>
+        <string>これらのリンクを共有した人はそれらのアルバムにアクセスできなくなります。</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -964,6 +1100,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>リンクが削除されました</string>
         <key>other</key>
         <string>リンクが削除されました</string>
       </dict>
@@ -978,6 +1116,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate]まで毎日、[B][StartTime]から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate]から[UntilDate]まで[/B]%d日ごとに、[B][StartTime]から[EndTime][/B]</string>
       </dict>
@@ -992,6 +1132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎日、[B][StartTime]から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate][/B]から%d日ごとに、[B][StartTime]から[EndTime][/B]</string>
       </dict>
@@ -1006,6 +1148,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate]まで毎週[WeekDay]に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate]から[UntilDate]まで[/B]%d週間ごとに[WeekDay]に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
@@ -1020,6 +1164,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から毎週[WeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate]から%d週間ごとに[WeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
       </dict>
@@ -1034,6 +1180,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate]まで毎週[WeekDaysList]と[LastWeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate]から[UntilDate]まで%d週間ごとに[WeekDaysList]と[LastWeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
       </dict>
@@ -1048,6 +1196,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から毎週[WeekDaysList]と[LastWeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
         <string>[B][StartDate]から%d週間ごとに[WeekDaysList]と[LastWeekDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
       </dict>
@@ -1062,8 +1212,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月[MonthDay]に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第[MonthDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに[MonthDay]に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -1076,8 +1228,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月[MonthDay]に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第[MonthDay]に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに[MonthDay]に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -1090,8 +1244,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -1104,8 +1260,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1118,8 +1276,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1132,8 +1292,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1146,8 +1308,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1160,8 +1324,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1174,8 +1340,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1188,8 +1356,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1202,8 +1372,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1216,8 +1388,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五月曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五月曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五月曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1230,8 +1404,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1244,8 +1420,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1258,8 +1436,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1272,8 +1452,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1286,8 +1468,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1300,8 +1484,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1314,8 +1500,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1328,8 +1516,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1342,8 +1532,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1356,8 +1548,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五火曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五火曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五火曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1370,8 +1564,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1384,8 +1580,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1398,8 +1596,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1412,8 +1612,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1426,8 +1628,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1440,8 +1644,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1454,8 +1660,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -1468,8 +1676,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1482,8 +1692,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1496,8 +1708,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五水曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五水曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五水曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1510,8 +1724,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1524,8 +1740,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1538,8 +1756,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1552,8 +1772,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1566,8 +1788,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1580,8 +1804,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1594,8 +1820,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -1608,8 +1836,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1622,8 +1852,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1636,8 +1868,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五木曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五木曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五木曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1650,8 +1884,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1664,8 +1900,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1678,8 +1916,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1692,8 +1932,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1706,8 +1948,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1720,8 +1964,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1734,8 +1980,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -1748,8 +1996,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1762,8 +2012,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1776,8 +2028,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五金曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五金曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五金曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1790,8 +2044,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1804,8 +2060,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1818,8 +2076,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1832,8 +2092,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1846,8 +2108,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1860,8 +2124,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1874,8 +2140,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -1888,8 +2156,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1902,8 +2172,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1916,8 +2188,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五土曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五土曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五土曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1930,8 +2204,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第一日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第一日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第一日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1944,8 +2220,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第一日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第一日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第一日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1958,8 +2236,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第二日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%dか月ごとに第二日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第二日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1972,8 +2252,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第二日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第二日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第二日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1986,8 +2268,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第三日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第三日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第三日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2000,8 +2284,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第三日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第三日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第三日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2014,8 +2300,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第四日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第四日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第四日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -2028,8 +2316,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第四日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第四日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第四日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2042,8 +2332,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate]から[UntilDate][/B]まで毎月第五日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から[UntilDate]まで%d週間ごとに第五日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate]から[UntilDate][/B]まで%dか月ごとに第五日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2056,8 +2348,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[B][StartDate][/B]から毎月第五日曜日に、[B][StartTime] から[EndTime][/B]</string>
         <key>other</key>
-        <string>[B][StartDate]から%d週間ごとに第五日曜日に、[/B][B][StartTime] から[EndTime][/B]</string>
+        <string>[B][StartDate][/B]から%dか月ごとに第五日曜日に、[B][StartTime] から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -2070,6 +2364,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[ 未復号ファイル ]</string>
         <key>other</key>
         <string>[ 未復号ファイル ]</string>
       </dict>
@@ -2084,6 +2380,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>残り%d日</string>
         <key>other</key>
         <string>残り%d日</string>
       </dict>
@@ -2098,6 +2396,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d日間有効。</string>
         <key>other</key>
         <string>%d日間有効。</string>
       </dict>
@@ -2112,6 +2412,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d日間有効</string>
         <key>other</key>
         <string>%d日間有効</string>
       </dict>
@@ -2126,6 +2428,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ボーナスは%d後に有効期限が切れます。</string>
         <key>other</key>
         <string>ボーナスは%d後に有効期限が切れます。</string>
       </dict>
@@ -2140,6 +2444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>メッセージは少なくとも%d文字必要です</string>
         <key>other</key>
         <string>メッセージは少なくとも%d文字必要です</string>
       </dict>
@@ -2154,6 +2460,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」を「[B]」にアップロードしました</string>
         <key>other</key>
         <string>%d個の項目を「[B]」にアップロードしました</string>
       </dict>
@@ -2168,6 +2476,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」をクラウドドライブにアップロードしました</string>
         <key>other</key>
         <string>%d個の項目をクラウドドライブにアップロードしました</string>
       </dict>
@@ -2182,6 +2492,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」をチャットに送信しました</string>
         <key>other</key>
         <string>「[A]」をすべてのチャットに送信しました</string>
       </dict>
@@ -2196,6 +2508,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]をチャットに送信しました</string>
         <key>other</key>
         <string>[A]をすべてのチャットに送信しました</string>
       </dict>
@@ -2210,6 +2524,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d日</string>
         <key>other</key>
         <string>%d日</string>
       </dict>
@@ -2224,6 +2540,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d週</string>
         <key>other</key>
         <string>%d週</string>
       </dict>
@@ -2238,6 +2556,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%dか月</string>
         <key>other</key>
         <string>%dか月</string>
       </dict>
@@ -2252,6 +2572,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎日開催されます。</string>
         <key>other</key>
         <string>ミーティングは%d日ごとに開催されます。</string>
       </dict>
@@ -2266,6 +2588,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎週[weekDayName]に開催されます。</string>
         <key>other</key>
         <string>ミーティングは%d週間ごとに[weekDayName]に開催されます。</string>
       </dict>
@@ -2280,6 +2604,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎週[weekDayNames]と[lastWeekDayName]に開催されます。</string>
         <key>other</key>
         <string>ミーティングは%d週間ごとに[weekDayNames]と[lastWeekDayName]に開催されます。</string>
       </dict>
@@ -2294,6 +2620,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎月[cardinalDay]に開催されます。</string>
         <key>other</key>
         <string>ミーティングは%dか月ごとに[cardinalDay]に開催されます。</string>
       </dict>
@@ -2308,6 +2636,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎月[cardinalDays]と[cardinalLastDay]に開催されます。</string>
         <key>other</key>
         <string>ミーティングは%dか月ごとに[cardinalDays]と[cardinalLastDay]に開催されます。</string>
       </dict>
@@ -2322,6 +2652,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ミーティングは毎月第[weekNumber]週の[weekDayName]に開催されます。</string>
         <key>other</key>
         <string>ミーティングは%dか月ごとに第[weekNumber]週の[weekDayName]に開催されます。</string>
       </dict>
@@ -2336,6 +2668,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>毎週[weekDayNames]</string>
         <key>other</key>
         <string>%d週間ごとに[weekDayNames]</string>
       </dict>
@@ -2350,6 +2684,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>毎月[cardinalNumber]日に</string>
         <key>other</key>
         <string>%dか月ごとに[cardinalNumber]日に</string>
       </dict>
@@ -2364,6 +2700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>毎月、第[ordinalNumber][weekDayName]</string>
         <key>other</key>
         <string>%dか月ごとに、第[ordinalNumber][weekDayName]</string>
       </dict>
@@ -2378,6 +2716,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。</string>
         <key>other</key>
         <string>%d日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。</string>
       </dict>
@@ -2392,6 +2732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>毎日</string>
         <key>other</key>
         <string>%d日おきに</string>
       </dict>
@@ -2406,6 +2748,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルがクラウドドライブに保存されました</string>
         <key>other</key>
         <string>%d個のファイルがクラウドドライブに保存されました</string>
       </dict>
@@ -2420,6 +2764,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ダウンロードが開始されました</string>
         <key>other</key>
         <string>%d件のダウンロードが開始されました</string>
       </dict>
@@ -2434,6 +2780,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[UserName]さんが「[MeetingName]」への参加を待っています</string>
         <key>other</key>
         <string>%d人の参加者が「[MeetingName]」への参加を待っています</string>
       </dict>
@@ -2448,6 +2796,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[UserName]さんが通話への参加を待っています</string>
         <key>other</key>
         <string>%d人の参加者が通話への参加を待っています</string>
       </dict>
@@ -2462,6 +2812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d人の参加者</string>
         <key>other</key>
         <string>%d人の参加者</string>
       </dict>
@@ -2476,6 +2828,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目が選択されました</string>
         <key>other</key>
         <string>%d項目が選択されました</string>
       </dict>
@@ -2490,6 +2844,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ファイルがチャットに送信されました</string>
         <key>other</key>
         <string>ファイルがチャットに送信されました</string>
       </dict>
@@ -2504,6 +2860,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ファイルが%dチャットに送信されました</string>
         <key>other</key>
         <string>ファイルが%dチャットに送信されました</string>
       </dict>
@@ -2518,6 +2876,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ファイルが%dチャットに送信されました</string>
         <key>other</key>
         <string>ファイルが%dチャットに送信されました</string>
       </dict>
@@ -2532,6 +2892,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d件の連絡先</string>
         <key>other</key>
         <string>%d件の連絡先</string>
       </dict>
@@ -2546,6 +2908,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルを添付</string>
         <key>other</key>
         <string>%d個のファイルを添付</string>
       </dict>
@@ -2560,6 +2924,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d件の連絡先を招待する</string>
         <key>other</key>
         <string>%d件の連絡先を招待する</string>
       </dict>
@@ -2574,6 +2940,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d人の参加者</string>
         <key>other</key>
         <string>%d人の参加者</string>
       </dict>
@@ -2588,6 +2956,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>通知は[Time]までミュートされます</string>
         <key>other</key>
         <string>通知は[Time]までミュートされます</string>
       </dict>
@@ -2602,6 +2972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>フォルダが共有されました</string>
         <key>other</key>
         <string>%d個のフォルダが共有されました</string>
       </dict>
@@ -2616,6 +2988,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>無料通話は%d分後に終了します</string>
         <key>other</key>
         <string>無料通話は%d分後に終了します</string>
       </dict>
@@ -2630,6 +3004,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個の動画を「[A]」に追加しました</string>
         <key>other</key>
         <string>%d個の動画を「[A]」に追加しました</string>
       </dict>
@@ -2644,6 +3020,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」から%d個の動画を削除しました</string>
         <key>other</key>
         <string>「[A]」から%d個の動画を削除しました</string>
       </dict>
@@ -2658,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目非表示</string>
         <key>other</key>
         <string>%d項目非表示</string>
       </dict>
@@ -2672,6 +3052,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d項目非表示解除</string>
         <key>other</key>
         <string>%d項目非表示解除</string>
       </dict>
@@ -2686,6 +3068,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]に追加しました</string>
         <key>other</key>
         <string>%d項目を[A]に追加しました</string>
       </dict>
@@ -2700,6 +3084,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルを追加</string>
         <key>other</key>
         <string>%d個のファイルを追加</string>
       </dict>
@@ -2714,6 +3100,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のフォルダを追加</string>
         <key>other</key>
         <string>%d個のフォルダを追加</string>
       </dict>
@@ -2728,8 +3116,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルを追加しました</string>
         <key>other</key>
-        <string>%d個のファイル</string>
+        <string>%d個のファイルを追加しました</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -2742,8 +3132,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>と%d個のフォルダ</string>
         <key>other</key>
-        <string>と%d個のフォルダを追加</string>
+        <string>と%d個のフォルダ</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
@@ -2756,8 +3148,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。 </string>
         <key>other</key>
-        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。 </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2770,8 +3164,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>メールで複数回ご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。 </string>
         <key>other</key>
-        <string>メールで複数回ご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>メールで複数回ご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。 </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2784,6 +3180,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>メールでご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
         <key>other</key>
         <string>メールでご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
       </dict>
@@ -2798,6 +3196,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個のファイルバージョン。</string>
         <key>other</key>
         <string>%d個のファイルバージョン。</string>
       </dict>
@@ -2812,6 +3212,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ファイルバージョンによって使用される合計サイズ：[storageSpace]</string>
         <key>other</key>
         <string>ファイルバージョンによって使用される合計サイズ：[storageSpace]</string>
       </dict>
@@ -2826,6 +3228,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>「[A]」に追加しました</string>
         <key>other</key>
         <string>%d項目を「[A]」に追加しました</string>
       </dict>
@@ -2840,6 +3244,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>キューから「[A]」を削除しました</string>
         <key>other</key>
         <string>キューから%d個の項目を削除しました</string>
       </dict>
@@ -2854,6 +3260,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>アップロード中：残り%u件</string>
         <key>other</key>
         <string>アップロード中：残り%u件</string>
       </dict>
@@ -2868,6 +3276,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>一時停止中：残り%u件</string>
         <key>other</key>
         <string>一時停止中：残り%u件</string>
       </dict>

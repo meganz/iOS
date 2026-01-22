@@ -4836,5 +4836,5 @@
 "media.photoLibrary.zoom.smallest.title"="最小";
 /* Undecrypted file open error snackBar message */
 "general.addItems"="項目を追加";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="日付";

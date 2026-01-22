@@ -52,6 +52,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d plików</string>
         <key>one</key>
         <string>%d plik</string>
         <key>few</key>
@@ -70,6 +72,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d elementów usuniętych</string>
         <key>one</key>
         <string>%d element usunięty</string>
         <key>few</key>
@@ -88,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d plików</string>
         <key>one</key>
         <string>%d plik</string>
         <key>few</key>
@@ -106,6 +112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d katalogów</string>
         <key>one</key>
         <string>%d katalog</string>
         <key>few</key>
@@ -124,6 +132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d katalogów</string>
         <key>one</key>
         <string>%d katalog</string>
         <key>few</key>
@@ -142,6 +152,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Każdy, kto posiada te linki, może przeglądać i pobierać dane użytkownika</string>
         <key>one</key>
         <string>Każdy, kto posiada ten link, może przeglądać i pobierać dane użytkownika</string>
         <key>few</key>
@@ -2223,7 +2235,7 @@
         <key>zero</key>
         <string>Trzeci czwartek każdego %d miesiąca zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]</string>
         <key>one</key>
-        <string>Trzeci czwartek każdego  miesiąca zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]</string>
+        <string>Trzeci czwartek każdego miesiąca zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]</string>
         <key>few</key>
         <string>Trzeci czwartek każdego %d miesiąca zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]</string>
         <key>many</key>

@@ -12,8 +12,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] 님과 %d명이 손을 들었습니다</string>
         <key>other</key>
-        <string>[A] 님 외 %d명이 손을 들었습니다</string>
+        <string>[A] 님과 %d명이 손을 들었습니다</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -26,6 +28,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>당신과 %d명이 손을 들었습니다</string>
         <key>other</key>
         <string>당신과 %d명이 손을 들었습니다</string>
       </dict>
@@ -40,6 +44,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>파일 %d개</string>
         <key>other</key>
         <string>파일 %d개</string>
       </dict>
@@ -54,8 +60,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d개의 항목이 제거됨</string>
         <key>other</key>
-        <string>%d개의 항목 제거됨</string>
+        <string>%d개의 항목이 제거됨</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -68,6 +76,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>파일 %d개</string>
         <key>other</key>
         <string>파일 %d개</string>
       </dict>
@@ -82,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>폴더 %d개</string>
         <key>other</key>
         <string>폴더 %d개</string>
       </dict>
@@ -96,6 +108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>폴더 %d개</string>
         <key>other</key>
         <string>폴더 %d개</string>
       </dict>
@@ -110,6 +124,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>이 링크가 있는 누구나 당신의 데이터를 보고 다운로드할 수 있습니다</string>
         <key>other</key>
         <string>이 링크가 있는 누구나 당신의 데이터를 보고 다운로드할 수 있습니다</string>
       </dict>
@@ -124,6 +140,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>링크가 클립보드에 복사되었습니다</string>
         <key>other</key>
         <string>링크가 클립보드에 복사되었습니다</string>
       </dict>
@@ -138,6 +156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>링크가 생성되어 클립보드에 복사되었습니다</string>
         <key>other</key>
         <string>링크가 생성되어 클립보드에 복사되었습니다</string>
       </dict>
@@ -152,6 +172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>모든 중복에 적용</string>
         <key>other</key>
         <string>모든 %d개의 중복에 적용</string>
       </dict>
@@ -166,6 +188,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>시간</string>
         <key>other</key>
         <string>시간</string>
       </dict>
@@ -180,6 +204,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>일</string>
         <key>other</key>
         <string>일</string>
       </dict>
@@ -194,6 +220,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>주</string>
         <key>other</key>
         <string>주</string>
       </dict>
@@ -208,6 +236,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>개월</string>
         <key>other</key>
         <string>개월</string>
       </dict>
@@ -222,6 +252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>년</string>
         <key>other</key>
         <string>년</string>
       </dict>
@@ -236,6 +268,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d시간</string>
         <key>other</key>
         <string>%d시간</string>
       </dict>
@@ -250,6 +284,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d일</string>
         <key>other</key>
         <string>%d일</string>
       </dict>
@@ -264,6 +300,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d주</string>
         <key>other</key>
         <string>%d주</string>
       </dict>
@@ -278,6 +316,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d개월</string>
         <key>other</key>
         <string>%d개월</string>
       </dict>
@@ -292,6 +332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d년</string>
         <key>other</key>
         <string>%d년</string>
       </dict>
@@ -306,6 +348,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>파일 %d개</string>
         <key>other</key>
         <string>파일 %d개</string>
       </dict>
@@ -320,6 +364,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>폴더 %d개</string>
         <key>other</key>
         <string>폴더 %d개</string>
       </dict>
@@ -334,6 +380,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>폴더 %d개</string>
         <key>other</key>
         <string>폴더 %d개</string>
       </dict>
@@ -348,6 +396,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• 파일 %d개</string>
         <key>other</key>
         <string>• 파일 %d개</string>
       </dict>
@@ -362,8 +412,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>항목 %d개</string>
         <key>other</key>
-        <string>%d개의 항목</string>
+        <string>항목 %d개</string>
       </dict>
     </dict>
     <key>recents.section.title.items</key>
@@ -376,8 +428,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>항목 %d개</string>
         <key>other</key>
-        <string>%d개의 항목</string>
+        <string>항목 %d개</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -390,6 +444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>이미지 %d개</string>
         <key>other</key>
         <string>이미지 %d개</string>
       </dict>
@@ -404,6 +460,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>동영상 %d개</string>
         <key>other</key>
         <string>동영상 %d개</string>
       </dict>

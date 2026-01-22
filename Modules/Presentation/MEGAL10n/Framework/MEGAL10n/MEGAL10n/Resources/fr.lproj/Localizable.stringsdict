@@ -30,6 +30,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Vous et %d autre personne avez levé la main</string>
         <key>one</key>
         <string>Vous et %d autre personne avez levé la main</string>
         <key>many</key>
@@ -48,12 +50,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d fichier</string>
         <key>one</key>
-        <string>%d fichier</string>
+        <string>%d fichier</string>
         <key>many</key>
-        <string>%d de fichiers</string>
+        <string>%d fichiers</string>
         <key>other</key>
-        <string>%d fichiers</string>
+        <string>%d fichiers</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.removedItemCount</key>
@@ -66,12 +70,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d élément supprimé</string>
         <key>one</key>
-        <string>%d élément a été supprimé</string>
+        <string>%d élément supprimé</string>
         <key>many</key>
-        <string>%d d’éléments ont été supprimés</string>
+        <string>%d éléments supprimés</string>
         <key>other</key>
-        <string>%d éléments ont été supprimés</string>
+        <string>%d éléments supprimés</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -84,12 +90,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d fichier</string>
         <key>one</key>
-        <string>%d fichier</string>
+        <string>%d fichier</string>
         <key>many</key>
-        <string>%d de fichiers</string>
+        <string>%d fichiers</string>
         <key>other</key>
-        <string>%d fichiers</string>
+        <string>%d fichiers</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.folderCount</key>
@@ -102,12 +110,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dossier</string>
         <key>one</key>
-        <string>%d dossier</string>
+        <string>%d dossier</string>
         <key>many</key>
-        <string>%d de dossiers</string>
+        <string>%d dossiers</string>
         <key>other</key>
-        <string>%d dossiers</string>
+        <string>%d dossiers</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.folderCount</key>
@@ -120,10 +130,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
-        <string>%d de dossiers</string>
+        <string>%d dossiers</string>
         <key>other</key>
         <string>%d dossiers</string>
       </dict>
@@ -138,6 +150,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quiconque disposant de ce lien peut consulter et télécharger vos données</string>
         <key>one</key>
         <string>Quiconque disposant de ce lien peut consulter et télécharger vos données</string>
         <key>many</key>
@@ -156,6 +170,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Le lien a été copié dans le presse-papiers</string>
         <key>one</key>
         <string>Le lien a été copié dans le presse-papiers</string>
         <key>many</key>
@@ -174,6 +190,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Le lien a été créé et copié dans votre presse-papiers</string>
         <key>one</key>
         <string>Le lien a été créé et copié dans votre presse-papiers</string>
         <key>many</key>
@@ -192,10 +210,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Appliquer au doublon</string>
         <key>one</key>
         <string>Appliquer au doublon</string>
         <key>many</key>
-        <string>Appliquer à tous les %d de doublons</string>
+        <string>Appliquer à tous les %d doublons</string>
         <key>other</key>
         <string>Appliquer à tous les %d doublons</string>
       </dict>
@@ -210,10 +230,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>heure</string>
         <key>one</key>
         <string>heure</string>
         <key>many</key>
-        <string>d’heures</string>
+        <string>heures</string>
         <key>other</key>
         <string>heures</string>
       </dict>
@@ -228,10 +250,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>jour</string>
         <key>one</key>
         <string>jour</string>
         <key>many</key>
-        <string>de jours</string>
+        <string>jours</string>
         <key>other</key>
         <string>jours</string>
       </dict>
@@ -246,10 +270,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>semaine</string>
         <key>one</key>
         <string>semaine</string>
         <key>many</key>
-        <string>de semaines</string>
+        <string>semaines</string>
         <key>other</key>
         <string>semaines</string>
       </dict>
@@ -264,10 +290,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>mois</string>
         <key>one</key>
         <string>mois</string>
         <key>many</key>
-        <string>de mois</string>
+        <string>mois</string>
         <key>other</key>
         <string>mois</string>
       </dict>
@@ -282,10 +310,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>an</string>
         <key>one</key>
         <string>an</string>
         <key>many</key>
-        <string>d’années</string>
+        <string>ans</string>
         <key>other</key>
         <string>ans</string>
       </dict>
@@ -300,10 +330,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d heure</string>
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
-        <string>%d d’heures</string>
+        <string>%d heures</string>
         <key>other</key>
         <string>%d heures</string>
       </dict>
@@ -318,10 +350,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d jour</string>
         <key>one</key>
         <string>%d jour</string>
         <key>many</key>
-        <string>%d de jours</string>
+        <string>%d jours</string>
         <key>other</key>
         <string>%d jours</string>
       </dict>
@@ -336,10 +370,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d semaine</string>
         <key>one</key>
         <string>%d semaine</string>
         <key>many</key>
-        <string>%d de semaines</string>
+        <string>%d semaines</string>
         <key>other</key>
         <string>%d semaines</string>
       </dict>
@@ -354,10 +390,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d mois</string>
         <key>one</key>
         <string>%d mois</string>
         <key>many</key>
-        <string>%d de mois</string>
+        <string>%d mois</string>
         <key>other</key>
         <string>%d mois</string>
       </dict>
@@ -372,10 +410,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d an</string>
         <key>one</key>
         <string>%d an</string>
         <key>many</key>
-        <string>%d d’années</string>
+        <string>%d ans</string>
         <key>other</key>
         <string>%d ans</string>
       </dict>
@@ -390,10 +430,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
-        <string>%d de fichiers</string>
+        <string>%d fichiers</string>
         <key>other</key>
         <string>%d fichiers</string>
       </dict>
@@ -408,10 +450,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
-        <string>%d de dossiers</string>
+        <string>%d dossiers</string>
         <key>other</key>
         <string>%d dossiers</string>
       </dict>
@@ -426,10 +470,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
-        <string>%d de dossiers</string>
+        <string>%d dossiers</string>
         <key>other</key>
         <string>%d dossiers</string>
       </dict>
@@ -444,10 +490,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d fichier</string>
         <key>one</key>
         <string>• %d fichier</string>
         <key>many</key>
-        <string>• %d de fichiers</string>
+        <string>• %d fichiers</string>
         <key>other</key>
         <string>• %d fichiers</string>
       </dict>
@@ -462,10 +510,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d élément</string>
         <key>one</key>
         <string>%d élément</string>
         <key>many</key>
-        <string>%d d’éléments</string>
+        <string>%d éléments</string>
         <key>other</key>
         <string>%d éléments</string>
       </dict>
@@ -480,10 +530,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d élément</string>
         <key>one</key>
         <string>%d élément</string>
         <key>many</key>
-        <string>%d d’éléments</string>
+        <string>%d éléments</string>
         <key>other</key>
         <string>%d éléments</string>
       </dict>
@@ -498,10 +550,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d image</string>
         <key>one</key>
         <string>%d image</string>
         <key>many</key>
-        <string>%d d’images</string>
+        <string>%d images</string>
         <key>other</key>
         <string>%d images</string>
       </dict>
@@ -516,10 +570,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d vidéo</string>
         <key>one</key>
-        <string>%d vidéo</string>
+        <string>%d vidéo</string>
         <key>many</key>
-        <string>%d de vidéos</string>
+        <string>%d vidéos</string>
         <key>other</key>
         <string>%d vidéos</string>
       </dict>
@@ -534,10 +590,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d image</string>
         <key>one</key>
         <string>%d image</string>
         <key>many</key>
-        <string>%d d’images</string>
+        <string>%d images</string>
         <key>other</key>
         <string>%d images</string>
       </dict>
@@ -552,10 +610,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>et %d vidéo</string>
         <key>one</key>
         <string>et %d vidéo</string>
         <key>many</key>
-        <string>et %d de vidéos</string>
+        <string>et %d vidéos</string>
         <key>other</key>
         <string>et %d vidéos</string>
       </dict>
@@ -570,6 +630,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>« [A] » et %d de plus</string>
         <key>one</key>
         <string>« [A] » et %d de plus</string>
         <key>many</key>
@@ -588,10 +650,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] de %d fichier</string>
         <key>one</key>
         <string>[A] de %d fichier</string>
         <key>many</key>
-        <string>[A] de %d de fichiers</string>
+        <string>[A] de %d fichiers</string>
         <key>other</key>
         <string>[A] de %d fichiers</string>
       </dict>
@@ -606,10 +670,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
-        <string>%d de fichiers</string>
+        <string>%d fichiers</string>
         <key>other</key>
         <string>%d fichiers</string>
       </dict>
@@ -624,6 +690,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Supprimer le lien</string>
         <key>one</key>
         <string>Supprimer le lien</string>
         <key>many</key>
@@ -642,12 +710,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Lien supprimé</string>
         <key>one</key>
-        <string>Le lien a été supprimé</string>
+        <string>Lien supprimé</string>
         <key>many</key>
-        <string>Les liens ont été supprimés</string>
+        <string>Liens supprimés</string>
         <key>other</key>
-        <string>Les liens ont été supprimés</string>
+        <string>Liens supprimés</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
@@ -660,6 +730,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Supprimer le lien ?</string>
         <key>one</key>
         <string>Supprimer le lien ?</string>
         <key>many</key>
@@ -678,6 +750,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder.</string>
         <key>one</key>
         <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder.</string>
         <key>many</key>

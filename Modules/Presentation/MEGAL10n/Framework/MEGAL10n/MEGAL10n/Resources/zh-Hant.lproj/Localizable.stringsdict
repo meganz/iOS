@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A]和其他%d個人舉起手</string>
         <key>other</key>
         <string>[A]和其他%d個人舉起手</string>
       </dict>
@@ -26,6 +28,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>您和其他%d個人舉起手</string>
         <key>other</key>
         <string>您和其他%d個人舉起手</string>
       </dict>
@@ -40,6 +44,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個檔案</string>
         <key>other</key>
         <string>%d個檔案</string>
       </dict>
@@ -54,6 +60,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>已移除%d個項目</string>
         <key>other</key>
         <string>已移除%d個項目</string>
       </dict>
@@ -68,6 +76,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個檔案</string>
         <key>other</key>
         <string>%d個檔案</string>
       </dict>
@@ -82,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個資料夾</string>
         <key>other</key>
         <string>%d個資料夾</string>
       </dict>
@@ -96,6 +108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d個資料夾</string>
         <key>other</key>
         <string>%d個資料夾</string>
       </dict>
@@ -110,6 +124,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>任何擁有此連結的人都可以查看和下載您的資料</string>
         <key>other</key>
         <string>任何擁有這些連結的人都可以查看和下載您的資料</string>
       </dict>
@@ -124,6 +140,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>連結已複製到剪貼簿</string>
         <key>other</key>
         <string>連結已複製到剪貼簿</string>
       </dict>
@@ -138,6 +156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>連結已建立並且複製到您的剪貼簿</string>
         <key>other</key>
         <string>連結已建立並且複製到您的剪貼簿</string>
       </dict>
@@ -152,6 +172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>套用至重複的項目</string>
         <key>other</key>
         <string>套用至所有%d個重複的項目</string>
       </dict>
@@ -166,6 +188,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>小時</string>
         <key>other</key>
         <string>小時</string>
       </dict>
@@ -180,6 +204,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>天</string>
         <key>other</key>
         <string>天</string>
       </dict>
@@ -194,6 +220,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>週</string>
         <key>other</key>
         <string>週</string>
       </dict>
@@ -208,6 +236,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>月</string>
         <key>other</key>
         <string>個月</string>
       </dict>

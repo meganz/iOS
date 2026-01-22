@@ -243,7 +243,7 @@
 /* Slideshow Speed preference fast */
 "slideshow.preferenceSetting.speed.fast"="Snel (2s)";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="Volgorde diavoorstelling ";
+"slideshow.preferenceSetting.order"="Volgorde diavoorstelling";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="Shuffle";
 /* Slideshow Preference Setting repeat */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installeer de MEGA VPN-applicatie, inloggen met uw MEGA-account en uw gratis proefperiode starten. Uw bonusopslag wordt automatisch toegevoegd na het starten van uw gratis proefperiode.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="U heeft %@ extra opslagruimte ontvangen voor het starten van een MEGA VPN gratis proefversie ";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="U heeft %@ extra opslagruimte ontvangen voor het starten van een MEGA VPN gratis proefversie";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPN installeren";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -2637,7 +2637,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nieuwe Vergadering";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@'s vergadering ";
+"meetings.createMeeting.defaultMeetingName"="%@'s vergadering";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Begin vergadering";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -3267,7 +3267,7 @@
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]heeft de vergader omschrijving bijgewerkt[/B]";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] annuleerde[/B] de vergadering gepland voor ";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] heeft de geplande vergadering geannuleerd[/B]";
 /* In app notification description representing the day was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]heeft de vergaderdatum bijgewerkt[/B] naar";
 /* In app notification description representing the time was changed for one off meeting */
@@ -4836,5 +4836,5 @@
 "media.photoLibrary.zoom.smallest.title"="Kleinste";
 /* Undecrypted file open error snackBar message */
 "general.addItems"="Items toevoegen";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Datum";

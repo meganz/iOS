@@ -301,7 +301,7 @@
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
 "Completing..."="Tamamlanıyor…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
-"Retrying..."="Tekrar deneniyor…";
+"Retrying..."="Yeniden deneniyor…";
 /* Section title of the 'Sort by' */
 "sortTitle"="Sırala";
 /* Button title to 'Save' the selected option */
@@ -4836,5 +4836,5 @@
 "media.photoLibrary.zoom.smallest.title"="En küçük";
 /* Undecrypted file open error snackBar message */
 "general.addItems"="Öğe ekle";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Tarih";
