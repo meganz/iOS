@@ -1,6 +1,7 @@
 import MEGADomain
 
 protocol AlbumContentPhotoLibraryDataProviderProtocol: Sendable {
+    var photos: [AlbumPhotoEntity] { get async }
     func updatePhotos(_ newPhotos: [AlbumPhotoEntity]) async
     func isEmpty() async -> Bool
     func isFilterEnabled(for filter: FilterType) async -> Bool
@@ -11,7 +12,7 @@ protocol AlbumContentPhotoLibraryDataProviderProtocol: Sendable {
 }
 
 actor AlbumContentPhotoLibraryDataProvider: AlbumContentPhotoLibraryDataProviderProtocol {
-    private var photos = [AlbumPhotoEntity]()
+    private(set) var photos = [AlbumPhotoEntity]()
     
     func updatePhotos(_ newPhotos: [AlbumPhotoEntity]) {
         photos = newPhotos

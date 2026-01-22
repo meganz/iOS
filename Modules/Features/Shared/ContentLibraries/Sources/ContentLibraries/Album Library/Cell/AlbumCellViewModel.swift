@@ -232,7 +232,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     }
     
     private func loadAlbumCover(from photos: [AlbumPhotoEntity]) async {
-        let imageContainer = if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
+        let imageContainer = if let albumCover = albumCoverUseCase.albumCover(for: album, photos: photos) {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
             ImageContainer(

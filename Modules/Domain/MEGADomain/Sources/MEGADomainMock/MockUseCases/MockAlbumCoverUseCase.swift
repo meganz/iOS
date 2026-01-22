@@ -7,7 +7,7 @@ public struct MockAlbumCoverUseCase: AlbumCoverUseCaseProtocol {
         self.albumCover = albumCover
     }
     
-    public func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) async -> NodeEntity? {
+    public func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) -> NodeEntity? {
         albumCover
     }
 }

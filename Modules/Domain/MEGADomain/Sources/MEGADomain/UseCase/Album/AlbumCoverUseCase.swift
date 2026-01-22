@@ -7,7 +7,7 @@ public protocol AlbumCoverUseCaseProtocol: Sendable {
     ///   - album: Album to retrieve cover for
     ///   - photos: Album photo and video contents
     /// - Returns: Album cover node or nil if cover could not be determined
-    func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) async -> NodeEntity?
+    func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) -> NodeEntity?
 }
 
 public struct AlbumCoverUseCase: AlbumCoverUseCaseProtocol {
@@ -17,7 +17,7 @@ public struct AlbumCoverUseCase: AlbumCoverUseCaseProtocol {
         self.nodeRepository = nodeRepository
     }
     
-    public func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) async -> NodeEntity? {
+    public func albumCover(for album: AlbumEntity, photos: [AlbumPhotoEntity]) -> NodeEntity? {
         if let albumCover = album.coverNode,
            !nodeRepository.isInRubbishBin(node: albumCover),
            photos.contains(where: { $0.photo == albumCover }) {

@@ -108,7 +108,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     }
     
     private func albumCover(for photos: [AlbumPhotoEntity]) async {
-        if let albumCover = await albumCoverUseCase.albumCover(for: album, photos: photos) {
+        if let albumCover = albumCoverUseCase.albumCover(for: album, photos: photos) {
             await loadThumbnail(for: albumCover)
         } else {
             invokeCommand?(.setPlaceholderThumbnail)

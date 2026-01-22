@@ -282,4 +282,5 @@ public struct MEGAImageBundle {
     public static var link02SmallThin: Image { Image(.link02SmallThin) }
     public static var image04Solid: Image { Image(.image04Solid) }
     public static var glassAlbum: Image { Image(.glassAlbum) }
+    public static var rectangleImageStack: Image { Image(.rectangleImageStack) }
 }

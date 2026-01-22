@@ -297,6 +297,7 @@ extension MEGAAssets {
         public static var link02SmallThin: SwiftUI.Image { MEGAImageBundle.link02SmallThin }
         public static var image04Solid: SwiftUI.Image { MEGAImageBundle.image04Solid }
         public static var glassAlbum: SwiftUI.Image { MEGAImageBundle.glassAlbum }
+        public static var rectangleImageStack: SwiftUI.Image { MEGAImageBundle.rectangleImageStack }
     }
 }
 
@@ -752,5 +753,6 @@ extension MEGAAssets {
         public static var link02SmallThin: UIKit.UIImage { MEGAUIImageBundle.link02SmallThin }
         public static var image04Solid: UIKit.UIImage { MEGAUIImageBundle.image04Solid }
         public static var glassAlbum: UIKit.UIImage { MEGAUIImageBundle.glassAlbum }
+        public static var rectangleImageStack: UIKit.UIImage { MEGAUIImageBundle.rectangleImageStack }
     }
 }

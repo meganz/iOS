@@ -31,6 +31,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
         let userAlbumRepo = UserAlbumRepository.newRepo
+        let nodeRepository = NodeRepository.newRepo
         let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsUpdateRepo,
@@ -40,7 +41,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             photoLibraryUseCase: makePhotoLibraryUseCase(),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo,
+                nodeRepository: nodeRepository,
                 accountUseCase: AccountUseCase(
                     repository: AccountRepository.newRepo))
         )
@@ -65,7 +66,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             shareCollectionUseCase: ShareCollectionUseCase(
                 shareAlbumRepository: ShareCollectionRepository.newRepo,
                 userAlbumRepository: UserAlbumRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
+                nodeRepository: nodeRepository
             ),
             monitorAlbumPhotosUseCase: makeMonitorAlbumPhotosUseCase(),
             albumNameUseCase: AlbumNameUseCase(
@@ -78,7 +79,10 @@ struct AlbumContentRouter: AlbumContentRouting {
                 ),
                 appDelegateRouter: AppDelegateRouter()
             ),
-            newAlbumPhotosToAdd: newAlbumPhotos)
+            newAlbumPhotosToAdd: newAlbumPhotos,
+            albumCoverUseCase: AlbumCoverUseCase(
+                nodeRepository: nodeRepository),
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .album))
         return AlbumContentViewController(viewModel: viewModel)
     }
     

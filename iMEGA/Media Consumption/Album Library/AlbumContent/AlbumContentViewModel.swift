@@ -4,6 +4,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -32,6 +33,7 @@ enum AlbumContentAction: ActionType {
     case hideNodes
     case renameAlbum
     case onEditModeChange(Bool)
+    case moreButtonTap
 }
 
 @MainActor
@@ -54,6 +56,8 @@ final class AlbumContentViewModel: ViewModelType {
         case showSharePhotoLinks
         case updateAddToAlbumButton(Bool)
         case showEmptyView(isEmpty: Bool, isRevampEnabled: Bool)
+        case showActions(viewModel: AlbumActionSheetViewModel)
+        case startEditMode
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -72,6 +76,8 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
+    private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var loadingTask: Task<Void, Never>?
@@ -92,7 +98,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var showAlbumPhotosTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
-    private var updateRightBarButtonsTask: Task<Void, Never>? {
+    private(set) var updateRightBarButtonsTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
     private var retrieveUserAlbumCover: Task<Void, Never>? {
@@ -142,6 +148,8 @@ final class AlbumContentViewModel: ViewModelType {
         newAlbumPhotosToAdd: [NodeEntity]?,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
@@ -157,6 +165,8 @@ final class AlbumContentViewModel: ViewModelType {
         self.overDiskQuotaChecker = overDiskQuotaChecker
         self.tracker = tracker
         self.albumContentDataProvider = albumContentDataProvider
+        self.albumCoverUseCase = albumCoverUseCase
+        self.thumbnailLoader = thumbnailLoader
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         self.featureFlagProvider = featureFlagProvider
     }
@@ -215,6 +225,10 @@ final class AlbumContentViewModel: ViewModelType {
         case .onEditModeChange(let isEditing):
             Task {
                 await updateAddToAlbumFloatingActionButton(isEditing: isEditing)
+            }
+        case .moreButtonTap:
+            Task {
+                await handleMoreButtonTap()
             }
         default:
             break
@@ -629,5 +643,70 @@ final class AlbumContentViewModel: ViewModelType {
             await !albumContentDataProvider.isEmpty() && canAddPhotosToAlbum
         }
         invokeCommand?(.updateAddToAlbumButton(isButtonVisible))
+    }
+    
+    private func handleMoreButtonTap() async {
+        let isUserAlbum = album.type == .user
+        let albumPhotos = await albumContentDataProvider.photos
+        let albumCover = albumCoverUseCase.albumCover(for: album, photos: albumPhotos)
+        
+        var sheetActions  = [AlbumActionSheetViewModel.SheetAction]()
+        
+        if isUserAlbum {
+            sheetActions.append(AlbumActionSheetViewModel.SheetAction(icon: MEGAAssets.Image.pen2, title: Strings.Localizable.rename, action: { [weak self] in
+                self?.dispatch(.renameAlbum)
+            }))
+        }
+    
+        if !isPhotoSelectionHidden && albumPhotos.isNotEmpty {
+            sheetActions.append(AlbumActionSheetViewModel.SheetAction(icon: MEGAAssets.Image.checkCircle, title: Strings.Localizable.select, action: { [weak self] in
+                self?.invokeCommand?(.startEditMode)
+            }))
+        }
+        
+        if isUserAlbum && albumPhotos.isNotEmpty {
+            sheetActions.append(AlbumActionSheetViewModel.SheetAction(icon: MEGAAssets.Image.rectangleImageStack, title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, action: { [weak self] in
+                self?.dispatch(.showAlbumCoverPicker)
+            }))
+        }
+        
+        sheetActions.append(contentsOf: albumLinkActions())
+        
+        if album.type == .user {
+            sheetActions.append(AlbumActionSheetViewModel.SheetAction(icon: MEGAAssets.Image.trash, iconColor: TokenColors.Support.error.swiftUI, title: Strings.Localizable.delete, titleColor: TokenColors.Text.error.swiftUI, action: { [weak self] in
+                self?.dispatch(.deleteAlbum)
+            }))
+        }
+        
+        let viewModel = AlbumActionSheetViewModel(
+            albumCover: albumCover,
+            title: album.name,
+            sheetActions: sheetActions,
+            thumbnailLoader: thumbnailLoader)
+        
+        invokeCommand?(.showActions(viewModel: viewModel))
+    }
+    
+    private func albumLinkActions() -> [AlbumActionSheetViewModel.SheetAction] {
+        guard album.type == .user,
+              case let .exported(isLinkExported) = album.sharedLinkStatus else {
+            return  []
+        }
+        return if isLinkExported {
+            [
+                .init(icon: MEGAAssets.Image.link01, title: Strings.Localizable.General.MenuAction.ManageLink.title(1), action: { [weak self] in
+                    self?.dispatch(.shareLink)
+                }),
+                .init(icon: MEGAAssets.Image.linkOff01, title: Strings.Localizable.General.MenuAction.RemoveLink.title(1), action: { [weak self] in
+                    self?.dispatch(.removeLink)
+                })
+            ]
+        } else {
+            [
+                .init(icon: MEGAAssets.Image.link01, title: Strings.Localizable.General.MenuAction.ShareLink.title(1), action: { [weak self] in
+                    self?.dispatch(.shareLink)
+                })
+            ]
+        }
     }
 }

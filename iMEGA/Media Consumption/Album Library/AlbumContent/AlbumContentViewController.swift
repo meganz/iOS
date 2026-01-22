@@ -216,6 +216,10 @@ final class AlbumContentViewController: UIViewController, ViewType {
             isVisible ? addFloatingAddButton() : removeAddToAlbumFloatingActionButton()
         case .showEmptyView(let isEmpty, let isRevampEnabled):
             isEmpty ? showEmptyView(isRevampEnabled: isRevampEnabled) : removeEmptyView(isRevampEnabled: isRevampEnabled)
+        case .showActions(let viewModel):
+            showMoreActions(viewModel: viewModel)
+        case .startEditMode:
+            startEditingMode()
         }
     }
     
@@ -439,6 +443,32 @@ final class AlbumContentViewController: UIViewController, ViewType {
         controller.view.removeFromSuperview()
         controller.removeFromParent()
         floatingActionButtonController = nil
+    }
+    
+    private func showMoreActions(viewModel: AlbumActionSheetViewModel) {
+        let view = AlbumContentSheetView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: view)
+        if let sheet = hostingController.sheetPresentationController {
+            let customDetent = UISheetPresentationController.Detent.custom { context in
+                hostingController.view.layoutIfNeeded()
+                
+                let targetSize = CGSize(
+                    width: context.maximumDetentValue,
+                    height: UIView.layoutFittingCompressedSize.height
+                )
+                
+                let size = hostingController.view.systemLayoutSizeFitting(
+                    targetSize,
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                )
+                
+                return size.height
+            }
+            sheet.detents = [customDetent, .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(hostingController, animated: true)
     }
 }
 

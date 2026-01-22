@@ -1018,6 +1018,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
@@ -1033,6 +1035,8 @@ final class AlbumContentViewModelTests: XCTestCase {
             overDiskQuotaChecker: overDiskQuotaChecker,
             newAlbumPhotosToAdd: newAlbumPhotosToAdd,
             tracker: tracker,
+            albumCoverUseCase: albumCoverUseCase,
+            thumbnailLoader: thumbnailLoader,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }
@@ -1373,6 +1377,109 @@ struct AlbumContentViewModelTestSuite {
     }
     
     @MainActor
+    struct MoreButtonTapped {
+        @Test(arguments: [
+            (SharedLinkStatusEntity.unavailable, true, [
+                Strings.Localizable.rename,
+                Strings.Localizable.delete
+            ]),
+            (SharedLinkStatusEntity.unavailable, false, [
+                Strings.Localizable.rename,
+                Strings.Localizable.select,
+                Strings.Localizable.CameraUploads.Albums.selectAlbumCover,
+                Strings.Localizable.delete
+            ]),
+            (SharedLinkStatusEntity.exported(false), true, [
+                Strings.Localizable.rename,
+                Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                Strings.Localizable.delete
+            ]),
+            (SharedLinkStatusEntity.exported(true), true, [
+                Strings.Localizable.rename,
+                Strings.Localizable.General.MenuAction.ManageLink.title(1),
+                Strings.Localizable.General.MenuAction.RemoveLink.title(1),
+                Strings.Localizable.delete
+            ])
+        ])
+        func userAlbum(
+            sharedLinkStatus: SharedLinkStatusEntity,
+            isPhotosEmpty: Bool,
+            expectedSheetTitles: [String]
+        ) async throws {
+            let albumName = "Test Album"
+            let monitorAlbumPhotosUseCase = makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: isPhotosEmpty)
+            let sut = makeSUT(
+                album: .init(id: 8, name: albumName, type: .user, sharedLinkStatus: sharedLinkStatus),
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+            
+            sut.dispatch(.onViewWillAppear)
+            await sut.setupSubscriptionTask?.value
+            
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    switch command {
+                    case .showActions(let viewModel):
+                        #expect(viewModel.title == albumName)
+                        #expect(viewModel.sheetActions.map(\.title) == expectedSheetTitles)
+                        confirmation()
+                    default: break
+                    }
+                }
+                
+                sut.dispatch(.moreButtonTap)
+                
+                try await waitForCommand()
+            }
+        }
+        
+        @Test(arguments: [
+            (false, [Strings.Localizable.select]),
+            (true, [])
+        ])
+        func systemAlbum(
+            isPhotoSelectionHidden: Bool,
+            expectedSheetTitles: [String]
+        ) async throws {
+            let albumName = "Test Album"
+            let sut = makeSUT(
+                album: .init(id: 8, name: albumName, type: .favourite),
+                monitorAlbumPhotosUseCase: makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: false),
+                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+            
+            sut.dispatch(.onViewWillAppear)
+            await sut.setupSubscriptionTask?.value
+            
+            sut.dispatch(.configureContextMenu(isSelectHidden: isPhotoSelectionHidden))
+            await sut.updateRightBarButtonsTask?.value
+            
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    switch command {
+                    case .showActions(let viewModel):
+                        #expect(viewModel.title == albumName)
+                        #expect(viewModel.sheetActions.map(\.title) == expectedSheetTitles)
+                        confirmation()
+                    default: break
+                    }
+                }
+                
+                sut.dispatch(.moreButtonTap)
+                
+                try await waitForCommand()
+            }
+        }
+        
+        private func makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: Bool) -> some MonitorAlbumPhotosUseCaseProtocol {
+            let albumPhotos: [AlbumPhotoEntity] = isPhotosEmpty ? [] : [NodeEntity(handle: 65)].toAlbumPhotoEntities()
+            let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+                item: Result<[AlbumPhotoEntity], any Error>.success(albumPhotos))
+            return MockMonitorAlbumPhotosUseCase(
+                monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         album: AlbumEntity = .init(id: 1, type: .user),
         albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
@@ -1385,6 +1492,8 @@ struct AlbumContentViewModelTestSuite {
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
+        albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
+        thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
@@ -1400,6 +1509,8 @@ struct AlbumContentViewModelTestSuite {
             overDiskQuotaChecker: overDiskQuotaChecker,
             newAlbumPhotosToAdd: newAlbumPhotosToAdd,
             tracker: tracker,
+            albumCoverUseCase: albumCoverUseCase,
+            thumbnailLoader: thumbnailLoader,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }
