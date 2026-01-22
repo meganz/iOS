@@ -50,23 +50,22 @@ struct AlbumCoverPickerView: View {
             
             NavigationBarView(
                 leading: {
-                    Button {
-                        viewModel.onCancel()
-                    } label: {
-                        Text(Strings.Localizable.cancel)
-                            .font(.body)
-                            .foregroundColor(textColor)
+                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                        cancelButton
+                            .buttonStyle(.glass)
+                            .fixedSize()
+                    } else {
+                        cancelButton
                     }
                 },
                 trailing: {
-                    Button {
-                        viewModel.onSave()
-                    } label: {
-                        Text(Strings.Localizable.save)
-                            .font(.body.bold())
-                            .foregroundColor(textColor.opacity(viewModel.isSaveButtonDisabled ? 0.5 : 1))
+                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                        saveButton
+                            .buttonStyle(.glass)
+                            .fixedSize()
+                    } else {
+                        saveButton
                     }
-                    .disabled(viewModel.isSaveButtonDisabled)
                 },
                 center: {
                     NavigationTitleView(title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover)
@@ -77,7 +76,36 @@ struct AlbumCoverPickerView: View {
             )
             .padding(.top, 16)
         }
-        .frame(height: 60)
+        .frame(height: navigationBarHeight)
+    }
+    
+    var navigationBarHeight: CGFloat {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            70
+        } else {
+            60
+        }
+    }
+    
+    var cancelButton: some View {
+        Button {
+            viewModel.onCancel()
+        } label: {
+            Text(Strings.Localizable.cancel)
+                .font(.body)
+                .foregroundColor(textColor)
+        }
+    }
+    
+    var saveButton: some View {
+        Button {
+            viewModel.onSave()
+        } label: {
+            Text(Strings.Localizable.save)
+                .font(.body.bold())
+                .foregroundColor(textColor.opacity(viewModel.isSaveButtonDisabled ? 0.5 : 1))
+        }
+        .disabled(viewModel.isSaveButtonDisabled)
     }
     
     private var textColor: Color {

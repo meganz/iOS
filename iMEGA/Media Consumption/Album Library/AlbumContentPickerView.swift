@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -15,17 +16,36 @@ struct AlbumContentPickerView: View {
         ZStack {
             TokenColors.Background.surface1.swiftUI
             
-            VStack(spacing: 0) {
-                navigationBar
-                
-                PhotoLibraryContentView(
-                    viewModel: viewModel.photoLibraryContentViewModel,
-                    router: PhotoLibraryContentViewRouter(),
-                    onFilterUpdate: nil
-                )
-                
-                Spacer()
-                footer
+            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                ZStack {
+                    VStack(spacing: 0) {
+                        navigationBar
+                        
+                        PhotoLibraryContentView(
+                            viewModel: viewModel.photoLibraryContentViewModel,
+                            router: PhotoLibraryContentViewRouter(),
+                            onFilterUpdate: nil
+                        )
+                    }
+                    
+                    VStack(spacing: 0) {
+                        Spacer()
+                        footer
+                    }
+                }
+            } else {
+                VStack(spacing: 0) {
+                    navigationBar
+                    
+                    PhotoLibraryContentView(
+                        viewModel: viewModel.photoLibraryContentViewModel,
+                        router: PhotoLibraryContentViewRouter(),
+                        onFilterUpdate: nil
+                    )
+                    
+                    Spacer()
+                    footer
+                }
             }
         }
         .alert(isPresented: $viewModel.showSelectionLimitReachedAlert) {
@@ -52,29 +72,47 @@ struct AlbumContentPickerView: View {
                 .padding(.horizontal, 30)
             
             HStack {
-                Button {
-                    viewModel.onCancel()
-                } label: {
-                    Text(Strings.Localizable.cancel)
-                        .font(.body)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                }.padding(10)
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    cancelButton
+                        .buttonStyle(.glass)
+                } else {
+                    cancelButton
+                }
                 
                 Text(viewModel.photoSourceLocationNavigationTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
                 
-                Button {
-                    viewModel.onDone()
-                } label: {
-                    Text(Strings.Localizable.done)
-                        .font(.body.bold())
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
-                }.padding(10)
-                .disabled(viewModel.isDoneButtonDisabled)
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    doneButton
+                        .buttonStyle(.glass)
+                } else {
+                    doneButton
+                }
             }.padding(.bottom, 10)
         }
+    }
+    
+    var cancelButton: some View {
+        Button {
+            viewModel.onCancel()
+        } label: {
+            Text(Strings.Localizable.cancel)
+                .font(.body)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+        }.padding(10)
+    }
+    
+    var doneButton: some View {
+        Button {
+            viewModel.onDone()
+        } label: {
+            Text(Strings.Localizable.done)
+                .font(.body.bold())
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
+        }.padding(10)
+        .disabled(viewModel.isDoneButtonDisabled)
     }
     
     @ViewBuilder
@@ -83,17 +121,27 @@ struct AlbumContentPickerView: View {
             VStack(spacing: 0) {
                 HStack {
                     Spacer()
-                    Button {
-                        viewModel.onFilter()
-                    } label: {
-                        Text(Strings.Localizable.filter)
-                            .font(.body)
-                            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                    }.padding(20)
+                    
+                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                        filterButton
+                            .buttonStyle(.glass)
+                    } else {
+                        filterButton
+                    }
                 }
             }
             .padding(.bottom, 20)
         }
+    }
+    
+    var filterButton: some View {
+        Button {
+            viewModel.onFilter()
+        } label: {
+            Text(Strings.Localizable.filter)
+                .font(.body)
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+        }.padding(20)
     }
     
     private func dismiss() {
