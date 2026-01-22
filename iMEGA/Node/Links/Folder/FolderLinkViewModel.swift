@@ -54,11 +54,6 @@ import Search
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let sortHeaderCoordinator: SortHeaderCoordinator
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -102,13 +97,11 @@ import Search
     init(
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
-        sortHeaderCoordinator: SortHeaderCoordinator,
         viewMode: ViewModePreferenceEntity,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.folderLinkUseCase = folderLinkUseCase
         self.saveMediaUseCase = saveMediaUseCase
-        self.sortHeaderCoordinator = sortHeaderCoordinator
         self.tracker = tracker
         self.viewMode = viewMode
         super.init()

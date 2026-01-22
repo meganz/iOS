@@ -19,22 +19,13 @@ extension OfflineViewController {
         }
     }
 
-    var sortHeaderCoordinator: SortHeaderCoordinator {
-        .init(
-            sortOptionsViewModel: .init(
-                title: Strings.Localizable.sortTitle,
-                sortOptions: SearchResultsSortOptionFactory.makeAll(
-                    excludedKeys: [.favourite, .label, .dateAdded, .shareCreated, .linkCreated]
-                )
-            ),
-            currentSortOrderProvider: { [weak self] in
-                guard let self else { return .init(key: .name) }
-                return sortOrder.toUIComponentSortOrderEntity()
-            },
-            sortOptionSelectionHandler: {  [weak self] in
-                guard let self else { return }
-                sortOrder = $0.sortOrder.toDomainSortOrderEntity()
-            }
+    var sortHeaderConfig: SortHeaderConfig {
+        let keys: [MEGAUIComponent.SortOrder.Key] = [
+            .name, .lastModified, .size
+        ]
+        return SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: keys.sortOptions
         )
     }
 
@@ -59,15 +50,16 @@ extension OfflineViewController {
         let headerView = UIView()
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
-        let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
 
         let headerContentView = ResultsHeaderView {
-            SortHeaderView(viewModel: sortHeaderViewModel)
-                .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
-                    guard let self else { return }
-                    viewModel.dispatch(.onSortHeaderViewPressed)
-                })
+            SortHeaderViewWrapper(config: sortHeaderConfig, sortOrder: sortOrder.toUIComponentSortOrderEntity()) { [weak self] order in
+                self?.sortOrder = order.toDomainSortOrderEntity()
+            }
+            .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
+                guard let self else { return }
+                viewModel.dispatch(.onSortHeaderViewPressed)
+            })  
         } rightView: {
             SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }

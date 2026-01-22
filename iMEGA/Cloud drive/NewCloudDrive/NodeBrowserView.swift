@@ -44,10 +44,7 @@ struct NodeBrowserView: View {
                 VStack(spacing: 0) {
                     if viewModel.shouldDisplayHeaderViewInMDView {
                         ResultsHeaderView(height: 44) {
-                            SortHeaderView(
-                                viewModel: viewModel.sortHeaderViewModelForMD,
-                                horizontalPadding: TokenSpacing._5
-                            )
+                            SortHeaderView(config: viewModel.mediaDiscoverySortHeaderConfig, selection: $viewModel.mediaDiscoverySortOrder)
                             .simultaneousGesture(TapGesture().onEnded { _ in
                                 viewModel.sortHeaderViewPressedForMediaDiscovery()
                             })

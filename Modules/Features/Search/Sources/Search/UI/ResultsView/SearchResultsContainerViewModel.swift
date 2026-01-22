@@ -34,12 +34,6 @@ public class SearchResultsContainerViewModel: ObservableObject {
     // selection was changed but we don't have new results
     private var lastAvailableChips: [SearchChipEntity] = []
 
-    private let sortHeaderCoordinator: SortHeaderCoordinator
-
-    public var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
-
     @Published private(set) var shouldShowSortingAndViewModeHeader: Bool = false
 
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
@@ -48,13 +42,15 @@ public class SearchResultsContainerViewModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     private let shouldShowMediaDiscoveryModeHandler: () -> Bool
     private let headerType: HeaderType
+    let sortHeaderConfig: SortHeaderConfig
     let sortHeaderViewPressedEvent: () -> Void
-
+    @Published var sortOrder: MEGAUIComponent.SortOrder
+    
     public init(
         bridge: SearchBridge,
         config: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
-        sortOptionsViewModel: SortOptionsViewModel,
+        sortHeaderConfig: SortHeaderConfig,
         headerType: HeaderType,
         initialViewMode: SearchResultsViewMode,
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool,
@@ -64,20 +60,11 @@ public class SearchResultsContainerViewModel: ObservableObject {
         self.config = config
         self.searchResultsViewModel = searchResultsViewModel
         self.headerType = headerType
+        self.sortHeaderConfig = sortHeaderConfig
         self.shouldShowMediaDiscoveryModeHandler = shouldShowMediaDiscoveryModeHandler
         self.sortHeaderViewPressedEvent = sortHeaderViewPressedEvent
-        self.sortHeaderCoordinator = .init(
-            sortOptionsViewModel: sortOptionsViewModel,
-            currentSortOrderProvider: { [weak bridge] in
-                bridge?.sortingOrder() ?? .init(key: .name)
-            },
-            sortOptionSelectionHandler: { @MainActor [weak searchResultsViewModel, weak bridge] sortOption in
-                guard let searchResultsViewModel, let bridge else { return }
-                bridge.updateSortOrder(sortOption.sortOrder)
-                await searchResultsViewModel.queryChanged(with: sortOption.sortOrder)
-            }
-        )
-
+        self.sortOrder = bridge.sortingOrder()
+        
         displayedHeaderSection = switch headerType {
         case .none: .none
         case .chips: .chips
@@ -100,6 +87,18 @@ public class SearchResultsContainerViewModel: ObservableObject {
                 bridge.viewModeChanged($0)
             }
             .store(in: &subscriptions)
+        
+        $sortOrder
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [bridge, searchResultsViewModel] order in
+                Task { @MainActor in
+                    bridge.updateSortOrder(order)
+                    await searchResultsViewModel.queryChanged(with: order)
+                }
+            }
+            .store(in: &subscriptions)
+        
         self.searchResultsViewModel.interactor = self
 
         observeSortingAnViewHeaderVisibility()

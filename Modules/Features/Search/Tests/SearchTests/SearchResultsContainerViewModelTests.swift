@@ -252,22 +252,6 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.displayedHeaderSection == .chips)
     }
 
-    @Test func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
-        let sortOptionsViewModel = SortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
-            ]
-        )
-        let sut = makeSUT(sortOptionsViewModel: sortOptionsViewModel)
-        let displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
-        #expect(displaySortOptionsViewModel.title == "Sort by")
-        #expect(displaySortOptionsViewModel.sortOptions.count == 1)
-        let sortOption = try #require(displaySortOptionsViewModel.sortOptions.first)
-        #expect(sortOption.sortOrder == .init(key: .name, direction: .descending))
-    }
-
     @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() {
         let sut = makeSUT(headerType: .dynamic)
         let updatedQuery = sut.updateQuery(
@@ -462,9 +446,7 @@ struct SearchResultsContainerViewModelTests {
 
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
-        sortOptionsViewModel: SortOptionsViewModel = .init(title: "", sortOptions: [
-            .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
-        ]),
+        sortHeaderConfig: SortHeaderConfig = SortHeaderConfig(title: "", options: [SortOption(key: .name, localizedTitle: "")]),
         resultsProvider: some SearchResultsProviding = MockSearchResultsProviding(
             searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ),
@@ -517,7 +499,7 @@ struct SearchResultsContainerViewModelTests {
                 usesRevampedLayout: false,
                 contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
             ),
-            sortOptionsViewModel: sortOptionsViewModel,
+            sortHeaderConfig: sortHeaderConfig,
             headerType: headerType,
             initialViewMode: initialViewMode,
             shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler,

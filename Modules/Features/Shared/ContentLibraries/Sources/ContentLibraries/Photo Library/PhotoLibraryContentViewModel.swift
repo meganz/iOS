@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAUIComponent
 import SwiftUI
 
 @MainActor
@@ -13,6 +14,7 @@ import SwiftUI
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
     public let contentMode: PhotoLibraryContentMode
+    public let globalHeaderType: PhotoGlobalHeaderType
     let configuration: PhotoLibraryContentConfiguration?
     
     public lazy var selection = PhotoSelection(selectLimit: configuration?.selectLimit)
@@ -25,9 +27,11 @@ import SwiftUI
     // MARK: - Init
     public init(library: PhotoLibrary,
                 contentMode: PhotoLibraryContentMode = .library,
+                globalHeaderType: PhotoGlobalHeaderType = .dateAndZoom, // by default, dispaly a date and zoom control
                 configuration: PhotoLibraryContentConfiguration? = nil) {
         self.library = library
         self.contentMode = contentMode
+        self.globalHeaderType = globalHeaderType
         self.configuration = configuration
         
         super.init()

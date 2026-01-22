@@ -53,18 +53,15 @@ public final class VideoListViewModel: ObservableObject {
     @Published var isSheetPresented = false
     @Published public var selectedLocationFilterOption: LocationChipFilterOptionType = .allLocation
     @Published public var selectedDurationFilterOption: DurationChipFilterOptionType = .allDurations
+    @Published var sortOrder: MEGAUIComponent.SortOrder
     var newlySelectedChip: ChipContainerViewModel?
 
     private let contentProvider: any VideoListViewModelContentProviderProtocol
     private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
-    private let sortHeaderCoordinator: SortHeaderCoordinator
-
+    let sortHeaderConfig: SortHeaderConfig
+    
     private var subscriptions = Set<AnyCancellable>()
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
 
     private var searchTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -103,19 +100,15 @@ public final class VideoListViewModel: ObservableObject {
 
         self.contentProvider = contentProvider
 
-        self.sortHeaderCoordinator = .init(
-            sortOptionsViewModel: .init(
-                title: Strings.Localizable.sortTitle,
-                sortOptions: VideoSortOptionsFactory.makeAll()
-            ),
-            currentSortOrderProvider: { [weak syncModel] in
-                (syncModel?.videoRevampSortOrderType ?? .defaultAsc).toUIComponentSortOrderEntity()
-            },
-            sortOptionSelectionHandler: { @MainActor [weak syncModel] sortOption in
-                syncModel?.videoRevampSortOrderType = sortOption.sortOrder.toDomainSortOrderEntity()
-            }
+        self.sortHeaderConfig = SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: VideoSortOptionsFactory.makeAll()
         )
-
+        
+        let sortOrderEntity: MEGADomain.SortOrderEntity = syncModel.videoRevampSortOrderType ?? .defaultAsc
+        self.sortOrder = sortOrderEntity.toUIComponentSortOrderEntity()
+        
+        subscribeToSortOrder()
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToSelectedVideos()
@@ -251,6 +244,16 @@ public final class VideoListViewModel: ObservableObject {
         try Task.checkCancellation()
         self.videos = try await contentProvider
             .search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
+    }
+    
+    private func subscribeToSortOrder() {
+        $sortOrder
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [syncModel] order in
+                syncModel.videoRevampSortOrderType = order.toDomainSortOrderEntity()
+            }
+            .store(in: &subscriptions)
     }
     
     private func subscribeToEditingMode() {

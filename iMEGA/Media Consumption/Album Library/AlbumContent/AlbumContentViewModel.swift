@@ -8,6 +8,7 @@ import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
+import SwiftUI
 
 enum AlbumContentAction: ActionType {
     case addToAlbumTap
@@ -78,22 +79,6 @@ final class AlbumContentViewModel: ViewModelType {
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
-    private lazy var sortHeaderCoordinator: SortHeaderCoordinator = {
-        .init(
-            sortOptionsViewModel: .init(
-                title: Strings.Localizable.sortTitle,
-                sortOptions: AlbumSortOptionsFactory.makeAll()
-            ),
-            currentSortOrderProvider: { [weak self] in
-                (self?.selectedSortOrder ?? .newest).toUIComponentSortOrder()
-            },
-            sortOptionSelectionHandler: { @MainActor [weak self] sortOption in
-                guard let self else { return }
-                let newSortOrder = sortOption.sortOrder.toDomainSortOrderEntity().toSortOrderType()
-                self.dispatch(.changeSortOrder(newSortOrder))
-            }
-        )
-    }()
     private var newAlbumPhotosToAdd: [NodeEntity]?
     private var photoLibraryContainsPhotos: Bool = true
     private var deletePhotosTask: Task<Void, Never>?
@@ -126,11 +111,22 @@ final class AlbumContentViewModel: ViewModelType {
     var albumName: String {
         album.name
     }
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
-
+    
+    lazy var headerSortViewModel: PhotoHeaderSortViewModel = {
+        let sortConfig = SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: [MEGAUIComponent.SortOrder.Key.lastModified].sortOptions
+        )
+        return PhotoHeaderSortViewModel(
+            config: sortConfig,
+            currentSortOrder: { [weak self] in
+                (self?.selectedSortOrder ?? .newest).toUIComponentSortOrder()
+            }, onSortOrderChanged: { [weak self] order in
+                self?.dispatch(.changeSortOrder(order.toDomainSortOrderEntity().toSortOrderType()))
+            }
+        )
+    }()
+    
     // MARK: - Init
     
     init(
@@ -402,7 +398,6 @@ final class AlbumContentViewModel: ViewModelType {
     private func updateSortOrder(_ sortOrder: SortOrderType) {
         guard sortOrder != selectedSortOrder else { return }
         selectedSortOrder = sortOrder
-        sortHeaderCoordinator.updateSortUI()
         showAlbumPhotos()
     }
     

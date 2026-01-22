@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAUIComponent
 
 extension MEGADomain.SortOrderEntity {
@@ -44,5 +45,38 @@ extension MEGAUIComponent.SortOrder {
         case (.linkCreated, .ascending): .linkCreationAsc
         case(.linkCreated, .descending): .linkCreationDesc
         }
+    }
+}
+
+extension SortOrder.Key {
+    var localizedTitle: String {
+        switch self {
+        case .name:
+            Strings.Localizable.Sorting.Name.title
+        case .favourite:
+            Strings.Localizable.Sorting.Favourite.title
+        case .label:
+            Strings.Localizable.CloudDrive.Sort.label
+        case .dateAdded:
+            Strings.Localizable.Sorting.DateAdded.title
+        case .lastModified:
+            Strings.Localizable.Sorting.LastModified.title
+        case .size:
+            Strings.Localizable.Sorting.Size.title
+        case .shareCreated:
+            Strings.Localizable.Sorting.ShareCreated.title
+        case .linkCreated:
+            Strings.Localizable.Sorting.LinkCreated.title
+        }
+    }
+    
+    public var sortOption: SortOption {
+        SortOption(key: self, localizedTitle: localizedTitle)
+    }
+}
+
+extension [SortOrder.Key] {
+    public var sortOptions: [SortOption] {
+        map(\.sortOption)
     }
 }

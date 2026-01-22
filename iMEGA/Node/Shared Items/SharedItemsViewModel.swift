@@ -5,6 +5,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
 import Search
@@ -29,13 +30,26 @@ protocol SharedItemsViewing: AnyObject {
     let searchDebouncer = Debouncer(delay: 0.5)
     private weak var sharedItemsView: (any SharedItemsViewing)?
 
-    private let sortHeaderCoordinator: SortHeaderCoordinator
     private let tracker: any AnalyticsTracking
 
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
+    var sortHeaderConfig: SortHeaderConfig {
+        let currentSelectTab = sharedItemsView?.selectedTab ?? .incoming
+        return SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: sortOrderKeys(for: currentSelectTab).sortOptions
+        )
     }
 
+    var sortOrder: MEGAUIComponent.SortOrder {
+        get {
+            sharedItemsView?.currentSortOrder.toUIComponentSortOrderEntity() ?? .init(key: .name)
+        }
+        
+        set {
+            sharedItemsView?.currentSortOrder = newValue.toDomainSortOrderEntity()
+        }
+    }
+    
     private var selectedTab: SharedItemsTabSelection {
         sharedItemsView?.selectedTab ?? .incoming
     }
@@ -45,7 +59,6 @@ protocol SharedItemsViewing: AnyObject {
          nodeUseCase: some NodeUseCaseProtocol,
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
          moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
-         sortOptionsViewModel: SortOptionsViewModel,
          sharedItemsView: some SharedItemsViewing,
          tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -56,19 +69,6 @@ protocol SharedItemsViewing: AnyObject {
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.sharedItemsView = sharedItemsView
         self.tracker = tracker
-        self.sortHeaderCoordinator = .init(
-            sortOptionsViewModel: sortOptionsViewModel,
-            currentSortOrderProvider: { [weak sharedItemsView] in
-                sharedItemsView?.currentSortOrder.toUIComponentSortOrderEntity() ?? .init(key: .name)
-            },
-            sortOptionSelectionHandler: { @MainActor [weak sharedItemsView] sortOption in
-                sharedItemsView?.currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
-            },
-            hiddenSortOptionKeysProvider: { [weak sharedItemsView] in
-                Self.keysToHide(for: sharedItemsView?.selectedTab ?? .incoming)
-            }
-        )
-
         super.init()
     }
 
@@ -139,27 +139,25 @@ protocol SharedItemsViewing: AnyObject {
         await nodeUseCase.isFileTakenDown(nodeHandle)
     }
 
-    func updateSortUI() {
-        sortHeaderCoordinator.updateSortUI()
-    }
-
     func sortHeaderViewPressed() {
         tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
     }
 
-    /// The sort option keys that should be hidden for the current shared items tab.
+    func shouldResetSortOrderType() -> Bool {
+        let currentSelectTab = sharedItemsView?.selectedTab ?? .incoming
+        return sortOrderKeys(for: currentSelectTab).notContains(sortOrder.key)
+    }
+    
+    /// The sort option keys that is supported for the current shared items tab.
     ///
-    /// This is used to filter out sort options that are not relevant to the
-    /// selected tab when building `displaySortOptionsViewModel`.
-    ///
-    /// - For the `.outgoing` tab, the `.linkCreated` sort option is hidden.
-    /// - For the `.links` tab, the `.shareCreated` sort option is hidden.
-    /// - For the `.incoming`, both `.linkCreated` and .shareCreated` are hidden.
-    static func keysToHide(for tab: SharedItemsTabSelection) -> Set<MEGAUIComponent.SortOrder.Key> {
+    /// - For the `.outgoing` tab, the `.linkCreated` is excluded
+    /// - For the `.links` tab, the `.shareCreated` is excluded
+    /// - For the `.incoming`, both `.linkCreated` and .shareCreated` are excluded
+    private func sortOrderKeys(for tab: SharedItemsTabSelection) -> [MEGAUIComponent.SortOrder.Key] {
         switch tab {
-        case .outgoing: [.linkCreated]
-        case .links: [.shareCreated]
-        default: [.linkCreated, .shareCreated]
+        case .outgoing: [.name, .favourite, .label, .shareCreated, .dateAdded, .lastModified, .size]
+        case .links: [.name, .favourite, .label, .linkCreated, .dateAdded, .lastModified, .size]
+        default: [.name, .favourite, .label, .dateAdded, .lastModified, .size]
         }
     }
 }

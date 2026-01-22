@@ -21,10 +21,7 @@ public struct SearchResultsContainerView: View {
             SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
                 if viewModel.shouldShowSortingAndViewModeHeader {
                     ResultsHeaderView {
-                        SortHeaderView(
-                            viewModel: viewModel.sortHeaderViewModel,
-                            horizontalPadding: TokenSpacing._5
-                        )
+                        SortHeaderView(config: viewModel.sortHeaderConfig, selection: $viewModel.sortOrder)
                         .simultaneousGesture(TapGesture().onEnded { _ in
                             viewModel.sortHeaderViewPressedEvent()
                         })

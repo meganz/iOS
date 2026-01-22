@@ -19,7 +19,6 @@ struct PhotoLibraryGlobalHeaderView<LeftContent: View, RightContent: View>: View
             leftView: { leftContent },
             rightView: { rightContent }
         )
-        .padding(.horizontal, TokenSpacing._5)
         .background(TokenColors.Background.page.swiftUI.opacity(1.0))
     }
 }

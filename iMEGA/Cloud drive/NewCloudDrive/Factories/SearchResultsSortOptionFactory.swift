@@ -1,101 +1,25 @@
-import MEGAAssets
-import MEGAL10n
+import MEGAAppPresentation
 import MEGAUIComponent
-import Search
-import SwiftUI
 
+/// A factory that returns all sort options supported by the MEGA Cloud app.
+///
+/// By default, these options are used everywhere, except in places that restrict the available options.
+/// For example:
+/// - Media Discovery mode only supports `.favourite`.
+/// - Offline only supports `.name`, `.size`, and `.lastModified`.
+/// - Shared Items: supported options vary by tab (Incoming, Outgoing, Links).
+///
+/// In these cases, define the options locally instead of using this factory.
 enum SearchResultsSortOptionFactory {
-    static var iconsByDirection: [MEGAUIComponent.SortOrder.SortDirection: Image] {
-        [.ascending: MEGAAssets.Image.arrowUp, .descending: MEGAAssets.Image.arrowDown]
-    }
-    
-    static func makeAll(
-        excludedKeys: Set<MEGAUIComponent.SortOrder.Key> = [
-            .shareCreated,
-            .linkCreated
+    static func makeAll() -> [SortOption] {
+        let keys: [MEGAUIComponent.SortOrder.Key] = [
+            .name,
+            .favourite,
+            .label,
+            .dateAdded,
+            .lastModified,
+            .size
         ]
-    ) -> [SortOption] {
-        var options: [SortOption] = []
-
-        appendSortOptions(
-            for: .name,
-            title: Strings.Localizable.Sorting.Name.title,
-            include: excludedKeys.notContains(.name),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .favourite,
-            title: Strings.Localizable.Sorting.Favourite.title,
-            include: excludedKeys.notContains(.favourite),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .label,
-            title: Strings.Localizable.CloudDrive.Sort.label,
-            include: excludedKeys.notContains(.label),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .shareCreated,
-            title: Strings.Localizable.Sorting.ShareCreated.title,
-            include: excludedKeys.notContains(.shareCreated),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .linkCreated,
-            title: Strings.Localizable.Sorting.LinkCreated.title,
-            include: excludedKeys.notContains(.linkCreated),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .dateAdded,
-            title: Strings.Localizable.Sorting.DateAdded.title,
-            include: excludedKeys.notContains(.dateAdded),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .lastModified,
-            title: Strings.Localizable.Sorting.LastModified.title,
-            include: excludedKeys.notContains(.lastModified),
-            to: &options
-        )
-        
-        appendSortOptions(
-            for: .size,
-            title: Strings.Localizable.Sorting.Size.title,
-            include: excludedKeys.notContains(.size),
-            to: &options
-        )
-        
-        return options
-    }
-    
-    private static func appendSortOptions(
-        for key: MEGAUIComponent.SortOrder.Key,
-        title: String,
-        include: Bool = true,
-        to options: inout [SortOption]
-    ) {
-        guard include else { return }
-        options.append(
-            .init(
-                sortOrder: .init(key: key),
-                title: title,
-                iconsByDirection: iconsByDirection
-            )
-        )
-        options.append(
-            .init(
-                sortOrder: .init(key: key, direction: .descending),
-                title: title,
-                iconsByDirection: iconsByDirection
-            )
-        )
+        return keys.sortOptions
     }
 }

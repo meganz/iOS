@@ -270,9 +270,9 @@ final class HomeScreenFactory: NSObject {
             bridge: searchBridge,
             config: config,
             searchResultsViewModel: searchResultsViewModel,
-            sortOptionsViewModel: .init(
+            sortHeaderConfig: SortHeaderConfig(
                 title: Strings.Localizable.sortTitle,
-                sortOptions: SearchResultsSortOptionFactory.makeAll()
+                options: SearchResultsSortOptionFactory.makeAll()
             ),
             headerType: .chips,
             initialViewMode: viewMode.toSearchResultsViewMode(),

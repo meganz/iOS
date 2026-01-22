@@ -70,7 +70,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
-            sortOptionsForMD: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+            sortOptionsForMD: [SortOption] = [SortOption(key: .name, localizedTitle: "")],
             selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified),
             featureFlagList: [RemoteFeatureFlag: Bool] = [:],
         ) {
@@ -130,9 +130,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                         usesRevampedLayout: false,
                         contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
                     ),
-                    sortOptionsViewModel: .init(
+                    sortHeaderConfig: SortHeaderConfig(
                         title: "",
-                        sortOptions: [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])]
+                        options: [SortOption(key: .name, localizedTitle: "")]
                     ),
                     headerType: .dynamic,
                     initialViewMode: .list,
@@ -164,14 +164,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 accountStorageUseCase: mockAccountStorageUseCase,
  // Inject the mock here
-                sortHeaderCoordinatorForMD: .init(
-                    sortOptionsViewModel: .init(
-                        title: "",
-                        sortOptions: sortOptionsForMD
-                    ),
-                    currentSortOrderProvider: { selectedSortOrderForMD },
-                    sortOptionSelectionHandler: { _ in }
-                ),
+                mediaDiscoverySortHeaderConfig: SortHeaderConfig(title: "", options: sortOptionsForMD),
                 nodeActionsBridge: NodeActionsBridge(),
                 tracker: tracker,
                 viewModeSaver: { saver($0)
@@ -559,7 +552,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         isFromSharedItem: Bool = false,
         currentStatus: StorageStatusEntity = .noStorageProblems,
         displayMode: DisplayMode? = nil,
-        sortOptionsForMD: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+        sortOptionsForMD: [SortOption] = [SortOption(key: .name, localizedTitle: "")],
         selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified)
     ) -> (Harness, MockAccountStorageUseCase) {
         let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)
@@ -654,23 +647,6 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testSortHeaderViewModelForMD_whenSetUsingInit_shouldMatchResults() {
-        let sortOptions: [SortOption] = [
-            .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
-            .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
-        ]
-
-        let (harness, _) = makeHarness(
-            sortOptionsForMD: sortOptions,
-            selectedSortOrderForMD: sortOptions[0].sortOrder
-        )
-        XCTAssertEqual(
-            harness.sut.sortHeaderViewModelForMD.displaySortOptionsViewModel.sortOptions.map(\.sortOrder),
-            [.init(key: .lastModified, direction: .descending)]
-        )
-    }
-
-    @MainActor
     func testShouldDisplayHeaderViewInMDView_isAlwaysFalse_shouldMatchResults() {
         let (harness, _) = makeHarness()
         XCTAssertFalse(harness.sut.shouldDisplayHeaderViewInMDView)
@@ -689,15 +665,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             case viewModeNotSet
         }
 
-        let sortOptions: [SortOption] = [
-            .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
-            .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
-        ]
-
-        let (harness, _) = makeHarness(
-            sortOptionsForMD: sortOptions,
-            selectedSortOrderForMD: sortOptions[0].sortOrder
-        )
+        let (harness, _) = makeHarness()
 
         XCTAssertEqual(harness.sut.viewModeHeaderViewModelForMD.selectedViewMode, .mediaDiscovery)
 

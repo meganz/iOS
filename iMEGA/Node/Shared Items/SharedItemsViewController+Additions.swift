@@ -47,18 +47,8 @@ extension SharedItemsViewController {
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo),
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
-            sortOptionsViewModel: sortOptionsViewModel,
             sharedItemsView: self
         )
-    }
-
-    private var sortOptionsViewModel: SortOptionsViewModel {
-        .init(title: Strings.Localizable.sortTitle, sortOptions: sortOptions)
-    }
-
-    private var sortOptions: [SortOption] {
-        SearchResultsSortOptionFactory
-            .makeAll(excludedKeys: [])
     }
 
     @objc func createNodeInfoViewModel(withNode node: MEGANode,

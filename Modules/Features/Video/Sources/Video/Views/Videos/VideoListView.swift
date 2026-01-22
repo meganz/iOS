@@ -155,10 +155,7 @@ public struct VideoListView: View {
     @ViewBuilder
     private func sortHeaderView() -> some View {
         ResultsHeaderView(height: 44, leftView: {
-            SortHeaderView(
-                viewModel: viewModel.sortHeaderViewModel,
-                horizontalPadding: TokenSpacing._5
-            )
+            SortHeaderView(config: viewModel.sortHeaderConfig, selection: $viewModel.sortOrder)
         })
     }
 

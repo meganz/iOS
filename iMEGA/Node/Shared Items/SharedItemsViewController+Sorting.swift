@@ -8,44 +8,21 @@ import SwiftUI
 
 extension SharedItemsViewController {
     @objc func headerView() -> UIView {
-        guard let headerContainerView else {
-            return makeHeaderView()
+        UIHostingConfiguration {
+            SortHeaderViewWrapper(config: viewModel.sortHeaderConfig, sortOrder: viewModel.sortOrder) { [weak self] order in
+                self?.viewModel.sortOrder = order
+            }
+            .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
+                self?.viewModel.sortHeaderViewPressed()
+            })
         }
-
-        return headerContainerView
+        .margins(.all, 0)
+        .makeContentView()
     }
-
-    private func makeHeaderView() -> UIView {
-        let headerView = UIView()
-        headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
-
-        let sortHeaderViewModel = viewModel.sortHeaderViewModel
-        let headerContentView = ResultsHeaderView(leftView: {
-            SortHeaderView(viewModel: sortHeaderViewModel)
-                .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
-                    guard let self else { return }
-                    viewModel.sortHeaderViewPressed()
-                })
-        })
-
-        let hostingViewController = UIHostingController(rootView: headerContentView)
-        headerView.wrap(hostingViewController.view)
-        addChild(hostingViewController)
-        self.headerContainerView = headerView
-        hostingViewController.view.backgroundColor = TokenColors.Background.page
-        return headerView
-    }
-
+    
     @objc func resetSortIfNeeded() {
-        guard SharedItemsViewModel
-            .keysToHide(for: selectedTab)
-            .contains(currentSortOrder.toUIComponentSortOrderEntity().key) else {
-            viewModel.updateSortUI()
-            return
-        }
-
+        guard viewModel.shouldResetSortOrderType() else { return }
         sortOrderType = .defaultAsc
-        viewModel.updateSortUI()
     }
 }
 

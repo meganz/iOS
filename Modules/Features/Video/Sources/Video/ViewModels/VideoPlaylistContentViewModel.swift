@@ -36,7 +36,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let videoRevampRouter: any VideoRevampRouting
     private let syncModel: VideoRevampSyncModel
-    private let sortHeaderCoordinator: SortHeaderCoordinator
+    let sortHeaderConfig: SortHeaderConfig
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
@@ -49,6 +49,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     @Published var shouldShowVideoPlaylistPicker = false
     @Published var shouldShowShareLinkView = false
+    @Published var sortOrder: MEGAUIComponent.SortOrder
     
     @Published private(set) var viewState: ViewState = .partial
     
@@ -74,10 +75,6 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var moveVideoInVideoPlaylistContentToRubbishBinTask: Task<Void, Never>?
     
     private var subscriptions = Set<AnyCancellable>()
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
 
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
@@ -116,18 +113,12 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
 
-        self.sortHeaderCoordinator = .init(
-            sortOptionsViewModel: .init(
-                title: Strings.Localizable.sortTitle,
-                sortOptions: VideoSortOptionsFactory.makeAll()
-            ),
-            currentSortOrderProvider: {
-                sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent).toUIComponentSortOrderEntity()
-            },
-            sortOptionSelectionHandler: { @MainActor sortOption in
-                sortOrderPreferenceUseCase.save(sortOrder: sortOption.sortOrder.toDomainSortOrderEntity(), for: .videoPlaylistContent)
-            }
+        self.sortHeaderConfig = SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: VideoSortOptionsFactory.makeAll()
         )
+        
+        self.sortOrder = sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent).toUIComponentSortOrderEntity()
 
         assignVideoPlaylistRenameValidator()
         
@@ -135,6 +126,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             self?.renameVideoPlaylist(with: newVideoPlaylistName)
         }
         
+        subscribeToSortOrder()
         subscribeToRemoveVideosFromVideoPlaylistAction()
         subscribeToDidSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
     }
@@ -345,6 +337,16 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             guard let self else { return }
             _ = await videoPlaylistModificationUseCase.delete(videoPlaylists: [videoPlaylistEntity])
         }
+    }
+    
+    private func subscribeToSortOrder() {
+        $sortOrder
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [sortOrderPreferenceUseCase] order in
+                sortOrderPreferenceUseCase.save(sortOrder: order.toDomainSortOrderEntity(), for: .videoPlaylistContent)
+            }
+            .store(in: &subscriptions)
     }
     
     private func subscribeToRemoveVideosFromVideoPlaylistAction() {

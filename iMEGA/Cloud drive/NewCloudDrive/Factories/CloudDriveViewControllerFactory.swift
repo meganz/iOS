@@ -10,6 +10,7 @@ import MEGAPermissions
 import MEGAPreference
 import MEGARepo
 import MEGASwift
+import MEGAUIComponent
 import MEGAUIKit
 import Search
 import SwiftUI
@@ -339,24 +340,9 @@ struct CloudDriveViewControllerFactory {
                 accountUseCase: AccountUseCase(
                     repository: AccountRepository.newRepo)),
             accountStorageUseCase: accountStorageUseCase,
-            sortHeaderCoordinatorForMD: .init(
-                sortOptionsViewModel: .init(
-                    title: Strings.Localizable.sortTitle,
-                    sortOptions: SearchResultsSortOptionFactory.makeAll(
-                        excludedKeys: [.name, .favourite, .label, .dateAdded, .size, .shareCreated, .linkCreated]
-                    )
-                ),
-                currentSortOrderProvider: { [weak mediaDiscoveryContentViewModel] in
-                    guard let mediaDiscoveryContentViewModel else { return .init(key: .lastModified) }
-                    return mediaDiscoveryContentViewModel.sortOrder == .oldest
-                    ? .init(key: .lastModified)
-                    : .init(key: .lastModified, direction: .descending)
-                },
-                sortOptionSelectionHandler: { [weak mediaDiscoveryContentViewModel, tracker] in
-                    let sortOrder = SortOrderType(megaSortOrderType: $0.sortOrder.toMEGASortOrderType())
-                    tracker.trackAnalyticsEvent(with: SortByDateModifiedMenuItemEvent())
-                    await mediaDiscoveryContentViewModel?.update(sortOrder: sortOrder)
-                }
+            mediaDiscoverySortHeaderConfig: SortHeaderConfig(
+                title: Strings.Localizable.sortTitle,
+                options: [MEGAUIComponent.SortOrder.Key.lastModified].sortOptions
             ),
             nodeActionsBridge: nodeActionsBridge,
             viewModeSaver: { viewMode in
@@ -1072,13 +1058,13 @@ struct CloudDriveViewControllerFactory {
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool,
         sortHeaderViewPressedEvent: @escaping () -> Void
     ) -> SearchResultsContainerViewModel {
-        .init(
+        return SearchResultsContainerViewModel(
             bridge: bridge,
             config: searchConfig,
             searchResultsViewModel: searchResultsViewModel,
-            sortOptionsViewModel: .init(
+            sortHeaderConfig: SortHeaderConfig(
                 title: Strings.Localizable.sortTitle,
-                sortOptions: SearchResultsSortOptionFactory.makeAll()
+                options: SearchResultsSortOptionFactory.makeAll()
             ),
             headerType: headerType,
             initialViewMode: initialViewMode,

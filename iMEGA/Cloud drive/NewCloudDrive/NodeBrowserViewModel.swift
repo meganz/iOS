@@ -133,12 +133,8 @@ class NodeBrowserViewModel: ObservableObject {
         config.displayMode == .rubbishBin
     }
 
-    private let sortHeaderCoordinatorForMD: SortHeaderCoordinator
-
-    var sortHeaderViewModelForMD: SortHeaderViewModel {
-        sortHeaderCoordinatorForMD.headerViewModel
-    }
-
+    let mediaDiscoverySortHeaderConfig: SortHeaderConfig
+    
     var shouldDisplayHeaderViewInMDView: Bool {
         isCloudDriveRevampEnabled
     }
@@ -151,6 +147,8 @@ class NodeBrowserViewModel: ObservableObject {
         remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
+    @Published var mediaDiscoverySortOrder: MEGAUIComponent.SortOrder
+    
     init(
         viewMode: ViewModePreferenceEntity,
         searchResultsContainerViewModel: SearchResultsContainerViewModel,
@@ -168,7 +166,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        sortHeaderCoordinatorForMD: SortHeaderCoordinator,
+        mediaDiscoverySortHeaderConfig: SortHeaderConfig,
         nodeActionsBridge: NodeActionsBridge,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         // we call this whenever view sate is changed so that:
@@ -213,12 +211,29 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.accountStorageUseCase = accountStorageUseCase
-        self.sortHeaderCoordinatorForMD = sortHeaderCoordinatorForMD
+        self.mediaDiscoverySortHeaderConfig = mediaDiscoverySortHeaderConfig
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
 
+        self.mediaDiscoverySortOrder = if let mediaDiscoveryViewModel {
+            mediaDiscoveryViewModel.sortOrder == .oldest ? SortOrder(key: .lastModified) : SortOrder(key: .lastModified, direction: .descending)
+        } else {
+            SortOrder(key: .lastModified)
+        }
+        
+        $mediaDiscoverySortOrder
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [mediaDiscoveryViewModel, tracker] order in
+                Task { @MainActor in
+                    tracker.trackAnalyticsEvent(with: SortByDateModifiedMenuItemEvent())
+                    await mediaDiscoveryViewModel?.update(sortOrder: SortOrderType(megaSortOrderType: order.toMEGASortOrderType()))
+                }
+            }
+            .store(in: &subscriptions)
+        
         $viewMode
             .removeDuplicates()
             .sink { [weak self] viewMode in

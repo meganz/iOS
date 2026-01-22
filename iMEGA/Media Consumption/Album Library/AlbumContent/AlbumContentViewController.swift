@@ -14,23 +14,13 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     let viewModel: AlbumContentViewModel
     
-    lazy var photoLibraryContentViewModel: PhotoLibraryContentViewModel = {
-        let configuration = PhotoLibraryContentConfiguration(
-            globalHeaderLeftViewProvider: { [weak viewModel] in
-                guard let viewModel else { return AnyView(EmptyView()) }
-                return AnyView(
-                    SortHeaderView(
-                        viewModel: viewModel.sortHeaderViewModel,
-                        horizontalPadding: 0
-                    )
-                    .frame(height: 36)
-                )
-            }
-        )
+    lazy var photoLibraryContentViewModel: PhotoLibraryContentViewModel = { [viewModel] in
+        let configuration = PhotoLibraryContentConfiguration()
         return PhotoLibraryContentViewModel(
             library: PhotoLibrary(),
             contentMode: PhotoLibraryContentMode.album,
-            configuration: configuration
+            globalHeaderType: .sort(viewModel.headerSortViewModel),
+            configuration: configuration,
         )
     }()
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)

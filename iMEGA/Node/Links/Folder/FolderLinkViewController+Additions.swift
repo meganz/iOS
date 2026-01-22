@@ -52,7 +52,6 @@ extension FolderLinkViewController {
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
             saveMediaUseCase: saveMediaUseCase,
-            sortHeaderCoordinator: sortHeaderCoordinator,
             viewMode: isListViewModeSelected() ? .list : .thumbnail
         )
         

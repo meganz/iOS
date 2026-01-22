@@ -42,7 +42,8 @@ struct PlaylistContentScreen: View {
             nodeUseCase: viewModel.nodeUseCase,
             featureFlagProvider: viewModel.featureFlagProvider,
             videoSelection: videoSelection,
-            sortHeaderViewModel: viewModel.sortHeaderViewModel,
+            sortHeaderConfig: viewModel.sortHeaderConfig,
+            sortOrder: $viewModel.sortOrder,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
         .task {
@@ -122,7 +123,8 @@ struct PlaylistContentView: View {
     private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
-    @StateObject private var sortHeaderViewModel: SortHeaderViewModel
+    @Binding var sortOrder: MEGAUIComponent.SortOrder
+    let sortHeaderConfig: SortHeaderConfig
     private let onTapAddButton: () -> Void
     
     init(
@@ -138,7 +140,8 @@ struct PlaylistContentView: View {
         nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
-        sortHeaderViewModel: @autoclosure @escaping () -> SortHeaderViewModel,
+        sortHeaderConfig: SortHeaderConfig,
+        sortOrder: Binding<MEGAUIComponent.SortOrder>,
         onTapAddButton: @escaping () -> Void
     ) {
         self.videoConfig = videoConfig
@@ -153,7 +156,8 @@ struct PlaylistContentView: View {
         self.playlistType = playlistType
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
-        _sortHeaderViewModel = StateObject(wrappedValue: sortHeaderViewModel())
+        self.sortHeaderConfig = sortHeaderConfig
+        self._sortOrder = sortOrder
         self.onTapAddButton = onTapAddButton
     }
     
@@ -192,10 +196,7 @@ struct PlaylistContentView: View {
     @ViewBuilder
     private func sortHeaderView() -> some View {
         ResultsHeaderView(height: 44, leftView: {
-            SortHeaderView(
-                viewModel: sortHeaderViewModel,
-                horizontalPadding: TokenSpacing._5
-            )
+            SortHeaderView(config: sortHeaderConfig, selection: $sortOrder)
         })
     }
     
@@ -256,183 +257,4 @@ struct PlaylistContentView: View {
             featureFlagProvider: featureFlagProvider
         )
     }
-}
-
-// MARK: Preview - ViewState.partial
-#Preview {
-    PlaylistContentView(
-        videoConfig: .preview,
-        viewState: .partial,
-        previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "",
-            duration: "",
-            title: "",
-            isExported: false,
-            type: .favourite
-        ),
-        videos: [],
-        searchText: nil,
-        playlistType: .user,
-        router: Preview_VideoRevampRouter(),
-        thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-        nodeUseCase: Preview_NodeUseCase(),
-        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
-        videoSelection: VideoSelection(),
-        sortHeaderViewModel: SortHeaderViewModel(
-            selectedOption: SortOption(
-                sortOrder: SortOrder(key: .lastModified),
-                title: "Last Modified",
-                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
-            ),
-            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
-        ),
-        onTapAddButton: {}
-    )
-}
-
-// MARK: - Preview - ViewState.loading
-
-#Preview {
-    PlaylistContentView(
-        videoConfig: .preview,
-        viewState: .loading,
-        previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "",
-            duration: "",
-            title: "",
-            isExported: false,
-            type: .favourite
-        ),
-        videos: [],
-        searchText: nil,
-        playlistType: .user,
-        router: Preview_VideoRevampRouter(),
-        thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-        nodeUseCase: Preview_NodeUseCase(),
-        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
-        videoSelection: VideoSelection(),
-        sortHeaderViewModel: SortHeaderViewModel(
-            selectedOption: SortOption(
-                sortOrder: SortOrder(key: .lastModified),
-                title: "Last Modified",
-                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
-            ),
-            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
-        ),
-        onTapAddButton: {}
-    )
-    .preferredColorScheme(.dark)
-}
-
-// MARK: - Preview - ViewState.loaded
-
-#Preview {
-    PlaylistContentView(
-        videoConfig: .preview,
-        viewState: .loaded,
-        previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: [
-                ImageContainer(image: Image(systemName: "person"), type: .thumbnail)
-            ]),
-            count: "1 video",
-            duration: "3:05:20",
-            title: "Magic of Disney’s Animal Kingdom",
-            isExported: false,
-            type: .user
-        ),
-        videos: [ .preview ],
-        searchText: nil,
-        playlistType: .user,
-        router: Preview_VideoRevampRouter(),
-        thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-        nodeUseCase: Preview_NodeUseCase(),
-        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
-        videoSelection: VideoSelection(),
-        sortHeaderViewModel: SortHeaderViewModel(
-            selectedOption: SortOption(
-                sortOrder: SortOrder(key: .lastModified),
-                title: "Last Modified",
-                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
-            ),
-            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
-        ),
-        onTapAddButton: {}
-    )
-    .preferredColorScheme(.dark)
-}
-
-// MARK: - Preview - ViewState.empty
-
-#Preview {
-    PlaylistContentView(
-        videoConfig: .preview,
-        viewState: .empty,
-        previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "",
-            duration: "empty playlist",
-            title: "Favourites",
-            isExported: false,
-            type: .favourite
-        ),
-        videos: [],
-        searchText: nil,
-        playlistType: .user,
-        router: Preview_VideoRevampRouter(),
-        thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-        nodeUseCase: Preview_NodeUseCase(),
-        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
-        videoSelection: VideoSelection(),
-        sortHeaderViewModel: SortHeaderViewModel(
-            selectedOption: SortOption(
-                sortOrder: SortOrder(key: .lastModified),
-                title: "Last Modified",
-                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
-            ),
-            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
-        ),
-        onTapAddButton: {}
-    )
-}
-
-// MARK: - Preview - ViewState.error
-
-#Preview {
-    PlaylistContentView(
-        videoConfig: .preview,
-        viewState: .error,
-        previewEntity: VideoPlaylistCellPreviewEntity(
-            thumbnail: VideoPlaylistThumbnail(type: .normal, imageContainers: []),
-            count: "",
-            duration: "",
-            title: "",
-            isExported: false,
-            type: .user
-        ),
-        videos: [],
-        searchText: nil,
-        playlistType: .user,
-        router: Preview_VideoRevampRouter(),
-        thumbnailLoader: Preview_ThumbnailLoader(),
-        sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
-        nodeUseCase: Preview_NodeUseCase(),
-        featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
-        videoSelection: VideoSelection(),
-        sortHeaderViewModel: SortHeaderViewModel(
-            selectedOption: SortOption(
-                sortOrder: SortOrder(key: .lastModified),
-                title: "Last Modified",
-                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
-            ),
-            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
-        ),
-        onTapAddButton: {}
-    )
-    .preferredColorScheme(.dark)
 }

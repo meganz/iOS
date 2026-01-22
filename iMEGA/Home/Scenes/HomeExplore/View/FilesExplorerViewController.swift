@@ -131,15 +131,16 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         let headerView = UIView()
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
-        let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
 
         let headerContentView = ResultsHeaderView {
-            SortHeaderView(viewModel: sortHeaderViewModel)
-                .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
-                    guard let self else { return }
-                    viewModel.dispatch(.onSortHeaderViewPressed)
-                })
+            SortHeaderViewWrapper(config: viewModel.sortHeaderConfig, sortOrder: viewModel.sortOrder) { [viewModel] order in
+                viewModel.sortOrder = order
+            }
+            .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
+                guard let self else { return }
+                viewModel.dispatch(.onSortHeaderViewPressed)
+            })  
         } rightView: {
             SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }

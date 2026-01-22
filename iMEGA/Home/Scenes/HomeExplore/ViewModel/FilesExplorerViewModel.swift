@@ -89,7 +89,6 @@ final class FilesExplorerViewModel: ViewModelType {
 
     private var subscriptions = Set<AnyCancellable>()
     private let tracker: any AnalyticsTracking
-    private let sortOptionsViewModel: SortOptionsViewModel
 
     private var currentSortOrder: MEGADomain.SortOrderEntity {
         get {
@@ -101,23 +100,7 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
 
-    private lazy var sortHeaderCoordinator: SortHeaderCoordinator = {
-        .init(
-            sortOptionsViewModel: sortOptionsViewModel,
-            currentSortOrderProvider: {
-                Helper.sortType(for: nil).toUIComponentSortOrderEntity()
-            },
-            sortOptionSelectionHandler: { @MainActor [weak self] sortOption in
-                guard let self else { return }
-                currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
-                invokeCommand?(.sortTypeHasChanged)
-            }
-        )
-    }()
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
+    let sortHeaderConfig: SortHeaderConfig
 
     lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
         SearchResultsHeaderViewModeViewModel(
@@ -125,6 +108,8 @@ final class FilesExplorerViewModel: ViewModelType {
             availableViewModes: [.list, .grid]
         )
     }()
+    
+    @Published var sortOrder: MEGAUIComponent.SortOrder
 
     // MARK: - Initializer
     required init(
@@ -135,7 +120,7 @@ final class FilesExplorerViewModel: ViewModelType {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         nodeProvider: some MEGANodeProviderProtocol,
-        sortOptionsViewModel: SortOptionsViewModel,
+        sortHeaderConfig: SortHeaderConfig,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         notificationCenter: NotificationCenter = .default,
         tracker: some AnalyticsTracking = DIContainer.tracker
@@ -147,11 +132,13 @@ final class FilesExplorerViewModel: ViewModelType {
         self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.nodeProvider = nodeProvider
-        self.sortOptionsViewModel = sortOptionsViewModel
+        self.sortHeaderConfig = sortHeaderConfig
         self.featureFlagProvider = featureFlagProvider
         self.notificationCenter = notificationCenter
         self.tracker = tracker
-
+        self.sortOrder = Helper.sortType(for: nil).toUIComponentSortOrderEntity()
+        
+        listenToSortOrderChanges()
         listenToViewModeChanges()
     }
     
@@ -313,6 +300,17 @@ final class FilesExplorerViewModel: ViewModelType {
         tracker.trackAnalyticsEvent(with: preference == .list ? ViewModeListMenuItemEvent() : ViewModeGridMenuItemEvent())
     }
 
+    private func listenToSortOrderChanges() {
+        $sortOrder
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] order in
+                self?.currentSortOrder = order.toDomainSortOrderEntity()
+                self?.invokeCommand?(.sortTypeHasChanged)
+            }
+            .store(in: &subscriptions)
+    }
+    
     private func listenToViewModeChanges() {
         viewModeHeaderViewModel
             .$selectedViewMode

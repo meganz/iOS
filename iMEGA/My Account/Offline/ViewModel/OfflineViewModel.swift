@@ -33,15 +33,10 @@ final class OfflineViewModel: NSObject, ViewModelType {
         }
     }
 
-    private let sortHeaderCoordinator: SortHeaderCoordinator
     private let userDefaults: UserDefaults
     private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
     private var subscriptions: Set<AnyCancellable> = []
     private let tracker: any AnalyticsTracking
-
-    var sortHeaderViewModel: SortHeaderViewModel {
-        sortHeaderCoordinator.headerViewModel
-    }
 
     private var viewMode: ViewModePreferenceEntity {
         ViewModePreferenceEntity(rawValue: userDefaults.integer(forKey: MEGAViewModePreference)) ?? .list
@@ -58,7 +53,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
     init(
         offlineUseCase: some OfflineUseCaseProtocol,
         megaStore: MEGAStore,
-        sortHeaderCoordinator: SortHeaderCoordinator,
         fileManager: FileManager = FileManager.default,
         userDefaults: UserDefaults = .standard,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
@@ -68,7 +62,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
     ) {
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
-        self.sortHeaderCoordinator = sortHeaderCoordinator
         self.fileManager = fileManager
         self.userDefaults = userDefaults
         self.documentsDirectoryPath = documentsDirectoryPath

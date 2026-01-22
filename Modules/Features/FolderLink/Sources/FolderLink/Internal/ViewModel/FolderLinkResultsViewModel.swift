@@ -99,7 +99,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
             bridge: searchBridge,
             config: searchConfig,
             searchResultsViewModel: searchResultsViewModel,
-            sortOptionsViewModel: SortOptionsViewModel.folderLink,
+            sortHeaderConfig: SortHeaderConfig.folderLink,
             headerType: .dynamic,
             initialViewMode: viewMode,
             shouldShowMediaDiscoveryModeHandler: { [weak self] in self?.shouldEnableMediaDiscoveryMode ?? false },

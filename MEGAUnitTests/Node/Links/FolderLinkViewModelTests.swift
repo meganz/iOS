@@ -31,24 +31,6 @@ struct FolderLinkViewModelTests {
         Test.assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [SendToChatFolderLinkNoAccountLoggedButtonPressedEvent()])
     }
 
-    @Test func testHeaderViewModel_shouldMatchResults() {
-        let sut = makeSUT(
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .favourite), title: "Favourite", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .dateAdded), title: "Date added", iconsByDirection: [:])
-            ],
-            selectedSortOrder: .init(key: .name)
-        )
-        let headerViewModel = sut.sortHeaderViewModel
-        #expect(headerViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder) == [
-            .init(key: .name, direction: .descending),
-            .init(key: .favourite),
-            .init(key: .dateAdded)
-        ])
-    }
-
     @Test(arguments: [
         (ViewModePreferenceEntity.list, SearchResultsViewMode.list),
         (ViewModePreferenceEntity.thumbnail, SearchResultsViewMode.grid)
@@ -117,18 +99,12 @@ struct FolderLinkViewModelTests {
     typealias SUT = FolderLinkViewModel
     func makeSUT(
         tracker: MockTracker = MockTracker(),
-        sortOptions: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
         selectedSortOrder: MEGAUIComponent.SortOrder = .init(key: .name),
         viewMode: ViewModePreferenceEntity = .list
     ) -> SUT {
         .init(
             folderLinkUseCase: MockFolderLinkUseCase(),
             saveMediaUseCase: MockSaveMediaToPhotosUseCase(),
-            sortHeaderCoordinator: .init(
-                sortOptionsViewModel: .init(title: "", sortOptions: sortOptions),
-                currentSortOrderProvider: { selectedSortOrder },
-                sortOptionSelectionHandler: { _ in }
-            ),
             viewMode: viewMode,
             tracker: tracker
         )

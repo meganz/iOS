@@ -39,8 +39,7 @@ extension OfflineViewController {
                 offlineFilesRepository: OfflineFilesRepository.newRepo,
                 nodeTransferRepository: NodeTransferRepository.newRepo
             ),
-            megaStore: MEGAStore.shareInstance(),
-            sortHeaderCoordinator: sortHeaderCoordinator
+            megaStore: MEGAStore.shareInstance()
         ) { [weak self] updatedViewMode in
             guard let self,
                   (updatedViewMode == .list && !isListViewModeSelected())

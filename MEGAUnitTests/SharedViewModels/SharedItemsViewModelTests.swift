@@ -242,93 +242,6 @@ final class SharedItemsViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testSortHeaderViewModel_valuePassedDuringInit_shouldMatchValues() {
-        let sortOptionsViewModel = SortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:])
-            ]
-        )
-        let sut = makeSUT(
-            sortOptionsViewModel: sortOptionsViewModel,
-            sharedItemsView: MockSharedItemsView(currentSortOrder: .defaultAsc)
-        )
-
-        let displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
-        XCTAssertEqual(displaySortOptionsViewModel.title, sortOptionsViewModel.title)
-        XCTAssertEqual(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder),
-            [.init(key: .name, direction: .descending), .init(key: .size)]
-        )
-    }
-
-    @MainActor
-    func testKeysToHide_forIncomingTab_shouldHideExpectedSortOptions() {
-        XCTAssertEqual(SUT.keysToHide(for: .incoming), [ .linkCreated, .shareCreated])
-    }
-
-    @MainActor
-    func testKeysToHide_forOutgoingTab_shouldHideExpectedSortOptions() {
-        XCTAssertEqual(SUT.keysToHide(for: .outgoing), [.linkCreated])
-    }
-
-    @MainActor
-    func testKeysToHide_forLinksTab_shouldHideExpectedSortOptions() {
-        XCTAssertEqual(SUT.keysToHide(for: .links), [.shareCreated])
-    }
-
-    @MainActor
-    func testUpdateSortUI_shouldHideKeys_basedOnTabs() {
-        let sortOptionsViewModel = SortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .linkCreated), title: "Link created", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .shareCreated), title: "Share created", iconsByDirection: [:])
-            ]
-        )
-        let sharedItemsView = MockSharedItemsView(selectedTab: .incoming)
-        let sut = makeSUT(
-            sortOptionsViewModel: sortOptionsViewModel,
-            sharedItemsView: sharedItemsView
-        )
-
-        var displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
-        )
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
-        )
-
-        sharedItemsView.selectedTab = .outgoing
-        sut.updateSortUI()
-
-        displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
-        )
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .shareCreated))
-        )
-
-        sharedItemsView.selectedTab = .links
-        sut.updateSortUI()
-
-        displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .linkCreated))
-        )
-        XCTAssertTrue(
-            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
-        )
-    }
-
-    @MainActor
     func testSortButtonPressedEvent() {
         let tracker = MockTracker()
         let sut = makeSUT(tracker: tracker)
@@ -346,9 +259,6 @@ final class SharedItemsViewModelTests: XCTestCase {
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        sortOptionsViewModel: SortOptionsViewModel = .init(title: "", sortOptions: [
-            .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
-        ]),
         sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
@@ -360,7 +270,6 @@ final class SharedItemsViewModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel,
-            sortOptionsViewModel: sortOptionsViewModel,
             sharedItemsView: sharedItemsView,
             tracker: tracker
         )

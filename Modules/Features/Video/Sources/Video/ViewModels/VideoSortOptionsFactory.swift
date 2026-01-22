@@ -56,16 +56,8 @@ enum VideoSortOptionsFactory {
     ) {
         options.append(
             SortOption(
-                sortOrder: SortOrder(key: key),
-                title: title,
-                iconsByDirection: iconsByDirection
-            )
-        )
-        options.append(
-            SortOption(
-                sortOrder: SortOrder(key: key, direction: .descending),
-                title: title,
-                iconsByDirection: iconsByDirection
+                key: key,
+                localizedTitle: title
             )
         )
     }

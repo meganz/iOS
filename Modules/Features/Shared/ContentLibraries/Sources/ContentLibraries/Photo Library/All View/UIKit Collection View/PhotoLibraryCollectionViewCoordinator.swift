@@ -3,6 +3,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
+import MEGAUIComponent
 import SwiftUI
 import UIKit
 
@@ -171,14 +172,13 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
     
     private func createGlobalHeaderConfiguration(title: String) -> any UIContentConfiguration {
-        let isAlbumMode = representer.contentMode == .album
-
         return UIHostingConfiguration {
-            if isAlbumMode, let customLeftView = viewModel.libraryViewModel.configuration?.globalHeaderLeftViewProvider?() {
-                // Album mode with custom sort header
-                PhotoLibraryGlobalHeaderView(leftContent: { customLeftView })
-            } else {
-                // Timeline mode with month title and zoom control
+            switch viewModel.libraryViewModel.globalHeaderType {
+            case let .sort(sortViewModel):
+                PhotoLibraryGlobalHeaderView {
+                    SortHeaderViewWrapper(config: sortViewModel.config, sortOrder: sortViewModel.currentSortOrder(), handler: sortViewModel.onSortOrderChanged)
+                }
+            case .dateAndZoom:
                 PhotoLibraryGlobalHeaderView(
                     title: title,
                     zoomState: Binding(
@@ -186,7 +186,9 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                         set: { self.viewModel.zoomState = $0 }
                     )
                 )
+                .padding(.horizontal, TokenSpacing._5)
             }
+            
         }
         .margins(.all, 0)
         .background(TokenColors.Background.page.swiftUI)
@@ -200,7 +202,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
 
         // In album mode with custom header, don't update the title dynamically
         let isAlbumMode = representer.contentMode == .album
-        guard !isAlbumMode || viewModel.libraryViewModel.configuration?.globalHeaderLeftViewProvider == nil else {
+        guard !isAlbumMode else {
             return
         }
 
