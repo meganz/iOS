@@ -162,6 +162,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
+                accountUseCase: MockAccountUseCase(),
                 accountStorageUseCase: mockAccountStorageUseCase,
  // Inject the mock here
                 mediaDiscoverySortHeaderConfig: SortHeaderConfig(title: "", options: sortOptionsForMD),

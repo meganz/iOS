@@ -86,6 +86,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let nodeSourceUpdatesListener: any CloudDriveNodeSourceUpdatesListening
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
@@ -106,6 +107,7 @@ class NodeBrowserViewModel: ObservableObject {
     private var refreshStorageStatusTask: Task<Void, Never>?
     private var updatedViewModesTask: Task<Void, Never>?
     private var monitorNodeUpdatesTask: Task<Void, Never>?
+    private var accountUpdatesMonitoringTask: Task<Void, Never>?
 
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
@@ -165,6 +167,7 @@ class NodeBrowserViewModel: ObservableObject {
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         mediaDiscoverySortHeaderConfig: SortHeaderConfig,
         nodeActionsBridge: NodeActionsBridge,
@@ -210,6 +213,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.accountUseCase = accountUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.mediaDiscoverySortHeaderConfig = mediaDiscoverySortHeaderConfig
         self.tracker = tracker
@@ -335,6 +339,7 @@ class NodeBrowserViewModel: ObservableObject {
         subscribeToViewModePreferenceChangeNotification(with: cloudDriveViewModeMonitoringService)
         if !accountStorageUseCase.isUnlimitedStorageAccount {
             monitorStorageStatusUpdates()
+            monitorAccountUpdates()
         }
 
         nodeActionsBridge.selectedResultsHandler = { [weak self] searchResults in
@@ -349,10 +354,13 @@ class NodeBrowserViewModel: ObservableObject {
         refreshStorageStatusTask?.cancel()
         updatedViewModesTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
+        accountUpdatesMonitoringTask?.cancel()
 
         accountStorageMonitoringTask = nil
         refreshStorageStatusTask = nil
         updatedViewModesTask = nil
+        accountUpdatesMonitoringTask = nil
+        monitorNodeUpdatesTask = nil
     }
 
     var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
@@ -666,6 +674,19 @@ class NodeBrowserViewModel: ObservableObject {
             for await status in onStorageStatusUpdateSequence {
                 MEGALogDebug("[StorageBanner] monitorStorageStatusUpdates - storage status: \(status)")
                 self?.updateTemporaryBanner(status: status)
+            }
+        }
+    }
+
+    private func monitorAccountUpdates() {
+        guard config.isFromSharedItem != true,
+              let displayMode = config.displayMode,
+              displayMode == .cloudDrive else { return }
+
+        accountUpdatesMonitoringTask = Task { [weak self, accountUseCase] in
+            for await _ in accountUseCase.onAccountUpdates {
+                guard !Task.isCancelled else { break }
+                self?.refreshStorageBanners()
             }
         }
     }

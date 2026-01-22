@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import MEGASwift
 import UIKit
@@ -26,6 +27,10 @@ final class ProgressIndicatorView: UIView {
             repo: NodeTransferRepository.newRepo,
             transferInventoryRepository: TransferInventoryRepository.newRepo,
             fileSystemRepository: FileSystemRepository.sharedRepo
+        ),
+        accountStorageUseCase: AccountStorageUseCase(
+            accountRepository: AccountRepository.newRepo,
+            preferenceUseCase: PreferenceUseCase.default
         )
     )
     

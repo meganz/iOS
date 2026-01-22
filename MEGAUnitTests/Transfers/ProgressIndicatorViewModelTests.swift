@@ -62,7 +62,10 @@ struct ProgressIndicatorViewModelTests {
     
     private static func makeSUT() -> (sut: ProgressIndicatorViewModel, mockUseCase: MockTransferCounterUseCase) {
         let mockUseCase = MockTransferCounterUseCase()
-        let sut = ProgressIndicatorViewModel(transferCounterUseCase: mockUseCase)
+        let sut = ProgressIndicatorViewModel(
+            transferCounterUseCase: mockUseCase,
+            accountStorageUseCase: MockAccountStorageUseCase()
+        )
         return (sut, mockUseCase)
     }
     

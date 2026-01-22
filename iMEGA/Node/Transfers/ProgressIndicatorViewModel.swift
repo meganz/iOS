@@ -14,6 +14,7 @@ final class ProgressIndicatorViewModel {
     private(set) var lastFailedTransfer: TransferEntity?
     
     private let transferCounterUseCase: any TransferCounterUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
     
     private var queuedUploadTransfers = [String]()
@@ -47,6 +48,11 @@ final class ProgressIndicatorViewModel {
             oldValue?.cancel()
         }
     }
+    private var accountStorageMonitoringTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     // MARK: - Published Properties
     
     @Published private(set) var progress: CGFloat = 0.0
@@ -68,9 +74,12 @@ final class ProgressIndicatorViewModel {
     // MARK: - Init and deinit
     
     init(transferCounterUseCase: some TransferCounterUseCaseProtocol,
+         accountStorageUseCase: some AccountStorageUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.transferCounterUseCase = transferCounterUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         setupTransferMonitoring()
+        monitorStorageStatusUpdates()
         bindBadgeStateUpdates()
         $transfersPaused.useCase = preferenceUseCase
     }
@@ -81,6 +90,7 @@ final class ProgressIndicatorViewModel {
         transferTemporaryErrorTask?.cancel()
         transferFinishTask?.cancel()
         dismissTask?.cancel()
+        accountStorageMonitoringTask?.cancel()
     }
     
     // MARK: - Public Methods
@@ -140,6 +150,18 @@ final class ProgressIndicatorViewModel {
     
     // MARK: - Private Methods
     
+    private func monitorStorageStatusUpdates() {
+        accountStorageMonitoringTask = Task { [weak self, accountStorageUseCase] in
+            for await status in accountStorageUseCase.onStorageStatusUpdates {
+                guard !Task.isCancelled else { break }
+                if status == .noStorageProblems {
+                    self?.shouldShowOverquotaBadge = false
+                    self?.progressStrokeColor = TokenColors.Support.success.cgColor
+                }
+            }
+        }
+    }
+
     private func updateStateBadge(for transfer: TransferEntity) {
         guard let lastErrorExtended = transfer.lastErrorExtended else {
             return

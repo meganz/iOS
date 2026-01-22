@@ -304,6 +304,8 @@ struct CloudDriveViewControllerFactory {
             accountRepository: AccountRepository.newRepo,
             preferenceUseCase: PreferenceUseCase.default
         )
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
         let mediaDiscoveryContentViewModel = makeOptionalMediaDiscoveryViewModel(
             nodeSource: nodeSource,
             mediaContentDelegate: mediaContentDelegate,
@@ -337,8 +339,8 @@ struct CloudDriveViewControllerFactory {
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
-                accountUseCase: AccountUseCase(
-                    repository: AccountRepository.newRepo)),
+                accountUseCase: accountUseCase),
+            accountUseCase: accountUseCase,
             accountStorageUseCase: accountStorageUseCase,
             mediaDiscoverySortHeaderConfig: SortHeaderConfig(
                 title: Strings.Localizable.sortTitle,
