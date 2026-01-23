@@ -562,6 +562,11 @@ class NodeBrowserViewModel: ObservableObject {
     
     func changeViewMode(_ viewMode: ViewModePreferenceEntity) {
         guard viewMode != self.viewMode else { return }
+
+        if editing && (viewMode == .mediaDiscovery || self.viewMode == .mediaDiscovery) {
+            stopEditing()
+        }
+
         self.viewMode = viewMode
     }
 

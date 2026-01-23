@@ -779,6 +779,108 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testChangeViewMode_whenSwitchingFromListToMDInEditMode_shouldExitEditMode() {
+        let harness = Harness(defaultViewMode: .list, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.mediaDiscovery)
+
+        XCTAssertFalse(harness.sut.editing, "Edit mode should be disabled when switching to MD view mode")
+        XCTAssertEqual(harness.sut.viewMode, .mediaDiscovery, "View mode should be mediaDiscovery")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingFromThumbnailToMDInEditMode_shouldExitEditMode() {
+        let harness = Harness(defaultViewMode: .thumbnail, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.mediaDiscovery)
+
+        XCTAssertFalse(harness.sut.editing, "Edit mode should be disabled when switching to MD view mode")
+        XCTAssertEqual(harness.sut.viewMode, .mediaDiscovery, "View mode should be mediaDiscovery")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingFromMDToListInEditMode_shouldExitEditMode() {
+        let harness = Harness(defaultViewMode: .mediaDiscovery, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.list)
+
+        XCTAssertFalse(harness.sut.editing, "Edit mode should be disabled when switching from MD view mode")
+        XCTAssertEqual(harness.sut.viewMode, .list, "View mode should be list")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingFromMDToThumbnailInEditMode_shouldExitEditMode() {
+        let harness = Harness(defaultViewMode: .mediaDiscovery, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.thumbnail)
+
+        XCTAssertFalse(harness.sut.editing, "Edit mode should be disabled when switching from MD view mode")
+        XCTAssertEqual(harness.sut.viewMode, .thumbnail, "View mode should be thumbnail")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingBetweenListAndThumbnailInEditMode_shouldPreserveEditMode() {
+        let harness = Harness(defaultViewMode: .list, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.thumbnail)
+
+        XCTAssertTrue(harness.sut.editing, "Edit mode should be preserved when switching between list and thumbnail")
+        XCTAssertEqual(harness.sut.viewMode, .thumbnail, "View mode should be thumbnail")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingBetweenThumbnailAndListInEditMode_shouldPreserveEditMode() {
+        let harness = Harness(defaultViewMode: .thumbnail, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.list)
+
+        XCTAssertTrue(harness.sut.editing, "Edit mode should be preserved when switching between thumbnail and list")
+        XCTAssertEqual(harness.sut.viewMode, .list, "View mode should be list")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenNotInEditMode_shouldNotAffectEditMode() {
+        let harness = Harness(defaultViewMode: .list, node: .init())
+        XCTAssertFalse(harness.sut.editing, "Should not be in edit mode")
+
+        harness.sut.changeViewMode(.mediaDiscovery)
+
+        XCTAssertFalse(harness.sut.editing, "Edit mode should remain disabled")
+        XCTAssertEqual(harness.sut.viewMode, .mediaDiscovery, "View mode should be mediaDiscovery")
+    }
+
+    @MainActor
+    func testChangeViewMode_whenSwitchingToSameViewMode_shouldNotChangeAnything() {
+        let harness = Harness(defaultViewMode: .list, node: .init())
+
+        harness.sut.setEditMode(true)
+        XCTAssertTrue(harness.sut.editing, "Should be in edit mode")
+
+        harness.sut.changeViewMode(.list)
+
+        XCTAssertTrue(harness.sut.editing, "Edit mode should be preserved when view mode doesn't change")
+        XCTAssertEqual(harness.sut.viewMode, .list, "View mode should remain list")
+    }
+
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
         AsyncStream { continuation in
             for update in updates {
