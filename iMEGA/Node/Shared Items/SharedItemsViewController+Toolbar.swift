@@ -19,11 +19,15 @@ extension SharedItemsViewController {
         newToolbar.isHidden = true
         
         view.addSubview(newToolbar)
-        
+        let bottomOffset: CGFloat = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            -10
+        } else {
+            0
+        }
         NSLayoutConstraint.activate([
             newToolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             newToolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            newToolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            newToolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: bottomOffset)
         ])
         
         toolbar = newToolbar

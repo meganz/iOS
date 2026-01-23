@@ -567,6 +567,7 @@
     [self setEditing:YES animated:YES];
     [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     [self configToolbarItemsForSharedItems];
+    [self configNavigationBarButtonItems];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     [self audioPlayerHidden:YES];
 }
