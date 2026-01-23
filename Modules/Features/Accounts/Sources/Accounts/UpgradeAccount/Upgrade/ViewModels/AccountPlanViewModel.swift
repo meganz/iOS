@@ -104,14 +104,16 @@ public final class AccountPlanViewModel {
         // [28 Nov 00:00:00, 30 Nov 23:59:59] -> Black Friday deal
         // [1 Dec 00:00:00, 1 Dec 23:59:59] -> Cyber Monday deal
         // [2 Dec 00:00:00, the next deal] -> Special offer
-        guard let dec1Start = date(year, 12, 1, 0, 0, 0),
+        guard let blackFridayStart = date(year, 11, 28, 0, 0, 0),
+              let dec1Start = date(year, 12, 1, 0, 0, 0),
               let dec2Start = date(year, 12, 2, 0, 0, 0)
         else {
             return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer("\(percentage)%")
         }
 
         switch now {
-        case ..<dec1Start:
+
+        case blackFridayStart..<dec1Start:
             // We can start from now until 30 Nov 23:59:59
             // as the offer start date is controlled by Apple
             // and we can test it in sandbox env in advance.
