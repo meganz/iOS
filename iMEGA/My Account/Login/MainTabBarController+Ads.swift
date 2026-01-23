@@ -1,4 +1,5 @@
 import Accounts
+import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -40,7 +41,8 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
             AdsSlotConfig(
                 displayAds: isVisibleController(type: HomeViewController.self) ||
                 isVisibleController(type: FilesExplorerContainerViewController.self) ||
-                isVisibleController(type: VideoRevampTabContainerViewController.self)
+                isVisibleController(type: VideoRevampTabContainerViewController.self) ||
+                isVisibleController(type: UIHostingController<HomeView>.self)
             )
             
         case TabManager.chatTabIndex():

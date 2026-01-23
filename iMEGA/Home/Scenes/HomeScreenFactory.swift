@@ -1,5 +1,6 @@
 import ChatRepo
 import Foundation
+import Home
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -40,6 +41,29 @@ final class HomeScreenFactory: NSObject {
     }
     
     func createHomeScreen(
+        from tabBarController: MainTabBarController,
+        tracker: some AnalyticsTracking,
+        enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]
+    ) -> UIViewController {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne) {
+            createRevampedHomeScreen()
+        } else {
+            createLegacyHomeScreen(
+                from: tabBarController,
+                tracker: tracker,
+                enableItemMultiSelection: enableItemMultiSelection
+            )
+        }
+    }
+
+    private func createRevampedHomeScreen() -> UIViewController {
+        let hostingController = HomeViewHostingController(rootView: HomeView())
+        let navigationController = MEGANavigationController(rootViewController: hostingController)
+        navigationController.tabBarItem = UITabBarItem(title: nil, image: MEGAAssets.UIImage.home, selectedImage: nil)
+        return navigationController
+    }
+
+    private func createLegacyHomeScreen(
         from tabBarController: MainTabBarController,
         tracker: some AnalyticsTracking,
         enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]

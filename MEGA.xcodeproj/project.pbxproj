@@ -2371,6 +2371,8 @@
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
+		BF7758D12F21D8490091DE2A /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = BF7758D02F21D8490091DE2A /* Home */; };
+		BF7758EA2F21EE730091DE2A /* HomeViewHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7758E92F21EE730091DE2A /* HomeViewHostingController.swift */; };
 		BF7A73862C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
 		BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1B244D354A0015255F /* MeterTable.swift */; };
@@ -5254,6 +5256,8 @@
 		BF6E080A2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerGridHeaderView.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		BF7758C92F21D6F40091DE2A /* Home */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Home; sourceTree = "<group>"; };
+		BF7758E92F21EE730091DE2A /* HomeViewHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewHostingController.swift; sourceTree = "<group>"; };
 		BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellControllerModelTests.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
 		BF7EBD1B244D354A0015255F /* MeterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterTable.swift; sourceTree = "<group>"; };
@@ -5668,6 +5672,7 @@
 				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
 				94F92EAE2CAAA25F00966A0F /* GoogleMobileAds in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
+				BF7758D12F21D8490091DE2A /* Home in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				995403F82E3CD0F500468F84 /* KMTransferUtils in Frameworks */,
@@ -8379,6 +8384,7 @@
 				5DD6B16724D67E3A00F14515 /* Pannel */,
 				BFAFAF0E2519595300C92887 /* HomeViewController.swift */,
 				BFAFAF0D2519595300C92887 /* HomeViewController.xib */,
+				BF7758E92F21EE730091DE2A /* HomeViewHostingController.swift */,
 				5D73F50D24F74F850041D9FB /* ImagePickerViewController.swift */,
 			);
 			path = View;
@@ -11034,6 +11040,7 @@
 				A52F1E342EBCE55800D3A2E9 /* CloudDrive */,
 				A52F1E352EBCE55800D3A2E9 /* DeviceCenter */,
 				A589D4F12F04EB7400A9B23C /* FolderLink */,
+				BF7758C92F21D6F40091DE2A /* Home */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A52F1E382EBCE55800D3A2E9 /* Notifications */,
@@ -13822,6 +13829,7 @@
 				A5E1368B2EB50586004BDD4F /* MEGADomain */,
 				14F2EFBF2EDD46B300C37318 /* APMKit */,
 				A5472CC62F04EF0900A49688 /* FolderLink */,
+				BF7758D02F21D8490091DE2A /* Home */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -15319,6 +15327,7 @@
 				947DC5E32AC1C863002C1D7C /* HomeSearchResultsAdditions.swift in Sources */,
 				94712EF02A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
+				BF7758EA2F21EE730091DE2A /* HomeViewHostingController.swift in Sources */,
 				B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
@@ -19681,6 +19690,10 @@
 		BF67F7F92AB4172100AC127E /* LogRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LogRepo;
+		};
+		BF7758D02F21D8490091DE2A /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
