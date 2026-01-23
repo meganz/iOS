@@ -4834,7 +4834,15 @@
 "media.photoLibrary.zoom.compact.title"="Compact";
 /* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Add items */
-"general.addItems"="Add items";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
+/* Add items */
+"general.addItems"="Add items";
+/* Alert title in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.title"="Limited Photo Access";
+/* Alert body in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.message"="It seems some of the photos you selected are not authorized for MEGA. Would you like to grant access to them now?";
+/* Alert cancel button in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.availableOnly"="Upload Available Only";
+/* Alert confirm button in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.selectMore"="Select More Photos";

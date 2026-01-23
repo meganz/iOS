@@ -665,7 +665,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func loadPhotosView() {
         let photoPicker = MEGAPhotoPicker(presenter: self)
         Task { @MainActor in
-            let assets = await photoPicker.pickAssets()
+            let result = await photoPicker.pickAssets()
+            let assets = result.assets
+            guard !assets.isEmpty else { return }
             await startUpload(assets: assets)
         }
     }

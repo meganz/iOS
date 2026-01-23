@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAUI
+import Photos
 
 protocol AssetUploader {
     func upload(assets: [PHAsset], to handle: MEGAHandle)
@@ -40,11 +41,33 @@ struct CloudDrivePhotosPickerRouter {
     }
 
     func start() {
-        permissionHandler.photosPermissionWithCompletionHandler { granted in
+        permissionHandler.photosPermissionWithCompletionHandler { [weak presenter] granted in
+            guard let presenter else { return }
+
             if granted {
-                Task { @MainActor in
-                    let assets = await photoPicker.pickAssets()
-                    assetUploader.upload(assets: assets, to: parentNode.handle)
+                Task { @MainActor [weak presenter] in
+                    guard let presenter else { return }
+                    let result = await photoPicker.pickAssets()
+                    let assets = result.assets
+                    let selectedCount = result.selectedCount
+                    
+                    if assets.count < selectedCount, PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
+                        let alert = UIAlertController(
+                            title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.title,
+                            message: Strings.Localizable.Photo.Picker.Alert.LimitAccess.message,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.selectMore, style: .default) { [weak presenter] _ in
+                            guard let presenter else { return }
+                            PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: presenter)
+                        })
+                        alert.addAction(UIAlertAction(title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.availableOnly, style: .default) { _ in
+                            assetUploader.upload(assets: assets, to: parentNode.handle)
+                        })
+                        presenter.present(alert, animated: true)
+                    } else {
+                        assetUploader.upload(assets: assets, to: parentNode.handle)
+                    }
                 }
             } else {
                 permissionRouter.alertPhotosPermission()

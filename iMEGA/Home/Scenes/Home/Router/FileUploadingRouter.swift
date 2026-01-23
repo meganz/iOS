@@ -55,7 +55,8 @@ final class FileUploadingRouter {
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
         Task { @MainActor in
-            let assets = await photoPicker.pickAssets()
+            let result = await photoPicker.pickAssets()
+            let assets = result.assets
             if assets.count > 0 {
                 self.presentDestinationFolderBrowser { targetNode in
                     completion(assets, targetNode)

@@ -8,8 +8,8 @@ public final class MockMEGAPhotoPicker: MEGAPhotoPickerProtocol {
         self.assets = assets
     }
     
-    public func pickAssets() async -> [PHAsset] {
-        assets
+    public func pickAssets() async -> (assets: [PHAsset], selectedCount: Int) {
+        (assets, assets.count)
     }
 }
 

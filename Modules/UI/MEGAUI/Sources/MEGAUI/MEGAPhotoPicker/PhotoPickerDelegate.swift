@@ -1,10 +1,10 @@
 import PhotosUI
 
 final class PhotoPickerDelegate: PHPickerViewControllerDelegate {
-    private let completion: ([PHAsset]) -> Void
+    private let completion: ([PHAsset], Int) -> Void
     private var hasFinishedPicking = false
     
-    init(completion: @escaping ([PHAsset]) -> Void) {
+    init(completion: @escaping ([PHAsset], Int) -> Void) {
         self.completion = completion
     }
     
@@ -12,7 +12,7 @@ final class PhotoPickerDelegate: PHPickerViewControllerDelegate {
         guard !hasFinishedPicking else { return }
         hasFinishedPicking = true
         let assets = results.toPHAssets()
-        completion(assets)
+        completion(assets, results.count)
         picker.dismiss(animated: true)
     }
 }

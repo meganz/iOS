@@ -3,9 +3,9 @@ import PhotosUI
 
 @MainActor
 public protocol MEGAPhotoPickerProtocol {
-    /// Asynchronously presents a picker and returns an array of `PHAsset` representing the assets picked by the user.
-    /// If user taps cancel, this funtion will return an empty array
-    func pickAssets() async -> [PHAsset]
+    /// Asynchronously presents a picker and returns a tuple of `PHAsset` and the original number of selected items.
+    /// If user taps cancel, this funtion will return an empty array and zero count
+    func pickAssets() async -> (assets: [PHAsset], selectedCount: Int)
 }
 
 public final class MEGAPhotoPicker: MEGAPhotoPickerProtocol {
@@ -16,7 +16,7 @@ public final class MEGAPhotoPicker: MEGAPhotoPickerProtocol {
         self.presenter = presenter
     }
     
-    public func pickAssets() async -> [PHAsset] {
+    public func pickAssets() async -> (assets: [PHAsset], selectedCount: Int) {
         return await withCheckedContinuation { continuation in
             var pickerConfiguration = PHPickerConfiguration(photoLibrary: .shared())
             pickerConfiguration.preferredAssetRepresentationMode = .automatic
@@ -24,8 +24,8 @@ public final class MEGAPhotoPicker: MEGAPhotoPickerProtocol {
             pickerConfiguration.selectionLimit = 0
             
             let picker = PHPickerViewController(configuration: pickerConfiguration)
-            let delegate = PhotoPickerDelegate { assets in
-                continuation.resume(returning: assets)
+            let delegate = PhotoPickerDelegate { assets, selectedCount in
+                continuation.resume(returning: (assets, selectedCount))
             }
             self.photoPickerDelegate = delegate
             picker.delegate = delegate
