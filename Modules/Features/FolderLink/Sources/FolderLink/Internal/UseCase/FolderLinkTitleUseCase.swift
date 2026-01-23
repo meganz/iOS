@@ -1,7 +1,7 @@
 import MEGADomain
 
 protocol FolderLinkTitleUseCaseProtocol: Sendable {
-    func title(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState) -> FolderLinkTitleType
+    func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType
 }
 
 struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
@@ -11,7 +11,7 @@ struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func title(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState) -> FolderLinkTitleType {
+    func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType {
         switch editingState {
         case let .active(nodeHandles):
             if nodeHandles.isEmpty {

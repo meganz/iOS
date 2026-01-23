@@ -1,8 +1,8 @@
 import MEGADomain
 
 protocol FolderLinkBottomBarUseCaseProtocol: Sendable {
-    func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState) -> Bool
-    func shouldDisableBottomBar(handle: HandleEntity, editingState: FolderLinkEditingState) -> Bool
+    func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState<Set<HandleEntity>>) -> Bool
+    func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool
 }
 
 struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
@@ -12,7 +12,7 @@ struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState) -> Bool {
+    func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState<Set<HandleEntity>>) -> Bool {
         let nodes = switch editingState {
         case .inactive:
             folderLinkRepository.children(of: handle)
@@ -27,7 +27,7 @@ struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
         }
     }
     
-    func shouldDisableBottomBar(handle: HandleEntity, editingState: FolderLinkEditingState) -> Bool {
+    func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool {
         guard let node = folderLinkRepository.node(for: handle), node.isNodeKeyDecrypted else { return true }
         return switch editingState {
         case .inactive:

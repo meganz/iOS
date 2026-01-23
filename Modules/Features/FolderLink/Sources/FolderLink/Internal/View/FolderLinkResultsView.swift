@@ -7,23 +7,26 @@ import MEGAPreference
 import Search
 import SwiftUI
 
-struct FolderLinkResultsView: View {
+/// A view that uses the Search module to render folder link nodes in either a list or grid layout.
+struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     struct Dependency {
-        let isRoot: Bool
         let handle: HandleEntity
         let link: String
         let searchResultMapper: any FolderLinkSearchResultMapperProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
-        let onDismiss: @MainActor (Bool) -> Void
+        let dismissContent: () -> DismissButton
     }
     
     @StateObject private var viewModel: FolderLinkResultsViewModel
     
     let dependency: Dependency
     
-    init(dependency: FolderLinkResultsView.Dependency) {
+    init(
+        dependency: FolderLinkResultsView.Dependency,
+        viewMode: Binding<SearchResultsViewMode>
+    ) {
         self.dependency = dependency
         _viewModel = StateObject(
             wrappedValue: FolderLinkResultsViewModel(
@@ -38,7 +41,8 @@ struct FolderLinkResultsView: View {
                     bottomBarUseCase: FolderLinkBottomBarUseCase(),
                     quickActionUseCase: FolderLinkQuickActionUseCase(),
                     sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
-                )
+                ),
+                viewMode: viewMode
             )
         )
     }
@@ -87,17 +91,7 @@ struct FolderLinkResultsView: View {
                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
             }
         } else {
-            Button {
-                dependency.onDismiss(dependency.isRoot)
-            } label: {
-                if dependency.isRoot {
-                    Text(Strings.Localizable.close)
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                } else {
-                    Image(uiImage: MEGAAssets.UIImage.backArrow)
-                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                }
-            }
+            dependency.dismissContent()
         }
     }
     

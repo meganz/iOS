@@ -46,7 +46,7 @@ final class NewFolderLinkViewController: UIViewController {
         folderLinkViewController.didMove(toParent: self)
     }
     
-    private func buildDependency(link: String) -> FolderLinkView<FolderLinkUnavailableView>.Dependency {
+    private func buildDependency(link: String) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView>.Dependency {
         let sdk = MEGASdk.sharedFolderLink
         
         let searchResultMapper = FolderLinkSearchResultMapper(
@@ -71,6 +71,9 @@ final class NewFolderLinkViewController: UIViewController {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,
             nodeActionHandler: nodeActionHandler,
+            mediaDiscoveryContent: {
+                FolderLinkMediaDiscoveryContentView(viewModel: $0)
+            },
             onClose: { [weak self] in
                 self?.dismiss(animated: true)
             }

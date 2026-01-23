@@ -7,6 +7,7 @@ import MEGAFoundation
 import MEGAPreference
 import SwiftUI
 
+@MainActor
 protocol MediaDiscoveryContentDelegate: AnyObject {
     
     /// This delegate function will be triggered when a change to the currently selected media nodes for this media discovery list  occurs.

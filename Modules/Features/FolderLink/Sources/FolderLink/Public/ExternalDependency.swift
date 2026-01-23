@@ -41,3 +41,14 @@ public protocol FolderLinkNodeActionHandlerProtocol {
     func handle(action: FolderLinkNodeAction)
     func handle(action: FolderLinkNodesAction)
 }
+
+@MainActor
+public protocol FolderLinkMediaDiscoveryContentBuilderProtocol {
+    associatedtype Content: View
+    
+    func build(viewModel: FolderLinkMediaDiscoveryViewModel) -> Content
+}
+
+public protocol FolderLinkMediaDiscoveryContent: View {
+    init(viewModel: FolderLinkMediaDiscoveryViewModel)
+}

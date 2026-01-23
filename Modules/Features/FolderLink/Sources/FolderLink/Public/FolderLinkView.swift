@@ -7,7 +7,7 @@ import MEGAUIComponent
 import Search
 import SwiftUI
 
-public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View {
+public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUnavailable: View, MediaDiscovery: FolderLinkMediaDiscoveryContent {
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
@@ -15,6 +15,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let onClose: @MainActor () -> Void
         
         public init(
@@ -24,6 +25,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
+            @ViewBuilder mediaDiscoveryContent: @escaping (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery,
             onClose: @escaping @MainActor () -> Void
         ) {
             self.link = link
@@ -32,6 +34,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
             self.nodeActionHandler = nodeActionHandler
+            self.mediaDiscoveryContent = mediaDiscoveryContent
             self.onClose = onClose
         }
     }
@@ -132,8 +135,11 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                     }
                 }
         case let .results(nodeHandle):
-            FolderLinkResultsView(
-                dependency: folderLinkResultsDependency(isRoot: true, handle: nodeHandle)
+            FolderLinkResultsContainerView(
+                dependency: folderLinkResultsDependency(
+                    handle: nodeHandle,
+                    dismissContent: { closeButton }
+                )
             )
         }
     }
@@ -142,8 +148,11 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
     private func navigationDestinationBuilder(with route: NavigationRoute) -> some View {
         switch route {
         case let .folder(nodeHandle):
-            FolderLinkResultsView(
-                dependency: folderLinkResultsDependency(isRoot: false, handle: nodeHandle)
+            FolderLinkResultsContainerView(
+                dependency: folderLinkResultsDependency(
+                    handle: nodeHandle,
+                    dismissContent: { backButton }
+                )
             )
         }
     }
@@ -158,9 +167,20 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
         }
     }
     
-    private func folderLinkResultsDependency(isRoot: Bool, handle: HandleEntity) -> FolderLinkResultsView.Dependency {
-        FolderLinkResultsView.Dependency(
-            isRoot: isRoot,
+    private var backButton: some View {
+        Button {
+            navigationPath.removeLast()
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.backArrow)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+        }
+    }
+    
+    private func folderLinkResultsDependency<DismissButton>(
+        handle: HandleEntity,
+        dismissContent: @escaping () -> DismissButton
+    ) -> FolderLinkResultsContainerView<MediaDiscovery, DismissButton>.Dependency {
+        FolderLinkResultsContainerView.Dependency(
             handle: handle,
             link: dependency.link,
             searchResultMapper: dependency.searchResultMapper,
@@ -173,13 +193,8 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                     dependency.fileNodeOpener.openNode(handle: selection.result.id, siblings: selection.siblings())
                 }
             },
-            onDismiss: { isRoot in
-                if isRoot {
-                    dependency.onClose()
-                } else {
-                    navigationPath.removeLast()
-                }
-            }
+            mediaDiscoveryContent: dependency.mediaDiscoveryContent,
+            dismissContent: dismissContent
         )
     }
 }

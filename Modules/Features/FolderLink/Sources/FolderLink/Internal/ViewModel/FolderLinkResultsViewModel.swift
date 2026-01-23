@@ -62,8 +62,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
         }
         
         searchBridge.viewModeChanged = { [weak self] viewMode in
-            guard let self, self.viewMode != viewMode else { return }
-            self.viewMode = viewMode
+            self?.handleViewModeChanged(viewMode)
         }
         
         searchBridge.selectionChanged = { [weak self] results in
@@ -110,30 +109,22 @@ final class FolderLinkResultsViewModel: ObservableObject {
     private let dependency: FolderLinkResultsViewModel.Dependency
     private var cancellables: Set<AnyCancellable> = []
     
+    @Binding var viewMode: SearchResultsViewMode
     @Published private var sortOrder: MEGAUIComponent.SortOrder
-    @Published private var viewMode: SearchResultsViewMode
     @Published private var selectedNodes: Set<HandleEntity> = []
     
-    init(dependency: FolderLinkResultsViewModel.Dependency) {
+    init(
+        dependency: FolderLinkResultsViewModel.Dependency,
+        viewMode: Binding<SearchResultsViewMode>
+    ) {
         self.dependency = dependency
-        
+        self._viewMode = viewMode
         sortOrder = dependency.sortOrderPreferenceUseCase.sortOrder(for: dependency.nodeHandle).toUIComponentSortOrderEntity()
-        viewMode = dependency.viewModeUseCase.viewModeForOpeningFolder(dependency.nodeHandle)
         
-        $viewMode
-            .dropFirst()
-            .removeDuplicates()
-            .sink { [weak self] viewMode in
-                guard let self else { return }
-                switch viewMode {
-                case .grid:
-                    searchResultsContainerViewModel.update(pageLayout: .thumbnail)
-                case .list:
-                    searchResultsContainerViewModel.update(pageLayout: .list)
-                case .mediaDiscovery:
-                    // IOS-11103
-                    break
-                }
+        $nodesAction
+            .compactMap { $0 }
+            .sink { [weak self] _ in
+                self?.editMode = .inactive
             }
             .store(in: &cancellables)
         
@@ -142,9 +133,15 @@ final class FolderLinkResultsViewModel: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] mode in
                 guard let self else { return }
-                searchResultsContainerViewModel.setEditing(mode.isEditing)
-                if !mode.isEditing {
-                    searchResultsContainerViewModel.clearSelection()
+                let isEditing = mode.isEditing
+                switch self.viewMode {
+                case .list, .grid:
+                    searchResultsContainerViewModel.setEditing(isEditing)
+                    if !isEditing {
+                        searchResultsContainerViewModel.clearSelection()
+                    }
+                case .mediaDiscovery:
+                    break
                 }
             }
             .store(in: &cancellables)
@@ -239,7 +236,29 @@ final class FolderLinkResultsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    /// edit mode of Search and MediaDiscovery is independent so here we only handle for list and grid view mode.
+    /// For mediaDiscovery view mode, it is handled in FolderLinkMediaDiscoveryViewModel
     func toggleSelectAll() {
-        searchResultsContainerViewModel.toggleSelectAll()
+        switch viewMode {
+        case .list, .grid:
+            searchResultsContainerViewModel.toggleSelectAll()
+        case .mediaDiscovery:
+            break
+        }
+    }
+    
+    /// When the viewMode is changed to list or grid, we ask Search to update the page layout accordantly,
+    /// For mediaDiscovery mode, we do nothing but update the binding viewMode so the parent knows and switch to media discovery view
+    private func handleViewModeChanged(_ viewMode: SearchResultsViewMode) {
+        guard self.viewMode != viewMode else { return }
+        self.viewMode = viewMode
+        switch viewMode {
+        case .grid:
+            searchResultsContainerViewModel.update(pageLayout: .thumbnail)
+        case .list:
+            searchResultsContainerViewModel.update(pageLayout: .list)
+        case .mediaDiscovery:
+            break
+        }
     }
 }

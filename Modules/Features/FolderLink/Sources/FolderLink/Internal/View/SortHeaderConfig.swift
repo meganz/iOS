@@ -17,4 +17,15 @@ extension SortHeaderConfig {
             options: keys.sortOptions
         )
     }
+    
+    static var folderLinkMediaDiscovery: SortHeaderConfig {
+        let keys: [MEGAUIComponent.SortOrder.Key] = [
+            .lastModified
+        ]
+        
+        return SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: keys.sortOptions
+        )
+    }
 }
