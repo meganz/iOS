@@ -3,7 +3,7 @@ import MEGADomain
 import Search
 
 @MainActor
-final class FolderLinkResultsContainverViewModel: ObservableObject {
+final class FolderLinkResultsContainerViewModel: ObservableObject {
     struct Dependency {
         let handle: HandleEntity
         let viewModeUseCase: any FolderLinkViewModeUseCaseProtocol

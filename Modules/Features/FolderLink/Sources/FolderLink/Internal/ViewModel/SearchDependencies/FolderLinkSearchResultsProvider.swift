@@ -4,16 +4,19 @@ import Search
 
 struct FolderLinkSearchResultsProvider: SearchResultsProviding {
     private let nodeHandle: HandleEntity
+    private let searchChips: [SearchChipEntity]
     private let folderLinkSearchUseCase: any FolderLinkSearchUseCaseProtocol
     private let folderSearchResultMapper: any FolderLinkSearchResultMapperProtocol
     @Atomic private var allResultIds: [ResultId] = []
     
     init(
         nodeHandle: HandleEntity,
+        searchChips: [SearchChipEntity],
         folderLinkSearchUseCase: some FolderLinkSearchUseCaseProtocol,
         folderSearchResultMapper: some FolderLinkSearchResultMapperProtocol
     ) {
         self.nodeHandle = nodeHandle
+        self.searchChips = searchChips
         self.folderLinkSearchUseCase = folderLinkSearchUseCase
         self.folderSearchResultMapper = folderSearchResultMapper
     }
@@ -23,15 +26,21 @@ struct FolderLinkSearchResultsProvider: SearchResultsProviding {
     }
     
     func search(queryRequest: Search.SearchQuery, lastItemIndex: Int?) async -> Search.SearchResultsEntity? {
+        let appliedChips = queryRequest == .initial ? [] : queryRequest.chips
+        
         if lastItemIndex != nil {
-            return SearchResultsEntity.empty
+            return SearchResultsEntity(results: [], availableChips: searchChips, appliedChips: appliedChips)
         }
         
-        let children = await folderLinkSearchUseCase.children(of: nodeHandle, order: queryRequest.sorting.toDomainSortOrderEntity())
-        
-        let searchResultEntity = apply(searchQuery: queryRequest, for: children)
-        $allResultIds.mutate { $0 = searchResultEntity.results.map(\.id) }
-        return searchResultEntity
+        do {
+            let children = try await folderLinkSearchUseCase.search(parentHandle: nodeHandle, with: queryRequest)
+            let results = children.map { folderSearchResultMapper.mapToSearchResult(from: $0) }
+            let searchResultEntity = SearchResultsEntity(results: results, availableChips: searchChips, appliedChips: appliedChips)
+            $allResultIds.mutate { $0 = results.map(\.id) }
+            return searchResultEntity
+        } catch {
+            return nil
+        }
     }
     
     func currentResultIds() -> [Search.ResultId] {
@@ -40,29 +49,5 @@ struct FolderLinkSearchResultsProvider: SearchResultsProviding {
     
     func searchResultUpdateSignalSequence() -> MEGASwift.AnyAsyncSequence<Search.SearchResultUpdateSignal> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
-    }
-    
-    private func apply(searchQuery: Search.SearchQuery, for nodes: [NodeEntity]) -> Search.SearchResultsEntity {
-        switch searchQuery {
-        case .initial:
-            let results = nodes.map { folderSearchResultMapper.mapToSearchResult(from: $0) }
-            return SearchResultsEntity(results: results, availableChips: [], appliedChips: [])
-        case let .userSupplied(queryEntity):
-            let textQuery = queryEntity.query
-            let results = if textQuery.isEmpty {
-                nodes.map { folderSearchResultMapper.mapToSearchResult(from: $0) }
-            } else {
-                nodes
-                    .filter { $0.name.containsIgnoringCaseAndDiacritics(searchText: textQuery) }
-                    .map { folderSearchResultMapper.mapToSearchResult(from: $0) }
-            }
-            return SearchResultsEntity(results: results, availableChips: [], appliedChips: [])
-        }
-    }
-}
-
-extension SearchResultsEntity {
-    static var empty: SearchResultsEntity {
-        SearchResultsEntity(results: [], availableChips: [], appliedChips: [])
     }
 }

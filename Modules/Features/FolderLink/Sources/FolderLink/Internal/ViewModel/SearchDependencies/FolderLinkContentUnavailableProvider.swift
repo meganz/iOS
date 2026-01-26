@@ -11,8 +11,8 @@ struct FolderLinkContentUnavailableProvider: ContentUnavailableViewModelProvidin
         config: Search.SearchConfig
     ) -> ContentUnavailableViewModel {
         ContentUnavailableViewModel(
-            image: MEGAAssets.Image.glassFolder,
-            title: Strings.Localizable.emptyFolder,
+            image: query.isSearchActive ? MEGAAssets.Image.glassSearch02 : MEGAAssets.Image.glassFolder,
+            title: query.isSearchActive ? Strings.Localizable.noResults : Strings.Localizable.emptyFolder,
             subtitle: nil,
             font: .body,
             titleTextColor: TokenColors.Text.primary.swiftUI,

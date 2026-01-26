@@ -24,6 +24,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
 
     @Published var editMode: EditMode = .inactive
     @Published var searchText: String = ""
+    @Published var searchBecameActive: Bool = false
     @Published var selection: SearchResultSelection?
     @Published var nodeAction: FolderLinkNodeAction?
     @Published var nodesAction: FolderLinkNodesAction?
@@ -75,6 +76,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
         
         let searchResultsProvider = FolderLinkSearchResultsProvider(
             nodeHandle: dependency.nodeHandle,
+            searchChips: SearchChipEntity.allChips(currentDate: { .init() }, calendar: .autoupdatingCurrent),
             folderLinkSearchUseCase: dependency.searchUseCase,
             folderSearchResultMapper: dependency.searchResultMapper
         )
@@ -232,6 +234,18 @@ final class FolderLinkResultsViewModel: ObservableObject {
                     self?.title = Strings.Localizable.folderLink
                     self?.subtitle = nil
                 }
+            }
+            .store(in: &cancellables)
+        
+        $searchText
+            .sink { [searchResultsContainerViewModel] text in
+                searchResultsContainerViewModel.bridge.queryChanged(text)
+            }
+            .store(in: &cancellables)
+        
+        $searchBecameActive
+            .sink { [searchResultsContainerViewModel] isActive in
+                searchResultsContainerViewModel.searchActiveDidChange(isActive)
             }
             .store(in: &cancellables)
     }

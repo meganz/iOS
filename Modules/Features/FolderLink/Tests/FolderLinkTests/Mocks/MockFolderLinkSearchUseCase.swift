@@ -1,5 +1,6 @@
 import FolderLink
 import MEGADomain
+import Search
 
 final class MockFolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
     private let root: HandleEntity
@@ -11,6 +12,10 @@ final class MockFolderLinkSearchUseCase: FolderLinkSearchUseCaseProtocol {
     func rootFolderLink() -> HandleEntity { root }
     
     func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity] {
+        []
+    }
+    
+    func search(parentHandle: HandleEntity, with query: SearchQuery) async throws -> [NodeEntity] {
         []
     }
 }

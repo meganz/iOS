@@ -20,8 +20,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     }
     
     @StateObject private var viewModel: FolderLinkResultsViewModel
-    
-    let dependency: Dependency
+    private let dependency: Dependency
     
     init(
         dependency: FolderLinkResultsView.Dependency,
@@ -48,7 +47,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     }
     
     var body: some View {
-        SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
+        FolderLinkResultsSearchableView(viewModel: viewModel.searchResultsContainerViewModel, searchBecameActive: $viewModel.searchBecameActive)
             .background(TokenColors.Background.page.swiftUI)
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden(true)
@@ -150,5 +149,20 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         
         Spacer()
         ShareLinkButton(link: dependency.link)
+    }
+}
+
+/// This view is needed to access the `isSearching` environment value and bind it back to FolderLinkResultsViewModel's searchBecameActive
+/// searchBecameActive is needed for Search to switch between Search chips and Sort & View mode header.
+struct FolderLinkResultsSearchableView: View {
+    @Environment(\.isSearching) private var isSearching
+    let viewModel: SearchResultsContainerViewModel
+    @Binding var searchBecameActive: Bool
+    
+    var body: some View {
+        SearchResultsContainerView(viewModel: viewModel)
+            .onChange(of: isSearching) { isSearching in
+                searchBecameActive = isSearching
+            }
     }
 }

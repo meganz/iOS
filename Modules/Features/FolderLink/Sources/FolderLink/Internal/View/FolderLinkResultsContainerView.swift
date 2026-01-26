@@ -43,14 +43,14 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
         }
     }
     
-    @StateObject private var viewModel: FolderLinkResultsContainverViewModel
+    @StateObject private var viewModel: FolderLinkResultsContainerViewModel
     private let dependency: Dependency
     
     init(dependency: Dependency) {
         self.dependency = dependency
         _viewModel = StateObject(
-            wrappedValue: FolderLinkResultsContainverViewModel(
-                dependency: FolderLinkResultsContainverViewModel.Dependency(handle: dependency.handle)
+            wrappedValue: FolderLinkResultsContainerViewModel(
+                dependency: FolderLinkResultsContainerViewModel.Dependency(handle: dependency.handle)
             )
         )
     }

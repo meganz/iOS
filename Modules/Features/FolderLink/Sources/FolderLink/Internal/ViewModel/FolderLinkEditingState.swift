@@ -1,6 +1,6 @@
 import MEGADomain
 
-/// An enum which represents current editing state where
+/// An enum which represents current editing state
 enum FolderLinkEditingState<C> where C: Collection {
     /// Edit mode is not active
     case inactive
