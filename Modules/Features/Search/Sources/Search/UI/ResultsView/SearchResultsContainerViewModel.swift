@@ -323,7 +323,8 @@ public extension SearchResultsContainerViewModel {
 
     @discardableResult
     func changeSortOrder(_ sortOrder: MEGAUIComponent.SortOrder) -> Task<Void, Never> {
-        Task { @MainActor in
+        self.sortOrder = sortOrder
+        return Task { @MainActor in
             await searchResultsViewModel.showLoadingPlaceholderIfNeeded()
             await searchResultsViewModel.queryChanged(with: sortOrder)
         }

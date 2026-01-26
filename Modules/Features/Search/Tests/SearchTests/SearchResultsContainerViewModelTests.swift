@@ -207,27 +207,39 @@ struct SearchResultsContainerViewModelTests {
         #expect(selectedChipItems.map(\.id) == expectedIds)
     }
 
+    @Test
+    func testChangeSortOrder_whenSortOrderIsSameAsInitial_shouldNotTriggerAdditionalQuery() async {
+        let (sut, resultsProvider) = makeSUTWithChipsPrepared()
+        await sut.task()
+        let initialSortOrder = SortOrder(key: .name)
+        let changeSortOrderTask = sut.changeSortOrder(initialSortOrder)
+        await changeSortOrderTask.value
+        // Allow time for async Combine publisher side effects to complete
+        try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+        #expect(resultsProvider.passedInQueries == [.initial])
+    }
+
     @Test(arguments: [
-        (SortOrder(key: .name), [SearchQuery.initial]),
-        (SortOrder(key: .name, direction: .descending), nil),
-        (SortOrder(key: .size, direction: .descending), nil),
-        (SortOrder(key: .size), nil),
-        (SortOrder(key: .dateAdded, direction: .descending), nil),
-        (SortOrder(key: .dateAdded), nil),
-        (SortOrder(key: .label), nil),
-        (SortOrder(key: .label, direction: .descending), nil),
-        (SortOrder(key: .favourite), nil),
-        (SortOrder(key: .favourite, direction: .descending), nil)
+        SortOrder(key: .name, direction: .descending),
+        SortOrder(key: .size, direction: .descending),
+        SortOrder(key: .size),
+        SortOrder(key: .dateAdded, direction: .descending),
+        SortOrder(key: .dateAdded),
+        SortOrder(key: .label),
+        SortOrder(key: .label, direction: .descending),
+        SortOrder(key: .favourite),
+        SortOrder(key: .favourite, direction: .descending)
     ])
     func testChangeSortOrder_forAllCases_shouldMatchTheExpectation(
-        sortOrder: MEGAUIComponent.SortOrder,
-        expectedReceivedQueries: [SearchQuery]?
+        sortOrder: MEGAUIComponent.SortOrder
     ) async {
         let (sut, resultsProvider) = makeSUTWithChipsPrepared()
         await sut.task()
         let changeSortOrderTask = sut.changeSortOrder(sortOrder)
         await changeSortOrderTask.value
-        let defaultExpectedReceivedQueries: [SearchQuery] = [
+        // Allow time for async Combine publisher side effects to complete
+        try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+        let expectedSearchQueries: [SearchQuery] = [
             .initial,
             .userSupplied(
                 .init(
@@ -240,11 +252,16 @@ struct SearchResultsContainerViewModelTests {
             )
         ]
 
-        let expectedSearchQueries = (expectedReceivedQueries != nil
-                                     ? expectedReceivedQueries
-                                     : defaultExpectedReceivedQueries) ?? []
-
         #expect(resultsProvider.passedInQueries == expectedSearchQueries)
+    }
+
+    @Test func testChangeSortOrder_shouldUpdateSortOrderSynchronously() async {
+        let (sut, _) = makeSUTWithChipsPrepared()
+        await sut.task()
+        let newSortOrder = SortOrder(key: .size, direction: .descending)
+        let task = sut.changeSortOrder(newSortOrder)
+        #expect(sut.sortOrder == newSortOrder)
+        await task.value
     }
 
     @Test func testShowChipsInitialValue_whenSet_ShouldMatchResult() {

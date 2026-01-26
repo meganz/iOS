@@ -8,8 +8,8 @@ extension SortOrderType {
         case .nameDescending: .init(key: .name, direction: .descending)
         case .largest: .init(key: .size, direction: .descending)
         case .smallest: .init(key: .size)
-        case .newest: .init(key: .dateAdded, direction: .descending)
-        case .oldest: .init(key: .dateAdded)
+        case .newest: .init(key: .lastModified, direction: .descending)
+        case .oldest: .init(key: .lastModified)
         case .label: .init(key: .label)
         case .favourite: .init(key: .favourite)
         }

@@ -952,8 +952,12 @@ struct CloudDriveViewControllerFactory {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode?.handle).toUIComponentSortOrderEntity()
             },
             updateSortOrder: { @MainActor sortOrder in
-                guard let node = nodeSource.parentNode else { return }
-                let sortOrder = sortOrder.toDomainSortOrderEntity()
+                guard let node = nodeSource.parentNode,
+                      case let sortOrder = sortOrder.toDomainSortOrderEntity(),
+                      sortOrderPreferenceUseCase.sortOrder(for: node.handle) != sortOrder else {
+                    return
+                }
+
                 triggerEvent(for: sortOrder)
                 sortOrderPreferenceUseCase.save(
                     sortOrder: sortOrder,
