@@ -12,7 +12,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case cameraUploadsRevamp = "Camera Uploads Revamp"
     case dotAppDomain = ".app Domain"
     case videoPlayerRevamp = "Video Player Revamp"
-    case cloudDriveRevamp = "Cloud Drive Revamp"
     case mediaRevamp = "Media Revamp"
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
     case newFolderLink = "New FolderLink"
@@ -24,7 +23,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
     public static let rolledOutKeys: Set<FeatureFlagKey> = [
         .cameraUploadsRevamp,
-        .dotAppDomain,
-        .cloudDriveRevamp
+        .dotAppDomain
     ]
 }
