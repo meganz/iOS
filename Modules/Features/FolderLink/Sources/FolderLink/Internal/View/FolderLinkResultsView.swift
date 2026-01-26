@@ -45,6 +45,7 @@ struct FolderLinkResultsView: View {
     
     var body: some View {
         SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
+            .background(TokenColors.Background.page.swiftUI)
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationBarBackButtonHidden(true)
             .toolbar {

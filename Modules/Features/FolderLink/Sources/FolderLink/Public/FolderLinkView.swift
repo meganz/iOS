@@ -111,6 +111,7 @@ public struct FolderLinkView<LinkUnavailable>: View where LinkUnavailable: View 
                 }
         case let .error(reason):
             linkUnavailableContent(reason)
+                .ignoresSafeArea()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         closeButton

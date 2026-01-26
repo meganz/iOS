@@ -17,11 +17,11 @@ extension FolderLinkBottomBarAction {
     var icon: Image {
         switch self {
         case .addToCloudDrive:
-            Image(uiImage: MEGAAssets.UIImage.import)
+            Image(uiImage: MEGAAssets.UIImage.folderArrow)
         case .makeAvailableOffline:
-            Image(uiImage: MEGAAssets.UIImage.offline)
+            Image(uiImage: MEGAAssets.UIImage.cloudDownload)
         case .saveToPhotos:
-            Image(uiImage: MEGAAssets.UIImage.saveToPhotos)
+            Image(uiImage: MEGAAssets.UIImage.photosApp)
         }
     }
 }
