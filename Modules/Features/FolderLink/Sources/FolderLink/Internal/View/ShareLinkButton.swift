@@ -11,7 +11,7 @@ struct ShareLinkButton: View {
                 Label {
                     Text(Strings.Localizable.General.MenuAction.ShareLink.title(1))
                 } icon: {
-                    Image(uiImage: MEGAAssets.UIImage.link)
+                    Image(uiImage: MEGAAssets.UIImage.link01)
                 }
             }
         }
