@@ -1451,7 +1451,6 @@
 		947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947CA1FB2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947CA1FA2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift */; };
-		947DC5DF2AC1C7F5002C1D7C /* HomeChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5DE2AC1C7F5002C1D7C /* HomeChips.swift */; };
 		947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */; };
 		947DC5E32AC1C863002C1D7C /* HomeSearchResultsAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */; };
 		947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E52AC1CB07002C1D7C /* HomeChips+TrackingTests.swift */; };
@@ -4309,7 +4308,6 @@
 		947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InviteYourFriendsViewController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
 		947CA1FA2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
-		947DC5DE2AC1C7F5002C1D7C /* HomeChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeChips.swift; sourceTree = "<group>"; };
 		947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeChips+Tracking.swift"; sourceTree = "<group>"; };
 		947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultsAdditions.swift; sourceTree = "<group>"; };
 		947DC5E52AC1CB07002C1D7C /* HomeChips+TrackingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeChips+TrackingTests.swift"; sourceTree = "<group>"; };
@@ -10626,7 +10624,6 @@
 			isa = PBXGroup;
 			children = (
 				947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */,
-				947DC5DE2AC1C7F5002C1D7C /* HomeChips.swift */,
 				947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */,
 				94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */,
 				94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */,
@@ -15318,7 +15315,6 @@
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
-				947DC5DF2AC1C7F5002C1D7C /* HomeChips.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,

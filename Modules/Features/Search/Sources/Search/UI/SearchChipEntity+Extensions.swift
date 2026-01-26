@@ -1,12 +1,10 @@
-import MEGAAnalyticsiOS
-import MEGAFoundation
+import Foundation
 import MEGAL10n
-import Search
 
 extension SearchChipEntity {
 
-    static let nodeFormatsGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle
-    static let timeFilterGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pillTitle
+    public static let nodeFormatsGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle
+    public static let timeFilterGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pillTitle
 
     // MARK: - Node format chips
     public static let images = SearchChipEntity(
