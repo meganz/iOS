@@ -15,6 +15,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     private var wrapper: SearchControllerWrapper?
     private var selectionHandler: SearchControllerSelectionHandler?
     private var toolbar: UIToolbar?
+    private var blurView: UIVisualEffectView?
     private var backButtonTitle: String?
     private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory
     private var browseDelegate: BrowserViewControllerDelegateHandler
@@ -171,9 +172,12 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             withDuration: 0.33,
             animations: {
                 self.toolbar?.alpha = 0
+                self.blurView?.alpha = 0
             },
             completion: { _ in
                 self.toolbar?.removeFromSuperview()
+                self.blurView?.removeFromSuperview()
+                self.blurView = nil
             }
         )
     }
@@ -186,6 +190,24 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         
         tabBarController?.view.addSubview(toolbar)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+            let blurView = GradientVisualEffectView(effect: blurEffect)
+            self.blurView = blurView
+            blurView.alpha = 0
+            tabBarController?.view.insertSubview(blurView, belowSubview: toolbar)
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+            
+            if let tabBar = tabBarController?.tabBar {
+                NSLayoutConstraint.activate([
+                    blurView.topAnchor.constraint(equalTo: toolbar.topAnchor),
+                    blurView.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor),
+                    blurView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor),
+                    blurView.bottomAnchor.constraint(equalTo: tabBarController?.view.bottomAnchor ?? tabBar.bottomAnchor)
+                ])
+            }
+        }
         
         if let tabBar = tabBarController?.tabBar {
             NSLayoutConstraint.activate([
@@ -200,6 +222,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             withDuration: animated ? 0.33 : 0,
             animations: {
                 toolbar.alpha = 1
+                self.blurView?.alpha = 1
             }
         )
     }
@@ -296,4 +319,35 @@ extension SearchControllerWrapper: UISearchBarDelegate {
 /// CloudDriveMatchingNodeProvider is used for that purpose
 struct CloudDriveMatchingNodeProvider {
     let matchingNode: (NodeEntity) -> Bool
+}
+
+private class GradientVisualEffectView: UIVisualEffectView {
+    private let gradientLayer = CAGradientLayer()
+
+    override init(effect: UIVisualEffect?) {
+        super.init(effect: effect)
+        setupGradient()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupGradient()
+    }
+    
+    private func setupGradient() {
+        gradientLayer.colors = [
+            UIColor.black.withAlphaComponent(0.0).cgColor,
+            UIColor.black.withAlphaComponent(0.8).cgColor
+        ]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        layer.mask = gradientLayer
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
 }
