@@ -7,25 +7,29 @@ public struct CheckMarkView: View {
     let showBorder: Bool
     let borderColor: Color
     let isMediaRevamp: Bool
-    
+    let hideWhenUnselected: Bool
+
     var iconForegroundColor: Color?
-    
+
     /// - Parameters:
     ///   - markedSelected: a boolean indicates selected state
     ///   - foregroundColor: circle fill color, controlled by caller based on selection state
     ///   - showBorder: a boolean indicates border
     ///   - borderColor: a border color
     ///   - isMediaRevamp: enables media revamp styling (inverse checkmark color, hidden when unselected)
+    ///   - hideWhenUnselected: when true and isMediaRevamp is true, hides the checkmark when unselected (default: true)
     public init(markedSelected: Bool,
                 foregroundColor: Color,
                 showBorder: Bool = true,
                 borderColor: Color = Color.white,
-                isMediaRevamp: Bool = false) {
+                isMediaRevamp: Bool = false,
+                hideWhenUnselected: Bool = true) {
         self.markedSelected = markedSelected
         self.foregroundColor = foregroundColor
         self.showBorder = showBorder
         self.borderColor = borderColor
         self.isMediaRevamp = isMediaRevamp
+        self.hideWhenUnselected = hideWhenUnselected
     }
     
     private var imageName: String {
@@ -33,7 +37,11 @@ public struct CheckMarkView: View {
     }
     
     private var checkmarkColor: Color {
-        isMediaRevamp ? TokenColors.Icon.inverse.swiftUI : borderColor
+        if isMediaRevamp {
+            markedSelected ? TokenColors.Icon.inverse.swiftUI : borderColor
+        } else {
+            markedSelected ? .white : borderColor
+        }
     }
     
     public var body: some View {
@@ -43,7 +51,7 @@ public struct CheckMarkView: View {
             .if(!isMediaRevamp && markedSelected && showBorder) { view in
                 view.background(Color.white.mask(Circle()))
             }
-            .opacity(isMediaRevamp && !markedSelected ? 0 : 1)
+            .opacity(isMediaRevamp && hideWhenUnselected && !markedSelected ? 0 : 1)
     }
     
     private var designTokenCheckMarkView: some View {

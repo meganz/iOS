@@ -190,7 +190,9 @@ struct VideoCellViewContent: View {
             CheckMarkView(
                 markedSelected: isSelected.wrappedValue,
                 foregroundColor: checkMarkForegroundColor,
-                isMediaRevamp: isMediaRevampEnabled
+                borderColor: TokenColors.Border.strong.swiftUI,
+                isMediaRevamp: isMediaRevampEnabled,
+                hideWhenUnselected: false
             )
         }
     }
