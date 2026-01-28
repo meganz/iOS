@@ -325,7 +325,15 @@
     if (error.type) {
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
-            if (error.type != MEGAErrorTypeApiEExist) {
+            if (error.type == MEGAErrorTypeApiEExist) {
+                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@ - %ld, but it is expected when downgrading subscription", error.name, (long)error.type);
+                [self finishSubmittedTransactions];
+            } else if (error.type == MEGAErrorTypeApiEExpired) {
+                // According to API, MEGAErrorTypeApiEExpired will be returned `when all purchases in the receipt have expired`.
+                // In this case the submitted receipt is no longer useful and we can skip the error.
+                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@ - %ld, but it is expected when the receipt has expired", error.name, (long)error.type);
+                [self finishSubmittedTransactions];
+            } else {
                 MEGALogError(@"[StoreKit] Submitting receipt failed with error: %@ - %ld", error.name, (long)error.type);
                 for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedSubmitReceipt:)]) {
@@ -334,9 +342,6 @@
                 }
 
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:LocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
-            } else {
-                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@ - %ld, but it is expected when downgrading subscription", error.name, (long)error.type);
-                [self finishSubmittedTransactions];
             }
             [self setIsSubmittingReceipt:false];
             self.submittingTransactions = nil;
