@@ -4,8 +4,6 @@ import MEGAL10n
 import UIKit
 
 final class AudioPlaylistViewController: UIViewController {
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.tableFooterView = UIView()
@@ -16,12 +14,6 @@ final class AudioPlaylistViewController: UIViewController {
             tableView.separatorStyle = .none
         }
     }
-    @IBOutlet weak var toolbarBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var toolbarView: UIView!
-    @IBOutlet weak var toolbarBlurView: UIVisualEffectView!
-    @IBOutlet weak var removeButton: UIButton!
-    @IBOutlet weak var tableViewTopToTitleBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var closeTopToTopLayoutGuideBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
     private var playlistSource: (any AudioPlaylistSource)? {
@@ -44,6 +36,9 @@ final class AudioPlaylistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavigationBar()
+        configureToolbar()
+        
         updateAppearance()
         
         viewModel.invokeCommand = { [weak self] command in
@@ -52,8 +47,6 @@ final class AudioPlaylistViewController: UIViewController {
         
         viewModel.dispatch(.onViewDidLoad)
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
-        
-        configureLiquidGlassStyle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,60 +54,52 @@ final class AudioPlaylistViewController: UIViewController {
         viewModel.dispatch(.onViewWillDisappear)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            setupLiquidGlassNavigationBar(with: TokenColors.Background.page)
+        } else {
+            guard let navigationBar = navigationController?.navigationBar else { return }
+            let currentAppearance = navigationBar.standardAppearance
+            currentAppearance.backgroundColor = TokenColors.Background.page
+            currentAppearance.shadowColor = .clear
+            
+            navigationController?.navigationBar.standardAppearance = currentAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = currentAppearance
+            navigationController?.navigationBar.compactAppearance = currentAppearance
+        }
+    }
+    
     // MARK: - Private functions
-    private func configureLiquidGlassStyle() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
+    private func configureToolbar() {
+        let removeItem = UIBarButtonItem(
+            title: Strings.Localizable.remove,
+            style: .plain,
+            target: self,
+            action: #selector(removeButtonAction(_:))
+        )
         
-        closeButton.configuration = .glass()
-        toolbarBlurView.isHidden = true
-        toolbarView.backgroundColor = .clear
-        tableViewTopToTitleBottomConstraint.constant = 12.5
-        closeTopToTopLayoutGuideBottomConstraint.constant = 10
-        removeButton.configuration = .glass()
-        
-        toolbarBottomConstraint.priority = .defaultLow
-        let constraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        constraint.priority = .required
-        constraint.isActive = true
+        toolbarItems = [
+            UIBarButtonItem(systemItem: .flexibleSpace),
+            removeItem
+        ]
+    }
+    
+    private func configureNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Strings.Localizable.close,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonAction(_:))
+        )
     }
     
     private func showToolbar() {
-        if toolbarView.isHidden {
-            toolbarView.isHidden = false
-            
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 1.0,
-                           initialSpringVelocity: 1.0,
-                           options: .curveEaseInOut,
-                           animations: {
-                self.toolbarBottomConstraint.constant = 0
-                self.toolbarView.layoutIfNeeded()
-                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.toolbarView.frame.height, right: 0)
-            })
-        }
+        navigationController?.setToolbarHidden(false, animated: true)
     }
     
     private func hideToolbar() {
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        let duration: CGFloat = 0.5
-        let delay: CGFloat = 0.0
-        let damping: CGFloat = 1.0
-        let velocity: CGFloat = 1.0
-        let option: UIView.AnimationOptions = .curveEaseInOut
-        
-        UIView.animate(withDuration: duration,
-                       delay: delay,
-                       usingSpringWithDamping: damping,
-                       initialSpringVelocity: velocity,
-                       options: option) {
-            let height: CGFloat = self.toolbarView.frame.height
-            self.toolbarBottomConstraint.constant = height * -1
-            self.toolbarView.layoutIfNeeded()
-        } completion: { _ in
-            self.toolbarView.isHidden = true
-        }
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     private func updateDataSource(_ currentTrack: AudioPlayerItem, _ queueTracks: [AudioPlayerItem]?, _ selectedIndexPaths: [IndexPath]?) {
@@ -169,39 +154,6 @@ final class AudioPlaylistViewController: UIViewController {
     // MARK: - UI configurations
     private func updateAppearance() {
         view.backgroundColor = TokenColors.Background.page
-        
-        closeButton.setTitle(Strings.Localizable.close, for: .normal)
-        
-        removeButton.setTitle(Strings.Localizable.remove, for: .normal)
-        
-        let isLiquidGlassEnabled = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
-            true
-        } else {
-            false
-        }
-        if !isLiquidGlassEnabled {
-            toolbarView.addBorder(
-                edge: .top,
-                color: TokenColors.Border.strong,
-                thickness: 0.5
-            )
-        }
-        
-        style()
-    }
-    
-    private func style() {
-        closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        closeButton.setTitleColor(TokenColors.Text.primary, for: .normal)
-        removeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        removeButton.setTitleColor(TokenColors.Text.primary, for: .normal)
-        
-        toolbarView.backgroundColor = TokenColors.Background.surface1
-        
-        toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
-        
-        titleLabel.textColor = TokenColors.Text.primary
-        
         tableView.separatorColor = TokenColors.Border.strong
     }
     
@@ -212,11 +164,11 @@ final class AudioPlaylistViewController: UIViewController {
     }
     
     // MARK: - UI actions
-    @IBAction func closeButtonAction(_ sender: Any) {
+    @IBAction func closeButtonAction(_ barButtonItem: UIBarButtonItem) {
         viewModel.dispatch(.dismiss)
     }
     
-    @IBAction func removeButtonAction(_ sender: Any) {
+    @objc func removeButtonAction(_ barButtonItem: UIBarButtonItem) {
         viewModel.dispatch(.removeSelectedItems)
     }
     
@@ -228,7 +180,7 @@ final class AudioPlaylistViewController: UIViewController {
         case .reload(let items):
             reloadData(items: items)
         case .title(let title):
-            titleLabel.text = title
+            navigationItem.title = title
         case .deselectAll:
             tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: false) }
             if tableView.numberOfRows(inSection: 1) == 0 && tableView.indexPathsForSelectedRows?.isEmpty ?? true {

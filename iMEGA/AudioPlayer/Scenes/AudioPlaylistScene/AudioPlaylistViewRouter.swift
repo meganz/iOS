@@ -24,9 +24,10 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
             router: self,
             tracker: DIContainer.tracker
         )
-        baseViewController = vc
+        let navigationController = MEGANavigationController(rootViewController: vc)
+        baseViewController = navigationController
         
-        return vc
+        return navigationController
     }
     
     @objc func start() {
