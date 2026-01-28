@@ -99,7 +99,7 @@ struct MediaTabView: View {
     
     @ViewBuilder
     private func videoListView(videoTabViewModel: VideoTabViewModel) -> some View {
-        VideoListView(
+        EquatableVideoListView(
             viewModel: videoTabViewModel.videoListViewModel,
             videoConfig: videoTabViewModel.videoConfig,
             router: videoTabViewModel.router
@@ -133,4 +133,5 @@ struct MediaTabView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(TokenColors.Background.page.swiftUI)
     }
+    
 }
