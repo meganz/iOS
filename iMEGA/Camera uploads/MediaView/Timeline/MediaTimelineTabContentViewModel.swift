@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -17,6 +19,7 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
     let timelineViewModel: NewTimelineViewModel
 
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private let subtitleUpdatePassthroughSubject = CurrentValueSubject<String?, Never>(nil)
     private let updateNavigationBarButtonsPassthroughSubject = PassthroughSubject<Void, Never>()
     private let idleWaitTimeNanoSeconds: UInt64
@@ -33,11 +36,13 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
         timelineViewModel: NewTimelineViewModel,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
         uploadStateDebounceDuration: Duration = .milliseconds(300)
     ) {
         self.timelineViewModel = timelineViewModel
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
+        self.tracker = tracker
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
         self.uploadStateDebounceDuration = uploadStateDebounceDuration
         $isCameraUploadsEnabled.useCase = preferenceUseCase
@@ -165,10 +170,15 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
                 await Task.yield()
                 timelineViewModel?.navigateToCameraUploadSettings()
             }
+            tracker.trackAnalyticsEvent(with: MediaScreenSettingsMenuToolbarEvent())
         }
     }
     
     func handleSortAction(_ sortType: SortOrderType) {
+        if sortType == .newest {
+            tracker.trackAnalyticsEvent(with: MediaScreenSortByNewestSelectedEvent())
+        }
+        
         timelineViewModel.updateSortOrder(sortType.toSortOrderEntity())
     }
     

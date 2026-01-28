@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -49,12 +51,19 @@ struct MediaNavigationBarItemFactory {
     /// - Returns: A navigation bar item view model for the search button
     static func searchButton(
         id: String = "search",
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         action: @escaping () -> Void
     ) -> NavigationBarItemViewModel {
         NavigationBarItemViewModel(
             id: id,
             placement: .trailing,
-            type: .imageButton(image: MEGAAssets.UIImage.search, action: action)
+            type: .imageButton(
+                image: MEGAAssets.UIImage.search,
+                action: {
+                    action()
+                    tracker.trackAnalyticsEvent(with: MediaScreenSearchMenuToolbarEvent())
+                }
+            )
         )
     }
 

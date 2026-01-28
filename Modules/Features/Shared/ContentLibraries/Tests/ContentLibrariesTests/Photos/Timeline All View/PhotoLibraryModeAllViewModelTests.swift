@@ -1,5 +1,7 @@
 @preconcurrency import Combine
 @testable import ContentLibraries
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -45,12 +47,14 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         libraryViewModel: PhotoLibraryContentViewModel = .init(library: PhotoLibrary()),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        tracker: some AnalyticsTracking = MockTracker(),
         configuration: ContentLibraries.Configuration = .mockConfiguration()
     ) -> PhotoLibraryModeAllViewModel {
         .init(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: preferenceUseCase,
             devicePermissionHandler: devicePermissionHandler,
+            tracker: tracker,
             configuration: configuration)
     }
     
@@ -404,16 +408,62 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
     }
     
     @MainActor
+    struct Analytics {
+        @Test
+        func zoomStateChange() async throws {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                tracker: tracker,
+                configuration: .mockConfiguration(
+                    featureFlags: [.mediaRevamp: true])
+            )
+            
+            sut.zoomState = PhotoLibraryZoomState(scaleFactor: .one)
+            sut.zoomState = PhotoLibraryZoomState(scaleFactor: .five)
+            sut.zoomState = PhotoLibraryZoomState(scaleFactor: .three)
+            sut.zoomState = PhotoLibraryZoomState(scaleFactor: .thirteen)
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MediaScreenGridSizeLargeSelectedEvent(),
+                    MediaScreenGridSizeCompactSelectedEvent(),
+                    MediaScreenGridSizeDefaultSelectedEvent()
+                ]
+            )
+        }
+        
+        @Test
+        func revampOffShouldNotTrack() async throws {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                tracker: tracker,
+                configuration: .mockConfiguration(
+                    featureFlags: [.mediaRevamp: false])
+            )
+            
+            sut.zoomState = PhotoLibraryZoomState(scaleFactor: .five)
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: []
+            )
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         libraryViewModel: PhotoLibraryContentViewModel = .init(library: PhotoLibrary()),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        tracker: some AnalyticsTracking = MockTracker(),
         configuration: ContentLibraries.Configuration = .mockConfiguration()
     ) -> PhotoLibraryModeAllViewModel {
         .init(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: preferenceUseCase,
             devicePermissionHandler: devicePermissionHandler,
+            tracker: tracker,
             configuration: configuration)
     }
 }

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAUIComponent
@@ -8,7 +9,12 @@ import SwiftUI
 @MainActor
 @objc public final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published public var library: PhotoLibrary
-    @Published public var selectedMode: PhotoLibraryViewMode = .all
+    @Published public var selectedMode: PhotoLibraryViewMode = .all {
+        didSet {
+            guard selectedMode != oldValue else { return }
+            tracker.trackViewModeChange(selectedMode)
+        }
+    }
     @Published public var showFilter = false
     
     var cardScrollPosition: PhotoScrollPosition?
@@ -23,16 +29,21 @@ import SwiftUI
         contentMode: contentMode,
         contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
     )
+    private let tracker: any AnalyticsTracking
     
     // MARK: - Init
-    public init(library: PhotoLibrary,
-                contentMode: PhotoLibraryContentMode = .library,
-                globalHeaderType: PhotoGlobalHeaderType = .dateAndZoom, // by default, dispaly a date and zoom control
-                configuration: PhotoLibraryContentConfiguration? = nil) {
+    public init(
+        library: PhotoLibrary,
+        contentMode: PhotoLibraryContentMode = .library,
+        globalHeaderType: PhotoGlobalHeaderType = .dateAndZoom, // by default, display a date and zoom control
+        configuration: PhotoLibraryContentConfiguration? = nil,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.library = library
         self.contentMode = contentMode
         self.globalHeaderType = globalHeaderType
         self.configuration = configuration
+        self.tracker = tracker
         
         super.init()
     }

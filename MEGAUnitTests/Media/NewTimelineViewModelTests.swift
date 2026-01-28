@@ -1,5 +1,6 @@
 import ContentLibraries
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
@@ -227,12 +228,39 @@ struct NewTimelineViewModelTests {
         let sut = Self.makeSUT(
             contentConsumptionUserAttributeUseCase: contentConsumption
         )
-        let newFilter: PhotosFilterOptionsEntity = [.images, .cameraUploads]
-        sut.updatePhotoFilter(option: newFilter)
+        sut.updatePhotoFilter(option: .images)
+        sut.updatePhotoFilter(option: .cameraUploads)
         
         await sut.saveFilters()
         
         #expect(contentConsumption.savedTimelineUserAttribute == .init(mediaType: .images, location: .cameraUploads, usePreference: true))
+    }
+    
+    @MainActor
+    @Test
+    func filterChangesTrackAnalyticsCorrectly() {
+        let tracker = MockTracker()
+        let sut = Self.makeSUT(
+            tracker: tracker
+        )
+        sut.updatePhotoFilter(option: .images)
+        sut.updatePhotoFilter(option: .videos)
+        sut.updatePhotoFilter(option: .allMedia)
+        sut.updatePhotoFilter(option: .cloudDrive)
+        sut.updatePhotoFilter(option: .cameraUploads)
+        sut.updatePhotoFilter(option: .allLocations)
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MediaScreenFilterImagesSelectedEvent(),
+                MediaScreenFilterVideosSelectedEvent(),
+                MediaScreenFilterAllMediaSelectedEvent(),
+                MediaScreenFilterCloudDriveSelectedEvent(),
+                MediaScreenFilterCameraUploadsSelectedEvent(),
+                MediaScreenFilterAllLocationsSelectedEvent()
+            ]
+        )
     }
     
     @MainActor
@@ -243,7 +271,8 @@ struct NewTimelineViewModelTests {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase()
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> NewTimelineViewModel {
         .init(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
@@ -252,7 +281,8 @@ struct NewTimelineViewModelTests {
             preferenceUseCase: preferenceUseCase,
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            tracker: tracker
         )
     }
 }

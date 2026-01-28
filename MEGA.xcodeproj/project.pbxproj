@@ -13,6 +13,9 @@
 		0D30D86225BFA14A00C26367 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30D86125BFA14A00C26367 /* Tab.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0E03CDF62E6E7031004E73F9 /* PhotoBrowserPickerCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E03CDF52E6E7031004E73F9 /* PhotoBrowserPickerCollectionViewCellViewModelTests.swift */; };
+		0E0448642F23178B003FCC9E /* AnalyticsTracking+MediaTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0448622F23177B003FCC9E /* AnalyticsTracking+MediaTab.swift */; };
+		0E04487C2F23207B003FCC9E /* AnalyticsTracker+PhotosFilterOptionsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E04487B2F232069003FCC9E /* AnalyticsTracker+PhotosFilterOptionsEntity.swift */; };
+		0E0448862F23277A003FCC9E /* AnalyticsTracker+MediaBottomToolbarAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0448852F232769003FCC9E /* AnalyticsTracker+MediaBottomToolbarAction.swift */; };
 		0E0A24DA2E24D17000F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0A24D92E24D16E00F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift */; };
 		0E0CFAC82E7110E600EEA597 /* TimeLineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0CFAC72E7110E600EEA597 /* TimeLineViewModelTests.swift */; };
 		0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */; };
@@ -2865,6 +2868,9 @@
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
 		0E03CDF52E6E7031004E73F9 /* PhotoBrowserPickerCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserPickerCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		0E0448622F23177B003FCC9E /* AnalyticsTracking+MediaTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracking+MediaTab.swift"; sourceTree = "<group>"; };
+		0E04487B2F232069003FCC9E /* AnalyticsTracker+PhotosFilterOptionsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracker+PhotosFilterOptionsEntity.swift"; sourceTree = "<group>"; };
+		0E0448852F232769003FCC9E /* AnalyticsTracker+MediaBottomToolbarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsTracker+MediaBottomToolbarAction.swift"; sourceTree = "<group>"; };
 		0E0A24D92E24D16E00F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadPausedReasonEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0E0CFAC72E7110E600EEA597 /* TimeLineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModelTests.swift; sourceTree = "<group>"; };
 		0E0CFFC52D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaCheckerTests.swift; sourceTree = "<group>"; };
@@ -6050,6 +6056,7 @@
 		0E7533A52EF1ECDC002BEE1E /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				0E04487B2F232069003FCC9E /* AnalyticsTracker+PhotosFilterOptionsEntity.swift */,
 				0E7533A12EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift */,
 				0E7533A22EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift */,
 				0E7533A32EF1ECDC002BEE1E /* NewTimelineView.swift */,
@@ -7845,6 +7852,7 @@
 				0E7533A52EF1ECDC002BEE1E /* Timeline */,
 				4C6C8FFA2ED991F600095F34 /* Toolbar */,
 				4C1A206F2EE2CF6C00E41A44 /* Videos */,
+				0E0448622F23177B003FCC9E /* AnalyticsTracking+MediaTab.swift */,
 				4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */,
 				4C0A55672ED6F61900A58D8B /* MediaTab.swift */,
 				4CEA864A2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift */,
@@ -7880,6 +7888,7 @@
 		4C6C8FFA2ED991F600095F34 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
+				0E0448852F232769003FCC9E /* AnalyticsTracker+MediaBottomToolbarAction.swift */,
 				4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */,
 				4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */,
 				4CEA86502EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift */,
@@ -14708,6 +14717,9 @@
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				944AEA9E2DC8E1BF00E76682 /* AlertModelFactory.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
+				0E0448862F23277A003FCC9E /* AnalyticsTracker+MediaBottomToolbarAction.swift in Sources */,
+				0E04487C2F23207B003FCC9E /* AnalyticsTracker+PhotosFilterOptionsEntity.swift in Sources */,
+				0E0448642F23178B003FCC9E /* AnalyticsTracking+MediaTab.swift in Sources */,
 				94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */,
 				C464FDDE2D9CB74E00274FCD /* AnimatedCollectionViewLayout.swift in Sources */,
 				14F2EFB82EDD45FF00C37318 /* APMCrashlyticsReporter.swift in Sources */,

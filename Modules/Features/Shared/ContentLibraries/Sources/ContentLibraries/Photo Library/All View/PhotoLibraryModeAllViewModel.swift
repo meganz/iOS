@@ -7,7 +7,12 @@ import MEGAPreference
 import MEGARepo
 
 public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
-    @Published var zoomState: PhotoLibraryZoomState
+    @Published var zoomState: PhotoLibraryZoomState {
+        didSet {
+            guard zoomState != oldValue, isMediaRevampEnabled else { return }
+            tracker.trackZoomStateChange(zoomState)
+        }
+    }
     @Published private(set) var bannerType: PhotoLibraryBannerType?
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
@@ -18,6 +23,7 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
     private(set) var limitedPhotoAccessBannerDismissedDate: Date?
     private let isMediaRevampEnabled: Bool
     private let devicePermissionHandler: any DevicePermissionsHandling
+    private let tracker: any AnalyticsTracking
     private let updateBannerHeaderPassthroughSubject = PassthroughSubject<Void, Never>()
     private let bannerDismissCooldown: TimeInterval = .days(15)
     
@@ -25,6 +31,7 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
         libraryViewModel: PhotoLibraryContentViewModel,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         devicePermissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler(),
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
         self.isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
@@ -39,6 +46,7 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
             supportedScaleFactors: supportedScaleFactors
         )
         self.devicePermissionHandler = devicePermissionHandler
+        self.tracker = tracker
         
         super.init(libraryViewModel: libraryViewModel)
         $isCameraUploadsEnabled.useCase = preferenceUseCase

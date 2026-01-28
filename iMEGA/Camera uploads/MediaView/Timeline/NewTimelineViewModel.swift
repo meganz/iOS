@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAPreference
@@ -19,6 +20,7 @@ final class NewTimelineViewModel: ObservableObject {
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -39,7 +41,8 @@ final class NewTimelineViewModel: ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.photoLibraryContentViewModel = photoLibraryContentViewModel
         self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
@@ -47,6 +50,7 @@ final class NewTimelineViewModel: ObservableObject {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.nodeUseCase = nodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
     
@@ -129,6 +133,7 @@ final class NewTimelineViewModel: ObservableObject {
         }
         
         guard photoFilterOptions != newFilterOptions else { return }
+        tracker.trackFilterChange(new: option)
         photoFilterOptions = newFilterOptions
         loadPhotosTaskId = UUID()
     }

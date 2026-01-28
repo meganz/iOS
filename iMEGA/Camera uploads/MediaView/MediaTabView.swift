@@ -75,6 +75,7 @@ struct MediaTabView: View {
             }
         }
         .environment(\.editMode, $viewModel.editMode)
+        .onAppear(perform: viewModel.onViewAppear)
     }
     
     // MARK: - Tab Content

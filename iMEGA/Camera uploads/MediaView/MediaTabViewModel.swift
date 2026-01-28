@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -15,6 +16,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         didSet {
             guard selectedTab != oldValue else { return }
             updateNavigationBarForCurrentTab()
+            tracker.trackTabSelectedEvent(for: selectedTab)
         }
     }
 
@@ -69,6 +71,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     private var subscriptions = Set<AnyCancellable>()
 
     let tabViewModels: [MediaTab: any MediaTabContentViewModel]
+    private let tracker: any AnalyticsTracking
 
     // MARK: - Initialization
 
@@ -79,7 +82,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         devicePermissionHandler: some DevicePermissionsHandling,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         cameraUploadsSettingsViewRouter: some Routing,
-        cameraUploadProgressRouter: some CameraUploadProgressRouting
+        cameraUploadProgressRouter: some CameraUploadProgressRouting,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.tabViewModels = tabViewModels
         self.visualMediaSearchResultsViewModel = visualMediaSearchResultsViewModel
@@ -90,11 +94,16 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             cameraUploadProgressRouter: cameraUploadProgressRouter
         )
+        self.tracker = tracker
 
         configureContextMenuManager()
         subscribeToTabViewModelEvents()
         injectSharedResources()
         updateNavigationBarForCurrentTab()
+    }
+    
+    func onViewAppear() {
+        tracker.trackAnalyticsEvent(with: MediaScreenEvent())
     }
 
     // MARK: - Shared Resource Injection
@@ -110,6 +119,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     func handleToolbarItemAction(_ action: MediaBottomToolbarAction) {
         guard let tabViewModel = tabViewModels[selectedTab] as? any MediaTabToolbarActionHandler else { return }
         tabViewModel.handleToolbarAction(action)
+        tracker.trackMediaBottomToolbarAction(action)
     }
 
     // MARK: - Private Methods

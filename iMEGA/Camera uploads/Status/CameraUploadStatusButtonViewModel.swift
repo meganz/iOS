@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
@@ -19,7 +20,8 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private let cameraUploadsSettingsViewRouter: any Routing
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-
+    private let tracker: any AnalyticsTracking
+    
     var onTappedHandler: (() -> Void)?
     
     init(
@@ -29,7 +31,8 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         cameraUploadsSettingsViewRouter: some Routing,
         cameraUploadProgressRouter: some CameraUploadProgressRouting,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
         self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider( 
@@ -39,6 +42,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         imageViewModel = CameraUploadStatusImageViewModel(
             status: preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] ?? false ? .checkPendingItemsToUpload : .turnedOff)
         super.init()
@@ -75,6 +79,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     
     func onTapped() {
         if featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+            tracker.trackAnalyticsEvent(with: MediaScreenTransfersMenuToolbarEvent())
             guard isCameraUploadsEnabled else {
                 cameraUploadsSettingsViewRouter.start()
                 return

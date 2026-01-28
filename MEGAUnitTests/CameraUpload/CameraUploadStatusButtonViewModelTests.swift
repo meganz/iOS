@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
@@ -162,30 +163,46 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     func testOnTapped_cameraUploadsDisabled_shouldRouteToSettings() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
         let cameraUploadsSettingsViewRouter = MockRouter()
+        let tracker = MockTracker()
         let sut = makeSUT(
             preferenceUseCase: preferenceUseCase,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true]),
+            tracker: tracker
         )
         
         sut.onTapped()
         
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MediaScreenTransfersMenuToolbarEvent()
+            ]
+        )
     }
     
     @MainActor
     func testOnTapped_cameraUploadsEnabled_shouldRouteToCameraUploadProgress() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
         let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
+        let tracker = MockTracker()
         let sut = makeSUT(
             preferenceUseCase: preferenceUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true]),
+            tracker: tracker
         )
         
         sut.onTapped()
         
         XCTAssertEqual(cameraUploadProgressRouter.startCalledCount, 1)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MediaScreenTransfersMenuToolbarEvent()
+            ]
+        )
     }
     
     @MainActor
@@ -196,7 +213,8 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
         cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> CameraUploadStatusButtonViewModel {
         CameraUploadStatusButtonViewModel(
             idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
@@ -205,6 +223,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             preferenceUseCase: preferenceUseCase,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            featureFlagProvider: featureFlagProvider)
+            featureFlagProvider: featureFlagProvider,
+            tracker: tracker)
     }
 }

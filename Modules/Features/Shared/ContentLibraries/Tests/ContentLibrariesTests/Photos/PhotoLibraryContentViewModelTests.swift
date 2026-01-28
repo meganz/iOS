@@ -1,27 +1,26 @@
 @testable import ContentLibraries
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
-import XCTest
+import Testing
 
-final class PhotoLibraryContentViewModelTests: XCTestCase {
+struct PhotoLibraryContentViewModelTests {
     @MainActor
-    func testShouldShowPhotoLibraryPicker_contentModeThatsNotAlbumOrAlbumLink_shouldReturnFalse() {
-        let modes = [PhotoLibraryContentMode.album, .albumLink]
-        modes.forEach {
-            let sut = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: $0, configuration: nil)
-            XCTAssertFalse(sut.shouldShowPhotoLibraryPicker)
-        }
+    @Test(arguments: [
+        (PhotoLibraryContentMode.album, false),
+        (.albumLink, false),
+        (.library, true),
+        (.mediaDiscovery, true),
+        (.mediaDiscoveryFolderLink, true),
+    ])
+    func shouldShowPhotoLibraryPicker(mode: PhotoLibraryContentMode, expectedResult: Bool) {
+        let sut = Self.makeSUT(contentMode: mode)
+        #expect(sut.shouldShowPhotoLibraryPicker == expectedResult)
     }
     
     @MainActor
-    func testShouldShowPhotoLibraryPicker_contentModeAlbumOrAlbumLink_shouldReturnTrue() {
-        let modes = [PhotoLibraryContentMode.library, .mediaDiscovery, .mediaDiscoveryFolderLink]
-        modes.forEach {
-            let sut = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: $0, configuration: nil)
-            XCTAssertTrue(sut.shouldShowPhotoLibraryPicker)
-        }
-    }
-    
-    @MainActor
+    @Test
     func testToggleSelectAllPhotos_onCalledAgain_shouldToggleBetweenSelectAllAndUnselectAll() throws {
         let photos = [NodeEntity(name: "a.png", handle: HandleEntity(1),
                                  modificationTime: try "2023-08-18T22:01:04Z".date),
@@ -29,30 +28,66 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
                                  modificationTime: try "2023-08-11T22:01:04Z".date)
         ]
         let library = photos.toPhotoLibrary(withSortType: .modificationDesc)
-        let sut = PhotoLibraryContentViewModel(library: library,
-                                               contentMode: .album, configuration: nil)
+        let sut = Self.makeSUT(library: library, contentMode: .album)
         
         sut.toggleSelectAllPhotos()
         
-        XCTAssertTrue(sut.selection.allSelected)
-        XCTAssertEqual(Set(library.allPhotos), Set(photos))
+        #expect(sut.selection.allSelected)
+        #expect(Set(library.allPhotos) == Set(photos))
         
         sut.toggleSelectAllPhotos()
         
-        XCTAssertFalse(sut.selection.allSelected)
-        XCTAssertTrue(sut.selection.photos.isEmpty)
-        XCTAssertTrue(library.allPhotos.isNotEmpty)
+        #expect(sut.selection.allSelected == false)
+        #expect(sut.selection.photos.isEmpty)
+        #expect(library.allPhotos.isNotEmpty)
     }
     
     @MainActor
-    func testIsPhotoLibraryEmpty_onPhotoLibraryContentChange_shouldReturnPhotoLibraryEmptyState() throws {
-        for photos in [
-            [NodeEntity(name: "a.png", handle: HandleEntity(1), modificationTime: try "2023-08-18T22:01:04Z".date)],
-            []
-        ] {
-            let sut = PhotoLibraryContentViewModel(library: photos.toPhotoLibrary(withSortType: .modificationDesc))
-            
-            XCTAssertEqual(sut.isPhotoLibraryEmpty, photos.isEmpty)
-        }
+    @Test(arguments: [
+        [NodeEntity(name: "a.png", handle: HandleEntity(1), modificationTime: try "2023-08-18T22:01:04Z".date)],
+        []
+    ])
+    func testIsPhotoLibraryEmpty_onPhotoLibraryContentChange_shouldReturnPhotoLibraryEmptyState(photos: [NodeEntity]) throws {
+        let sut = Self.makeSUT(library: photos.toPhotoLibrary(withSortType: .modificationDesc))
+        
+        #expect(sut.isPhotoLibraryEmpty ==  photos.isEmpty)
+    }
+    
+    @MainActor
+    @Test
+    func libraryViewModeChangeTrackAnalytics() {
+        let tracker = MockTracker()
+        let sut = Self.makeSUT(
+            tracker: tracker)
+        
+        sut.selectedMode = .day
+        sut.selectedMode = .month
+        sut.selectedMode = .year
+        sut.selectedMode = .all
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                MediaScreenDaysFilterSelectedEvent(),
+                MediaScreenMonthsFilterSelectedEvent(),
+                MediaScreenYearsFilterSelectedEvent(),
+                MediaScreenAllFilterSelectedEvent()
+            ]
+        )
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        library: PhotoLibrary = PhotoLibrary(),
+        contentMode: PhotoLibraryContentMode = .library,
+        configuration: PhotoLibraryContentConfiguration? = nil,
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> PhotoLibraryContentViewModel {
+        .init(
+            library: library,
+            contentMode: contentMode,
+            configuration: configuration,
+            tracker: tracker
+        )
     }
 }

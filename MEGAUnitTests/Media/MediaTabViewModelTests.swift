@@ -1,6 +1,7 @@
 import Combine
 import ContentLibraries
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
@@ -70,17 +71,46 @@ struct MediaTabViewModelTests {
     }
     
     @MainActor
-    @Test
-    func handleToolbarItemAction() async throws {
-        let expectedAction = MediaBottomToolbarAction.delete
-        let contentViewModel = MockMediaTabContentViewModel()
-        let sut = Self.makeSUT(
-            tabViewModels: [.timeline: contentViewModel]
-        )
+    struct ToolbarItemAction {
+        @Test
+        func handleToolbarItemAction() {
+            let expectedAction = MediaBottomToolbarAction.delete
+            let contentViewModel = MockMediaTabContentViewModel()
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            sut.handleToolbarItemAction(expectedAction)
+            
+            #expect(contentViewModel.handledAction == expectedAction)
+        }
         
-        sut.handleToolbarItemAction(expectedAction)
-        
-        #expect(contentViewModel.handledAction == expectedAction)
+        @Test
+        func actionAnalyticsTracked() async throws {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                tabViewModels: [.timeline: MockMediaTabContentViewModel()],
+                tracker: tracker
+            )
+            // Events are not sendable so cant use params for the test
+            let actions = [MediaBottomToolbarAction.shareLink, .manageLink, .download, .sendToChat, .more, .moveToRubbishBin, .addToAlbum]
+            for action in actions {
+                sut.handleToolbarItemAction(action)
+            }
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MediaScreenLinkButtonPressedEvent(),
+                    MediaScreenLinkButtonPressedEvent(),
+                    MediaScreenDownloadButtonPressedEvent(),
+                    MediaScreenRespondButtonPressedEvent(),
+                    MediaScreenMoreButtonPressedEvent(),
+                    MediaScreenTrashButtonPressedEvent(),
+                    MediaScreenAlbumAddItemsButtonPressedEvent()
+                ]
+            )
+        }
     }
     
     @MainActor
@@ -219,6 +249,45 @@ struct MediaTabViewModelTests {
         }
     }
     
+    @Suite
+    struct Analytics {
+        @MainActor
+        @Test
+        func onAppear() {
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
+            
+            sut.onViewAppear()
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [MediaScreenEvent()]
+            )
+        }
+        
+        @MainActor
+        @Test
+        func tabChange() {
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
+            
+            sut.selectedTab = .album
+            sut.selectedTab = .video
+            sut.selectedTab = .playlist
+            sut.selectedTab = .timeline
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MediaScreenAlbumsTabEvent(),
+                    MediaScreenVideosTabEvent(),
+                    MediaScreenPlaylistsTabEvent(),
+                    MediaScreenTimelineTabEvent()
+                ]
+            )
+        }
+    }
+    
     @MainActor
     private static func makeSUT(
         tabViewModels: [MediaTab: any MediaTabContentViewModel] = [:],
@@ -227,7 +296,8 @@ struct MediaTabViewModelTests {
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
-        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter()
+        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> MediaTabViewModel {
         .init(
             tabViewModels: tabViewModels,
@@ -235,7 +305,8 @@ struct MediaTabViewModelTests {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-            cameraUploadProgressRouter: cameraUploadProgressRouter)
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            tracker: tracker)
     }
     
     @MainActor

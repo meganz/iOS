@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -35,10 +37,15 @@ struct NavigationBarItemViewBuilder {
     @MainActor @ViewBuilder
     private static func makeContextMenuView(
         config: CMConfigEntity,
-        manager: ContextMenuManager
+        manager: ContextMenuManager,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) -> some View {
         manager.menu(with: config) {
-            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+            Button {
+                tracker.trackAnalyticsEvent(with: MediaScreenMoreMenuToolbarEvent())
+            } label: {
+                Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+            }
         }
     }
 }
