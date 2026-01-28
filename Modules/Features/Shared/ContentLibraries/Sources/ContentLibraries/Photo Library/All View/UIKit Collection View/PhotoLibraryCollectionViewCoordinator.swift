@@ -51,6 +51,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var currentVisibleMonthTitle: String = ""
     private weak var globalHeaderView: UICollectionViewCell?
     private var visibleSectionHeaders: Set<Int> = []
+    private var subscriptions = Set<AnyCancellable>()
 
     private var dragInitialIndexPath: IndexPath?
     private var dragLastIndexPath: IndexPath?
@@ -155,6 +156,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             self?.refreshGlobalHeader()
         }
         
+        subscribeToEditModeChanges()
+
         if ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
             panGesture.delegate = self
@@ -184,7 +187,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                     zoomState: Binding(
                         get: { self.viewModel.zoomState },
                         set: { self.viewModel.zoomState = $0 }
-                    )
+                    ),
+                    isEditing: self.viewModel.isEditing
                 )
                 .padding(.horizontal, TokenSpacing._5)
             }
@@ -227,6 +231,16 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         guard let globalHeaderView = globalHeaderView else { return }
         let title = currentVisibleMonthTitle.isEmpty ? (photoLibraryDataSource.first?.title ?? "") : currentVisibleMonthTitle
         globalHeaderView.contentConfiguration = createGlobalHeaderConfiguration(title: title)
+    }
+    
+    private func subscribeToEditModeChanges() {
+        viewModel.libraryViewModel.selection.$editMode
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.refreshGlobalHeader()
+            }
+            .store(in: &subscriptions)
     }
     
     private func configureScrollTracker(for collectionView: UICollectionView) {

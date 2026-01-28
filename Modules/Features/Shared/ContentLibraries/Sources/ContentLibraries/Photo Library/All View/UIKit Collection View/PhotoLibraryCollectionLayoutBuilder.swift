@@ -75,8 +75,9 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         
         // Use a placeholder header for the first section when media revamp is enabled
         // This allows tracking when the first section is visible without showing duplicate content
-        let isFirstSection = isMediaRevampEnabled && sectionIndex == 0
+        let isFirstSection = isFirstSection(sectionIndex)
         configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isFirstSection)
+        applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
         
         return section
     }
@@ -100,9 +101,10 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = spacing
         
-        let isFirstSection = isMediaRevampEnabled && sectionIndex == 0
+        let isFirstSection = isFirstSection(sectionIndex)
         configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isFirstSection)
-        
+        applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
+
         return section
     }
     
@@ -149,6 +151,18 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     ) -> NSCollectionLayoutSection {
         let section = MasonrySectionLayoutFactory.makeMasonrySection(layoutEnvironment: layoutEnvironment)
         configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: true)
+        
         return section
+    }
+    
+    private func isFirstSection(_ sectionIndex: Int) -> Bool {
+        isMediaRevampEnabled && sectionIndex == 0
+    }
+    
+    private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, isFirstSection: Bool) {
+        // Add top inset for first section to account for the pinned global header only when banner is displayed
+        if isFirstSection && bannerType != nil {
+            section.contentInsets.top = PhotoLibrarySupplementaryElementKind.globalHeaderHeight
+        }
     }
 }

@@ -24,8 +24,8 @@ struct PhotoLibraryGlobalHeaderView<LeftContent: View, RightContent: View>: View
 }
 
 // Convenience initializer for timeline mode (text title + zoom control)
-extension PhotoLibraryGlobalHeaderView where LeftContent == Text, RightContent == PhotoLibraryZoomMenuControl {
-    init(title: String, zoomState: Binding<PhotoLibraryZoomState>) {
+extension PhotoLibraryGlobalHeaderView where LeftContent == Text, RightContent == ZoomMenuControlWrapper {
+    init(title: String, zoomState: Binding<PhotoLibraryZoomState>, isEditing: Bool) {
         self.init(
             leftContent: {
                 Text(title)
@@ -33,9 +33,20 @@ extension PhotoLibraryGlobalHeaderView where LeftContent == Text, RightContent =
                     .foregroundColor(TokenColors.Text.primary.swiftUI)
             },
             rightContent: {
-                PhotoLibraryZoomMenuControl(zoomState: zoomState)
+                ZoomMenuControlWrapper(zoomState: zoomState, isEditing: isEditing)
             }
         )
+    }
+}
+
+struct ZoomMenuControlWrapper: View {
+    @Binding var zoomState: PhotoLibraryZoomState
+    let isEditing: Bool
+
+    var body: some View {
+        if !isEditing {
+            PhotoLibraryZoomMenuControl(zoomState: $zoomState)
+        }
     }
 }
 
