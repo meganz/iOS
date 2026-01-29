@@ -34,15 +34,12 @@ extension AdvancedTableViewController {
     }
 
     private enum Section: CaseIterable {
-        case transfers
         case downloadOptions
         case camera
     }
 
     private func titleForHeader(in section: Int) -> String? {
         switch Section.allCases[section] {
-        case .transfers:
-            return Strings.Localizable.transfers
         case .downloadOptions:
             return Strings.Localizable.downloadOptions
         case .camera:
@@ -52,8 +49,6 @@ extension AdvancedTableViewController {
 
     private func titleForFooter(in section: Int) -> String? {
         switch Section.allCases[section] {
-        case .transfers:
-            return Strings.Localizable.transfersSectionFooter
         case .downloadOptions:
             return Strings.Localizable.imagesAndOrVideosDownloadedWillBeStoredInTheDeviceSMediaLibraryInsteadOfTheOfflineSection
         case .camera:
@@ -77,7 +72,6 @@ extension AdvancedTableViewController {
         savePhotosLabel.textColor = TokenColors.Text.primary
         saveVideosLabel.textColor = TokenColors.Text.primary
         saveMediaInGalleryLabel.textColor = TokenColors.Text.primary
-        dontUseHttpLabel.textColor = TokenColors.Text.primary
     }
     
     @objc func hasSetIsSaveMediaCapturedToGalleryEnabled() -> Bool {

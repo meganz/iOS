@@ -872,10 +872,6 @@
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Disable";
 /* File versioning footer message */
 "settings.fileManagement.fileVersioning.footer.title"="All current files will remain. Only historic versions of your files will be deleted.";
-/* Text next to a switch that allows disabling the HTTP protocol for transfers */
-"dontUseHttp"="Don’t use HTTP";
-/* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Enable this option only if your transfers don’t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Download options";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */

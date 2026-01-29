@@ -241,9 +241,7 @@
             }
         }
         
-        if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-            [MEGASdk.shared useHttpsOnly:YES];
-        }
+        [MEGASdk.shared useHttpsOnly:YES];
         
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
@@ -1208,10 +1206,6 @@
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
     MEGALogDebug(@"on event type %lu, number %lu", event.type, event.number);
     switch (event.type) {
-        case EventChangeToHttps:
-            [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"useHttpsOnly"];
-            break;
-            
         case EventAccountBlocked:
             [self handleAccountBlockedEvent:event];
             break;

@@ -10,7 +10,7 @@ final class AdvancedTableViewControllerTests: XCTestCase {
         
         let sectionCount = sut.numberOfSections(in: sut.tableView)
         
-        XCTAssertEqual(sectionCount, 3)
+        XCTAssertEqual(sectionCount, 2)
     }
     
     func testTitleForHeaderInSection_rendersNonNilSectionTitle() {

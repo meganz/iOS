@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -448,7 +448,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="52d-B4-DXw">
-                                                    <rect key="frame" x="345" y="11.666666666666664" width="51" height="27.999999999999993"/>
+                                                    <rect key="frame" x="345" y="11.666666666666664" width="51" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="xkr-g7-Eme"/>
                                                     </constraints>
@@ -693,46 +693,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="TRANSFERS" id="Omu-b7-TCb" userLabel="Transfers">
-                                <string key="footerTitle">Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="48" id="NgY-Fi-hpk" userLabel="Don't use HTTP Table View Cell">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="48"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="NgY-Fi-hpk" id="h3R-hg-8mw">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vyq-Yn-Bxz" userLabel="Don't use HTTP Switch">
-                                                    <rect key="frame" x="333" y="10" width="63" height="28"/>
-                                                    <connections>
-                                                        <action selector="useHttpsOnlySwitch:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="PRf-l2-BHX"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't use HTTP" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kL-0h-YiN" userLabel="Don't use HTTP">
-                                                    <rect key="frame" x="20" y="17" width="305" height="14"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="leading" secondItem="h3R-hg-8mw" secondAttribute="leadingMargin" id="1cg-aF-8CZ"/>
-                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="trailing" secondItem="h3R-hg-8mw" secondAttribute="trailingMargin" id="ACS-o4-OxP"/>
-                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="leading" secondItem="1kL-0h-YiN" secondAttribute="trailing" constant="8" symbolic="YES" id="CVr-2c-USV"/>
-                                                <constraint firstItem="1kL-0h-YiN" firstAttribute="top" secondItem="h3R-hg-8mw" secondAttribute="topMargin" constant="2" id="Ny0-wZ-hy4"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="1kL-0h-YiN" secondAttribute="bottom" constant="2" id="oZt-I6-p3m"/>
-                                                <constraint firstItem="Vyq-Yn-Bxz" firstAttribute="centerY" secondItem="h3R-hg-8mw" secondAttribute="centerY" id="xx2-xF-eOX"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="DOWNLOAD OPTIONS" footerTitle="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section." id="8u2-hQ-lGy" userLabel="Download Options">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="48" id="qCA-HQ-nS1" userLabel="Save Images In Library Table View Cell">
-                                        <rect key="frame" x="0.0" y="210.66666030883789" width="414" height="48"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="qCA-HQ-nS1" id="OpU-Jz-CNM">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
@@ -776,7 +740,7 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="48" id="2uJ-Cf-XIf" userLabel="Save Videos in Library Table View Cell">
-                                        <rect key="frame" x="0.0" y="258.66666030883789" width="414" height="48"/>
+                                        <rect key="frame" x="0.0" y="103.33333206176758" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="2uJ-Cf-XIf" id="shB-pb-yOU">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
@@ -823,20 +787,20 @@
                             <tableViewSection headerTitle="Camera" footerTitle="Save a copy of the images and videos taken from the MEGA app in your device’s media library." id="4rI-FB-rsU">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="932-md-qrY" userLabel="Save to gallery Table View Cell">
-                                        <rect key="frame" x="0.0" y="397.99999237060547" width="414" height="55.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="242.66666221618652" width="414" height="56.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="932-md-qrY" id="uRA-az-Dr6">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uU3-hV-B7S" userLabel="Save to Gallery Switch">
-                                                    <rect key="frame" x="333" y="14" width="63" height="28"/>
+                                                    <rect key="frame" x="333" y="14.333333333333336" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="saveInLibrarySwitchValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="uSP-Qi-gP7"/>
                                                     </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ac8-ls-Zj9">
-                                                    <rect key="frame" x="339" y="12.333333333333336" width="49" height="31"/>
+                                                    <rect key="frame" x="339" y="12.666666666666664" width="49" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="Ma5-e4-78j"/>
                                                         <constraint firstAttribute="width" constant="49" id="VAr-m7-M1R"/>
@@ -846,7 +810,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save in Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YB-6E-Htm" userLabel="Save to Galllery">
-                                                    <rect key="frame" x="20" y="17" width="305" height="21.666666666666671"/>
+                                                    <rect key="frame" x="20" y="17" width="305" height="22.333333333333329"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -877,7 +841,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="dontUseHttpLabel" destination="1kL-0h-YiN" id="dTh-da-9fl"/>
                         <outlet property="saveImagesButton" destination="0xX-SB-VHF" id="oeA-M5-O1R"/>
                         <outlet property="saveImagesSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
                         <outlet property="saveMediaInGalleryButton" destination="ac8-ls-Zj9" id="AQq-Ne-Dpu"/>
@@ -887,7 +850,6 @@
                         <outlet property="saveVideosButton" destination="d0c-df-U4e" id="D6z-Rr-lel"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
                         <outlet property="saveVideosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
-                        <outlet property="useHttpsOnlySwitch" destination="Vyq-Yn-Bxz" id="eDN-vd-W8p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NC8-4Q-Rd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1092,20 +1054,20 @@
                                 <string key="footerTitle">Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="N5d-3p-umx" userLabel="Use Mobile Data Table View Cell">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="55.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="55.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="N5d-3p-umx" id="Jr8-rI-sPM">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Mobile Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Dx-HX-Oyl">
-                                                    <rect key="frame" x="20" y="17" width="305" height="21.666666666666671"/>
+                                                    <rect key="frame" x="20" y="17" width="305" height="21.333333333333329"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qpH-oX-jGh" userLabel="Use Mobile Data Switch">
-                                                    <rect key="frame" x="333" y="14" width="63" height="28"/>
+                                                    <rect key="frame" x="333" y="13.666666666666664" width="63" height="28"/>
                                                     <connections>
                                                         <action selector="useMobileDataSwitchChanged:" destination="z1p-YM-xge" eventType="valueChanged" id="cEt-Zl-tj7"/>
                                                     </connections>
@@ -1127,7 +1089,7 @@
                             <tableViewSection headerTitle="On your device" footerTitle="Currently using 0 MB" id="Ko3-Bl-ozS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="WbE-QH-DWS" style="IBUITableViewCellStyleDefault" id="g99-XO-Y4L" userLabel="Clear Offline Files Table View Cell">
-                                        <rect key="frame" x="0.0" y="218.33332824707031" width="414" height="51"/>
+                                        <rect key="frame" x="0.0" y="217.99999237060547" width="414" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g99-XO-Y4L" id="U3B-1C-y5d">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
@@ -1149,7 +1111,7 @@
                             <tableViewSection headerTitle="" footerTitle="Currently using 256 MB" id="Z5Q-jf-tcd" userLabel="Clear cache">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvancedCell" textLabel="3R5-CK-znG" style="IBUITableViewCellStyleDefault" id="u4H-C6-twv" userLabel="Clear Cache Table View Cell">
-                                        <rect key="frame" x="0.0" y="324.33332824707031" width="414" height="51"/>
+                                        <rect key="frame" x="0.0" y="323.99999237060547" width="414" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u4H-C6-twv" id="0DU-SS-DWH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
@@ -1171,7 +1133,7 @@
                             <tableViewSection headerTitle="ON MEGA" footerTitle="Currently using 256 MB" id="1gy-ee-vQr" userLabel="On MEGA">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="YM7-sM-FPb" style="IBUITableViewCellStyleDefault" id="LKO-7b-28g" userLabel="Rubbish Bin Table View Cell">
-                                        <rect key="frame" x="0.0" y="450.66666030883789" width="414" height="51"/>
+                                        <rect key="frame" x="0.0" y="450.33332443237305" width="414" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LKO-7b-28g" id="JLg-pr-tMK">
                                             <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="51"/>
@@ -1196,7 +1158,7 @@
                             <tableViewSection id="ye3-UW-pSH" userLabel="File Versioning">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="YTy-SK-XyD" detailTextLabel="Ump-rj-lFn" style="IBUITableViewCellStyleValue1" id="218-HR-YXu" userLabel="File Versioning Table View Cell">
-                                        <rect key="frame" x="0.0" y="549.66666030883789" width="414" height="51"/>
+                                        <rect key="frame" x="0.0" y="549.33332443237305" width="414" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="218-HR-YXu" id="fyk-cC-KcH">
                                             <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="51"/>

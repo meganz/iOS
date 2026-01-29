@@ -141,9 +141,7 @@
             [self checkPasscode];
         }
         
-        if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-            [MEGASdk.shared useHttpsOnly:YES];
-        }
+        [MEGASdk.shared useHttpsOnly:YES];
     } else {
         [self openApp];
     }

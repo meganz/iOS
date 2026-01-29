@@ -31,13 +31,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.dontUseHttpLabel setText:LocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
     self.savePhotosLabel.text = LocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
     self.saveVideosLabel.text = LocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
     self.saveMediaInGalleryLabel.text = LocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
-    BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
-    [self.useHttpsOnlySwitch setOn:useHttpsOnly];
-
     BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:AdvancedTableViewController.savePhotoToGalleryKey];
     [self.saveImagesSwitch setOn:isSavePhotoToGalleryEnabled];
 
@@ -121,11 +117,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)useHttpsOnlySwitch:(UISwitch *)sender {
-    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:sender.on forKey:@"useHttpsOnly"];
-    [MEGASdk.shared useHttpsOnly:sender.on];
-}
 
 - (IBAction)downloadOptionsSaveImagesSwitchTouchUpInside:(UIButton *)sender {
     [self checkPhotosPermissionForUserDefaultSetting:AdvancedTableViewController.savePhotoToGalleryKey settingSwitch:self.saveImagesSwitch];
