@@ -53,6 +53,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Calculate app size and post it to the MR
 
+### post_build_warnings
+
+```sh
+[bundle exec] fastlane post_build_warnings
+```
+
+
+
+### post_errors
+
+```sh
+[bundle exec] fastlane post_errors
+```
+
+
+
 ----
 
 
