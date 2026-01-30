@@ -1,5 +1,5 @@
 {
-  "originHash" : "0a752d42b41596387c074d3923a8b8014b9c0074a81b288f58e1b58834a44385",
+  "originHash" : "1317962b779f75d9c53940d44d38e8c94a3986761e051c2d0dbcadca06a96193",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
-        "revision" : "793b67f4652e1a39d03fab6650033768afe6d15e",
-        "version" : "12.5.0"
+        "revision" : "674d9a7ee9858207181a3dd0b42c77298c6fb71b",
+        "version" : "12.8.0"
       }
     },
     {
@@ -96,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
       "state" : {
-        "revision" : "c2d59acf17a8ba7ed80a763593c67c9c7c006ad1",
-        "version" : "12.5.0"
+        "revision" : "2ffd220823f3716904733162e9ae685545c276d1",
+        "version" : "12.8.0"
       }
     },
     {
@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nathantannar4/InputBarAccessoryView",
       "state" : {
-        "revision" : "0451bb8bebff4da089f15d440aaa1740fee29ce6",
-        "version" : "7.0.2"
+        "revision" : "6677def509ef3a0cb252bcf9a23e1c6a67ec2fa0",
+        "version" : "7.0.4"
       }
     },
     {
@@ -214,7 +214,7 @@
       "location" : "https://github.com/meganz/MEGADesignToken",
       "state" : {
         "branch" : "main",
-        "revision" : "bf64beb4a8869c88c4199d7e1fef3be5bd97c378"
+        "revision" : "cd3ce5627c5610188b5eeceba666fc028c128d0f"
       }
     },
     {
@@ -231,7 +231,7 @@
       "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
       "state" : {
         "branch" : "main",
-        "revision" : "ecae93cd630c565b935a961b68416c3d22bcf279"
+        "revision" : "f4eb98ee7ace6da578de07bc77e502aee8bf713c"
       }
     },
     {
@@ -293,8 +293,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
-        "revision" : "2053b120767c42a70bcba21095f34e4cfb54a75d",
-        "version" : "5.21.3"
+        "revision" : "36e79ba485e9bb4d3cd4e3318908866dac5e7b51",
+        "version" : "5.21.5"
       }
     },
     {
@@ -311,8 +311,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-async-algorithms.git",
       "state" : {
-        "revision" : "042e1c4d9d19748c9c228f8d4ebc97bb1e339b0b",
-        "version" : "1.0.4"
+        "revision" : "6c050d5ef8e1aa6342528460db614e9770d7f804",
+        "version" : "1.1.1"
       }
     },
     {
@@ -338,8 +338,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
       "state" : {
-        "revision" : "ce592ae52f982c847a4efc0dd881cc9eb32d29f2",
-        "version" : "1.6.4"
+        "revision" : "2778fd4e5a12a8aaa30a3ee8285f4ce54c5f3181",
+        "version" : "1.9.1"
       }
     },
     {
@@ -347,8 +347,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
       "state" : {
-        "revision" : "5f3a0ffb76bdd6f61d24c7398d40c8f09c98006d",
-        "version" : "12.12.0"
+        "revision" : "1239c23464503053c17d37ee5daa70de3455e9c8",
+        "version" : "12.14.0"
       }
     },
     {
@@ -358,15 +358,6 @@
       "state" : {
         "revision" : "13b248eaa73b7826f0efb1bcf455e251d65ecb1b",
         "version" : "3.1.0"
-      }
-    },
-    {
-      "identity" : "swift-protobuf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-protobuf.git",
-      "state" : {
-        "revision" : "c169a5744230951031770e27e475ff6eefe51f9d",
-        "version" : "1.33.3"
       }
     },
     {
