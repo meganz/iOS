@@ -97,8 +97,12 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         self.tracker = tracker
 
         configureContextMenuManager()
-        subscribeToTabViewModelEvents()
+        // injectSharedResources() should be called before subscribeToTabViewModelEvents().
+        // titleUpdatePublisher is a computed property that checks sharedResourceProvider —
+        // if nil, it returns a Just publisher that completes immediately instead of the
+        // correct long-lived publisher that responds to selection changes.
         injectSharedResources()
+        subscribeToTabViewModelEvents()
         updateNavigationBarForCurrentTab()
     }
     

@@ -233,3 +233,20 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationSubtitleProvider {
         subtitleUpdatePassthroughSubject.eraseToAnyPublisher()
     }
 }
+
+extension MediaTimelineTabContentViewModel: MediaTabNavigationTitleProvider {
+    var titleUpdatePublisher: AnyPublisher<String, Never> {
+        let inactiveEditModeTitle = Strings.Localizable.Photos.SearchResults.Media.Section.title
+        guard let sharedResourceProvider else {
+            return Just(inactiveEditModeTitle).eraseToAnyPublisher()
+        }
+
+        let selectionCountPublisher = timelineViewModel.photoLibraryContentViewModel.selection.$photos
+            .map { $0.count }
+            .eraseToAnyPublisher()
+
+        return sharedResourceProvider.selectionTitlePublisher(
+            selectionCountPublisher: selectionCountPublisher,
+            inactiveEditModeTitle: inactiveEditModeTitle)
+    }
+}
