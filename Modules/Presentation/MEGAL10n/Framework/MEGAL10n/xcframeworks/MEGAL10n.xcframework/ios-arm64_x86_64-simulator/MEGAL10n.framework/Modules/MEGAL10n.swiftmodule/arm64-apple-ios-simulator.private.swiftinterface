@@ -269,7 +269,6 @@ public enum Strings {
     public static let documents: Swift.String
     public static let done: Swift.String
     public static let dontShowAgain: Swift.String
-    public static let dontUseHttp: Swift.String
     public static let download: Swift.String
     public static let downloadOptions: Swift.String
     public static let downloadButton: Swift.String
@@ -893,7 +892,6 @@ public enum Strings {
     public static let transfersEmptyStateTitleDownload: Swift.String
     public static let transfersEmptyStateTitlePaused: Swift.String
     public static let transfersEmptyStateTitleUpload: Swift.String
-    public static let transfersSectionFooter: Swift.String
     public static let turnMobileDataOn: Swift.String
     public static let twoFactorAuthentication: Swift.String
     public static let twoFactorAuthenticationDisabled: Swift.String
