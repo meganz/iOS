@@ -1,9 +1,13 @@
 import SwiftUI
 
 struct PhotoLibraryModeAllCollectionView: View {
-    
-    @StateObject var viewModel: PhotoLibraryModeAllCollectionViewModel
+    @StateObject private var viewModel: PhotoLibraryModeAllCollectionViewModel
     let router: any PhotoLibraryContentViewRouting
+
+    init(viewModel: @autoclosure @escaping () -> PhotoLibraryModeAllCollectionViewModel, router: some PhotoLibraryContentViewRouting) {
+        self._viewModel = StateObject(wrappedValue: viewModel())
+        self.router = router
+    }
 
     private var isLiquidGlassEnabled: Bool {
         if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {

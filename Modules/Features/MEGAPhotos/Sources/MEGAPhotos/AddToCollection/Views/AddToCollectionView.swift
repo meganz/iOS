@@ -64,23 +64,25 @@ public struct AddToCollectionView: View {
     private var collectionsContent: some View {
         PageTabView(
             tabs: [
-                .init(
+                PageTabItem(
                     id: AddToCollectionViewModel.Tabs.albums,
-                    title: Strings.Localizable.CameraUploads.Albums.title) {
-                        albumsContent
-                    },
-                .init(
+                    title: Strings.Localizable.CameraUploads.Albums.title),
+                PageTabItem(
                     id: AddToCollectionViewModel.Tabs.videoPlaylists,
-                    title: Strings.Localizable.Videos.Tab.Title.playlist) {
-                        AddToPlaylistView(
-                            viewModel: viewModel.addToPlaylistViewModel)
-                    }
+                    title: Strings.Localizable.Videos.Tab.Title.playlist)
             ],
             selectedTab: $viewModel.selectedTab,
             selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
             textForegroundColor: TokenColors.Text.primary.swiftUI,
             tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,
             backgroundColor: TokenColors.Background.surface1.swiftUI
-        )
+        ) { tab in
+            switch tab {
+            case .albums:
+                albumsContent
+            case .videoPlaylists:
+                AddToPlaylistView(viewModel: viewModel.addToPlaylistViewModel)
+            }
+        }
     }
 }

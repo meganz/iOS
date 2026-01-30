@@ -29,7 +29,10 @@ import SwiftUI
         contentMode: contentMode,
         contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
     )
+    
     private let tracker: any AnalyticsTracking
+    
+    lazy var allCollectionViewModel = PhotoLibraryModeAllCollectionViewModel(libraryViewModel: self)
     
     // MARK: - Init
     public init(

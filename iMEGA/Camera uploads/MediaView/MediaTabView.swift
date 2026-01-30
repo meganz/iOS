@@ -31,11 +31,7 @@ struct MediaTabView: View {
     
     private var tabs: some View {
         MEGASwiftUI.PageTabView(
-            tabs: MediaTab.allCases.map { tab in
-                MEGASwiftUI.PageTabView.TabItem(id: tab, title: tab.title) {
-                    contentView(for: tab)
-                }
-            },
+            tabs: MediaTab.allCases.map { PageTabItem(id: $0, title: $0.title) },
             selectedTab: $viewModel.selectedTab,
             selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
             textForegroundColor: TokenColors.Text.secondary.swiftUI,
@@ -46,7 +42,9 @@ struct MediaTabView: View {
                 get: { viewModel.editMode == .active },
                 set: { _ in }
             )
-        )
+        ) { tab in
+            contentView(for: tab)
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {

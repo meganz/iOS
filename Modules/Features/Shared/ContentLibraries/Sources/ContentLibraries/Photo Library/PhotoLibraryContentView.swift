@@ -77,8 +77,7 @@ public struct PhotoLibraryContentView: View {
             }
             
             PhotoLibraryModeAllCollectionView(
-                viewModel: PhotoLibraryModeAllCollectionViewModel(
-                    libraryViewModel: viewModel),
+                viewModel: viewModel.allCollectionViewModel,
                 router: router
             )
             .opacity(viewModel.selectedMode == .all ? 1.0 : 0.0)
