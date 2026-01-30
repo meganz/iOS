@@ -16,6 +16,7 @@ final class CrashlyticsLogger: NSObject, Sendable {
         case sharedItems
         case viewLifecycle
         case audioPlayer
+        case storeKit
         var rawValue: String {
             switch self {
             case .general: "General"
@@ -26,6 +27,7 @@ final class CrashlyticsLogger: NSObject, Sendable {
             case .sharedItems: "Shared Items"
             case .viewLifecycle: "View"
             case .audioPlayer: "Audio Player"
+            case .storeKit: "Store Kit"
             }
         }
     }
