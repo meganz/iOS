@@ -15,6 +15,7 @@
 @property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;
 @property (nonatomic, strong, nullable) NSArray<SKPaymentTransaction *> *submittingTransactions;
+@property (nonatomic, strong, nullable) SKProductsRequest *productsRequest;
 @end
 
 @implementation MEGAPurchase
@@ -67,9 +68,9 @@
         }
         self.products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         self.iOSProductIdentifiers = [productIdentifieres copy];
-        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
-        prodRequest.delegate = self;
-        [prodRequest start];
+        self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
+        self.productsRequest.delegate = self;
+        [self.productsRequest start];
 
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
@@ -170,6 +171,7 @@
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     MEGALogError(@"[StoreKit] Request did fail with error %@", error);
+    [self checkForExpiredOrCancellation];
 }
 
 #pragma mark - SKPaymentTransactionObserver Methods
