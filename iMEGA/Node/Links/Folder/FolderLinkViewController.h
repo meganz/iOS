@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FolderLinkViewController : UIViewController
 
-@property (nonatomic, readonly, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic) BOOL isFolderRootNode;
 @property (nonatomic, strong, nullable) NSString *publicLinkString;
 @property (nonatomic, strong, nullable) NSString *linkEncryptedString;
@@ -66,12 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (FolderLinkViewController *)folderLinkViewControllerFromNode:(MEGANode *)node;
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error;
 - (void)handleInvalidDecryptionKey;
-- (void)handleLoginDone;
-- (void)handleFetchNodesDone:(BOOL)validKey;
-- (void)handleLogout;
 - (void)handleFileAttributeUpdate:(uint64_t)nodeHandle;
 - (void)showDecryptionAlert;
-- (void)handleFetchNodesFailed;
+- (void)handleRootFolderLinkLoaded;
 
 @end
 

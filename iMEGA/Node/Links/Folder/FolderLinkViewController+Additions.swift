@@ -33,7 +33,7 @@ extension FolderLinkViewController {
         isDecryptedFolder() && !isUndecryptedNodeSelected()
     }
     
-    @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
+    @objc func makeFolderLinkViewModel(link: String) -> FolderLinkViewModel {
         let downloadFileRepository = DownloadFileRepository(
             sdk: MEGASdk.shared,
             sharedFolderSdk: MEGASdk.sharedFolderLink
@@ -46,11 +46,13 @@ extension FolderLinkViewController {
             downloadChatRepository: DownloadChatRepository.newRepo
         )
         let viewModel = FolderLinkViewModel(
+            publicLink: link,
             folderLinkUseCase: FolderLinkUseCase(
                 transferRepository: TransferRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo,
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
+            folderLinkFlowUseCase: FolderLinkFlowUseCase(),
             saveMediaUseCase: saveMediaUseCase,
             viewMode: isListViewModeSelected() ? .list : .thumbnail
         )
@@ -60,8 +62,20 @@ extension FolderLinkViewController {
         return viewModel
     }
     
-    @objc func onViewDidLoad() {
-        viewModel.dispatch(.onViewDidLoad)
+    @objc func startMonitoringNodeUpdates() {
+        viewModel.dispatch(.monitorNodeUpdates)
+    }
+    
+    @objc func startLoadingFolderLink() {
+        viewModel.dispatch(.startLoadingFolderLink)
+    }
+    
+    @objc func confirmDecryptionKey(_ key: String) {
+        viewModel.dispatch(.confirmDecryptionKey(key))
+    }
+    
+    @objc func cancelConfirmingDecryptionKey() {
+        viewModel.dispatch(.cancelConfirmingDecryptionKey)
     }
     
     @objc func containsMediaFiles() -> Bool {
@@ -301,14 +315,6 @@ extension FolderLinkViewController {
         ])
     }
     
-    @objc func startLoading() {
-        activityIndicator.startAnimating()
-    }
-    
-    @objc func stopLoading() {
-        activityIndicator.stopAnimating()
-    }
-    
     private func isFromFolderLink(nodeHandle: HandleEntity) -> MEGANode? {
         nodesArray.first { $0.handle == nodeHandle }
     }
@@ -356,23 +362,14 @@ extension FolderLinkViewController: ViewType {
             case .expired:
                 showUnavailableLinkViewWithError(.expired)
             }
+        case .rootFolderLinkLoaded:
+            handleRootFolderLinkLoaded()
         case .invalidDecryptionKey:
             handleInvalidDecryptionKey()
         case .decryptionKeyRequired:
             showDecryptionAlert()
-        case .loginDone:
-            handleLoginDone()
-        case .fetchNodesDone(let validKey):
-            handleFetchNodesDone(validKey)
-        case .fetchNodesFailed:
-            guard isLoginDone else { return }
-            handleFetchNodesFailed()
-        case .logoutDone:
-            handleLogout()
         case .fileAttributeUpdate(let handleEntity):
             handleFileAttributeUpdate(handleEntity)
-        case .fetchNodesStarted:
-            startLoading()
         case .endEditingMode:
             setEditMode(false)
             refreshToolbarButtonsStatus(isDecryptedFolder())

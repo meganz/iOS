@@ -2,13 +2,17 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
+import MEGASdk
 import MEGAUIComponent
 import Search
 
 @MainActor
 @objc public final class FolderLinkViewModel: NSObject, ViewModelType {
     public enum Action: ActionType {
-        case onViewDidLoad
+        case startLoadingFolderLink
+        case confirmDecryptionKey(String)
+        case monitorNodeUpdates
+        case cancelConfirmingDecryptionKey
         case trackSendToChatFolderLinkNoAccountLogged
         case trackSendToChatFolderLink
         case saveToPhotos([NodeEntity])
@@ -17,16 +21,12 @@ import Search
     }
     
     public enum Command: CommandType {
+        case rootFolderLinkLoaded
         case nodeDownloadTransferFinish(HandleEntity)
         case nodesUpdate([NodeEntity])
         case linkUnavailable(FolderLinkUnavailableReason)
         case invalidDecryptionKey
         case decryptionKeyRequired
-        case loginDone
-        case fetchNodesDone(validKey: Bool)
-        case fetchNodesStarted
-        case fetchNodesFailed
-        case logoutDone
         case fileAttributeUpdate(HandleEntity)
         case endEditingMode
         case showSaveToPhotosError(String)
@@ -36,7 +36,13 @@ import Search
     public var invokeCommand: ((Command) -> Void)?
     public func dispatch(_ action: Action) {
         switch action {
-        case .onViewDidLoad:
+        case .startLoadingFolderLink:
+            startLoadingFolderLink()
+        case let .confirmDecryptionKey(key):
+            confirmDecryptionKey(key)
+        case .cancelConfirmingDecryptionKey:
+            folderLinkFlowUseCase.stop()
+        case .monitorNodeUpdates:
             startMonitoringUpdates()
         case .trackSendToChatFolderLink:
             trackSendToChatFolderLinkEvent()
@@ -51,7 +57,9 @@ import Search
         }
     }
     
+    private let publicLink: String
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
+    private let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
 
@@ -82,12 +90,6 @@ import Search
         }
     }
     
-    private var monitorFetchNodesRequestStartUpdatesTask: Task<Void, Never>? {
-        didSet {
-            oldValue?.cancel()
-        }
-    }
-    
     private var monitorRequestFinishUpdatesTask: Task<Void, Never>? {
         didSet {
             oldValue?.cancel()
@@ -95,11 +97,15 @@ import Search
     }
     
     init(
+        publicLink: String,
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
+        folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
         viewMode: ViewModePreferenceEntity,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
+        self.publicLink = publicLink
+        self.folderLinkFlowUseCase = folderLinkFlowUseCase
         self.folderLinkUseCase = folderLinkUseCase
         self.saveMediaUseCase = saveMediaUseCase
         self.tracker = tracker
@@ -111,7 +117,6 @@ import Search
     deinit {
         monitorCompletedDownloadTransferTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
-        monitorFetchNodesRequestStartUpdatesTask?.cancel()
         monitorRequestFinishUpdatesTask?.cancel()
     }
     
@@ -130,48 +135,50 @@ import Search
             }
         }
         
-        monitorFetchNodesRequestStartUpdatesTask = Task { [weak self, folderLinkUseCase] in
-            for await _ in folderLinkUseCase.fetchNodesRequestStartUpdates {
-                guard !Task.isCancelled else { break }
-                self?.invokeCommand?(.fetchNodesStarted)
-            }
-        }
-        
         monitorRequestFinishUpdatesTask = Task { [weak self, folderLinkUseCase] in
-            for await result in folderLinkUseCase.requestFinishUpdates {
+            for await nodeHandle in folderLinkUseCase.fileAttributesUpdates {
                 guard !Task.isCancelled else { break }
-                switch result {
-                case .success(let requestEntity):
-                    switch requestEntity.type {
-                    case .login:
-                        self?.invokeCommand?(.loginDone)
-                    case .fetchNodes:
-                        self?.invokeCommand?(.fetchNodesDone(validKey: !requestEntity.flag))
-                    case .logout:
-                        self?.handleLogoutDone()
-                    case .getAttrFile:
-                        self?.invokeCommand?(.fileAttributeUpdate(requestEntity.nodeHandle))
-                    default:
-                        break
-                    }
-                case .failure(let folderLinkErrorEntity):
-                    switch folderLinkErrorEntity {
-                    case .linkUnavailable(let reason):
-                        self?.invokeCommand?(.linkUnavailable(reason))
-                    case .invalidDecryptionKey:
-                        self?.invokeCommand?(.invalidDecryptionKey)
-                    case .decryptionKeyRequired:
-                        self?.invokeCommand?(.decryptionKeyRequired)
-                    case .fetchNodesFailed:
-                        self?.invokeCommand?(.fetchNodesFailed)
-                    }
-                }
+                self?.invokeCommand?(.fileAttributeUpdate(nodeHandle))
             }
         }
     }
     
-    private func handleLogoutDone() {
-        invokeCommand?(.logoutDone)
+    /// Only run once per folder link, no need keep track the task, just need weak self for avoid prolong self lifetime
+    private func startLoadingFolderLink() {
+        Task { [weak self, folderLinkFlowUseCase, publicLink] in
+            do throws(FolderLinkFlowErrorEntity) {
+                try await folderLinkFlowUseCase.initialStart(with: publicLink)
+                guard !Task.isCancelled else { return }
+                self?.invokeCommand?(.rootFolderLinkLoaded)
+            } catch {
+                self?.handleFolderLinkFlowError(error)
+            }
+        }
+    }
+    
+    /// Next task only starts when previous task completed.
+    /// So no need keep track the task, just need weak self for avoid prolong self lifetime
+    private func confirmDecryptionKey(_ key: String) {
+        Task { [weak self, folderLinkFlowUseCase, publicLink] in
+            do throws(FolderLinkFlowErrorEntity) {
+                try await folderLinkFlowUseCase.confirmDecryptionKey(with: publicLink, decryptionKey: key)
+                guard !Task.isCancelled else { return }
+                self?.invokeCommand?(.rootFolderLinkLoaded)
+            } catch {
+                self?.handleFolderLinkFlowError(error)
+            }
+        }
+    }
+    
+    private func handleFolderLinkFlowError(_ error: FolderLinkFlowErrorEntity) {
+        switch error {
+        case .invalidDecryptionKey:
+            invokeCommand?(.invalidDecryptionKey)
+        case .missingDecryptionKey:
+            invokeCommand?(.decryptionKeyRequired)
+        case let .linkUnavailable(reason):
+            invokeCommand?(.linkUnavailable(reason))
+        }
     }
     
     private func trackSendToChatFolderLinkNoAccountLoggedEvent() {

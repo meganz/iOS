@@ -32,14 +32,9 @@
 
 @interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate>
 
-@property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
-@property (nonatomic, getter=isValidatingDecryptionKey) BOOL validatingDecryptionKey;
-
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
-
-@property (nonatomic, strong) NSMutableArray *cloudImages;
 
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
@@ -62,7 +57,7 @@
 
 - (FolderLinkViewModel *)viewModel {
     if (!_viewModel) {
-        _viewModel = [self makeFolderLinkViewModel];
+        _viewModel = [self makeFolderLinkViewModelWithLink:self.publicLinkString];
     }
     return _viewModel;
 }
@@ -72,8 +67,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self onViewDidLoad];
+    [self configureViews];
     
+    if (self.isFolderRootNode) {
+        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
+        [self setActionButtonsEnabled:NO];
+        [self startLoading];
+        [self startLoadingFolderLink];
+    } else {
+        [self reloadUI];
+        [self startMonitoringNodeUpdates];
+    }
+}
+
+- (void)configureViews {
     [self configureImages];
     
     self.currentContentInsetHeight = 0;
@@ -82,7 +89,6 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
 
     self.definesPresentationContext = YES;
-    self.loginDone = NO;
     self.fetchNodesDone = NO;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
@@ -114,16 +120,7 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
-
-    if (self.isFolderRootNode) {
-        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
-        [self setActionButtonsEnabled:NO];
-    } else {
-        [self reloadUI];
-    }
-
-    [self determineViewMode];
-    [self configureContextMenuManager];
+    
     [self setupSpinner];
     
     self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
@@ -156,10 +153,6 @@
     
     MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
     
-    if (!self.loginDone && self.isFolderRootNode) {
-        [sdkFolder loginToFolderLink:self.publicLinkString];
-    }
-    
     [sdkFolder retryPendingConnections];
     
     [self updateMiniPlayerPresenter];
@@ -191,10 +184,6 @@
 #pragma mark - Private
 
 - (void)reloadUI {
-    if (!self.parentNode) {
-        self.parentNode = [MEGASdk.sharedFolderLink rootNode];
-    }
-    
     [self setNavigationBarTitleLabel];
     
     self.nodeList = [MEGASdk.sharedFolderLink childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
@@ -211,8 +200,6 @@
     
     self.nodesArray = tempArray;
 
-    [self reloadData];
-
     if (self.nodeList.size == 0) {
         [self.flTableView hidesBottomBarWhenPushed];
     } else {
@@ -220,6 +207,18 @@
     }
     
     [self configureToolbarButtons];
+    [self determineViewMode];
+    [self configureContextMenuManager];
+    
+    [self reloadData];
+}
+
+- (void)startLoading {
+    [self.activityIndicator startAnimating];
+}
+
+- (void)stopLoading {
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)setNavigationBarTitleLabel {
@@ -315,6 +314,7 @@
 }
     
 - (void)showDecryptionAlert {
+    __weak typeof(self) weakSelf = self;
     UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"decryptionKeyAlertTitle", @"") message:LocalizedString(@"decryptionKeyAlertMessage", @"") preferredStyle:UIAlertControllerStyleAlert];
     
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -326,17 +326,14 @@
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [MEGASdk.sharedFolderLink logout];
+        [weakSelf cancelConfirmingDecryptionKey];
         [decryptionAlertController.textFields.firstObject resignFirstResponder];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }]];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"decrypt", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
-        
-        self.validatingDecryptionKey = YES;
-        
-        [MEGASdk.sharedFolderLink loginToFolderLink:linkString];
+        NSString *key = decryptionAlertController.textFields.firstObject.text;
+        [weakSelf confirmDecryptionKey:key];
     }]];
     
     decryptionAlertController.actions.lastObject.enabled = NO;
@@ -345,11 +342,10 @@
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    self.validatingDecryptionKey = NO;
-    
+    __weak typeof(self) weakSelf = self;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"decryptionKeyNotValid", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [self showDecryptionAlert];
+        [weakSelf showDecryptionAlert];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -699,14 +695,10 @@
 - (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        if (!self.isFetchNodesDone && self.isFolderRootNode) {
-            text = @"";
+        if (self.searchController.isActive) {
+            text = LocalizedString(@"noResults", @"");
         } else {
-            if (self.searchController.isActive) {
-                text = LocalizedString(@"noResults", @"");
-            } else {
-                text = LocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-            }
+            text = LocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         }
     } else {
         text = LocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -726,10 +718,6 @@
 
 - (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
-        if (!self.isFetchNodesDone && self.isFolderRootNode) {
-            return nil;
-        }
-        
          if (self.searchController.isActive) {
              return [UIImage megaImageWithNamed:@"glassSearch02"];
          }
@@ -755,55 +743,6 @@
     }
 }
 
-- (void)handleLoginDone {
-    self.loginDone = YES;
-    self.fetchNodesDone = NO;
-    [MEGASdk.sharedFolderLink fetchNodes];
-}
-
-- (void)handleFetchNodesDone:(BOOL)validKey {
-    if (!validKey) {
-        [MEGASdk.sharedFolderLink logout];
-        
-        [self stopLoading];
-        
-        if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
-            [self showDecryptionKeyNotValidAlert];
-        } else { //Link with invalid key
-            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-        }
-        return;
-    }
-    
-    self.fetchNodesDone = YES;
-    
-    [self reloadUI];
-
-    [self determineViewMode];
-    
-    [self configureContextMenuManager];
-
-    NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
-    if (componentsArray.count == 4) {
-        [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
-    }
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-        [MEGASdk.sharedFolderLink pauseTransfers:YES];
-    }
-    [self stopLoading];
-}
-
-- (void)handleFetchNodesFailed {
-    [MEGASdk.sharedFolderLink logout];
-    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-}
-
-- (void)handleLogout {
-    self.loginDone = NO;
-    self.fetchNodesDone = NO;
-}
-
 - (void)handleFileAttributeUpdate:(uint64_t)nodeHandle {
     for (NodeTableViewCell *nodeTableViewCell in self.flTableView.tableView.visibleCells) {
         if (nodeHandle == nodeTableViewCell.node.handle) {
@@ -813,12 +752,18 @@
     }
 }
 
+#pragma mark - Folder Link flow
+
 - (void)handleInvalidDecryptionKey {
-    if (self.isValidatingDecryptionKey) { //If the user have written the key
-        [self showDecryptionKeyNotValidAlert];
-    } else {
-        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-    }
+    [self showDecryptionKeyNotValidAlert];
+}
+
+- (void)handleRootFolderLinkLoaded {
+    self.fetchNodesDone = YES;
+    self.parentNode = MEGASdk.sharedFolderLink.rootNode;
+    [self stopLoading];
+    [self reloadUI];
+    [self startMonitoringNodeUpdates];
 }
 
 @end

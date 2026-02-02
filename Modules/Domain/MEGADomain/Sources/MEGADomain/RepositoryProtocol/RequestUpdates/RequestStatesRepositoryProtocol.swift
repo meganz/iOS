@@ -28,7 +28,9 @@ public extension RequestStatesRepositoryProtocol {
     /// A stream of `RequestEntity` indicating request finished sucessfully (error type is ok)
     var completedRequestUpdates: AnyAsyncSequence<RequestEntity> {
         requestFinishUpdates
-            .compactMap { $0.isSuccess ? $0.requestEntity : nil }
+            .compactMap {
+                $0.isSuccess ? $0.requestEntity : nil
+            }
             .eraseToAnyAsyncSequence()
     }
 }

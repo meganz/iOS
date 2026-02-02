@@ -103,7 +103,9 @@ struct FolderLinkViewModelTests {
         viewMode: ViewModePreferenceEntity = .list
     ) -> SUT {
         .init(
+            publicLink: "",
             folderLinkUseCase: MockFolderLinkUseCase(),
+            folderLinkFlowUseCase: MockFolderLinkFlowUseCase(),
             saveMediaUseCase: MockSaveMediaToPhotosUseCase(),
             viewMode: viewMode,
             tracker: tracker

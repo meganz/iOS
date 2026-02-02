@@ -16,7 +16,7 @@ public final class MockFolderLinkUseCase: FolderLinkUseCaseProtocol {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     
-    public var requestFinishUpdates: AnyAsyncSequence<Result<RequestEntity, FolderLinkErrorEntity>> {
+    public var fileAttributesUpdates: AnyAsyncSequence<HandleEntity> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
 }

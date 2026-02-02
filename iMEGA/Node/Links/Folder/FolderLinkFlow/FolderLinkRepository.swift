@@ -2,14 +2,10 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 
-package protocol FolderLinkRepositoryProtocol: RepositoryProtocol, Sendable {
+protocol FolderLinkRepositoryProtocol: RepositoryProtocol, Sendable {
     func loginTo(link: String) async throws
     func logout()
     func fetchNodes() async throws
-    func getRootNode() -> HandleEntity
-    func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity]
-    func children(of nodeHandle: HandleEntity) -> [NodeEntity]
-    func node(for handle: HandleEntity) -> NodeEntity?
 }
 
 struct FolderLinkRepository: FolderLinkRepositoryProtocol {
@@ -31,7 +27,7 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
                     continuation.resume()
                 case let .failure(error):
                     if error.hasExtraInfo {
-                        let reason: LinkUnavailableReason = if error.linkStatus == .downETD {
+                        let reason: FolderLinkUnavailableReason = if error.linkStatus == .downETD {
                             .downETD
                         } else if error.userStatus == .etdSuspension {
                             .userETDSuspension
@@ -50,7 +46,6 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
                         continuation.resume(throwing: loginError)
                     }
                 }
-
             })
         }
     }
@@ -67,7 +62,7 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
                     }
                 case let .failure(error):
                     if error.hasExtraInfo {
-                        let reason: LinkUnavailableReason = if error.linkStatus == .downETD {
+                        let reason: FolderLinkUnavailableReason = if error.linkStatus == .downETD {
                             .downETD
                         } else if error.userStatus == .etdSuspension {
                             .userETDSuspension
@@ -89,25 +84,7 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
         }
     }
     
-    func getRootNode() -> MEGADomain.HandleEntity {
-        sdk.rootNode?.handle ?? .invalid
-    }
-    
     func logout() {
         sdk.logout()
-    }
-    
-    func children(of nodeHandle: HandleEntity, order: SortOrderEntity) async -> [NodeEntity] {
-        guard let node = await sdk.node(for: nodeHandle) else { return [] }
-        return sdk.children(forParent: node, order: order.toMEGASortOrderType().rawValue).toNodeEntities()
-    }
-    
-    func children(of nodeHandle: HandleEntity) -> [NodeEntity] {
-        guard let node = sdk.node(forHandle: nodeHandle) else { return [] }
-        return sdk.children(forParent: node).toNodeEntities()
-    }
-    
-    func node(for handle: HandleEntity) -> NodeEntity? {
-        sdk.node(forHandle: handle)?.toNodeEntity()
     }
 }
