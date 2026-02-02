@@ -822,7 +822,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    if ([self isCloudDriveRevampEnabled]) {
+    if ([self isCloudDriveRevampEnabled] && self.flavor != HomeScreen) {
         [actions addObject:[self makeSelectActionSheetFor:indexPath]];
     }
 
