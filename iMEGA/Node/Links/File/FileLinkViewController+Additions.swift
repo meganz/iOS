@@ -24,7 +24,7 @@ extension FileLinkViewController {
             self.sendLinkDelegate = SendLinkToChatsDelegate(link: linkEncryptedString ?? publicLinkString ?? "")
             sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
             
-            self.navigationController?.pushViewController(sendToChatNavigationController, animated: true)
+            present(sendToChatNavigationController, animated: true)
             viewModel.dispatch(.trackSendToChatFileLink)
         } else {
             MEGALinkManager.linkSavedString = linkEncryptedString ?? publicLinkString ?? ""
