@@ -1685,6 +1685,7 @@
 		A56582822F2C6B0E0089CD6D /* FolderLinkLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565827E2F2C6B0E0089CD6D /* FolderLinkLoginUseCase.swift */; };
 		A56582852F2C6B610089CD6D /* FolderLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56582842F2C6B5E0089CD6D /* FolderLinkRepository.swift */; };
 		A56582932F2C9DB00089CD6D /* MockFolderLinkFlowUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56582912F2C9DA50089CD6D /* MockFolderLinkFlowUseCase.swift */; };
+		A56582FC2F3194CD0089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56582FB2F3194C50089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift */; };
 		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
@@ -4567,6 +4568,7 @@
 		A565827F2F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkLogoutUseCase.swift; sourceTree = "<group>"; };
 		A56582842F2C6B5E0089CD6D /* FolderLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkRepository.swift; sourceTree = "<group>"; };
 		A56582912F2C9DA50089CD6D /* MockFolderLinkFlowUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFolderLinkFlowUseCase.swift; sourceTree = "<group>"; };
+		A56582FB2F3194C50089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkSearchResultsProvidingBuilder.swift; sourceTree = "<group>"; };
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkNodeActionHandler.swift; sourceTree = "<group>"; };
@@ -11142,6 +11144,7 @@
 				A51ECDA62F234BA300DE16AD /* FolderLinkMediaDiscoveryContentViewModel.swift */,
 				A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */,
 				A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */,
+				A56582FB2F3194C50089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift */,
 				A5ECB60C2F0F909F003FEAA8 /* FolderLinkUnavailableView.swift */,
 				A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */,
 				A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */,
@@ -15292,6 +15295,7 @@
 				A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */,
 				A56582852F2C6B610089CD6D /* FolderLinkRepository.swift in Sources */,
 				A5EB72162F0BAF9000B9EDC0 /* FolderLinkSearchResultMapper.swift in Sources */,
+				A56582FC2F3194CD0089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */,
 				A5ECB60E2F0F90AA003FEAA8 /* FolderLinkUnavailableView.swift in Sources */,

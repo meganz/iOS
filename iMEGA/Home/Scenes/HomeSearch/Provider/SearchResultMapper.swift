@@ -13,7 +13,7 @@ import SwiftUI
 /// the structure below is responsible for turning a node
 /// into a fully self contained SearchResults item that has all properties needed
 /// to display in the SearchResultsView
-struct SearchResultMapper: Sendable {
+struct SearchResultMapper: Sendable, SearchResultsMapping {
     private let sdk: MEGASdk
     private let nodeIconUsecase: any NodeIconUsecaseProtocol
     private let nodeDetailUseCase: any NodeDetailUseCaseProtocol

@@ -11,7 +11,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
-        let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
@@ -21,7 +21,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
         public init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
-            searchResultMapper: some FolderLinkSearchResultMapperProtocol,
+            searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
@@ -30,7 +30,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
-            self.searchResultMapper = searchResultMapper
+            self.searchResultsProvidingBuilder = searchResultsProvidingBuilder
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
             self.nodeActionHandler = nodeActionHandler
@@ -183,7 +183,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
         FolderLinkResultsContainerView.Dependency(
             handle: handle,
             link: dependency.link,
-            searchResultMapper: dependency.searchResultMapper,
+            searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
             sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
             nodeActionHandler: dependency.nodeActionHandler,
             selectionHandler: { selection in

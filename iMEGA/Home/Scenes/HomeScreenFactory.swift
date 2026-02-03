@@ -355,20 +355,32 @@ final class HomeScreenFactory: NSObject {
         navigationController: UINavigationController,
         isFromSharedItem: Bool = false
     ) -> HomeSearchResultsProvider {
+        let nodeUseCase = makeNodeUseCase()
+        let hiddenNodesFeatureEnabled = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+        
+        let mapper = SearchResultMapper(
+            sdk: sdk,
+            nodeIconUsecase: makeNodeIconUsecase(),
+            nodeDetailUseCase: makeNodeDetailUseCase(),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
+            mediaUseCase: makeMediaUseCase(),
+            nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+            showHiddenNodeBlur: !isFromSharedItem
+        )
+        
         return HomeSearchResultsProvider(
             parentNodeProvider: parentNodeProvider,
             filesSearchUseCase: makeFilesSearchUseCase(),
-            nodeDetailUseCase: makeNodeDetailUseCase(),
             nodeUseCase: makeNodeUseCase(),
-            sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
-            mediaUseCase: makeMediaUseCase(),
             downloadedNodesListener: makeDownloadedNodesListener(),
-            nodeIconUsecase: makeNodeIconUsecase(),
             sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
+            resultsMapper: mapper,
+            resultsUpdates: CloudDriveResultsUpdatesProvider(nodeUseCase: nodeUseCase),
             allChips: Self.allChips(),
             sdk: sdk,
-            nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
             isFromSharedItem: isFromSharedItem
         )
     }

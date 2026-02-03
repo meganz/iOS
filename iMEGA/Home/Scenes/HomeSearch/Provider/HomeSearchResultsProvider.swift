@@ -13,15 +13,33 @@ import Search
     static let shared = LoadMoreActor()
 }
 
+protocol SearchResultsUpdatesProvider: Sendable {
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
+}
+
+protocol SearchResultsMapping: Sendable {
+    func map(node: NodeEntity) -> SearchResult
+}
+
+struct CloudDriveResultsUpdatesProvider: SearchResultsUpdatesProvider {
+    let nodeUseCase: any NodeUseCaseProtocol
+    
+    init(nodeUseCase: some NodeUseCaseProtocol) {
+        self.nodeUseCase = nodeUseCase
+    }
+    
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        nodeUseCase.nodeUpdates
+    }
+}
+
 /// abstraction into a search results
 final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendable {
     private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let mediaUseCase: any MediaUseCaseProtocol
     private let downloadedNodesListener: any DownloadedNodesListening
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
-    private let sdk: MEGASdk
-
+    
     // We only initially fetch the node list when the user triggers search
     // Concrete nodes are then loaded one by one in the pagination
     @Atomic private var nodeList: NodeListEntity?
@@ -39,47 +57,33 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
     private let parentNodeProvider: () -> NodeEntity?
-    private let mapper: SearchResultMapper
+    private let mapper: any SearchResultsMapping
+    private let resultsUpdates: any SearchResultsUpdatesProvider
     private let availableChips: [SearchChipEntity]
 
     init(
         parentNodeProvider: @escaping () -> NodeEntity?,
         filesSearchUseCase: some FilesSearchUseCaseProtocol,
-        nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
-        mediaUseCase: some MediaUseCaseProtocol,
         downloadedNodesListener: some DownloadedNodesListening,
-        nodeIconUsecase: some NodeIconUsecaseProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        resultsMapper: some SearchResultsMapping,
+        resultsUpdates: some SearchResultsUpdatesProvider,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
-        nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
         isFromSharedItem: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
         self.nodeUseCase = nodeUseCase
-        self.mediaUseCase = mediaUseCase
         self.downloadedNodesListener = downloadedNodesListener
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
+        self.mapper = resultsMapper
+        self.resultsUpdates = resultsUpdates
         self.availableChips = allChips
-        self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         self.isFromSharedItem = isFromSharedItem
-
-        mapper = SearchResultMapper(
-            sdk: sdk,
-            nodeIconUsecase: nodeIconUsecase,
-            nodeDetailUseCase: nodeDetailUseCase,
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            mediaUseCase: mediaUseCase,
-            nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-            showHiddenNodeBlur: !isFromSharedItem
-        )
     }
     
     /// Get the most updated results from data source according to a query.
@@ -309,7 +313,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     }
     
     private func genericNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
-        nodeUseCase.nodeUpdates
+        resultsUpdates.nodeUpdates
             .compactMap { [weak self] updatedNodes -> SearchResultUpdateSignal? in
                 guard let self,
                       let parentNodeHandle = parentNodeProvider()?.handle,

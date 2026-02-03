@@ -12,7 +12,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     struct Dependency {
         let handle: HandleEntity
         let link: String
-        let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
@@ -32,7 +32,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                 dependency: FolderLinkResultsViewModel.Dependency(
                     nodeHandle: dependency.handle,
                     link: dependency.link,
-                    searchResultMapper: dependency.searchResultMapper,
+                    searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
                     titleUseCase: FolderLinkTitleUseCase(),
                     viewModeUseCase: FolderLinkViewModeUseCase(),
                     searchUseCase: FolderLinkSearchUseCase(),

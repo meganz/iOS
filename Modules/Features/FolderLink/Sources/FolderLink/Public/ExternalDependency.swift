@@ -27,8 +27,8 @@ public protocol FolderLinkBuilderProtocol: Sendable {
     func build(link: String, with key: String) async -> String
 }
 
-public protocol FolderLinkSearchResultMapperProtocol: Sendable {
-    func mapToSearchResult(from node: NodeEntity) -> SearchResult
+public protocol FolderLinkSearchResultsProvidingBuilderProtocol: Sendable {
+    func build(with handle: HandleEntity) -> any SearchResultsProviding
 }
 
 @MainActor

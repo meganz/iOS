@@ -13,7 +13,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
     struct Dependency {
         let handle: HandleEntity
         let link: String
-        let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
@@ -24,7 +24,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
             FolderLinkResultsView.Dependency(
                 handle: handle,
                 link: link,
-                searchResultMapper: searchResultMapper,
+                searchResultsProvidingBuilder: searchResultsProvidingBuilder,
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 nodeActionHandler: nodeActionHandler,
                 selectionHandler: selectionHandler,

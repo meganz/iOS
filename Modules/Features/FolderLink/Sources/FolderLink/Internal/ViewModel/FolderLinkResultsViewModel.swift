@@ -12,7 +12,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
     struct Dependency {
         let nodeHandle: HandleEntity
         let link: String
-        let searchResultMapper: any FolderLinkSearchResultMapperProtocol
+        let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
         let viewModeUseCase: any FolderLinkViewModeUseCaseProtocol
         let searchUseCase: any FolderLinkSearchUseCaseProtocol
@@ -74,17 +74,10 @@ final class FolderLinkResultsViewModel: ObservableObject {
             self?.editMode = editing ? .active : .inactive
         }
         
-        let searchResultsProvider = FolderLinkSearchResultsProvider(
-            nodeHandle: dependency.nodeHandle,
-            searchChips: SearchChipEntity.allChips(currentDate: { .init() }, calendar: .autoupdatingCurrent),
-            folderLinkSearchUseCase: dependency.searchUseCase,
-            folderSearchResultMapper: dependency.searchResultMapper
-        )
-        
         let searchConfig = SearchConfig.folderLink
         
         let searchResultsViewModel = SearchResultsViewModel(
-            resultsProvider: searchResultsProvider,
+            resultsProvider: dependency.searchResultsProvidingBuilder.build(with: dependency.nodeHandle),
             bridge: searchBridge,
             config: searchConfig,
             layout: viewMode == .grid ? .thumbnail : .list,

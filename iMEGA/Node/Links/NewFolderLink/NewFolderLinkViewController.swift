@@ -47,16 +47,6 @@ final class NewFolderLinkViewController: UIViewController {
     }
     
     private func buildDependency(link: String) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView>.Dependency {
-        let sdk = MEGASdk.sharedFolderLink
-        
-        let searchResultMapper = FolderLinkSearchResultMapper(
-            sdk: sdk,
-            nodeValidationRepository: NodeValidationRepository.folderLink,
-            nodeDataRepository: NodeDataRepository.newRepo,
-            thumbnailRepository: ThumbnailRepository.folderLinkThumbnailRepository(),
-            nodeIconRepository: NodeAssetsManager.shared
-        )
-        
         let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,
             sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
@@ -64,10 +54,11 @@ final class NewFolderLinkViewController: UIViewController {
         
         let fileNodeOpener = FolderLinkFileNodeOpener(navigationController: navigationController)
         let nodeActionHandler = FolderLinkNodeActionHandler(navigationController: navigationController)
+        
         return FolderLinkView.Dependency(
             link: link,
             folderLinkBuilder: MEGAFolderLinkBuilder(),
-            searchResultMapper: searchResultMapper,
+            searchResultsProvidingBuilder: FolderLinkSearchResultsProvidingBuilder(),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,
             nodeActionHandler: nodeActionHandler,

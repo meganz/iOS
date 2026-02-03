@@ -5,14 +5,14 @@ import MEGAL10n
 import MEGASdk
 import Search
 
-struct FolderLinkSearchResultMapper: FolderLinkSearchResultMapperProtocol {
+struct FolderLinkSearchResultMapper: SearchResultsMapping {
     let sdk: MEGASdk
     let nodeValidationRepository: any NodeValidationRepositoryProtocol
     let nodeDataRepository: any NodeDataRepositoryProtocol
     let thumbnailRepository: any ThumbnailRepositoryProtocol
     let nodeIconRepository: any NodeIconRepositoryProtocol
     
-    func mapToSearchResult(from node: NodeEntity) -> SearchResult {
+    func map(node: NodeEntity) -> SearchResult {
         SearchResult(
             id: node.handle,
             isFolder: node.isFolder,

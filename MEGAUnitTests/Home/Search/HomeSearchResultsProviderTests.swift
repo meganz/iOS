@@ -64,6 +64,14 @@ fileprivate extension Date {
     }
 }
 
+final class MockSearchResultsUpdatesProvider: SearchResultsUpdatesProvider {
+    let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
+    
+    init(nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()) {
+        self.nodeUpdates = nodeUpdates
+    }
+}
+
 @MainActor
 final class HomeSearchResultsProviderTests: XCTestCase {
     
@@ -110,22 +118,30 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             sensitiveDisplayPreferenceUseCase =  MockSensitiveDisplayPreferenceUseCase(
                 excludeSensitives: excludeSensitives)
             
-            sut = HomeSearchResultsProvider(
-                parentNodeProvider: { NodeEntity(handle: Harness.parentNodeHandle) },
-                filesSearchUseCase: filesSearchUseCase,
+            let mapper = SearchResultMapper(
+                sdk: sdk,
+                nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 mediaUseCase: mediaUseCase,
+                nodeActions: NodeActions.mock(),
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+            )
+            
+            sut = HomeSearchResultsProvider(
+                parentNodeProvider: { NodeEntity(handle: Harness.parentNodeHandle) },
+                filesSearchUseCase: filesSearchUseCase,
+                nodeUseCase: nodeDataUseCase,
                 downloadedNodesListener: MockDownloadedNodesListener(downloadedNodes: downloadedNodesUpdates),
-                nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                resultsMapper: mapper,
+                resultsUpdates: MockSearchResultsUpdatesProvider(nodeUpdates: nodeUpdates),
                 allChips: SearchChipEntity.allChips(
                     currentDate: { .testDate },
                     calendar: .testCalendar
                 ),
                 sdk: sdk,
-                nodeActions: NodeActions.mock(),
                 hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
                 isFromSharedItem: isFromSharedItem
             )
