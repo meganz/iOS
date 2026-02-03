@@ -4,12 +4,11 @@ import MEGAUIComponent
 import SwiftUI
 
 public struct SearchResultsContainerView: View {
-    enum Constants {
-        static let floatingAddButtonBottomInset = 70.0
-    }
     @StateObject var viewModel: SearchResultsContainerViewModel
-
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsContainerViewModel) {
+    private let bottomInset: CGFloat
+    
+    public init(bottomInset: CGFloat = 0, viewModel: @autoclosure @escaping () -> SearchResultsContainerViewModel) {
+        self.bottomInset = bottomInset
         _viewModel = StateObject(wrappedValue: viewModel())
     }
 
@@ -37,7 +36,7 @@ public struct SearchResultsContainerView: View {
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 Spacer()
-                    .frame(height: viewModel.searchResultsViewModel.usesRevampedLayout ? Constants.floatingAddButtonBottomInset : 0)
+                    .frame(height: bottomInset)
             }
         }
         .task {

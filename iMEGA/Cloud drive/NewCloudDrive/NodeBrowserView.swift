@@ -60,13 +60,13 @@ struct NodeBrowserView: View {
                     MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
                 }
             } else {
-                SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
+                SearchResultsContainerView(bottomInset: searchResultsBottomInset, viewModel: viewModel.searchResultsContainerViewModel)
                     .environment(\.editMode, $viewModel.editMode)
             }
         }
         .background()
         .overlay(alignment: .bottomTrailing) {
-            if floatingAddButtonViewModel.showsFloatingAddButton, viewModel.viewModeAwareMediaDiscoveryViewModel == nil {
+            if shouldShowFloatingAddButton {
                 RoundedPrimaryImageButton(image: MEGAAssets.Image.plus,
                                           isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                                           action: { floatingAddButtonViewModel.addButtonTapAction() })
@@ -151,5 +151,13 @@ struct NodeBrowserView: View {
                 .font(.headline)
                 .lineLimit(1)
         }
+    }
+    
+    private var shouldShowFloatingAddButton: Bool {
+        floatingAddButtonViewModel.showsFloatingAddButton && viewModel.viewModeAwareMediaDiscoveryViewModel == nil
+    }
+    
+    private var searchResultsBottomInset: CGFloat {
+        shouldShowFloatingAddButton ? 70.0 : 0
     }
 }
