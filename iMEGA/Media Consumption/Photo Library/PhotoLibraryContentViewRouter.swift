@@ -115,7 +115,7 @@ extension PhotoLibraryContentMode {
         switch self {
         case .library:
             .photosTimeline
-        case .album:
+        case .album, .albumPicker:
             .photosAlbum
         case .mediaDiscovery, .mediaDiscoverySharedItems:
             .cloudDrive

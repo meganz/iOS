@@ -67,7 +67,9 @@ extension MEGAAssets {
         public static var restore: SwiftUI.Image { MEGAImageBundle.restore }
         public static var link: SwiftUI.Image { MEGAImageBundle.link }
         public static var offline: SwiftUI.Image { MEGAImageBundle.offline }
+        public static var offlineRevamp: SwiftUI.Image { MEGAImageBundle.offlineRevamp }
         public static var rubbishBin: SwiftUI.Image { MEGAImageBundle.rubbishBin }
+        public static var rubbishBinRevamp: SwiftUI.Image { MEGAImageBundle.rubbishBinRevamp }
         public static var noResultsDocuments: SwiftUI.Image { MEGAImageBundle.noResultsDocuments }
         public static var noResultsAudio: SwiftUI.Image { MEGAImageBundle.noResultsAudio }
         public static var noResultsVideo: SwiftUI.Image { MEGAImageBundle.noResultsVideo }
@@ -92,6 +94,7 @@ extension MEGAAssets {
         public static var callControlSpeakerEnabled: SwiftUI.Image { MEGAImageBundle.callControlSpeakerEnabled }
         public static var callControlSpeakerDisabled: SwiftUI.Image { MEGAImageBundle.callControlSpeakerDisabled }
         public static var saveToPhotos: SwiftUI.Image { MEGAImageBundle.saveToPhotos }
+        public static var saveToPhotosRevamp: SwiftUI.Image { MEGAImageBundle.saveToPhotosRevamp }
         public static var capture: SwiftUI.Image { MEGAImageBundle.capture }
         public static var subscriptionFeatureCloud: SwiftUI.Image { MEGAImageBundle.subscriptionFeatureCloud }
         public static var subscriptionFeatureTransfers: SwiftUI.Image { MEGAImageBundle.subscriptionFeatureTransfers }
@@ -368,20 +371,24 @@ extension MEGAAssets {
         public static var hudDownload: UIKit.UIImage { MEGAUIImageBundle.hudDownload }
         public static var upload: UIKit.UIImage { MEGAUIImageBundle.upload }
         public static var sendToChat: UIKit.UIImage { MEGAUIImageBundle.sendToChat }
+        public static var sendToChatRevamp: UIKit.UIImage { MEGAUIImageBundle.sendToChatRevamp }
         public static var folderChat: UIKit.UIImage { MEGAUIImageBundle.folderChat }
         public static var filetypeFolderCamera: UIKit.UIImage { MEGAUIImageBundle.filetypeFolderCamera }
         public static var filetypeGeneric: UIKit.UIImage { MEGAUIImageBundle.filetypeGeneric }
         public static var folderUsers: UIKit.UIImage { MEGAUIImageBundle.folderUsers }
         public static var filetypeFolder: UIKit.UIImage { MEGAUIImageBundle.filetypeFolder }
         public static var export: UIKit.UIImage { MEGAUIImageBundle.export }
+        public static var exportRevamp: UIKit.UIImage { MEGAUIImageBundle.exportRevamp }
         public static var shareFolder: UIKit.UIImage { MEGAUIImageBundle.shareFolder }
         public static var verifyContact: UIKit.UIImage { MEGAUIImageBundle.verifyContact }
         public static var offline: UIKit.UIImage { MEGAUIImageBundle.offline }
+        public static var offlineRevamp: UIKit.UIImage { MEGAUIImageBundle.offlineRevamp }
         public static var info: UIKit.UIImage { MEGAUIImageBundle.info }
         public static var rename: UIKit.UIImage { MEGAUIImageBundle.rename }
         public static var copy: UIKit.UIImage { MEGAUIImageBundle.copy }
         public static var move: UIKit.UIImage { MEGAUIImageBundle.move }
         public static var rubbishBin: UIKit.UIImage { MEGAUIImageBundle.rubbishBin }
+        public static var rubbishBinRevamp: UIKit.UIImage { MEGAUIImageBundle.rubbishBinRevamp }
         public static var hudMinus: UIKit.UIImage { MEGAUIImageBundle.hudMinus }
         public static var leaveShare: UIKit.UIImage { MEGAUIImageBundle.leaveShare }
         public static var link: UIKit.UIImage { MEGAUIImageBundle.link }
@@ -396,6 +403,7 @@ extension MEGAAssets {
         public static var selectItem: UIKit.UIImage { MEGAUIImageBundle.selectItem }
         public static var restore: UIKit.UIImage { MEGAUIImageBundle.restore }
         public static var saveToPhotos: UIKit.UIImage { MEGAUIImageBundle.saveToPhotos }
+        public static var saveToPhotosRevamp: UIKit.UIImage { MEGAUIImageBundle.saveToPhotosRevamp }
         public static var pageView: UIKit.UIImage { MEGAUIImageBundle.pageView }
         public static var thumbnailsThin: UIKit.UIImage { MEGAUIImageBundle.thumbnailsThin }
         public static var edittext: UIKit.UIImage { MEGAUIImageBundle.edittext }
@@ -411,6 +419,7 @@ extension MEGAAssets {
         public static var eyeOff: UIKit.UIImage { MEGAUIImageBundle.eyeOff }
         public static var eyeOn: UIKit.UIImage { MEGAUIImageBundle.eyeOn }
         public static var addTo: UIKit.UIImage { MEGAUIImageBundle.addTo }
+        public static var addToRevamp: UIKit.UIImage { MEGAUIImageBundle.addToAlbumRevamp }
         public static var standardDisclosureIndicator: UIKit.UIImage { MEGAUIImageBundle.standardDisclosureIndicator }
         public static var hudSuccess: UIKit.UIImage { MEGAUIImageBundle.hudSuccess }
         public static var hudError: UIKit.UIImage { MEGAUIImageBundle.hudError }

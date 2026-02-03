@@ -54,7 +54,7 @@ import SwiftUI
 
 extension PhotoLibraryContentViewModel {
     var shouldShowPhotoLibraryPicker: Bool {
-        ![.album, .albumLink].contains(contentMode)
+        ![.album, .albumPicker, .albumLink].contains(contentMode)
     }
     
     public var isPhotoLibraryEmpty: Bool {

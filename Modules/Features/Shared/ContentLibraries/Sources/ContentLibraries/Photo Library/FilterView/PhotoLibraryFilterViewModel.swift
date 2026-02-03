@@ -18,7 +18,7 @@ public final class PhotoLibraryFilterViewModel: ObservableObject {
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     
     var isRememberPreferenceActive: Bool {
-        contentMode != .album
+        ![.album, .albumPicker].contains(contentMode)
     }
     
     init(contentMode: PhotoLibraryContentMode = .library,
@@ -28,7 +28,7 @@ public final class PhotoLibraryFilterViewModel: ObservableObject {
     }
     
     var shouldShowMediaTypeFilter: Bool {
-        contentMode != .album
+        ![.album, .albumPicker].contains(contentMode)
     }
     
     func setSelectedFiltersToAppliedFiltersIfRequired() {

@@ -64,7 +64,13 @@ public struct MEGAImageBundle {
   public static var offline: SwiftUICore.Image {
     get
   }
+  public static var offlineRevamp: SwiftUICore.Image {
+    get
+  }
   public static var rubbishBin: SwiftUICore.Image {
+    get
+  }
+  public static var rubbishBinRevamp: SwiftUICore.Image {
     get
   }
   public static var noResultsDocuments: SwiftUICore.Image {
@@ -137,6 +143,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var saveToPhotos: SwiftUICore.Image {
+    get
+  }
+  public static var saveToPhotosRevamp: SwiftUICore.Image {
     get
   }
   public static var capture: SwiftUICore.Image {
@@ -1091,6 +1100,9 @@ public struct MEGAUIImageBundle {
   public static var sendToChat: UIKit.UIImage {
     get
   }
+  public static var sendToChatRevamp: UIKit.UIImage {
+    get
+  }
   public static var folderChat: UIKit.UIImage {
     get
   }
@@ -1100,6 +1112,9 @@ public struct MEGAUIImageBundle {
   public static var export: UIKit.UIImage {
     get
   }
+  public static var exportRevamp: UIKit.UIImage {
+    get
+  }
   public static var shareFolder: UIKit.UIImage {
     get
   }
@@ -1107,6 +1122,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var offline: UIKit.UIImage {
+    get
+  }
+  public static var offlineRevamp: UIKit.UIImage {
     get
   }
   public static var info: UIKit.UIImage {
@@ -1122,6 +1140,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var rubbishBin: UIKit.UIImage {
+    get
+  }
+  public static var rubbishBinRevamp: UIKit.UIImage {
     get
   }
   public static var hudMinus: UIKit.UIImage {
@@ -1164,6 +1185,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var saveToPhotos: UIKit.UIImage {
+    get
+  }
+  public static var saveToPhotosRevamp: UIKit.UIImage {
     get
   }
   public static var pageView: UIKit.UIImage {
@@ -1209,6 +1233,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var addTo: UIKit.UIImage {
+    get
+  }
+  public static var addToAlbumRevamp: UIKit.UIImage {
     get
   }
   public static var standardDisclosureIndicator: UIKit.UIImage {

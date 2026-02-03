@@ -18,23 +18,23 @@ enum MediaBottomToolbarAction: Equatable {
     var image: UIImage {
         switch self {
         case .shareLink:
-            MEGAAssets.UIImage.link
+            MEGAAssets.UIImage.link01
         case .removeLink:
             MEGAAssets.UIImage.removeLink
         case .delete, .moveToRubbishBin:
-            MEGAAssets.UIImage.rubbishBin
+            MEGAAssets.UIImage.rubbishBinRevamp
         case .download:
-            MEGAAssets.UIImage.offline
+            MEGAAssets.UIImage.offlineRevamp
         case .manageLink:
-            MEGAAssets.UIImage.link
+            MEGAAssets.UIImage.link01
         case .saveToPhotos:
-            MEGAAssets.UIImage.saveToPhotos
+            MEGAAssets.UIImage.saveToPhotosRevamp
         case .sendToChat:
-            MEGAAssets.UIImage.sendToChat
+            MEGAAssets.UIImage.sendToChatRevamp
         case .more:
             MEGAAssets.UIImage.moreList
         case .addToAlbum:
-            MEGAAssets.UIImage.addTo
+            MEGAAssets.UIImage.addToRevamp
         }
     }
 }

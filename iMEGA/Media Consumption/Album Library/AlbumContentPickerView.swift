@@ -1,5 +1,6 @@
 import ContentLibraries
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -98,9 +99,14 @@ struct AlbumContentPickerView: View {
         Button {
             viewModel.onCancel()
         } label: {
-            Text(Strings.Localizable.cancel)
-                .font(.body)
-                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+                MEGAAssets.Image.closeBannerButton
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            } else {
+                Text(Strings.Localizable.cancel)
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            }
         }.padding(10)
     }
     

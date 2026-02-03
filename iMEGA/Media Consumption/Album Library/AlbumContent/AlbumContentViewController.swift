@@ -219,6 +219,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         case .showActions(let viewModel):
             showMoreActions(viewModel: viewModel)
         case .startEditMode:
+            presentedViewController?.dismiss(animated: true)
             startEditingMode()
         }
     }

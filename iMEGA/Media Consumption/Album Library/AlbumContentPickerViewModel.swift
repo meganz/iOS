@@ -38,7 +38,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
         self.selectLimit = configuration?.selectLimit ?? 150
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
-                                                                    contentMode: .album,
+                                                                    contentMode: .albumPicker,
                                                                     configuration: configuration)
         navigationTitle = normalNavigationTitle
         isDoneButtonDisabled = !isNewAlbum

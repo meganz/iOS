@@ -15,17 +15,21 @@ public struct MEGAUIImageBundle {
     public static var hudDownload: UIImage { UIImage.hudDownload }
     public static var upload: UIImage { UIImage.upload }
     public static var sendToChat: UIImage { UIImage.sendToChat }
+    public static var sendToChatRevamp: UIImage { UIImage.sendToChatRevamp }
     public static var folderChat: UIImage { UIImage.folderChat }
     public static var folderUsers: UIImage { UIImage.folderUsers }
     public static var export: UIImage { UIImage.export }
+    public static var exportRevamp: UIImage { UIImage.exportRevamp }
     public static var shareFolder: UIImage { UIImage.shareFolder }
     public static var verifyContact: UIImage { UIImage.verifyContact }
     public static var offline: UIImage { UIImage.offline }
+    public static var offlineRevamp: UIImage { UIImage.offlineRevamp }
     public static var info: UIImage { UIImage.info }
     public static var rename: UIImage { UIImage.rename }
     public static var copy: UIImage { UIImage.copy }
     public static var move: UIImage { UIImage.move }
     public static var rubbishBin: UIImage { UIImage.rubbishBin }
+    public static var rubbishBinRevamp: UIImage { UIImage.rubbishBinRevamp }
     public static var hudMinus: UIImage { UIImage.hudMinus }
     public static var leaveShare: UIImage { UIImage.leaveShare }
     public static var link: UIImage { UIImage.link }
@@ -40,6 +44,7 @@ public struct MEGAUIImageBundle {
     public static var selectItem: UIImage { UIImage.selectItem }
     public static var restore: UIImage { UIImage.restore }
     public static var saveToPhotos: UIImage { UIImage.saveToPhotos }
+    public static var saveToPhotosRevamp: UIImage { UIImage.saveToPhotosRevamp }
     public static var pageView: UIImage { UIImage.pageView }
     public static var thumbnailsThin: UIImage { UIImage.thumbnailsThin }
     public static var edittext: UIImage { UIImage.edittext }
@@ -55,6 +60,7 @@ public struct MEGAUIImageBundle {
     public static var eyeOff: UIImage { UIImage.eyeOff }
     public static var eyeOn: UIImage { UIImage.eyeOn }
     public static var addTo: UIImage { UIImage.addTo }
+    public static var addToAlbumRevamp: UIImage { UIImage.addToAlbumRevamp }
     public static var standardDisclosureIndicator: UIImage { UIImage.standardDisclosureIndicator }
     public static var hudSuccess: UIImage { UIImage.hudSuccess }
     public static var hudError: UIImage { UIImage.hudError }

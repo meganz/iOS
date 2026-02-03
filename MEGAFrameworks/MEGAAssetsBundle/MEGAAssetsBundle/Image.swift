@@ -11,7 +11,9 @@ public struct MEGAImageBundle {
     public static var restore: Image { Image(.restore) }
     public static var link: Image { Image(.link) }
     public static var offline: Image { Image(.offline) }
+    public static var offlineRevamp: Image { Image(.offlineRevamp) }
     public static var rubbishBin: Image { Image(.rubbishBin) }
+    public static var rubbishBinRevamp: Image { Image(.rubbishBinRevamp) }
     public static var noResultsDocuments: Image { Image(.noResultsDocuments) }
     public static var noResultsAudio: Image { Image(.noResultsAudio) }
     public static var noResultsVideo: Image { Image(.noResultsVideo) }
@@ -36,6 +38,7 @@ public struct MEGAImageBundle {
     public static var callControlSpeakerEnabled: Image { Image(.callControlSpeakerEnabled) }
     public static var callControlSpeakerDisabled: Image { Image(.callControlSpeakerDisabled) }
     public static var saveToPhotos: Image { Image(.saveToPhotos) }
+    public static var saveToPhotosRevamp: Image { Image(.saveToPhotosRevamp) }
     public static var capture: Image { Image(.capture) }
     public static var subscriptionFeatureCloud: Image { Image(.subscriptionFeatureCloud) }
     public static var subscriptionFeatureTransfers: Image { Image(.subscriptionFeatureTransfers) }
