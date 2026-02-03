@@ -6,6 +6,7 @@ import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGASdk
 import MEGASwift
@@ -381,21 +382,30 @@ extension MEGAAVViewController {
         }
     }
     
-    @objc func endAudioPlayerInterruptionIfNeeded() {
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidStart()
-        }
-    }
-    
-    @objc func configureDefaultAudioSessionIfNoActivePlayer() {
-        if !AudioPlayerManager.shared.isPlayerAlive() {
-            let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance()))
-            audioSessionUseCase.configureDefaultAudioSession()
+    @objc func stopHttpServerAndResetAudioSession() {
+        let capturedNode = self.node
+        let capturedAPI = self.apiForStreaming
+        Task {
+            if capturedNode != nil, let api = capturedAPI {
+                await DispatchQueue.global(qos: .userInitiated).asyncPerform {
+                    api.httpServerStop()
+                }
+            }
+            
+            if !AudioPlayerManager.shared.isPlayerAlive() {
+                await DispatchQueue.global(qos: .userInitiated).asyncPerform {
+                    let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance()))
+                    audioSessionUseCase.configureDefaultAudioSession()
+                }
+            }
+            
+            if AudioPlayerManager.shared.isPlayerAlive() {
+                AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+            }
         }
     }
 }
 
-// 在 MEGAAVViewController+Additions.swift 中添加
 extension MEGAAVViewController {
     @objc func setupVideoMetricsTracking() {
         guard let player = player, let playerItem = player.currentItem else { return }
