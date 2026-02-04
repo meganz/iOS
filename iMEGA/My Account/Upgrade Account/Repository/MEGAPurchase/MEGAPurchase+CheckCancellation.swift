@@ -66,6 +66,10 @@ extension MEGAPurchase {
     }
 
     private func refreshReceiptAndSubmit() async {
+        guard FileManager.default.ubiquityIdentityToken != nil else {
+            MEGALogDebug("[StoreKit - checkForExpiredOrCancellation] iCloud not logged in, skipped fetching for latest receipt")
+            return
+        }
         await ReceiptRefresher().refreshReceipt()
         if let localReceipt = await getLocalReceiptData() {
             do {
@@ -166,6 +170,7 @@ private class ReceiptRefresher: NSObject, SKRequestDelegate, @unchecked Sendable
         continuation?.resume()
         $continuation.mutate { $0 = nil }
         $activeRequest.mutate { $0 = nil }
+        request.cancel()
     }
 
     func request(_ request: SKRequest, didFailWithError error: any Error) {
@@ -175,6 +180,7 @@ private class ReceiptRefresher: NSObject, SKRequestDelegate, @unchecked Sendable
         continuation?.resume()
         $continuation.mutate { $0 = nil }
         $activeRequest.mutate { $0 = nil }
+        request.cancel()
     }
 }
 
