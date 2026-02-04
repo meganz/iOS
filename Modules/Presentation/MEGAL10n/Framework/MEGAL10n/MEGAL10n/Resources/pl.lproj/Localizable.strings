@@ -4838,3 +4838,11 @@
 "general.addItems"="Dodaj elementy";
 /* Undecrypted file open error snackBar message */
 "media.photoLibrary.album.sorting.date"="Data";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Ograniczony dostęp do zdjęć";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Niektóre wybrane przez Ciebie zdjęcia nie są dostępne w MEGA. Chcesz zaktualizować ustawienia dostępu?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Prześlij dostępne zdjęcia";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Zaktualizuj dostęp";

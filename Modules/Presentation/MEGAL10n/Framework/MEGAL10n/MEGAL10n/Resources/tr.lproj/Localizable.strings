@@ -157,7 +157,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Bağlantı kullanılamıyor";
 /*  */
-"fileLinkUnavailableText1"="Bunun sebebi şunlar olabilir:";
+"fileLinkUnavailableText1"="Bunun nedenleri şunlar olabilir:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Dosya, Hizmet Şartlarımızı ihlal ettiği için kaldırıldı";
 /*  */
@@ -197,7 +197,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="\"%@\" klasörü oluşturulamıyor";
 /*  */
-"folderLinkUnavailableText1"="Bunun sebebi şunlar olabilir:";
+"folderLinkUnavailableText1"="Bunun nedenleri şunlar olabilir:";
 /*  */
 "folderLinkUnavailableText2"="Klasör bağlantısı, Hizmet Şartlarımızı ihlal ettiği için kaldırıldı.";
 /*  */
@@ -4761,7 +4761,7 @@
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Yıllık planda en az %@ tasarruf edin";
 /* Camera Uploads Progress navigation title */
-"cameraUploads.progress.navigation.title"="İlerleme";
+"cameraUploads.progress.navigation.title"="Durum";
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Devam ediyor";
 /* Camera Uploads row progress format */
@@ -4838,3 +4838,11 @@
 "general.addItems"="Öğe ekle";
 /* Undecrypted file open error snackBar message */
 "media.photoLibrary.album.sorting.date"="Tarih";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Sınırlı fotoğraf erişimi";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="MEGA, seçtiğiniz bazı fotoğraflara erişemiyor. Erişim ayarlarınızı güncellemek ister misiniz?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Mevcut fotoğrafları yükle";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Erişimi güncelle";

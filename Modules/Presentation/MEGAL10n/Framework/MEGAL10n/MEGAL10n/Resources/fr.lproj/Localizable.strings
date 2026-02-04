@@ -391,11 +391,11 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique de MEGA se conforment aux lois sur le droit d’auteur.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, diffuser en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
+"copyrightMessagePart2"="Il vous est strictement interdit d'utiliser le service MEGA Cloud pour enfreindre les droits d'auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, diffuser, distribuer, envoyer par e-mail, créer un lien vers, transmettre ou rendre disponible, de quelque manière que ce soit, tout fichier, toute donnée ou tout contenu qui enfreint les droits d'auteur ou d'autres droits de propriété intellectuelle de toute personne ou entité.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Accepter";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Ne pas accepter";
+"disagree"="Refuser";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Lien sans clé";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -4836,3 +4836,11 @@
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Accès limité aux photos";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Certaines photos que vous avez sélectionnées ne sont pas disponibles sur MEGA. Souhaitez-vous mettre à jour vos paramètres d'accès ?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Téléverser les photos disponibles";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Mettre à jour l'accès";

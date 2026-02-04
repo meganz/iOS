@@ -295,7 +295,7 @@
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="대기 중";
 /* A label to indicate a paused state for a transfer item (upload/download). */
-"paused"="일시정지 중";
+"paused"="일시정지됨";
 /* Possible state of a transfer. When the transfer was cancelled */
 "Cancelled"="취소됨";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
@@ -539,7 +539,7 @@
 /* Used as a context menu item on album content screen. */
 "cameraUploads.albums.selectAlbumCover"="사진첩 표지 선택";
 /* Used as a hud message in album content screen. */
-"cameraUploads.albums.albumCoverUpdated"="사진첩 표지 업데이트됨";
+"cameraUploads.albums.albumCoverUpdated"="사진첩 표지 변경됨";
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="숨겨진 항목";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
@@ -2165,7 +2165,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 암호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="전송 할당량 초과";
+"Transfer over quota"="전송 할당량 초과됨";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="선택 초기화";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2173,7 +2173,7 @@
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
 "Resume All"="모두 재개";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
-"Clear All"="모두 삭제";
+"Clear All"="모두 지우기";
 /* Alert header for asking permission to resume transfers */
 "Resume Transfers?"="전송을 재개할까요?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
@@ -2359,7 +2359,7 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="키";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="복호화 키를 따로 보냄";
+"Send Decryption Key Separately"="복호화 키 따로 보내기";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="만료일";
 /* Text for options in Get Link View to activate password protection */
@@ -3015,7 +3015,7 @@
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="메인 보기에 표시";
 /* Label indicating storage over quota */
-"transfer.storage.quotaExceeded"="저장소 할당량 초과";
+"transfer.storage.quotaExceeded"="저장소 할당량 초과됨";
 /* Header title displayed above the currently playing track in the audio player's playlist */
 "media.audio.playlist.section.nowPlaying.title"="재생 중";
 /* Header title displayed above the upcoming tracks in the audio player's playlist */
@@ -3461,7 +3461,7 @@
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="백업 정지됨";
 /* Device Center backup paused status */
-"device.center.backup.paused.status.message"="일시정지 중";
+"device.center.backup.paused.status.message"="일시정지됨";
 /* Device Center backup out of quota status */
 "device.center.backup.outOfQuota.status.message"="할당량 초과";
 /* Device Center backup error status */
@@ -3779,7 +3779,7 @@
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="이 계정의 전송 할당량 대부분을 이용하였기 때문에 다운로드가 중단될 수 있습니다. 더 많은 할당량을 받으려면, 새 요금제를 결제하거나, MEGA에 반복 구독이 있다면, 요금제가 갱신될 때까지 기다릴 수 있습니다.";
 /* Title of the dialog for transfer quota error with exceeded quota */
-"transferQuotaError.downloadExceededQuota.title"="전송 할당량 초과";
+"transferQuotaError.downloadExceededQuota.title"="전송 할당량 초과됨";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
 "transferQuotaError.downloadExceededQuota.freeAccount.message"="이 IP 주소에 남은 전송 할당량이 없어서 다운로드를 계속할 수 없습니다. 더 많은 할당량을 받으려면 Pro 요금제로 업그레이드 하거나 IP 주소에 무료 할당량이 이용 가능해질 때까지 %@ 동안 기다리세요. 전송 할당량에 대해 [A]더 알아보기[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
@@ -4836,3 +4836,11 @@
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="제한된 사진 접근";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="선택한 사진 중 일부가 MEGA에서 이용 불가능합니다. 접근 설정을 수정 하시겠습니까?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="이용 가능한 사진 업로드";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="권한 수정";

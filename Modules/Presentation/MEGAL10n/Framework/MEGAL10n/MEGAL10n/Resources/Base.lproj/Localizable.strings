@@ -4835,10 +4835,10 @@
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
 /* Alert title in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.title"="Limited Photo Access";
+"photo.picker.alert.limitAccess.title"="Limited photo access";
 /* Alert body in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.message"="It seems some of the photos you selected are not authorized for MEGA. Would you like to grant access to them now?";
+"photo.picker.alert.limitAccess.message"="Some photos you selected aren’t available to MEGA. Want to update your access settings?";
 /* Alert cancel button in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.availableOnly"="Upload Available Only";
+"photo.picker.alert.limitAccess.availableOnly"="Upload available photos";
 /* Alert confirm button in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.selectMore"="Select More Photos";
+"photo.picker.alert.limitAccess.selectMore"="Update access";

@@ -4838,3 +4838,11 @@
 "general.addItems"="項目を追加";
 /* Undecrypted file open error snackBar message */
 "media.photoLibrary.album.sorting.date"="日付";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="写真へのアクセス制限";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="選択した写真の一部はMEGAで利用できません。アクセス設定を更新しますか？";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="利用可能な写真をアップロード";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="アクセス権を更新";

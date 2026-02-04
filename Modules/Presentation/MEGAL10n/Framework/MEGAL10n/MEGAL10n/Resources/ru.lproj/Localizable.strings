@@ -4828,11 +4828,21 @@
 "cloudDrive.emptyStateSubtitle"="Добавьте файлы — они будут защищены сквозным шифрованием.";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Предпросмотр недоступен для нерасшифрованных файлов";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="Большой";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Компактный";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Самый маленький";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Дата";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Добавить элементы";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Ограниченный доступ к фото";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="У MEGA нет доступа к некоторым из выбранных фотографий. Обновить настройки доступа?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Загрузить доступные фотографии";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Обновить доступ";

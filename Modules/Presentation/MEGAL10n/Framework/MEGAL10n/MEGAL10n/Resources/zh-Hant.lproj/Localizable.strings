@@ -4836,3 +4836,11 @@
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="照片存取限受限";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="您選擇的部分照片無法在MEGA上使用。想要更新您的存取權限設定嗎？";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="上傳可用的照片";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="更新存取權限";

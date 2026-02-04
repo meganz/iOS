@@ -1065,7 +1065,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูลเพิ่ม %@ สำหรับการติดตั้งแอปสำหรับมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="รับพื้นที่ฟรี %@ เมื่อติดตั้งแอป MEGA สำหรับมือถือ %2$@ แอป MEGA สำหรับมือถือพร้อมให้ใช้งานบน iOS และ Android";
+"account.achievement.mobileApp.incomplete.explaination.label"="รับพื้นที่ฟรี %@ เมื่อติดตั้งแอป MEGA สำหรับมือถือ %2$@ แอป MEGA สำหรับมือถือพร้อมให้ใช้งานบน iOS และ Android ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.freeTrial.detail.complete.label"="เพิ่มโบนัส %1$@ ให้แล้ว %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
@@ -1675,7 +1675,7 @@
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="ยกเลิกจัดเก็บ";
 /* Title of button to archive chats. */
-"archiveChat"="Archive";
+"archiveChat"="จัดเก็บ";
 /* Title of flag of archived chats. */
 "archived"="จัดเก็บ";
 /* Title of empty state view for archived chats. */
@@ -2917,9 +2917,9 @@
 /* File extension: .swf. Commercial names should be stay on English */
 "general.filetype.swf"="Flash Movie";
 /* File extension: .tar. Commercial names should be stay on English */
-"general.filetype.tar"="Archive";
+"general.filetype.tar"="บีบอัด";
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
-"general.filetype.compressed"="Compressed";
+"general.filetype.compressed"="บีบอัด";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
 "general.filetype.tga"="กราฟิก TARGA";
 /* File extension: .tif. Commercial names should be stay on English */
@@ -3745,7 +3745,7 @@
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="เฉพาะผู้เข้าร่วมที่ได้รับอนุญาตจากผู้จัดการประชุมเท่านั้นถึงจะสามารถเข้าร่วมการประชุมได้";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="ในระหว่างการโทร ผู้เข้าร่วมที่เพิ่มจากผู้ที่ไม่ใช่ผู้จัดการประชุมจะไม่ถูกจัดให้อยู่ในห้องนั่งรอ ";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="ในระหว่างการโทร ผู้เข้าร่วมที่เพิ่มจากผู้ที่ไม่ใช่ผู้จัดการประชุมจะไม่ถูกจัดให้อยู่ในห้องนั่งรอ";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="เรียนรู้เพิ่มเติม";
 /* Album saved to cloud drive alert message */
@@ -4447,7 +4447,7 @@
 /* App Store Screenshots string - Image 10 */
 "appstore.screenshot10"="เข้าร่วมกับคนนับล้านและธุรกิจมากมายที่ไว้วางใจให้ MEGA ดูแลและปกป้องข้อมูลสำคัญของคุณ";
 /* Modal title when sharing a meeting link */
-"chat.meetings.shareLink.main"=" ยืนยันการประชุมแล้ว: เชิญคนอื่นเข้าร่วม";
+"chat.meetings.shareLink.main"="ยืนยันการประชุมแล้ว: เชิญคนอื่นเข้าร่วม";
 /* Modal description when sharing a meeting link */
 "chat.meetings.shareLink.description"="ทุกคนที่มีลิงก์นี้สามารถเข้าร่วมการประชุมและดูแชทการประชุมได้";
 /* Button title to send to chat in modal shown when sharing a meeting link */
@@ -4499,7 +4499,7 @@
 /* Ad-free experience screen header title */
 "ads.adFree.header.title"="สัมผัสประสบการณ์ MEGA แบบไร้โฆษณา";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="อัปเกรดเป็นแผน Pro เพื่อพื้นที่จัดเก็บที่มากขึ้นและสิทธิประโยชน์อีกมากมาย แผน Pro ของเราเริ่มต้นเพียงเดือนละ %@ ";
+"ads.adFree.header.subTitle"="อัปเกรดเป็นแผน Pro เพื่อพื้นที่จัดเก็บที่มากขึ้นและสิทธิประโยชน์อีกมากมาย แผน Pro ของเราเริ่มต้นเพียงเดือนละ %@";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4687,7 +4687,7 @@
 /* Button subtitle for MEGA VPN in menu */
 "accountMenu.megaVPN.buttonSubtitle"="VPN ความเร็วสูง";
 /* Button title for MEGA Pass in menu */
-"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
 /* Button subtitle for MEGA Pass in menu */
 "accountMenu.megaPass.buttonSubtitle"="จัดเก็บและกรอกรหัสผ่านของคุณอัตโนมัติอย่างปลอดภัย";
 /* Button title for MEGA transfer it in menu */
@@ -4828,11 +4828,21 @@
 "cloudDrive.emptyStateSubtitle"="เก็บรักษาข้อมูลให้ปลอดภัยด้วยการเข้ารหัสวิธีซีโร่-นอว์เลจ";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="ไม่สามารถแสดงตัวอย่างสำหรับไฟล์ที่ยังไม่ถอดรหัส";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="ใหญ่";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="กะทัดรัด";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="เล็กที่สุด";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="วันที่";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="เพิ่มรายการ";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="การเข้าถึงรูปถ่ายถูกจำกัด";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="รูปถ่ายบางรูปที่คุณเลือกไม่พร้อมใช้งานใน MEGA ต้องการอัปเดตการตั้งค่าการเข้าถึงหรือไม่";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="อัปโหลดรูปถ่ายที่สามารถเข้าถึงได้";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="อัปเดตการเข้าถึง";

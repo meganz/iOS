@@ -12,12 +12,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[A] et %d autre personne ont levé la main</string>
         <key>many</key>
-        <string>[A] et %d autres personnes ont levé la main</string>
+        <string>[A] et %d autres ont levé la main</string>
         <key>other</key>
-        <string>[A] et %d autres personnes ont levé la main</string>
+        <string>[A] et %d autres ont levé la main</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -845,7 +843,7 @@
         <key>one</key>
         <string>%d seconde</string>
         <key>many</key>
-        <string>%d de secondes</string>
+        <string>%d secondes</string>
         <key>other</key>
         <string>%d secondes</string>
       </dict>
@@ -863,7 +861,7 @@
         <key>one</key>
         <string>%d minute</string>
         <key>many</key>
-        <string>%d de minutes</string>
+        <string>%d minutes</string>
         <key>other</key>
         <string>%d minutes</string>
       </dict>
@@ -881,7 +879,7 @@
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
-        <string>%d d’heures</string>
+        <string>%d heures</string>
         <key>other</key>
         <string>%d heures</string>
       </dict>
@@ -899,7 +897,7 @@
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
-        <string>%d d’heures</string>
+        <string>%d heures</string>
         <key>other</key>
         <string>%d heures</string>
       </dict>
@@ -917,7 +915,7 @@
         <key>one</key>
         <string>, %d minute</string>
         <key>many</key>
-        <string>, %d de minutes</string>
+        <string>, %d minutes</string>
         <key>other</key>
         <string>, %d minutes</string>
       </dict>
@@ -935,7 +933,7 @@
         <key>one</key>
         <string>%d minute</string>
         <key>many</key>
-        <string>%d de minutes</string>
+        <string>%d minutes</string>
         <key>other</key>
         <string>%d minutes</string>
       </dict>
@@ -953,7 +951,7 @@
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
-        <string>%d d’heures</string>
+        <string>%d heures</string>
         <key>other</key>
         <string>%d heures</string>
       </dict>
@@ -971,7 +969,7 @@
         <key>one</key>
         <string>%d minute</string>
         <key>many</key>
-        <string>%d de minutes</string>
+        <string>%d minutes</string>
         <key>other</key>
         <string>%d minutes</string>
       </dict>
@@ -987,7 +985,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ce dossier ne peut être partagé qu’en lecture seule, car c’est un dossier de sauvegarde. Tout changement apporté à son contenu pourrait désactiver les sauvegardes.</string>
+        <string>Ce dossier ne peut être partagé qu’en lecture seule, car c’est un dossier de sauvegarde. Tout changement apporté à son contenu pourrait désactiver la sauvegarde.</string>
         <key>many</key>
         <string>Ces dossiers ne peuvent être partagés qu’en lecture seule, car ce sont des dossiers de sauvegarde. Tout changement apporté à leur contenu pourrait désactiver les sauvegardes.</string>
         <key>other</key>
@@ -1007,7 +1005,7 @@
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
-        <string>%d d’heures</string>
+        <string>%d heures</string>
         <key>other</key>
         <string>%d heures</string>
       </dict>
@@ -1025,7 +1023,7 @@
         <key>one</key>
         <string>%d minute</string>
         <key>many</key>
-        <string>%d de minutes</string>
+        <string>%d minutes</string>
         <key>other</key>
         <string>%d minutes</string>
       </dict>
@@ -1043,7 +1041,7 @@
         <key>one</key>
         <string>heure</string>
         <key>many</key>
-        <string>d’heures</string>
+        <string>heures</string>
         <key>other</key>
         <string>heures</string>
       </dict>
@@ -1061,7 +1059,7 @@
         <key>one</key>
         <string>minute</string>
         <key>many</key>
-        <string>de minutes</string>
+        <string>minutes</string>
         <key>other</key>
         <string>minutes</string>
       </dict>
@@ -1079,7 +1077,7 @@
         <key>one</key>
         <string>%d message non lu</string>
         <key>many</key>
-        <string>%d de messages non lus</string>
+        <string>%d messages non lus</string>
         <key>other</key>
         <string>%d messages non lus</string>
       </dict>
@@ -1097,7 +1095,7 @@
         <key>one</key>
         <string>Vous ne pouvez ajouter que %d élément à la fois dans un album.</string>
         <key>many</key>
-        <string>Vous ne pouvez ajouter que %d d’éléments à la fois dans un album.</string>
+        <string>Vous ne pouvez ajouter que %d éléments à la fois dans un album.</string>
         <key>other</key>
         <string>Vous ne pouvez ajouter que %d éléments à la fois dans un album.</string>
       </dict>
@@ -1115,7 +1113,7 @@
         <key>one</key>
         <string>%d élément a été ajouté dans « [A] »</string>
         <key>many</key>
-        <string>%d d’éléments ont été ajoutés dans « [A] »</string>
+        <string>%d éléments ont été ajoutés dans « [A] »</string>
         <key>other</key>
         <string>%d éléments ont été ajoutés dans « [A] »</string>
       </dict>
@@ -1133,7 +1131,7 @@
         <key>one</key>
         <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : la vidéo n’a pas été téléversée</string>
         <key>many</key>
-        <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : %d de vidéos n’ont pas été téléversées</string>
+        <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : %d vidéos n’ont pas été téléversées</string>
         <key>other</key>
         <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : %d vidéos n’ont pas été téléversées</string>
       </dict>
@@ -1149,11 +1147,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d fichier est en attente.</string>
+        <string>%d fichier est en attente</string>
         <key>many</key>
-        <string>%d de fichiers sont en attente.</string>
+        <string>%d fichiers sont en attente</string>
         <key>other</key>
-        <string>%d fichiers sont en attente.</string>
+        <string>%d fichiers sont en attente</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.delete</key>
@@ -1223,7 +1221,7 @@
         <key>one</key>
         <string>« [A] » a été supprimé</string>
         <key>many</key>
-        <string>%d d’albums ont été supprimés</string>
+        <string>%d albums ont été supprimés</string>
         <key>other</key>
         <string>%d albums ont été supprimés</string>
       </dict>
@@ -1241,7 +1239,7 @@
         <key>one</key>
         <string>%d élément a été supprimé de « [A] »</string>
         <key>many</key>
-        <string>%d d’éléments ont été supprimés de « [A] »</string>
+        <string>%d éléments ont été supprimés de « [A] »</string>
         <key>other</key>
         <string>%d éléments ont été supprimés de « [A] »</string>
       </dict>
@@ -1331,7 +1329,7 @@
         <key>one</key>
         <string>Tous les jours du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>many</key>
-        <string>Tous les %d de jours du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Tous les %d jours du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>other</key>
         <string>Tous les %d jours du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
       </dict>
@@ -1349,7 +1347,7 @@
         <key>one</key>
         <string>Tous les jours à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>many</key>
-        <string>Tous les %d de jours à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Tous les %d  jours à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>other</key>
         <string>Tous les %d jours à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
       </dict>

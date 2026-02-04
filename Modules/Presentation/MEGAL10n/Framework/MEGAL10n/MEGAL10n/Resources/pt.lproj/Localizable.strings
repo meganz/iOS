@@ -395,7 +395,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="Concordo";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Não concordo";
+"disagree"="Discordo";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link sem chave";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -4836,3 +4836,11 @@
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Acesso limitado a fotos";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Algumas das fotos que você selecionou não estão disponíveis no MEGA. Você quer atualizar as suas configurações de acesso?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Fazer o upload das fotos disponíveis";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Atualizar acesso";

@@ -4838,3 +4838,11 @@
 "general.addItems"="Items toevoegen";
 /* Undecrypted file open error snackBar message */
 "media.photoLibrary.album.sorting.date"="Datum";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Gelimiteerd fototoegang";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Sommige foto's die u heeft geselecteerd, zijn niet beschikbaar voor MEGA. Wilt u uw toegangsinstellingen bijwerken?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Upload beschikbare foto's";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Toegang bijwerken";

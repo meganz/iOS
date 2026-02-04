@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Jika anda tidak memiliki password, hubungi orang yang membuat link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Masukkan kata sandi tautan";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Keluar";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */

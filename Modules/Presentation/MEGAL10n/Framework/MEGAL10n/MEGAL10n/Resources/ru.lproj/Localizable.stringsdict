@@ -12,14 +12,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] и ещё %d пользователей подняли руки</string>
         <key>one</key>
         <string>[A] и ещё %d пользователь подняли руки</string>
         <key>few</key>
         <string>[A] и ещё %d пользователя подняли руки</string>
         <key>many</key>
         <string>[A] и ещё %d пользователей подняли руки</string>
-        <key>other</key>
-        <string>[A] и ещё %d пользователя подняли руки</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -32,14 +32,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Вы и ещё %d пользователей подняли руки</string>
         <key>one</key>
         <string>Вы и ещё %d пользователь подняли руки</string>
         <key>few</key>
         <string>Вы и ещё %d пользователя подняли руки</string>
         <key>many</key>
         <string>Вы и ещё %d пользователей подняли руки</string>
-        <key>other</key>
-        <string>Вы и ещё %d пользователя подняли руки</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -52,14 +52,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов</string>
         <key>one</key>
         <string>%d файл</string>
         <key>few</key>
         <string>%d файла</string>
         <key>many</key>
         <string>%d файлов</string>
-        <key>other</key>
-        <string>%d файла</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.removedItemCount</key>
@@ -72,14 +72,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов удалено</string>
         <key>one</key>
         <string>%d элемент удалён</string>
         <key>few</key>
         <string>%d элемента удалено</string>
         <key>many</key>
         <string>%d элементов удалено</string>
-        <key>other</key>
-        <string>%d элемента удалено</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -92,14 +92,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов</string>
         <key>one</key>
         <string>%d файл</string>
         <key>few</key>
         <string>%d файла</string>
         <key>many</key>
         <string>%d файлов</string>
-        <key>other</key>
-        <string>%d файла</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.folderCount</key>
@@ -112,14 +112,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d папок</string>
         <key>one</key>
         <string>%d папка</string>
         <key>few</key>
         <string>%d папки</string>
         <key>many</key>
         <string>%d папок</string>
-        <key>other</key>
-        <string>%d папки</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.folderCount</key>
@@ -132,14 +132,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d папок</string>
         <key>one</key>
         <string>%d папка</string>
         <key>few</key>
         <string>%d папки</string>
         <key>many</key>
         <string>%d папок</string>
-        <key>other</key>
-        <string>%d папки</string>
       </dict>
     </dict>
     <key>sharedItems.link.accessInfo</key>
@@ -152,13 +152,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
         <key>one</key>
         <string>Любой человек, у которого есть ссылка, может просматривать и скачивать эти данные</string>
         <key>few</key>
         <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
         <key>many</key>
-        <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
-        <key>other</key>
         <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
       </dict>
     </dict>
@@ -172,13 +172,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ссылки скопированы в буфер обмена</string>
         <key>one</key>
         <string>Ссылка скопирована в буфер обмена</string>
         <key>few</key>
         <string>Ссылки скопированы в буфер обмена</string>
         <key>many</key>
-        <string>Ссылки скопированы в буфер обмена</string>
-        <key>other</key>
         <string>Ссылки скопированы в буфер обмена</string>
       </dict>
     </dict>
@@ -192,13 +192,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ссылки созданы и скопированы в буфер обмена</string>
         <key>one</key>
         <string>Ссылка создана и скопирована в буфер обмена</string>
         <key>few</key>
         <string>Ссылки созданы и скопированы в буфер обмена</string>
         <key>many</key>
-        <string>Ссылки созданы и скопированы в буфер обмена</string>
-        <key>other</key>
         <string>Ссылки созданы и скопированы в буфер обмена</string>
       </dict>
     </dict>
@@ -212,14 +212,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Применить ко всем %d дубликатам</string>
         <key>one</key>
         <string>Применить к дубликату</string>
         <key>few</key>
         <string>Применить ко всем %d дубликатам</string>
         <key>many</key>
         <string>Применить ко всем %d дубликатам</string>
-        <key>other</key>
-        <string>Применить ко всем %d дубликата</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -232,14 +232,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>часов</string>
         <key>one</key>
         <string>час</string>
         <key>few</key>
         <string>часа</string>
         <key>many</key>
         <string>часов</string>
-        <key>other</key>
-        <string>часа</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -252,14 +252,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>дней</string>
         <key>one</key>
         <string>день</string>
         <key>few</key>
         <string>дня</string>
         <key>many</key>
         <string>дней</string>
-        <key>other</key>
-        <string>дня</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -272,14 +272,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>недель</string>
         <key>one</key>
         <string>неделя</string>
         <key>few</key>
         <string>недели</string>
         <key>many</key>
         <string>недель</string>
-        <key>other</key>
-        <string>недели</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -292,14 +292,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>месяцев</string>
         <key>one</key>
         <string>месяц</string>
         <key>few</key>
         <string>месяца</string>
         <key>many</key>
         <string>месяцев</string>
-        <key>other</key>
-        <string>месяца</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -312,14 +312,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>лет</string>
         <key>one</key>
         <string>год</string>
         <key>few</key>
         <string>года</string>
         <key>many</key>
         <string>лет</string>
-        <key>other</key>
-        <string>года</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -332,14 +332,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d часов</string>
         <key>one</key>
         <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
         <string>%d часов</string>
-        <key>other</key>
-        <string>%d часа</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -352,14 +352,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d дней</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
         <string>%d дня</string>
         <key>many</key>
         <string>%d дней</string>
-        <key>other</key>
-        <string>%d дня</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -372,14 +372,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d недель</string>
         <key>one</key>
         <string>%d неделя</string>
         <key>few</key>
         <string>%d недели</string>
         <key>many</key>
         <string>%d недель</string>
-        <key>other</key>
-        <string>%d недели</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -392,14 +392,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d месяцев</string>
         <key>one</key>
         <string>%d месяц</string>
         <key>few</key>
         <string>%d месяца</string>
         <key>many</key>
         <string>%d месяцев</string>
-        <key>other</key>
-        <string>%d месяца</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -412,14 +412,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d лет</string>
         <key>one</key>
         <string>%d год</string>
         <key>few</key>
         <string>%d года</string>
         <key>many</key>
         <string>%d лет</string>
-        <key>other</key>
-        <string>%d года</string>
       </dict>
     </dict>
     <key>general.format.count.file</key>
@@ -432,14 +432,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов</string>
         <key>one</key>
         <string>%d файл</string>
         <key>few</key>
         <string>%d файла</string>
         <key>many</key>
         <string>%d файлов</string>
-        <key>other</key>
-        <string>%d файла</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -452,14 +452,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов</string>
         <key>one</key>
         <string>%d папка</string>
         <key>few</key>
         <string>%d папки</string>
         <key>many</key>
         <string>%d папок</string>
-        <key>other</key>
-        <string>%d папки</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -472,14 +472,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d папок</string>
         <key>one</key>
         <string>%d папка</string>
         <key>few</key>
         <string>%d папки</string>
         <key>many</key>
         <string>%d папок</string>
-        <key>other</key>
-        <string>%d папки</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -492,14 +492,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d файлов</string>
         <key>one</key>
         <string>• %d файл</string>
         <key>few</key>
         <string>• %d файла</string>
         <key>many</key>
         <string>• %d файлов</string>
-        <key>other</key>
-        <string>• %d файла</string>
       </dict>
     </dict>
     <key>general.format.count.items</key>
@@ -512,14 +512,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов</string>
         <key>one</key>
         <string>%d элемент</string>
         <key>few</key>
         <string>%d элемента</string>
         <key>many</key>
         <string>%d элементов</string>
-        <key>other</key>
-        <string>%d элемента</string>
       </dict>
     </dict>
     <key>recents.section.title.items</key>
@@ -532,14 +532,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов</string>
         <key>one</key>
         <string>%d элемент</string>
         <key>few</key>
         <string>%d элемента</string>
         <key>many</key>
         <string>%d элементов</string>
-        <key>other</key>
-        <string>%d элемента</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -552,14 +552,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d изображений</string>
         <key>one</key>
         <string>%d изображение</string>
         <key>few</key>
         <string>%d изображения</string>
         <key>many</key>
         <string>%d изображений</string>
-        <key>other</key>
-        <string>%d изображения</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -572,13 +572,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d видео</string>
         <key>one</key>
         <string>%d видео</string>
         <key>few</key>
         <string>%d видео</string>
         <key>many</key>
-        <string>%d видео</string>
-        <key>other</key>
         <string>%d видео</string>
       </dict>
     </dict>
@@ -592,14 +592,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d изображений</string>
         <key>one</key>
         <string>%d изображение</string>
         <key>few</key>
         <string>%d изображения</string>
         <key>many</key>
         <string>%d изображений</string>
-        <key>other</key>
-        <string>%d изображения</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -612,13 +612,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>и %d видео</string>
         <key>one</key>
         <string>и %d видео</string>
         <key>few</key>
         <string>и %d видео</string>
         <key>many</key>
-        <string>и %d видео</string>
-        <key>other</key>
         <string>и %d видео</string>
       </dict>
     </dict>
@@ -632,13 +632,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>«[A]» и ещё %d</string>
         <key>one</key>
         <string>«[A]» и ещё %d</string>
         <key>few</key>
         <string>«[A]» и ещё %d</string>
         <key>many</key>
-        <string>«[A]» и ещё %d</string>
-        <key>other</key>
         <string>«[A]» и ещё %d</string>
       </dict>
     </dict>
@@ -652,13 +652,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] из %d файлов</string>
         <key>one</key>
         <string>[A] из %d файла</string>
         <key>few</key>
         <string>[A] из %d файлов</string>
         <key>many</key>
-        <string>[A] из %d файлов</string>
-        <key>other</key>
         <string>[A] из %d файлов</string>
       </dict>
     </dict>
@@ -672,14 +672,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов</string>
         <key>one</key>
         <string>%d файл</string>
         <key>few</key>
         <string>%d файла</string>
         <key>many</key>
         <string>%d файлов</string>
-        <key>other</key>
-        <string>%d файла</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -692,13 +692,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить ссылки</string>
         <key>one</key>
         <string>Удалить ссылку</string>
         <key>few</key>
         <string>Удалить ссылки</string>
         <key>many</key>
-        <string>Удалить ссылки</string>
-        <key>other</key>
         <string>Удалить ссылки</string>
       </dict>
     </dict>
@@ -712,13 +712,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ссылки удалены</string>
         <key>one</key>
         <string>Ссылка удалена</string>
         <key>few</key>
         <string>Ссылки удалены</string>
         <key>many</key>
-        <string>Ссылки удалены</string>
-        <key>other</key>
         <string>Ссылки удалены</string>
       </dict>
     </dict>
@@ -732,13 +732,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить ссылки?</string>
         <key>one</key>
         <string>Удалить ссылку?</string>
         <key>few</key>
         <string>Удалить ссылки?</string>
         <key>many</key>
-        <string>Удалить ссылки?</string>
-        <key>other</key>
         <string>Удалить ссылки?</string>
       </dict>
     </dict>
@@ -752,14 +752,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут их открыть.</string>
         <key>one</key>
-        <string>Люди, с которыми вы поделились этой ссылкой, больше не смогут получить к ней доступ.</string>
+        <string>Люди, с которыми вы поделились этой ссылкой, больше не смогут её открыть.</string>
         <key>few</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут их открыть.</string>
         <key>many</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
-        <key>other</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут их открыть.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -772,13 +772,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Поделиться папками</string>
         <key>one</key>
         <string>Поделиться папкой</string>
         <key>few</key>
         <string>Поделиться папками</string>
         <key>many</key>
-        <string>Поделиться папками</string>
-        <key>other</key>
         <string>Поделиться папками</string>
       </dict>
     </dict>
@@ -792,13 +792,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Поделиться ссылками</string>
         <key>one</key>
         <string>Поделиться ссылкой</string>
         <key>few</key>
         <string>Поделиться ссылками</string>
         <key>many</key>
-        <string>Поделиться ссылками</string>
-        <key>other</key>
         <string>Поделиться ссылками</string>
       </dict>
     </dict>
@@ -812,13 +812,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Управление ссылками</string>
         <key>one</key>
         <string>Управление ссылкой</string>
         <key>few</key>
         <string>Управление ссылками</string>
         <key>many</key>
-        <string>Управление ссылками</string>
-        <key>other</key>
         <string>Управление ссылками</string>
       </dict>
     </dict>
@@ -832,13 +832,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Экспорт файлов</string>
         <key>one</key>
         <string>Экспорт файла</string>
         <key>few</key>
         <string>Экспорт файлов</string>
         <key>many</key>
-        <string>Экспорт файлов</string>
-        <key>other</key>
         <string>Экспорт файлов</string>
       </dict>
     </dict>
@@ -852,14 +852,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d секунд</string>
         <key>one</key>
         <string>%d секунда</string>
         <key>few</key>
         <string>%d секунды</string>
         <key>many</key>
         <string>%d секунд</string>
-        <key>other</key>
-        <string>%d секунды</string>
       </dict>
     </dict>
     <key>call.duration.minute</key>
@@ -872,14 +872,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d минут</string>
         <key>one</key>
         <string>%d минута</string>
         <key>few</key>
         <string>%d минуты</string>
         <key>many</key>
         <string>%d минут</string>
-        <key>other</key>
-        <string>%d минуты</string>
       </dict>
     </dict>
     <key>call.duration.hour</key>
@@ -892,14 +892,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d часов</string>
         <key>one</key>
         <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
         <string>%d часов</string>
-        <key>other</key>
-        <string>%d часа</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -912,14 +912,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d часов</string>
         <key>one</key>
         <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
         <string>%d часов</string>
-        <key>other</key>
-        <string>%d часа</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.minute</key>
@@ -932,14 +932,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d минут</string>
         <key>one</key>
-        <string> %d минута</string>
+        <string>%d минута</string>
         <key>few</key>
-        <string> %d минуты</string>
+        <string>%d минуты</string>
         <key>many</key>
-        <string> %d минут</string>
-        <key>other</key>
-        <string> %d минуты</string>
+        <string>%d минут</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -952,14 +952,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d минут</string>
         <key>one</key>
         <string>%d минута</string>
         <key>few</key>
         <string>%d минуты</string>
         <key>many</key>
         <string>%d минут</string>
-        <key>other</key>
-        <string>%d минуты</string>
       </dict>
     </dict>
     <key>dnd.duration.hour</key>
@@ -972,14 +972,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d часов</string>
         <key>one</key>
         <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
         <string>%d часов</string>
-        <key>other</key>
-        <string>%d часа</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -992,14 +992,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d минут</string>
         <key>one</key>
         <string>%d минута</string>
         <key>few</key>
         <string>%d минуты</string>
         <key>many</key>
         <string>%d минут</string>
-        <key>other</key>
-        <string>%d минуты</string>
       </dict>
     </dict>
     <key>mybackups.share.folder.warning.message</key>
@@ -1012,13 +1012,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.</string>
         <key>one</key>
         <string>Эта папка может быть доступна только для чтения, потому что это папка резервных копий. Любые изменения её содержимого могут отключить резервное копирование.</string>
         <key>few</key>
         <string>Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.</string>
         <key>many</key>
-        <string>Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.</string>
-        <key>other</key>
         <string>Эти папки могут быть доступны только для чтения, потому что это папки резервных копий. Любые изменения их содержимого могут отключить резервное копирование.</string>
       </dict>
     </dict>
@@ -1032,14 +1032,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d часов</string>
         <key>one</key>
         <string>%d час</string>
         <key>few</key>
         <string>%d часа</string>
         <key>many</key>
         <string>%d часов</string>
-        <key>other</key>
-        <string>%d часа</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -1052,14 +1052,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d минут</string>
         <key>one</key>
         <string>%d минута</string>
         <key>few</key>
         <string>%d минуты</string>
         <key>many</key>
         <string>%d минут</string>
-        <key>other</key>
-        <string>%d минуты</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
@@ -1072,14 +1072,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>часов</string>
         <key>one</key>
         <string>час</string>
         <key>few</key>
         <string>часа</string>
         <key>many</key>
         <string>часов</string>
-        <key>other</key>
-        <string>часа</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -1092,14 +1092,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>минут</string>
         <key>one</key>
         <string>минута</string>
         <key>few</key>
         <string>минуты</string>
         <key>many</key>
         <string>минут</string>
-        <key>other</key>
-        <string>минуты</string>
       </dict>
     </dict>
     <key>chat.message.unreadMessage</key>
@@ -1112,14 +1112,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d непрочитанных сообщений</string>
         <key>one</key>
         <string>%d непрочитанное сообщение</string>
         <key>few</key>
         <string>%d непрочитанных сообщения</string>
         <key>many</key>
         <string>%d непрочитанных сообщений</string>
-        <key>other</key>
-        <string>%d непрочитанных сообщения</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -1132,14 +1132,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>За один раз вы можете добавить в альбом до %d элементов.</string>
         <key>one</key>
         <string>За один раз вы можете добавить в альбом до %d элемента.</string>
         <key>few</key>
         <string>За один раз вы можете добавить в альбом до %d элементов.</string>
         <key>many</key>
         <string>За один раз вы можете добавить в альбом до %d элементов.</string>
-        <key>other</key>
-        <string>За один раз вы можете добавить в альбом до %d элемента.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -1152,14 +1152,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В «[A]» добавлено %d элементов</string>
         <key>one</key>
         <string>В «[A]» добавлен %d элемент</string>
         <key>few</key>
         <string>В «[A]» добавлено %d элемента</string>
         <key>many</key>
         <string>В «[A]» добавлено %d элементов</string>
-        <key>other</key>
-        <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
@@ -1172,13 +1172,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
         <key>one</key>
         <string>Фото загружены. Загрузка видео отключена: видео не загружено</string>
         <key>few</key>
         <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
         <key>many</key>
-        <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
-        <key>other</key>
         <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
       </dict>
     </dict>
@@ -1192,14 +1192,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов в ожидании</string>
         <key>one</key>
         <string>%d файл в ожидании</string>
         <key>few</key>
         <string>%d файла в ожидании</string>
         <key>many</key>
         <string>%d файлов в ожидании</string>
-        <key>other</key>
-        <string>%d файла в ожидании</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.delete</key>
@@ -1212,13 +1212,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить (%d)</string>
         <key>one</key>
         <string>Удалить (%d)</string>
         <key>few</key>
         <string>Удалить (%d)</string>
         <key>many</key>
-        <string>Удалить (%d)</string>
-        <key>other</key>
         <string>Удалить (%d)</string>
       </dict>
     </dict>
@@ -1232,13 +1232,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить альбомы?</string>
         <key>one</key>
         <string>Удалить альбом?</string>
         <key>few</key>
         <string>Удалить альбомы?</string>
         <key>many</key>
-        <string>Удалить альбомы?</string>
-        <key>other</key>
         <string>Удалить альбомы?</string>
       </dict>
     </dict>
@@ -1252,13 +1252,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
         <key>one</key>
         <string>Альбом будет удалён, но его содержимое останется на «Временной шкале».</string>
         <key>few</key>
         <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
         <key>many</key>
-        <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
-        <key>other</key>
         <string>Альбомы будут удалены, но их содержимое останется на «Временной шкале».</string>
       </dict>
     </dict>
@@ -1272,14 +1272,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалено %d альбомов</string>
         <key>one</key>
         <string>Альбом «[A]» удалён</string>
         <key>few</key>
         <string>Удалено %d альбома</string>
         <key>many</key>
         <string>Удалено %d альбомов</string>
-        <key>other</key>
-        <string>Удалено %d альбома</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>
@@ -1292,14 +1292,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Из «[A]» удалено %d элементов</string>
         <key>one</key>
         <string>Из «[A]» удалён %d элемент</string>
         <key>few</key>
         <string>Из «[A]» удалено %d элемента</string>
         <key>many</key>
         <string>Из «[A]» удалено %d элементов</string>
-        <key>other</key>
-        <string>Из «[A]» удалено %d элемента</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
@@ -1312,13 +1312,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить ссылки?</string>
         <key>one</key>
         <string>Удалить ссылку?</string>
         <key>few</key>
         <string>Удалить ссылки?</string>
         <key>many</key>
-        <string>Удалить ссылки?</string>
-        <key>other</key>
         <string>Удалить ссылки?</string>
       </dict>
     </dict>
@@ -1332,13 +1332,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Удалить ссылки</string>
         <key>one</key>
         <string>Удалить ссылку</string>
         <key>few</key>
         <string>Удалить ссылки</string>
         <key>many</key>
-        <string>Удалить ссылки</string>
-        <key>other</key>
         <string>Удалить ссылки</string>
       </dict>
     </dict>
@@ -1352,13 +1352,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
         <key>one</key>
         <string>Люди, с которыми вы поделились этой ссылкой, потеряют доступ к альбому.</string>
         <key>few</key>
         <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
         <key>many</key>
-        <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
-        <key>other</key>
         <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
       </dict>
     </dict>
@@ -1372,13 +1372,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ссылки удалены</string>
         <key>one</key>
         <string>Ссылка удалена</string>
         <key>few</key>
         <string>Ссылки удалены</string>
         <key>many</key>
-        <string>Ссылки удалены</string>
-        <key>other</key>
         <string>Ссылки удалены</string>
       </dict>
     </dict>
@@ -1392,14 +1392,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d дней с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
-        <string>Каждый день [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждый день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
-        <string>Каждые %d дня [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d дня с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
-        <string>Каждые %d дней [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d дня [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <string>Каждые %d дней с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1412,14 +1412,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d дней с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d дня с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d дней с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d дня с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -1432,14 +1432,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d недель в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждую неделю в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d недели в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d недель в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d недели в [WeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -1452,14 +1452,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d недель в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждую неделю в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d недели в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d недель в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d недели в [WeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -1472,14 +1472,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждую неделю в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -1492,14 +1492,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждую неделю в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d недель в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d недели в [WeekDaysList] и [LastWeekDay] с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -1512,14 +1512,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -1532,14 +1532,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в [MonthDay]-й день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -1552,14 +1552,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -1572,14 +1572,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1592,14 +1592,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1612,14 +1612,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1632,14 +1632,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1652,14 +1652,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1672,14 +1672,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1692,14 +1692,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1712,14 +1712,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый понедельник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1732,14 +1732,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый понедельник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1752,14 +1752,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1772,14 +1772,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1792,14 +1792,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1812,14 +1812,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1832,14 +1832,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1852,14 +1852,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1872,14 +1872,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1892,14 +1892,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1912,14 +1912,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый вторник с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1932,14 +1932,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый вторник с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1952,14 +1952,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1972,14 +1972,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1992,14 +1992,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -2012,14 +2012,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -2032,14 +2032,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -2052,14 +2052,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -2072,14 +2072,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -2092,14 +2092,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -2112,14 +2112,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую среду с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -2132,14 +2132,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую среду с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -2152,14 +2152,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -2172,14 +2172,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -2192,14 +2192,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -2212,14 +2212,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второй четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -2232,14 +2232,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -2252,14 +2252,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третий четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -2272,14 +2272,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -2292,14 +2292,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -2312,14 +2312,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый четверг с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -2332,14 +2332,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятый четверг с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -2352,14 +2352,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -2372,14 +2372,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -2392,14 +2392,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -2412,14 +2412,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -2432,14 +2432,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -2452,14 +2452,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -2472,14 +2472,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -2492,14 +2492,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -2512,14 +2512,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую пятницу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -2532,14 +2532,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую пятницу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -2552,14 +2552,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -2572,14 +2572,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -2592,14 +2592,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -2612,14 +2612,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во вторую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -2632,14 +2632,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -2652,14 +2652,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третью субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -2672,14 +2672,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -2692,14 +2692,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -2712,14 +2712,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую субботу с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -2732,14 +2732,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятую субботу с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -2752,14 +2752,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -2772,14 +2772,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в первое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -2792,14 +2792,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второе воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -2812,14 +2812,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца во второе воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -2832,14 +2832,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третье воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2852,14 +2852,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в третье воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2872,14 +2872,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -2892,14 +2892,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в четвёртое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2912,14 +2912,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2932,14 +2932,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>one</key>
         <string>Каждый месяц в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>few</key>
         <string>Каждые %d месяца в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>many</key>
         <string>Каждые %d месяцев в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в пятое воскресенье с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -2952,13 +2952,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[Нерасшифрованные файлы]</string>
         <key>one</key>
         <string>[Нерасшифрованный файл]</string>
         <key>few</key>
         <string>[Нерасшифрованные файлы]</string>
         <key>many</key>
-        <string>[Нерасшифрованные файлы]</string>
-        <key>other</key>
         <string>[Нерасшифрованные файлы]</string>
       </dict>
     </dict>
@@ -2972,14 +2972,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Осталось %d дней</string>
         <key>one</key>
         <string>Остался %d день</string>
         <key>few</key>
         <string>Осталось %d дня</string>
         <key>many</key>
         <string>Осталось %d дней</string>
-        <key>other</key>
-        <string>Осталось %d дня</string>
       </dict>
     </dict>
     <key>account.achievement.validity.days</key>
@@ -2992,14 +2992,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Действует %d дней.</string>
         <key>one</key>
         <string>Действует %d день.</string>
         <key>few</key>
         <string>Действует %d дня.</string>
         <key>many</key>
         <string>Действует %d дней.</string>
-        <key>other</key>
-        <string>Действует %d дня.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -3012,14 +3012,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>на %d дней</string>
         <key>one</key>
         <string>на %d день</string>
         <key>few</key>
         <string>на %d дня</string>
         <key>many</key>
         <string>на %d дней</string>
-        <key>other</key>
-        <string>на %d дня</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -3032,14 +3032,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Бонус истекает через %d дней.</string>
         <key>one</key>
         <string>Бонус истекает через %d день.</string>
         <key>few</key>
         <string>Бонус истекает через %d дня.</string>
         <key>many</key>
         <string>Бонус истекает через %d дней.</string>
-        <key>other</key>
-        <string>Бонус истекает через %d дня.</string>
       </dict>
     </dict>
     <key>accounts.cancelSubscriptionSurvey.error.minimumRequiredCharacterCount</key>
@@ -3052,13 +3052,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Сообщение должно содержать не менее %d символов</string>
         <key>one</key>
         <string>Сообщение должно содержать не менее %d символа</string>
         <key>few</key>
         <string>Сообщение должно содержать не менее %d символов</string>
         <key>many</key>
-        <string>Сообщение должно содержать не менее %d символов</string>
-        <key>other</key>
         <string>Сообщение должно содержать не менее %d символов</string>
       </dict>
     </dict>
@@ -3072,14 +3072,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В «[B]» загружено %d элементов</string>
         <key>one</key>
         <string>В «[B]» загружен элемент «[A]»</string>
         <key>few</key>
         <string>В «[B]» загружено %d элемента</string>
         <key>many</key>
         <string>В «[B]» загружено %d элементов</string>
-        <key>other</key>
-        <string>В «[B]» загружено %d элемента</string>
       </dict>
     </dict>
     <key>share.message.uploadedToCloudDrive</key>
@@ -3092,14 +3092,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В облачный диск загружено %d элементов</string>
         <key>one</key>
         <string>В облачный диск загружен элемент «[A]»</string>
         <key>few</key>
         <string>В облачный диск загружено %d элемента</string>
         <key>many</key>
         <string>В облачный диск загружено %d элементов</string>
-        <key>other</key>
-        <string>В облачный диск загружено %d элемента</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withOneFile</key>
@@ -3112,13 +3112,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Файл «[A]» отправлен во все чаты</string>
         <key>one</key>
         <string>Файл «[A]» отправлен в чат</string>
         <key>few</key>
         <string>Файл «[A]» отправлен во все чаты</string>
         <key>many</key>
-        <string>Файл «[A]» отправлен во все чаты</string>
-        <key>other</key>
         <string>Файл «[A]» отправлен во все чаты</string>
       </dict>
     </dict>
@@ -3132,13 +3132,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] отправлено во все чаты</string>
         <key>one</key>
         <string>[A] отправлено в чат</string>
         <key>few</key>
         <string>[A] отправлено во все чаты</string>
         <key>many</key>
-        <string>[A] отправлено во все чаты</string>
-        <key>other</key>
         <string>[A] отправлено во все чаты</string>
       </dict>
     </dict>
@@ -3152,14 +3152,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d дней</string>
         <key>one</key>
         <string>%d день</string>
         <key>few</key>
         <string>%d дня</string>
         <key>many</key>
         <string>%d дней</string>
-        <key>other</key>
-        <string>%d дня</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.interval</key>
@@ -3172,14 +3172,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d недель</string>
         <key>one</key>
         <string>%d неделя</string>
         <key>few</key>
         <string>%d недели</string>
         <key>many</key>
         <string>%d недель</string>
-        <key>other</key>
-        <string>%d недели</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.interval</key>
@@ -3192,14 +3192,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d месяцев</string>
         <key>one</key>
         <string>%d месяц</string>
         <key>few</key>
         <string>%d месяца</string>
         <key>many</key>
         <string>%d месяцев</string>
-        <key>other</key>
-        <string>%d месяца</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.footerNote</key>
@@ -3212,14 +3212,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться каждые %d дней.</string>
         <key>one</key>
         <string>Встреча будет проводиться каждый день.</string>
         <key>few</key>
         <string>Встреча будет проводиться каждые %d дня.</string>
         <key>many</key>
         <string>Встреча будет проводиться каждые %d дней.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться каждые %d дня.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -3232,14 +3232,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться каждые %d недель в [weekDayName].</string>
         <key>one</key>
         <string>Встреча будет проводиться каждую неделю в [weekDayName].</string>
         <key>few</key>
         <string>Встреча будет проводиться каждые %d недели в [weekDayName].</string>
         <key>many</key>
         <string>Встреча будет проводиться каждые %d недель в [weekDayName].</string>
-        <key>other</key>
-        <string>Встреча будет проводиться каждые %d недели в [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -3252,14 +3252,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться каждые %d недель в [weekDayNames] и [lastWeekDayName].</string>
         <key>one</key>
         <string>Встреча будет проводиться каждую неделю в [weekDayNames] и [lastWeekDayName].</string>
         <key>few</key>
         <string>Встреча будет проводиться каждые %d недели в [weekDayNames] и [lastWeekDayName].</string>
         <key>many</key>
         <string>Встреча будет проводиться каждые %d недель в [weekDayNames] и [lastWeekDayName].</string>
-        <key>other</key>
-        <string>Встреча будет проводиться каждые %d недели в [weekDayNames] и [lastWeekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
@@ -3272,14 +3272,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяцев.</string>
         <key>one</key>
         <string>Встреча будет проводиться в день [cardinalDay] каждый месяц.</string>
         <key>few</key>
         <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяца.</string>
         <key>many</key>
         <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяцев.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяца.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -3292,14 +3292,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяцев.</string>
         <key>one</key>
         <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждый месяц.</string>
         <key>few</key>
         <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяца.</string>
         <key>many</key>
         <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяцев.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяца.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -3312,14 +3312,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяцев.</string>
         <key>one</key>
         <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждый месяц.</string>
         <key>few</key>
         <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяца.</string>
         <key>many</key>
         <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяцев.</string>
-        <key>other</key>
-        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяца.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -3332,14 +3332,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d недель в [weekDayNames]</string>
         <key>one</key>
         <string>Каждую неделю в [weekDayNames]</string>
         <key>few</key>
         <string>Каждые %d недели в [weekDayNames]</string>
         <key>many</key>
         <string>Каждые %d недель в [weekDayNames]</string>
-        <key>other</key>
-        <string>Каждые %d недели в [weekDayNames]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
@@ -3352,14 +3352,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев в день [cardinalNumber]</string>
         <key>one</key>
         <string>Каждый месяц в день [cardinalNumber]</string>
         <key>few</key>
         <string>Каждые %d месяца в день [cardinalNumber]</string>
         <key>many</key>
         <string>Каждые %d месяцев в день [cardinalNumber]</string>
-        <key>other</key>
-        <string>Каждые %d месяца в день [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -3372,14 +3372,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d месяцев, [ordinalNumber] [weekDayName]</string>
         <key>one</key>
         <string>Каждый месяц, [ordinalNumber] [weekDayName]</string>
         <key>few</key>
         <string>Каждые %d месяца, [ordinalNumber] [weekDayName]</string>
         <key>many</key>
         <string>Каждые %d месяцев, [ordinalNumber] [weekDayName]</string>
-        <key>other</key>
-        <string>Каждые %d месяца, [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
@@ -3392,14 +3392,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В некоторых месяцах меньше %d дней. Для них повторение будет запланировано на последний день месяца.</string>
         <key>one</key>
         <string>В некоторых месяцах меньше %d дня. Для них повторение будет запланировано на последний день месяца.</string>
         <key>few</key>
         <string>В некоторых месяцах меньше %d дней. Для них повторение будет запланировано на последний день месяца.</string>
         <key>many</key>
         <string>В некоторых месяцах меньше %d дней. Для них повторение будет запланировано на последний день месяца.</string>
-        <key>other</key>
-        <string>В некоторых месяцах меньше %d дня. Для них повторение будет запланировано на последний день месяца.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -3412,14 +3412,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Каждые %d дней</string>
         <key>one</key>
         <string>Каждый день</string>
         <key>few</key>
         <string>Каждые %d дня</string>
         <key>many</key>
         <string>Каждые %d дней</string>
-        <key>other</key>
-        <string>Каждые %d дня</string>
       </dict>
     </dict>
     <key>albumLink.alert.message.filesSaveToCloudDrive</key>
@@ -3432,14 +3432,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d файлов сохранено в Облачном диске</string>
         <key>one</key>
         <string>%d файл сохранён в Облачном диске</string>
         <key>few</key>
         <string>%d файла сохранено в Облачном диске</string>
         <key>many</key>
         <string>%d файлов сохранено в Облачном диске</string>
-        <key>other</key>
-        <string>%d файла сохранено в Облачном диске</string>
       </dict>
     </dict>
     <key>general.saveToPhotos.started</key>
@@ -3452,14 +3452,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Запущено %d скачиваний</string>
         <key>one</key>
         <string>Скачивание запущено</string>
         <key>few</key>
         <string>Запущено %d скачивания</string>
         <key>many</key>
         <string>Запущено %d скачиваний</string>
-        <key>other</key>
-        <string>Запущено %d скачивания</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
@@ -3472,14 +3472,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d участников ждут подключения к «[MeetingName]»</string>
         <key>one</key>
         <string>[UserName] ждёт подключения к «[MeetingName]»</string>
         <key>few</key>
         <string>%d участника ждут подключения к «[MeetingName]»</string>
         <key>many</key>
         <string>%d участников ждут подключения к «[MeetingName]»</string>
-        <key>other</key>
-        <string>%d участника ждут подключения к «[MeetingName]»</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -3492,14 +3492,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d участников ждут подключения к звонку</string>
         <key>one</key>
         <string>[UserName] ждёт подключения к звонку</string>
         <key>few</key>
         <string>%d участника ждут подключения к звонку</string>
         <key>many</key>
         <string>%d участников ждут подключения к звонку</string>
-        <key>other</key>
-        <string>%d участника ждут подключения к звонку</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.participantsCount</key>
@@ -3512,14 +3512,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d участников</string>
         <key>one</key>
         <string>%d участник</string>
         <key>few</key>
         <string>%d участника</string>
         <key>many</key>
         <string>%d участников</string>
-        <key>other</key>
-        <string>%d участника</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -3532,14 +3532,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов выбрано</string>
         <key>one</key>
         <string>%d элемент выбран</string>
         <key>few</key>
         <string>%d элемента выбрано</string>
         <key>many</key>
         <string>%d элементов выбрано</string>
-        <key>other</key>
-        <string>%d элемента выбрано</string>
       </dict>
     </dict>
     <key>chat.message.filesSentToAChat</key>
@@ -3552,13 +3552,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Файлы отправлены в чат</string>
         <key>one</key>
         <string>Файл отправлен в чат</string>
         <key>few</key>
         <string>Файлы отправлены в чат</string>
         <key>many</key>
-        <string>Файлы отправлены в чат</string>
-        <key>other</key>
         <string>Файлы отправлены в чат</string>
       </dict>
     </dict>
@@ -3572,14 +3572,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Файл отправлен в %d чатов</string>
         <key>one</key>
         <string>Файл отправлен в %d чат</string>
         <key>few</key>
         <string>Файл отправлен в %d чата</string>
         <key>many</key>
         <string>Файл отправлен в %d чатов</string>
-        <key>other</key>
-        <string>Файл отправлен в %d чата</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
@@ -3592,14 +3592,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Файлы отправлены в %d чатов</string>
         <key>one</key>
         <string>Файлы отправлены в %d чат</string>
         <key>few</key>
         <string>Файлы отправлены в %d чата</string>
         <key>many</key>
         <string>Файлы отправлены в %d чатов</string>
-        <key>other</key>
-        <string>Файлы отправлены в %d чата</string>
       </dict>
     </dict>
     <key>chat.message.numberOfContacts</key>
@@ -3612,14 +3612,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d контактов</string>
         <key>one</key>
         <string>%d контакт</string>
         <key>few</key>
         <string>%d контакта</string>
         <key>many</key>
         <string>%d контактов</string>
-        <key>other</key>
-        <string>%d контакта</string>
       </dict>
     </dict>
     <key>chat.message.numberOfAttachments</key>
@@ -3632,14 +3632,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Прикреплено %d файлов</string>
         <key>one</key>
         <string>Прикреплён %d файл</string>
         <key>few</key>
         <string>Прикреплено %d файла</string>
         <key>many</key>
         <string>Прикреплено %d файлов</string>
-        <key>other</key>
-        <string>Прикреплено %d файла</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -3652,14 +3652,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Пригласить %d контактов</string>
         <key>one</key>
         <string>Пригласить %d контакт</string>
         <key>few</key>
         <string>Пригласить %d контакта</string>
         <key>many</key>
         <string>Пригласить %d контактов</string>
-        <key>other</key>
-        <string>Пригласить %d контакта</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
@@ -3672,14 +3672,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d участников</string>
         <key>one</key>
         <string>%d участник</string>
         <key>few</key>
         <string>%d участника</string>
         <key>many</key>
         <string>%d участников</string>
-        <key>other</key>
-        <string>%d участника</string>
       </dict>
     </dict>
     <key>chat.info.notifications.mutedUntilTime</key>
@@ -3692,13 +3692,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Уведомления будут беззвучными до [Time]</string>
         <key>one</key>
         <string>Уведомления будут беззвучными до [Time]</string>
         <key>few</key>
         <string>Уведомления будут беззвучными до [Time]</string>
         <key>many</key>
-        <string>Уведомления будут беззвучными до [Time]</string>
-        <key>other</key>
         <string>Уведомления будут беззвучными до [Time]</string>
       </dict>
     </dict>
@@ -3712,14 +3712,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Открыт доступ к %d папкам</string>
         <key>one</key>
         <string>Открыт доступ к папке</string>
         <key>few</key>
         <string>Открыт доступ к %d папкам</string>
         <key>many</key>
         <string>Открыт доступ к %d папкам</string>
-        <key>other</key>
-        <string>Открыт доступ к %d папки</string>
       </dict>
     </dict>
     <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
@@ -3732,14 +3732,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ваш бесплатный звонок завершится через %d минут</string>
         <key>one</key>
         <string>Ваш бесплатный звонок завершится через %d минуту</string>
         <key>few</key>
         <string>Ваш бесплатный звонок завершится через %d минуты</string>
         <key>many</key>
         <string>Ваш бесплатный звонок завершится через %d минут</string>
-        <key>other</key>
-        <string>Ваш бесплатный звонок завершится через %d минуты</string>
       </dict>
     </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
@@ -3752,13 +3752,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В «[A]» добавлено %d видео</string>
         <key>one</key>
         <string>В «[A]» добавлено %d видео</string>
         <key>few</key>
         <string>В «[A]» добавлено %d видео</string>
         <key>many</key>
-        <string>В «[A]» добавлено %d видео</string>
-        <key>other</key>
         <string>В «[A]» добавлено %d видео</string>
       </dict>
     </dict>
@@ -3772,13 +3772,13 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Из «[A]» удалено %d видео</string>
         <key>one</key>
         <string>Из «[A]» удалено %d видео</string>
         <key>few</key>
         <string>Из «[A]» удалено %d видео</string>
         <key>many</key>
-        <string>Из «[A]» удалено %d видео</string>
-        <key>other</key>
         <string>Из «[A]» удалено %d видео</string>
       </dict>
     </dict>
@@ -3792,14 +3792,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов скрыто</string>
         <key>one</key>
         <string>%d элемент скрыт</string>
         <key>few</key>
         <string>%d элемента скрыто</string>
         <key>many</key>
         <string>%d элементов скрыто</string>
-        <key>other</key>
-        <string>%d элемента скрыто</string>
       </dict>
     </dict>
     <key>nodes.action.unhideItems</key>
@@ -3812,14 +3812,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Показано %d элементов</string>
         <key>one</key>
         <string>Показан %d элемент</string>
         <key>few</key>
         <string>Показано %d элемента</string>
         <key>many</key>
         <string>Показано %d элементов</string>
-        <key>other</key>
-        <string>Показано %d элемента</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -3832,14 +3832,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В «[A]» добавлено %d элементов</string>
         <key>one</key>
         <string>Добавлено в «[A]»</string>
         <key>few</key>
         <string>В «[A]» добавлено %d элемента</string>
         <key>many</key>
         <string>В «[A]» добавлено %d элементов</string>
-        <key>other</key>
-        <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -3852,14 +3852,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Добавлено %d файлов</string>
         <key>one</key>
         <string>Добавлен %d файл</string>
         <key>few</key>
         <string>Добавлено %d файла</string>
         <key>many</key>
         <string>Добавлено %d файлов</string>
-        <key>other</key>
-        <string>Добавлено %d файла</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3872,14 +3872,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Добавлено %d папок</string>
         <key>one</key>
         <string>Добавлена %d папка</string>
         <key>few</key>
         <string>Добавлено %d папки</string>
         <key>many</key>
         <string>Добавлено %d папок</string>
-        <key>other</key>
-        <string>Добавлено %d папки</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3892,14 +3892,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Добавлено %d файлов</string>
         <key>one</key>
         <string>Добавлен %d файл</string>
         <key>few</key>
         <string>Добавлено %d файла</string>
         <key>many</key>
         <string>Добавлено %d файлов</string>
-        <key>other</key>
-        <string>Добавлено %d файла</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3912,14 +3912,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>и %d папок</string>
         <key>one</key>
         <string>и %d папка</string>
         <key>few</key>
         <string>и %d папки</string>
         <key>many</key>
         <string>и %d папок</string>
-        <key>other</key>
-        <string>и %d папки</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
@@ -3932,14 +3932,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>one</key>
-        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>few</key>
-        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>many</key>
-        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
-        <key>other</key>
-        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте [date], ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3952,14 +3952,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>one</key>
-        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>few</key>
-        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>many</key>
-        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
-        <key>other</key>
-        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы несколько раз писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3972,14 +3972,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>one</key>
-        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файл, занимающий [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>few</key>
-        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
         <key>many</key>
-        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
-        <key>other</key>
-        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файла, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A]. </string>
+        <string>Хотя мы писали вам по электронной почте, ваше хранилище всё ещё заполнено. На вашем Облачном диске хранится %d файлов, занимающих [storageSpace], и ваш аккаунт был заблокирован. Перейдите на план [plan], чтобы увеличить хранилище и разблокировать аккаунт. Если вы не предпримете никаких действий в ближайшее время, ваши данные будут удалены. Улучшите аккаунт сейчас, чтобы защитить свои файлы. [A]Подробнее об ограничениях хранилища[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3992,14 +3992,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d версий файлов</string>
         <key>one</key>
         <string>%d версия файлов</string>
         <key>few</key>
         <string>%d версии файлов</string>
         <key>many</key>
         <string>%d версий файлов</string>
-        <key>other</key>
-        <string>%d версии файлов</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -4012,14 +4012,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Общий размер, используемый версиями файла: [storageSpace]</string>
         <key>one</key>
         <string>Общий размер, используемый в зависимости от версии файла: [storageSpace]</string>
         <key>few</key>
         <string>Общий размер, используемый версиями файла: [storageSpace]</string>
         <key>many</key>
         <string>Общий размер, используемый версиями файла: [storageSpace]</string>
-        <key>other</key>
-        <string>Общий объём, занимаемый версиями файлов: [storageSpace]</string>
       </dict>
     </dict>
     <key>set.addTo.snackbar.message</key>
@@ -4032,14 +4032,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>В «[A]» добавлено %d элементов</string>
         <key>one</key>
         <string>Добавлено в «[A]»</string>
         <key>few</key>
         <string>В «[A]» добавлено %d элемента</string>
         <key>many</key>
         <string>В «[A]» добавлено %d элементов</string>
-        <key>other</key>
-        <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
     <key>audio.playlist.removeTracks.snack.message</key>
@@ -4052,14 +4052,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d элементов удалено из очереди</string>
         <key>one</key>
         <string>«[A]» удалён из очереди</string>
         <key>few</key>
         <string>%d элемента удалены из очереди</string>
         <key>many</key>
         <string>%d элементов удалено из очереди</string>
-        <key>other</key>
-        <string>%d элемента удалено из очереди</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.uploading.items</key>
@@ -4072,14 +4072,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Загрузка: осталось %u элементов</string>
         <key>one</key>
         <string>Загрузка: остался %u элемент</string>
         <key>few</key>
         <string>Загрузка: осталось %u элемента</string>
         <key>many</key>
         <string>Загрузка: осталось %u элементов</string>
-        <key>other</key>
-        <string>Загрузка: осталось %u элемента</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -4092,14 +4092,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Приостановлено: осталось %u элементов</string>
         <key>one</key>
         <string>Приостановлено: остался %u элемент</string>
         <key>few</key>
         <string>Приостановлено: осталось %u элемента</string>
         <key>many</key>
         <string>Приостановлено: осталось %u элементов</string>
-        <key>other</key>
-        <string>Приостановлено: осталось %u элемента</string>
       </dict>
     </dict>
   </dict>
