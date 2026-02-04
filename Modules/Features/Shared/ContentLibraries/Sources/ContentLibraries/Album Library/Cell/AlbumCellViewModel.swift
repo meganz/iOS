@@ -104,7 +104,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         
-        isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         title = if let searchText {
             AttributedString(album.name
                 .forceLeftToRight()

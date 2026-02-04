@@ -40,6 +40,7 @@ struct PlaylistContentScreen: View {
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
+            remoteFeatureFlagUseCase: viewModel.remoteFeatureFlagUseCase,
             featureFlagProvider: viewModel.featureFlagProvider,
             videoSelection: videoSelection,
             sortHeaderConfig: viewModel.sortHeaderConfig,
@@ -117,6 +118,7 @@ struct PlaylistContentView: View {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videos: [NodeEntity]
     private let searchText: String?
@@ -138,6 +140,7 @@ struct PlaylistContentView: View {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
         sortHeaderConfig: SortHeaderConfig,
@@ -150,6 +153,7 @@ struct PlaylistContentView: View {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         self.videos = videos
         self.searchText = searchText
@@ -162,7 +166,7 @@ struct PlaylistContentView: View {
     }
     
     private var isMediaRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
     
     var body: some View {
@@ -254,6 +258,7 @@ struct PlaylistContentView: View {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: featureFlagProvider
         )
     }

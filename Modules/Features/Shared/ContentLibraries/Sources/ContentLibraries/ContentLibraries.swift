@@ -19,17 +19,20 @@ public struct ContentLibraries: Sendable {
     
     public struct Configuration: Sendable {
         let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+        let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
         let featureFlagProvider: any FeatureFlagProviderProtocol
         let nodeUseCase: any NodeUseCaseProtocol
         let isAlbumPerformanceImprovementsEnabled: @Sendable () -> Bool
         
         public init(
             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+            remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
             featureFlagProvider: some FeatureFlagProviderProtocol,
             nodeUseCase: some NodeUseCaseProtocol,
             isAlbumPerformanceImprovementsEnabled: @escaping @Sendable () -> Bool
         ) {
             self.sensitiveNodeUseCase = sensitiveNodeUseCase
+            self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
             self.nodeUseCase = nodeUseCase
             self.isAlbumPerformanceImprovementsEnabled = isAlbumPerformanceImprovementsEnabled
             self.featureFlagProvider = featureFlagProvider

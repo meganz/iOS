@@ -81,7 +81,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         self.collectionView = collectionView
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
-            let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+            let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
             let isFirstSection = isMediaRevampEnabled && indexPath.section == 0
             
             header.contentConfiguration = UIHostingConfiguration {
@@ -158,7 +158,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         subscribeToEditModeChanges()
 
-        if ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+        if ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
             panGesture.delegate = self
             collectionView.addGestureRecognizer(panGesture)
@@ -199,7 +199,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
     
     private func updateGlobalHeaderMonthTitle() {
-        guard ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp),
+        guard ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp),
               let globalHeaderView = globalHeaderView else {
             return
         }

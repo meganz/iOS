@@ -126,6 +126,7 @@ public struct VideoListView: View {
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
+            remoteFeatureFlagUseCase: viewModel.remoteFeatureFlagUseCase,
             featureFlagProvider: viewModel.featureFlagProvider
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)

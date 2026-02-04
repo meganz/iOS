@@ -35,6 +35,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     
     private let videoConfig: VideoConfig
     private let representer: AllVideosCollectionViewRepresenter
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var searchText: String?
 
@@ -53,8 +54,10 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     
     init(
         _ representer: AllVideosCollectionViewRepresenter,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         self.representer = representer
         self.videoConfig = representer.videoConfig
@@ -98,6 +101,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 thumbnailLoader: viewModel.thumbnailLoader,
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
                 featureFlagProvider: featureFlagProvider,
                 onTapMoreOptions: { [weak self] node, shouldShowSelection in
                     self?.onTapMoreOptions(node, sender: cell, shouldShowSelection: shouldShowSelection)

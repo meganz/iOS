@@ -1021,6 +1021,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -1037,6 +1038,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }
@@ -1255,11 +1257,10 @@ struct AlbumContentViewModelTestSuite {
             isMediaRevampEnabled: Bool,
             addBarButton: Bool
         ) async throws {
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: isMediaRevampEnabled])
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
                 albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
-                featureFlagProvider: featureFlagProvider)
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled]))
             
             try await confirmation { confirmation in
                 sut.invokeCommand = { command in
@@ -1296,13 +1297,12 @@ struct AlbumContentViewModelTestSuite {
                 allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)])
             let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
                 monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: true])
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
                 photoLibraryUseCase: photoLibraryUseCase,
                 monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
                 albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
-                featureFlagProvider: featureFlagProvider)
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
             
             try await confirmation(expectedCount: 2) { confirmation in
                 sut.invokeCommand = { command in
@@ -1349,12 +1349,11 @@ struct AlbumContentViewModelTestSuite {
                 item: Result<[AlbumPhotoEntity], any Error>.success(albumPhotos))
             let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
                 monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: true])
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
                 monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
                 albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
-                featureFlagProvider: featureFlagProvider)
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
             
             sut.dispatch(.onViewWillAppear)
             await sut.setupSubscriptionTask?.value
@@ -1495,6 +1494,7 @@ struct AlbumContentViewModelTestSuite {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -1511,6 +1511,7 @@ struct AlbumContentViewModelTestSuite {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }

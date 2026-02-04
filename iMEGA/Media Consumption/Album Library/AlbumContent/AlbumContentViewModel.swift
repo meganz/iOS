@@ -78,6 +78,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var loadingTask: Task<Void, Never>?
@@ -150,6 +151,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
@@ -167,6 +169,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentDataProvider = albumContentDataProvider
         self.albumCoverUseCase = albumCoverUseCase
         self.thumbnailLoader = thumbnailLoader
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         self.featureFlagProvider = featureFlagProvider
     }
@@ -254,7 +257,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     var isMediaRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
     
     // MARK: Private

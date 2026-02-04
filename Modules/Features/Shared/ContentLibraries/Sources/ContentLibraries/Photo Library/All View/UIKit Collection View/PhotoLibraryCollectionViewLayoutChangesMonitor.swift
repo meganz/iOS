@@ -67,7 +67,7 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
         previousLayoutBuilder: PhotoLibraryCollectionLayoutBuilder?,
         didReloadData: Bool
     ) {
-        let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         let newLayoutBuilder = PhotoLibraryCollectionLayoutBuilder(
             zoomState: zoomState,
             bannerType: bannerType,

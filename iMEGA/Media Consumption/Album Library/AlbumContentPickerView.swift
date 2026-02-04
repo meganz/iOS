@@ -99,7 +99,7 @@ struct AlbumContentPickerView: View {
         Button {
             viewModel.onCancel()
         } label: {
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+            if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
                 MEGAAssets.Image.closeBannerButton
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
             } else {

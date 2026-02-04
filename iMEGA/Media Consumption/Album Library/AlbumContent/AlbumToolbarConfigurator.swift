@@ -21,7 +21,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     }
     
     var isMediaRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
 
     private func makeDownloadItem() -> UIBarButtonItem {

@@ -22,6 +22,7 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
     @PreferenceWrapper(key: PreferenceKeyEntity.limitedPhotoAccessBannerDismissedDate, defaultValue: nil)
     private(set) var limitedPhotoAccessBannerDismissedDate: Date?
     private let isMediaRevampEnabled: Bool
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let devicePermissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
     private let updateBannerHeaderPassthroughSubject = PassthroughSubject<Void, Never>()
@@ -34,7 +35,8 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
         tracker: some AnalyticsTracking = DIContainer.tracker,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
-        self.isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        self.remoteFeatureFlagUseCase = configuration.remoteFeatureFlagUseCase
+        self.isMediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         let supportedScaleFactors: [PhotoLibraryZoomState.ScaleFactor] = isMediaRevampEnabled
         ? [.one, .three, .five]
         : PhotoLibraryZoomState.ScaleFactor.allCases

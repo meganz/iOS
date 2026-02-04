@@ -13,7 +13,7 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
     }
 
     private var isMediaRevampEnabled: Bool {
-        ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
 
     var body: some View {

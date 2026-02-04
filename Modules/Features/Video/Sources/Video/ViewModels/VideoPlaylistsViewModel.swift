@@ -29,6 +29,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         case reinitialise
     }
     
+    let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     let featureFlagProvider: any FeatureFlagProviderProtocol
     
     public let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -67,7 +68,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
     @Published var shareLinkContextActionForSelectedVideoPlaylistMode: ShareLinkActionMenuMode = .hidden
 
     public var isMediaRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
 
     private(set) var alertViewModel: TextFieldAlertViewModel
@@ -93,6 +94,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         alertViewModel: TextFieldAlertViewModel,
         renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel,
         thumbnailLoader: some ThumbnailLoaderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         contentProvider: some VideoPlaylistsViewModelContentProviderProtocol,
         videoRevampRouter: some VideoRevampRouting,
@@ -108,6 +110,7 @@ public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtoc
         self.renameVideoPlaylistAlertViewModel = renameVideoPlaylistAlertViewModel
         self.monitorSortOrderChangedDispatchQueue = monitorSortOrderChangedDispatchQueue
         self.thumbnailLoader = thumbnailLoader
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         self.contentProvider = contentProvider
         self.videoRevampRouter = videoRevampRouter

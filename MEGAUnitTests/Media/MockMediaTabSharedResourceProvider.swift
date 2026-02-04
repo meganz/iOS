@@ -14,7 +14,8 @@ final class MockMediaTabSharedResourceProvider: @MainActor MediaTabSharedResourc
             devicePermissionHandler: MockDevicePermissionHandler(),
             preferenceUseCase: MockPreferenceUseCase(),
             cameraUploadsSettingsViewRouter: MockRouter(),
-            cameraUploadProgressRouter: MockCameraUploadProgressRouter()
+            cameraUploadProgressRouter: MockCameraUploadProgressRouter(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
         )
     }()
 

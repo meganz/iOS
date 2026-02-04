@@ -340,6 +340,7 @@ struct AddToAlbumsViewModelTests {
         addToCollectionRouter: some AddToCollectionRouting = MockAddToCollectionRouter(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             nodeUseCase: MockNodeUseCase(),
             isAlbumPerformanceImprovementsEnabled: { true }),

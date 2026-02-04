@@ -826,9 +826,10 @@ struct AlbumCellViewModelTestSuite {
             isMediaRevampEnabled: Bool,
             expectedImage: Image
         ) {
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled])
             let sut = makeSUT(
                 album: .init(id: 8, type: .user),
-                configuration: .mockConfiguration(featureFlags: [FeatureFlagKey.mediaRevamp: isMediaRevampEnabled]))
+                configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
         }

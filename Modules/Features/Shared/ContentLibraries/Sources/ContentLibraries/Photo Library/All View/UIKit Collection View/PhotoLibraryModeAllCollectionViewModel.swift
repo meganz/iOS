@@ -16,7 +16,7 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
-        self.isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        self.isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         super.init(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: preferenceUseCase,

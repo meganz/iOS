@@ -29,7 +29,7 @@ public struct EnableCameraUploadsBannerButtonView: View {
     ) {
         self.onTapHandler = onTapHandler
         self.closeButtonAction = closeButtonAction
-        isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
     
     public var body: some View {

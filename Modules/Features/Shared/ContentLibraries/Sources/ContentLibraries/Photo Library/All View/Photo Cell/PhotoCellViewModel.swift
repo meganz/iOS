@@ -62,7 +62,7 @@ open class PhotoCellViewModel: ObservableObject {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
-        self.isMediaRevamp = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        self.isMediaRevamp = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""

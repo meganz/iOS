@@ -60,7 +60,8 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     
     @MainActor
     func testInit_defaultValue() throws {
-        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
+        let sut = try makeSUT(configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
         XCTAssertEqual(sut.photoCategoryList.count, 3)
         XCTAssertEqual(sut.photoCategoryList[0].categoryDate, try "2022-09-01T22:01:04Z".date.removeDay(timeZone: .GMT))
         XCTAssertEqual(sut.photoCategoryList[0].contentList,
@@ -83,7 +84,8 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomInOneTime_daySection() throws {
-        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
+        let sut = try makeSUT(configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
         sut.zoomState.zoom(.in)
 
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -108,7 +110,8 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomInTwoTimes_daySection() throws {
-        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
+        let sut = try makeSUT(configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
         sut.zoomState.zoom(.in)
         sut.zoomState.zoom(.in)
 
@@ -134,7 +137,8 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomOutOneTime_monthSection() throws {
-        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
+        let sut = try makeSUT(configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
         sut.zoomState.zoom(.out)
 
         XCTAssertEqual(sut.photoCategoryList.count, 3)
@@ -159,7 +163,8 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
 
     @MainActor
     func testZoomState_zoomOutTwoTimes_monthSection() throws {
-        let sut = try makeSUT(configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
+        let sut = try makeSUT(configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
         sut.zoomState.zoom(.out)
         sut.zoomState.zoom(.out)
 
@@ -259,9 +264,10 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
         ) async throws {
             let mockPreferences = MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: isCameraUploadsEnabled])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: false])
             let sut = makeSUT(
                 preferenceUseCase: mockPreferences,
-                configuration: .mockConfiguration(featureFlags: [.mediaRevamp: false]))
+                configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             try await confirmation { confirmation in
                 let subscription = sut.$bannerType
@@ -280,9 +286,10 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
         func cameraUploadsDisabled() async throws {
             let mockPreferences = MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
             let sut = makeSUT(
                 preferenceUseCase: mockPreferences,
-                configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true]))
+                configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             try await confirmation { confirmation in
                 let subscription = sut.$bannerType
@@ -308,10 +315,11 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
             let mockPreferences = MockPreferenceUseCase(dict: [
                 PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false,
                 PreferenceKeyEntity.lastEnableCameraUploadBannerDismissedDate.rawValue: storedDate])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
             let sut = makeSUT(
                 preferenceUseCase: mockPreferences,
                 configuration: .mockConfiguration(
-                    featureFlags: [.mediaRevamp: true]))
+                    remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             try await confirmation { confirmation in
                 let subscription = sut.$bannerType
@@ -336,12 +344,13 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
         ) async throws {
             let mockPreferences = MockPreferenceUseCase(dict: [
                 PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
             let sut = makeSUT(
                 preferenceUseCase: mockPreferences,
                 devicePermissionHandler: MockDevicePermissionHandler(
                     photoAuthorization: photoAuthorization),
                 configuration: .mockConfiguration(
-                    featureFlags: [.mediaRevamp: true]))
+                    remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             try await confirmation { confirmation in
                 let subscription = sut.$bannerType
@@ -368,12 +377,13 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
                 PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true,
                 PreferenceKeyEntity.limitedPhotoAccessBannerDismissedDate.rawValue: storedDate
             ])
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
             let sut = makeSUT(
                 preferenceUseCase: mockPreferences,
                 devicePermissionHandler: MockDevicePermissionHandler(
                     photoAuthorization: .limited),
                 configuration: .mockConfiguration(
-                    featureFlags: [.mediaRevamp: true]))
+                    remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
             
             try await confirmation { confirmation in
                 let subscription = sut.$bannerType
@@ -412,10 +422,11 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
         @Test
         func zoomStateChange() async throws {
             let tracker = MockTracker()
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
             let sut = makeSUT(
                 tracker: tracker,
                 configuration: .mockConfiguration(
-                    featureFlags: [.mediaRevamp: true])
+                    remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
             )
             
             sut.zoomState = PhotoLibraryZoomState(scaleFactor: .one)
@@ -436,10 +447,11 @@ struct PhotoLibraryModeAllViewModelTestsSuite {
         @Test
         func revampOffShouldNotTrack() async throws {
             let tracker = MockTracker()
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: false])
             let sut = makeSUT(
                 tracker: tracker,
                 configuration: .mockConfiguration(
-                    featureFlags: [.mediaRevamp: false])
+                    remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
             )
             
             sut.zoomState = PhotoLibraryZoomState(scaleFactor: .five)
@@ -503,9 +515,10 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
 
         // Act
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
         let sut = makeSUT(
             libraryViewModel: libraryViewModel,
-            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+            configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         )
 
         // Assert
@@ -523,9 +536,10 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
 
         // Act
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: false])
         let sut = makeSUT(
             libraryViewModel: libraryViewModel,
-            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: false])
+            configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         )
 
         // Assert
@@ -543,9 +557,10 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .library)
 
         // Act
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
         let sut = makeSUT(
             libraryViewModel: libraryViewModel,
-            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+            configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         )
 
         // Assert
@@ -561,9 +576,10 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         let library = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentMode: .album)
 
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true])
         let sut = makeSUT(
             libraryViewModel: libraryViewModel,
-            configuration: .mockConfiguration(featureFlags: [.mediaRevamp: true])
+            configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         )
 
         // Act - update library to trigger subscription

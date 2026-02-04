@@ -26,7 +26,9 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     let thumbnailLoader: any ThumbnailLoaderProtocol
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
+    
     let featureFlagProvider: any FeatureFlagProviderProtocol
+    let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private weak var selectionDelegate: (any VideoPlaylistContentViewModelSelectionDelegate)?
@@ -93,6 +95,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         videoRevampRouter: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         syncModel: VideoRevampSyncModel
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
@@ -111,6 +114,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.videoRevampRouter = videoRevampRouter
         self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.syncModel = syncModel
 
         self.sortHeaderConfig = SortHeaderConfig(

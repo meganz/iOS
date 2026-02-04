@@ -151,7 +151,7 @@ extension Tab.TabType {
     fileprivate var title: String {
         return switch self {
         case .cloudDrive: Strings.Localizable.TabbarTitle.drive
-        case .cameraUploads: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        case .cameraUploads: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
             ? Strings.Localizable.Photos.SearchResults.Media.Section.title
             : Strings.Localizable.TabbarTitle.photos
         case .home: Strings.Localizable.TabbarTitle.home

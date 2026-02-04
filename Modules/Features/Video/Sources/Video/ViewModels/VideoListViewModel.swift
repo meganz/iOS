@@ -32,6 +32,7 @@ public final class VideoListViewModel: ObservableObject {
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
     let featureFlagProvider: any FeatureFlagProviderProtocol
+    let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var selection: VideoSelection
@@ -84,17 +85,19 @@ public final class VideoListViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.syncModel = syncModel
         self.selection = selection
 
-        self.mediaRevampEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        self.mediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         self.showFilterChips = !mediaRevampEnabled
         self.showSortHeader = mediaRevampEnabled
 

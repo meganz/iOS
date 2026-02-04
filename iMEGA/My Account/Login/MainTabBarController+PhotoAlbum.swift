@@ -5,7 +5,7 @@ import UIKit
 
 extension MainTabBarController {
     @objc func photoAlbumViewController() -> UIViewController? {
-        let isMediaRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        let isMediaRevampEnabled = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
 
         if isMediaRevampEnabled {
             return makeMediaTabViewController()

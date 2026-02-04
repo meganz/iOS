@@ -66,8 +66,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         overDiskQuotaChecker: some OverDiskQuotaChecking,
         alertViewModel: TextFieldAlertViewModel,
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
     ) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
@@ -79,7 +79,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
-        isMediaRevampEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        isMediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         super.init()
         setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in

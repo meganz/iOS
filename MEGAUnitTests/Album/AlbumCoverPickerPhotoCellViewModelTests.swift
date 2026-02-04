@@ -10,6 +10,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         ContentLibraries.configuration = ContentLibraries.Configuration(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             nodeUseCase: MockNodeUseCase(),
             isAlbumPerformanceImprovementsEnabled: { false }
@@ -26,6 +27,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
             libraryViewModel: libraryViewModel,
             configuration: .init(
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
                 featureFlagProvider: MockFeatureFlagProvider(list: [:]),
                 nodeUseCase: MockNodeUseCase(),
                 isAlbumPerformanceImprovementsEnabled: { true }

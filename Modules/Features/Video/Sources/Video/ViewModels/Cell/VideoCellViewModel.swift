@@ -46,7 +46,7 @@ final class VideoCellViewModel: ObservableObject {
     }
 
     var isMediaRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
     
     init(

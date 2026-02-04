@@ -8,7 +8,7 @@ final class PhotoMonthSection: PhotoDateSection {
         let formatter: any DateFormatting = isCurrentYear ? DateFormatter.monthOnlyTemplate() : DateFormatter.monthTemplate()
         let title = formatter.localisedString(from: photoByMonth.categoryDate)
         
-        let isMediaRevampEnabled = ContentLibraries.configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         let finalTitle = isMediaRevampEnabled ? title : DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
 
         super.init(contentList: photoByMonth.allPhotos,
