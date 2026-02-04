@@ -1,11 +1,13 @@
 import MEGAAppPresentation
 
+typealias PSAPresentableView = any PSAViewType & UIView
+
 protocol PSAViewRouting: Routing {
-    func currentPSAView() -> PSAView?
+    func currentPSAView() -> PSAPresentableView?
     func isPSAViewAlreadyShown() -> Bool
     func hidePSAView(_ hide: Bool)
     func openPSAURLString(_ urlString: String)
-    func dismiss(psaView: PSAView)
+    func dismiss(psaView: PSAPresentableView)
 }
 
 @objc
@@ -21,7 +23,11 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     func start() {
         guard let tabBar = tabBarController as? MainTabBarController else { return }
         
-        let psaView = PSAView.instanceFromNib
+        let psaView = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            PSASwiftUIBackedView()
+        } else {
+            PSAView.instanceFromNib
+        }
         
         tabBar.presentPSA(psaView)
     }
@@ -30,7 +36,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         fatalError("PSA uses view instead of view controller")
     }
     
-    func currentPSAView() -> PSAView? {
+    func currentPSAView() -> PSAPresentableView? {
         (tabBarController as? MainTabBarController)?.currentPSAView()
     }
     
@@ -56,7 +62,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         MEGALinkManager.processLinkURL(url)
     }
     
-    func dismiss(psaView: PSAView) {
+    func dismiss(psaView: PSAPresentableView) {
         (tabBarController as? MainTabBarController)?.dismissPSA()
     }
 }

@@ -248,6 +248,9 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
 		14D55C182ECF113D00825803 /* MEGAPreferenceMocks in Frameworks */ = {isa = PBXBuildFile; productRef = 14D55C172ECF113D00825803 /* MEGAPreferenceMocks */; };
+		14DE60422F2A46E800C7F913 /* PSASwiftUIBackedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */; };
+		14DE60472F2A4B4100C7F913 /* PSAContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60462F2A4B3800C7F913 /* PSAContentView.swift */; };
+		14DE60592F2B486D00C7F913 /* PSAViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60582F2B486800C7F913 /* PSAViewType.swift */; };
 		14F2EFB72EDD45FF00C37318 /* CrashlyticsReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2EFB52EDD45FF00C37318 /* CrashlyticsReporting.swift */; };
 		14F2EFB82EDD45FF00C37318 /* APMCrashlyticsReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2EFB42EDD45FF00C37318 /* APMCrashlyticsReporter.swift */; };
 		14F2EFBC2EDD464000C37318 /* CrashlyticsReportingMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2EFBA2EDD464000C37318 /* CrashlyticsReportingMocks.swift */; };
@@ -3103,6 +3106,9 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMetricsTracker.swift; sourceTree = "<group>"; };
+		14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSASwiftUIBackedView.swift; sourceTree = "<group>"; };
+		14DE60462F2A4B3800C7F913 /* PSAContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAContentView.swift; sourceTree = "<group>"; };
+		14DE60582F2B486800C7F913 /* PSAViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewType.swift; sourceTree = "<group>"; };
 		14F2EFB42EDD45FF00C37318 /* APMCrashlyticsReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APMCrashlyticsReporter.swift; sourceTree = "<group>"; };
 		14F2EFB52EDD45FF00C37318 /* CrashlyticsReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashlyticsReporting.swift; sourceTree = "<group>"; };
 		14F2EFB92EDD464000C37318 /* APMCrashlyticsReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APMCrashlyticsReporterTests.swift; sourceTree = "<group>"; };
@@ -12704,10 +12710,13 @@
 		BF46B82525AB98F3008641BB /* PSA */ = {
 			isa = PBXGroup;
 			children = (
+				14DE60462F2A4B3800C7F913 /* PSAContentView.swift */,
+				14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */,
 				BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */,
 				BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */,
 				BF46B82625AB991F008641BB /* PSAViewModel.swift */,
 				BF46B83825AB99DE008641BB /* PSAViewRouter.swift */,
+				14DE60582F2B486800C7F913 /* PSAViewType.swift */,
 			);
 			path = PSA;
 			sourceTree = "<group>";
@@ -15946,9 +15955,12 @@
 				B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
 				A8AACC432E81906A00D463D9 /* ProgressIndicatorViewModel.swift in Sources */,
+				14DE60472F2A4B4100C7F913 /* PSAContentView.swift in Sources */,
+				14DE60422F2A46E800C7F913 /* PSASwiftUIBackedView.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
+				14DE60592F2B486D00C7F913 /* PSAViewType.swift in Sources */,
 				BF943E9B23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */,
 				BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */,

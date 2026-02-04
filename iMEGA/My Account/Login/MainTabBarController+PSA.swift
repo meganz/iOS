@@ -48,8 +48,8 @@ extension MainTabBarController {
         bottomOverlayManager?.isItemHidden(.psa) ?? true
     }
     
-    func currentPSAView() -> PSAView? {
-        bottomOverlayManager?.view(for: .psa) as? PSAView
+    func currentPSAView() -> PSAPresentableView? {
+        bottomOverlayManager?.view(for: .psa) as? PSAPresentableView
     }
     
     func updatePSABannerVisibility(for viewController: UIViewController) -> Bool {

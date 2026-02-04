@@ -146,7 +146,7 @@ final class MockPSAViewRouter: PSAViewRouting {
         psaViewShown = true
     }
     
-    func currentPSAView() -> PSAView? {
+    func currentPSAView() -> PSAPresentableView? {
         return nil
     }
     
@@ -162,7 +162,7 @@ final class MockPSAViewRouter: PSAViewRouting {
         didOpenPSAURLString = true
     }
     
-    func dismiss(psaView: PSAView) {
+    func dismiss(psaView: PSAPresentableView) {
         psaViewShown = false
     }
     

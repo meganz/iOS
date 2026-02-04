@@ -5,14 +5,14 @@ import MEGAL10n
 import MEGAUIKit
 import UIKit
 
-final class PSAView: UIView, ViewType {
+final class PSAView: UIView, PSAViewType {
     
-    var viewModel: PSAViewModel! {
+    var viewModel: PSAViewModel? {
         didSet {
-            viewModel.invokeCommand = {[weak self] command in
+            viewModel?.invokeCommand = {[weak self] command in
                 self?.executeCommand(command)
             }
-            viewModel.dispatch(.onViewReady)
+            viewModel?.dispatch(.onViewReady)
         }
     }
         
@@ -106,7 +106,7 @@ final class PSAView: UIView, ViewType {
     @IBAction func leftButtonTapped(_ sender: UIButton) {
         defer {
             if let positiveButtonLink = psaEntity?.positiveLink, psaEntity?.positiveText != nil {
-                viewModel.dispatch(.openPSAURLString(positiveButtonLink))
+                viewModel?.dispatch(.openPSAURLString(positiveButtonLink))
             }
         }
         
@@ -115,7 +115,7 @@ final class PSAView: UIView, ViewType {
             return
         }
         
-        viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
+        viewModel?.dispatch(.dismiss(psaView: self, psaEntity: psaEntity))
     }
     
     @IBAction func rightButtonTapped(_ sender: UIButton) {
@@ -124,7 +124,7 @@ final class PSAView: UIView, ViewType {
             return
         }
         
-        viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
+        viewModel?.dispatch(.dismiss(psaView: self, psaEntity: psaEntity))
     }
 }
 

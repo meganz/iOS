@@ -7,7 +7,7 @@ enum PSAViewAction: ActionType {
     case setPSAViewHidden(_ hide: Bool)
     case onViewReady
     case openPSAURLString(_ urlString: String)
-    case dimiss(psaView: PSAView, psaEntity: PSAEntity)
+    case dismiss(psaView: PSAPresentableView, psaEntity: PSAEntity)
 }
 
 @objc
@@ -49,7 +49,9 @@ final class PSAViewModel: NSObject, ViewModelType {
                 guard router.isPSAViewAlreadyShown() == false, shouldShowView else { return }
                 
                 router.start()
-                router.currentPSAView()?.viewModel = self
+                if var psaView = router.currentPSAView() {
+                    psaView.viewModel = self
+                }
             }
         case .setPSAViewHidden(let hide):
             router.hidePSAView(hide)
@@ -57,7 +59,7 @@ final class PSAViewModel: NSObject, ViewModelType {
             invokeConfigViewCommandIfNeeded()
         case .openPSAURLString(let urlString):
             router.openPSAURLString(urlString)
-        case .dimiss(let psaView, let psaEntity):
+        case .dismiss(let psaView, let psaEntity):
             useCase.markAsSeenForPSA(withIdentifier: psaEntity.identifier)
             router.dismiss(psaView: psaView)
         }
