@@ -1,30 +1,36 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
 public struct HomeView: View {
-    // [IOS-11238] - Use ViewModel instead of @State
-    @State var hidesFAB = false
-    public init() {}
+    @StateObject private var viewModel: HomeViewModel
+
+    public init() {
+        _viewModel = StateObject(wrappedValue: HomeViewModel())
+    }
 
     public var body: some View {
         listContent
+            .navigationTitle(Strings.Localizable.home)
             .embedInScrollViewWithDirectionChangeHandler {
-                hidesFAB = $0
+                viewModel.hidesFAB = $0
             }
             .overlay(alignment: .bottomTrailing) {
                 fabButton
-                    .opacity(hidesFAB ? 0 : 1)
-                    .animation(.easeInOut(duration: 0.3), value: hidesFAB)
+                    .opacity(viewModel.hidesFAB ? 0 : 1)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.hidesFAB)
             }
     }
 
     private var listContent: some View {
         LazyVStack(spacing: 0) {
-            ForEach(0..<50, id: \.self) { index in
-                RowView()
-                    .background((index % 2 == 0 ? Color.red : Color.yellow))
+            ForEach(viewModel.widgets) { widget in
+                switch widget {
+                case .shortcuts:
+                    ShortcutsWidgetView()
+                }
             }
         }
     }
