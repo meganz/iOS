@@ -151,7 +151,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         AudioPlayerManager.shared.isPlayerAlive() ? -120.0 : -60.0
     }
     
-    private func isTabRoot(_ viewController: UIViewController) -> Bool {
+    func isTabRoot(_ viewController: UIViewController) -> Bool {
         guard let viewControllers else { return false }
         if viewControllers.contains(viewController) { return true }
         guard let navigationVC = viewController.navigationController else { return false }
