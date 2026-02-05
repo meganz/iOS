@@ -7,7 +7,7 @@ import MEGAUIComponent
 import Search
 import SwiftUI
 
-public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUnavailable: View, MediaDiscovery: FolderLinkMediaDiscoveryContent {
+public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View where LinkUnavailable: View, MediaDiscovery: FolderLinkMediaDiscoveryContent, MiniPlayer: View {
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
@@ -45,16 +45,20 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
     
     @StateObject private var viewModel: FolderLinkViewModel
     @State private var navigationPath = NavigationPath()
+    @StateObject private var miniPlayerViewModel = FolderLinkMiniPlayerViewModel()
     
     private let dependency: Dependency
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
+    @ViewBuilder let miniPlayerContent: (FolderLinkMiniPlayerViewModel) -> MiniPlayer
     
     public init(
         dependency: Dependency,
-        @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable
+        @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable,
+        miniPlayerContent: @escaping (FolderLinkMiniPlayerViewModel) -> MiniPlayer
     ) {
         self.dependency = dependency
         self.linkUnavailableContent = linkUnavailableContent
+        self.miniPlayerContent = miniPlayerContent
         _viewModel = StateObject(
             wrappedValue: FolderLinkViewModel(
                 dependency: FolderLinkViewModel.Dependency(
@@ -73,6 +77,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
                 }
+                .safeAreaInset(edge: .bottom) {
+                    miniPlayerView
+                }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
     }
@@ -82,6 +89,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
         switch viewModel.viewState {
         case .loading:
             ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .opacity(viewModel.askingForDecryptionKey || viewModel.notifyInvalidDecryptionKey ? 0 : 1)
                 .onFirstLoad {
                     await viewModel.startLoadingFolderLink()
@@ -154,6 +162,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
                     dismissContent: { backButton }
                 )
             )
+            .safeAreaInset(edge: .bottom) {
+                miniPlayerView
+            }
         }
     }
     
@@ -174,6 +185,11 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery>: View where LinkUn
             Image(uiImage: MEGAAssets.UIImage.backArrow)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         }
+    }
+    
+    private var miniPlayerView: some View {
+        miniPlayerContent(miniPlayerViewModel)
+            .frame(height: miniPlayerViewModel.showing ? miniPlayerViewModel.height : 0)
     }
     
     private func folderLinkResultsDependency<DismissButton>(

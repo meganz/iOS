@@ -1,4 +1,6 @@
+import Combine
 import FolderLink
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
@@ -6,7 +8,11 @@ import MEGASdk
 import SwiftUI
 import UIKit
 
-final class NewFolderLinkViewController: UIViewController {
+final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {}
+    
+    func hasUpdatedContentView() -> Bool { true }
+    
     private let link: String
     
     init(link: String) {
@@ -23,6 +29,11 @@ final class NewFolderLinkViewController: UIViewController {
         attachFolderLinkView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
+    }
+    
     private func attachFolderLinkView() {
         navigationController?.navigationBar.isHidden = true
         let folderLinkViewController = UIHostingController(
@@ -30,6 +41,9 @@ final class NewFolderLinkViewController: UIViewController {
                 dependency: buildDependency(link: link),
                 linkUnavailableContent: { reason in
                     FolderLinkUnavailableView(reason: reason)
+                },
+                miniPlayerContent: {
+                    FolderLinkMiniPlayerView(viewModel: $0)
                 }
             )
         )
@@ -46,7 +60,7 @@ final class NewFolderLinkViewController: UIViewController {
         folderLinkViewController.didMove(toParent: self)
     }
     
-    private func buildDependency(link: String) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView>.Dependency {
+    private func buildDependency<MiniPlayer>(link: String) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView, MiniPlayer>.Dependency {
         let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,
             sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo

@@ -1694,6 +1694,8 @@
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
 		A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */; };
 		A57DA72D2EB49EC800D3B486 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = A57DA72C2EB49EC800D3B486 /* MEGATest */; };
+		A588C5E52F338C6600F7547B /* FolderLinkMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588C5E42F338C5C00F7547B /* FolderLinkMiniPlayerView.swift */; };
+		A588C6232F3482E100F7547B /* FolderLinkMiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588C6222F3482E000F7547B /* FolderLinkMiniPlayerViewController.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
 		A5A462E42DE6EC2F005FD227 /* TransferTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A462E32DE6EC24005FD227 /* TransferTableViewCellViewModel.swift */; };
@@ -4578,6 +4580,8 @@
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkNodeActionHandler.swift; sourceTree = "<group>"; };
+		A588C5E42F338C5C00F7547B /* FolderLinkMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMiniPlayerView.swift; sourceTree = "<group>"; };
+		A588C6222F3482E000F7547B /* FolderLinkMiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMiniPlayerViewController.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A589D4F12F04EB7400A9B23C /* FolderLink */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FolderLink; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
@@ -11148,6 +11152,8 @@
 				A5E273AF2F0D065B0045BC02 /* FolderLinkFileNodeOpener.swift */,
 				A51ECDAB2F234BBC00DE16AD /* FolderLinkMediaDiscoveryContentView.swift */,
 				A51ECDA62F234BA300DE16AD /* FolderLinkMediaDiscoveryContentViewModel.swift */,
+				A588C5E42F338C5C00F7547B /* FolderLinkMiniPlayerView.swift */,
+				A588C6222F3482E000F7547B /* FolderLinkMiniPlayerViewController.swift */,
 				A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */,
 				A5EB72142F0BAF8600B9EDC0 /* FolderLinkSearchResultMapper.swift */,
 				A56582FB2F3194C50089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift */,
@@ -15301,6 +15307,8 @@
 				A56582812F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift in Sources */,
 				A51ECDAC2F234BBE00DE16AD /* FolderLinkMediaDiscoveryContentView.swift in Sources */,
 				A51ECDA72F234BA600DE16AD /* FolderLinkMediaDiscoveryContentViewModel.swift in Sources */,
+				A588C5E52F338C6600F7547B /* FolderLinkMiniPlayerView.swift in Sources */,
+				A588C6232F3482E100F7547B /* FolderLinkMiniPlayerViewController.swift in Sources */,
 				A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */,
 				A56582852F2C6B610089CD6D /* FolderLinkRepository.swift in Sources */,
 				A5EB72162F0BAF9000B9EDC0 /* FolderLinkSearchResultMapper.swift in Sources */,
