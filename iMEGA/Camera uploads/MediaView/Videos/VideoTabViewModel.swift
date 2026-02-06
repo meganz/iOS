@@ -65,6 +65,18 @@ final class VideoTabViewModel: ObservableObject, MediaTabContentViewModel, Media
                 self.videoSelection.editMode = convertedEditMode
              }
             .store(in: &subscriptions)
+        
+        // It handles the case when user triggers edit mode from more menu's "select" action
+        syncModel.$editMode
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] syncModelEditMode in
+                guard let self, let sharedResourceProvider = self.sharedResourceProvider else { return }
+                if syncModelEditMode == .active && sharedResourceProvider.editMode != .active {
+                    self.editModeToggleRequested.send()
+                }
+            }
+            .store(in: &subscriptions)
     }
 }
 

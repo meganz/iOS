@@ -10,8 +10,8 @@ import Video
 struct VideoRevampRouter: VideoRevampRouting {
     let explorerType: ExplorerTypeEntity
     let navigationController: UINavigationController?
-    
-    private let syncModel = VideoRevampSyncModel()
+    let syncModel: VideoRevampSyncModel
+
     private let nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private var videoConfig: VideoConfig {

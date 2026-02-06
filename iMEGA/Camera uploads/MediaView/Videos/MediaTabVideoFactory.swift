@@ -75,7 +75,8 @@ struct MediaTabVideoFactory {
 
         let router = VideoRevampRouter(
             explorerType: .video,
-            navigationController: navigationController
+            navigationController: navigationController,
+            syncModel: syncModel
         )
 
         return VideoTabViewModel(

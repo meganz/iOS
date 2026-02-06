@@ -25,7 +25,11 @@ struct FilesExplorerRouter {
         }
         
         if explorerType == .video {
-            let router = VideoRevampRouter(explorerType: explorerType, navigationController: navigationController)
+            let router = VideoRevampRouter(
+                explorerType: explorerType,
+                navigationController: navigationController,
+                syncModel: VideoRevampSyncModel()
+            )
             router.start()
             return
         }
