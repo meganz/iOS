@@ -40,6 +40,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     @Published private(set) var viewState: MediaDiscoveryContentViewState = .normal
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
     let photoLibraryContentViewRouter: PhotoLibraryContentViewRouter
+    let shouldEnableActionForEmptyState: Bool
     
     var editMode: EditMode {
         get { photoLibraryContentViewModel.selection.editMode }
@@ -66,6 +67,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
          parentNodeProvider: @escaping () -> NodeEntity?,
          sortOrder: SortOrderType,
          isAutomaticallyShown: Bool,
+         shouldEnableActionForEmptyState: Bool = true,
          delegate: (some MediaDiscoveryContentDelegate)?,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
@@ -75,6 +77,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
         photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(contentMode: contentMode)
         
+        self.shouldEnableActionForEmptyState = shouldEnableActionForEmptyState
         self.parentNodeProvider = parentNodeProvider
         self.delegate = delegate
         self.analyticsUseCase = analyticsUseCase

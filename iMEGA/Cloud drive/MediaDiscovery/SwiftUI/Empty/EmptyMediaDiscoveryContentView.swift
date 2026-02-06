@@ -5,9 +5,16 @@ import MEGASwiftUI
 import SwiftUI
 
 struct EmptyMediaDiscoveryContentView: View {
+    typealias MenuActionHandler = (EmptyMediaDiscoveryContentMenuAction) -> Void
+    
+    enum Action {
+        case none
+        case menu(MenuActionHandler)
+    }
+    
     let image: UIImage
     let title: String
-    let menuActionHandler: (EmptyMediaDiscoveryContentMenuAction) -> Void
+    let action: Action
     
     var body: some View {
         VStack {
@@ -34,26 +41,31 @@ struct EmptyMediaDiscoveryContentView: View {
     
     @ViewBuilder
     var actionContent: some View {
-        VStack {
-            Menu(content: {
-                ForEach(EmptyMediaDiscoveryContentMenuAction.allCases.reversed()) { menuItem in
-                    Button(
-                        action: { menuActionHandler(menuItem) },
-                        label: { Label { Text(menuItem.title) } icon: { menuItem.menuIcon } }
-                    )
-                }
-            }, label: {
-                Text(Strings.Localizable.addFiles)
-                    .font(.body.weight(.semibold))
-                    .foregroundColor(TokenColors.Text.inverseAccent.swiftUI)
-                    .background(TokenColors.Button.primary.swiftUI)
-                    .frame(width: 288, height: 50)
-            })
-            .background(TokenColors.Button.primary.swiftUI)
-            .cornerRadius(8, corners: .allCorners)
-            .shadow(color: TokenColors.Text.primary.swiftUI.opacity(0.15), radius: 3, x: 0, y: 1)
+        switch action {
+        case .none:
+            EmptyView()
+        case let .menu(menuActionHandler):
+            VStack {
+                Menu(content: {
+                    ForEach(EmptyMediaDiscoveryContentMenuAction.allCases.reversed()) { menuItem in
+                        Button(
+                            action: { menuActionHandler(menuItem) },
+                            label: { Label { Text(menuItem.title) } icon: { menuItem.menuIcon } }
+                        )
+                    }
+                }, label: {
+                    Text(Strings.Localizable.addFiles)
+                        .font(.body.weight(.semibold))
+                        .foregroundColor(TokenColors.Text.inverseAccent.swiftUI)
+                        .background(TokenColors.Button.primary.swiftUI)
+                        .frame(width: 288, height: 50)
+                })
+                .background(TokenColors.Button.primary.swiftUI)
+                .cornerRadius(8, corners: .allCorners)
+                .shadow(color: TokenColors.Text.primary.swiftUI.opacity(0.15), radius: 3, x: 0, y: 1)
+            }
+            .padding(.bottom, 35)
         }
-        .padding(.bottom, 35)
     }
 }
 
@@ -82,5 +94,5 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     EmptyMediaDiscoveryContentView(
         image: MEGAAssets.UIImage.folderEmptyState,
         title: Strings.Localizable.emptyFolder,
-        menuActionHandler: { _ in })
+        action: .none)
 }

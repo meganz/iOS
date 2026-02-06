@@ -24,6 +24,7 @@ final class FolderLinkMediaDiscoveryContentViewModel: ObservableObject, MediaDis
             parentNodeProvider: { MEGASdk.sharedFolderLink.node(forHandle: self.nodeHandle)?.toNodeEntity() },
             sortOrder: sortOrder,
             isAutomaticallyShown: false,
+            shouldEnableActionForEmptyState: false,
             delegate: self,
             analyticsUseCase: mediaAnalyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase,
