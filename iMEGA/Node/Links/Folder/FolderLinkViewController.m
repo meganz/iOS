@@ -75,7 +75,7 @@
         [self startLoading];
         [self startLoadingFolderLink];
     } else {
-        [self reloadUI];
+        [self refreshResults:YES];
         [self startMonitoringNodeUpdates];
     }
 }
@@ -183,22 +183,32 @@
 
 #pragma mark - Private
 
-- (void)reloadUI {
-    [self setNavigationBarTitleLabel];
-    
-    self.nodeList = [MEGASdk.sharedFolderLink childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-    if (_nodeList.size == 0) {
-        [self setActionButtonsEnabled:NO];
-    } else {
-        [self setActionButtonsEnabled:YES];
+- (void)refreshResults:(BOOL)firstLoad {
+    [self fetchNodeList];
+    if (firstLoad) {
+        [self determineViewMode];
     }
-    
+    [self reloadUI];
+}
+
+- (void)fetchNodeList {
+    self.nodeList = [MEGASdk.sharedFolderLink childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size];
     for (NSUInteger i = 0; i < self.nodeList.size ; i++) {
         [tempArray addObject:[self.nodeList nodeAtIndex:i]];
     }
     
     self.nodesArray = tempArray;
+}
+
+- (void)reloadUI {
+    [self setNavigationBarTitleLabel];
+    
+    if (_nodeList.size == 0) {
+        [self setActionButtonsEnabled:NO];
+    } else {
+        [self setActionButtonsEnabled:YES];
+    }
 
     if (self.nodeList.size == 0) {
         [self.flTableView hidesBottomBarWhenPushed];
@@ -207,7 +217,6 @@
     }
     
     [self configureToolbarButtons];
-    [self determineViewMode];
     [self configureContextMenuManager];
     
     [self reloadData];
@@ -762,7 +771,7 @@
     self.fetchNodesDone = YES;
     self.parentNode = MEGASdk.sharedFolderLink.rootNode;
     [self stopLoading];
-    [self reloadUI];
+    [self refreshResults:YES];
     [self startMonitoringNodeUpdates];
 }
 

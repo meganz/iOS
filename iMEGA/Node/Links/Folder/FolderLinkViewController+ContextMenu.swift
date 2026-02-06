@@ -104,7 +104,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
 
     func sortMenu(didSelect sortType: SortOrderType) {
         Helper.save(sortType.megaSortOrderType, for: parentNode)
-        reloadUI()
+        refreshResults(false)
         updateContextMenu()
     }
 }

@@ -16,7 +16,7 @@ extension FolderLinkViewController {
         set {
             Helper.save(newValue.toMEGASortOrderType(), for: parentNode)
             triggerEvent(for: newValue)
-            reloadUI()
+            refreshResults(false)
         }
     }
 

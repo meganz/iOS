@@ -18,6 +18,7 @@ import Search
         case saveToPhotos([NodeEntity])
         case updateViewMode(ViewModePreferenceEntity)
         case onSortHeaderViewPressed
+        case logout
     }
     
     public enum Command: CommandType {
@@ -54,6 +55,8 @@ import Search
             updateViewMode(viewMode)
         case .onSortHeaderViewPressed:
             tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+        case .logout:
+            logout()
         }
     }
     
@@ -62,7 +65,8 @@ import Search
     private let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
-
+    private var folderLinkFlowStopped = false
+    
     private var subscriptions: Set<AnyCancellable> = []
 
     private var viewMode: ViewModePreferenceEntity {
@@ -145,6 +149,7 @@ import Search
     
     /// Only run once per folder link, no need keep track the task, just need weak self for avoid prolong self lifetime
     private func startLoadingFolderLink() {
+        folderLinkFlowStopped = false
         Task { [weak self, folderLinkFlowUseCase, publicLink] in
             do throws(FolderLinkFlowErrorEntity) {
                 try await folderLinkFlowUseCase.initialStart(with: publicLink)
@@ -159,6 +164,7 @@ import Search
     /// Next task only starts when previous task completed.
     /// So no need keep track the task, just need weak self for avoid prolong self lifetime
     private func confirmDecryptionKey(_ key: String) {
+        folderLinkFlowStopped = false
         Task { [weak self, folderLinkFlowUseCase, publicLink] in
             do throws(FolderLinkFlowErrorEntity) {
                 try await folderLinkFlowUseCase.confirmDecryptionKey(with: publicLink, decryptionKey: key)
@@ -171,6 +177,7 @@ import Search
     }
     
     private func handleFolderLinkFlowError(_ error: FolderLinkFlowErrorEntity) {
+        guard !folderLinkFlowStopped else { return }
         switch error {
         case .invalidDecryptionKey:
             invokeCommand?(.invalidDecryptionKey)
@@ -179,6 +186,11 @@ import Search
         case let .linkUnavailable(reason):
             invokeCommand?(.linkUnavailable(reason))
         }
+    }
+    
+    private func logout() {
+        folderLinkFlowStopped = true
+        folderLinkFlowUseCase.stop()
     }
     
     private func trackSendToChatFolderLinkNoAccountLoggedEvent() {

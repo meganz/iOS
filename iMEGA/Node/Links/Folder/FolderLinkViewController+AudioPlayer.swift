@@ -104,7 +104,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     
     @objc func logoutFolderLinkIfNoActivePlayer() {
         if !AudioPlayerManager.shared.isPlayerAlive() {
-            MEGASdk.sharedFolderLink.logout()
+            viewModel.dispatch(.logout)
         }
     }
 }

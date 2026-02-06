@@ -41,7 +41,7 @@ package final class FolderLinkViewModel: ObservableObject {
     @Published package var viewState: ViewState = .loading
     @Published package var askingForDecryptionKey: Bool = false
     @Published package var notifyInvalidDecryptionKey: Bool = false
-    
+    private var folderLinkFlowStopped = false
     private let dependency: FolderLinkViewModel.Dependency
     private var folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol {
         dependency.folderLinkFlowUseCase
@@ -54,6 +54,7 @@ package final class FolderLinkViewModel: ObservableObject {
     }
     
     package func startLoadingFolderLink() async {
+        folderLinkFlowStopped = false
         do throws(FolderLinkFlowErrorEntity) {
             let handleEntity = try await folderLinkFlowUseCase.initialStart(with: dependency.link)
             viewState = .results(handleEntity)
@@ -63,10 +64,12 @@ package final class FolderLinkViewModel: ObservableObject {
     }
     
     package func stopLoadingFolderLink() {
+        folderLinkFlowStopped = true
         folderLinkFlowUseCase.stop()
     }
     
     package func confirmDecryptionKey(_ key: String) async {
+        folderLinkFlowStopped = false
         do throws(FolderLinkFlowErrorEntity) {
             let handleEntity = try await folderLinkFlowUseCase.confirmDecryptionKey(with: dependency.link, decryptionKey: key)
             viewState = .results(handleEntity)
@@ -76,7 +79,7 @@ package final class FolderLinkViewModel: ObservableObject {
     }
     
     package func cancelConfirmingDecryptionKey() {
-        folderLinkFlowUseCase.stop()
+        stopLoadingFolderLink()
     }
     
     package func acknowledgeInvalidDecryptionKey() {
@@ -84,6 +87,7 @@ package final class FolderLinkViewModel: ObservableObject {
     }
     
     private func handleFolderLinkFlowError(_ error: FolderLinkFlowErrorEntity) {
+        guard !folderLinkFlowStopped else { return }
         switch error {
         case .invalidDecryptionKey:
             notifyInvalidDecryptionKey = true
