@@ -36,6 +36,42 @@ public protocol UploadFileRepositoryProtocol: Sendable {
         update: ((TransferEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     )
+    
+    /// Uploads a file from a specified URL to a parent folder.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the file to upload.
+    ///   - parent: The handle of the parent folder.
+    ///   - uploadOptions: the uploadOptionsm
+    ///   - start: An optional closure called when the upload starts.
+    ///   - progress: An optional closure called to update the progress of the upload.
+    ///   - completion: An optional closure called upon completion of the upload.
+    func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    )
+    
+    /// Uploads a file from a specified URL to a parent folder asynchronously.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the file to upload.
+    ///   - parent: The node entity representing the parent folder.
+    ///   - uploadOptions: Configuration options for the upload, including file name, app data, source handling, and priority settings.
+    ///   - start: An optional closure called when the upload starts, providing the transfer entity.
+    ///   - progress: An optional closure called periodically to report upload progress, providing the updated transfer entity.
+    /// - Returns: The transfer entity representing the completed upload.
+    /// - Throws: A `TransferErrorEntity` if the upload fails.
+    func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity
 
     /// Uploads a support file from a specified URL.
     ///

@@ -1,47 +1,5 @@
 import Foundation
 
-/// Upload trigger tags representing the source of an upload action.
-public enum PitagTriggerEntity: Sendable {
-    /// Not applicable or default trigger
-    case notApplicable
-    /// Upload initiated from a file picker
-    case picker
-    /// Upload initiated from drag and drop
-    case dragAndDrop
-    /// Upload initiated from camera
-    case camera
-    /// Upload initiated from a scanner
-    case scanner
-    /// Upload initiated by sync algorithm
-    case syncAlgorithm
-    /// Upload initiated from share from app
-    case shareFromApp
-    /// Upload initiated from camera capture
-    case cameraCapture
-    /// Upload initiated from explorer extension
-    case explorerExtension
-    /// Upload initiated from voice recorder
-    case voiceRecorder
-}
-
-/// Upload target tags representing the destination of an upload.
-public enum PitagTargetEntity: Sendable {
-    /// Not applicable or default target
-    case notApplicable
-    /// Target is Cloud Drive
-    case cloudDrive
-    /// Target is a 1-to-1 chat
-    case chat1To1
-    /// Target is a group chat
-    case chatGroup
-    /// Target is note to self
-    case noteToSelf
-    /// Target is an incoming share
-    case incomingShare
-    /// Target is multiple chats
-    case multipleChats
-}
-
 /// Options for uploading files and folders to MEGA.
 ///
 /// This struct encapsulates various configuration options for upload transfers,

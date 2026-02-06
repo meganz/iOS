@@ -11,6 +11,41 @@ public enum FileUploadEvent: Sendable {
 public protocol UploadFileUseCaseProtocol: Sendable {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
     func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
+    /// Uploads a file from a specified URL to a parent folder.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the file to upload.
+    ///   - parent: The handle of the parent folder.
+    ///   - uploadOptions: the uploadOptions
+    ///   - start: An optional closure called when the upload starts.
+    ///   - progress: An optional closure called to update the progress of the upload.
+    ///   - completion: An optional closure called upon completion of the upload.
+    func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    )
+    
+    /// Uploads a file from a specified URL to a parent folder asynchronously.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the file to upload.
+    ///   - parent: The node entity representing the parent folder.
+    ///   - uploadOptions: Configuration options for the upload, including file name, app data, source handling, and priority settings.
+    ///   - start: An optional closure called when the upload starts, providing the transfer entity.
+    ///   - progress: An optional closure called periodically to report upload progress, providing the updated transfer entity.
+    /// - Returns: The transfer entity representing the completed upload.
+    /// - Throws: A `TransferErrorEntity` if the upload fails.
+    func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity
     func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent>
     func cancel(transfer: TransferEntity) async throws
     func tempURL(forFilename filename: String) -> URL
@@ -59,6 +94,51 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
             }
             try? fileSystemRepository.removeItem(at: uploadUrl)
         }
+    }
+    
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    ) {
+        let name = uploadOptions.fileName ?? url.lastPathComponent
+        let uploadUrl = fileCacheRepository.tempUploadURL(for: name)
+        
+        guard fileSystemRepository.moveFile(at: url, to: uploadUrl) else {
+            completion?(.failure(.moveFileToUploadsFolderFailed))
+            return
+        }
+        
+        uploadFileRepository.uploadFile(uploadUrl, toParent: parent, uploadOptions: uploadOptions, start: start, progress: progress) { result in
+            switch result {
+            case .success(let transferEntity):
+                completion?(.success(transferEntity))
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+            try? fileSystemRepository.removeItem(at: uploadUrl)
+        }
+    }
+    
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity {
+        let name = uploadOptions.fileName ?? url.lastPathComponent
+        let uploadUrl = fileCacheRepository.tempUploadURL(for: name)
+        
+        guard fileSystemRepository.moveFile(at: url, to: uploadUrl) else {
+            throw TransferErrorEntity.moveFileToUploadsFolderFailed
+        }
+        
+        let transfer = try await uploadFileRepository.uploadFile(uploadUrl, toParent: parent, uploadOptions: uploadOptions, start: start, progress: progress)
+        return transfer
     }
     
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {

@@ -34,6 +34,56 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken.value, delegate: transferDelegate)
     }
     
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    ) {
+        guard let parentNode = sdk.node(forHandle: parent) else {
+            completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
+            return
+        }
+        
+        guard let completion else {
+            sdk.startUpload(withLocalPath: url.path, parent: parentNode, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions())
+            return
+        }
+        
+        let transferDelegate = TransferDelegate(completion: completion)
+        transferDelegate.start = start
+        transferDelegate.progress = progress
+        
+        sdk.startUpload(withLocalPath: url.path, parent: parentNode, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions(), delegate: transferDelegate)
+    }
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity {
+        guard let parentNode = sdk.node(forHandle: parent) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        return try await withAsyncThrowingValue { completion in
+            sdk.startUpload(withLocalPath: url.path,
+                            parent: parentNode,
+                            cancelToken: self.cancelToken.value,
+                            options: uploadOptions.toMEGAUploadOptions(),
+                            delegate: TransferDelegate(start: start, progress: progress) { result in
+                switch result {
+                case .success(let transfer):
+                    completion(.success(transfer))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
+    }
+    
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
         let stream = AsyncThrowingStream<FileUploadEvent, any Error> { continuation in
             let start: (TransferEntity) -> Void = { transferEntity in

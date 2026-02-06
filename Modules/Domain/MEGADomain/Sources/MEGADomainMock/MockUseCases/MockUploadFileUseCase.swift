@@ -50,6 +50,28 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         completion?(result)
     }
     
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?,
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+    ) { }
+    
+    public func uploadFile(
+        _ url: URL,
+        toParent parent: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        start: ((TransferEntity) -> Void)?,
+        progress: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity {
+        guard let transferEntity else {
+            throw TransferErrorEntity.generic
+        }
+        return transferEntity
+    }
+    
     public func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void) async throws -> TransferEntity {
         guard let result = uploadSupportFileResult, let transferEntity else {
             throw TransferErrorEntity.generic
