@@ -118,7 +118,7 @@ extension TextEditorViewController: ViewType {
                 title: textEditorModel.textFile.fileName
             )
             .toWrappedUIView(
-                shouldEnableGlassEffect: true,
+                shouldEnableGlassEffect: false,
                 padding: .init(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3)
             )
         } else {

@@ -535,7 +535,7 @@ extension MEGAPhotoBrowserViewController {
         }
 
         if isLiquidGlassEnabled {
-            navigationItem.titleView = rootView.toWrappedUIView(shouldEnableGlassEffect: true)
+            navigationItem.titleView = rootView.toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             let hostController = UIHostingController(rootView: rootView)
             let titleView = hostController.view

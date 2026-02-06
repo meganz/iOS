@@ -147,7 +147,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         hideNavigationEditBarButton(photoLibraryContentViewModel.library.isEmpty)
         
         if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
-            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
+            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             navigationItem.title = viewModel.albumName
         }
@@ -228,7 +228,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     private func buildNavigationBar() {
         if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
-            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
+            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             self.title = viewModel.albumName
         }
