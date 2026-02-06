@@ -348,7 +348,7 @@ extension FolderLinkViewController: ViewType {
                 let parentNodeEntity = parentNode?.toNodeEntity(),
                 parentNodeEntity.shouldProcessOnNodeEntitiesUpdate(withChildNodes: nodesArray.map({ $0.toNodeEntity() }), updatedNodes: nodeEntities)
             else { return }
-            reloadUI()
+            refreshResults(false)
         case .linkUnavailable(let linkUnavailableReason):
             switch linkUnavailableReason {
             case .downETD:

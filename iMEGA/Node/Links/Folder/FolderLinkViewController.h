@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setViewEditing:(BOOL)editing;
 - (void)setEditMode:(BOOL)editMode;
 - (void)changeViewModePreference;
-- (void)reloadUI;
+- (void)refreshResults:(BOOL)firstLoad;
 
 - (void)didDownloadTransferFinish:(MEGANode *)node;
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView;
