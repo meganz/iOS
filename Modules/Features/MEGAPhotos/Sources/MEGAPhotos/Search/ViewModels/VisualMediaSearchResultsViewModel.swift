@@ -124,7 +124,6 @@ public final class VisualMediaSearchResultsViewModel: ObservableObject {
                 photoAlbumContainerInteractionManager.changePage(to: .timeline)
             }
             selectedVisualMediaResult = nil
-            break
         }
     }
     
