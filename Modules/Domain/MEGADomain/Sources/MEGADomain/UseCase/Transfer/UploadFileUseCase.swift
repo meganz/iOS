@@ -26,7 +26,7 @@ public protocol UploadFileUseCaseProtocol: Sendable {
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
-        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+        completion: ((Result<Void, TransferErrorEntity>) -> Void)?
     )
     
     /// Uploads a file from a specified URL to a parent folder asynchronously.
@@ -102,7 +102,7 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
-        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
+        completion: ((Result<Void, TransferErrorEntity>) -> Void)?
     ) {
         let name = uploadOptions.fileName ?? url.lastPathComponent
         let uploadUrl = fileCacheRepository.tempUploadURL(for: name)
@@ -114,8 +114,8 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         
         uploadFileRepository.uploadFile(uploadUrl, toParent: parent, uploadOptions: uploadOptions, start: start, progress: progress) { result in
             switch result {
-            case .success(let transferEntity):
-                completion?(.success(transferEntity))
+            case .success:
+                completion?(.success)
             case .failure(let error):
                 completion?(.failure(error))
             }

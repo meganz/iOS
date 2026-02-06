@@ -200,16 +200,13 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             guard let uploadLocalURL = transferViewEntity.localFileURL else {
                 return
             }
-            uploadFileUseCase.uploadFile(uploadLocalURL,
-                                         toParent: transferViewEntity.parentHandle,
-                                         fileName: transferViewEntity.name,
-                                         appData: transferViewEntity.appData,
-                                         isSourceTemporary: true,
-                                         startFirst: transferViewEntity.priority
-            ) { transferEntity in
+            
+            let start: (TransferEntity) -> Void = { [weak self] transferEntity in
                 transferViewEntity.setState(transferEntity.state)
-                self.continueFolderTransfersIfNeeded()
-            } update: { _ in } completion: { [weak self]  result in
+                self?.continueFolderTransfersIfNeeded()
+            }
+            
+            let completion: (Result<Void, TransferErrorEntity>) -> Void = { [weak self] result in
                 switch result {
                 case .success:
                     transferViewEntity.setState(.complete)
@@ -218,6 +215,29 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     self?.transferErrors.append(error)
                 }
                 self?.continueFolderTransfersIfNeeded()
+            }
+            
+            if let uploadOptions = transferViewEntity.uploadOptions {
+                uploadFileUseCase.uploadFile(
+                    uploadLocalURL,
+                    toParent: transferViewEntity.parentHandle,
+                    uploadOptions: uploadOptions,
+                    start: start,
+                    progress: { _ in },
+                    completion: completion
+                )
+            } else {
+                uploadFileUseCase.uploadFile(
+                    uploadLocalURL,
+                    toParent: transferViewEntity.parentHandle,
+                    fileName: transferViewEntity.name,
+                    appData: transferViewEntity.appData,
+                    isSourceTemporary: true,
+                    startFirst: transferViewEntity.priority,
+                    start: start,
+                    update: { _ in },
+                    completion: completion
+                )
             }
         }
     }

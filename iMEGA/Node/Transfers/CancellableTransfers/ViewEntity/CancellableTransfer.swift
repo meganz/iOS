@@ -12,6 +12,7 @@ import MEGASwift
     let priority: Bool
     let isFile: Bool
     let type: CancellableTransferType
+    @Atomic var uploadOptions: UploadOptionsEntity?
     @Atomic var name: String?
     @Atomic var state: TransferStateEntity = .none
     @Atomic var stage: TransferStageEntity = .none
@@ -29,6 +30,33 @@ import MEGASwift
         self.type = type
         super.init()
         self.$name.mutate { $0 = name }
+    }
+    
+    init(
+        handle: HandleEntity = .invalid,
+        parentHandle: HandleEntity = .invalid,
+        fileLinkURL: URL? = nil,
+        localFileURL: URL? = nil,
+        name: String? = nil,
+        appData: String? = nil,
+        priority: Bool = false,
+        isFile: Bool = true,
+        type: CancellableTransferType,
+        uploadOptions: UploadOptionsEntity? = nil
+    ) {
+        self.handle = handle
+        self.parentHandle = parentHandle
+        self.messageId = .invalid
+        self.chatId = .invalid
+        self.fileLinkURL = fileLinkURL
+        self.localFileURL = localFileURL
+        self.appData = appData
+        self.priority = priority
+        self.isFile = isFile
+        self.type = type
+        super.init()
+        self.$name.mutate { $0 = name }
+        self.$uploadOptions.mutate { $0 = uploadOptions }
     }
     
     @objc init(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
