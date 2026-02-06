@@ -5,6 +5,7 @@ import MEGAPhotos
 import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
+import Video
 
 public final class AddToCollectionRouter: AddToCollectionRouting {
     private weak var presenter: UIViewController?
@@ -93,7 +94,8 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
                 ),
                 router: VideoRevampRouter(
                     explorerType: .video,
-                    navigationController: self.presenter?.navigationController),
+                    navigationController: self.presenter?.navigationController,
+                    syncModel: VideoRevampSyncModel()),
                 videoPlaylistsUseCase: VideoPlaylistUseCase(
                     fileSearchUseCase: FilesSearchUseCase(
                         repo: fileSearchRepo,

@@ -117,3 +117,15 @@ extension MediaTabHostingController: MediaToolbarActionDelegate {
         viewModel.handleToolbarItemAction(action)
     }
 }
+
+// MARK: - BottomOverlayPresenterProtocol
+
+extension MediaTabHostingController: BottomOverlayPresenterProtocol {
+    func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+
+    func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
+    }
+}

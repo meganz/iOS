@@ -94,7 +94,8 @@ struct MediaTabPlaylistFactory {
 
         let router = VideoRevampRouter(
             explorerType: .video,
-            navigationController: navigationController
+            navigationController: navigationController,
+            syncModel: syncModel
         )
 
         let videoPlaylistsViewModel = VideoPlaylistsViewModel(
