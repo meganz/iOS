@@ -177,6 +177,8 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     func handleSortAction(_ sortType: SortOrderType) {
         if sortType == .newest {
             tracker.trackAnalyticsEvent(with: MediaScreenSortByNewestSelectedEvent())
+        } else if sortType == .oldest {
+            tracker.trackAnalyticsEvent(with: MediaScreenSortByOldestSelectedEvent())
         }
         
         timelineViewModel.updateSortOrder(sortType.toSortOrderEntity())

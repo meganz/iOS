@@ -1,5 +1,6 @@
 import ContentLibraries
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
@@ -71,13 +72,24 @@ struct MediaTimelineTabContentViewModelTests {
         
         @Test
         func sortAction() {
-            let sut = makeSUT()
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
             #expect(sut.timelineViewModel.sortOrder == .modificationDesc)
             
             let newSortOrder = SortOrderEntity.modificationAsc
             sut.handleSortAction(newSortOrder.toSortOrderType())
             
             #expect(sut.timelineViewModel.sortOrder == newSortOrder)
+            
+            sut.handleSortAction(SortOrderEntity.modificationDesc.toSortOrderType())
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MediaScreenSortByOldestSelectedEvent(),
+                    MediaScreenSortByNewestSelectedEvent()
+                ]
+            )
         }
         
         @Test
@@ -345,12 +357,14 @@ struct MediaTimelineTabContentViewModelTests {
     private static func makeSUT(
         timelineViewModel: NewTimelineViewModel = makeTimelineViewModel(),
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
-        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase()
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        tracker: some AnalyticsTracking = MockTracker()
     ) -> MediaTimelineTabContentViewModel {
         .init(
             timelineViewModel: timelineViewModel,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            preferenceUseCase: preferenceUseCase)
+            preferenceUseCase: preferenceUseCase,
+            tracker: tracker)
     }
     
     @MainActor
