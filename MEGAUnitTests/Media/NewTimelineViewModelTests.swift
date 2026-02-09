@@ -43,7 +43,7 @@ struct NewTimelineViewModelTests {
             )
             let sut = makeSUT(
                 photoLibraryUseCase: photoLibraryUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
+                contentConsumptionUserAttributeUseCase: contentConsumptionUseCase)
             
             await sut.loadPhotos()
             
@@ -114,11 +114,11 @@ struct NewTimelineViewModelTests {
     @Suite("Empty View")
     struct EmptyView {
         @Test("Camera upload enabled ensure correct no media found empty type returned")
-        func emptyViewCameraUploadEnabled() {
+        func emptyViewCameraUploadEnabled() async {
             let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
-            sut.updatePhotoFilter(option: .allMedia)
-            sut.updatePhotoFilter(option: .allLocations)
+            await sut.updatePhotoFilter(option: .allMedia)
+            await sut.updatePhotoFilter(option: .allLocations)
             
             let emptyScreenType = sut.emptyScreenTypeToShow()
             
@@ -145,8 +145,8 @@ struct NewTimelineViewModelTests {
         ) async throws {
             let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]))
-            sut.updatePhotoFilter(option: filterType)
-            sut.updatePhotoFilter(option: filterLocation)
+            await sut.updatePhotoFilter(option: filterType)
+            await sut.updatePhotoFilter(option: filterLocation)
             
             let emptyScreenType = sut.emptyScreenTypeToShow()
             
@@ -183,16 +183,21 @@ struct NewTimelineViewModelTests {
     
     @MainActor
     @Test
-    func updatePhotoFilter() {
-        let sut = Self.makeSUT()
+    func updatePhotoFilter() async {
+        let contentConsumption = MockContentConsumptionUserAttributeUseCase()
+        let sut = Self.makeSUT(
+            contentConsumptionUserAttributeUseCase: contentConsumption
+        )
         let taskId = sut.loadPhotosTaskId
         #expect(sut.photoFilterOptions == [.allMedia, .allLocations])
         
         let newFilter: PhotosFilterOptionsEntity = [.images, .allLocations]
-        sut.updatePhotoFilter(option: newFilter)
+        await sut.updatePhotoFilter(option: newFilter)
         
         #expect(sut.photoFilterOptions == newFilter)
         #expect(sut.loadPhotosTaskId != taskId)
+        
+        #expect(contentConsumption.savedTimelineUserAttribute == .init(mediaType: .images, location: .allLocations, usePreference: true))
     }
     
     @MainActor
@@ -223,32 +228,17 @@ struct NewTimelineViewModelTests {
     
     @MainActor
     @Test
-    func saveFilters() async throws {
-        let contentConsumption = MockContentConsumptionUserAttributeUseCase()
-        let sut = Self.makeSUT(
-            contentConsumptionUserAttributeUseCase: contentConsumption
-        )
-        sut.updatePhotoFilter(option: .images)
-        sut.updatePhotoFilter(option: .cameraUploads)
-        
-        await sut.saveFilters()
-        
-        #expect(contentConsumption.savedTimelineUserAttribute == .init(mediaType: .images, location: .cameraUploads, usePreference: true))
-    }
-    
-    @MainActor
-    @Test
-    func filterChangesTrackAnalyticsCorrectly() {
+    func filterChangesTrackAnalyticsCorrectly() async {
         let tracker = MockTracker()
         let sut = Self.makeSUT(
             tracker: tracker
         )
-        sut.updatePhotoFilter(option: .images)
-        sut.updatePhotoFilter(option: .videos)
-        sut.updatePhotoFilter(option: .allMedia)
-        sut.updatePhotoFilter(option: .cloudDrive)
-        sut.updatePhotoFilter(option: .cameraUploads)
-        sut.updatePhotoFilter(option: .allLocations)
+        await sut.updatePhotoFilter(option: .images)
+        await sut.updatePhotoFilter(option: .videos)
+        await sut.updatePhotoFilter(option: .allMedia)
+        await sut.updatePhotoFilter(option: .cloudDrive)
+        await sut.updatePhotoFilter(option: .cameraUploads)
+        await sut.updatePhotoFilter(option: .allLocations)
         
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
