@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAInfrastructure
 import MEGASdk
 import MEGASwift
 
@@ -102,6 +103,9 @@ public final class CurrentUserSource: @unchecked Sendable {
                 $_storageStatus.mutate { $0 = nil }
                 $_isPaywalled.mutate { $0 = false }
                 _myUser.mutate { $0 = nil }
+                Task {
+                    await RemoteFeatureFlagReadySource.shared.reset()
+                }
             }
             .store(in: &subscriptions)
         
@@ -109,6 +113,9 @@ public final class CurrentUserSource: @unchecked Sendable {
             .publisher(for: .accountDidFinishFetchNodes)
             .sink { [weak self] _ in
                 self?._currentUserEmail.mutate { $0 = self?.sdk.myUser?.email }
+                Task {
+                    await RemoteFeatureFlagReadySource.shared.markAsReady()
+                }
             }
             .store(in: &subscriptions)
         

@@ -26,4 +26,8 @@ public final class MockRemoteFeatureFlagUseCase: RemoteFeatureFlagUseCaseProtoco
         let isEnabled: Bool = list[flag] ?? false
         return isEnabled ? .enabled(value: 1) : .disabled
     }
+    
+    public func getAfterReady(for key: String) async -> RemoteFeatureFlagState {
+        await get(for: key)
+    }
 }

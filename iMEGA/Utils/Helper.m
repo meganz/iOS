@@ -350,6 +350,7 @@
     [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [Helper markRemoteFeatureFlagAsLoading];
         [MEGASdk.shared fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
         [MEGAChatSdk.shared refreshUrls];
     }

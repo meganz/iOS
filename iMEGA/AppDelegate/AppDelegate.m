@@ -221,6 +221,7 @@
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        [self markRemoteFeatureFlagAsLoading];
         [MEGASdk.shared fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {

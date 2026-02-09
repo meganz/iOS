@@ -3,6 +3,7 @@ import LogRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAInfrastructure
 import MEGAPreference
 import MEGARepo
 import MEGASwift
@@ -81,5 +82,13 @@ extension Helper {
         )
         
         return transfersListenerUseCase.areQueuedTransfersPaused()
+    }
+}
+
+extension Helper {
+    @objc static func markRemoteFeatureFlagAsLoading() {
+        Task {
+            await RemoteFeatureFlagReadySource.shared.markAsLoading()
+        }
     }
 }

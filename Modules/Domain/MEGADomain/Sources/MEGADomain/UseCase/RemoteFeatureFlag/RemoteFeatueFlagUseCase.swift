@@ -10,6 +10,13 @@ public extension RemoteFeatureFlagUseCaseProtocol {
         default: return false
         }
     }
+    
+    func isFeatureFlagEnabledAfterReady(for flag: RemoteFeatureFlag) async -> Bool {
+        switch await getAfterReady(for: flag.rawValue) {
+        case .enabled: return true
+        default: return false
+        }
+    }
 }
 
 public extension RemoteFeatureFlagUseCase {

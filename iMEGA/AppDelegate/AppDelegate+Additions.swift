@@ -12,6 +12,8 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAFoundation
+import MEGAInfrastructure
 import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
@@ -790,12 +792,21 @@ extension AppDelegate {
 extension AppDelegate {
     @objc func startAPMIfNeeded() {
         Task {
-            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-            // loadUserData will refresh the remote flags, remote flags will be ready after it finishes
-            try? await accountUseCase.loadUserData()
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .appPerfomanceMonitoring) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAppPerformanceMonitoring) {
+            let isAPMEnabled = await AsyncUtils.timeout(30, default: false) {
+                await DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabledAfterReady(for: .iosAppPerformanceMonitoring)
+            }
+            
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .appPerfomanceMonitoring) || isAPMEnabled {
                 APMKit.start(with: APMCrashlyticsReporter())
             }
+        }
+    }
+}
+
+extension AppDelegate {
+    @objc func markRemoteFeatureFlagAsLoading() {
+        Task {
+            await RemoteFeatureFlagReadySource.shared.markAsLoading()
         }
     }
 }
