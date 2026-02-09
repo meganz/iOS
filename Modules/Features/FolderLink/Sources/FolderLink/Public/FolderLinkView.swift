@@ -82,6 +82,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+        .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .task {
+            await viewModel.onAppear()
+        }
     }
     
     @ViewBuilder
@@ -89,8 +93,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         switch viewModel.viewState {
         case .loading:
             ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .opacity(viewModel.askingForDecryptionKey || viewModel.notifyInvalidDecryptionKey ? 0 : 1)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(TokenColors.Background.page.swiftUI)
                 .onFirstLoad {
                     await viewModel.startLoadingFolderLink()
                 }
@@ -108,6 +113,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 .invalidDecryptionKeyAlert(isPresented: $viewModel.notifyInvalidDecryptionKey) {
                     viewModel.acknowledgeInvalidDecryptionKey()
                 }
+                .noNetworkConnection()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         closeButton
@@ -123,6 +129,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         case let .error(reason):
             linkUnavailableContent(reason)
                 .ignoresSafeArea()
+                .noNetworkConnection()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         closeButton

@@ -20,6 +20,8 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     }
     
     @StateObject private var viewModel: FolderLinkResultsViewModel
+    @Environment(\.networkConnected) var networkConnected
+    
     private let dependency: Dependency
     
     init(
@@ -50,6 +52,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         FolderLinkResultsSearchableView(viewModel: viewModel.searchResultsContainerViewModel, searchBecameActive: $viewModel.searchBecameActive)
             .background(TokenColors.Background.page.swiftUI)
             .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .noNetworkConnection()
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -66,7 +69,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                 
                 ToolbarItemGroup(placement: .bottomBar) {
                     bottomBar
-                        .disabled(viewModel.bottomBarDisabled)
+                        .disabled(viewModel.bottomBarDisabled || !networkConnected)
                 }
             }
             .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
@@ -86,9 +89,15 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
             Button {
                 viewModel.toggleSelectAll()
             } label: {
-                MEGAAssets.Image.checkStack
-                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                Label {
+                    Text(Strings.Localizable.selectAll)
+                } icon: {
+                    MEGAAssets.Image.checkStack
+                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                }
+                .labelStyle(.iconOnly)
             }
+            .disabled(!networkConnected)
         } else {
             dependency.dismissContent()
         }
@@ -131,7 +140,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                     Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
                 }
             }
-            .disabled(!viewModel.shouldEnableMoreOptionsMenu)
+            .disabled(!viewModel.shouldEnableMoreOptionsMenu || !networkConnected)
         }
     }
     

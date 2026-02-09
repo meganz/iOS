@@ -1,5 +1,6 @@
 import FolderLink
 import MEGADomain
+import MEGADomainMock
 import Testing
 
 @Suite("FolderLinkViewModel Tests")
@@ -8,7 +9,7 @@ struct FolderLinkViewModelTests {
     @Test("start success sets results state")
     func start_success_setsResults() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(initialStartResult: .success(123))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.startLoadingFolderLink()
         
@@ -18,7 +19,7 @@ struct FolderLinkViewModelTests {
     @Test("start login requires decryption key sets askingForDecryptionKey")
     func start_loginRequiresKey_setsAsking() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(initialStartResult: .failure(.missingDecryptionKey))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.startLoadingFolderLink()
         
@@ -29,7 +30,7 @@ struct FolderLinkViewModelTests {
     @Test("start generic error sets error state")
     func start_generic_setsError() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(initialStartResult: .failure(.linkUnavailable(.generic)))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.startLoadingFolderLink()
         
@@ -39,7 +40,7 @@ struct FolderLinkViewModelTests {
     @Test("confirmDecryptionKey success sets results state")
     func confirmKey_success_setsResults() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(confirmDecryptionKeyResult: .success(123))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.confirmDecryptionKey("key")
         #expect(sut.viewState == .results(123))
@@ -49,7 +50,7 @@ struct FolderLinkViewModelTests {
     @Test("confirmDecryptionKey invalid key sets notifyInvalidDecryptionKey")
     func confirmKey_invalid_setsNotify() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(confirmDecryptionKeyResult: .failure(.invalidDecryptionKey))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.confirmDecryptionKey("bad-key")
         
@@ -60,7 +61,7 @@ struct FolderLinkViewModelTests {
     @Test("confirmDecryptionKey generic error sets error state")
     func confirmKey_generic_setsError() async {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase(confirmDecryptionKeyResult: .failure(.linkUnavailable(.generic)))
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         await sut.confirmDecryptionKey("some-key")
         
@@ -70,7 +71,7 @@ struct FolderLinkViewModelTests {
     @Test("cancelConfirmingDecryptionKey calls stop on flow use case")
     func cancel_callsStop() {
         let folderLinkFlowUseCase = MockFolderLinkFlowUseCase()
-        let sut = makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase)
         
         sut.cancelConfirmingDecryptionKey()
         
@@ -79,22 +80,51 @@ struct FolderLinkViewModelTests {
 
     @Test("acknowledgeInvalidDecryptionKey sets askingForDecryptionKey true")
     func acknowledgeInvalid_setsAskingTrue() {
-        let sut = makeSUT()
+        let sut = FolderLinkViewModelTests.makeSUT()
         
         sut.acknowledgeInvalidDecryptionKey()
         
         #expect(sut.askingForDecryptionKey == true)
     }
+    
+    @MainActor
+    @Suite("NoNetworkConnectionState Tests")
+    struct NoNetworkConnectionState {
+        @Test(
+            "should get current network state",
+            arguments: [true, false]
+        )
+        func onAppear_shouldGetCurrentState(connected: Bool) async throws {
+            let networkUseCase = MockNetworkMonitorUseCase(connected: connected)
+            let sut = makeSUT(networkUseCase: networkUseCase)
+            #expect(sut.isNetworkConnected == connected)
+        }
+        
+        @Test
+        func onAppear_shouldMonitorAndUpdate() async throws {
+            let updates = [true, false, true, true, false]
+            let networkUseCase = MockNetworkMonitorUseCase(
+                connected: true,
+                connectionSequence: updates.async.eraseToAnyAsyncSequence()
+            )
+            let sut = makeSUT(networkUseCase: networkUseCase)
+            #expect(sut.isNetworkConnected == true)
+            await sut.onAppear()
+            #expect(sut.isNetworkConnected == false)
+        }
+    }
 
     // MARK: - Helpers
-    private func makeSUT(
+    private static func makeSUT(
         folderLinkFlowUseCase: MockFolderLinkFlowUseCase = MockFolderLinkFlowUseCase(),
-        folderLinkBuilder: MockFolderlinkBuilder = MockFolderlinkBuilder()
+        folderLinkBuilder: MockFolderlinkBuilder = MockFolderlinkBuilder(),
+        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
     ) -> FolderLinkViewModel {
         let dependency = FolderLinkViewModel.Dependency(
             link: "some_link",
             folderLinkBuilder: folderLinkBuilder,
             folderLinkFlowUseCase: folderLinkFlowUseCase,
+            networkUseCase: networkUseCase
         )
         return FolderLinkViewModel(dependency: dependency)
     }

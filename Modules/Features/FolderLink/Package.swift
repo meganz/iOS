@@ -52,7 +52,8 @@ let package = Package(
             name: "FolderLinkTests",
             dependencies: [
                 "FolderLink",
-                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo")
+                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
+                .product(name: "MEGADomainMock", package: "MEGADomain")
             ]
         )
     ]

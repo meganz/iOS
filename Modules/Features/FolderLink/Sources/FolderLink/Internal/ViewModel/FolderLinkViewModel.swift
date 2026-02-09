@@ -1,4 +1,5 @@
 import Combine
+import MEGAAppSDKRepo
 import MEGADomain
 
 @MainActor
@@ -7,6 +8,7 @@ package final class FolderLinkViewModel: ObservableObject {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
         let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
+        let networkUseCase: any NetworkMonitorUseCaseProtocol
         
         package init(
             link: String,
@@ -18,17 +20,24 @@ package final class FolderLinkViewModel: ObservableObject {
                 folderLinkSearchUseCase: FolderLinkSearchUseCase(),
                 folderLinkBuilder: folderLinkBuilder
             )
-            self.init(link: link, folderLinkBuilder: folderLinkBuilder, folderLinkFlowUseCase: folderLinkFlowUseCase)
+            self.init(
+                link: link,
+                folderLinkBuilder: folderLinkBuilder,
+                folderLinkFlowUseCase: folderLinkFlowUseCase,
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+            )
         }
         
         package init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
-            folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol
+            folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
+            networkUseCase: some NetworkMonitorUseCaseProtocol
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
             self.folderLinkFlowUseCase = folderLinkFlowUseCase
+            self.networkUseCase = networkUseCase
         }
     }
     
@@ -41,6 +50,7 @@ package final class FolderLinkViewModel: ObservableObject {
     @Published package var viewState: ViewState = .loading
     @Published package var askingForDecryptionKey: Bool = false
     @Published package var notifyInvalidDecryptionKey: Bool = false
+    @Published package var isNetworkConnected: Bool
     private var folderLinkFlowStopped = false
     private let dependency: FolderLinkViewModel.Dependency
     private var folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol {
@@ -51,6 +61,13 @@ package final class FolderLinkViewModel: ObservableObject {
         dependency: FolderLinkViewModel.Dependency,
     ) {
         self.dependency = dependency
+        self.isNetworkConnected = dependency.networkUseCase.isConnected()
+    }
+    
+    package func onAppear() async {
+        for await connected in dependency.networkUseCase.connectionSequence {
+            isNetworkConnected = connected
+        }
     }
     
     package func startLoadingFolderLink() async {

@@ -26,6 +26,7 @@ let package = Package(
         .package(path: "../MEGAUI"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../MEGASharedRepo/MEGATest")
     ],
@@ -33,6 +34,7 @@ let package = Package(
         .target(
             name: "MEGASwiftUI",
             dependencies: [
+                "MEGAAssets",
                 "MEGAUI",
                 "MEGAAppPresentation",
                 "MEGAFoundation",

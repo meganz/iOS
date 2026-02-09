@@ -19,6 +19,8 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
     }
     
     @StateObject private var viewModel: FolderLinkMediaDiscoveryViewModel
+    @Environment(\.networkConnected) var networkConnected
+    
     private let dependency: Dependency
     
     init(
@@ -39,6 +41,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             headerView
             dependency.content(viewModel)
         }
+        .noNetworkConnection()
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -58,7 +61,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             if viewModel.shouldShowBottomBar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     bottomBar
-                        .disabled(viewModel.bottomBarDisabled)
+                        .disabled(viewModel.bottomBarDisabled || !networkConnected)
                 }
             }
         }
@@ -92,9 +95,15 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             Button {
                 viewModel.toggleSelectAll()
             } label: {
-                MEGAAssets.Image.checkStack
-                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                Label {
+                    Text(Strings.Localizable.selectAll)
+                } icon: {
+                    MEGAAssets.Image.checkStack
+                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                }
+                .labelStyle(.iconOnly)
             }
+            .disabled(!networkConnected)
         } else {
             dependency.dismissContent()
         }
@@ -128,7 +137,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                     Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
                 }
             }
-            .disabled(!viewModel.shouldEnableMoreOptionsMenu)
+            .disabled(!viewModel.shouldEnableMoreOptionsMenu || !networkConnected)
         }
     }
     
