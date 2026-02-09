@@ -5,9 +5,13 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct HomeView: View {
-    @StateObject private var viewModel: HomeViewModel
+    private let menuActionsSheetViewModel: HomeMenuActionsSheetViewModel
+    @StateObject private var floatingButtonVisibilityViewModel: HomeFloatingButtonVisibilityViewModel
+    @StateObject var viewModel: HomeViewModel
 
-    public init() {
+    public init(menuActionsSheetViewModel: HomeMenuActionsSheetViewModel) {
+        self.menuActionsSheetViewModel = menuActionsSheetViewModel
+        _floatingButtonVisibilityViewModel = StateObject(wrappedValue: HomeFloatingButtonVisibilityViewModel())
         _viewModel = StateObject(wrappedValue: HomeViewModel())
     }
 
@@ -15,12 +19,13 @@ public struct HomeView: View {
         listContent
             .navigationTitle(Strings.Localizable.home)
             .embedInScrollViewWithDirectionChangeHandler {
-                viewModel.hidesFAB = $0
+                floatingButtonVisibilityViewModel.hidesFloatingActionsButton = $0
             }
-            .overlay(alignment: .bottomTrailing) {
-                fabButton
-                    .opacity(viewModel.hidesFAB ? 0 : 1)
-                    .animation(.easeInOut(duration: 0.3), value: viewModel.hidesFAB)
+            .floatingButton(isHidden: floatingButtonVisibilityViewModel.hidesFloatingActionsButton) {
+                viewModel.presentsSheet.toggle()
+            }
+            .sheet(isPresented: $viewModel.presentsSheet) {
+                HomeMenuActionsSheetView(viewModel: menuActionsSheetViewModel, isPresented: $viewModel.presentsSheet)
             }
     }
 
@@ -32,15 +37,11 @@ public struct HomeView: View {
                     ShortcutsWidgetView()
                 }
             }
-        }
-    }
+            ForEach(0..<10, id: \.self) { index in
+                RowView()
+                    .background((index % 2 == 0 ? Color.red : Color.yellow))
 
-    private var fabButton: some View {
-        VStack {
-            RoundedPrimaryImageButton(image: MEGAAssets.Image.plus) {
-                // [IOS-11238] - Handle the tap on FAB
             }
-            .padding(TokenSpacing._5)
         }
     }
 

@@ -23,20 +23,23 @@ public struct EmbedInScrollViewWithDirectionObservingModifier: ViewModifier {
                     .background {
                         GeometryReader { proxy in
                             let contentHeight = proxy.size.height
+                            let minYinScrollViewCoordinate = proxy.frame(in: .named(scrollViewCoordinateSpaceName)).minY
+                            let contentHeightGap = outerHeight - contentHeight
                             let minY = max(
-                                min(0, proxy.frame(in: .named(scrollViewCoordinateSpaceName)).minY),
-                                outerHeight - contentHeight
+                                min(0, minYinScrollViewCoordinate),
+                                contentHeightGap
                             )
-
                             Color.clear
                                 .onChange(of: minY) { newVal in
-                                    if (isScrollingDown && newVal > lastMinY)
+                                    // When contentSize's height is still smaller than scrollView's height, we disable scrolling down handler
+                                    if contentHeightGap > 0 {
+                                        isScrollingDown = false
+                                        scrollDirectionHandler(isScrollingDown)
+                                    } else if (isScrollingDown && newVal > lastMinY)
                                         || (!isScrollingDown && newVal < lastMinY) {
-
                                         isScrollingDown = newVal < lastMinY
                                         scrollDirectionHandler(isScrollingDown)
                                     }
-
                                     lastMinY = newVal
                                 }
                         }

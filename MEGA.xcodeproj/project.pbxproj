@@ -2581,6 +2581,7 @@
 		C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */; };
 		C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
+		C41388F52F3418DF00C560C5 /* HomeScreenFactory+Revamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */; };
 		C42B8C7C2E29EB4D00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */; };
 		C435BE4E2EDE9295001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435BE4C2EDE9292001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
@@ -5469,6 +5470,7 @@
 		C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+QuickUploadAction.swift"; sourceTree = "<group>"; };
 		C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouter.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
+		C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeScreenFactory+Revamp.swift"; sourceTree = "<group>"; };
 		C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuNotificationsViewModelTests.swift; sourceTree = "<group>"; };
 		C435BE4C2EDE9292001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContentUnavailableViewModelProvider.swift; sourceTree = "<group>"; };
 		C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Yield.swift"; sourceTree = "<group>"; };
@@ -8695,6 +8697,7 @@
 				5D570D0A2537E6F1006C5670 /* HomeExplore */,
 				5D166B752521952F004F4F4A /* HomeSearch */,
 				5D8C5AB624F0A39300EDD7A9 /* HomeLocalisation.swift */,
+				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
 				5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */,
 				94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */,
 				947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */,
@@ -15390,6 +15393,7 @@
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
+				C41388F52F3418DF00C560C5 /* HomeScreenFactory+Revamp.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
 				947DC5E32AC1C863002C1D7C /* HomeSearchResultsAdditions.swift in Sources */,

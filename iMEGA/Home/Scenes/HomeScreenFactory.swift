@@ -46,7 +46,9 @@ final class HomeScreenFactory: NSObject {
         enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]
     ) -> UIViewController {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne) {
-            createRevampedHomeScreen()
+            createRevampedHomeScreen(
+                from: tabBarController
+            )
         } else {
             createLegacyHomeScreen(
                 from: tabBarController,
@@ -54,13 +56,6 @@ final class HomeScreenFactory: NSObject {
                 enableItemMultiSelection: enableItemMultiSelection
             )
         }
-    }
-
-    private func createRevampedHomeScreen() -> UIViewController {
-        let hostingController = HomeViewHostingController(rootView: HomeView())
-        let navigationController = MEGANavigationController(rootViewController: hostingController)
-        navigationController.tabBarItem = UITabBarItem(title: nil, image: MEGAAssets.UIImage.home, selectedImage: nil)
-        return navigationController
     }
 
     private func createLegacyHomeScreen(
