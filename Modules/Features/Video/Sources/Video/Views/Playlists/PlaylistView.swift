@@ -37,6 +37,7 @@ public struct PlaylistView: View {
                     isLiquidGlassEnabled: viewModel.featureFlagProvider.isLiquidGlassEnabled(),
                     action: { viewModel.addPlaylistButtonTap() })
                 .padding(TokenSpacing._5)
+                .padding(.bottom, liquidGlassBottomPadding)
             }
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
@@ -216,6 +217,17 @@ public struct PlaylistView: View {
     
     private var placeholder: some View {
         VideoListPlaceholderView(isActive: viewModel.viewState == .loading)
+    }
+    
+    private var liquidGlassBottomPadding: CGFloat {
+        guard #available(iOS 26.0, *),
+              viewModel.featureFlagProvider.isLiquidGlassEnabled() else {
+            return 0
+        }
+        let bottomInset = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows.first?.safeAreaInsets.bottom ?? 0
+        return bottomInset + 44
     }
 }
 

@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -13,20 +14,31 @@ import Video
 
 struct MediaTabView: View {
     @ObservedObject var viewModel: MediaTabViewModel
+    @State private var orientation = UIDevice.current.orientation
     
     var body: some View {
-        tabs
-            .searchableVisible(
-                text: viewModel.searchText,
-                isPresented: $viewModel.isSearching,
-                placement: .navigationBarDrawer(displayMode: .always))
-            .overlay {
-                if viewModel.isSearching {
-                    VisualMediaSearchResultsView(
-                        viewModel: viewModel.visualMediaSearchResultsViewModel
-                    )
+        GeometryReader { geometry in
+            tabs
+                .overlay {
+                    if viewModel.isSearching {
+                        VisualMediaSearchResultsView(
+                            viewModel: viewModel.visualMediaSearchResultsViewModel
+                        )
+                    }
                 }
+                .onChange(of: geometry.safeAreaInsets) { _ in
+                    guard isLiquidGlassEnabled else { return }
+                    viewModel.triggerLayoutRefresh()
+                }
+        }
+        .onRotate { newOrientation in
+            let isOrientationChanged = orientation.isLandscape != newOrientation.isLandscape
+            orientation = newOrientation
+
+            if isOrientationChanged, isLiquidGlassEnabled {
+                viewModel.triggerLayoutRefresh()
             }
+        }
     }
     
     private var tabs: some View {
@@ -41,39 +53,26 @@ struct MediaTabView: View {
             isTabSwitchingDisabled: Binding(
                 get: { viewModel.editMode == .active },
                 set: { _ in }
-            )
+            ),
+            ignoresBottomSafeArea: isLiquidGlassEnabled
         ) { tab in
             contentView(for: tab)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                VStack(spacing: 0) {
-                    Text(viewModel.navigationTitle)
-                        .font(.headline)
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                    if let subtitle = viewModel.navigationSubtitle {
-                        Text(subtitle)
-                            .font(.system(.caption, design: .default, weight: .semibold))
-                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    }
-                }
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                ForEach(viewModel.leadingNavigationBarViewModels) { viewModel in
-                    NavigationBarItemViewBuilder.makeView(for: viewModel)
-                }
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                ForEach(viewModel.trailingNavigationBarViewModels) { viewModel in
-                    NavigationBarItemViewBuilder.makeView(for: viewModel)
-                }
+        .id(viewModel.layoutRevision)
+        .environment(\.editMode, $viewModel.editMode)
+        .onAppear {
+            viewModel.onViewAppear()
+            if isLiquidGlassEnabled {
+                viewModel.triggerLayoutRefresh()
             }
         }
-        .environment(\.editMode, $viewModel.editMode)
-        .onAppear(perform: viewModel.onViewAppear)
+    }
+    
+    private var isLiquidGlassEnabled: Bool {
+        if #available(iOS 26.0, *) {
+            return DIContainer.featureFlagProvider.isLiquidGlassEnabled()
+        }
+        return false
     }
     
     // MARK: - Tab Content

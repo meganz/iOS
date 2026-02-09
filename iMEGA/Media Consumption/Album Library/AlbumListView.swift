@@ -77,6 +77,7 @@ struct AlbumListView: View {
                     isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                     action: viewModel.onCreateAlbum)
                 .padding(TokenSpacing._5)
+                .padding(.bottom, liquidGlassBottomPadding)
                 .opacity($editMode.wrappedValue.isEditing ? 0 : 1)
             }
         }
@@ -148,5 +149,16 @@ struct AlbumListView: View {
         }, invokeDismiss: {
             viewModel.showShareAlbumLinks = false
         })
+    }
+
+    private var liquidGlassBottomPadding: CGFloat {
+        guard #available(iOS 26.0, *),
+              DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return 0
+        }
+        let bottomInset = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows.first?.safeAreaInsets.bottom ?? 0
+        return bottomInset + 44
     }
 }

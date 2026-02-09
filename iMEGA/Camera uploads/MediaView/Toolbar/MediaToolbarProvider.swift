@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import UIKit
 
@@ -25,7 +26,9 @@ extension MediaToolbarProvider {
 
         // Configure toolbar
         toolbar.alpha = 0.0
-        toolbar.backgroundColor = TokenColors.Background.surface1
+        if !isLiquidGlassEnabled {
+            toolbar.backgroundColor = TokenColors.Background.surface1
+        }
 
         // Add to tabBarController's view to cover the tab bar
         tabBarController.view.addSubview(toolbar)
@@ -43,6 +46,17 @@ extension MediaToolbarProvider {
 
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 1.0
+            if self.isLiquidGlassEnabled {
+                tabBarController.tabBar.alpha = 0.0
+            }
+        }
+    }
+    
+    private var isLiquidGlassEnabled: Bool {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
         }
     }
 
@@ -52,6 +66,9 @@ extension MediaToolbarProvider {
         // Fade out animation
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 0.0
+            if self.isLiquidGlassEnabled {
+                self.tabBarController?.tabBar.alpha = 1.0
+            }
         } completion: { _ in
             self.toolbar.removeFromSuperview()
         }
