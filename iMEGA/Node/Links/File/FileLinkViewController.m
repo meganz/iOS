@@ -191,7 +191,7 @@
 
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
-        UILabel *label = [UILabel customNavigationBarLabelWithTitle:self.node.nameAfterDecryptionCheck subtitle:LocalizedString(@"fileLink", @"") traitCollection:self.traitCollection];
+        UILabel *label = [UILabel customNavigationBarLabelWithTitle:self.node.nameAfterDecryptionCheck subtitle:LocalizedString(@"fileLink", @"")];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
         self.navigationItem.titleView = self.navigationBarLabel;
@@ -209,7 +209,7 @@
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
     [self hideActionButtons];
     
-    self.navigationBarLabel = [UILabel customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") traitCollection:self.traitCollection];
+    self.navigationBarLabel = [UILabel customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available")];
     self.navigationItem.titleView = self.navigationBarLabel;
     [self.navigationItem.titleView sizeToFit];
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];

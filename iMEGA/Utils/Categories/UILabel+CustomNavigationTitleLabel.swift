@@ -4,7 +4,7 @@ import MEGAUIKit
 
 extension UILabel {
     /// Create a 2-line Label to display title and subtitles in a NavigationBar whose color aligns with Design Token colors.
-    @objc static func customNavigationBarLabel(title: String, subtitle: String?, traitCollection: UITraitCollection) -> UILabel {
+    @objc static func customNavigationBarLabel(title: String, subtitle: String?) -> UILabel {
         let titleColor = TokenColors.Text.primary
         let subtitleColor = TokenColors.Text.secondary
         

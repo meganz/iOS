@@ -139,8 +139,7 @@ extension PhotosViewController {
                 guard let self else { return }
                 objcWrapper_parent.navigationItem.titleView = UILabel.customNavigationBarLabel(
                     title: title,
-                    subtitle: subtitle,
-                    traitCollection: traitCollection
+                    subtitle: subtitle
                 )
                 objcWrapper_parent.navigationItem.titleView?.sizeToFit()
             }
