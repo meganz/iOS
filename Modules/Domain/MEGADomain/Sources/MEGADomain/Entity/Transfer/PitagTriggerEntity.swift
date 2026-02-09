@@ -6,7 +6,7 @@ public enum PitagTriggerEntity: Sendable {
     case picker
     /// Upload initiated from drag and drop
     case dragAndDrop
-    /// Upload initiated from camera
+    /// Upload initiated from Camera Uploads
     case camera
     /// Upload initiated from a scanner
     case scanner

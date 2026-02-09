@@ -78,7 +78,7 @@ final class HomeScreenFactory: NSObject {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             tracker: tracker,
-            router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController, photoPicker: MEGAPhotoPicker(presenter: navigationController), remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo))
+            router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController, photoPicker: MEGAPhotoPicker(presenter: navigationController))
         )
         
         homeViewController.uploadViewModel = uploadViewModel
