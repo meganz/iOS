@@ -411,7 +411,7 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
                     docs: docs,
                     currentFileName: currentFileName,
                     originalFileName: originalFileName,
-                    parentNodeHandle: parentNode.handle
+                    parentNode: parentNode
                 )
             )
         )

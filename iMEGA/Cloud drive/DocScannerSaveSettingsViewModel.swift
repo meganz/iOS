@@ -47,7 +47,7 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
             let docs: [UIImage]?
             let currentFileName: String?
             let originalFileName: String
-            let parentNodeHandle: HandleEntity
+            let parentNode: MEGANode
         }
         
         case sendScannedDocsToChatRoom(SendToChatRoomModel)
@@ -84,7 +84,7 @@ extension DocScannerSaveSettingsViewModel {
         Task {
             invokeCommand?(.showLoading)
             let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
-            let transfers = await buildTransfers(for: paths, parentNodeHandle: model.parentNodeHandle)
+            let transfers = await buildTransfers(for: paths, parentNode: model.parentNode)
             let collisionEntities = transfers.map {
                 NameCollisionEntity(
                     parentHandle: $0.parentHandle,
@@ -98,7 +98,7 @@ extension DocScannerSaveSettingsViewModel {
         }
     }
     
-    private func buildTransfers(for paths: [String], parentNodeHandle: HandleEntity) async -> [CancellableTransfer] {
+    private func buildTransfers(for paths: [String], parentNode: MEGANode) async -> [CancellableTransfer] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.sharedRepo,
@@ -110,15 +110,17 @@ extension DocScannerSaveSettingsViewModel {
             for path in paths {
                 taskGroup.addTask {
                     let appData = await metadataUseCase.formattedCoordinate(forFilePath: path)
+                    let uploadOptions = UploadOptionsEntity(
+                        appData: appData,
+                        pitagTrigger: .scanner,
+                        pitagTarget: parentNode.isInShare() ? .incomingShare : .cloudDrive
+                    )
                     return CancellableTransfer(
                         handle: .invalid,
-                        parentHandle: parentNodeHandle,
+                        parentHandle: parentNode.handle,
                         localFileURL: URL(fileURLWithPath: path),
-                        name: nil,
-                        appData: appData,
-                        priority: false,
-                        isFile: true,
-                        type: .upload
+                        type: .upload,
+                        uploadOptions: uploadOptions
                     )
                 }
             }
