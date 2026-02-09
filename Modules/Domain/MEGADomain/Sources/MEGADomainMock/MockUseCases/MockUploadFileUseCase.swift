@@ -56,7 +56,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         uploadOptions: UploadOptionsEntity,
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
-        completion: ((Result<Void, TransferErrorEntity>) -> Void)?
+        completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) { }
     
     public func uploadFile(

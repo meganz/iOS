@@ -8,6 +8,23 @@ import MEGARepo
 final class DocScannerSaveSettingsViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     private let screenScale = UIScreen.main.scale
+    private let pitagResolverUseCase: any PitagResolverUseCaseProtocol
+    private let uploadFileUseCase: any UploadFileUseCaseProtocol
+    
+    init(
+        pitagResolverUseCase: some PitagResolverUseCaseProtocol = PitagResolverUseCase(),
+        uploadFileUseCase: some UploadFileUseCaseProtocol = UploadFileUseCase(
+            uploadFileRepository: UploadFileRepository(
+                sdk: .shared
+            ),
+            fileSystemRepository: FileSystemRepository.sharedRepo,
+            nodeRepository: NodeRepository.newRepo,
+            fileCacheRepository: FileCacheRepository.newRepo
+        )
+    ) {
+        self.pitagResolverUseCase = pitagResolverUseCase
+        self.uploadFileUseCase = uploadFileUseCase
+    }
     
     enum Action: ActionType {
         struct SendToChatRoomModel {
@@ -192,30 +209,43 @@ extension DocScannerSaveSettingsViewModel {
     ) async {
         var completionCounter = 0
         pathsAndMetadata.forEach { (path, metadata) in
-            let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { transfer in
-                guard let nodeHandle = MEGASdk.shared.node(forHandle: transfer.nodeHandle)?.handle else { return }
-                
-                chats.forEach { chatRoom in
-                    MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
-                }
-                users.forEach { user in
-                    if let chatRoom = MEGAChatSdk.shared.chatRoom(byUser: user.handle) {
+            let pitagTarget = pitagResolverUseCase.resolvePitagTarget(forChats: chats, users: users)
+            let options = UploadOptionsEntity(
+                appData: metadata,
+                isSourceTemporary: true,
+                pitagTrigger: .scanner,
+                isChatUpload: true,
+                pitagTarget: pitagTarget
+            )
+            let url = URL(fileURLWithPath: path)
+            uploadFileUseCase.uploadFile(url, toParent: parentNode.handle, uploadOptions: options, start: nil, progress: nil) { result in
+                switch result {
+                case .success(let transfer):
+                    guard let nodeHandle = MEGASdk.shared.node(forHandle: transfer.nodeHandle)?.handle else { return }
+                    
+                    chats.forEach { chatRoom in
                         MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
-                    } else {
-                        MEGAChatSdk.shared.mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
-                            MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
-                        })
                     }
+                    users.forEach { user in
+                        if let chatRoom = MEGAChatSdk.shared.chatRoom(byUser: user.handle) {
+                            MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
+                        } else {
+                            MEGAChatSdk.shared.mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
+                                MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
+                            })
+                        }
+                    }
+                    if completionCounter == pathsAndMetadata.count - 1 {
+                        let receiverCount = chats.count + users.count
+                        let fileName = currentFileName ?? originalFileName
+                        let message = Strings.Localizable.Share.Message.SendToChat.withOneFile(receiverCount).replacingOccurrences(of: "[A]", with: fileName)
+                        completion(message)
+                    }
+                    completionCounter += 1
+                case .failure(let error):
+                    MEGALogError("[Doc Scanner] Uploading the file failed with error: \(error)")
                 }
-                if completionCounter == pathsAndMetadata.count - 1 {
-                    let receiverCount = chats.count + users.count
-                    let fileName = currentFileName ?? originalFileName
-                    let message = Strings.Localizable.Share.Message.SendToChat.withOneFile(receiverCount).replacingOccurrences(of: "[A]", with: fileName)
-                    completion(message)
-                }
-                completionCounter += 1
             }
-            MEGASdk.shared.startUploadForChat(withLocalPath: path, parent: parentNode, appData: metadata, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate)
         }
     }
 }

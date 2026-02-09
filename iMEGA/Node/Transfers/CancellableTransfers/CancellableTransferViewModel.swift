@@ -224,7 +224,16 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     uploadOptions: uploadOptions,
                     start: start,
                     progress: { _ in },
-                    completion: completion
+                    completion: { [weak self] result in
+                        switch result {
+                        case .success:
+                            transferViewEntity.setState(.complete)
+                        case .failure(let error):
+                            transferViewEntity.setState(.failed)
+                            self?.transferErrors.append(error)
+                        }
+                        self?.continueFolderTransfersIfNeeded()
+                    }
                 )
             } else {
                 uploadFileUseCase.uploadFile(
