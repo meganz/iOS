@@ -138,7 +138,8 @@
     if (self.toUploadSomething) {
         self.filePath = imagePath.mnz_relativeLocalPath;
         [self dismissViewControllerAnimated:YES completion:^{
-            CancellableTransfer *transfer = [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.filePath] name:nil appData:nil priority:NO isFile:YES type:CancellableTransferTypeUpload];
+            NSURL *localFileURL = [NSURL fileURLWithPath:self.filePath];
+            CancellableTransfer *transfer = [self cancellableTransferWithParentNode:self.parentNode localFileURL:localFileURL];
             [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:@[transfer] presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
         }];
     } else if (self.toChangeAvatar) {
@@ -163,7 +164,8 @@
 - (void)actionForVideo {
     if (self.toUploadSomething) {
         [self dismissViewControllerAnimated:YES completion:^{
-            CancellableTransfer *transfer = [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.filePath] name:nil appData:nil priority:NO isFile:YES type:CancellableTransferTypeUpload];
+            NSURL *localFileURL = [NSURL fileURLWithPath:self.filePath];
+            CancellableTransfer *transfer = [self cancellableTransferWithParentNode:self.parentNode localFileURL:localFileURL];
             [CancellableTransferRouterOCWrapper.alloc.init uploadFiles:@[transfer] presenter:UIApplication.mnz_visibleViewController type:CancellableTransferTypeUpload];
         }];
     } else if (self.toShareThroughChat) {

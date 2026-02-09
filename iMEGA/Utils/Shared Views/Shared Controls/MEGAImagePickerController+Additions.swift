@@ -16,4 +16,18 @@ extension MEGAImagePickerController {
     @objc func getIsSaveMediaCapturedToGalleryEnabled() -> Bool {
         Self.isSaveMediaCapturedToGalleryEnabled
     }
+    
+    @objc func cancellableTransfer(parentNode: MEGANode, localFileURL: URL?) -> CancellableTransfer {
+        let uploadOptions = UploadOptionsEntity(
+            pitagTrigger: .camera,
+            pitagTarget: parentNode.isInShare() ? .incomingShare : .cloudDrive
+        )
+        return CancellableTransfer(
+            handle: MEGAInvalidHandle,
+            parentHandle: parentNode.handle,
+            localFileURL: localFileURL,
+            type: .upload,
+            uploadOptions: uploadOptions
+        )
+    }
 }
