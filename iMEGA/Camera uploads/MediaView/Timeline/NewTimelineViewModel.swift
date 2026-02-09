@@ -54,10 +54,9 @@ final class NewTimelineViewModel: ObservableObject {
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
     
-    func onViewDisappear() async {
+    func onViewDisappear() {
         currentNodeUpdateTask = nil
         sortPhotoLibraryTask = nil
-        await saveFilters()
     }
     
     func loadPhotos() async {
@@ -123,7 +122,7 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
-    func updatePhotoFilter(option: PhotosFilterOptionsEntity) {
+    func updatePhotoFilter(option: PhotosFilterOptionsEntity) async {
         let newFilterOptions = if PhotosFilterOptionsEntity.mediaOptions.contains(option) {
             option.union(photoFilterOptions.locationSelection)
         } else if PhotosFilterOptionsEntity.locationOptions.contains(option) {
@@ -136,13 +135,14 @@ final class NewTimelineViewModel: ObservableObject {
         tracker.trackFilterChange(new: option)
         photoFilterOptions = newFilterOptions
         loadPhotosTaskId = UUID()
+        await saveFilters()
     }
     
     func updateEditMode(_ mode: EditMode) {
         photoLibraryContentViewModel.selection.editMode = mode
     }
     
-    func saveFilters() async {
+    private func saveFilters() async {
         guard let mediaType = photoFilterOptions.mediaSelection.toTimelineUserAttributeMediaTypeEntity(),
               let location = photoFilterOptions.locationSelection.toTimelineUserAttributeMediaLocationEntity() else { return }
         
@@ -155,7 +155,7 @@ final class NewTimelineViewModel: ObservableObject {
             try await contentConsumptionUserAttributeUseCase.save(timeline: timeline)
             
         } catch let error as JSONCodingErrorEntity {
-            MEGALogError("[Timeline] Unable to save timeline filter. \(error.localizedDescription)")
+            MEGALogError("[\(type(of: self))] Unable to save timeline filter. \(error.localizedDescription)")
         } catch {
             MEGALogError(error.localizedDescription)
         }

@@ -185,8 +185,10 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     }
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
-        timelineViewModel.updatePhotoFilter(option: option)
-        updateNavigationBarButtonsPassthroughSubject.send()
+        Task {
+            await timelineViewModel.updatePhotoFilter(option: option)
+            updateNavigationBarButtonsPassthroughSubject.send()
+        }
     }
 }
 

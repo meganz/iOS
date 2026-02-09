@@ -93,14 +93,23 @@ struct MediaTimelineTabContentViewModelTests {
         }
         
         @Test
-        func photoLocationOption() {
+        func photoLocationOption() async throws {
             let sut = makeSUT()
             #expect(sut.timelineViewModel.photoFilterOptions == [.allMedia, .allLocations])
             
-            let newFilter: PhotosFilterOptionsEntity = [.images, .cloudDrive]
-            sut.handlePhotoFilter(option: newFilter)
-            
-            #expect(sut.timelineViewModel.photoFilterOptions == newFilter)
+            try await confirmation { confirmation in
+                let newFilter: PhotosFilterOptionsEntity = [.images, .cloudDrive]
+                let subscription = try #require(sut.navigationBarUpdatePublisher)
+                    .sink {
+                        #expect(sut.timelineViewModel.photoFilterOptions == newFilter)
+                        confirmation()
+                    }
+                
+                sut.handlePhotoFilter(option: newFilter)
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
         }
         
         @Test
