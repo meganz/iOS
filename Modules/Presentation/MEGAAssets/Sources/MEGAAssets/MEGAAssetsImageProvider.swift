@@ -198,6 +198,9 @@ extension MEGAAssets {
         public static var zoomSquare: SwiftUI.Image { MEGAImageBundle.zoomSquare }
         public static var filetypeWebData: SwiftUI.Image { MEGAImageBundle.filetypeWebData }
         public static var filetypeImages: SwiftUI.Image { MEGAImageBundle.filetypeImages }
+        public static var favouritesHomeChip: SwiftUI.Image { MEGAImageBundle.favouritesHomeChip }
+        public static var videosHomeChip: SwiftUI.Image { MEGAImageBundle.videosHomeChip }
+        public static var offlineHomeChip: SwiftUI.Image { MEGAImageBundle.offlineHomeChip }
         // MARK: - DeviceCenter
         public static var android: SwiftUI.Image { MEGAImageBundle.android }
         public static var drive: SwiftUI.Image { MEGAImageBundle.drive }
