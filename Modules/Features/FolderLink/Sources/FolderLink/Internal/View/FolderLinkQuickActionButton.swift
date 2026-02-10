@@ -17,11 +17,11 @@ extension FolderLinkQuickAction {
     var icon: Image {
         switch self {
         case .addToCloudDrive:
-            Image(uiImage: MEGAAssets.UIImage.import)
+            Image(uiImage: MEGAAssets.UIImage.folderArrow)
         case .makeAvailableOffline:
-            Image(uiImage: MEGAAssets.UIImage.offline)
+            Image(uiImage: MEGAAssets.UIImage.cloudDownload)
         case .sendToChat:
-            Image(uiImage: MEGAAssets.UIImage.sendToChat)
+            Image(uiImage: MEGAAssets.UIImage.messagePlus)
         }
     }
 }

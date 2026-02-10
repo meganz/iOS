@@ -128,7 +128,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                         Label {
                             Text(Strings.Localizable.select)
                         } icon: {
-                            Image(uiImage: MEGAAssets.UIImage.selectItem)
+                            Image(uiImage: MEGAAssets.UIImage.checkCircle)
                         }
                     }
                 }
