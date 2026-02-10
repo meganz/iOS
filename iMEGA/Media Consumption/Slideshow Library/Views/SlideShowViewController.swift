@@ -221,7 +221,15 @@ final class SlideShowViewController: UIViewController, ViewType {
                 }
 
                 let itemWidth = self.collectionView.bounds.size.width
-                let targetContentOffset = Double(index) * itemWidth
+                
+                let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+                let targetContentOffset: Double
+                if isRTL {
+                    let contentWidth = self.collectionView.contentSize.width
+                    targetContentOffset = contentWidth - Double(index + 1) * itemWidth
+                } else {
+                    targetContentOffset = Double(index) * itemWidth
+                }
 
                 let distance = targetContentOffset - currentContentOffsetX
                 let progress = Double(step) / Double(steps)

@@ -37,7 +37,13 @@ class AnimatedCollectionViewLayout: UICollectionViewFlowLayout {
 
         if scrollDirection == .horizontal {
             distance = collectionView.frame.width
-            itemOffset = attributes.center.x - collectionView.contentOffset.x
+            let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+            if isRTL {
+                let rightEdge = collectionView.contentOffset.x + collectionView.frame.width
+                itemOffset = rightEdge - attributes.center.x
+            } else {
+                itemOffset = attributes.center.x - collectionView.contentOffset.x
+            }
             attributes.startOffset = (attributes.frame.origin.x - collectionView.contentOffset.x) / attributes.frame.width
             attributes.endOffset = (attributes.frame.origin.x - collectionView.contentOffset.x - collectionView.frame.width) / attributes.frame.width
         } else {
