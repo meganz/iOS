@@ -86,6 +86,7 @@ struct RevampedSearchResultThumbnailView: View {
         .overlay(alignment: .bottomTrailing) {
             backgroundFooter
         }
+        .contentShape(Rectangle())
         .applyTapAndLongPressFromRowViewModel(viewModel, isHighlighted: $highlighted)
     }
 
