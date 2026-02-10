@@ -183,6 +183,16 @@
         
         appData = [appData mnz_appDataToLocalIdentifier:transferRecordDTO.localIdentifier];
         
+        MEGAPitagTarget pitagTarget = parentNode.isInShare ? MEGAPitagTargetIncomingShare : MEGAPitagTargetCloudDrive;
+        MEGAUploadOptions *uploadOptions = [[MEGAUploadOptions alloc] initWithFileName:nil
+                                                                                 mtime:-1
+                                                                               appData:appData
+                                                                     isSourceTemporary:YES
+                                                                            startFirst:NO
+                                                                          pitagTrigger:MEGAPitagTriggerPicker
+                                                                          isChatUpload:NO
+                                                                           pitagTarget:pitagTarget];
+        
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
             
@@ -191,9 +201,15 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [MEGASdk.shared startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
+            [MEGASdk.shared startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath
+                                              parent:parentNode
+                                         cancelToken:nil
+                                             options:uploadOptions];
         } else {
-            [MEGASdk.shared startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
+            [MEGASdk.shared startUploadWithLocalPath:filePath.mnz_relativeLocalPath
+                                              parent:parentNode
+                                         cancelToken:nil
+                                             options:uploadOptions];
         }
         
         if (transferRecordDTO.localIdentifier) {
