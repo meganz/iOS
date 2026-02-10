@@ -33,7 +33,7 @@ struct Description: Decodable {
 
             let nonEmptyParagraphs = paragraphs.compactMap { $0 }
             if nonEmptyParagraphs.isEmpty {
-                throw "App Description is empty (Transifex)"
+                throw "App Description is empty (Weblate)"
             } else {
                 return nonEmptyParagraphs.joined(separator: "\n\n")
             }

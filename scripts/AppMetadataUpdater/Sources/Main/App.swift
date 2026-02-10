@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 
-/// A command-line tool to update metadata (description or release notes) on Transifex.
+/// A command-line tool to update metadata (description or release notes) on Weblate.
 ///
 /// This tool accepts an authorization token and flags to determine which metadata should be updated.
 /// - Flags:
@@ -27,10 +27,10 @@ import Foundation
 /// $ swift run AppMetadataUpdater --update-description --update-release-notes --version 16.1 "Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
 /// ```
 ///
-/// In these examples, the app will use the provided authorization token and update the relevant metadata on Transifex.
+/// In these examples, the app will use the provided authorization token and update the relevant metadata on Weblate.
 @main
 struct App: AsyncParsableCommand {
-    @Argument(help: "Authorization token for the Transifex. Example: 'Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
+    @Argument(help: "Authorization token for the Weblate. Example: 'Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
     var authorization: String
 
     @Flag(help: "Update the description metadata.")
