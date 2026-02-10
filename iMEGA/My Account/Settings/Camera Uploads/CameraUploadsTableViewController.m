@@ -50,6 +50,8 @@
     
     if (self.isPresentedModally) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(modalDialogDoneButtonTouched)];
+        UIBarButtonItemStyle style = [self isLiquidGlassEnabled] ? UIBarButtonItemStylePlain : UIBarButtonItemStyleDone;
+        [self.navigationItem.rightBarButtonItem setStyle: style];
     }
     
     if (!CameraUploadManager.hasMigratedToCameraUploadsV2) {

@@ -65,10 +65,14 @@ final class AppearanceManager: NSObject {
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar) {
         navigationBar.tintColor = UIColor.barTint()
         
-        let navigationBarAppearance = makeNavigationBarAppearance()
-        
-        navigationBar.standardAppearance = navigationBarAppearance
-        navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            let navigationBarAppearance = makeNavigationBarAppearance()
+            
+            navigationBar.standardAppearance = navigationBarAppearance
+            navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            
+            return
+        }
     }
     
     @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar) {

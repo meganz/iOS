@@ -104,10 +104,11 @@ struct MediaTimelineTabContentViewModelTests {
                         #expect(sut.timelineViewModel.photoFilterOptions == newFilter)
                         confirmation()
                     }
+                try await Task.sleep(nanoseconds: 100_000_000)
                 
                 sut.handlePhotoFilter(option: newFilter)
                 
-                try await Task.sleep(nanoseconds: 100_000_000)
+                await sut.updatePhotoFilterTask?.value
                 subscription.cancel()
             }
         }

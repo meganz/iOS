@@ -31,6 +31,7 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
     private(set) var delayedUploadUpToDateTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
+    private(set) var updatePhotoFilterTask: Task<Void, Never>?
     
     init(
         timelineViewModel: NewTimelineViewModel,
@@ -185,9 +186,9 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     }
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
-        Task {
-            await timelineViewModel.updatePhotoFilter(option: option)
-            updateNavigationBarButtonsPassthroughSubject.send()
+        updatePhotoFilterTask = Task { [weak timelineViewModel, weak updateNavigationBarButtonsPassthroughSubject] in
+            await timelineViewModel?.updatePhotoFilter(option: option)
+            updateNavigationBarButtonsPassthroughSubject?.send()
         }
     }
 }

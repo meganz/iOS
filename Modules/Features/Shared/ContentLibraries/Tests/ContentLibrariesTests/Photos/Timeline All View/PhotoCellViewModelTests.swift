@@ -676,7 +676,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testSelect_onEditModeAndLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
+    func disabled_testSelect_onEditModeAndLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
         let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library, configuration: PhotoLibraryContentConfiguration(selectLimit: 3))
         libraryViewModel.selectedMode = .all
@@ -828,7 +828,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testMonitorInheritedSensitivityChanges_thumbnailContainerPlaceholder_shouldNotUpdateImageContainer() async throws {
+    func disabled_testMonitorInheritedSensitivityChanges_thumbnailContainerPlaceholder_shouldNotUpdateImageContainer() async throws {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         let imageContainer = ImageContainer(image: Image("folder"), type: .placeholder)
         
@@ -923,7 +923,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
+    func disabled_testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         

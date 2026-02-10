@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAL10n
 
 extension CameraUploadsTableViewController {
@@ -12,6 +13,22 @@ extension CameraUploadsTableViewController {
         let title = Strings.Localizable.General.cameraUploads
         navigationItem.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
+        
+        if #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+           let navigationBar = navigationController?.navigationBar {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        }
+    }
+    
+    @objc
+    func isLiquidGlassEnabled() -> Bool {
+        if #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
+        }
     }
     
     @objc
