@@ -31,7 +31,7 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
             let docs: [UIImage]?
             let currentFileName: String?
             let originalFileName: String
-            let chatRoomId: HandleEntity
+            let chatRoom: ChatRoomEntity?
         }
         
         struct SendToChatsAndUsersModel {
@@ -149,20 +149,29 @@ extension DocScannerSaveSettingsViewModel {
     
     private func sendScannedDocsToChatRoom(model: Action.SendToChatRoomModel, parentNode: MEGANode) async {
         let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
-        let pathsAndMetadata = await buildUploadMetadata(paths: paths, chatRoomId: model.chatRoomId)
+        let pathsAndMetadata = await buildUploadMetadata(paths: paths, chatRoom: model.chatRoom)
         await uploadScannedDocs(pathsAndMetadata: pathsAndMetadata, model: model, parentNode: parentNode)
     }
     
     private func uploadScannedDocs(pathsAndMetadata: [(String, String)], model: Action.SendToChatRoomModel, parentNode: MEGANode) async {
         pathsAndMetadata.forEach { (path, metadata) in
-            ChatUploader.sharedInstance.upload(
-                filepath: path,
-                appData: metadata,
-                chatRoomId: model.chatRoomId,
-                parentNode: parentNode,
-                isSourceTemporary: true,
-                delegate: MEGAStartUploadTransferDelegate(completion: nil)
-            )
+            if let chatId = model.chatRoom?.chatId {
+                let pitagTarget: PitagTargetEntity = model.chatRoom?.pitagTarget ?? .chat1To1
+                let options = UploadOptionsEntity(
+                    appData: metadata,
+                    isSourceTemporary: true,
+                    pitagTrigger: .scanner,
+                    isChatUpload: true,
+                    pitagTarget: pitagTarget
+                )
+                ChatUploader.sharedInstance.upload(
+                    filepath: path,
+                    chatRoomId: chatId,
+                    parentNode: parentNode,
+                    uploadOptions: options,
+                    delegate: MEGAStartUploadTransferDelegate(completion: nil)
+                )
+            }
         }
     }
 }
@@ -252,7 +261,7 @@ extension DocScannerSaveSettingsViewModel {
 
 // MARK: - Utils
 extension DocScannerSaveSettingsViewModel {
-    private func buildUploadMetadata(paths: [String], chatRoomId: HandleEntity? = nil) async -> [(String, String)] {
+    private func buildUploadMetadata(paths: [String], chatRoom: ChatRoomEntity? = nil) async -> [(String, String)] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.sharedRepo,
@@ -268,8 +277,8 @@ extension DocScannerSaveSettingsViewModel {
                         metadata += coordinate
                     }
                     
-                    if let chatRoomId {
-                        metadata = metadata.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+                    if let chatRoom {
+                        metadata = metadata.mnz_appDataToAttach(toChatID: chatRoom.chatId, asVoiceClip: false)
                     }
                     
                     return (path, metadata)

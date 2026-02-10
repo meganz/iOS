@@ -14,6 +14,13 @@ protocol ChatUploaderProtocol: Sendable {
         isSourceTemporary: Bool,
         delegate: MEGAStartUploadTransferDelegate
     )
+    func upload(
+        filepath: String,
+        chatRoomId: UInt64,
+        parentNode: MEGANode,
+        uploadOptions: UploadOptionsEntity,
+        delegate: MEGAStartUploadTransferDelegate
+    )
 }
 
 final class ChatUploader: NSObject, ChatUploaderProtocol {
@@ -112,6 +119,37 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
                                               isSourceTemporary: isSourceTemporary,
                                               fileName: nil,
                                               delegate: delegate)
+        }
+    }
+    
+    func upload(
+        filepath: String,
+        chatRoomId: UInt64,
+        parentNode: MEGANode,
+        uploadOptions: UploadOptionsEntity,
+        delegate: MEGAStartUploadTransferDelegate
+    ) {
+        MEGALogInfo("[ChatUploader] uploading File path \(filepath)")
+        cleanupDatabaseIfRequired()
+        guard let context = store.stack.newBackgroundContext() else { return }
+        
+        context.performAndWait {
+            MEGALogInfo("[ChatUploader] inserted new entry File path \(filepath)")
+            // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
+            self.store.insertChatUploadTransfer(withFilepath: filepath,
+                                                chatRoomId: String(chatRoomId),
+                                                transferTag: nil,
+                                                allowDuplicateFilePath: false,
+                                                context: context)
+            
+            MEGALogInfo("[ChatUploader] SDK upload started for File path \(filepath)")
+            MEGASdk.shared.startUpload(
+                withLocalPath: filepath,
+                parent: parentNode,
+                cancelToken: MEGACancelToken(),
+                options: uploadOptions.toMEGAUploadOptions(),
+                delegate: delegate
+            )
         }
     }
     

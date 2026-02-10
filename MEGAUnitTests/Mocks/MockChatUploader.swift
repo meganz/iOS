@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 
 final class MockChatUploader: ChatUploaderProtocol, @unchecked Sendable {
     var uploadImage_calledTimes: Int = 0
@@ -16,6 +17,16 @@ final class MockChatUploader: ChatUploaderProtocol, @unchecked Sendable {
         chatRoomId: UInt64,
         parentNode: MEGANode,
         isSourceTemporary: Bool,
+        delegate: MEGAStartUploadTransferDelegate
+    ) {
+        uploadFile_calledTimes += 1
+    }
+    
+    func upload(
+        filepath: String,
+        chatRoomId: UInt64,
+        parentNode: MEGANode,
+        uploadOptions: MEGADomain.UploadOptionsEntity,
         delegate: MEGAStartUploadTransferDelegate
     ) {
         uploadFile_calledTimes += 1

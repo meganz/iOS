@@ -142,6 +142,14 @@ extension ChatRoomEntity {
     public func oneToOneRoomOtherParticipantUserHandle() -> HandleEntity? {
         chatType == .oneToOne ? peers.first?.handle : nil
     }
+    
+    public var pitagTarget: PitagTargetEntity {
+        switch chatType {
+        case .group, .meeting: .chatGroup
+        case .oneToOne: .chat1To1
+        case .noteToSelf: .noteToSelf
+        }
+    }
 }
 
 extension ChatRoomEntity: Equatable {

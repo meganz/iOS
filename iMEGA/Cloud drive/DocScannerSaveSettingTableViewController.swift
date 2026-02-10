@@ -151,17 +151,13 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
             return
         }
         
-        guard let chatRoomId = chatRoom?.chatId else {
-            return
-        }
-        
         viewModel.dispatch(
             .sendScannedDocsToChatRoom(
                 .init(
                     docs: docs,
                     currentFileName: currentFileName,
                     originalFileName: originalFileName,
-                    chatRoomId: chatRoomId
+                    chatRoom: chatRoom
                 )
             )
         )
