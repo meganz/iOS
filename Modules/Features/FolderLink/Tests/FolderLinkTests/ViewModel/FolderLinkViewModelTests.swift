@@ -118,12 +118,14 @@ struct FolderLinkViewModelTests {
     private static func makeSUT(
         folderLinkFlowUseCase: MockFolderLinkFlowUseCase = MockFolderLinkFlowUseCase(),
         folderLinkBuilder: MockFolderlinkBuilder = MockFolderlinkBuilder(),
-        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
+        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
+        pendingConnectionsRetryUseCase: MockFolderLinkPendingConnectionsRetryUseCase = MockFolderLinkPendingConnectionsRetryUseCase()
     ) -> FolderLinkViewModel {
         let dependency = FolderLinkViewModel.Dependency(
             link: "some_link",
             folderLinkBuilder: folderLinkBuilder,
             folderLinkFlowUseCase: folderLinkFlowUseCase,
+            pendingConnectionsRetryUseCase: pendingConnectionsRetryUseCase,
             networkUseCase: networkUseCase
         )
         return FolderLinkViewModel(dependency: dependency)

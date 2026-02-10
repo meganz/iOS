@@ -8,6 +8,7 @@ package final class FolderLinkViewModel: ObservableObject {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
         let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
+        let pendingConnectionsRetryUseCase: any FolderLinkPendingConnectionsRetryUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
         
         package init(
@@ -24,7 +25,9 @@ package final class FolderLinkViewModel: ObservableObject {
                 link: link,
                 folderLinkBuilder: folderLinkBuilder,
                 folderLinkFlowUseCase: folderLinkFlowUseCase,
-                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+                pendingConnectionsRetryUseCase: FolderLinkPendingConnectionsRetryUseCase(),
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                
             )
         }
         
@@ -32,11 +35,13 @@ package final class FolderLinkViewModel: ObservableObject {
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
             folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
+            pendingConnectionsRetryUseCase: some FolderLinkPendingConnectionsRetryUseCaseProtocol,
             networkUseCase: some NetworkMonitorUseCaseProtocol
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
             self.folderLinkFlowUseCase = folderLinkFlowUseCase
+            self.pendingConnectionsRetryUseCase = pendingConnectionsRetryUseCase
             self.networkUseCase = networkUseCase
         }
     }
@@ -101,6 +106,10 @@ package final class FolderLinkViewModel: ObservableObject {
     
     package func acknowledgeInvalidDecryptionKey() {
         askingForDecryptionKey = true
+    }
+    
+    package func retryPendingConnections() {
+        dependency.pendingConnectionsRetryUseCase.retryPendingConnections()
     }
     
     private func handleFolderLinkFlowError(_ error: FolderLinkFlowErrorEntity) {

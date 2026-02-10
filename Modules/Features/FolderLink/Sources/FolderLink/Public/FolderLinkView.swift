@@ -98,6 +98,8 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 .background(TokenColors.Background.page.swiftUI)
                 .onFirstLoad {
                     await viewModel.startLoadingFolderLink()
+                    // When first open folder link, calling retryPendingConnections after login to folder link
+                    viewModel.retryPendingConnections()
                 }
                 .askingForDecryptionKeyAlert(
                     isPresented: $viewModel.askingForDecryptionKey,
@@ -171,6 +173,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             )
             .safeAreaInset(edge: .bottom) {
                 miniPlayerView
+            }
+            .task {
+                // Calling retryPendingConnections whenever opening a folder
+                viewModel.retryPendingConnections()
             }
         }
     }
