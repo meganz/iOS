@@ -94,13 +94,13 @@ final class FileUploadingRouter {
     
     private func uploadImportedDocuments(at urls: [URL], to parentNode: MEGANode, presenter: UIViewController) {
         Task { @MainActor in
-            let transfers = await self.buildTransfers(for: urls, parentNode: parentNode)
+            let transfers = await self.buildTransfers(for: urls, parentNode: parentNode, pitagTrigger: .picker)
             let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
             NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
         }
     }
     
-    private func buildTransfers(for urls: [URL], parentNode: MEGANode, isCapturing: Bool = false) async -> [CancellableTransfer] {
+    private func buildTransfers(for urls: [URL], parentNode: MEGANode, pitagTrigger: PitagTriggerEntity) async -> [CancellableTransfer] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.sharedRepo,
@@ -111,31 +111,17 @@ final class FileUploadingRouter {
             taskGroup.addTasksUnlessCancelled(for: urls) { url in
                 let appData = await metadataUseCase.formattedCoordinate(forFileURL: url)
                 
-                if isCapturing {
-                    let uploadOptions = UploadOptionsEntity(
-                        appData: appData,
-                        pitagTrigger: .cameraCapture,
-                        pitagTarget: parentNode.isInShare() ? .incomingShare : .cloudDrive
-                    )
-                    return CancellableTransfer(
-                        handle: .invalid,
-                        parentHandle: parentNode.handle,
-                        localFileURL: url,
-                        type: .upload,
-                        uploadOptions: uploadOptions
-                    )
-                }
-                
+                let uploadOptions = UploadOptionsEntity(
+                    appData: appData,
+                    pitagTrigger: pitagTrigger,
+                    pitagTarget: parentNode.isInShare() ? .incomingShare : .cloudDrive
+                )
                 return CancellableTransfer(
                     handle: .invalid,
                     parentHandle: parentNode.handle,
-                    fileLinkURL: nil,
                     localFileURL: url,
-                    name: nil,
-                    appData: appData,
-                    priority: false,
-                    isFile: true,
-                    type: .upload
+                    type: .upload,
+                    uploadOptions: uploadOptions
                 )
             }
             
@@ -175,7 +161,7 @@ final class FileUploadingRouter {
     private func uploadCapturedMedia(filePath: String, to parentNode: MEGANode, presenter: UIViewController) {
         Task { @MainActor in
             let url = URL(fileURLWithPath: filePath)
-            let transfers = await buildTransfers(for: [url], parentNode: parentNode, isCapturing: true)
+            let transfers = await buildTransfers(for: [url], parentNode: parentNode, pitagTrigger: .cameraCapture)
             CancellableTransferRouter.init(presenter: presenter, transfers: transfers, transferType: .upload).start()
         }
     }
