@@ -1,31 +1,33 @@
-import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
 struct HomeMenuActionsSheetView: View {
-    private let viewModel: HomeMenuActionsSheetViewModel
+
+    private var menuActions: [HomeAddMenuAction] = HomeAddMenuAction.allCases
     // Binding variable to dismiss the sheet upon action selection.
     @Binding var isPresented: Bool
+    @Binding var selection: HomeAddMenuAction?
+    @State private var savedAction: HomeAddMenuAction?
 
     public init(
-        viewModel: HomeMenuActionsSheetViewModel,
         isPresented: Binding<Bool>,
+        selection: Binding<HomeAddMenuAction?>
     ) {
-        self.viewModel = viewModel
-        self._isPresented = isPresented
+        _isPresented = isPresented
+        _selection = selection
     }
 
     public var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 LazyVStack(spacing: .zero) {
-                    ForEach(viewModel.menuActions) { action in
+                    ForEach(menuActions) { action in
                         UploadActionItemView(
                             image: action.image,
                             title: action.title,
                             actionHandler: {
                                 isPresented = false
-                                viewModel.saveSelectedAction(action)
+                                savedAction = action
                             })
                     }
                 }
@@ -38,7 +40,7 @@ struct HomeMenuActionsSheetView: View {
             .presentationDetents([.height(allActionsHeight + proxy.safeAreaInsets.bottom)])
         }
         .onDisappear {
-            viewModel.performSelectedActionAfterDismissal()
+            selection = savedAction
         }
         .presentationDragIndicator(.visible)
     }
@@ -48,7 +50,7 @@ struct HomeMenuActionsSheetView: View {
     }
 
     private var allActionsHeight: CGFloat {
-        CGFloat(viewModel.menuActions.count) * UploadActionItemView.Constants.itemHeight
+        CGFloat(menuActions.count) * UploadActionItemView.Constants.itemHeight
     }
 }
 

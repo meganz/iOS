@@ -19,11 +19,11 @@ extension HomeScreenFactory {
             tabBarController: tabBarController
         )
 
-        let menuActions = makeRevampMenuActions(newChatRouter: newChatRouter, navigationController: navigationController)
-        let menuActionsSheetViewModel = HomeMenuActionsSheetViewModel(menuActions: menuActions)
-        let homeView = HomeView(
-            menuActionsSheetViewModel: menuActionsSheetViewModel
+        let dependency = HomeView.Dependency(
+            homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController)
         )
+        
+        let homeView = HomeView(dependency: dependency)
 
         let hostingController = HomeViewHostingController(rootView: homeView)
 
@@ -32,11 +32,7 @@ extension HomeScreenFactory {
         return navigationController
     }
 
-    private func makeRevampMenuActions(
-        newChatRouter: NewChatRouter,
-        navigationController: UINavigationController
-    ) -> [HomeMenuAction] {
-
+    private func makeHomeAddMenuActionHandler(newChatRouter: NewChatRouter, navigationController: UINavigationController) -> HomeAddMenuActionHandler {
         let tracker = DIContainer.tracker
         let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
             tracker: tracker,
@@ -44,34 +40,49 @@ extension HomeScreenFactory {
             nodeSource: .node { MEGASdk.sharedSdk.rootNode?.toNodeEntity() }
         )
 
-        let chooseFromPhotos = HomeMenuAction(image: MEGAAssets.Image.photosApp, title: Strings.Localizable.choosePhotoVideo) {
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .chooseFromPhotos)
-        }
-
-        let capture = HomeMenuAction(image: MEGAAssets.Image.camera, title: Strings.Localizable.capturePhotoVideo) {
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .capture)
-        }
-
-        let importFromFiles = HomeMenuAction(image: MEGAAssets.Image.folderArrow, title: Strings.Localizable.CloudDrive.Upload.importFromFiles) {
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .importFrom)
-        }
-
-        let scanDocument = HomeMenuAction(image: MEGAAssets.Image.fileScan, title: Strings.Localizable.scanDocument) {
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .scanDocument)
-        }
-
-        let newTextFile = HomeMenuAction(image: MEGAAssets.Image.filePlus02, title: Strings.Localizable.newTextFile) {
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .newTextFile)
-        }
-
-        let newChat = HomeMenuAction(image: MEGAAssets.Image.messageChatCircle, title: Strings.Localizable.Chat.NewChat.title) {
-            newChatRouter.presentNewChat(from: navigationController)
-        }
-
-        return [chooseFromPhotos, capture, importFromFiles, scanDocument, newTextFile, newChat]
+        return HomeAddMenuActionHandler(
+            uploadAddMenuDelegateHandler: uploadAddMenuDelegateHandler,
+            newChatRouter: newChatRouter,
+            navigationController: navigationController
+        )
     }
 
     private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
+    }
+}
+
+@MainActor
+private struct HomeAddMenuActionHandler: HomeAddMenuActionHandling {
+
+    private let uploadAddMenuDelegateHandler: UploadAddMenuDelegateHandler
+    private let newChatRouter: NewChatRouter
+    private unowned let navigationController: UINavigationController
+
+    init(
+        uploadAddMenuDelegateHandler: UploadAddMenuDelegateHandler,
+        newChatRouter: NewChatRouter,
+        navigationController: UINavigationController
+    ) {
+        self.uploadAddMenuDelegateHandler = uploadAddMenuDelegateHandler
+        self.newChatRouter = newChatRouter
+        self.navigationController = navigationController
+    }
+
+    func handleAction(_ action: HomeAddMenuAction) {
+        switch action {
+        case .chooseFromPhotos:
+            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .chooseFromPhotos)
+        case .capture:
+            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .capture)
+        case .importFromFiles:
+            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .importFrom)
+        case .scanDocument:
+            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .scanDocument)
+        case .newTextFile:
+            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .newTextFile)
+        case .newChat:
+            newChatRouter.presentNewChat(from: navigationController)
+        }
     }
 }

@@ -14,7 +14,7 @@ protocol NodeInsertionRouting {
 }
 
 struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
-    private let navigationController: UINavigationController
+    private unowned let navigationController: UINavigationController
     private let openNodeHandler: (NodeEntity) -> Void
 
     init(navigationController: UINavigationController, openNodeHandler: @escaping (NodeEntity) -> Void) {

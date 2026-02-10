@@ -5,27 +5,37 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct HomeView: View {
-    private let menuActionsSheetViewModel: HomeMenuActionsSheetViewModel
-    @StateObject private var floatingButtonVisibilityViewModel: HomeFloatingButtonVisibilityViewModel
-    @StateObject var viewModel: HomeViewModel
+    public struct Dependency {
+        let homeAddMenuActionHandler: any HomeAddMenuActionHandling
+        public init(
+            homeAddMenuActionHandler: some HomeAddMenuActionHandling
+        ) {
+            self.homeAddMenuActionHandler = homeAddMenuActionHandler
+        }
+    }
 
-    public init(menuActionsSheetViewModel: HomeMenuActionsSheetViewModel) {
-        self.menuActionsSheetViewModel = menuActionsSheetViewModel
-        _floatingButtonVisibilityViewModel = StateObject(wrappedValue: HomeFloatingButtonVisibilityViewModel())
-        _viewModel = StateObject(wrappedValue: HomeViewModel())
+    @StateObject var viewModel = HomeViewModel()
+
+    private let dependency: Dependency
+
+    public init(dependency: Dependency) {
+        self.dependency = dependency
     }
 
     public var body: some View {
         listContent
             .navigationTitle(Strings.Localizable.home)
             .embedInScrollViewWithDirectionChangeHandler {
-                floatingButtonVisibilityViewModel.hidesFloatingActionsButton = $0
+                viewModel.hidesFloatingActionsButton = $0
             }
-            .floatingButton(isHidden: floatingButtonVisibilityViewModel.hidesFloatingActionsButton) {
+            .floatingButton(isHidden: viewModel.hidesFloatingActionsButton) {
                 viewModel.presentsSheet.toggle()
             }
             .sheet(isPresented: $viewModel.presentsSheet) {
-                HomeMenuActionsSheetView(viewModel: menuActionsSheetViewModel, isPresented: $viewModel.presentsSheet)
+                HomeMenuActionsSheetView(isPresented: $viewModel.presentsSheet, selection: $viewModel.selectedFloatingButtonAction)
+            }
+            .onReceive(viewModel.$selectedFloatingButtonAction.compactMap { $0 }) {
+                dependency.homeAddMenuActionHandler.handleAction($0)
             }
     }
 
