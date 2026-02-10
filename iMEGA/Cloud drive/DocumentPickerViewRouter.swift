@@ -72,7 +72,7 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         Task {
-            let transfers = await buildTransfer(for: urls, parentHandle: parent.handle)
+            let transfers = await buildTransfer(for: urls, parent: parent)
 
             CancellableTransferRouterOCWrapper().uploadFiles(
                 transfers,
@@ -88,7 +88,7 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
         self.router = nil
     }
     
-    private func buildTransfer(for urls: [URL], parentHandle: HandleEntity) async -> [CancellableTransfer] {
+    private func buildTransfer(for urls: [URL], parent: NodeEntity) async -> [CancellableTransfer] {
         await withTaskGroup(of: CancellableTransfer.self) { taskGroup in
             for url in urls {
                 taskGroup.addTask {
@@ -98,17 +98,18 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
                     }
                     
                     let appData = await self.metadataUseCase.formattedCoordinate(forFileURL: fileURL)
+                    let uploadOptions = UploadOptionsEntity(
+                        appData: appData,
+                        pitagTrigger: .picker,
+                        pitagTarget: parent.isInShare ? .incomingShare : .cloudDrive
+                    )
                     
                     return CancellableTransfer(
                         handle: .invalid,
-                        parentHandle: parentHandle,
-                        fileLinkURL: nil,
+                        parentHandle: parent.handle,
                         localFileURL: fileURL,
-                        name: nil,
-                        appData: appData,
-                        priority: false,
-                        isFile: true,
-                        type: .upload
+                        type: .upload,
+                        uploadOptions: uploadOptions
                     )
                 }
             }
