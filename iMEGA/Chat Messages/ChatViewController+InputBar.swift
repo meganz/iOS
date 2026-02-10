@@ -363,32 +363,55 @@ extension ChatViewController {
                                            delegate: delegate)
     }
     
-    private nonisolated func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+    private nonisolated func uploadAsset(
+        withFilePath filePath: String,
+        parentNode: MEGANode,
+        chatRoomId: HandleEntity,
+        pitagTrigger: PitagTriggerEntity,
+        delegate: MEGAStartUploadTransferDelegate
+    ) {
         Task { @MainActor in
-            let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId, localIdentifier: localIdentifier)
-            ChatUploader.sharedInstance.upload(filepath: filePath,
-                                               appData: appData,
-                                               chatRoomId: chatRoomId,
-                                               parentNode: parentNode,
-                                               isSourceTemporary: false,
-                                               delegate: delegate)
+            let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId, localIdentifier: "")
+            let pitagTarget: PitagTargetEntity = chatRoom.pitagTarget
+            let options = UploadOptionsEntity(
+                appData: appData,
+                isSourceTemporary: false,
+                pitagTrigger: pitagTrigger,
+                isChatUpload: true,
+                pitagTarget: pitagTarget
+            )
+            ChatUploader.sharedInstance.upload(
+                filepath: filePath,
+                chatRoomId: chatId,
+                parentNode: parentNode,
+                uploadOptions: options,
+                delegate: delegate
+            )
         }
     }
     
     private func uploadVideo(withFilePath path: String, parentNode: MEGANode) {
         let videoURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
         
-        let processAsset = MEGAProcessAsset(toShareThroughChatWithVideoURL: videoURL,
-                                            presenter: self,
-                                            filePath: { [weak self] path in
-            guard let filePath = path,
-                let `self` = self else {
-                MEGALogDebug("Video processing `MEGAProcessAsset` issue with file path as nil")
-                return
-            }
-            
-            self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
-        }, error: { [weak self] error in
+        let processAsset = MEGAProcessAsset(
+            toShareThroughChatWithVideoURL: videoURL,
+            presenter: self,
+            filePath: { [weak self] path in
+                guard let filePath = path,
+                      let self else {
+                    MEGALogDebug("Video processing `MEGAProcessAsset` issue with file path as nil")
+                    return
+                }
+                
+                uploadAsset(
+                    withFilePath: filePath,
+                    parentNode: parentNode,
+                    chatRoomId: chatRoom.chatId,
+                    pitagTrigger: .cameraCapture,
+                    delegate: createUploadTransferDelegate()
+                )
+            },
+            error: { [weak self] error in
             guard let `self` = self else {
                 return
             }
@@ -673,22 +696,29 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showCamera() {
-        guard let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera,
-                                                               filePathCompletion: { [weak self] (filePath, _, node) in
-            guard let path = filePath,
-                let parentNode = node,
-                let `self` = self else {
+        guard let pickerController = MEGAImagePickerController(
+            toShareThroughChatWith: .camera,
+            filePathCompletion: { [weak self] (filePath, _, node) in
+                guard let path = filePath,
+                      let parentNode = node,
+                      let self else {
                     return
-            }
-            let pathGroup = path.fileExtensionGroup
-            if pathGroup.isImage {
-                self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
-            } else if pathGroup.isVideo {
-                self.uploadVideo(withFilePath: path, parentNode: parentNode)
-            } else {
-                MEGALogDebug("showCamera: Unknown media type found and cannot be uploaded.")
-            }
-        }) else {
+                }
+                let pathGroup = path.fileExtensionGroup
+                if pathGroup.isImage {
+                    uploadAsset(
+                        withFilePath: path,
+                        parentNode: parentNode,
+                        chatRoomId: chatRoom.chatId,
+                        pitagTrigger: .cameraCapture,
+                        delegate: createUploadTransferDelegate()
+                    )
+                } else if pathGroup.isVideo {
+                    self.uploadVideo(withFilePath: path, parentNode: parentNode)
+                } else {
+                    MEGALogDebug("showCamera: Unknown media type found and cannot be uploaded.")
+                }
+            }) else {
             MEGALogDebug("Could not load Image Picker view")
             return
         }
@@ -858,7 +888,13 @@ extension ChatViewController: UIDocumentPickerDelegate {
             do {
                 guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
                 urls.forEach { url in
-                    uploadAsset(withFilePath: url.path, parentNode: myChatFilesFolderNode, localIdentifier: "", chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
+                    uploadAsset(
+                        withFilePath: url.path,
+                        parentNode: myChatFilesFolderNode,
+                        chatRoomId: chatRoom.chatId,
+                        pitagTrigger: .picker,
+                        delegate: createUploadTransferDelegate()
+                    )
                 }
             } catch {
                 MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
