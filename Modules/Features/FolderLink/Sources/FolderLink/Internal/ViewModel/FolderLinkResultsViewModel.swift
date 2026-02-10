@@ -20,6 +20,54 @@ final class FolderLinkResultsViewModel: ObservableObject {
         let bottomBarUseCase: any FolderLinkBottomBarUseCaseProtocol
         let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
+        
+        init(
+            nodeHandle: HandleEntity,
+            link: String,
+            searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            titleUseCase: some FolderLinkTitleUseCaseProtocol,
+            viewModeUseCase: some FolderLinkViewModeUseCaseProtocol,
+            searchUseCase: some FolderLinkSearchUseCaseProtocol,
+            editModeUseCase: some FolderLinkEditModeUseCaseProtocol,
+            bottomBarUseCase: some FolderLinkBottomBarUseCaseProtocol,
+            quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol,
+            trackingUseCase: some FolderLinkTrackingUseCaseProtocol
+        ) {
+            self.nodeHandle = nodeHandle
+            self.link = link
+            self.searchResultsProvidingBuilder = searchResultsProvidingBuilder
+            self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+            self.titleUseCase = titleUseCase
+            self.viewModeUseCase = viewModeUseCase
+            self.searchUseCase = searchUseCase
+            self.editModeUseCase = editModeUseCase
+            self.bottomBarUseCase = bottomBarUseCase
+            self.quickActionUseCase = quickActionUseCase
+            self.trackingUseCase = trackingUseCase
+        }
+        
+        init(
+            nodeHandle: HandleEntity,
+            link: String,
+            searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+        ) {
+            self.init(
+                nodeHandle: nodeHandle,
+                link: link,
+                searchResultsProvidingBuilder: searchResultsProvidingBuilder,
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                titleUseCase: FolderLinkTitleUseCase(),
+                viewModeUseCase: FolderLinkViewModeUseCase(),
+                searchUseCase: FolderLinkSearchUseCase(),
+                editModeUseCase: FolderLinkEditModeUseCase(),
+                bottomBarUseCase: FolderLinkBottomBarUseCase(),
+                quickActionUseCase: FolderLinkQuickActionUseCase(),
+                trackingUseCase: FolderLinkTrackingUseCase()
+            )
+        }
     }
 
     @Published var editMode: EditMode = .inactive
@@ -97,7 +145,9 @@ final class FolderLinkResultsViewModel: ObservableObject {
             headerType: .dynamic,
             initialViewMode: viewMode,
             shouldShowMediaDiscoveryModeHandler: { [weak self] in self?.shouldEnableMediaDiscoveryMode ?? false },
-            sortHeaderViewPressedEvent: { } // IOS-11083
+            sortHeaderViewPressedEvent: { [dependency] in
+                dependency.trackingUseCase.trackSortHeaderPressed()
+            }
         )
     }()
     
@@ -148,6 +198,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
                 guard let self else { return }
                 dependency.sortOrderPreferenceUseCase.save(sortOrder: order.toDomainSortOrderEntity(), for: dependency.nodeHandle)
                 searchResultsContainerViewModel.changeSortOrder(order)
+                self.dependency.trackingUseCase.trackSortOrderChanged(order)
             }
             .store(in: &cancellables)    
         

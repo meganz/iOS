@@ -1,4 +1,6 @@
 import FolderLink
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
@@ -115,14 +117,14 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
             sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
             
             navigationController?.present(sendToChatNavigationController, animated: true)
-            // IOS-11083 - trackSendToChatFolderLink
+            DIContainer.tracker.trackAnalyticsEvent(with: SendToChatFolderLinkButtonPressedEvent())
         } else {
             MEGALinkManager.linkSavedString = link
             MEGALinkManager.selectedOption = .sendNodeLinkToChat
 
             navigationController?.pushViewController(
                 OnboardingUSPViewController(), animated: true)
-            // trackSendToChatFolderLink - trackSendToChatFolderLinkNoAccountLogged
+            DIContainer.tracker.trackAnalyticsEvent(with: SendToChatFolderLinkNoAccountLoggedButtonPressedEvent())
         }
     }
 }

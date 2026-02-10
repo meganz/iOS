@@ -20,14 +20,24 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
     struct Dependency {
         let handle: HandleEntity
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
+        let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
         
-        init(handle: HandleEntity, titleUseCase: any FolderLinkTitleUseCaseProtocol) {
+        init(
+            handle: HandleEntity,
+            titleUseCase: some FolderLinkTitleUseCaseProtocol,
+            trackingUseCase: some FolderLinkTrackingUseCaseProtocol
+        ) {
             self.handle = handle
             self.titleUseCase = titleUseCase
+            self.trackingUseCase = trackingUseCase
         }
         
         init(handle: HandleEntity) {
-            self.init(handle: handle, titleUseCase: FolderLinkTitleUseCase())
+            self.init(
+                handle: handle,
+                titleUseCase: FolderLinkTitleUseCase(),
+                trackingUseCase: FolderLinkTrackingUseCase()
+            )
         }
     }
     
@@ -138,10 +148,21 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                 self?.editMode = .inactive
             }
             .store(in: &subscriptions)
+        
+        $sortOrder
+            .dropFirst()
+            .sink { order in
+                dependency.trackingUseCase.trackSortOrderChanged(order)
+            }
+            .store(in: &subscriptions)
     }
     
     func toggleSelectAll() {
         selectAll.toggle()
+    }
+    
+    func sortHeaderPressed() {
+        dependency.trackingUseCase.trackSortHeaderPressed()
     }
     
     // MARK: To receive updates from external: `MediaDiscoveryContentView` → Folder Link

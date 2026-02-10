@@ -35,12 +35,6 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                     nodeHandle: dependency.handle,
                     link: dependency.link,
                     searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
-                    titleUseCase: FolderLinkTitleUseCase(),
-                    viewModeUseCase: FolderLinkViewModeUseCase(),
-                    searchUseCase: FolderLinkSearchUseCase(),
-                    editModeUseCase: FolderLinkEditModeUseCase(),
-                    bottomBarUseCase: FolderLinkBottomBarUseCase(),
-                    quickActionUseCase: FolderLinkQuickActionUseCase(),
                     sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
                 ),
                 viewMode: viewMode

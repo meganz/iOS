@@ -78,7 +78,9 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                     config: SortHeaderConfig.folderLinkMediaDiscovery,
                     selection: $viewModel.sortOrder
                 )
-                // IOS-11083
+                .simultaneousGesture(TapGesture().onEnded { [viewModel] _ in
+                    viewModel.sortHeaderPressed()
+                })
             },
             rightView: {
                 SearchResultsHeaderViewModeView(
