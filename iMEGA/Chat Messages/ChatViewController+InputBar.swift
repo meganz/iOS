@@ -560,16 +560,24 @@ extension ChatViewController: ChatInputBarDelegate {
         }
     }
     
-    private nonisolated func uploadAudio(path: String, parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+    private func uploadAudio(path: String, parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
         let appData = ("" as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: true)
-        
+        let pitagTarget: PitagTargetEntity = chatRoom.pitagTarget
+        let uploadOptions = UploadOptionsEntity(
+            appData: appData,
+            isSourceTemporary: false,
+            pitagTrigger: .voiceRecorder,
+            isChatUpload: true,
+            pitagTarget: pitagTarget
+        )
         if let voiceMessagesNode = MEGASdk.shared.node(forPath: MEGAVoiceMessagesFolderName, node: parentNode) {
-            ChatUploader.sharedInstance.upload(filepath: path,
-                                               appData: appData,
-                                               chatRoomId: chatRoomId,
-                                               parentNode: voiceMessagesNode,
-                                               isSourceTemporary: false,
-                                               delegate: delegate)
+            ChatUploader.sharedInstance.upload(
+                filepath: path,
+                chatRoomId: chatRoomId,
+                parentNode: voiceMessagesNode,
+                uploadOptions: uploadOptions,
+                delegate: delegate
+            )
         } else {
             MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
                                                          parent: parentNode,
@@ -577,12 +585,13 @@ extension ChatViewController: ChatInputBarDelegate {
                 guard let request else { return }
                 
                 if let voiceMessagesNode = MEGASdk.shared.node(forHandle: request.nodeHandle) {
-                    ChatUploader.sharedInstance.upload(filepath: path,
-                                                       appData: appData,
-                                                       chatRoomId: chatRoomId,
-                                                       parentNode: voiceMessagesNode,
-                                                       isSourceTemporary: false,
-                                                       delegate: delegate)
+                    ChatUploader.sharedInstance.upload(
+                        filepath: path,
+                        chatRoomId: chatRoomId,
+                        parentNode: voiceMessagesNode,
+                        uploadOptions: uploadOptions,
+                        delegate: delegate
+                    )
                 } else {
                     MEGALogDebug("Voice folder not created")
                 }
