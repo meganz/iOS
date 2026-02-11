@@ -2283,6 +2283,7 @@
 		BF22BFBB268AF67400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
+		BF2388EA2F396C1500520512 /* HomeViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2388E92F396C1500520512 /* HomeViewRouter.swift */; };
 		BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */; };
 		BF25A3742E41894B00583D88 /* MEGAProcessAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */; };
 		BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */; };
@@ -5203,6 +5204,7 @@
 		BF20BB642E49853B0013CAE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
+		BF2388E92F396C1500520512 /* HomeViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewRouter.swift; sourceTree = "<group>"; };
 		BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDrivePhotosPickerRouter.swift; sourceTree = "<group>"; };
 		BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProcessAssetTests.swift; sourceTree = "<group>"; };
 		BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyDatePickerView.swift; sourceTree = "<group>"; };
@@ -8546,6 +8548,7 @@
 				5DF249DC24F37589003FED76 /* FileUploadingRouter.swift */,
 				5DD4B2F0257DEAE000A01306 /* HomeBannerRouter.swift */,
 				BF74E1E2253668E1001F663C /* HomeRouter.swift */,
+				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
 				5D48593D2526CD5F007BF705 /* NewChatRouter.swift */,
 				5D7792DB250613B200378D87 /* NodeInfoRouter.swift */,
 				5D0B42B5250618070057D49B /* NodeLinkRouter.swift */,
@@ -15401,6 +15404,7 @@
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
 				BF7758EA2F21EE730091DE2A /* HomeViewHostingController.swift in Sources */,
 				B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */,
+				BF2388EA2F396C1500520512 /* HomeViewRouter.swift in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,

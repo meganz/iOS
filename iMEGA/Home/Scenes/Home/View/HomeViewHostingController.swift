@@ -3,6 +3,27 @@ import SwiftUI
 
 final class HomeViewHostingController: UIHostingController<HomeView>, AdsSlotDisplayable {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.backButtonDisplayMode = .minimal
+
+        // Required to allow SwiftUI content (NavigationStack / ScrollView) to extend
+        // under the tab bar when hosted inside a UINavigationController.
+        // Without this, UIKit clamps the hosting view above the tab bar,
+        // causing an unexpected bottom gap.
+        extendedLayoutIncludesOpaqueBars = true
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureAdsVisibility()

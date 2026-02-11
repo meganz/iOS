@@ -4,13 +4,8 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-enum ShortcutType: CaseIterable, Identifiable {
-    case favourites
-    case videos
-    case offline
-
-    var id: Self { self }
-
+extension ShortcutType {
+    
     var title: String {
         switch self {
         case .favourites: Strings.Localizable.favourites

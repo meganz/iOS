@@ -3,12 +3,14 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ShortcutsWidgetView: View {
+    let shortcutTapAction: (ShortcutType) -> Void
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: TokenSpacing._3) {
                 ForEach(ShortcutType.allCases) { chip in
                     Button {
-                        // IOS-11280: Handle the shortcut button actions
+                        shortcutTapAction(chip)
                     } label: {
                         PillView(viewModel: chip.pillViewModel)
                     }
@@ -21,5 +23,5 @@ struct ShortcutsWidgetView: View {
 }
 
 #Preview {
-    ShortcutsWidgetView()
+    ShortcutsWidgetView(shortcutTapAction: { _ in })
 }

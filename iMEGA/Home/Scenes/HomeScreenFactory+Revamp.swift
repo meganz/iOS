@@ -19,8 +19,10 @@ extension HomeScreenFactory {
             tabBarController: tabBarController
         )
 
+        let router = HomeViewRouter(navigationController: navigationController)
         let dependency = HomeView.Dependency(
-            homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController)
+            homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
+            router: router
         )
         
         let homeView = HomeView(dependency: dependency)

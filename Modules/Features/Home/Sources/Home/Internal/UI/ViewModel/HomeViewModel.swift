@@ -6,6 +6,4 @@ final class HomeViewModel: ObservableObject {
     @Published var hidesFloatingActionsButton: Bool = false
     @Published var selectedFloatingButtonAction: HomeAddMenuAction?
     let widgets = HomeWidgetType.allCases
-
-    init() {}
 }
