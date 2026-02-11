@@ -447,7 +447,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
     }
     
     private func showMoreActions(viewModel: AlbumActionSheetViewModel) {
-        let view = AlbumContentSheetView(viewModel: viewModel)
+        let view = AlbumContentSheetView(viewModel: viewModel) { [weak self] actionToExecute in
+            self?.dismiss(animated: true) {
+                actionToExecute()
+            }
+        }
         let hostingController = UIHostingController(rootView: view)
         if let sheet = hostingController.sheetPresentationController {
             let customDetent = UISheetPresentationController.Detent.custom { context in
