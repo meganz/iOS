@@ -3,11 +3,14 @@ import SwiftUI
 
 struct AlbumContentSheetView: View {
     @StateObject var viewModel: AlbumActionSheetViewModel
+    let onDismiss: (@escaping () -> Void) -> Void
     
     var body: some View {
         MEGAList(contentView: {
             ForEach(viewModel.sheetActions) { action in
-                Button(action: action.action) {
+                Button {
+                    onDismiss(action.action)
+                } label: {
                     MEGAList(
                         title: action.title
                     )
