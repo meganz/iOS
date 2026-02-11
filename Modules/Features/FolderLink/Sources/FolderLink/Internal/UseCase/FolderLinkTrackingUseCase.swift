@@ -9,18 +9,18 @@ protocol FolderLinkTrackingUseCaseProtocol: Sendable {
     func trackSortOrderChanged(_ sortOrder: MEGAUIComponent.SortOrder)
 }
 
-struct FolderLinkTrackingUseCase: FolderLinkTrackingUseCaseProtocol {
+package struct FolderLinkTrackingUseCase: FolderLinkTrackingUseCaseProtocol {
     private let tracker: any AnalyticsTracking
     
     package init(tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.tracker = tracker
     }
     
-    func trackSortHeaderPressed() {
+    package func trackSortHeaderPressed() {
         tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
     }
     
-    func trackViewModeChanged(_ viewMode: Search.SearchResultsViewMode) {
+    package func trackViewModeChanged(_ viewMode: Search.SearchResultsViewMode) {
         let eventIdentifier: any EventIdentifier =  switch viewMode {
         case .list:
             ViewModeListMenuItemEvent()
@@ -32,14 +32,14 @@ struct FolderLinkTrackingUseCase: FolderLinkTrackingUseCaseProtocol {
         tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
     
-    func trackSortOrderChanged(_ sortOrder: MEGAUIComponent.SortOrder) {
+    package func trackSortOrderChanged(_ sortOrder: MEGAUIComponent.SortOrder) {
         let eventIdentifier: any EventIdentifier =  switch sortOrder.key {
         case .name:
             SortByNameMenuItemEvent()
         case .size:
             SortBySizeMenuItemEvent()
         case .linkCreated:
-            SortByDateAddedMenuItemEvent()
+            SortByLinkCreationMenuItemEvent()
         case .lastModified:
             SortByDateModifiedMenuItemEvent()
         case .label:

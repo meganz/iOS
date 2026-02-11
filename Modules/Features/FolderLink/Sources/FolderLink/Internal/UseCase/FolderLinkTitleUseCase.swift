@@ -4,14 +4,14 @@ protocol FolderLinkTitleUseCaseProtocol: Sendable {
     func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType
 }
 
-struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
+package struct FolderLinkTitleUseCase: FolderLinkTitleUseCaseProtocol {
     private let folderLinkRepository: any FolderLinkRepositoryProtocol
     
-    init(folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo) {
+    package init(folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo) {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType {
+    package func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType {
         switch editingState {
         case let .active(nodeHandles):
             if nodeHandles.isEmpty {

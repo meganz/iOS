@@ -5,14 +5,14 @@ protocol FolderLinkBottomBarUseCaseProtocol: Sendable {
     func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool
 }
 
-struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
+package struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
     private let folderLinkRepository: any FolderLinkRepositoryProtocol
     
-    init(folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo) {
+    package init(folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo) {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState<Set<HandleEntity>>) -> Bool {
+    package func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState<Set<HandleEntity>>) -> Bool {
         let nodes = switch editingState {
         case .inactive:
             folderLinkRepository.children(of: handle)
@@ -27,7 +27,7 @@ struct FolderLinkBottomBarUseCase: FolderLinkBottomBarUseCaseProtocol {
         }
     }
     
-    func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool {
+    package func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool {
         guard let node = folderLinkRepository.node(for: handle), node.isNodeKeyDecrypted else { return true }
         return switch editingState {
         case .inactive:

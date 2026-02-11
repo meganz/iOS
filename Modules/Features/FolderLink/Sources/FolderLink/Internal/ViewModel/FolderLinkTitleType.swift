@@ -1,4 +1,4 @@
-enum FolderLinkTitleType {
+package enum FolderLinkTitleType: Equatable {
     // Begin editing
     case askForSelecting
     // Editing is inactive

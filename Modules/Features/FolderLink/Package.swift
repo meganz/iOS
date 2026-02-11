@@ -22,6 +22,7 @@ let package = Package(
         
         // Presentation
         .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         
         // Domain
         .package(path: "../../Domain/MEGADomain"),
@@ -33,7 +34,8 @@ let package = Package(
         .package(path: "../../DataSource/MEGASDK"),
         
         // Infra
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         .target(
@@ -52,8 +54,10 @@ let package = Package(
             name: "FolderLinkTests",
             dependencies: [
                 "FolderLink",
+                "MEGATest",
                 .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
-                .product(name: "MEGADomainMock", package: "MEGADomain")
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ]
         )
     ]

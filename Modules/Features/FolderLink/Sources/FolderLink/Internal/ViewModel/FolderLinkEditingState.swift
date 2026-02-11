@@ -1,7 +1,7 @@
 import MEGADomain
 
 /// An enum which represents current editing state
-enum FolderLinkEditingState<C> where C: Collection {
+package enum FolderLinkEditingState<C> where C: Collection {
     /// Edit mode is not active
     case inactive
     /// Edit mode is active and comes with a collection of selected nodes.
