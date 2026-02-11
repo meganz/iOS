@@ -353,14 +353,23 @@ extension ChatViewController {
         return appData
     }
     
-    private nonisolated func uploadAsset(asset: PHAsset, filePath: String, parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
-        let appData = buildAssetUploadAppData(asset: asset, chatRoomId: chatRoomId)
-        ChatUploader.sharedInstance.upload(filepath: filePath,
-                                           appData: appData,
-                                           chatRoomId: chatRoomId,
-                                           parentNode: parentNode,
-                                           isSourceTemporary: false,
-                                           delegate: delegate)
+    private nonisolated func uploadAsset(asset: PHAsset, filePath: String, parentNode: MEGANode, chatRoom: ChatRoomEntity, delegate: MEGAStartUploadTransferDelegate) {
+        let appData = buildAssetUploadAppData(asset: asset, chatRoomId: chatRoom.chatId)
+        let pitagTarget: PitagTargetEntity = chatRoom.pitagTarget
+        let options = UploadOptionsEntity(
+            appData: appData,
+            isSourceTemporary: false,
+            pitagTrigger: .picker,
+            isChatUpload: true,
+            pitagTarget: pitagTarget
+        )
+        ChatUploader.sharedInstance.upload(
+            filepath: filePath,
+            chatRoomId: chatRoom.chatId,
+            parentNode: parentNode,
+            uploadOptions: options,
+            delegate: delegate
+        )
     }
     
     private nonisolated func uploadAsset(
@@ -429,7 +438,7 @@ extension ChatViewController {
         processAsset.prepare()
     }
     
-    private nonisolated func uploadingAssets(assets: [PHAsset], parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+    private nonisolated func uploadingAssets(assets: [PHAsset], parentNode: MEGANode, chatRoom: ChatRoomEntity, delegate: MEGAStartUploadTransferDelegate) {
         let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
                                             presenter: self,
                                             filePaths: { [weak self] filePaths in
@@ -437,7 +446,7 @@ extension ChatViewController {
             guard let self, let filePaths else { return }
                                                 
             filePaths.enumerated().forEach { (index, filePath) in
-                self.uploadAsset(asset: assets[index], filePath: filePath, parentNode: parentNode, chatRoomId: chatRoomId, delegate: delegate)
+                self.uploadAsset(asset: assets[index], filePath: filePath, parentNode: parentNode, chatRoom: chatRoom, delegate: delegate)
             }
             
         }, errors: { errors in
@@ -472,7 +481,7 @@ extension ChatViewController {
         do {
             MyChatFilesFolderNodeAccess.shared.updateAutoCreate(status: true)
             guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else { return }
-            uploadingAssets(assets: assets, parentNode: myChatFilesFolderNode, chatRoomId: chatRoom.chatId, delegate: createUploadTransferDelegate())
+            uploadingAssets(assets: assets, parentNode: myChatFilesFolderNode, chatRoom: chatRoom, delegate: createUploadTransferDelegate())
         } catch {
             MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
         }
