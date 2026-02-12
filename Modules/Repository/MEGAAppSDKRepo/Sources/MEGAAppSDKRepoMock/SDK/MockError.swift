@@ -4,15 +4,24 @@ public final class MockError: MEGAError, @unchecked Sendable {
     let megaErrorType: MEGAErrorType
     private let _name: String
     private let _value: Int64
+    private let _hasExtraInfo: Bool
+    private let _userStatus: MEGAUserErrorCode
+    private let _linkStatus: MEGALinkErrorCode
     
     public init(
         errorType: MEGAErrorType = .apiOk,
         name: String = "MockError",
-        value: Int64 = 0
+        value: Int64 = 0,
+        hasExtraInfo: Bool = false,
+        userStatus: MEGAUserErrorCode = .etdUnknown,
+        linkStatus: MEGALinkErrorCode = .unknown
     ) {
         megaErrorType = errorType
         _name = name
         _value = value
+        _hasExtraInfo = hasExtraInfo
+        _userStatus = userStatus
+        _linkStatus = linkStatus
     }
     
     public override var type: MEGAErrorType { megaErrorType }
@@ -22,6 +31,18 @@ public final class MockError: MEGAError, @unchecked Sendable {
     public override var value: Int64 { _value }
     
     public static var failingError: MEGAError { MockError(errorType: .anyFailingErrorType) }
+    
+    public override var hasExtraInfo: Bool {
+        _hasExtraInfo
+    }
+    
+    public override var userStatus: MEGAUserErrorCode {
+        _userStatus
+    }
+    
+    public override var linkStatus: MEGALinkErrorCode {
+        _linkStatus
+    }
 }
 
 public extension MEGAErrorType {

@@ -12,18 +12,18 @@ package protocol FolderLinkRepositoryProtocol: RepositoryProtocol, Sendable {
     func retryPendingConnections()
 }
 
-struct FolderLinkRepository: FolderLinkRepositoryProtocol {
-    static var newRepo: FolderLinkRepository {
+package struct FolderLinkRepository: FolderLinkRepositoryProtocol {
+    static package var newRepo: FolderLinkRepository {
         FolderLinkRepository(sdk: .sharedFolderLinkSdk)
     }
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    package init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func loginTo(link: String) async throws {
+   package func loginTo(link: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             sdk.login(toFolderLink: link, delegate: RequestDelegate { result in
                 switch result {
@@ -55,7 +55,7 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
         }
     }
     
-    func fetchNodes() async throws {
+    package func fetchNodes() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.fetchNodes(with: RequestDelegate { result in
                 switch result {
@@ -89,24 +89,24 @@ struct FolderLinkRepository: FolderLinkRepositoryProtocol {
         }
     }
     
-    func getRootNode() -> MEGADomain.HandleEntity {
+    package func getRootNode() -> MEGADomain.HandleEntity {
         sdk.rootNode?.handle ?? .invalid
     }
     
-    func logout() {
+    package func logout() {
         sdk.logout()
     }
     
-    func children(of nodeHandle: HandleEntity) -> [NodeEntity] {
+    package func children(of nodeHandle: HandleEntity) -> [NodeEntity] {
         guard let node = sdk.node(forHandle: nodeHandle) else { return [] }
         return sdk.children(forParent: node).toNodeEntities()
     }
     
-    func node(for handle: HandleEntity) -> NodeEntity? {
+    package func node(for handle: HandleEntity) -> NodeEntity? {
         sdk.node(forHandle: handle)?.toNodeEntity()
     }
     
-    func retryPendingConnections() {
+    package func retryPendingConnections() {
         sdk.retryPendingConnections()
     }
 }
