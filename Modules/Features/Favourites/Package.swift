@@ -3,37 +3,39 @@
 import PackageDescription
 
 let package = Package(
-    name: "Home",
+    name: "Favourites",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "Home",
-            targets: ["Home"]
-        )
+            name: "Favourites",
+            targets: ["Favourites"]
+        ),
     ],
     dependencies: [
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
-        .package(path: "../Favourites"),
+        .package(path: "../Search"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
         .target(
-            name: "Home",
+            name: "Favourites",
             dependencies: [
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGAAssets",
                 "MEGAL10n",
-                "Favourites"
+                "MEGASwift",
+                "Search"
             ]
         ),
         .testTarget(
-            name: "HomeTests",
-            dependencies: ["Home"]
-        )
+            name: "FavouritesTests",
+            dependencies: ["Favourites"]
+        ),
     ]
 )

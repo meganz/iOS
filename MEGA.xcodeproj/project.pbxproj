@@ -5214,6 +5214,7 @@
 		BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysInformation.swift; sourceTree = "<group>"; };
 		BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFrequencyOption.swift; sourceTree = "<group>"; };
 		BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetails.swift; sourceTree = "<group>"; };
+		BF26E7482F3D84A600AF51E5 /* Favourites */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Favourites; sourceTree = "<group>"; };
 		BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInProgressTimeReporting.swift; sourceTree = "<group>"; };
 		BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingFloatingPanelViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
@@ -8548,7 +8549,6 @@
 				5DF249DC24F37589003FED76 /* FileUploadingRouter.swift */,
 				5DD4B2F0257DEAE000A01306 /* HomeBannerRouter.swift */,
 				BF74E1E2253668E1001F663C /* HomeRouter.swift */,
-				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
 				5D48593D2526CD5F007BF705 /* NewChatRouter.swift */,
 				5D7792DB250613B200378D87 /* NodeInfoRouter.swift */,
 				5D0B42B5250618070057D49B /* NodeLinkRouter.swift */,
@@ -8573,6 +8573,7 @@
 			children = (
 				A88E7FE42549FD8A001B0A66 /* Recents */,
 				5D87C1F224E922C500BB5AB0 /* Repository */,
+				BF0BA1182F3AE68400066BC8 /* Revamp */,
 				5D8A05AA24E4C03100456AC7 /* Scenes */,
 				5D87C1EF24E91EA300BB5AB0 /* UseCase */,
 			);
@@ -8700,7 +8701,6 @@
 				5D570D0A2537E6F1006C5670 /* HomeExplore */,
 				5D166B752521952F004F4F4A /* HomeSearch */,
 				5D8C5AB624F0A39300EDD7A9 /* HomeLocalisation.swift */,
-				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
 				5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */,
 				94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */,
 				947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */,
@@ -11081,6 +11081,7 @@
 				A52F1E332EBCE55800D3A2E9 /* Chat */,
 				A52F1E342EBCE55800D3A2E9 /* CloudDrive */,
 				A52F1E352EBCE55800D3A2E9 /* DeviceCenter */,
+				BF26E7482F3D84A600AF51E5 /* Favourites */,
 				A589D4F12F04EB7400A9B23C /* FolderLink */,
 				BF7758C92F21D6F40091DE2A /* Home */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
@@ -12678,6 +12679,15 @@
 				BF0B5E0C2BB2C98400ADE274 /* LegacyNoInternetViewModifier.swift */,
 			);
 			path = NoInternetViewModifier;
+			sourceTree = "<group>";
+		};
+		BF0BA1182F3AE68400066BC8 /* Revamp */ = {
+			isa = PBXGroup;
+			children = (
+				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
+				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
+			);
+			path = Revamp;
 			sourceTree = "<group>";
 		};
 		BF0BD6012C5306C7003E608A /* NodeDescription */ = {

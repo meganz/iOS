@@ -1,7 +1,7 @@
+import Favourites
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
-import MEGASwiftUI
 import SwiftUI
 
 public struct HomeView: View {
@@ -15,7 +15,7 @@ public struct HomeView: View {
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
-            router: some HomeViewRouting
+            router: some HomeViewRouting,
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
