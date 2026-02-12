@@ -280,7 +280,7 @@ class MessageInputBar: UIView {
         updateAppearance()
         setSendButtonColor()
         
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             backgroundColor = TokenColors.Background.page
             return
         }

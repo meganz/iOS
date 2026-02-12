@@ -13,8 +13,7 @@ struct PhotoLibraryPicker: View {
     }
 
     private var liquidGlassBottomPadding: CGFloat {
-        guard #available(iOS 26.0, *),
-              ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return 0
         }
         let bottomInset = UIApplication.shared.connectedScenes
@@ -39,7 +38,7 @@ private extension PhotoLibraryPicker {
     
     @ViewBuilder
     private var pickerView: some View {
-        if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             basePicker
                 .glassEffect(.regular)
         } else {

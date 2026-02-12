@@ -83,7 +83,7 @@ final class MediaTabHostingController: UIViewController {
     }
 
     private func refreshLayoutIfNeeded() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
+        guard #available(iOS 26.0, *) else { return }
         viewModel.layoutRevision = UUID()
     }
 

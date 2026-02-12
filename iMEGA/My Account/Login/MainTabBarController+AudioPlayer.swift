@@ -23,7 +23,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private func adjustMiniPlayerDisplay() {
         let shouldShowMiniPlayer = currentPresenter != nil
         
-        let safeAreaOverlayCoverAllowedForCurrentPresenter = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled(), let presenter = currentPresenter, isTabRoot(presenter) {
+        let safeAreaOverlayCoverAllowedForCurrentPresenter = if #available(iOS 26.0, *), let presenter = currentPresenter, isTabRoot(presenter) {
             false
         } else { true }
         let safeAreaOverlayCoverAllowed = tabBar.isHidden && safeAreaOverlayCoverAllowedForCurrentPresenter

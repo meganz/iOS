@@ -23,7 +23,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     func start() {
         guard let tabBar = tabBarController as? MainTabBarController else { return }
         
-        let psaView = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let psaView = if #available(iOS 26.0, *) {
             PSASwiftUIBackedView()
         } else {
             PSAView.instanceFromNib

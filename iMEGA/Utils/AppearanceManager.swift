@@ -65,7 +65,7 @@ final class AppearanceManager: NSObject {
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar) {
         navigationBar.tintColor = UIColor.barTint()
         
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             let navigationBarAppearance = makeNavigationBarAppearance()
             
             navigationBar.standardAppearance = navigationBarAppearance
@@ -99,7 +99,7 @@ final class AppearanceManager: NSObject {
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar) {
         let toolbarAppearance: UIToolbarAppearance
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             toolbarAppearance = makeLiquidGlassToolbarAppearance()
             toolbar.isTranslucent = true
         } else {
@@ -156,7 +156,7 @@ final class AppearanceManager: NSObject {
         appearance.compactInlineLayoutAppearance.selected.iconColor = selectedColor
         appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             configureLiquidGlassTabBarAppearance(appearance, tabBar: tabBar)
         } else {
             configureLegacyTabBarAppearance(appearance, tabBar: tabBar)
@@ -280,7 +280,7 @@ final class AppearanceManager: NSObject {
     private class func setupToolbar() {
         let toolbarAppearance: UIToolbarAppearance
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             toolbarAppearance = makeLiquidGlassToolbarAppearance()
         } else {
             toolbarAppearance = makeLegacyToolbarAppearance()

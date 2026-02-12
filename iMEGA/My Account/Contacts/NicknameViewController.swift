@@ -136,7 +136,7 @@ class NicknameViewController: UIViewController {
         cancelBarButtonItem.title = Strings.Localizable.cancel
         saveBarButtonItem.title = Strings.Localizable.save
         nicknameLabel.text = Strings.Localizable.aliasNickname
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             saveBarButtonItem.style = .plain
         }
         

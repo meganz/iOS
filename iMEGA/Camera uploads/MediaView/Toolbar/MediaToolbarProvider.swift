@@ -26,7 +26,7 @@ extension MediaToolbarProvider {
 
         // Configure toolbar
         toolbar.alpha = 0.0
-        if !isLiquidGlassEnabled {
+        if !isLiquidGlassSupported {
             toolbar.backgroundColor = TokenColors.Background.surface1
         }
 
@@ -46,14 +46,14 @@ extension MediaToolbarProvider {
 
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 1.0
-            if self.isLiquidGlassEnabled {
+            if self.isLiquidGlassSupported {
                 tabBarController.tabBar.alpha = 0.0
             }
         }
     }
     
-    private var isLiquidGlassEnabled: Bool {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+    private var isLiquidGlassSupported: Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false
@@ -66,7 +66,7 @@ extension MediaToolbarProvider {
         // Fade out animation
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 0.0
-            if self.isLiquidGlassEnabled {
+            if self.isLiquidGlassSupported {
                 self.tabBarController?.tabBar.alpha = 1.0
             }
         } completion: { _ in

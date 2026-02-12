@@ -83,7 +83,7 @@ struct PSAContentView: View {
     }
 
     var body: some View {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             content
                 .padding(innerContentPadding)   // horizontal/vertical padding inside content
                 .glassEffect(.regular, in: .rect(cornerRadius: cardCornerRadius, style: .continuous))

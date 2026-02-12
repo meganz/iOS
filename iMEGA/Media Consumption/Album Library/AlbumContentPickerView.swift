@@ -17,7 +17,7 @@ struct AlbumContentPickerView: View {
         ZStack {
             TokenColors.Background.surface1.swiftUI
             
-            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            if #available(iOS 26.0, *) {
                 ZStack {
                     VStack(spacing: 0) {
                         navigationBar
@@ -73,7 +73,7 @@ struct AlbumContentPickerView: View {
                 .padding(.horizontal, 30)
             
             HStack {
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     cancelButton
                         .buttonStyle(.glass)
                 } else {
@@ -85,7 +85,7 @@ struct AlbumContentPickerView: View {
                     .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
                 
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     doneButton
                         .buttonStyle(.glass)
                 } else {
@@ -128,7 +128,7 @@ struct AlbumContentPickerView: View {
                 HStack {
                     Spacer()
                     
-                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         filterButton
                             .buttonStyle(.glass)
                     } else {

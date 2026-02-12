@@ -47,7 +47,7 @@ struct ScanDocumentViewRouter: Sendable {
         scanVC.onDeinit { [weak scanDocumentViewControllerDelegate] in
             scanDocumentViewControllerDelegate?.cancelContinuation()
         }
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             AppearanceManager.setDefaultNavigationBar(for: [VNDocumentCameraViewController.self])
         }
         presenter.present(scanVC, animated: true)

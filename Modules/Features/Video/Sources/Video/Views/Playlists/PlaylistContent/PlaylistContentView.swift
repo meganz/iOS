@@ -188,7 +188,6 @@ struct PlaylistContentView: View {
         .overlay(alignment: .bottomTrailing) {
             RoundedPrimaryImageButton(
                 image: MEGAAssets.Image.plus,
-                isLiquidGlassEnabled: featureFlagProvider.isLiquidGlassEnabled(),
                 action: { onTapAddButton() }
             )
             .padding(TokenSpacing._5)

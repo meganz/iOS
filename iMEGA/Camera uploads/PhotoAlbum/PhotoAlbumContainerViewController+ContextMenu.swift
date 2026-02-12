@@ -26,7 +26,7 @@ extension PhotoAlbumContainerViewController {
     }
     
     var cancelBarButton: UIBarButtonItem {
-        let style = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let style = if #available(iOS 26.0, *) {
             UIBarButtonItem.Style.plain
         } else {
             UIBarButtonItem.Style.done

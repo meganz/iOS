@@ -28,7 +28,7 @@ class FolderLinkTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundView = UIView()
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             tableViewBottomConstraint.isActive = false
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }

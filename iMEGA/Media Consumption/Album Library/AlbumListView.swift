@@ -74,7 +74,6 @@ struct AlbumListView: View {
             if viewModel.isMediaRevampEnabled {
                 RoundedPrimaryImageButton(
                     image: MEGAAssets.Image.plus,
-                    isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                     action: viewModel.onCreateAlbum)
                 .padding(TokenSpacing._5)
                 .padding(.bottom, liquidGlassBottomPadding)
@@ -152,8 +151,7 @@ struct AlbumListView: View {
     }
 
     private var liquidGlassBottomPadding: CGFloat {
-        guard #available(iOS 26.0, *),
-              DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return 0
         }
         let bottomInset = UIApplication.shared.connectedScenes

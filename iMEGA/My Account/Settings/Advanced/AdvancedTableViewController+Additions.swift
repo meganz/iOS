@@ -92,7 +92,7 @@ extension AdvancedTableViewController {
     @objc static let saveVideoToGalleryKey: String = PreferenceKeyEntity.saveVideoToGallery.rawValue
     
     @objc func setupForLiquidGlass() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return
         }
         saveImagesButton.isHidden = true

@@ -46,7 +46,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         
-        let toolbarBackgroundColor = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let toolbarBackgroundColor = if #available(iOS 26.0, *) {
             UIColor.clear
         } else {
            TokenColors.Background.surface1

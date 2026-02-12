@@ -110,7 +110,7 @@ extension UIViewController {
 
 extension UIViewController {
     static var doneBarButtonStyle: UIBarButtonItem.Style {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             return UIBarButtonItem.Style.plain
         } else {
             return UIBarButtonItem.Style.done

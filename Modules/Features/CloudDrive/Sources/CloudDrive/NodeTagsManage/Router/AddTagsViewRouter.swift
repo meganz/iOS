@@ -29,15 +29,16 @@ struct AddTagsViewRouter: AddTagsViewRouting {
     }
     
     func build() -> UIViewController {
-        let isLiquidGlassEnabled: Bool = if #available(iOS 26.0, *), featureFlagProvider.isLiquidGlassEnabled() {
+        let isLiquidGlassSupported: Bool = if #available(iOS 26.0, *) {
             true
         } else {
             false
         }
+        
         let view = ManageTagsView(
             viewModel: ManageTagsViewModel(
                 nodeEntity: nodeEntity,
-                navigationBarViewModel: ManageTagsViewNavigationBarViewModel(isLiquidGlassEnabled: isLiquidGlassEnabled),
+                navigationBarViewModel: ManageTagsViewNavigationBarViewModel(isLiquidGlassSupported: isLiquidGlassSupported),
                 existingTagsViewModel: ExistingTagsViewModel(
                     nodeEntity: nodeEntity,
                     tagsViewModel: NodeTagsViewModel(

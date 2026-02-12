@@ -8,7 +8,7 @@ extension SharedItemsViewController {
         let newToolbar = UIToolbar()
         newToolbar.translatesAutoresizingMaskIntoConstraints = false
         
-        let toobarBackgroundColor = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let toobarBackgroundColor = if #available(iOS 26.0, *) {
             UIColor.clear
         } else {
             UIColor.surface1Background()
@@ -19,7 +19,7 @@ extension SharedItemsViewController {
         newToolbar.isHidden = true
         
         view.addSubview(newToolbar)
-        let bottomOffset: CGFloat = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let bottomOffset: CGFloat = if #available(iOS 26.0, *) {
             -10
         } else {
             0

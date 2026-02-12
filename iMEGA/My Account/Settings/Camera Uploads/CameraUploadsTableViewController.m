@@ -50,7 +50,7 @@
     
     if (self.isPresentedModally) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(modalDialogDoneButtonTouched)];
-        UIBarButtonItemStyle style = [self isLiquidGlassEnabled] ? UIBarButtonItemStylePlain : UIBarButtonItemStyleDone;
+        UIBarButtonItemStyle style = [self isLiquidGlassSupported] ? UIBarButtonItemStylePlain : UIBarButtonItemStyleDone;
         [self.navigationItem.rightBarButtonItem setStyle: style];
     }
     

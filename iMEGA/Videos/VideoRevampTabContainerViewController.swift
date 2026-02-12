@@ -217,7 +217,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func configureToolbar() {
-        if #available(iOS 26.0, *), featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             configureToolbarWithGroups()
         } else {
             configureToolbarLegacy()
@@ -322,7 +322,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        if #available(iOS 26.0, *), featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             let appearance = UIToolbarAppearance()
             appearance.configureWithDefaultBackground()
             appearance.backgroundEffect = UIBlurEffect(style: .systemMaterial)

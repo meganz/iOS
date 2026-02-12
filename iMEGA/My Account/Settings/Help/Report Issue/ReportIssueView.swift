@@ -90,14 +90,14 @@ struct ReportIssueView: View {
     
     private var navigationBar: some View {
         NavigationBarView(leading: {
-            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            if #available(iOS 26.0, *) {
                 leftNavigationButton
                     .buttonStyle(.glass)
             } else {
                 leftNavigationButton
             }
         }, trailing: {
-            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            if #available(iOS 26.0, *) {
                 rightNavigationBarButton
                     .buttonStyle(.glass)
             } else {

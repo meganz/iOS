@@ -278,7 +278,7 @@ extension ContactsViewController {
     
     @objc @MainActor
     func clearBackButtonForLiquidGlass() {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             clearBackBarButton()
         }
     }
@@ -339,14 +339,13 @@ extension ContactsViewController {
 
     @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+           #available(iOS 26.0, *) {
             configureLiquidGlassNavigationBar()
         }
     }
 
     @objc func markNavigationBarNeedsLayoutForLiquidGlass() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return
         }
         

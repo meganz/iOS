@@ -12,7 +12,7 @@ struct LegacyCallsSettingsView: View {
     var body: some View {
         GeometryReader { geometry in
             Group {
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     contentView(geometry: geometry)
                 } else {
                     contentView(geometry: geometry)

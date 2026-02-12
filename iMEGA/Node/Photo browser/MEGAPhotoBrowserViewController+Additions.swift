@@ -268,14 +268,14 @@ extension MEGAPhotoBrowserViewController {
                 barButtonItem?.image = UIImage(systemName: "play.rectangle")
                 barButtonItem?.isEnabled = true
                 
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     barButtonItem?.hidesSharedBackground = false
                 }
             } else {
                 barButtonItem?.image = nil
                 barButtonItem?.isEnabled = false
                 
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     barButtonItem?.hidesSharedBackground = true
                 }
             }
@@ -392,7 +392,7 @@ extension MEGAPhotoBrowserViewController {
     }
 
     @objc func updateNavigationBar(_ navigationBar: UINavigationBar) {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         } else {
             AppearanceManager.forceNavigationBarUpdate(navigationBar)
@@ -400,7 +400,7 @@ extension MEGAPhotoBrowserViewController {
     }
 
     @objc func updateNavigationAndStatusBarBackground(_ navigationBar: UINavigationBar, statusBar: UIView) {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             statusBar.backgroundColor = .clear
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         } else {
@@ -514,7 +514,7 @@ extension MEGAPhotoBrowserViewController {
                 with: String(format: "%lu", dataProvider.currentIndex + 1))
         }
 
-        let isLiquidGlassEnabled = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        let isLiquidGlassSupported = if #available(iOS 26.0, *) {
             true
         } else {
             false
@@ -522,9 +522,9 @@ extension MEGAPhotoBrowserViewController {
 
         let rootView: NavigationTitleView?
         if let name = node.name {
-            rootView = .init(title: name, subtitle: subtitle, isLiquidGlassEnabled: isLiquidGlassEnabled)
+            rootView = .init(title: name, subtitle: subtitle, isLiquidGlassSupported: isLiquidGlassSupported)
         } else if let subtitle {
-            rootView = .init(title: subtitle, isLiquidGlassEnabled: isLiquidGlassEnabled)
+            rootView = .init(title: subtitle, isLiquidGlassSupported: isLiquidGlassSupported)
         } else {
             rootView = nil
         }
@@ -534,7 +534,7 @@ extension MEGAPhotoBrowserViewController {
             return
         }
 
-        if isLiquidGlassEnabled {
+        if isLiquidGlassSupported {
             navigationItem.titleView = rootView.toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             let hostController = UIHostingController(rootView: rootView)

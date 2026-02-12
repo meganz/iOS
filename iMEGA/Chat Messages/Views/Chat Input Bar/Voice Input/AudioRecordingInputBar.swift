@@ -63,7 +63,7 @@ class AudioRecordingInputBar: UIView {
                 self.audioWavesView.updateAudioView(withLevel: level)
             }
             
-            guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            guard #available(iOS 26.0, *) else {
                 backgroundColor = TokenColors.Background.page
                 return
             }
@@ -211,7 +211,7 @@ class AudioRecordingInputBar: UIView {
             audioWavesView.updateAudioView(withLevel: level)
         }
         
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             backgroundColor = TokenColors.Background.page
             return
         }

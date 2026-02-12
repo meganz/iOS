@@ -77,7 +77,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         selectionHandler?.onSelectionModeChange = { [weak self] enabled, config in
             guard let self else { return }
             
-            let shouldSwitchTabbarVisibility = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            let shouldSwitchTabbarVisibility = if #available(iOS 26.0, *) {
                 config.displayMode == .cloudDrive
             } else {
                 false
@@ -191,7 +191,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         tabBarController?.view.addSubview(toolbar)
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
             let blurView = GradientVisualEffectView(effect: blurEffect)
             self.blurView = blurView

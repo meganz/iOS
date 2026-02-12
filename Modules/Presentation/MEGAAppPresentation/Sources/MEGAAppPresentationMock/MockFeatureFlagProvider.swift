@@ -11,6 +11,4 @@ public final class MockFeatureFlagProvider: FeatureFlagProviderProtocol, @unchec
     public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
         return list[key] ?? false
     }
-    
-    public func isLiquidGlassEnabled() -> Bool { false }
 }

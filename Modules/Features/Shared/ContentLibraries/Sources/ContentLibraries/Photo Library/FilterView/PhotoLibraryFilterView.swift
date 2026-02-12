@@ -50,7 +50,7 @@ struct PhotoLibraryFilterView: View {
             
             NavigationBarView(
                 leading: {
-                    if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         btnCancel
                             .buttonStyle(.glass)
                     } else {
@@ -58,7 +58,7 @@ struct PhotoLibraryFilterView: View {
                     }
                 },
                 trailing: {
-                    if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         btnDone
                             .buttonStyle(.glass)
                     } else {

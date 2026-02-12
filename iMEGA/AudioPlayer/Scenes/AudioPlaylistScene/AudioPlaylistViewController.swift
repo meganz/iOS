@@ -56,7 +56,7 @@ final class AudioPlaylistViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             setupLiquidGlassNavigationBar(with: TokenColors.Background.page)
         } else {
             guard let navigationBar = navigationController?.navigationBar else { return }

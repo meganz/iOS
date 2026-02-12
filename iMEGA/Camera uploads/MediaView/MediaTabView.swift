@@ -27,7 +27,7 @@ struct MediaTabView: View {
                     }
                 }
                 .onChange(of: geometry.safeAreaInsets) { _ in
-                    guard isLiquidGlassEnabled else { return }
+                    guard isLiquidGlassSupported else { return }
                     viewModel.triggerLayoutRefresh()
                 }
         }
@@ -35,7 +35,7 @@ struct MediaTabView: View {
             let isOrientationChanged = orientation.isLandscape != newOrientation.isLandscape
             orientation = newOrientation
 
-            if isOrientationChanged, isLiquidGlassEnabled {
+            if isOrientationChanged, isLiquidGlassSupported {
                 viewModel.triggerLayoutRefresh()
             }
         }
@@ -54,7 +54,7 @@ struct MediaTabView: View {
                 get: { viewModel.editMode == .active },
                 set: { _ in }
             ),
-            ignoresBottomSafeArea: isLiquidGlassEnabled
+            ignoresBottomSafeArea: isLiquidGlassSupported
         ) { tab in
             contentView(for: tab)
         }
@@ -62,16 +62,17 @@ struct MediaTabView: View {
         .environment(\.editMode, $viewModel.editMode)
         .onAppear {
             viewModel.onViewAppear()
-            if isLiquidGlassEnabled {
+            if isLiquidGlassSupported {
                 viewModel.triggerLayoutRefresh()
             }
         }
     }
     
-    private var isLiquidGlassEnabled: Bool {
+    private var isLiquidGlassSupported: Bool {
         if #available(iOS 26.0, *) {
-            return DIContainer.featureFlagProvider.isLiquidGlassEnabled()
+            return true
         }
+        
         return false
     }
     

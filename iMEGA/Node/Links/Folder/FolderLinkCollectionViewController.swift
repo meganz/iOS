@@ -47,7 +47,7 @@ class FolderLinkCollectionViewController: UIViewController {
         setupDataSource()
         addLongPressGestureIfNeeded()
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             collectionViewBottomConstraint.priority = .defaultLow
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }

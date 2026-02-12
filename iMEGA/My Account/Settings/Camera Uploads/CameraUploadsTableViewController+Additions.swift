@@ -15,16 +15,14 @@ extension CameraUploadsTableViewController {
         setMenuCapableBackButtonWith(menuTitle: title)
         
         if #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
            let navigationBar = navigationController?.navigationBar {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
     }
     
     @objc
-    func isLiquidGlassEnabled() -> Bool {
-        if #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+    func isLiquidGlassSupported() -> Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false

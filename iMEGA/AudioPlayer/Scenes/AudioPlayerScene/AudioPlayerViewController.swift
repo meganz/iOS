@@ -129,7 +129,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func configureLiquidGlassStyle() {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             closeButton.configuration = .glass()
             moreButton.configuration = .glass()
         }

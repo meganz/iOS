@@ -21,7 +21,7 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
-        if !isLiquidGlassEnabled() {
+        if !isLiquidGlassSupported() {
             toolbar.backgroundColor = TokenColors.Background.surface1
         }
         
@@ -79,13 +79,13 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
     // MARK: - Private
     
     private func updateMainTabbarAlpha(with value: CGFloat) {
-        if isLiquidGlassEnabled() {
+        if isLiquidGlassSupported() {
             tabBarController?.tabBar.alpha = value
         }
     }
     
-    private func isLiquidGlassEnabled() -> Bool {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+    private func isLiquidGlassSupported() -> Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false

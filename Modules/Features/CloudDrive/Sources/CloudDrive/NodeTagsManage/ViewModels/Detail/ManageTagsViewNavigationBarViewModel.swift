@@ -5,9 +5,9 @@ final class ManageTagsViewNavigationBarViewModel: ObservableObject {
     @Published var doneButtonDisabled: Bool = true
     @Published var cancelButtonTapped: Bool = false
     @Published var doneButtonTapped: Bool = false
-    let isLiquidGlassEnabled: Bool
+    let isLiquidGlassSupported: Bool
     
-    init(isLiquidGlassEnabled: Bool = false) {
-        self.isLiquidGlassEnabled = isLiquidGlassEnabled
+    init(isLiquidGlassSupported: Bool = false) {
+        self.isLiquidGlassSupported = isLiquidGlassSupported
     }
 }

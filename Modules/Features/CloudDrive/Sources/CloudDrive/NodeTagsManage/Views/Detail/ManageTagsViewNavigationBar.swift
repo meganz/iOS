@@ -14,14 +14,14 @@ struct ManageTagsViewNavigationBar: View {
     var body: some View {
         NavigationBarView(
             leading: {
-                if #available(iOS 26.0, *), viewModel.isLiquidGlassEnabled {
+                if #available(iOS 26.0, *) {
                     cancelButton.buttonStyle(.glass)
                 } else {
                     cancelButton
                 }
             },
             trailing: {
-                if #available(iOS 26.0, *), viewModel.isLiquidGlassEnabled {
+                if #available(iOS 26.0, *) {
                     doneButton
                         .buttonStyle(.glass)
                 } else {

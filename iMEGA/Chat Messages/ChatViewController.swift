@@ -120,8 +120,8 @@ class ChatViewController: MessagesViewController {
     
     var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle), displayName: "")
 
-    private var isLiquidGlassEnabled: Bool {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+    private var isLiquidGlassSupported: Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false
@@ -134,21 +134,21 @@ class ChatViewController: MessagesViewController {
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.audioCall,
-                               style: isLiquidGlassEnabled ? . plain : .done,
+                               style: isLiquidGlassSupported ? . plain : .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
     
     lazy var videoCallBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.videoCall,
-                               style: isLiquidGlassEnabled ? . plain : .done,
+                               style: isLiquidGlassSupported ? . plain : .done,
                                target: self,
                                action: #selector(startVideoCall))
     }()
     
     lazy var addParticipantBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.addContact,
-                               style: isLiquidGlassEnabled ? . plain : .done,
+                               style: isLiquidGlassSupported ? . plain : .done,
                                target: self,
                                action: #selector(addParticipant))
     }()

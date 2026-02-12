@@ -70,7 +70,6 @@ final class TextEditorViewController: UIViewController {
 
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             if #available(iOS 26.0, *),
-               DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                let navigationBar = navigationController?.navigationBar {
                 AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
             }
@@ -112,8 +111,7 @@ extension TextEditorViewController: ViewType {
     }
     
     private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isBackupNode: Bool) {
-        if #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             navigationItem.titleView = NavigationTitleView(
                 title: textEditorModel.textFile.fileName
             )
@@ -159,7 +157,6 @@ extension TextEditorViewController: ViewType {
         configureMarkdownSupportText(textEditorModel)
 
         if #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
            let navigationBar = navigationController?.navigationBar {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
@@ -313,8 +310,7 @@ extension TextEditorViewController: ViewType {
                 guard let newInputName = renameAC.textFields?.first?.text else { return }
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     self.viewModel.dispatch(.renameFileTo(newInputName: newInputName))
-                    if #available(iOS 26.0, *),
-                       DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         self.navigationItem.titleView = NavigationTitleView(
                             title: newInputName
                         )

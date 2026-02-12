@@ -68,7 +68,7 @@ struct ResourceInfoView: View {
             
             HStack {
                 Spacer()
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     dismissButton
                         .buttonStyle(.glass)
                 } else {

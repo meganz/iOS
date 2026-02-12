@@ -65,12 +65,12 @@ struct TabContainerView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height - (syncModel.showsTabView ? tabBarHeight : 0))
                 .animation(.easeInOut(duration: 0.1), value: syncModel.showsTabView)
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .background(videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() ? .clear : videoConfig.colorAssets.pageBackgroundColor)
+                .background(.clear)
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
             .id(layoutID)
             .onChange(of: geometry.safeAreaInsets) { _ in
-                guard videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() else { return }
+                guard #available(iOS 26.0, *) else { return }
                 refreshLayoutID()
             }
         }
@@ -92,7 +92,7 @@ struct TabContainerView: View {
             didChangeCurrentTab($0)
         }
         .onAppear {
-            guard videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() else { return }
+            guard #available(iOS 26.0, *) else { return }
             refreshLayoutID()
         }
     }

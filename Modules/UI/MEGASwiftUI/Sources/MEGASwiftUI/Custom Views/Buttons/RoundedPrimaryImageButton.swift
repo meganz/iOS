@@ -4,11 +4,9 @@ import SwiftUI
 public struct RoundedPrimaryImageButton: View {
     private let action: @MainActor () -> Void
     private let image: Image
-    private let isLiquidGlassEnabled: Bool
     
-    public init(image: Image, isLiquidGlassEnabled: Bool = false, action: @escaping @MainActor () -> Void) {
+    public init(image: Image, action: @escaping @MainActor () -> Void) {
         self.image = image
-        self.isLiquidGlassEnabled = isLiquidGlassEnabled
         self.action = action
     }
     
@@ -18,7 +16,7 @@ public struct RoundedPrimaryImageButton: View {
     
     @ViewBuilder
     private var buttonView: some View {
-        if #available(iOS 26.0, *), isLiquidGlassEnabled {
+        if #available(iOS 26.0, *) {
             Button(action: action) {
                 imageContent
             }

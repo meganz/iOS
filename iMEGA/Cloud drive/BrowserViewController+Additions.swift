@@ -289,7 +289,7 @@ extension BrowserViewController: ViewType {
 
 extension BrowserViewController {
     @objc func setupLayoutForLiquidGlass() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return
         }
         

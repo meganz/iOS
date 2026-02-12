@@ -17,7 +17,7 @@ struct NameCollisionView: View {
                 Text(viewModel.duplicatedItem.isFile ? Strings.Localizable.NameCollision.Title.file : Strings.Localizable.NameCollision.Title.folder)
                     .font(.headline)
                 Spacer()
-                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                if #available(iOS 26.0, *) {
                     Button(Strings.Localizable.cancel) {
                         viewModel.cancelResolveNameCollisions()
                     }

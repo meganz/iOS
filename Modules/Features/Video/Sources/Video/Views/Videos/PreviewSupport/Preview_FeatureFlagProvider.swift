@@ -7,8 +7,4 @@ struct Preview_FeatureFlagProvider: FeatureFlagProviderProtocol {
     func isFeatureFlagEnabled(for: MEGAAppPresentation.FeatureFlagKey) -> Bool {
         isFeatureFlagEnabled
     }
-    
-    func isLiquidGlassEnabled() -> Bool {
-        false
-    }
 }

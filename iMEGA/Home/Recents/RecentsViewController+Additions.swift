@@ -57,7 +57,7 @@ extension RecentsViewController {
     }
     
     @objc func makeFooterView() -> UIView {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             return .init(frame: CGRect(x: 0, y: 0, width: tableView?.bounds.size.width ?? 0.0, height: 100))
         } else {
             return .init(frame: .zero)

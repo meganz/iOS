@@ -73,7 +73,7 @@ class InviteContactViewController: UIViewController {
     // MARK: - Private
     
     private func forceResetNavigationBar() {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled(), let navigationBar = navigationController?.navigationBar {
+        if #available(iOS 26.0, *), let navigationBar = navigationController?.navigationBar {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         } else {
             AppearanceManager.forceResetNavigationBar()

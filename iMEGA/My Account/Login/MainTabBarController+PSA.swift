@@ -56,7 +56,7 @@ extension MainTabBarController {
         let psaHidden = isPSABannerHidden()
 
         if let presenter = viewController as? (any BottomOverlayPresenterProtocol), currentPSAView() != nil {
-            let safeAreaOverlayCoverAllowedForCurrentPresenter = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled(), isTabRoot(presenter) {
+            let safeAreaOverlayCoverAllowedForCurrentPresenter = if #available(iOS 26.0, *), isTabRoot(presenter) {
                 false
             } else { true }
             let safeAreaOverlayCoverAllowed = tabBar.isHidden && safeAreaOverlayCoverAllowedForCurrentPresenter

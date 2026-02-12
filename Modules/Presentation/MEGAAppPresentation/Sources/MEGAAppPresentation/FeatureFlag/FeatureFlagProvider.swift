@@ -3,5 +3,4 @@ import MEGARepo
 
 public protocol FeatureFlagProviderProtocol: Sendable {
     func isFeatureFlagEnabled(for: FeatureFlagKey) -> Bool
-    func isLiquidGlassEnabled() -> Bool 
 }

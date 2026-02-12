@@ -50,7 +50,7 @@ struct AlbumCoverPickerView: View {
             
             NavigationBarView(
                 leading: {
-                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         cancelButton
                             .buttonStyle(.glass)
                             .fixedSize()
@@ -59,7 +59,7 @@ struct AlbumCoverPickerView: View {
                     }
                 },
                 trailing: {
-                    if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    if #available(iOS 26.0, *) {
                         saveButton
                             .buttonStyle(.glass)
                             .fixedSize()
@@ -80,7 +80,7 @@ struct AlbumCoverPickerView: View {
     }
     
     var navigationBarHeight: CGFloat {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             70
         } else {
             60

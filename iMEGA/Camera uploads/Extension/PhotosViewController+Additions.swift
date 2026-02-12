@@ -20,8 +20,8 @@ extension PhotosViewController {
         selectAllBarButtonItem?.image = MEGAAssets.UIImage.image(named: "selectAllItems")
     }
     
-    @objc func isLiquidGlassEnabled() -> Bool {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+    @objc func isLiquidGlassSupported() -> Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false

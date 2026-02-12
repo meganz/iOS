@@ -33,8 +33,4 @@ struct FeatureFlagProvider: FeatureFlagProviderProtocol {
         
         return useCase.isFeatureFlagEnabled(for: key.rawValue)
     }
-    
-    public func isLiquidGlassEnabled() -> Bool {
-        !(Bundle.main.object(forInfoDictionaryKey: "UIDesignRequiresCompatibility") as? Bool ?? false)
-    }
 }

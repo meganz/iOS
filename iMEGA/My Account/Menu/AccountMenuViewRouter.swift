@@ -56,7 +56,7 @@ final class AccountMenuViewNavigationController: MEGANavigationController, Accou
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
     }
@@ -64,8 +64,7 @@ final class AccountMenuViewNavigationController: MEGANavigationController, Accou
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+           #available(iOS 26.0, *) {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
     }
@@ -233,7 +232,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         )
         if let cloudDriveVC {
             cloudDriveVC.hidesBottomBarWhenPushed = true
-            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            if #available(iOS 26.0, *) {
                 AppearanceManager.setupLiquidGlassNavigationBar(navigationController.navigationBar, backgroundColor: TokenColors.Background.surface1)
             }
             navigationController.pushViewController(cloudDriveVC, animated: true)

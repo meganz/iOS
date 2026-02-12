@@ -129,7 +129,7 @@ class CookieSettingsTableViewController: UITableViewController {
         saveBarButtonItem.title = Strings.Localizable.close
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
 
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             navigationItem.leftBarButtonItem = nil
         }
 

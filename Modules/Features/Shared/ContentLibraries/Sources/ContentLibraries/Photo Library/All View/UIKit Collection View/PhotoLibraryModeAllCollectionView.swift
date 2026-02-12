@@ -9,8 +9,8 @@ struct PhotoLibraryModeAllCollectionView: View {
         self.router = router
     }
 
-    private var isLiquidGlassEnabled: Bool {
-        if #available(iOS 26.0, *), ContentLibraries.configuration.featureFlagProvider.isLiquidGlassEnabled() {
+    private var isLiquidGlassSupported: Bool {
+        if #available(iOS 26.0, *) {
             true
         } else {
             false
@@ -24,7 +24,7 @@ struct PhotoLibraryModeAllCollectionView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             PhotoLibraryCollectionViewRepresenter(viewModel: viewModel, router: router)
-                .ignoresSafeArea(edges: isLiquidGlassEnabled ? .vertical : .bottom)
+                .ignoresSafeArea(edges: isLiquidGlassSupported ? .vertical : .bottom)
             if !isMediaRevampEnabled {
                 PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
                     .offset(by: viewModel.photoZoomControlPositionTracker)

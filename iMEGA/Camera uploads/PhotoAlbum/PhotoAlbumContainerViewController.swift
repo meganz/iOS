@@ -208,7 +208,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     
     private func configureSearchBar() {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             edgesForExtendedLayout = .bottom
         } else {
             edgesForExtendedLayout = []

@@ -143,15 +143,14 @@ extension OfflineViewController {
     }
 
     @objc func configSearchBarBackgroundColor(_ searchBar: UISearchBar) {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
+        guard #available(iOS 26.0, *) else { return }
         searchBar.backgroundImage = UIImage()
         searchBar.barTintColor = TokenColors.Background.surface1
     }
 
     @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+           #available(iOS 26.0, *) {
             configureNavigationBar()
         }
     }

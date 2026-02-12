@@ -34,7 +34,6 @@ public struct PlaylistView: View {
             if viewModel.isMediaRevampEnabled {
                 RoundedPrimaryImageButton(
                     image: MEGAAssets.Image.plus,
-                    isLiquidGlassEnabled: viewModel.featureFlagProvider.isLiquidGlassEnabled(),
                     action: { viewModel.addPlaylistButtonTap() })
                 .padding(TokenSpacing._5)
                 .padding(.bottom, liquidGlassBottomPadding)
@@ -220,10 +219,10 @@ public struct PlaylistView: View {
     }
     
     private var liquidGlassBottomPadding: CGFloat {
-        guard #available(iOS 26.0, *),
-              viewModel.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return 0
         }
+        
         let bottomInset = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .first?.windows.first?.safeAreaInsets.bottom ?? 0

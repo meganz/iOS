@@ -393,7 +393,7 @@ extension FolderLinkViewController: ViewType {
 
 extension FolderLinkViewController {
     @objc func resetLayoutConstraintForLiquidGlass() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return
         }
         
@@ -407,7 +407,7 @@ extension FolderLinkViewController {
     }
     
     @objc func clearBackBarButtonForLiquidGlass() {
-        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+        guard #available(iOS 26.0, *) else {
             return
         }
         clearBackBarButton()

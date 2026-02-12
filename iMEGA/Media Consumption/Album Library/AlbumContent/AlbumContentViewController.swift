@@ -146,7 +146,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         configureBarButtons()
         hideNavigationEditBarButton(photoLibraryContentViewModel.library.isEmpty)
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             navigationItem.title = viewModel.albumName
@@ -227,7 +227,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     // MARK: - Private
     
     private func buildNavigationBar() {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: false)
         } else {
             self.title = viewModel.albumName
@@ -415,8 +415,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         guard floatingActionButtonController == nil else { return }
         
         let button = RoundedPrimaryImageButton(
-            image: MEGAAssets.Image.plus,
-            isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled()) { [weak viewModel] in
+            image: MEGAAssets.Image.plus) { [weak viewModel] in
                 viewModel?.dispatch(.addToAlbumTap)
             }
         

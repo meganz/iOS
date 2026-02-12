@@ -42,7 +42,7 @@ extension PhotosViewController {
     }
     
     private func configureBarButtonItems(on toolbar: UIToolbar?) {
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             configureBarItemsWithGroups(on: toolbar)
         } else {
             configureToolbarLegacy(on: toolbar)

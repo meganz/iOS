@@ -145,7 +145,7 @@
             [UIView animateWithDuration:0.33f animations:^ {
                 [self.toolbar setAlpha:1.0];
                 
-                if ([self isLiquidGlassEnabled]) {
+                if ([self isLiquidGlassSupported]) {
                     self.tabBarController.tabBar.alpha = 0.0;
                 }
             }];
@@ -156,7 +156,7 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
             
-            if ([self isLiquidGlassEnabled]) {
+            if ([self isLiquidGlassSupported]) {
                 self.tabBarController.tabBar.alpha = 1.0;
             }
         } completion:^(BOOL finished) {

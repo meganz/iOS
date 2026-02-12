@@ -68,7 +68,6 @@ struct NodeBrowserView: View {
         .overlay(alignment: .bottomTrailing) {
             if shouldShowFloatingAddButton {
                 RoundedPrimaryImageButton(image: MEGAAssets.Image.plus,
-                                          isLiquidGlassEnabled: DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
                                           action: { floatingAddButtonViewModel.addButtonTapAction() })
                     .padding(TokenSpacing._5)
             }

@@ -93,7 +93,7 @@ import UIKit
         bindToSubscriptions()
         hideSeparatorsIfNeeded()
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             clearBackBarButton()
         }
     }

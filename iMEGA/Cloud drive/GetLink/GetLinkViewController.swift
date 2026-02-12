@@ -91,7 +91,7 @@ class GetLinkViewController: UIViewController {
         
         if var getLinkViewModel {
             var shouldSetDoneButton = true
-            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            if #available(iOS 26.0, *) {
                 shouldSetDoneButton = false
             }
             if shouldSetDoneButton {
@@ -112,7 +112,7 @@ class GetLinkViewController: UIViewController {
         setupColors()
         tableView.sectionHeaderTopPadding = 0
         
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+        if #available(iOS 26.0, *) {
             tableViewBottomConstraint.isActive = false
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
@@ -126,7 +126,6 @@ class GetLinkViewController: UIViewController {
             getLinkVM.dispatch(.onViewDidAppear)
         }
         if #available(iOS 26.0, *),
-           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
            let navigationBar = navigationController?.navigationBar {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }

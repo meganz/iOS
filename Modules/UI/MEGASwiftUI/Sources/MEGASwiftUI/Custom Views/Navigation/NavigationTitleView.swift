@@ -4,20 +4,20 @@ import SwiftUI
 public struct NavigationTitleView: View {
     public let title: String
     public let subtitle: String?
-    public let isLiquidGlassEnabled: Bool
+    public let isLiquidGlassSupported: Bool
 
     @Environment(\.colorScheme) private var colorScheme
 
-    public init(title: String, subtitle: String? = nil, isLiquidGlassEnabled: Bool = false) {
+    public init(title: String, subtitle: String? = nil, isLiquidGlassSupported: Bool = false) {
         self.title = title
         self.subtitle = subtitle
-        self.isLiquidGlassEnabled = isLiquidGlassEnabled
+        self.isLiquidGlassSupported = isLiquidGlassSupported
     }
     
     public var body: some View {
         Group {
             if let subtitle {
-                VStack(spacing: isLiquidGlassEnabled ? 0 : nil) {
+                VStack(spacing: isLiquidGlassSupported ? 0 : nil) {
                     Text(title)
                         .font(.subheadline)
                         .bold()
