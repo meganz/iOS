@@ -16,7 +16,7 @@ public struct FolderLinkNodeAction {
     public let sender: UIButton
 }
 
-public enum FolderLinkNodesAction {
+public enum FolderLinkNodesAction: Equatable {
     case addToCloudDrive(Set<HandleEntity>)
     case makeAvailableOffline(Set<HandleEntity>)
     case sendToChat(String)

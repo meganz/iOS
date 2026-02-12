@@ -6,7 +6,7 @@ import SwiftUI
 /// There is also Share Link quick action but not added here,
 /// because it is handled natively using [ShareLink](https://developer.apple.com/documentation/SwiftUI/ShareLink) SwiftUI view
 /// Check the ShareLinkButton usage in FolderLinkResultsView
-enum FolderLinkQuickAction {
+package enum FolderLinkQuickAction {
     case addToCloudDrive
     case makeAvailableOffline
     case sendToChat
@@ -16,7 +16,7 @@ enum FolderLinkQuickAction {
 /// There is also Share Link quick action but not added here,
 /// because it is handled natively using [ShareLink](https://developer.apple.com/documentation/SwiftUI/ShareLink) SwiftUI view
 /// Check the ShareLinkButton usage in FolderLinkResultsView
-enum FolderLinkBottomBarAction {
+package enum FolderLinkBottomBarAction {
     case addToCloudDrive
     case makeAvailableOffline
     case saveToPhotos

@@ -8,28 +8,26 @@ import SwiftUI
 import UIKit
 
 @MainActor
-final class FolderLinkResultsViewModel: ObservableObject {
-    struct Dependency {
+package final class FolderLinkResultsViewModel: ObservableObject {
+    package struct Dependency {
         let nodeHandle: HandleEntity
         let link: String
         let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
         let viewModeUseCase: any FolderLinkViewModeUseCaseProtocol
-        let searchUseCase: any FolderLinkSearchUseCaseProtocol
         let editModeUseCase: any FolderLinkEditModeUseCaseProtocol
         let bottomBarUseCase: any FolderLinkBottomBarUseCaseProtocol
         let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
         
-        init(
+        package init(
             nodeHandle: HandleEntity,
             link: String,
             searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             titleUseCase: some FolderLinkTitleUseCaseProtocol,
             viewModeUseCase: some FolderLinkViewModeUseCaseProtocol,
-            searchUseCase: some FolderLinkSearchUseCaseProtocol,
             editModeUseCase: some FolderLinkEditModeUseCaseProtocol,
             bottomBarUseCase: some FolderLinkBottomBarUseCaseProtocol,
             quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol,
@@ -41,7 +39,6 @@ final class FolderLinkResultsViewModel: ObservableObject {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.titleUseCase = titleUseCase
             self.viewModeUseCase = viewModeUseCase
-            self.searchUseCase = searchUseCase
             self.editModeUseCase = editModeUseCase
             self.bottomBarUseCase = bottomBarUseCase
             self.quickActionUseCase = quickActionUseCase
@@ -61,7 +58,6 @@ final class FolderLinkResultsViewModel: ObservableObject {
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 titleUseCase: FolderLinkTitleUseCase(),
                 viewModeUseCase: FolderLinkViewModeUseCase(),
-                searchUseCase: FolderLinkSearchUseCase(),
                 editModeUseCase: FolderLinkEditModeUseCase(),
                 bottomBarUseCase: FolderLinkBottomBarUseCase(),
                 quickActionUseCase: FolderLinkQuickActionUseCase(),
@@ -70,18 +66,18 @@ final class FolderLinkResultsViewModel: ObservableObject {
         }
     }
 
-    @Published var editMode: EditMode = .inactive
-    @Published var searchText: String = ""
+    @Published package var editMode: EditMode = .inactive
+    @Published package var searchText: String = ""
     @Published var searchBecameActive: Bool = false
     @Published var selection: SearchResultSelection?
     @Published var nodeAction: FolderLinkNodeAction?
-    @Published var nodesAction: FolderLinkNodesAction?
-    @Published var quickAction: FolderLinkQuickAction?
-    @Published var bottomBarAction: FolderLinkBottomBarAction?
-    @Published var bottomBarDisabled: Bool = true
-    @Published var shouldIncludeSaveToPhotosBottomAction: Bool = false
-    @Published var title: String = ""
-    @Published var subtitle: String?
+    @Published package var nodesAction: FolderLinkNodesAction?
+    @Published package var quickAction: FolderLinkQuickAction?
+    @Published package var bottomBarAction: FolderLinkBottomBarAction?
+    @Published package var bottomBarDisabled: Bool = true
+    @Published package var shouldIncludeSaveToPhotosBottomAction: Bool = false
+    @Published package var title: String = ""
+    @Published package var subtitle: String?
     
     var shouldShowQuickActionsMenu: Bool {
         dependency.quickActionUseCase.shouldEnableQuickActions(for: dependency.nodeHandle)
@@ -95,7 +91,7 @@ final class FolderLinkResultsViewModel: ObservableObject {
         dependency.editModeUseCase.canEnterEditModeWhenOpeningFolder(dependency.nodeHandle)
     }
     
-    lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
+    package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge { [weak self] selection in
             self?.selection = selection
         } context: { [weak self] result, button in
@@ -154,11 +150,11 @@ final class FolderLinkResultsViewModel: ObservableObject {
     private let dependency: FolderLinkResultsViewModel.Dependency
     private var cancellables: Set<AnyCancellable> = []
     
-    @Binding var viewMode: SearchResultsViewMode
-    @Published private var sortOrder: MEGAUIComponent.SortOrder
+    @Binding package var viewMode: SearchResultsViewMode
+    @Published package var sortOrder: MEGAUIComponent.SortOrder
     @Published private var selectedNodes: Set<HandleEntity> = []
     
-    init(
+    package init(
         dependency: FolderLinkResultsViewModel.Dependency,
         viewMode: Binding<SearchResultsViewMode>
     ) {

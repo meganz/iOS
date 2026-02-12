@@ -17,12 +17,12 @@ import SwiftUI
 /// internal to the Folder Link module.
 @MainActor
 public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
-    struct Dependency {
+    package struct Dependency {
         let handle: HandleEntity
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
         let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
         
-        init(
+        package init(
             handle: HandleEntity,
             titleUseCase: some FolderLinkTitleUseCaseProtocol,
             trackingUseCase: some FolderLinkTrackingUseCaseProtocol
@@ -51,32 +51,32 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
     @Published public var selectAll: Bool = false
     
     // Properties for FolderLinkMediaDiscoveryView
-    @Published var selectedPhotos: [NodeEntity] = []
-    @Published var title: String = ""
-    @Published var subtitle: String?
-    @Published var bottomBarDisabled: Bool = false
-    @Published var shouldShowBottomBar: Bool = false
+    @Published package var selectedPhotos: [NodeEntity] = []
+    @Published package var title: String = ""
+    @Published package var subtitle: String?
+    @Published package var bottomBarDisabled: Bool = false
+    @Published package var shouldShowBottomBar: Bool = false
     @Published var shouldEnableMoreOptionsMenu: Bool = true
-    @Published var bottomBarAction: FolderLinkBottomBarAction?
-    @Published var nodesAction: FolderLinkNodesAction?
-    @Binding var viewMode: SearchResultsViewMode
-    let viewModelViewModel: SearchResultsHeaderViewModeViewModel
+    @Published package var bottomBarAction: FolderLinkBottomBarAction?
+    @Published package var nodesAction: FolderLinkNodesAction?
+    @Binding package var viewMode: SearchResultsViewMode
+    package let viewModeViewModel: SearchResultsHeaderViewModeViewModel
     
     private var subscriptions: Set<AnyCancellable> = []
     private let dependency: Dependency
     
-    init(
+    package init(
         dependency: Dependency,
         viewMode: Binding<SearchResultsViewMode>
     ) {
         self.dependency = dependency
         self._viewMode = viewMode
-        self.viewModelViewModel = SearchResultsHeaderViewModeViewModel(
+        self.viewModeViewModel = SearchResultsHeaderViewModeViewModel(
             selectedViewMode: .mediaDiscovery,
             availableViewModes: [.list, .grid, .mediaDiscovery]
         )
         
-        viewModelViewModel
+        viewModeViewModel
             .$selectedViewMode
             .dropFirst()
             .filter { $0 != .mediaDiscovery }
@@ -157,11 +157,11 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    func toggleSelectAll() {
+    package func toggleSelectAll() {
         selectAll.toggle()
     }
     
-    func sortHeaderPressed() {
+    package func sortHeaderPressed() {
         dependency.trackingUseCase.trackSortHeaderPressed()
     }
     

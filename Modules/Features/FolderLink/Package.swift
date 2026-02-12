@@ -57,7 +57,8 @@ let package = Package(
                 "MEGATest",
                 .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
+                .product(name: "SearchMock", package: "Search"),
             ]
         )
     ]

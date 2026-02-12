@@ -87,6 +87,19 @@ struct FolderLinkViewModelTests {
         #expect(sut.askingForDecryptionKey == true)
     }
     
+    @Test("retryPendinConnections should call retry on repository")
+    func retryPendinConnections() {
+        // Given
+        let pendingConnectionRetryUseCase = MockFolderLinkPendingConnectionsRetryUseCase()
+        let sut = FolderLinkViewModelTests.makeSUT(pendingConnectionsRetryUseCase: pendingConnectionRetryUseCase)
+        
+        // When
+        sut.retryPendingConnections()
+        
+        // Then
+        #expect(pendingConnectionRetryUseCase.retryPendingConnectionsCalled == true)
+    }
+    
     @MainActor
     @Suite("NoNetworkConnectionState Tests")
     struct NoNetworkConnectionState {

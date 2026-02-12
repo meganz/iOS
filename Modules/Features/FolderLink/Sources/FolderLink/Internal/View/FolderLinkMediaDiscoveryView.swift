@@ -84,7 +84,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             },
             rightView: {
                 SearchResultsHeaderViewModeView(
-                    viewModel: viewModel.viewModelViewModel,
+                    viewModel: viewModel.viewModeViewModel,
                     horizontalPadding: TokenSpacing._7
                 )
             }

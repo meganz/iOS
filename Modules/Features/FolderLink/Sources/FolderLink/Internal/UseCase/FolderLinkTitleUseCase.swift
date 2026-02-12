@@ -1,6 +1,6 @@
 import MEGADomain
 
-protocol FolderLinkTitleUseCaseProtocol: Sendable {
+package protocol FolderLinkTitleUseCaseProtocol: Sendable {
     func title<C>(for nodeHandle: HandleEntity, editingState: FolderLinkEditingState<C>) -> FolderLinkTitleType
 }
 

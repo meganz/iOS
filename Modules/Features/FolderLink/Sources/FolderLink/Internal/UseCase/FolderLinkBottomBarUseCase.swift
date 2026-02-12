@@ -1,6 +1,6 @@
 import MEGADomain
 
-protocol FolderLinkBottomBarUseCaseProtocol: Sendable {
+package protocol FolderLinkBottomBarUseCaseProtocol: Sendable {
     func shouldIncludeSaveToPhotosAction(handle: HandleEntity, editingState: FolderLinkEditingState<Set<HandleEntity>>) -> Bool
     func shouldDisableBottomBar<C>(handle: HandleEntity, editingState: FolderLinkEditingState<C>) -> Bool
 }

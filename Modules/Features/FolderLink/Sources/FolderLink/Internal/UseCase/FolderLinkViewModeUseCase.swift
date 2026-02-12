@@ -1,7 +1,7 @@
 import MEGADomain
 import Search
 
-protocol FolderLinkViewModeUseCaseProtocol: Sendable {
+package protocol FolderLinkViewModeUseCaseProtocol: Sendable {
     func viewModeForOpeningFolder(_ handle: HandleEntity) -> SearchResultsViewMode
     func shouldEnableMediaDiscoveryMode(for handle: HandleEntity) -> Bool
 }

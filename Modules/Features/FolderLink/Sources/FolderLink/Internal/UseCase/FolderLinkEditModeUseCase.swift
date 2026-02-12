@@ -1,6 +1,6 @@
 import MEGADomain
 
-protocol FolderLinkEditModeUseCaseProtocol: Sendable {
+package protocol FolderLinkEditModeUseCaseProtocol: Sendable {
     func canEnterEditModeWhenOpeningFolder(_ nodeHandle: HandleEntity) -> Bool
 }
 

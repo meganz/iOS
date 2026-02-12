@@ -1,6 +1,6 @@
 import MEGADomain
 
-protocol FolderLinkQuickActionUseCaseProtocol: Sendable {
+package protocol FolderLinkQuickActionUseCaseProtocol: Sendable {
     func shouldEnableQuickActions(for nodeHandle: HandleEntity) -> Bool
 }
 

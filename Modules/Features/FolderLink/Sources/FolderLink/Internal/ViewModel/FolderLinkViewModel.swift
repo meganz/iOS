@@ -11,7 +11,7 @@ package final class FolderLinkViewModel: ObservableObject {
         let pendingConnectionsRetryUseCase: any FolderLinkPendingConnectionsRetryUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
         
-        package init(
+        init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol
         ) {

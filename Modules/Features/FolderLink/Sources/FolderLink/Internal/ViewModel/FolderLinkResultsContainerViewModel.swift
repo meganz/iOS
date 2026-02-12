@@ -3,13 +3,13 @@ import MEGADomain
 import Search
 
 @MainActor
-final class FolderLinkResultsContainerViewModel: ObservableObject {
-    struct Dependency {
+package final class FolderLinkResultsContainerViewModel: ObservableObject {
+    package struct Dependency {
         let handle: HandleEntity
         let viewModeUseCase: any FolderLinkViewModeUseCaseProtocol
         let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
         
-        init(
+        package init(
             handle: HandleEntity,
             viewModeUseCase: some FolderLinkViewModeUseCaseProtocol,
             trackingUseCase: some FolderLinkTrackingUseCaseProtocol
@@ -30,11 +30,11 @@ final class FolderLinkResultsContainerViewModel: ObservableObject {
     
     /// Holds the source of truth for the view mode.
     /// It is bound to Search and Media Discovery so they stay in sync when the view mode changes.
-    @Published var viewMode: SearchResultsViewMode
-    @Published var showMediaDiscovery: Bool = false
+    @Published package var viewMode: SearchResultsViewMode
+    @Published package var showMediaDiscovery: Bool = false
     private var subscriptions: Set<AnyCancellable> = []
     
-    init(
+    package init(
         dependency: Dependency
     ) {
         viewMode = dependency.viewModeUseCase.viewModeForOpeningFolder(dependency.handle)

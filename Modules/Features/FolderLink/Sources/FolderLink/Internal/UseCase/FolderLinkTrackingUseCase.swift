@@ -3,7 +3,7 @@ import MEGAAppPresentation
 import MEGAUIComponent
 import Search
 
-protocol FolderLinkTrackingUseCaseProtocol: Sendable {
+package protocol FolderLinkTrackingUseCaseProtocol: Sendable {
     func trackSortHeaderPressed()
     func trackViewModeChanged(_ viewMode: SearchResultsViewMode)
     func trackSortOrderChanged(_ sortOrder: MEGAUIComponent.SortOrder)
