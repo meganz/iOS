@@ -4829,11 +4829,11 @@
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="La vista previa no está disponible para archivos no descifrados";
 /* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
+"media.photoLibrary.zoom.large.title"="Grande";
 /* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
+"media.photoLibrary.zoom.compact.title"="Compacto";
 /* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+"media.photoLibrary.zoom.smallest.title"="Más pequeño";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Date";
 /* Undecrypted file open error snackBar message */
