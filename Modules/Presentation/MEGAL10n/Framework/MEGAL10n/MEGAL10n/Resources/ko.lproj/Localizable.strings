@@ -4829,9 +4829,9 @@
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="복호화되지 않은 파일은 미리 보기할 수 없습니다";
 /* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
+"media.photoLibrary.zoom.large.title"="대형";
 /* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
+"media.photoLibrary.zoom.compact.title"="소형";
 /* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */

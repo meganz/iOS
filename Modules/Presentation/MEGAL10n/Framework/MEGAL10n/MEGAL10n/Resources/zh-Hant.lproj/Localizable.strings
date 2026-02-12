@@ -4829,9 +4829,9 @@
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="無法預覽未解密的檔案";
 /* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Large";
+"media.photoLibrary.zoom.large.title"="大尺寸";
 /* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compact";
+"media.photoLibrary.zoom.compact.title"="精簡";
 /* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
 /* Header title for the Date field in the album content sorting controls */
