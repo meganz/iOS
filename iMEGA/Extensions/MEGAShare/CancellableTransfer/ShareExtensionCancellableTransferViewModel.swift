@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
@@ -19,12 +20,12 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let router: any CancellableTransferRouting
-    // MARK: - Internel properties
+    // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(router: some CancellableTransferRouting,
-         uploadFileUseCase: any UploadFileUseCaseProtocol,
+         uploadFileUseCase: some UploadFileUseCaseProtocol,
          transfers: [CancellableTransfer]) {
         self.router = router
         self.uploadFileUseCase = uploadFileUseCase
@@ -118,53 +119,53 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
     // MARK: - Share extension upload
     private func startShareExtensionFileUploads() {
-        fileTransfers.forEach { transferViewEntity in
-            guard let uploadLocalURL = transferViewEntity.localFileURL else {
-                return
-            }
-            uploadFileUseCase.uploadFile(uploadLocalURL,
-                                         toParent: transferViewEntity.parentHandle,
-                                         fileName: transferViewEntity.name,
-                                         appData: transferViewEntity.appData,
-                                         isSourceTemporary: false,
-                                         startFirst: transferViewEntity.priority) { transferEntity in
-                transferViewEntity.setState(transferEntity.state)
-            } update: { _ in } completion: { [weak self] result in
-                switch result {
-                case .success:
-                    transferViewEntity.setState(.complete)
-                case .failure(let error):
-                    transferViewEntity.setState(.failed)
-                    self?.transferErrors.append(error)
-                }
-                self?.continueFolderTransfersIfNeeded()
-            }
-        }
+        startUploads(
+            transfers: fileTransfers,
+            isFolder: false,
+            onCompletion: continueFolderTransfersIfNeeded
+        )
     }
     
     private func startShareExtensionFolderUploads() {
-        folderTransfers.forEach { transferViewEntity in
-            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+        startUploads(
+            transfers: folderTransfers,
+            isFolder: true,
+            onCompletion: checkIfAllTransfersComplete
+        )
+    }
+    
+    private func startUploads(
+        transfers: [CancellableTransfer],
+        isFolder: Bool,
+        onCompletion: @escaping () -> Void
+    ) {
+        transfers.forEach { transferViewEntity in
+            guard let uploadLocalURL = transferViewEntity.localFileURL,
+                  let uploadOptions = transferViewEntity.uploadOptions else {
                 return
             }
-            uploadFileUseCase.uploadFile(uploadLocalURL,
-                                         toParent: transferViewEntity.parentHandle,
-                                         fileName: nil,
-                                         appData: transferViewEntity.appData,
-                                         isSourceTemporary: false,
-                                         startFirst: transferViewEntity.priority,
-                                         start: nil) { transferEntity in
-                transferViewEntity.setStage(transferEntity.stage)
-            } completion: { [weak self] result in
-                switch result {
-                case .success:
-                    transferViewEntity.setState(.complete)
-                case .failure(let error):
-                    transferViewEntity.setState(.failed)
-                    self?.transferErrors.append(error)
+            
+            uploadFileUseCase.uploadFile(
+                uploadLocalURL,
+                toParent: transferViewEntity.parentHandle,
+                uploadOptions: uploadOptions,
+                start: isFolder ? nil : { [weak transferViewEntity] transferEntity in
+                    transferViewEntity?.setState(transferEntity.state)
+                },
+                progress: isFolder ? { [weak transferViewEntity] transferEntity in
+                    transferViewEntity?.setStage(transferEntity.stage)
+                } : { _ in },
+                completion: { [weak self] result in
+                    switch result {
+                    case .success:
+                        transferViewEntity.setState(.complete)
+                    case .failure(let error):
+                        transferViewEntity.setState(.failed)
+                        self?.transferErrors.append(error)
+                    }
+                    onCompletion()
                 }
-                self?.checkIfAllTransfersComplete()
-            }
+            )
         }
     }
 }

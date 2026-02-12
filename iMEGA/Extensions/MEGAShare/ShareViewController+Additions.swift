@@ -33,4 +33,37 @@ extension ShareViewController {
         
         return await metadataUseCase.formattedCoordinate(forFilePath: localPath)
     }
+    
+    @objc func cancellableTransfer(parentNode: MEGANode, localFileURL: URL?, appData: String, isFile: Bool) -> CancellableTransfer {
+        let uploadOptions = UploadOptionsEntity(
+            appData: appData,
+            pitagTrigger: .shareFromApp,
+            pitagTarget: parentNode.isInShare() ? .incomingShare : .cloudDrive
+        )
+        return CancellableTransfer(
+            handle: MEGAInvalidHandle,
+            parentHandle: parentNode.handle,
+            localFileURL: localFileURL,
+            isFile: isFile,
+            type: .upload,
+            uploadOptions: uploadOptions
+        )
+    }
+    
+    @objc func uploadOptions(
+        appData: String,
+        users: [MEGAUser],
+        chats: [MEGAChatListItem]
+    ) -> MEGAUploadOptions {
+        let pitagResolverUseCase = PitagResolverUseCase()
+        let pitagTarget = pitagResolverUseCase.resolvePitagTarget(forChats: chats.toChatListItemEntities(), users: users.toUserEntities())
+        let options = UploadOptionsEntity(
+            appData: appData,
+            isSourceTemporary: true,
+            pitagTrigger: .shareFromApp,
+            isChatUpload: true,
+            pitagTarget: pitagTarget
+        )
+        return options.toMEGAUploadOptions()
+    }
 }

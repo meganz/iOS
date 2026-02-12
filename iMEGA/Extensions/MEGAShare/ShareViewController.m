@@ -806,9 +806,11 @@
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile appData:(NSString *)appData {
     if (self.users || self.chats) {
-        [MEGASdk.shared startUploadForChatWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES fileName:nil];
+        MEGAUploadOptions *uploadOptions = [self uploadOptionsWithAppData:appData users:self.users chats:self.chats];
+        [MEGASdk.shared startUploadWithLocalPath:localPath parent:parentNode cancelToken:nil options:uploadOptions];
     } else {
-        [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:appData priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
+        CancellableTransfer *transfer = [self cancellableTransferWithParentNode:self.parentNode localFileURL:[NSURL fileURLWithPath:localPath] appData:appData isFile:isFile];
+        [self.transfers addObject:transfer];
         [self onePendingLess];
     }
 }

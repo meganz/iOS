@@ -12,7 +12,7 @@ public enum PitagTriggerEntity: Sendable {
     case scanner
     /// Upload initiated by sync algorithm
     case syncAlgorithm
-    /// Upload initiated from share from app
+    /// Upload initiated from share from external app
     case shareFromApp
     /// Upload initiated from camera capture
     case cameraCapture
