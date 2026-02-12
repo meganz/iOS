@@ -48,6 +48,7 @@ struct SearchableView<WrappedView: View>: View {
                  .emptyStateOverlay(
                      isSearchActive: isEditing,
                      isFilteredListEmpty: isFilteredListEmpty,
+                     isSearchTextEmpty: searchText.isEmpty,
                      emptyStateImage: "searchEmptyState",
                      emptyStateTitle: Strings.Localizable.noResults
                  )
@@ -60,13 +61,14 @@ struct SearchableView<WrappedView: View>: View {
 struct EmptyStateOverlayModifier: ViewModifier {
     var isSearchActive: Bool
     var isFilteredListEmpty: Bool
+    var isSearchTextEmpty: Bool
     var emptyStateImage: String
     var emptyStateTitle: String
     
     func body(content: Content) -> some View {
         content.overlay(
             VStack {
-                if isSearchActive && isFilteredListEmpty {
+                if isSearchActive && isFilteredListEmpty && !isSearchTextEmpty {
                     DeviceCenterEmptyStateView(
                         image: emptyStateImage,
                         title: emptyStateTitle
@@ -82,6 +84,7 @@ extension View {
     func emptyStateOverlay(
         isSearchActive: Bool,
         isFilteredListEmpty: Bool,
+        isSearchTextEmpty: Bool,
         emptyStateImage: String,
         emptyStateTitle: String
     ) -> some View {
@@ -89,6 +92,7 @@ extension View {
             EmptyStateOverlayModifier(
                 isSearchActive: isSearchActive,
                 isFilteredListEmpty: isFilteredListEmpty,
+                isSearchTextEmpty: isSearchTextEmpty,
                 emptyStateImage: emptyStateImage,
                 emptyStateTitle: emptyStateTitle
             )
