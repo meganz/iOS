@@ -1,0 +1,105 @@
+import MEGAAssets
+import MEGADesignToken
+import MEGASwiftUI
+import SwiftUI
+
+struct AccountDetailsWidgetView: View {
+
+    @StateObject private var viewModel = AccountDetailsWidgetViewModel()
+
+    private enum Constants {
+        static let avatarSize = 32.0
+        static let progressBarHeight = 2.0
+    }
+
+    var body: some View {
+        HStack(alignment: .plan, spacing: TokenSpacing._4) {
+            avatar
+            accountDetails
+            trailingAccessory
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, TokenSpacing._4)
+        .background(TokenColors.Background.surface1.swiftUI)
+        .cornerRadius(TokenRadius.medium)
+        .padding(.vertical, TokenSpacing._4)
+        .padding(.horizontal, TokenSpacing._5)
+    }
+
+    private var avatar: some View {
+        viewModel.profilePicture
+            .resizable()
+            .scaledToFill()
+            .frame(width: Constants.avatarSize, height: Constants.avatarSize)
+            .clipShape(Circle())
+            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            .padding(.leading, TokenSpacing._4)
+            .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+    }
+
+    private var accountDetails: some View {
+        VStack(alignment: .leading, spacing: TokenSpacing._2) {
+            userName
+            plan
+            storageUsage
+            progressBar
+        }
+    }
+
+    private var userName: some View {
+        Text(viewModel.userName)
+            .font(.callout)
+            .fontWeight(.semibold)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+    }
+
+    private var plan: some View {
+        Text(viewModel.plan)
+            .font(.subheadline)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+    }
+
+    private var storageUsage: some View {
+        Text(viewModel.storageUsage)
+            .font(.caption)
+            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+    }
+
+    private var progressBar: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(TokenColors.Button.disabled.swiftUI)
+                Rectangle()
+                    .fill(viewModel.storageUsedFractionColor)
+                    .frame(width: geometry.size.width * viewModel.storageUsedFraction)
+            }
+        }
+        .frame(height: Constants.progressBarHeight)
+    }
+
+    private var trailingAccessory: some View {
+        Button {
+            // [IOS-11316]: Handle routing logic
+        } label: {
+            MEGAAssets.Image.chevronRight
+                .renderingMode(.template)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                .frame(width: 24, height: 24)
+        }
+
+        .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+        .padding(.trailing, TokenSpacing._5)
+    }
+}
+
+// Custom alignment to vertically center the avatar and the plan
+private extension VerticalAlignment {
+    struct PlanAlignment: AlignmentID {
+        static func defaultValue(in context: ViewDimensions) -> CGFloat {
+            context[VerticalAlignment.center]
+        }
+    }
+    static let plan = VerticalAlignment(PlanAlignment.self)
+}

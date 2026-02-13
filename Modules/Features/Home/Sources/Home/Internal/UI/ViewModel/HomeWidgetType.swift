@@ -5,4 +5,5 @@ enum HomeWidgetType: CaseIterable, Identifiable {
     var id: Self { self }
 
     case shortcuts
+    case accountDetails
 }

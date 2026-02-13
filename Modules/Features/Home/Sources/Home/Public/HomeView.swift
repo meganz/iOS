@@ -80,6 +80,8 @@ public struct HomeView: View {
                         }
                     }
 
+                case .accountDetails:
+                    AccountDetailsWidgetView()
                 }
             }
             ForEach(0..<10, id: \.self) { index in
