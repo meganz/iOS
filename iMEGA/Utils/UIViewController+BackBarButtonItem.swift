@@ -28,6 +28,7 @@ extension UIViewController {
     @objc func setupLiquidGlassNavigationBar(with backgroundColor: UIColor) {
         guard #available(iOS 26.0, *),
               let navBar = navigationController?.navigationBar else { return }
-        AppearanceManager.setupLiquidGlassNavigationBar(navBar, backgroundColor: backgroundColor)
+        navBar.isTranslucent = true
+        AppearanceManager.applyLiquidGlassAppearance(to: navigationItem, backgroundColor: backgroundColor)
     }
 }

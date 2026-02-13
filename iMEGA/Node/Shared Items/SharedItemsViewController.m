@@ -52,6 +52,7 @@
     self.definesPresentationContext = YES;
     
     [self updateAppearance];
+    [self setupLiquidGlassNavigationBarWith:[UIColor surface1Background]];
     
     [self setupToolbar];
     
@@ -140,6 +141,13 @@
     [super viewDidAppear:animated];
     
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self setupLiquidGlassNavigationBarWith:[UIColor surface1Background]];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

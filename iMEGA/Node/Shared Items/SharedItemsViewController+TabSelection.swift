@@ -2,7 +2,7 @@ import MEGADesignToken
 
 extension SharedItemsViewController {
     @objc func updateTabSelection() {
-        self.selectorView?.backgroundColor = .pageBackgroundColor()
+        self.selectorView?.backgroundColor = TokenColors.Background.surface1
         
         updateTab(withButton: incomingButton, lineView: incomingLineView)
         updateTab(withButton: outgoingButton, lineView: outgoingLineView)
