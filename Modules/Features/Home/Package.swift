@@ -18,7 +18,10 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../Favourites"),
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Repository/MEGAAppSDKRepo")
     ],
     targets: [
         .target(
@@ -28,12 +31,19 @@ let package = Package(
                 "MEGADesignToken",
                 "MEGAAssets",
                 "MEGAL10n",
-                "Favourites"
-            ]
+                "Favourites",
+                "MEGAAppPresentation",
+                "MEGADomain",
+                "MEGAAppSDKRepo"
+                ]
         ),
         .testTarget(
             name: "HomeTests",
-            dependencies: ["Home"]
+            dependencies: [
+                "Home",
+                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
+                .product(name: "MEGADomainMock", package: "MEGADomain")
+            ]
         )
     ]
 )

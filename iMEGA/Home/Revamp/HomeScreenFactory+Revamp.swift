@@ -22,7 +22,8 @@ extension HomeScreenFactory {
         let router = HomeViewRouter(navigationController: navigationController)
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
-            router: router
+            router: router,
+            fullNameHandler: { $0.currentUser?.mnz_fullName ?? "" }
         )
         
         let homeView = HomeView(dependency: dependency)

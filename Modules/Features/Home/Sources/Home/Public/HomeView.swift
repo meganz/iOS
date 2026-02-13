@@ -1,6 +1,5 @@
 import Favourites
-import MEGAAssets
-import MEGADesignToken
+import MEGAAppSDKRepo
 import MEGAL10n
 import SwiftUI
 
@@ -12,13 +11,16 @@ public struct HomeView: View {
     public struct Dependency {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
         let router: any HomeViewRouting
+        let fullNameHandler: @Sendable (CurrentUserSource) -> String
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
+            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
+            self.fullNameHandler = fullNameHandler
         }
     }
 
@@ -81,7 +83,7 @@ public struct HomeView: View {
                     }
 
                 case .accountDetails:
-                    AccountDetailsWidgetView()
+                    AccountDetailsWidgetView(dependency: .init(fullNameHandler: self.dependency.fullNameHandler))
                 }
             }
             ForEach(0..<10, id: \.self) { index in

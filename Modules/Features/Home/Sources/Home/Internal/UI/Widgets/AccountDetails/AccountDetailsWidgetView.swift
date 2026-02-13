@@ -1,15 +1,30 @@
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import MEGASwiftUI
 import SwiftUI
 
 struct AccountDetailsWidgetView: View {
+    struct Dependency {
+        let fullNameHandler: @Sendable (CurrentUserSource) -> String
+    }
 
-    @StateObject private var viewModel = AccountDetailsWidgetViewModel()
+    @StateObject private var viewModel: AccountDetailsWidgetViewModel
 
     private enum Constants {
         static let avatarSize = 32.0
         static let progressBarHeight = 2.0
+    }
+
+    init(dependency: Dependency) {
+        _viewModel = StateObject(
+            wrappedValue: AccountDetailsWidgetViewModel(
+                dependency: .init(
+                    fullNameHandler: dependency.fullNameHandler
+                )
+            )
+        )
     }
 
     var body: some View {
@@ -24,6 +39,9 @@ struct AccountDetailsWidgetView: View {
         .cornerRadius(TokenRadius.medium)
         .padding(.vertical, TokenSpacing._4)
         .padding(.horizontal, TokenSpacing._5)
+        .task {
+            await viewModel.onTask()
+        }
     }
 
     private var avatar: some View {
