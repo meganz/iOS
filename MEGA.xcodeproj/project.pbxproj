@@ -2294,6 +2294,7 @@
 		BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */; };
 		BF2675DD2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */; };
 		BF2675E92A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */; };
+		BF26E7AF2F3EDB8800AF51E5 /* Favourites in Frameworks */ = {isa = PBXBuildFile; productRef = BF26E7AE2F3EDB8800AF51E5 /* Favourites */; };
 		BF27E3F42CF3FDD5002C892B /* CloudDrive in Frameworks */ = {isa = PBXBuildFile; productRef = BF27E3F32CF3FDD5002C892B /* CloudDrive */; };
 		BF29179D2A9D8DD800A59D12 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF29179C2A9D8DD800A59D12 /* ChatRepo */; };
 		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
@@ -5701,6 +5702,7 @@
 				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
+				BF26E7AF2F3EDB8800AF51E5 /* Favourites in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */,
@@ -13904,6 +13906,7 @@
 				14F2EFBF2EDD46B300C37318 /* APMKit */,
 				A5472CC62F04EF0900A49688 /* FolderLink */,
 				BF7758D02F21D8490091DE2A /* Home */,
+				BF26E7AE2F3EDB8800AF51E5 /* Favourites */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -19732,6 +19735,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
 			productName = GKContactImage;
+		};
+		BF26E7AE2F3EDB8800AF51E5 /* Favourites */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Favourites;
 		};
 		BF27E3F32CF3FDD5002C892B /* CloudDrive */ = {
 			isa = XCSwiftPackageProductDependency;

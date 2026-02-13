@@ -1,5 +1,6 @@
 import Favourites
 import MEGAAppSDKRepo
+import MEGADomain
 import MEGAL10n
 import SwiftUI
 
@@ -12,14 +13,23 @@ public struct HomeView: View {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
         let router: any HomeViewRouting
         let fullNameHandler: @Sendable (CurrentUserSource) -> String
+        let fileSearchUseCase: any FilesSearchUseCaseProtocol
+        let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
+        let favouritesSearchResultsMapper: any FavouritesSearchResultsMapping
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
+            fileSearchUseCase: some FilesSearchUseCaseProtocol,
+            sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+            favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
             fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
+            self.fileSearchUseCase = fileSearchUseCase
+            self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
+            self.favouritesSearchResultsMapper = favouritesSearchResultsMapper
             self.fullNameHandler = fullNameHandler
         }
     }
@@ -61,7 +71,13 @@ public struct HomeView: View {
         case let .shortcut(type):
             switch type {
             case .favourites:
-                FavouritesView()
+                FavouritesView(
+                    dependency: .init(
+                        fileSearchUseCase: dependency.fileSearchUseCase,
+                        sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
+                        searchResultsMapper: dependency.favouritesSearchResultsMapper,
+                    )
+                )
             case .offline, .videos:
                 EmptyView() // Handled by UIKit routing
             }

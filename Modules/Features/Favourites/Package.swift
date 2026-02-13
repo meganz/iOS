@@ -11,7 +11,7 @@ let package = Package(
         .library(
             name: "Favourites",
             targets: ["Favourites"]
-        ),
+        )
     ],
     dependencies: [
         .package(path: "../../UI/MEGASwiftUI"),
@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../Search"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../Domain/MEGADomain"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
@@ -28,6 +29,7 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGADesignToken",
                 "MEGAAssets",
+                "MEGADomain",
                 "MEGAL10n",
                 "MEGASwift",
                 "Search"
@@ -36,6 +38,6 @@ let package = Package(
         .testTarget(
             name: "FavouritesTests",
             dependencies: ["Favourites"]
-        ),
+        )
     ]
 )

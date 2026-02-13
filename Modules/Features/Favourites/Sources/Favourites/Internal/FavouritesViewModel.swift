@@ -8,7 +8,9 @@ import SwiftUI
 import UIKit
 
 @MainActor
-final class FavouritesViewModel {
+final class FavouritesViewModel: ObservableObject {
+    @Published var viewMode: SearchResultsViewMode = .list
+
     lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
             selection: { _ in },
@@ -18,6 +20,10 @@ final class FavouritesViewModel {
             updateSortOrder: { _ in },
             chipPickerShowedHandler: { _ in }
         )
+
+        searchBridge.viewModeChanged = { [weak self] viewMode in
+            self?.handleViewModeChanged(viewMode)
+        }
 
         let searchConfig = SearchConfig.favourites
 
@@ -43,7 +49,7 @@ final class FavouritesViewModel {
                 options: [MEGAUIComponent.SortOrder.Key.name].sortOptions
             ),
             headerType: .dynamic,
-            initialViewMode: .list,
+            initialViewMode: viewMode,
             shouldShowMediaDiscoveryModeHandler: { false },
             sortHeaderViewPressedEvent: { }
         )
@@ -57,5 +63,18 @@ final class FavouritesViewModel {
         resultsProvider: some SearchResultsProviding,
     ) {
         self.resultsProvider = resultsProvider
+    }
+
+    private func handleViewModeChanged(_ viewMode: SearchResultsViewMode) {
+        guard self.viewMode != viewMode else { return }
+        self.viewMode = viewMode
+        switch viewMode {
+        case .grid:
+            searchResultsContainerViewModel.update(pageLayout: .thumbnail)
+        case .list:
+            searchResultsContainerViewModel.update(pageLayout: .list)
+        case .mediaDiscovery:
+            break // MD mode is not supported in favourites
+        }
     }
 }
