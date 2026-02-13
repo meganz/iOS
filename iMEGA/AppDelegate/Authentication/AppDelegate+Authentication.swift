@@ -39,6 +39,8 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
         
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
+        
+        MEGAAuthentication.DependencyInjection.errorReportingUseCase = ErrorReportingUseCase()
     }
 
     @objc func makeOnboardingViewController() -> UIViewController {

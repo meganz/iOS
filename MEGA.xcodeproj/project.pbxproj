@@ -246,6 +246,7 @@
 		12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
+		140ADEC42F3DA18C00392C1F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
 		14D55C182ECF113D00825803 /* MEGAPreferenceMocks in Frameworks */ = {isa = PBXBuildFile; productRef = 14D55C172ECF113D00825803 /* MEGAPreferenceMocks */; };
 		14DE60422F2A46E800C7F913 /* PSASwiftUIBackedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */; };
@@ -5860,6 +5861,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14F2EFC42EDD4BF400C37318 /* APMKit in Frameworks */,
+				140ADEC42F3DA18C00392C1F /* FirebaseCrashlytics in Frameworks */,
 				A55CDB452DCF2D9D00D14103 /* MEGAAssets in Frameworks */,
 				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
 				A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */,
@@ -14108,6 +14110,7 @@
 				A57DA72C2EB49EC800D3B486 /* MEGATest */,
 				14D55C172ECF113D00825803 /* MEGAPreferenceMocks */,
 				14F2EFC32EDD4BF400C37318 /* APMKit */,
+				140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -19266,6 +19269,11 @@
 		0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAuthenticationOrchestration;
+		};
+		140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		14D55C172ECF113D00825803 /* MEGAPreferenceMocks */ = {
 			isa = XCSwiftPackageProductDependency;
