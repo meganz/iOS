@@ -4842,3 +4842,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="Upload available photos";
 /* Alert confirm button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.selectMore"="Update access";
+/* The title displayed in Home's account details widget */
+"home.widgets.accountDetails.nameTitle"="Hi %@!";
+/* The text for the storage usage displayed in Home's account details widget */
+"home.widgets.accountDetails.storageUsage"="%1$@ of %2$@ used";
