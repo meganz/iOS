@@ -620,11 +620,11 @@
 		4C6C8FFB2ED991F600095F34 /* MediaBottomToolbarAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */; };
 		4C6C90002ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */; };
 		4C6C90012ED9951400095F34 /* MediaToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FFF2ED9951400095F34 /* MediaToolbarProvider.swift */; };
-		4C6C90052ED99ADE00095F34 /* MediaTabHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C90042ED99ADE00095F34 /* MediaTabHostingController.swift */; };
+		4C6C90052ED99ADE00095F34 /* MediaTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C90042ED99ADE00095F34 /* MediaTabViewController.swift */; };
 		4C6C901F2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C901E2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift */; };
 		4C6C90202EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */; };
 		4C6C903C2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */; };
-		4CEA864B2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA864A2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift */; };
+		4CEA864B2EE82E0D00BF2A6A /* MediaTabViewController+NodeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA864A2EE82E0D00BF2A6A /* MediaTabViewController+NodeAction.swift */; };
 		4CEA86512EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA86502EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift */; };
 		4CEA86702EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA866F2EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift */; };
 		4CEA86762EEA568200BF2A6A /* VideoTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */; };
@@ -3501,11 +3501,11 @@
 		4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarAction.swift; sourceTree = "<group>"; };
 		4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarItemsFactory.swift; sourceTree = "<group>"; };
 		4C6C8FFF2ED9951400095F34 /* MediaToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaToolbarProvider.swift; sourceTree = "<group>"; };
-		4C6C90042ED99ADE00095F34 /* MediaTabHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabHostingController.swift; sourceTree = "<group>"; };
+		4C6C90042ED99ADE00095F34 /* MediaTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabViewController.swift; sourceTree = "<group>"; };
 		4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaNavigationBarItemFactory.swift; sourceTree = "<group>"; };
 		4C6C901E2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemViewModel.swift; sourceTree = "<group>"; };
 		4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemViewBuilder.swift; sourceTree = "<group>"; };
-		4CEA864A2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaTabHostingController+NodeAction.swift"; sourceTree = "<group>"; };
+		4CEA864A2EE82E0D00BF2A6A /* MediaTabViewController+NodeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaTabViewController+NodeAction.swift"; sourceTree = "<group>"; };
 		4CEA86502EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabToolbarCoordinator.swift; sourceTree = "<group>"; };
 		4CEA866F2EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoFilterEntity+Additions.swift"; sourceTree = "<group>"; };
 		4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTabViewModelTests.swift; sourceTree = "<group>"; };
@@ -7884,10 +7884,10 @@
 				0E0448622F23177B003FCC9E /* AnalyticsTracking+MediaTab.swift */,
 				4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */,
 				4C0A55672ED6F61900A58D8B /* MediaTab.swift */,
-				4CEA864A2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift */,
-				4C6C90042ED99ADE00095F34 /* MediaTabHostingController.swift */,
 				4C0A557D2ED8319400A58D8B /* MediaTabProtocols.swift */,
 				4C0A55622ED6EFB500A58D8B /* MediaTabView.swift */,
+				4CEA864A2EE82E0D00BF2A6A /* MediaTabViewController+NodeAction.swift */,
+				4C6C90042ED99ADE00095F34 /* MediaTabViewController.swift */,
 				4C0A55682ED6F61900A58D8B /* MediaTabViewControllerFactory.swift */,
 				4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */,
 				4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */,
@@ -15516,8 +15516,6 @@
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				4C6C90202EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift in Sources */,
 				4C0A556A2ED6F61900A58D8B /* MediaTab.swift in Sources */,
-				4CEA864B2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift in Sources */,
-				4C6C90052ED99ADE00095F34 /* MediaTabHostingController.swift in Sources */,
 				4C3ECC4E2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift in Sources */,
 				4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */,
 				0E42E3352EEF4E0200C3E524 /* MediaTabSharedResourceProvider+Additions.swift in Sources */,
@@ -15525,6 +15523,8 @@
 				4CEA86512EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift in Sources */,
 				4C1A206B2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift in Sources */,
 				4C0A55632ED6EFBC00A58D8B /* MediaTabView.swift in Sources */,
+				4CEA864B2EE82E0D00BF2A6A /* MediaTabViewController+NodeAction.swift in Sources */,
+				4C6C90052ED99ADE00095F34 /* MediaTabViewController.swift in Sources */,
 				4C0A556C2ED6F61900A58D8B /* MediaTabViewControllerFactory.swift in Sources */,
 				4C0A556B2ED6F61900A58D8B /* MediaTabViewModel.swift in Sources */,
 				0E7533A72EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift in Sources */,

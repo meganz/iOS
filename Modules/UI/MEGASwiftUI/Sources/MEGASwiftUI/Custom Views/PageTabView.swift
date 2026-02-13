@@ -87,8 +87,6 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
             .ignoresSafeArea(edges: ignoresBottomSafeArea ? .bottom : [])
     }
     
-    private var tabButtonsHeight: CGFloat { 44 }
-    
     private var tabButtons: some View {
         HStack(spacing: 0) {
             ForEach(tabs) { tab in

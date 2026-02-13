@@ -35,7 +35,7 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
         case TabManager.photosTabIndex():
             AdsSlotConfig(
                 displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self) ||
-                isVisibleController(type: MediaTabHostingController.self)
+                isVisibleController(type: MediaTabViewController.self)
             )
             
         case TabManager.homeTabIndex():

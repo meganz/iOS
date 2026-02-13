@@ -19,10 +19,10 @@ protocol MediaTabToolbarCoordinatorProtocol: AnyObject {
 @MainActor
 final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
-    private weak var viewController: MediaTabHostingController?
+    private weak var viewController: MediaTabViewController?
     private let nodeAccessoryActionDelegate: DefaultNodeAccessoryActionDelegate
 
-    init(viewController: MediaTabHostingController) {
+    init(viewController: MediaTabViewController) {
         self.viewController = viewController
         self.nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     }
@@ -52,7 +52,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
     // MARK: - Private Methods
 
-    private func presentMoreActions(for nodes: [NodeEntity], from viewController: MediaTabHostingController) {
+    private func presentMoreActions(for nodes: [NodeEntity], from viewController: MediaTabViewController) {
         let nodeActionViewController = createNodeActionViewController(
             displayMode: viewController.nodeActionDisplayMode,
             with: nodes,
@@ -64,7 +64,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     private func executeNodeAction(
         _ actionType: MegaNodeActionType,
         for nodes: [NodeEntity],
-        from viewController: MediaTabHostingController
+        from viewController: MediaTabViewController
     ) {
         let nodeActionViewController = createNodeActionViewController(
             displayMode: viewController.nodeActionDisplayMode,
@@ -83,7 +83,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     private func createNodeActionViewController(
         displayMode: DisplayMode,
         with nodes: [NodeEntity],
-        from viewController: MediaTabHostingController
+        from viewController: MediaTabViewController
     ) -> NodeActionViewController {
         let nodeActionVC = NodeActionViewController(
             nodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) },
@@ -99,7 +99,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
         _ nodeAction: NodeActionViewController,
         action: MegaNodeActionType,
         nodes: [NodeEntity],
-        from viewController: MediaTabHostingController
+        from viewController: MediaTabViewController
     ) {
         viewController.nodeAction(nodeAction, didSelect: action, forNodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) }, from: viewController.toolbar)
     }

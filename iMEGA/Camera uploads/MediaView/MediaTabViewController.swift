@@ -7,7 +7,7 @@ import UIKit
 
 // MARK: - MediaTabHostingController
 
-final class MediaTabHostingController: UIViewController {
+final class MediaTabViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -105,46 +105,33 @@ final class MediaTabHostingController: UIViewController {
     }
 
     private func makeTitleView() -> UIView {
-        let titleLabel = UILabel()
-        titleLabel.text = viewModel.navigationTitle
-        titleLabel.font = .preferredFont(forTextStyle: .headline)
-        titleLabel.textColor = TokenColors.Text.primary
-        titleLabel.textAlignment = .center
-
-        let subtitleLabel = UILabel()
-        subtitleLabel.text = viewModel.navigationSubtitle
-        subtitleLabel.textColor = TokenColors.Text.secondary
-        subtitleLabel.textAlignment = .center
-        subtitleLabel.isHidden = viewModel.navigationSubtitle == nil
-
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 0
-
-        return stackView
+        let titleView = UILabel.customNavigationBarLabel(
+            title: viewModel.navigationTitle,
+            subtitle: viewModel.navigationSubtitle
+        )
+        titleView.sizeToFit()
+        return titleView
     }
 
     private func updateTitleView() {
-        guard let stackView = navigationItem.titleView as? UIStackView,
-              let titleLabel = stackView.arrangedSubviews.first as? UILabel,
-              let subtitleLabel = stackView.arrangedSubviews.last as? UILabel else { return }
-
-        titleLabel.text = viewModel.navigationTitle
-        subtitleLabel.text = viewModel.navigationSubtitle
-        subtitleLabel.isHidden = viewModel.navigationSubtitle == nil
+        navigationItem.titleView = makeTitleView()
     }
 
     private func updateNavigationBarItems() {
         let leadingViewModels = viewModel.leadingNavigationBarViewModels
         let trailingViewModels = viewModel.trailingNavigationBarViewModels
 
-        let leadingItems = leadingViewModels.map { makeBarButtonItem(from: $0) }
-        // Reverse trailing items so first item in array appears closest to title
-        let trailingItems = trailingViewModels.reversed().map { makeBarButtonItem(from: $0) }
-
-        navigationItem.leftBarButtonItems = leadingItems.isEmpty ? nil : leadingItems
-        navigationItem.rightBarButtonItems = trailingItems.isEmpty ? nil : trailingItems
+        navigationItem.leftBarButtonItems = if leadingViewModels.isEmpty {
+            nil
+        } else {
+            leadingViewModels.map { makeBarButtonItem(from: $0) }
+        }
+        
+        navigationItem.rightBarButtonItems = if trailingViewModels.isEmpty {
+            nil
+        } else {
+            trailingViewModels.reversed().map { makeBarButtonItem(from: $0) }
+        }
     }
 
     private func makeBarButtonItem(from viewModel: NavigationBarItemViewModel) -> UIBarButtonItem {
@@ -252,7 +239,7 @@ final class MediaTabHostingController: UIViewController {
 
 // MARK: - UISearchResultsUpdating
 
-extension MediaTabHostingController: UISearchResultsUpdating {
+extension MediaTabViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text ?? ""
         viewModel.searchText.wrappedValue = searchText
@@ -261,7 +248,7 @@ extension MediaTabHostingController: UISearchResultsUpdating {
 
 // MARK: - UISearchBarDelegate
 
-extension MediaTabHostingController: UISearchBarDelegate {
+extension MediaTabViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         // Mark intent to exit, actual state change happens after dismiss completes
         isExitingSearch = true
@@ -270,7 +257,7 @@ extension MediaTabHostingController: UISearchBarDelegate {
 
 // MARK: - UISearchControllerDelegate
 
-extension MediaTabHostingController: UISearchControllerDelegate {
+extension MediaTabViewController: UISearchControllerDelegate {
     func didDismissSearchController(_ searchController: UISearchController) {
         // Only cleanup if we're intentionally exiting search
         guard isExitingSearch else { return }
@@ -284,7 +271,7 @@ extension MediaTabHostingController: UISearchControllerDelegate {
 
 // MARK: - MediaToolbarProvider
 
-extension MediaTabHostingController: MediaToolbarProvider {
+extension MediaTabViewController: MediaToolbarProvider {
 
     func updateToolbar(with config: MediaBottomToolbarConfig) {
         let items = toolbarItemsFactory.buildToolbarItems(config: config)
@@ -298,7 +285,7 @@ extension MediaTabHostingController: MediaToolbarProvider {
 
 // MARK: - MediaToolbarActionDelegate
 
-extension MediaTabHostingController: MediaToolbarActionDelegate {
+extension MediaTabViewController: MediaToolbarActionDelegate {
     func handleToolbarAction(_ action: MediaBottomToolbarAction) {
         // Delegate to the view model, which will route to the appropriate tab view model
         viewModel.handleToolbarItemAction(action)
@@ -307,7 +294,7 @@ extension MediaTabHostingController: MediaToolbarActionDelegate {
 
 // MARK: - BottomOverlayPresenterProtocol
 
-extension MediaTabHostingController: BottomOverlayPresenterProtocol {
+extension MediaTabViewController: BottomOverlayPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }

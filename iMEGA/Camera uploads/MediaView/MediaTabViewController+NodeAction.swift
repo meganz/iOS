@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - NodeActionViewControllerDelegate
 
-extension MediaTabHostingController: NodeActionViewControllerDelegate {
+extension MediaTabViewController: NodeActionViewControllerDelegate {
 
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         let nodeActionViewControllerDelegate: any NodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
@@ -58,7 +58,7 @@ extension MediaTabHostingController: NodeActionViewControllerDelegate {
 
 // MARK: - BrowserViewControllerDelegate
 
-extension MediaTabHostingController: BrowserViewControllerDelegate {
+extension MediaTabViewController: BrowserViewControllerDelegate {
 
     public func nodeEditCompleted(_ complete: Bool) {
         // Exit edit mode after node editing is complete

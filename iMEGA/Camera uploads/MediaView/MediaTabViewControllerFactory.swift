@@ -51,7 +51,7 @@ struct MediaTabViewControllerFactory {
     func build() -> UIViewController {
         let viewModel = makeMediaTabViewModel()
         let toolbarItemsFactory = makeToolbarItemsFactory()
-        let hostingController = MediaTabHostingController(
+        let hostingController = MediaTabViewController(
             viewModel: viewModel,
             toolbarItemsFactory: toolbarItemsFactory
         )
@@ -70,7 +70,7 @@ struct MediaTabViewControllerFactory {
     func buildBare() -> UIViewController {
         let viewModel = makeMediaTabViewModel()
         let toolbarItemsFactory = makeToolbarItemsFactory()
-        let hostingController = MediaTabHostingController(
+        let hostingController = MediaTabViewController(
             viewModel: viewModel,
             toolbarItemsFactory: toolbarItemsFactory
         )
