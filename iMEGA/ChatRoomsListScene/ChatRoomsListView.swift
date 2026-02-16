@@ -40,25 +40,52 @@ struct ChatRoomsListView: View {
                     }
                 }
             }
-            
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                switch viewModel.chatViewMode {
-                case .chats:
-                    Button {
-                        viewModel.addChatButtonTapped()
-                    } label: {
-                        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+
+            if #available(iOS 26.0, *) {
+                ToolbarItem(placement: .topBarTrailing) {
+                    switch viewModel.chatViewMode {
+                    case .chats:
+                        Button {
+                            viewModel.addChatButtonTapped()
+                        } label: {
+                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                        }
+                        .disabled(!viewModel.isConnectedToNetwork)
+                    case .meetings:
+                        addMenuButton {
+                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                        }
+                        .disabled(!viewModel.isConnectedToNetwork)
                     }
-                    .disabled(!viewModel.isConnectedToNetwork)
-                case .meetings:
-                    addMenuButton {
-                        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
-                    }
-                    .disabled(!viewModel.isConnectedToNetwork)
                 }
-                
-                contextMenuButton {
-                    Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+
+                ToolbarSpacer(.fixed, placement: .topBarTrailing)
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    contextMenuButton {
+                        Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+                    }
+                }
+            } else {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    switch viewModel.chatViewMode {
+                    case .chats:
+                        Button {
+                            viewModel.addChatButtonTapped()
+                        } label: {
+                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                        }
+                        .disabled(!viewModel.isConnectedToNetwork)
+                    case .meetings:
+                        addMenuButton {
+                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                        }
+                        .disabled(!viewModel.isConnectedToNetwork)
+                    }
+
+                    contextMenuButton {
+                        Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+                    }
                 }
             }
         }
