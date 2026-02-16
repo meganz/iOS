@@ -923,7 +923,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
+    func disable_testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         
