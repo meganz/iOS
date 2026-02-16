@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -9,15 +10,21 @@ public struct FavouritesView: View {
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
         let searchResultsMapper: any FavouritesSearchResultsMapping
+        let downloadedNodesListener: any DownloadedNodesListening
+        let nodeUseCase: any NodeUseCaseProtocol
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-            searchResultsMapper: some FavouritesSearchResultsMapping
+            searchResultsMapper: some FavouritesSearchResultsMapping,
+            downloadedNodesListener: some DownloadedNodesListening,
+            nodeUseCase: some NodeUseCaseProtocol
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
             self.searchResultsMapper = searchResultsMapper
+            self.downloadedNodesListener = downloadedNodesListener
+            self.nodeUseCase = nodeUseCase
         }
     }
 
@@ -29,7 +36,9 @@ public struct FavouritesView: View {
                 dependency: .init(
                     fileSearchUseCase: dependency.fileSearchUseCase,
                     sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
-                    searchResultsMapper: dependency.searchResultsMapper
+                    searchResultsMapper: dependency.searchResultsMapper,
+                    downloadedNodesListener: dependency.downloadedNodesListener,
+                    nodeUseCase: dependency.nodeUseCase
                 )
             )
         )

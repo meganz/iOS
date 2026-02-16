@@ -1,25 +1,34 @@
+import AsyncAlgorithms
+import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
 import Search
 
 struct FavouriteSearchResultsProvider: SearchResultsProviding {
-    struct Dependency{
+    struct Dependency {
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
         let searchResultsMapper: any FavouritesSearchResultsMapping
+        let downloadedNodesListener: any DownloadedNodesListening
+        let nodeUseCase: any NodeUseCaseProtocol
 
         init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-            searchResultsMapper: some FavouritesSearchResultsMapping
+            searchResultsMapper: some FavouritesSearchResultsMapping,
+            downloadedNodesListener: some DownloadedNodesListening,
+            nodeUseCase: some NodeUseCaseProtocol
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
             self.searchResultsMapper = searchResultsMapper
+            self.downloadedNodesListener = downloadedNodesListener
+            self.nodeUseCase = nodeUseCase
         }
     }
 
     private let dependency: Dependency
+    @Atomic private var nodes: [NodeEntity]?
 
     init(dependency: Dependency) {
         self.dependency = dependency
@@ -34,12 +43,14 @@ struct FavouriteSearchResultsProvider: SearchResultsProviding {
         return await results(for: queryRequest)
     }
 
-    func currentResultIds() -> [Search.ResultId] {
-        []
+    func currentResultIds() -> [ResultId] {
+        guard let nodes else { return [] }
+        return nodes.map(\.id)
     }
 
     func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
-        EmptyAsyncSequence<SearchResultUpdateSignal>().eraseToAnyAsyncSequence()
+        merge(specificNodeUpdateSequence(), genericNodeUpdateSequence())
+            .eraseToAnyAsyncSequence()
     }
 
     // MARK: - Private methods
@@ -65,7 +76,31 @@ struct FavouriteSearchResultsProvider: SearchResultsProviding {
             return .init(results: [], availableChips: [], appliedChips: [])
         }
 
+        self.$nodes.mutate { $0 = nodes }
         let results = nodes.map { dependency.searchResultsMapper.map(node: $0) }
         return .init(results: results, availableChips: [], appliedChips: [])
+    }
+
+    private func specificNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        dependency.downloadedNodesListener.downloadedNodes
+            .map {
+                SearchResultUpdateSignal.specific(result: dependency.searchResultsMapper.map(node: $0))
+            }.eraseToAnyAsyncSequence()
+    }
+
+    private func genericNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        dependency
+            .nodeUseCase
+            .nodeUpdates
+            .compactMap { updatedNodes -> SearchResultUpdateSignal? in
+                guard nodeUpdateContainsCurrentSearchResultValue(nodeUpdates: updatedNodes) else { return nil }
+                return SearchResultUpdateSignal.generic
+            }
+            .eraseToAnyAsyncSequence()
+    }
+
+    private func nodeUpdateContainsCurrentSearchResultValue(nodeUpdates: [NodeEntity]) -> Bool {
+        let currentResultIds = currentResultIds()
+        return nodeUpdates.contains(where: { currentResultIds.contains($0.id) })
     }
 }

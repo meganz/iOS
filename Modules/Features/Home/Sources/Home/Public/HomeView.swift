@@ -1,4 +1,5 @@
 import Favourites
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -16,6 +17,8 @@ public struct HomeView: View {
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
         let favouritesSearchResultsMapper: any FavouritesSearchResultsMapping
+        let downloadedNodesListener: any DownloadedNodesListening
+        let nodeUseCase: any NodeUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -23,6 +26,8 @@ public struct HomeView: View {
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
             favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
+            downloadedNodesListener: some DownloadedNodesListening,
+            nodeUseCase: some NodeUseCaseProtocol,
             fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
@@ -30,6 +35,8 @@ public struct HomeView: View {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
             self.favouritesSearchResultsMapper = favouritesSearchResultsMapper
+            self.downloadedNodesListener = downloadedNodesListener
+            self.nodeUseCase = nodeUseCase
             self.fullNameHandler = fullNameHandler
         }
     }
@@ -76,6 +83,8 @@ public struct HomeView: View {
                         fileSearchUseCase: dependency.fileSearchUseCase,
                         sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
                         searchResultsMapper: dependency.favouritesSearchResultsMapper,
+                        downloadedNodesListener: dependency.downloadedNodesListener,
+                        nodeUseCase: dependency.nodeUseCase
                     )
                 )
             case .offline, .videos:

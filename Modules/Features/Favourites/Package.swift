@@ -20,7 +20,9 @@ let package = Package(
         .package(path: "../Search"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Domain/MEGADomain"),
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
         .target(
@@ -32,7 +34,9 @@ let package = Package(
                 "MEGADomain",
                 "MEGAL10n",
                 "MEGASwift",
-                "Search"
+                "Search",
+                "MEGAAppPresentation",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]
         ),
         .testTarget(

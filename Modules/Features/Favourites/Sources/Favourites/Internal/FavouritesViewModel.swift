@@ -33,7 +33,7 @@ final class FavouritesViewModel: ObservableObject {
             config: searchConfig,
             layout: .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
-            viewDisplayMode: .home,
+            viewDisplayMode: .favourites,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
             usesRevampedLayout: true,

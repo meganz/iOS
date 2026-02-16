@@ -4,7 +4,10 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
+import MEGAPreference
+import MEGARepo
 
 // MARK: - Revamped Home
 extension HomeScreenFactory {
@@ -27,6 +30,8 @@ extension HomeScreenFactory {
             fileSearchUseCase: fileSearchUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
+            downloadedNodesListener: downloadedNodesListener,
+            nodeUseCase: nodeUseCase,
             fullNameHandler: { $0.currentUser?.mnz_fullName ?? "" }
         )
         
@@ -72,11 +77,7 @@ extension HomeScreenFactory {
                     thumbnailRepo: ThumbnailRepository.newRepo
                 )
             ),
-            nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
-            ),
+            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(
@@ -111,6 +112,30 @@ extension HomeScreenFactory {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+        )
+    }
+
+    private var nodeUseCase: some NodeUseCaseProtocol {
+        NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+    }
+
+    private var downloadedNodesListener: some DownloadedNodesListening {
+        CloudDriveDownloadedNodesListener(
+            subListeners: [
+                CloudDriveDownloadTransfersListener(
+                    sdk: MEGASdk.sharedSdk,
+                    transfersListenerUsecase: TransfersListenerUseCase(
+                        repo: TransfersListenerRepository.newRepo,
+                        preferenceUseCase: PreferenceUseCase.default
+                    ),
+                    fileSystemRepo: FileSystemRepository.sharedRepo
+                ),
+                NodesSavedToOfflineListener(notificationCenter: .default)
+            ]
         )
     }
 }

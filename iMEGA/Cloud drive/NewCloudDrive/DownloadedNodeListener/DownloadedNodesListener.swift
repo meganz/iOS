@@ -1,11 +1,8 @@
 import AsyncAlgorithms
+import MEGAAppPresentation
 import MEGADomain
 import MEGARepo
 import MEGASwift
-
-protocol DownloadedNodesListening: Sendable {
-    var downloadedNodes: AnyAsyncSequence<NodeEntity> { get }
-}
 
 final class CloudDriveDownloadedNodesListener: DownloadedNodesListening {
     var downloadedNodes: AnyAsyncSequence<NodeEntity> {
