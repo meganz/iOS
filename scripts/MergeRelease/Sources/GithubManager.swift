@@ -41,6 +41,14 @@ struct GithubManager {
         // Push the GitLab branch to GitHub
         do {
             try runInShell("git config http.postBuffer 100000000")
+
+            // --- Git LFS: make sure objects exist locally ---
+            try runInShell("git lfs fetch origin \(branchName)")
+            try runInShell("git lfs checkout")
+
+            // Upload LFS objects to the GitHub remote (public)
+            try runInShell("git lfs push public \(branchName)")
+            
             try runInShell("git push public \(branchName)")
         } catch {
             print("Error pushing to GitHub: \(error)")
