@@ -30,4 +30,12 @@ extension PhotoLibraryCollectionViewRepresenter {
     var contentMode: PhotoLibraryContentMode {
         viewModel.libraryViewModel.contentMode
     }
+    
+    var globalHeaderType: PhotoGlobalHeaderType {
+        viewModel.libraryViewModel.globalHeaderType
+    }
+    
+    var sectionHeaderType: PhotoSectionHeaderType {
+        viewModel.libraryViewModel.sectionHeaderType
+    }
 }

@@ -20,6 +20,7 @@ import SwiftUI
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
     public let contentMode: PhotoLibraryContentMode
+    public let sectionHeaderType: PhotoSectionHeaderType
     public let globalHeaderType: PhotoGlobalHeaderType
     let configuration: PhotoLibraryContentConfiguration?
     
@@ -38,12 +39,14 @@ import SwiftUI
     public init(
         library: PhotoLibrary,
         contentMode: PhotoLibraryContentMode = .library,
+        sectionHeaderType: PhotoSectionHeaderType = .photoDate, // by default, display the photo date header
         globalHeaderType: PhotoGlobalHeaderType = .dateAndZoom, // by default, display a date and zoom control
         configuration: PhotoLibraryContentConfiguration? = nil,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.library = library
         self.contentMode = contentMode
+        self.sectionHeaderType = sectionHeaderType
         self.globalHeaderType = globalHeaderType
         self.configuration = configuration
         self.tracker = tracker

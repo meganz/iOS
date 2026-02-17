@@ -9,7 +9,9 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     let bannerType: PhotoLibraryBannerType?
     let isMediaRevampEnabled: Bool
     let contentMode: PhotoLibraryContentMode
-
+    let photoGlobalHeaderType: PhotoGlobalHeaderType
+    let photoSectionHeaderType: PhotoSectionHeaderType
+    
     private var isAlbumMode: Bool {
         contentMode == .album
     }
@@ -32,7 +34,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             boundaryItems.append(configureSupplementaryLayoutHeader(elementKind: elementKind))
         }
         
-        if isMediaRevampEnabled {
+        if isMediaRevampEnabled && photoGlobalHeaderType != .none {
             boundaryItems.append(configureSupplementaryGlobalZoomHeader())
         }
         
@@ -51,7 +53,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             sectionProvider: { sectionIndex, layoutEnvironment in makeMultiColumnPhotoDateSection(sectionIndex: sectionIndex, layoutEnvironment: layoutEnvironment) },
             configuration: layoutConfiguration)
     }
-
+    
     private func buildMasonryLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout(
             sectionProvider: { sectionIndex, layoutEnvironment in
@@ -60,7 +62,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             configuration: layoutConfiguration
         )
     }
-
+    
     private func makeSingleColumnPhotoDateSection(sectionIndex: Int) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -76,7 +78,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         // Use a placeholder header for the first section when media revamp is enabled
         // This allows tracking when the first section is visible without showing duplicate content
         let isFirstSection = isFirstSection(sectionIndex)
-        configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isFirstSection)
+        configureSectionHeader(for: section, isPlaceholder: isFirstSection)
         applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
         
         return section
@@ -102,10 +104,19 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         section.interGroupSpacing = spacing
         
         let isFirstSection = isFirstSection(sectionIndex)
-        configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isFirstSection)
+        configureSectionHeader(for: section, isPlaceholder: isFirstSection)
         applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
-
+        
         return section
+    }
+    
+    private func configureSectionHeader(for section: NSCollectionLayoutSection, isPlaceholder: Bool) {
+        switch photoSectionHeaderType {
+        case .photoDate:
+            configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isPlaceholder)
+        case .sort:
+            configureSectionSortHeader(for: section)
+        }
     }
     
     private func configureSupplementaryPhotoDateSectionHeader(for section: NSCollectionLayoutSection, isPlaceholder: Bool = false) {
@@ -130,7 +141,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         )
         bannerHeader.zIndex = 4
         return bannerHeader
-    }   
+    }
     
     private func configureSupplementaryGlobalZoomHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let offset: CGPoint = bannerType != nil ? CGPoint(x: 0, y: PhotoLibrarySupplementaryElementKind.globalHeaderHeight) : .zero
@@ -144,14 +155,13 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         globalHeader.zIndex = 3
         return globalHeader
     }
-
+    
     private func makeMasonryPhotoSection(
         sectionIndex: Int,
         layoutEnvironment: some NSCollectionLayoutEnvironment
     ) -> NSCollectionLayoutSection {
         let section = MasonrySectionLayoutFactory.makeMasonrySection(layoutEnvironment: layoutEnvironment)
-        configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: true)
-        
+        configureSectionHeader(for: section, isPlaceholder: true)
         return section
     }
     
@@ -161,8 +171,18 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     
     private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, isFirstSection: Bool) {
         // Add top inset for first section to account for the pinned global header only when banner is displayed
-        if isFirstSection && bannerType != nil {
+        if isFirstSection && bannerType != nil && photoGlobalHeaderType != .none {
             section.contentInsets.top = PhotoLibrarySupplementaryElementKind.globalHeaderHeight
         }
+    }
+    
+    private func configureSectionSortHeader(for section: NSCollectionLayoutSection) {
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(36)),
+            elementKind: PhotoLibrarySupplementaryElementKind.layoutSortHeader.elementKind,
+            alignment: .topLeading
+        )
+        sectionHeader.zIndex = 2
+        section.boundarySupplementaryItems = [sectionHeader]
     }
 }

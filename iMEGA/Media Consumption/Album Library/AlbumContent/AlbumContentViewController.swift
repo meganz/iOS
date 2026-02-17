@@ -19,7 +19,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
         return PhotoLibraryContentViewModel(
             library: PhotoLibrary(),
             contentMode: PhotoLibraryContentMode.album,
-            globalHeaderType: .sort(viewModel.headerSortViewModel),
+            sectionHeaderType: .sort(viewModel.headerSortViewModel),
+            globalHeaderType: .none,
             configuration: configuration,
         )
     }()

@@ -72,7 +72,9 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
             zoomState: zoomState,
             bannerType: bannerType,
             isMediaRevampEnabled: isMediaRevampEnabled,
-            contentMode: representer.contentMode)
+            contentMode: representer.contentMode,
+            photoGlobalHeaderType: representer.globalHeaderType,
+            photoSectionHeaderType: representer.sectionHeaderType)
         
         guard previousLayoutBuilder != newLayoutBuilder else {
             return

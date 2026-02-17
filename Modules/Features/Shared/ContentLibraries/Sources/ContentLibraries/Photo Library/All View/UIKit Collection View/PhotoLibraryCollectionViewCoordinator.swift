@@ -11,6 +11,7 @@ enum PhotoLibrarySupplementaryElementKind: String {
     case photoDateSectionHeader = "photo-date-section-header-kind"
     case layoutHeaderEnableCameraUploads = "layout-header-enable-camera-uploads-kind"
     case layoutHeaderLimitedPermissions = "layout-header-limited-permissions-kind"
+    case layoutSortHeader = "layout-sort-header"
     case globalZoomHeader = "global-zoom-header-kind"
     
     var elementKind: String { rawValue }
@@ -20,7 +21,7 @@ enum PhotoLibrarySupplementaryElementKind: String {
         switch self {
         case .layoutHeaderEnableCameraUploads, .layoutHeaderLimitedPermissions: 4
         case .globalZoomHeader: 3
-        case .photoDateSectionHeader: 2
+        case .photoDateSectionHeader, .layoutSortHeader: 2
         }
     }
     
@@ -44,6 +45,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var enableCameraUploadsBannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var limitedPermissionsBannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var globalZoomHeaderRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
+    private var sortHeaderRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
     private var photoCellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
     private typealias PhotoLibraryEnableCameraUploadCollectionCell = UICollectionViewCell
     private let layoutChangesMonitor: PhotoLibraryCollectionViewLayoutChangesMonitor
@@ -84,6 +86,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
             let isFirstSection = isMediaRevampEnabled && indexPath.section == 0
             
+            // Disable interaction so pinned section headers don't intercept touches meant for the global zoom header above them.
+            header.isUserInteractionEnabled = representer.globalHeaderType != .dateAndZoom
             header.contentConfiguration = UIHostingConfiguration {
                 // First section uses a placeholder header (invisible) when media revamp is enabled
                 if isFirstSection {
@@ -148,6 +152,22 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             cell.clipsToBounds = true
         }
         
+        sortHeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(
+            elementKind: PhotoLibrarySupplementaryElementKind.layoutSortHeader.elementKind
+        ) { [unowned self] header, _, _ in
+            guard case let .sort(sortViewModel) = viewModel.libraryViewModel.sectionHeaderType else {
+                header.contentConfiguration = nil
+                return
+            }
+            header.contentConfiguration = UIHostingConfiguration {
+                PhotoLibraryGlobalHeaderView {
+                    SortHeaderViewWrapper(config: sortViewModel.config, sortOrder: sortViewModel.currentSortOrder(), handler: sortViewModel.onSortOrderChanged)
+                }
+            }
+            .margins(.all, 0)
+            .background(TokenColors.Background.page.swiftUI)
+        }
+        
         configureScrollTracker(for: collectionView)
         
         layoutChangesMonitor.configure(collectionView: collectionView)
@@ -174,9 +194,12 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             .trackContentOffset(scrollView.contentOffset.y)
     }
     
-    private func createGlobalHeaderConfiguration(title: String) -> any UIContentConfiguration {
+    private func createGlobalHeaderConfiguration(title: String) -> (any UIContentConfiguration)? {
+        let globalHeaderType = representer.globalHeaderType
+        guard globalHeaderType != .none else { return nil }
+        
         return UIHostingConfiguration {
-            switch viewModel.libraryViewModel.globalHeaderType {
+            switch globalHeaderType {
             case let .sort(sortViewModel):
                 PhotoLibraryGlobalHeaderView {
                     SortHeaderViewWrapper(config: sortViewModel.config, sortOrder: sortViewModel.currentSortOrder(), handler: sortViewModel.onSortOrderChanged)
@@ -191,8 +214,9 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                     isEditing: self.viewModel.isEditing
                 )
                 .padding(.horizontal, TokenSpacing._5)
+            case .none:
+                EmptyView()
             }
-            
         }
         .margins(.all, 0)
         .background(TokenColors.Background.page.swiftUI)
@@ -356,13 +380,15 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch PhotoLibrarySupplementaryElementKind(rawValue: kind) {
         case .layoutHeaderEnableCameraUploads:
-            return collectionView.dequeueConfiguredReusableSupplementary(using: enableCameraUploadsBannerRegistration, for: indexPath)
+            collectionView.dequeueConfiguredReusableSupplementary(using: enableCameraUploadsBannerRegistration, for: indexPath)
         case .layoutHeaderLimitedPermissions:
-            return collectionView.dequeueConfiguredReusableSupplementary(using: limitedPermissionsBannerRegistration, for: indexPath)
+            collectionView.dequeueConfiguredReusableSupplementary(using: limitedPermissionsBannerRegistration, for: indexPath)
         case .photoDateSectionHeader:
-            return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+            collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         case .globalZoomHeader:
-            return collectionView.dequeueConfiguredReusableSupplementary(using: globalZoomHeaderRegistration, for: indexPath)
+            collectionView.dequeueConfiguredReusableSupplementary(using: globalZoomHeaderRegistration, for: indexPath)
+        case .layoutSortHeader:
+            collectionView.dequeueConfiguredReusableSupplementary(using: sortHeaderRegistration, for: indexPath)
         case .none:
             fatalError("Unknown supported PhotoLibraryCollectionViewCoordinator.viewForSupplementaryElementOfKind: \(kind)")
         }
