@@ -9,52 +9,6 @@ import MEGATest
 import XCTest
 
 final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
-    @MainActor func testDispatch_onViewReadyWithAlbumCover_shouldSetLabelsAndUpdateThumbnail() throws {
-        let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
-        let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
-        XCTAssertTrue(isLocalFileCreated)
-        
-        let albumName = "Fruit"
-        let albumCount = 45
-        let album = AlbumEntity(id: 5, name: albumName, coverNode: NodeEntity(handle: 50), count: albumCount, type: .user)
-        let sut = makeSUT(album: album,
-                          thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail))))
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName,
-                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
-            .setThumbnail(path: localURL.path)
-        ])
-    }
-    
-    @MainActor func testDispatch_onViewReadyWithErrorAlbumCover_shouldSetLabelsAndSetPlaceholderThumbnail() throws {
-        let albumName = "Fruit"
-        let albumCount = 45
-        let album = AlbumEntity(id: 5, name: albumName, coverNode: NodeEntity(handle: 50), count: albumCount, type: .user)
-        let sut = makeSUT(album: album,
-                          thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .failure(GenericErrorEntity())))
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName,
-                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
-            .setPlaceholderThumbnail
-        ])
-    }
-    
-    @MainActor func testDispatch_onViewReadyWithOutAlbumCover_shouldOnlySetLabels() throws {
-        let albumName = "Fruit"
-        let albumCount = 45
-        let album = AlbumEntity(id: 5, name: albumName, count: albumCount, type: .user)
-        let sut = makeSUT(album: album,
-                          thumbnailUseCase: MockThumbnailUseCase())
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName,
-                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
-            .setPlaceholderThumbnail
-        ])
-    }
     
     @MainActor
     func testDispatchOnViewReady_photosCoverThumbnailLoaded_shouldSetAlbumCoverAndCount() async throws {
@@ -70,15 +24,13 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                 monitorUserAlbumPhotosAsyncSequence: userAlbumPhotosAsyncSequence.eraseToAnyAsyncSequence())
             let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
                 excludeSensitives: excludeSensitives)
-            let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             let sut = makeSUT(
                 album: album,
                 thumbnailUseCase: MockThumbnailUseCase(
                     loadThumbnailResult: .success(thumbnailEntity)),
                 monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                albumCoverUseCase: MockAlbumCoverUseCase(albumCover: coverNode),
-                albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+                albumCoverUseCase: MockAlbumCoverUseCase(albumCover: coverNode))
             
             await test(viewModel: sut, action: .onViewReady, expectedCommands: [
                 .setLabels(title: albumName,
@@ -98,11 +50,9 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         let album = AlbumEntity(id: 5, name: albumName, type: .user)
         let monitorUserAlbumPhotosUseCase = MockMonitorUserAlbumPhotosUseCase(
             monitorUserAlbumPhotosAsyncSequence: SingleItemAsyncSequence(item: []).eraseToAnyAsyncSequence())
-        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = makeSUT(
             album: album,
-            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase)
         
         await test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .setLabels(title: albumName,
@@ -129,7 +79,6 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol = MockMonitorUserAlbumPhotosUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> GetLinkAlbumInfoCellViewModel {
@@ -138,8 +87,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
             thumbnailUseCase: thumbnailUseCase,
             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            albumCoverUseCase: albumCoverUseCase,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            albumCoverUseCase: albumCoverUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

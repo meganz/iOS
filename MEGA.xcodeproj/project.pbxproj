@@ -124,9 +124,6 @@
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
 		0E8C8EA22ED7B03D0083918C /* MockCameraUploadProgressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */; };
-		0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */; };
-		0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */; };
-		0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */; };
 		0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */; };
 		0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */; };
 		0E959C152E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E959C142E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift */; };
@@ -2992,9 +2989,6 @@
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraUploadProgressRouter.swift; sourceTree = "<group>"; };
-		0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
-		0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
-		0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProviderTests.swift; sourceTree = "<group>"; };
 		0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsEmptyView.swift; sourceTree = "<group>"; };
 		0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTimelineEmptyView.swift; sourceTree = "<group>"; };
 		0E959C142E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraAssetUploadStatusDTO+Mapper.swift"; sourceTree = "<group>"; };
@@ -6127,14 +6121,6 @@
 			path = Progress;
 			sourceTree = "<group>";
 		};
-		0E8EABB92C869F19001722F7 /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */,
-			);
-			path = Mock;
-			sourceTree = "<group>";
-		};
 		0E9FE3592E0B6D720003AC0F /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -6282,7 +6268,6 @@
 				12397E202820C4A600A30CCC /* AlbumListView.swift */,
 				12397E222820C4BC00A30CCC /* AlbumListViewModel.swift */,
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
-				0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */,
 			);
 			path = "Album Library";
 			sourceTree = "<group>";
@@ -7159,14 +7144,12 @@
 			isa = PBXGroup;
 			children = (
 				328C15392A398998002499CE /* Links */,
-				0E8EABB92C869F19001722F7 /* Mock */,
 				0E3ABCD62C93965900A2A91F /* AlbumContentPhotoLibraryDataProviderTests.swift */,
 				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
 				32EC282029BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift */,
 				32EC280029B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift */,
 				328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */,
-				0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */,
 				0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */,
 			);
 			path = Album;
@@ -14775,7 +14758,6 @@
 				127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */,
 				0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */,
 				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
-				0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */,
 				0E9BF36B2EE908AC00C08624 /* AlbumTabVideoFactory.swift in Sources */,
 				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
@@ -16798,7 +16780,6 @@
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
-				0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
 				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
@@ -16969,7 +16950,6 @@
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
-				0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */,
 				0EAF3FA72D67D630007D4E9C /* MockAppDelegateRouter.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,

@@ -72,6 +72,9 @@ struct CameraUploadInProgressRowViewModelTests {
                     confirmation()
                 }
             
+            // Sleep to ensure subscription is setup
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
             let monitor = Task {
                 try await withTimeout(seconds: 5) { // Cancel task if stream don't finish
                     await sut.monitorUploadProgress()

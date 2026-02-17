@@ -18,327 +18,12 @@ final class AlbumContentViewModelTests: XCTestCase {
     private let albumEntity =
     AlbumEntity(id: 1, name: "GIFs", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
     
-    @MainActor func testDispatchViewReady_onLoadedNodesSuccessfully_shouldReturnNodesForAlbumAndTrackScreenEvent() {
-        let tracker = MockTracker()
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
-                             NodeEntity(name: "sample2.gif", handle: 2)]
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
-                                            tracker: tracker)
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: albumEntity.type
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [
-                AlbumContentScreenEvent()
-            ]
-        )
-    }
-    
-    @MainActor func testDispatchViewReady_onLoadedNodesSuccessfully_shouldSortAndThenReturnNodesForFavouritesAlbum() throws {
-        let expectedNodes = [NodeEntity(name: "sample2.gif", handle: 4, modificationTime: try "2022-12-15T20:01:04Z".date),
-                             NodeEntity(name: "sample2.gif", handle: 3, modificationTime: try "2022-12-3T20:01:04Z".date),
-                             NodeEntity(name: "sample1.gif", handle: 2, modificationTime: try "2022-08-19T20:01:04Z".date),
-                             NodeEntity(name: "sample2.gif", handle: 1, modificationTime: try "2022-08-19T20:01:04Z".date)]
-        let album = AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor func testDispatchViewReady_onLoadedNodesEmptyForFavouritesAlbum_shouldShowEmptyAlbum() {
-        let album = AlbumEntity(id: 1, name: "Favourites", type: .favourite)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []))
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor func testDispatchViewReady_onLoadedNodesEmpty_albumNilShouldDismiss() {
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []))
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .dismissAlbum
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor func testDispatchViewReady_onNewPhotosToAdd_shouldShowAlbumsToShowEmptyAlbumsThenAddPhotosThenLoadAlbumContent() {
-        let nodesToAdd = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
-        let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToAdd.count), failure: 0)
-        let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .success(resultEntity))
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: nodesToAdd.toAlbumPhotoEntities()),
-                                            albumModificationUseCase: albumModificationUseCase,
-                                            newAlbumPhotosToAdd: nodesToAdd)
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: albumEntity.type
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .startLoading,
-            .finishLoading,
-            .showResultMessage(.success("Added 2 items to “\(self.albumEntity.name)”")),
-            .showAlbumPhotos(photos: nodesToAdd, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
-    }
-    
-    @MainActor
-    func testDispatchViewWillAppear_onAlbumContentUpdated_shouldShowAlbumWithNewNodes() async {
-        let albumReloadPublisher = PassthroughSubject<Void, Never>()
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1)]
-        let useCase = MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities(),
-                                              albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: useCase)
-        
-        sut.dispatch(.onViewWillAppear)
-        await sut.setupSubscriptionTask?.value
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: albumEntity.type
-        )
-        await test(viewModel: sut, trigger: { albumReloadPublisher.send() }, expectedCommands: [
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], expectationValidation: ==)
-    }
-    
     @MainActor
     func testIsFavouriteAlbum_isEqualToAlbumEntityType() {
         let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite),
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
         
         XCTAssertTrue(sut.isFavouriteAlbum)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onFavouriteAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let image = NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)
-        let video = NodeEntity(name: "sample2.mp4", handle: 2, mediaType: .video)
-        let expectedNodes = [image, video]
-        let album = AlbumEntity(id: 1, name: "Favourites", coverNode: NodeEntity(handle: 1), count: 2, type: .favourite)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: true,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onOnlyImagesLoaded_shouldShowImagesAndHideFilter() {
-        let images = [NodeEntity(name: "test.jpg", handle: 1)]
-        let album = AlbumEntity(id: 1, type: .favourite)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: images.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: images, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onOnlyVideosLoaded_shouldShowVideosAndHideFilter() {
-        let videos = [NodeEntity(name: "test.mp4", handle: 1)]
-        let album = AlbumEntity(id: 1, type: .favourite)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: videos.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: videos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onUserAlbumContentLoadedWithItems_shouldShowFilterAndNotInEmptyState() {
-        let image = NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)
-        let video = NodeEntity(name: "sample2.mp4", handle: 2, mediaType: .video)
-        let expectedNodes = [image, video]
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: true,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onRawAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.cr2", handle: 1),
-                             NodeEntity(name: "sample2.nef", handle: 2)]
-        let album = AlbumEntity(id: 1, name: "RAW", coverNode: NodeEntity(handle: 1), count: 2, type: .raw)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onGifAlbumContentLoadedWithItems_shouldNotShowFilterAndNotInEmptyState() {
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
-                             NodeEntity(name: "sample2.gif", handle: 2)]
-        let album = AlbumEntity(id: 1, name: "Gif", coverNode: NodeEntity(handle: 1), count: 2, type: .gif)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedConfiguration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: expectedConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onImagesOnlyLoadedForUserAlbum_shouldNotEnableFilter() {
-        let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
-        let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
-            NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .image)
-        }
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedImages.toAlbumPhotoEntities()))
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: expectedImages, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        test(viewModel: sut, action: .changeFilter(.images), expectedCommands: [
-            .showAlbumPhotos(photos: expectedImages, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onVideosOnlyLoadedForUserAlbum_shouldNotEnableFilter() {
-        let videoNames: [FileNameEntity] = ["video1.mp4", "video2.avi", "video3.mov"]
-        let expectedVideos = videoNames.enumerated().map { (index: Int, name: String) in
-            NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .video)
-        }
-        let album = AlbumEntity(id: 1, type: .user)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedVideos.toAlbumPhotoEntities()))
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isFilterEnabled: false,
-            isEmptyState: false
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: expectedVideos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        test(viewModel: sut, action: .changeFilter(.videos), expectedCommands: [
-            .showAlbumPhotos(photos: expectedVideos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testContextMenuConfiguration_onAlbumSharedLinkTurnedOn_shouldSetCorrectStatusInContext() {
-        let expectedAlbumShareLinkStatus = SharedLinkStatusEntity.exported(true)
-        let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: expectedAlbumShareLinkStatus)
-        let sut = makeAlbumContentViewModel(
-            album: album, albumContentsUseCase: MockAlbumContentUseCase(photos: []))
-        
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isEmptyState: true,
-            sharedLinkStatus: album.sharedLinkStatus
-        )
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
     }
     
     @MainActor
@@ -373,38 +58,6 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testDispatchChangeSortOrder_onSortOrderDifferentWithLoadedContents_shouldShowAlbumWithNewSortedValueAndExistingAlbumContents() {
-        let expectedNodes = [NodeEntity(name: "sample1.gif", handle: 1),
-                             NodeEntity(name: "sample2.gif", handle: 2)]
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()))
-        
-        let expectedSortOrderAfterChange = SortOrderType.oldest
-        var expectedSortOrders = [SortOrderType.newest, expectedSortOrderAfterChange]
-        
-        let initialConfiguration = makeContextConfiguration(
-            albumType: albumEntity.type
-        )
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: expectedSortOrders.removeFirst()),
-            .configureRightBarButtons(contextMenuConfiguration: initialConfiguration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let updatedConfiguration = makeContextConfiguration(
-            sortOrder: expectedSortOrderAfterChange.toSortOrderEntity(),
-            albumType: albumEntity.type
-        )
-        
-        test(viewModel: sut, action: .changeSortOrder(expectedSortOrderAfterChange), expectedCommands: [
-            .showAlbumPhotos(photos: expectedNodes, sortOrder: expectedSortOrders.removeFirst()),
-            .configureRightBarButtons(contextMenuConfiguration: updatedConfiguration, canAddPhotosToAlbum: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
     func testDispatchChangeFilter_onFilterTheSame_shouldDoNothing() {
         let sut = makeAlbumContentViewModel(album: albumEntity,
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
@@ -416,87 +69,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         }
         sut.dispatch(.changeFilter(.allMedia))
         wait(for: [exp], timeout: 1.0)
-    }
-    
-    @MainActor
-    func testDispatchChangeFilter_onPhotosLoaded_shouldReturnCorrectNodesForFilterTypeAndSetCorrectMenuConfiguration() {
-        let imageNames: [FileNameEntity] = ["image1.png", "image2.png", "image3.heic"]
-        let expectedImages = imageNames.enumerated().map { (index: Int, name: String) in
-            NodeEntity(name: name, handle: UInt64(index + 1), mediaType: .image)
-        }
-        let loadedImages = expectedImages.toAlbumPhotoEntities()
-        let videoNames: [FileNameEntity] = ["video1.mp4", "video2.avi", "video3.mov"]
-        let expectedVideo = videoNames.enumerated().map { (index: Int, name: String) in
-            NodeEntity(name: name, handle: UInt64(index + imageNames.count + 1), mediaType: .video)
-        }
-        let loadedVideos = expectedVideo.toAlbumPhotoEntities()
-        let allMedia = expectedImages + expectedVideo
-        let sut = makeAlbumContentViewModel(album: albumEntity,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: loadedImages + loadedVideos))
-        
-        let configuration = makeContextConfiguration(albumType: albumEntity.type)
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
-            .showAlbumPhotos(photos: allMedia, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let testCases = [
-            (FilterType.images, expectedImages),
-            (FilterType.videos, expectedVideo),
-            (FilterType.allMedia, allMedia)
-        ]
-        
-        for (filter, expectedNodes) in testCases {
-            let filterConfiguration = makeContextConfiguration(
-                filter: filter.toFilterEntity(),
-                albumType: albumEntity.type
-            )
-            
-            test(viewModel: sut, action: .changeFilter(filter), expectedCommands: [
-                .showAlbumPhotos(photos: expectedNodes, sortOrder: .newest),
-                .configureRightBarButtons(contextMenuConfiguration: filterConfiguration, canAddPhotosToAlbum: false)
-            ], timeout: 1.0, expectationValidation: ==)
-        }
-    }
-    
-    @MainActor
-    func testShouldShowAddToAlbumButton_onPhotoLibraryNotEmptyOnUserAlbum_shouldReturnTrue() {
-        let album = AlbumEntity(id: 1, type: .user)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                            photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)]))
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isEmptyState: true
-        )
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testShouldShowAddToAlbumButton_onPhotoLibraryEmptyOnUserAlbum_shouldReturnFalse() {
-        let album = AlbumEntity(id: 1, type: .user)
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []))
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isEmptyState: true
-        )
-        
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
     }
     
     @MainActor
@@ -546,79 +118,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 2)
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, expectedAddedPhotos)
-    }
-    
-    @MainActor func testShowAlbumContentPicker_onCompletionWithExistingItems_shouldNotAddExistingItems() {
-        let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
-        let albumModificationUseCase = MockAlbumModificationUseCase()
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
-                                            albumModificationUseCase: albumModificationUseCase,
-                                            router: albumContentRouter)
-        
-        let configuration = makeContextConfiguration(albumType: album.type)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: expectedAddedPhotos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let exp = expectation(description: "Should not show added message or add items")
-        exp.isInverted = true
-        sut.invokeCommand = {
-            switch $0 {
-            case .showResultMessage:
-                exp.fulfill()
-            default:
-                XCTFail("Invoked unexpected command: \($0)")
-            }
-        }
-        sut.dispatch(.addToAlbumTap)
-        
-        wait(for: [exp], timeout: 1)
-        XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
-    }
-    
-    @MainActor
-    func testShowAlbumContentPicker_onErrorThrown_shouldFinishLoading() {
-        let expectedAddedPhotos = [NodeEntity(name: "a.jpg", handle: 1)]
-        let album = AlbumEntity(id: 1, type: .user)
-        let albumContentRouter = MockAlbumContentRouting(album: album, photos: expectedAddedPhotos)
-        let albumModificationUseCase = MockAlbumModificationUseCase(addPhotosResult: .failure(AlbumErrorEntity.generic))
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                            albumModificationUseCase: albumModificationUseCase,
-                                            router: albumContentRouter)
-        
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isEmptyState: true)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let exp = expectation(description: "Should only show loading then finish loading")
-        exp.expectedFulfillmentCount = 2
-        sut.invokeCommand = {
-            switch $0 {
-            case .startLoading:
-                exp.fulfill()
-            case .finishLoading:
-                exp.fulfill()
-            default:
-                XCTFail("Invoked unexpected command: \($0)")
-            }
-        }
-        sut.dispatch(.addToAlbumTap)
-        
-        wait(for: [exp], timeout: 2)
-        XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
     @MainActor
@@ -678,108 +177,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .showAlbumCoverPicker,
              expectedCommands: [.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))],
              timeout: 1.0, expectationValidation: ==)
-    }
-    
-    @MainActor
-    func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
-        let albumPhotos = nodesToRemove.enumerated().map { AlbumPhotoEntity(photo: $0.element, albumPhotoId: UInt64($0.offset + 1))}
-        let resultEntity = AlbumElementsResultEntity(success: UInt(nodesToRemove.count), failure: 0)
-        let albumModificationUseCase = MockAlbumModificationUseCase(resultEntity: resultEntity)
-        
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos),
-                                            albumModificationUseCase: albumModificationUseCase)
-        let configuration = makeContextConfiguration(albumType: album.type)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: nodesToRemove, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
-            .replacingOccurrences(of: "[A]", with: "\(album.name)")
-        test(viewModel: sut, action: .deletePhotos(nodesToRemove),
-             expectedCommands: [.showResultMessage(.custom(MEGAAssets.UIImage.hudMinus, message))],
-             timeout: 1.0, expectationValidation: ==)
-        XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
-    }
-    
-    @MainActor
-    func testDispatchDeletePhotos_onPhotosAlreadyRemoved_shouldDoNothing() {
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let nodesToRemove = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
-        let albumModificationUseCase = MockAlbumModificationUseCase()
-        let sut = makeAlbumContentViewModel(album: album,
-                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
-                                            albumModificationUseCase: albumModificationUseCase)
-        let configuration = makeContextConfiguration(
-            albumType: album.type,
-            isEmptyState: true)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        let exp = expectation(description: "Should not invoke any commands")
-        exp.isInverted = true
-        sut.invokeCommand = { _ in
-            exp.fulfill()
-        }
-        sut.dispatch(.deletePhotos(nodesToRemove))
-        wait(for: [exp], timeout: 1.0)
-        XCTAssertNil(albumModificationUseCase.deletedPhotos)
-    }
-    
-    @MainActor
-    func testShowAlbumPhotos_onImagesRemovedWithImageFilter_shouldSwitchToShowVideos() async {
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let expectedImages = [NodeEntity(name: "sample1.gif", handle: 1, mediaType: .image)]
-        let expectedVideos = [NodeEntity(name: "sample1.mp4", handle: 1, mediaType: .video)]
-        let allPhotos = expectedImages + expectedVideos
-        let albumReloadPublisher = PassthroughSubject<Void, Never>()
-        let albumContentsUseCase = MockAlbumContentUseCase(photos: allPhotos.toAlbumPhotoEntities(),
-                                                           albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
-        let sut = makeAlbumContentViewModel(
-            album: album,
-            albumContentsUseCase: albumContentsUseCase)
-        
-        let configuration = makeContextConfiguration(albumType: album.type,
-                                                     isFilterEnabled: true)
-        await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
-            .showAlbumPhotos(photos: allPhotos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        await sut.setupSubscriptionTask?.value
-        
-        let imageFilterConfiguration = makeContextConfiguration(
-            filter: .images,
-            albumType: album.type,
-            isFilterEnabled: true)
-        await test(viewModel: sut, actions: [.changeFilter(.images)], expectedCommands: [
-            .showAlbumPhotos(photos: expectedImages, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: imageFilterConfiguration, canAddPhotosToAlbum: true)
-        ], timeout: 1.0, expectationValidation: ==)
-        
-        await albumContentsUseCase.state.update(photos: expectedVideos.toAlbumPhotoEntities())
-        
-        let videoFilterConfiguration = makeContextConfiguration(
-            filter: .allMedia,
-            albumType: album.type,
-            isFilterEnabled: false)
-        
-        await test(viewModel: sut, trigger: { albumReloadPublisher.send() }, expectedCommands: [
-            .showAlbumPhotos(photos: expectedVideos, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: videoFilterConfiguration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
-        ], timeout: 1.0, expectationValidation: ==)
     }
     
     @MainActor
@@ -946,8 +343,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
         let sut = makeAlbumContentViewModel(
             album: albumEntity,
-            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
         
         let configuration = makeContextConfiguration(albumType: albumEntity.type)
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
@@ -966,8 +362,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
         let sut = makeAlbumContentViewModel(
             album: albumEntity,
-            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
         
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
             .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
@@ -987,8 +382,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let sut = makeAlbumContentViewModel(
             album: album,
             photoLibraryUseCase: photoLibraryUseCase,
-            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-            albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+            monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
         
         let configuration = makeContextConfiguration(
             albumType: album.type,
@@ -1020,7 +414,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
@@ -1039,7 +432,6 @@ final class AlbumContentViewModelTests: XCTestCase {
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }
     
@@ -1069,6 +461,13 @@ final class AlbumContentViewModelTests: XCTestCase {
             isEmptyState: isEmptyState,
             sharedLinkStatus: sharedLinkStatus
         )
+    }
+    
+    private func makeMockMonitorAlbumPhotosUseCase(for photos: [NodeEntity]) -> some MonitorAlbumPhotosUseCaseProtocol {
+        let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+            item: Result<[AlbumPhotoEntity], any Error>.success(photos.toAlbumPhotoEntities()))
+        return MockMonitorAlbumPhotosUseCase(
+            monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
     }
 }
 
@@ -1259,7 +658,6 @@ struct AlbumContentViewModelTestSuite {
         ) async throws {
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
-                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled]))
             
             try await confirmation { confirmation in
@@ -1301,7 +699,6 @@ struct AlbumContentViewModelTestSuite {
                 album: .init(id: 8, type: type),
                 photoLibraryUseCase: photoLibraryUseCase,
                 monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
             
             try await confirmation(expectedCount: 2) { confirmation in
@@ -1352,7 +749,6 @@ struct AlbumContentViewModelTestSuite {
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
                 monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
             
             sut.dispatch(.onViewWillAppear)
@@ -1409,8 +805,7 @@ struct AlbumContentViewModelTestSuite {
             let monitorAlbumPhotosUseCase = makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: isPhotosEmpty)
             let sut = makeSUT(
                 album: .init(id: 8, name: albumName, type: .user, sharedLinkStatus: sharedLinkStatus),
-                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
             
             sut.dispatch(.onViewWillAppear)
             await sut.setupSubscriptionTask?.value
@@ -1443,8 +838,7 @@ struct AlbumContentViewModelTestSuite {
             let albumName = "Test Album"
             let sut = makeSUT(
                 album: .init(id: 8, name: albumName, type: .favourite),
-                monitorAlbumPhotosUseCase: makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: false),
-                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true))
+                monitorAlbumPhotosUseCase: makeMockMonitorAlbumPhotosUseCase(isPhotosEmpty: false))
             
             sut.dispatch(.onViewWillAppear)
             await sut.setupSubscriptionTask?.value
@@ -1493,7 +887,6 @@ struct AlbumContentViewModelTestSuite {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
@@ -1512,7 +905,6 @@ struct AlbumContentViewModelTestSuite {
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
             featureFlagProvider: featureFlagProvider)
     }
     

@@ -13,7 +13,6 @@ extension ContentLibraries.Configuration {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: MockFeatureFlagProvider(list: featureFlags),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { isAlbumPerformanceImprovementsEnabled })
+            nodeUseCase: MockNodeUseCase())
     }
 }

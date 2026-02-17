@@ -18,102 +18,6 @@ final class AlbumListViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     @MainActor
-    func testLoadAlbums_onAlbumsLoaded_systemAlbumsTitlesAreUpdatedAndAlbumsAreSortedCorrectly() async throws {
-        var favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
-        var gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
-        var rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
-        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                     count: 1, type: .user, creationTime: try "2022-12-31T22:01:04Z".date)
-        let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
-                                     count: 1, type: .user, creationTime: try "2022-12-31T22:02:04Z".date)
-        let userAlbum3 = AlbumEntity(id: 6, name: "Other Album 1", coverNode: NodeEntity(handle: 5),
-                                     count: 1, type: .user, creationTime: try "2022-12-31T22:03:04Z".date)
-        let userAlbum4 = AlbumEntity(id: 7, name: "Other Album 4", coverNode: NodeEntity(handle: 6),
-                                     count: 1, type: .user, creationTime: try "2022-12-31T22:04:04Z".date)
-        let userAlbum5 = AlbumEntity(id: 8, name: "Album 5", coverNode: NodeEntity(handle: 7),
-                                     count: 1, type: .user, creationTime: try "2022-12-31T22:05:04Z".date)
-        let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
-                                                    userAlbum1, userAlbum2, userAlbum3, userAlbum4, userAlbum5])
-        // Update titles to expected
-        favouriteAlbum.name = Strings.Localizable.CameraUploads.Albums.Favourites.title
-        gifAlbum.name = Strings.Localizable.CameraUploads.Albums.Gif.title
-        rawAlbum.name = Strings.Localizable.CameraUploads.Albums.Raw.title
-        let sut = albumListViewModel(usecase: useCase)
-        
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        let result = await albumResult(sut: sut)
-        
-        XCTAssertEqual(result, [
-            favouriteAlbum,
-            gifAlbum,
-            rawAlbum,
-            userAlbum5,
-            userAlbum4,
-            userAlbum3,
-            userAlbum2,
-            userAlbum1
-        ])
-    }
-    
-    @MainActor
-    func testLoadAlbums_onAlbumsLoadedFinished_shouldLoadSetToFalse() async throws {
-        let sut = albumListViewModel()
-        let taskStartExpectation = expectation(description: "Monitoring task has started")
-        Task {
-            taskStartExpectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [taskStartExpectation], timeout: 1)
-        _ = await albumResult(sut: sut, condition: \.isEmpty)
-        
-        let assertionExpectation = expectation(description: "Result for assertion should pass")
-        let subscription = sut.$shouldLoad
-            .first(where: { !$0 })
-            .sink {
-                XCTAssertFalse($0)
-                assertionExpectation.fulfill()
-            }
-        
-        await fulfillment(of: [assertionExpectation], timeout: 0.5)
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testHasCustomAlbum_whenUserLoadAlbums_shouldReturnTrue() async throws {
-        let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
-        let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                     count: 1, type: .user)
-        let mockAlbumUseCase = MockAlbumListUseCase(albums: [rawAlbum, userAlbum1])
-        
-        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(usecase: mockAlbumUseCase, photoAlbumContainerViewModel: photoAlbumContainerViewModel)
-        
-        let taskStartedExpectation = expectation(description: "Monitoring task has started")
-        Task {
-            taskStartedExpectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [taskStartedExpectation], timeout: 1)
-        _ = await albumResult(sut: sut)
-        
-        let shouldShowSelectExpectation = expectation(description: "")
-        let subscription = photoAlbumContainerViewModel
-            .$shouldShowSelectBarButton
-            .first { $0 }
-            .sink { result in
-                XCTAssertTrue(result)
-                shouldShowSelectExpectation.fulfill()
-            }
-        await fulfillment(of: [shouldShowSelectExpectation], timeout: 1)
-        subscription.cancel()
-    }
-    
-    @MainActor
     func testHasCustomAlbum_whenUserCreateNewAlbum_shouldReturnTrue() async {
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
@@ -164,161 +68,6 @@ final class AlbumListViewModelTests: XCTestCase {
         _ = await albumResult(sut: sut, condition: \.isEmpty)
         
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
-    }
-    
-    @MainActor
-    func testNewAlbumName_whenAlbumContainsNewAlbum() async {
-        let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
-        let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = albumListViewModel(usecase: useCase)
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        let result = await albumResult(sut: sut)
-        
-        XCTAssertEqual(result.count, 1)
-        XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " \("(1)")")
-    }
-    
-    @MainActor
-    func testNewAlbumName_whenAlbumContainsSomeNewAlbums_shouldReturnTheCorrectSuffix() async {
-        let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
-        let newAlbum1 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (1)")
-        
-        let newAlbum3 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (3)")
-        
-        let newAlbum4 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + "Some Random name")
-        
-        let useCase = MockAlbumListUseCase(albums: [newAlbum4, newAlbum, newAlbum1, newAlbum3])
-        let sut = albumListViewModel(usecase: useCase)
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        _ = await albumResult(sut: sut)
-        
-        await wait()
-        
-        let newAlbumNameShouldBe = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (2)"
-        
-        XCTAssertEqual(sut.newAlbumName(), newAlbumNameShouldBe)
-    }
-    
-    @MainActor
-    func testNewAlbumName_whenAlbumContainsSomeNewAlbumsButNotNewAlbum_shouldReturnNewAlbum() async {
-        let newAlbum1 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (1)")
-        
-        let newAlbum3 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + " (3)")
-        
-        let newAlbum4 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + "Some Random name")
-        
-        let useCase = MockAlbumListUseCase(albums: [newAlbum4, newAlbum1, newAlbum3])
-        let sut = albumListViewModel(usecase: useCase)
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        _ = await albumResult(sut: sut)
-        
-        let newAlbumNameShouldBe = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
-        
-        XCTAssertEqual(sut.newAlbumName(), newAlbumNameShouldBe)
-    }
-    
-    @MainActor
-    func testNewAlbumNamePlaceholderText_whenAlbumContainsNewAlbum_shouldReturnCounterSuffix() async {
-        let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
-        let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = albumListViewModel(usecase: useCase)
-        let taskStartExpectation = expectation(description: "Monitoring task has started")
-        Task {
-            taskStartExpectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [taskStartExpectation], timeout: 1)
-        _ = await albumResult(sut: sut)
-        
-        sut.showCreateAlbumAlert = true
-        await wait()
-        XCTAssertEqual(sut.alertViewModel.placeholderText, "New album (1)")
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsNil_returnsNil() {
-        let sut = albumListViewModel()
-        XCTAssertNil(sut.alertViewModel.validator?(nil))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsEmpty_returnsNil() {
-        let sut = albumListViewModel()
-        XCTAssertNil(sut.alertViewModel.validator?(""))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsSpaces_returnsError() {
-        let sut = albumListViewModel()
-        XCTAssertNotNil(sut.alertViewModel.validator?("      "))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsValidButWithWhiteSpaces_returnsNil() {
-        let sut = albumListViewModel()
-        XCTAssertNil(sut.alertViewModel.validator?("  userAlbum    "))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsValid_returnsNil() {
-        let sut = albumListViewModel()
-        XCTAssertNil(sut.alertViewModel.validator?("userAlbum"))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameContainsInvalidChars_returnsErrorMessage() {
-        let sut = albumListViewModel()
-        XCTAssertNotNil(sut.alertViewModel.validator?("userAlbum:/;"))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsSameAsExistingUserAlbum_returnsErrorMessage() async {
-        let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: "userAlbum")
-        let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = albumListViewModel(usecase: useCase)
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        let result = await albumResult(sut: sut)
-        
-        XCTAssertEqual(result.count, 1)
-        XCTAssertNotNil(sut.alertViewModel.validator?(newAlbum.name))
-    }
-    
-    @MainActor
-    func testValidateAlbum_whenAlbumNameIsSameAsExistingSystemAlbum_returnsErrorMessage() async {
-        let newSysAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
-                                      coverNode: NodeEntity(handle: AlbumIdEntity.favourite.rawValue), count: 0, type: .favourite)
-        let useCase = MockAlbumListUseCase(albums: [newSysAlbum])
-        let sut = albumListViewModel(usecase: useCase)
-        let expectation = expectation(description: "Monitoring task has started")
-        Task {
-            expectation.fulfill()
-            try await sut.monitorAlbums()
-        }
-        await fulfillment(of: [expectation], timeout: 1)
-        let result = await albumResult(sut: sut)
-        
-        XCTAssertEqual(result.count, 1)
-        XCTAssertNotNil(sut.alertViewModel.validator?(newSysAlbum.name))
     }
     
     @MainActor
@@ -415,47 +164,6 @@ final class AlbumListViewModelTests: XCTestCase {
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [DIContainer.createNewAlbumDialogEvent])
-    }
-    
-    @MainActor
-    func testAlbumNames_whenExistingAlbumNamesNeeded_shouldReturnAlbumNames() async {
-        let album1 = AlbumEntity(id: 1, name: "Hey there", coverNode: nil, count: 0, type: .user)
-        let album2 = AlbumEntity(id: 1, name: "", coverNode: nil, count: 0, type: .user)
-        let album3 = AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite)
-        
-        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: [album1, album2, album3]))
-        let task = Task { try await sut.monitorAlbums() }
-        _ = await albumResult(sut: sut)
-        task.cancel()
-        
-        await wait()
-        
-        XCTAssertEqual(sut.albumNames.sorted(), ["Hey there", "", "Favourites"].sorted())
-    }
-    
-    @MainActor
-    func testReloadUpdates_onAlbumsUpdateEmitted_shouldReloadAlbums() {
-        let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                  count: 1, type: .user)]
-        let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
-        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: albums,
-                                                                   albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()))
-        
-        let task = Task { try await sut.monitorAlbums() }
-        
-        XCTAssertTrue(sut.albums.isEmpty)
-        
-        let exp = expectation(description: "should retrieve albums")
-        sut.$albums
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, albums)
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        albumsUpdatedPublisher.send()
-        wait(for: [exp], timeout: 2.0)
-        task.cancel()
     }
     
     @MainActor
@@ -699,12 +407,10 @@ final class AlbumListViewModelTests: XCTestCase {
             )
             let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
                 excludeSensitives: excludeSensitives)
-            let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
             
             let sut = albumListViewModel(
                 monitorAlbumsUseCase: monitorAlbumsUseCase,
-                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
             
             var subscriptions = Set<AnyCancellable>()
             
@@ -756,10 +462,8 @@ final class AlbumListViewModelTests: XCTestCase {
             monitorSystemAlbumsSequence: systemAsyncSequence,
             monitorUserAlbumsSequence: monitorUserAlbumsAsyncSequence
         )
-        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = albumListViewModel(
-            monitorAlbumsUseCase: monitorAlbumsUseCase,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            monitorAlbumsUseCase: monitorAlbumsUseCase)
         
         let exp = expectation(description: "Should load only user albums")
         let subscription = sut.$albums
@@ -791,11 +495,9 @@ final class AlbumListViewModelTests: XCTestCase {
             monitorSystemAlbumsSequence: SingleItemAsyncSequence(item: .success([])).eraseToAnyAsyncSequence(),
             monitorUserAlbumsSequence: userAlbumStream.eraseToAnyAsyncSequence()
         )
-        let albumRemoteFeatureFlagProvider = MockAlbumRemoteFeatureFlagProvider(isEnabled: true)
         let sut = albumListViewModel(
             monitorAlbumsUseCase: monitorAlbumsUseCase,
-            photoAlbumContainerViewModel: containerViewModel,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            photoAlbumContainerViewModel: containerViewModel)
         
         var expectedUpdates = [true, false, true]
         let exp = expectation(description: "Should load only user albums")
@@ -850,8 +552,7 @@ final class AlbumListViewModelTests: XCTestCase {
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
-        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
         AlbumListViewModel(
             usecase: usecase,
@@ -862,8 +563,7 @@ final class AlbumListViewModelTests: XCTestCase {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             overDiskQuotaChecker: overDiskQuotaChecker,
             alertViewModel: alertViewModel(),
-            photoAlbumContainerViewModel: photoAlbumContainerViewModel,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )
     }
 }
@@ -957,8 +657,7 @@ struct AlbumListViewModelTestsSuite {
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
-        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
         .init(
             usecase: useCase,

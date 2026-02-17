@@ -342,8 +342,7 @@ struct AddToAlbumsViewModelTests {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { true }),
+            nodeUseCase: MockNodeUseCase()),
         albumSelection: AlbumSelection = AlbumSelection(mode: .single)
     ) -> AddToAlbumsViewModel {
         .init(

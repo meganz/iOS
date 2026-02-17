@@ -48,7 +48,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let monitorAlbumsUseCase: any MonitorAlbumsUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
-    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     
     private lazy var albumsSubject = PassthroughSubject<[AlbumEntity], Never>()
@@ -66,8 +65,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         overDiskQuotaChecker: some OverDiskQuotaChecking,
         alertViewModel: TextFieldAlertViewModel,
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
@@ -78,7 +76,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.overDiskQuotaChecker = overDiskQuotaChecker
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
-        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         isMediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         super.init()
         setupSubscription()
@@ -307,20 +304,11 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func monitorAlbums() async throws {
-        guard !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else {
-            await newAlbumMonitoring()
-            return
-        }
-        let albumsUpdatedStream = usecase
-            .albumsUpdatedPublisher
-            .prepend(())
-            .debounceImmediate(for: .seconds(0.35), scheduler: DispatchQueue.global())
-            .eraseToAnyPublisher()
-            .values
-        
-        for await _ in albumsUpdatedStream {
-            try Task.checkCancellation()
-            try await loadAlbums()
+        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
+        for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(excludeSensitives: excludeSensitives),
+                                                              await monitorUserAlbums(excludeSensitives: excludeSensitives)) {
+            updateSelectBarButton(shouldShow: userAlbums.isNotEmpty)
+            updateAlbums(systemAlbums + userAlbums)
         }
     }
     
@@ -380,15 +368,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         createAlbumTask = nil
     }
     
-    private func newAlbumMonitoring() async {
-        let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
-        for await (systemAlbums, userAlbums) in combineLatest(await monitorSystemAlbums(excludeSensitives: excludeSensitives),
-                                                              await monitorUserAlbums(excludeSensitives: excludeSensitives)) {
-            updateSelectBarButton(shouldShow: userAlbums.isNotEmpty)
-            updateAlbums(systemAlbums + userAlbums)
-        }
-    }
-    
     @MainActor
     private func updateAlbums(_ newAlbums: [AlbumEntity]) {
         albumsSubject.send(newAlbums)
@@ -419,8 +398,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     // Throttle is not available in swift-async-algorithms package and will most likely only be available for iOS 16 and above due to the use of `Clock`.
     private func subscribeToAlbums() {
-        guard albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
-        
         albumsSubject
             .debounceImmediate(for: .seconds(0.3), scheduler: DispatchQueue.main)
             .assign(to: &$albums)

@@ -25,7 +25,6 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
-    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     
     private(set) var loadingTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -35,14 +34,13 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
          monitorUserAlbumPhotosUseCase: some MonitorUserAlbumPhotosUseCaseProtocol,
          sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
-         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
+         albumCoverUseCase: some AlbumCoverUseCaseProtocol
+    ) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
         self.monitorUserAlbumPhotosUseCase = monitorUserAlbumPhotosUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.albumCoverUseCase = albumCoverUseCase
-        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
     }
     
     deinit {
@@ -60,22 +58,8 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     
     private func onViewReady() {
         loadingTask = Task {
-            if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
-                await loadAlbumPhotos()
-            } else {
-                invokeCommand?(.setLabels(title: album.name,
-                                          subtitle: Strings.Localizable.General.Format.Count.items(album.count)))
-                await loadThumbnail()
-            }
+            await loadAlbumPhotos()
         }
-    }
-    
-    private func loadThumbnail() async {
-        guard let coverNode = album.coverNode else {
-            invokeCommand?(.setPlaceholderThumbnail)
-            return
-        }
-        await loadThumbnail(for: coverNode)
     }
     
     private func loadThumbnail(for node: NodeEntity) async {

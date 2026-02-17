@@ -266,8 +266,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { true }),
+            nodeUseCase: MockNodeUseCase()),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -392,8 +391,7 @@ struct VisualMediaSearchResultsViewModelTestsSuite {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { true }),
+            nodeUseCase: MockNodeUseCase()),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150)
     ) -> VisualMediaSearchResultsViewModel {
         .init(

@@ -158,8 +158,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     }
     
     func monitorAlbumPhotos() async {
-        guard configuration.isAlbumPerformanceImprovementsEnabled(),
-              album.type == .user else { return }
+        guard album.type == .user else { return }
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         for await albumPhotos in await monitorUserAlbumPhotosUseCase.monitorUserAlbumPhotos(
             for: album, excludeSensitives: excludeSensitives) {
@@ -250,16 +249,11 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         } else {
             .single
         }
-        let event = if configuration.isAlbumPerformanceImprovementsEnabled() {
-            AlbumSelectedEvent(
-                selectionType: selectionType,
-                imageCount: albumMetaData?.imageCount.toKotlinInt(),
-                videoCount: albumMetaData?.videoCount.toKotlinInt()
-            )
-        } else {
-            album.makeAlbumSelectedEvent(
-                selectionType: selectionType)
-        }
+        let event = AlbumSelectedEvent(
+            selectionType: selectionType,
+            imageCount: albumMetaData?.imageCount.toKotlinInt(),
+            videoCount: albumMetaData?.videoCount.toKotlinInt()
+        )
         tracker.trackAnalyticsEvent(with: event)
     }
 }

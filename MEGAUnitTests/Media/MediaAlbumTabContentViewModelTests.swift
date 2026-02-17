@@ -162,8 +162,7 @@ struct MediaAlbumTabContentViewModelTests {
         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol = MockMonitorAlbumsUseCase(),
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
-        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
         .init(
             usecase: useCase,

@@ -72,7 +72,6 @@ final class AlbumContentViewModel: ViewModelType {
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let monitorAlbumPhotosUseCase: any MonitorAlbumPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let albumRemoteFeatureFlagProvider: any AlbumRemoteFeatureFlagProviderProtocol
     private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
@@ -82,7 +81,6 @@ final class AlbumContentViewModel: ViewModelType {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var loadingTask: Task<Void, Never>?
-    private var subscriptions = Set<AnyCancellable>()
     private var selectedSortOrder: SortOrderType = .newest
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
@@ -91,9 +89,6 @@ final class AlbumContentViewModel: ViewModelType {
     private var deletePhotosTask: Task<Void, Never>?
     private var deleteAlbumTask: Task<Void, Never>?
     private(set) var setupSubscriptionTask: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
-    }
-    private(set) var reloadAlbumTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
     private var showAlbumPhotosTask: Task<Void, Never>? {
@@ -111,6 +106,7 @@ final class AlbumContentViewModel: ViewModelType {
     private var renameAlbumNamesTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+    private var albumUpdateSubscription: AnyCancellable?
     
     var invokeCommand: ((Command) -> Void)?
     var isPhotoSelectionHidden = false
@@ -152,7 +148,6 @@ final class AlbumContentViewModel: ViewModelType {
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
@@ -170,7 +165,6 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumCoverUseCase = albumCoverUseCase
         self.thumbnailLoader = thumbnailLoader
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -183,9 +177,11 @@ final class AlbumContentViewModel: ViewModelType {
             showAlbumContentPicker()
         case .onViewReady:
             onViewReady()
-        case .onViewWillAppear where setupSubscriptionTask == nil:
+        case .onViewWillAppear:
+            setupAlbumUpdateSubscription()
             setupAlbumMonitoring()
         case .onViewWillDisappear:
+            albumUpdateSubscription?.cancel()
             cancelLoading()
         case .changeSortOrder(let sortOrder):
             updateSortOrder(sortOrder)
@@ -233,8 +229,6 @@ final class AlbumContentViewModel: ViewModelType {
             Task {
                 await handleMoreButtonTap()
             }
-        default:
-            break
         }
     }
     
@@ -278,19 +272,6 @@ final class AlbumContentViewModel: ViewModelType {
         loadingTask = Task { [weak self] in
             guard let self else { return }
             await addNewAlbumPhotosIfNeeded()
-            guard !Task.isCancelled else { return }
-            await loadNodes()
-        }
-    }
-    
-    private func loadNodes() async {
-        guard !albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() else { return }
-        do {
-            let photos = try await albumContentsUseCase.photos(in: album)
-            guard !Task.isCancelled else { return }
-            await updateAlbumPhotos(photos)
-        } catch {
-            MEGALogError("Error getting nodes for album: \(error.localizedDescription)")
         }
     }
     
@@ -376,40 +357,23 @@ final class AlbumContentViewModel: ViewModelType {
         await updateAddToAlbumFloatingActionButton()
     }
     
-    private func reloadAlbum() {
-        reloadAlbumTask = Task { [weak self] in
-            await self?.loadNodes()
-        }
-    }
-    
     private func setupAlbumMonitoring() {
+        guard setupSubscriptionTask == nil else { return }
         setupSubscriptionTask = Task { [weak self] in
             guard let self else { return }
-            if albumRemoteFeatureFlagProvider.isPerformanceImprovementsEnabled() {
-                await monitorAlbumPhotos()
-            } else {
-                setupSubscription()
-            }
+            await monitorAlbumPhotos()
         }
     }
     
-    private func setupSubscription() {
-        albumContentsUseCase.albumReloadPublisher(forAlbum: album)
-            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+    private func setupAlbumUpdateSubscription() {
+        guard let userAlbumUpdatedPublisher = albumContentsUseCase.userAlbumUpdatedPublisher(for: album) else { return }
+        
+        albumUpdateSubscription = userAlbumUpdatedPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
-                reloadAlbum()
-            }.store(in: &subscriptions)
-        
-        if let userAlbumUpdatedPublisher = albumContentsUseCase.userAlbumUpdatedPublisher(for: album) {
-            userAlbumUpdatedPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    guard let self else { return }
-                    handleUserAlbumUpdate(setEntity: $0)
-                }.store(in: &subscriptions)
-        }
+                handleUserAlbumUpdate(setEntity: $0)
+            }
     }
     
     private func updateSortOrder(_ sortOrder: SortOrderType) {
@@ -540,7 +504,6 @@ final class AlbumContentViewModel: ViewModelType {
         showAlbumPhotosTask = nil
         updateRightBarButtonsTask = nil
         retrieveUserAlbumCover = nil
-        reloadAlbumTask = nil
         retrieveAlbumNamesTask = nil
         renameAlbumNamesTask = nil
     }

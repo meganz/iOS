@@ -169,8 +169,7 @@ private extension AddToAlbumsViewModel {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { false }),
+            nodeUseCase: MockNodeUseCase()),
         albumSelection: AlbumSelection = AlbumSelection(mode: .single)
     ) {
         self.init(

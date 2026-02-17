@@ -10,10 +10,7 @@ extension AppDelegate {
             sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo),
             featureFlagProvider: DIContainer.featureFlagProvider,
-            nodeUseCase: makeNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: {
-                AlbumRemoteFeatureFlagProvider().isPerformanceImprovementsEnabled()
-            }
+            nodeUseCase: makeNodeUseCase()
         )
     }
     

@@ -12,8 +12,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            nodeUseCase: MockNodeUseCase(),
-            isAlbumPerformanceImprovementsEnabled: { false }
+            nodeUseCase: MockNodeUseCase()
         )
         try super.setUpWithError()
     }
@@ -29,8 +28,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
                 featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-                nodeUseCase: MockNodeUseCase(),
-                isAlbumPerformanceImprovementsEnabled: { true }
+                nodeUseCase: MockNodeUseCase()
             ))
         
         let sut = AlbumCoverPickerPhotoCellViewModel(

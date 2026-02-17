@@ -368,7 +368,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             album: .init(id: albumId, type: .user),
             monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
             tracker: tracker,
-            configuration: .mockConfiguration(isAlbumPerformanceImprovementsEnabled: true)
+            configuration: .mockConfiguration()
         )
         
         let exp = expectation(description: "Album photos loaded")
