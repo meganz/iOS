@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="Prześlij dostępne zdjęcia";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Zaktualizuj dostęp";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Cześć %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="Użyto %1$@ z %2$@";

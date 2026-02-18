@@ -509,9 +509,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>“[A]” ve %d tane daha</string>
+        <string>“[A]” ve %d adet daha</string>
         <key>other</key>
-        <string>“[A]” ve %d tane daha</string>
+        <string>“[A]” ve %d adet daha</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -2781,9 +2781,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName], “[MeetingName]“ toplantısına katılmak için bekliyor</string>
+        <string>[UserName], “[MeetingName]” toplantısına katılmak için bekliyor</string>
         <key>other</key>
-        <string>%d katılımcı “[MeetingName]“ toplantısına katılmak için bekliyor</string>
+        <string>%d katılımcı “[MeetingName]” toplantısına katılmak için bekliyor</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>

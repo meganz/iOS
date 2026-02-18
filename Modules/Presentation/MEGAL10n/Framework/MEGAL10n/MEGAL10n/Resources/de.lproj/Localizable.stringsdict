@@ -3149,7 +3149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie am [date] per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A]. </string>
+        <string>Obwohl wir Sie am [date] per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
         <key>other</key>
         <string>Obwohl wir Sie am [date] per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A]. </string>
       </dict>
@@ -3165,7 +3165,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie mehrfach per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A]. </string>
+        <string>Obwohl wir Sie mehrfach per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
         <key>other</key>
         <string>Obwohl wir Sie mehrfach per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A]. </string>
       </dict>
@@ -3181,7 +3181,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A]. </string>
+        <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Datei belegt [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Datei zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
         <key>other</key>
         <string>Obwohl wir Sie per E-Mail kontaktiert haben, ist Ihr Speicher immer noch voll. %d Dateien belegen [storageSpace] in Ihrem Cloud Drive, und Ihr Account wurde gesperrt. Upgraden Sie auf ein [plan]-Paket, um mehr Speicherplatz zu erhalten und Ihren Account zu entsperren. Wenn Sie nicht in Kürze etwas unternehmen, werden Ihre Daten gelöscht. Upgraden Sie jetzt, um Ihre Dateien zu schützen. [A]Erfahren Sie mehr über Ihre Speicherlimits[/A].</string>
       </dict>
@@ -3260,10 +3260,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Wird hochgeladen: Keine Dateien übrig</string>
         <key>one</key>
-        <string>Uploading: %u item left</string>
+        <string>Wird hochgeladen: Noch %u Datei</string>
         <key>other</key>
-        <string>Uploading: %u items left</string>
+        <string>Wird hochgeladen: Noch %u Dateien</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3276,10 +3278,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Pausiert: Keine Dateien übrig</string>
         <key>one</key>
-        <string>Paused: %u item left</string>
+        <string>Pausiert: Noch %u Datei</string>
         <key>other</key>
-        <string>Paused: %u items left</string>
+        <string>Pausiert: Noch %u Dateien</string>
       </dict>
     </dict>
   </dict>

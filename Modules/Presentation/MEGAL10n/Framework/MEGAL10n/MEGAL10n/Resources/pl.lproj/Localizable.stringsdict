@@ -15,11 +15,11 @@
         <key>zero</key>
         <string>[A] i %d innych podnieśli ręce</string>
         <key>one</key>
-        <string>[A] a %d inni podniosili ręce</string>
+        <string>[A] i %d inny podnieśli ręce</string>
         <key>few</key>
-        <string>[A] a %d inni podniosili ręce</string>
+        <string>[A] a %d inni podnieśli ręce</string>
         <key>many</key>
-        <string>[A] a %d inni podniosili ręce</string>
+        <string>[A] a %d inni podnieśli ręce</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -33,7 +33,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>Ty i %d inni podnieśli ręce</string>
+        <string>Ty i %d innych podnieśli ręce</string>
         <key>one</key>
         <string>Ty i %d inni podnieśli ręce</string>
         <key>few</key>

@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="利用可能な写真をアップロード";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="アクセス権を更新";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="こんにちは、％@さん！";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%2$@中%1$@使用";

@@ -251,7 +251,7 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="Incluir subpastas";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
+"offlineEmptyState_title"="Não há arquivos salvos para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Não há contatos";
 /* Title shown when there's no incoming Shared Items */
@@ -293,7 +293,7 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="Nuvem de arquivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Em fila";
+"queued"="Na fila";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pausado";
 /* Possible state of a transfer. When the transfer was cancelled */
@@ -2725,17 +2725,17 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Assinatura Ativa";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="Você tem uma assinatura no MEGA ativa com a Apple. Você deve cancelá-la separadamente em Assinaturas, pois o MEGA não pode cancelá-la por você. Visite a nossa Central de Ajuda para mais informações.";
+"account.delete.subscription.itunes"="Você tem uma assinatura do MEGA ativa com a Apple. Você deve cancelá-la separadamente em Assinaturas, pois o MEGA não pode cancelá-la por você. Acesse a nossa Central de ajuda para mais informações.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Gerenciar Assinaturas";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="Você tem uma assinatura MEGA ativa com o Google. Você deve cancelá-la separadamente no Google Play, pois o MEGA não pode cancelá-la por você. Visite a nossa Central de Ajuda para mais informações.";
+"account.delete.subscription.googlePlay"="Você tem uma assinatura do MEGA ativa com o Google. Você deve cancelá-la separadamente na Google Play Store, pois o MEGA não pode cancelá-la por você. Acesse a nossa Central de ajuda para mais informações.";
 /* Dialog button title which triggers the action to visit Google play */
-"account.delete.subscription.googlePlay.visit"="Visite Google Play";
+"account.delete.subscription.googlePlay.visit"="Acesse a Google Play Store";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="Você tem uma assinatura MEGA ativa com a Huawei. Você deve cancelá-la separadamente em Huawei AppGallery, pois o MEGA não pode cancelá-la por você. Visite a nossa Central de Ajuda para mais informações.";
+"account.delete.subscription.huaweiAppGallery"="Você tem uma assinatura do MEGA ativa com a Huawei. Você deve cancelá-la separadamente na Huawei AppGallery, pois o MEGA não pode cancelá-la por você. Acesse a nossa Central de ajuda para mais informações.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
-"account.delete.subscription.huaweiAppGallery.visit"="Visite AppGallery";
+"account.delete.subscription.huaweiAppGallery.visit"="Acesse a AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Este é o último passo para excluir a sua conta. Tanto a sua conta quanto a sua assinatura serão excluídos e você perderá permanentemente todos os dados armazenados na sua conta. Por favor, digite a sua senha abaixo.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
@@ -2979,7 +2979,7 @@
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Não feche o aplicativo. Ao fechar, as transferências que ainda não estiverem na lista serão perdidas.";
+"transfers.cancellable.donotclose"="Não feche o aplicativo. Ao fechar, as transferências que ainda não estiverem na fila serão perdidas.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="transferência cancelada";
 /* Title of the dialog used to send bug reports to support team. */
@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Descrição atualizada";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Descartar alterações?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Você quer salvar as alterações feitas na descrição?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Convidar";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Pesquise arquivos de mídia";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="O armazenamento da sua conta está cheio";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Em andamento";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ de %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Oferta de Cyber Monday: %@ de desconto";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4773,7 +4773,7 @@
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Visualização em grade";
 /* Camera Uploads Progress In Queue section title */
-"cameraUploads.progress.section.inQueue.title"="Em fila";
+"cameraUploads.progress.section.inQueue.title"="Na fila";
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ de %2$@";
 /* Camera Uploads row file upload speed */
@@ -4827,15 +4827,15 @@
 /* The subtitle title displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="Mantenha algo seguro com criptografia de conhecimento zero.";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Não é possível visualizar arquivos não decodificados";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Grande";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="Compacta";
-/* Title of Photo's smallest zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.smallest.title"="Pequena";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Data";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="Acesso limitado a fotos";
 /* Undecrypted file open error snackBar message */
@@ -4844,3 +4844,9 @@
 "photo.picker.alert.limitAccess.availableOnly"="Fazer o upload das fotos disponíveis";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Atualizar acesso";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Adicionar itens";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Olá %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1% de %2 usados";

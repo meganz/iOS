@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="描述已更新";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="放弃更改？";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="您是否要保存对描述所做的更改？";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="邀请";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="尝试搜索媒体文件";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="您的存储空间已满";
 /* Button title to upgrade when storage is full */
@@ -4828,14 +4828,14 @@
 "cloudDrive.emptyStateSubtitle"="使用零知识加密保护数据的安全";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="无法预览未解密的文件";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="宽大";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="大号";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="紧凑";
-/* Title of Photo's smallest zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="日期";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="照片访问受限";
 /* Undecrypted file open error snackBar message */
@@ -4844,3 +4844,9 @@
 "photo.picker.alert.limitAccess.availableOnly"="上传可用的照片";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="更新访问权限";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="添加项目";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="你好，%@！";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%2$@已使用%1$@";

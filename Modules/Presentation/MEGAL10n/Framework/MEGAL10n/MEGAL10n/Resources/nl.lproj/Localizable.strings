@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="Upload beschikbare foto's";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Toegang bijwerken";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Hallo %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1$@ van %2$@ gebruikt";

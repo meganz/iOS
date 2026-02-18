@@ -945,13 +945,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="封存帳號";
+"parkAccount"="閒置帳戶";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="我已瞭解我正在重新註冊一個全新且空白的帳戶。除非我能想起原本的密碼，或者找到之前匯出的還原金鑰，否則我將失去我現在帳戶中的所有資料。";
 /* Caption of the button to proceed */
 "startNewAccount"="開始建立新帳號";
 /*  */
-"yourAccounHasBeenParked"="您的舊帳戶已封存。您現在可以登入您的新帳戶。";
+"yourAccounHasBeenParked"="您的舊帳戶已閒置。您現在可以登入您的新帳戶。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="邀請";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="嘗試搜尋媒體檔案";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="您的儲存空間已滿";
 /* Button title to upgrade when storage is full */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@傳輸配額";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="每年收費%@";
+"subscriptionPurchase.plan.billedYearly"="每年計費%@";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍後";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="進行中";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ 中的 %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="網路星期一優惠：%@折扣";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4828,14 +4828,14 @@
 "cloudDrive.emptyStateSubtitle"="使用零知識加密技術保護資料安全";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="無法預覽未解密的檔案";
-/* Title of Photo's large zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="大尺寸";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="精簡";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="最小";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="日期";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="照片存取限受限";
 /* Undecrypted file open error snackBar message */
@@ -4844,3 +4844,9 @@
 "photo.picker.alert.limitAccess.availableOnly"="上傳可用的照片";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="更新存取權限";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="新增項目";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="嗨 %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="已使用%1$@（共 %2$@）";

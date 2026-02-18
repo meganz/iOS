@@ -2857,11 +2857,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>« [A] » a été téléversé dans le Disque nuagique</string>
+        <string>« [A] » a été téléversé dans le disque Cloud</string>
         <key>many</key>
-        <string>%d d’éléments ont été téléversés dans le Disque nuagique</string>
+        <string>%d d’éléments ont été téléversés dans le disque Cloud</string>
         <key>other</key>
-        <string>%d éléments ont été téléversés dans le Disque nuagique</string>
+        <string>%d éléments ont été téléversés dans le disque Cloud</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withOneFile</key>
@@ -3163,11 +3163,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d fichier a été enregistré dans le Disque nuagique.</string>
+        <string>%d fichier a été enregistré dans le disque Cloud.</string>
         <key>many</key>
-        <string>%d de fichiers ont été enregistrés dans le Disque nuagique.</string>
+        <string>%d de fichiers ont été enregistrés dans le disque Cloud.</string>
         <key>other</key>
-        <string>%d fichiers ont été enregistrés dans le Disque nuagique.</string>
+        <string>%d fichiers ont été enregistrés dans le disque Cloud.</string>
       </dict>
     </dict>
     <key>general.saveToPhotos.started</key>
@@ -3613,11 +3613,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3631,11 +3631,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3649,11 +3649,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3739,11 +3739,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Téléversement : %u élément restant</string>
+        <string>Téléversement : %u élément restant</string>
         <key>many</key>
-        <string>Téléversement : %u éléments restants</string>
+        <string>Téléversement : %u éléments restants</string>
         <key>other</key>
-        <string>Téléversement : %u éléments restants</string>
+        <string>Téléversement : %u éléments restants</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3757,11 +3757,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>En pause : %u élément restant</string>
+        <string>En pause : %u élément restant</string>
         <key>many</key>
-        <string>En pause : %u éléments restants</string>
+        <string>En pause : %u éléments restants</string>
         <key>other</key>
-        <string>En pause : %u éléments restants</string>
+        <string>En pause : %u éléments restants</string>
       </dict>
     </dict>
   </dict>

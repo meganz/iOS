@@ -265,7 +265,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Zu MEGA einladen";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Ihr Kontakt [X] hat noch keinen MEGA-Account. Für Anrufe müssen Sie den Kontakt zunächst einladen. ";
+"dialog.callAttempt.contactNotInMEGA"="Ihr Kontakt [X] hat noch keinen MEGA-Account. Für Anrufe müssen Sie den Kontakt zunächst einladen.";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Einladung gesendet";
 /* Button title to allow the user postpone an action */
@@ -391,7 +391,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respektiert die Urheberrechte Dritter und erwartet von Nutzern der MEGA Cloud die Einhaltung aller relevanten Urheberrechtsgesetze.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Es ist Ihnen strikt untersagt, den Dienst MEGA Cloud zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen Dateien, Daten oder Inhalte, die die Urheber- oder andere Eigentumsrechte Dritte verletzen, nicht uploaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übertragen oder in irgendeiner anderen Form zugänglich machen.";
+"copyrightMessagePart2"="Es ist Ihnen strikt untersagt, den Dienst MEGA Cloud zur Verletzung von Urheberrechten zu missbrauchen. Sie dürfen Dateien, Daten oder Inhalte, welche die Urheber- oder andere Eigentumsrechte Dritte verletzen, nicht uploaden, speichern, teilen, anzeigen, streamen, verteilen, emailen, verlinken, übertragen oder in irgendeiner anderen Form zugänglich machen.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Einverstanden";
 /* button caption text that the user clicks when he disagrees */
@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Beschreibung aktualisiert";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Änderungen verwerfen?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Möchten Sie die Änderungen an der Beschreibung speichern?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Einladen";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Führen Sie eine Suche nach Mediendateien durch";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Ihr Speicher ist voll";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Läuft";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ von %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber-Monday-Deal: %@ gespart";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4823,19 +4823,19 @@
 /* The title displayed in the empty view when Cloud Drive root is empty */
 "cloudDrive.emptyStateTitle.root"="Noch keine Inhalte in Ihrem privaten Datentresor";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
-"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+"cloudDrive.emptyStateTitle.nonRoot"="Dieser Ordner ist leer";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+"cloudDrive.emptyStateSubtitle"="Sichern Sie Inhalte sicher mit Zero-Knowledge-Verschlüsselung";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Vorschau für unentschlüsselte Dateien nicht verfügbar";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Groß";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="Kompakt";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Mini";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Datum";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="Eingeschränkter Fotozugriff";
 /* Undecrypted file open error snackBar message */
@@ -4843,4 +4843,10 @@
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.availableOnly"="Verfügbare Fotos hochladen";
 /* Undecrypted file open error snackBar message */
-"photo.picker.alert.limitAccess.selectMore"="Zugriff aktualisieren";
+"photo.picker.alert.limitAccess.selectMore"="Zugriffsrechte ändern";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Elemente hinzufügen";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Hallo %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1$@ von %2$@ belegt";

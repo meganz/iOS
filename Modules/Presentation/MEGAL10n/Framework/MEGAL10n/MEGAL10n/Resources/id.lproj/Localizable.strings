@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="Cara kerja";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="Teman Anda perlu mendaftar akun gratis di MEGA dan [S]menginstal setidaknya satu aplikasi MEGA[/S] (baik aplikasi desktop kami atau salah satu aplikasi seluler kami)";
 /*  */
 "howItWorksSecondary"="Anda dapat memberi tahu teman anda melalui metode apa pun. Anda akan mendapatkan bonus jika anda telah memasukkan alamat email teman anda di sini sebelum mereka mendaftar dengan alamat itu.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Sembunyikan file dan folder penting";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Anda dapat menyembunyikan file dan folder sensitif untuk privasi dalam satu langkah mudah";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Tidak terlihat";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Hanya Anda yang dapat menampilkan file tersembunyi, baik secara individu maupun dengan menampilkan item tersembunyi sementara dari pengaturan";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur untuk privasi";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Tampilkan item tersembunyi beserta thumbnail-nya yang diburamkan, sehingga Anda dapat mengidentifikasinya tanpa menampilkan isinya";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Akun saya";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Deskripsi diperbarui";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Batalkan perubahan?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Apakah anda ingin menyimpan perubahan yang anda buat pada deskripsi?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Undang";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Coba cari file media";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Penyimpanan anda penuh";
 /* Button title to upgrade when storage is full */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ Transfer";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ dibebankan setiap tahun";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Mungkin nanti";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4721,17 +4721,17 @@
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ detik";
 /* The lock video player option in bottom more menu */
-"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+"videoPlayer.lock.lockVideoPlayer"="Kunci pemutar video";
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="Layar terkunci";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Ketuk ikon kunci untuk membuka kunci";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Tangkap";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Gambar disimpan ke perangkat anda";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Gambar dalam gambar";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Putar ulang hingga 60 hari data yang dihapus";
 /* Subscription benefit for for calls and meetings */
@@ -4753,23 +4753,23 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Ukuran";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Penawaran Black Friday: %@ diskon";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="Diskon %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ untuk tahun pertama";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Hemat setidaknya %@ pada paket tahunan";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="Progress";
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Sedang Berlangsung";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@/detik";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Penawaran Cyber Monday: %@ diskon";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Penawaran khusus: %@ diskon";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Tampilan kotak";
 /* Camera Uploads Progress In Queue section title */
@@ -4777,37 +4777,37 @@
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ dari %2$@";
 /* Camera Uploads row file upload speed */
-"cameraUploads.progress.row.uploadSpeed"="%@/s";
+"cameraUploads.progress.row.uploadSpeed"="%@/detik";
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="Ditagih setiap tahun";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Hanya %@/bulan";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Pengunggahan kamera ditunda, daya baterai terlalu rendah. Isi daya baterai untuk melanjutkan pengunggahan kamera";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Pengunggahan kamera ditunda, suhu perangkat terlalu tinggi. Pengunggahan akan dilanjutkan setelah perangkat Anda mendingin";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Pengunggahan kamera ditunda, tidak ada koneksi internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Izinkan data seluler";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="Penyimpanan anda penuh";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Untuk terus mengunggah, upgrade sekarang untuk mendapatkan lebih banyak penyimpanan";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Tingkatkan sekarang";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Untuk memastikan kami tidak melewatkan semua kenangan Anda, MEGA membutuhkan akses penuh ke perpustakaan foto Anda";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Perbarui izin";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Semua selesai";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="Foto dan video baru akan ditampilkan di sini setelah Anda mengambilnya";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="Transfer yang sedang berlangsung akan muncul di sini";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="Transfer yang berada dalam antrean akan muncul di sini";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Bagikan Dibuat";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,22 +4817,36 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Unggahan kamera selesai";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Pengunggahan kamera telah diperbarui";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Hanya Anda yang dapat mengungkapkan file tersembunyi, baik secara individual atau dengan menampilkan sementara item tersembunyi dari [A]Pengaturan[/A].";
 /* The title displayed in the empty view when Cloud Drive root is empty */
-"cloudDrive.emptyStateTitle.root"="Nothing in your private vault yet";
+"cloudDrive.emptyStateTitle.root"="Belum ada apa pun di brankas pribadi Anda";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
-"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+"cloudDrive.emptyStateTitle.nonRoot"="Folder ini kosong";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+"cloudDrive.emptyStateSubtitle"="Simpan sesuatu dengan aman menggunakan enkripsi zero-knowledge";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Pratinjau tidak tersedia untuk file yang belum didekripsi";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Besar";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Padat";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Kompak";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Terkecil";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Tanggal";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Tambahkan item";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Akses foto terbatas";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Beberapa foto yang Anda pilih tidak tersedia untuk MEGA. Ingin memperbarui pengaturan akses Anda?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Unggah foto yang tersedia";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Perbarui akses";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Hai %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1$@ dari %2$@ digunakan";

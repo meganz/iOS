@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Invită";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Încearcă să cauți fișiere media";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Spațiul dvs. de stocare este plin";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="În curs";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ din %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Ofertă Cyber Monday: reducere de %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4827,12 +4827,26 @@
 /* The subtitle title displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="Păstrați ceva în siguranță cu criptare cu cunoștință zero";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previzualizări indisponibile pentru fișierele ne-decriptate";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Mare";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="Compact";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Cele mai mici";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Dată";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Adăugați elemente";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Acces limitat la fotografii";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Unele fotografii pe care le-ai selectat nu sunt disponibile pentru MEGA. Vrei să actualizezi setările de acces?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Încarcă fotografiile disponibile";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Actualizează accesul";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Salut %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="Utilizate %1$@ din %2$@";

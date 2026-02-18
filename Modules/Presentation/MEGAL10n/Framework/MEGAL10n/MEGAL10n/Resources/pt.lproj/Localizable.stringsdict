@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] e mais %d pessoas levantaram a mão</string>
         <key>one</key>
         <string>[A] e mais %d pessoa levantaram a mão</string>
         <key>many</key>
@@ -30,6 +32,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Você e mais %d pessoas levantaram a mão</string>
         <key>one</key>
         <string>Você e mais %d pessoa levantaram a mão</string>
         <key>many</key>
@@ -48,6 +52,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos</string>
         <key>one</key>
         <string>%d arquivo</string>
         <key>many</key>
@@ -66,6 +72,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram removidos</string>
         <key>one</key>
         <string>%d item foi removido</string>
         <key>many</key>
@@ -84,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos</string>
         <key>one</key>
         <string>%d arquivo</string>
         <key>many</key>
@@ -102,6 +112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas</string>
         <key>one</key>
         <string>%d pasta</string>
         <key>many</key>
@@ -120,6 +132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas</string>
         <key>one</key>
         <string>%d pasta</string>
         <key>many</key>
@@ -138,6 +152,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Qualquer pessoa com estes links pode ver e fazer o download dos dados</string>
         <key>one</key>
         <string>Qualquer pessoa com este link pode ver e fazer o download dos dados</string>
         <key>many</key>
@@ -156,6 +172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Links copiados para a área de transferência</string>
         <key>one</key>
         <string>Link copiado para a área de transferência</string>
         <key>many</key>
@@ -174,6 +192,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Links criados e copiados para a área de transferência</string>
         <key>one</key>
         <string>Link criado e copiado para a área de transferência</string>
         <key>many</key>
@@ -192,6 +212,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Aplicar a todos os %d duplicados</string>
         <key>one</key>
         <string>Aplicar ao duplicado</string>
         <key>many</key>
@@ -210,10 +232,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>horas</string>
         <key>one</key>
         <string>hora</string>
         <key>many</key>
-        <string>horas</string>
+        <string>de horas</string>
         <key>other</key>
         <string>horas</string>
       </dict>
@@ -228,10 +252,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>dias</string>
         <key>one</key>
         <string>dia</string>
         <key>many</key>
-        <string>dias</string>
+        <string>de dias</string>
         <key>other</key>
         <string>dias</string>
       </dict>
@@ -246,10 +272,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>semanas</string>
         <key>one</key>
         <string>semana</string>
         <key>many</key>
-        <string>semanas</string>
+        <string>de semanas</string>
         <key>other</key>
         <string>semanas</string>
       </dict>
@@ -264,10 +292,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>meses</string>
         <key>one</key>
         <string>mês</string>
         <key>many</key>
-        <string>meses</string>
+        <string>de meses</string>
         <key>other</key>
         <string>meses</string>
       </dict>
@@ -282,10 +312,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>anos</string>
         <key>one</key>
         <string>ano</string>
         <key>many</key>
-        <string>anos</string>
+        <string>de anos</string>
         <key>other</key>
         <string>anos</string>
       </dict>
@@ -300,10 +332,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d horas</string>
         <key>one</key>
         <string>%d hora</string>
         <key>many</key>
-        <string>%d horas</string>
+        <string>%d de horas</string>
         <key>other</key>
         <string>%d horas</string>
       </dict>
@@ -318,10 +352,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dias</string>
         <key>one</key>
         <string>%d dia</string>
         <key>many</key>
-        <string>%d dias</string>
+        <string>%d de dias</string>
         <key>other</key>
         <string>%d dias</string>
       </dict>
@@ -336,10 +372,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d semanas</string>
         <key>one</key>
         <string>%d semana</string>
         <key>many</key>
-        <string>%d semanas</string>
+        <string>%d de semanas</string>
         <key>other</key>
         <string>%d semanas</string>
       </dict>
@@ -354,10 +392,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d meses</string>
         <key>one</key>
         <string>%d mês</string>
         <key>many</key>
-        <string>%d meses</string>
+        <string>%d de meses</string>
         <key>other</key>
         <string>%d meses</string>
       </dict>
@@ -372,10 +412,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d anos</string>
         <key>one</key>
         <string>%d ano</string>
         <key>many</key>
-        <string>%d anos</string>
+        <string>%d de anos</string>
         <key>other</key>
         <string>%d anos</string>
       </dict>
@@ -390,6 +432,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos</string>
         <key>one</key>
         <string>%d arquivo</string>
         <key>many</key>
@@ -408,6 +452,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas</string>
         <key>one</key>
         <string>%d pasta</string>
         <key>many</key>
@@ -426,6 +472,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas</string>
         <key>one</key>
         <string>%d pasta</string>
         <key>many</key>
@@ -444,6 +492,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d arquivos</string>
         <key>one</key>
         <string>• %d arquivo</string>
         <key>many</key>
@@ -462,10 +512,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens</string>
         <key>one</key>
         <string>%d item</string>
         <key>many</key>
-        <string>%d itens</string>
+        <string>%d de itens</string>
         <key>other</key>
         <string>%d itens</string>
       </dict>
@@ -480,10 +532,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens</string>
         <key>one</key>
         <string>%d item</string>
         <key>many</key>
-        <string>%d itens</string>
+        <string>%d de itens</string>
         <key>other</key>
         <string>%d itens</string>
       </dict>
@@ -498,6 +552,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d imagens</string>
         <key>one</key>
         <string>%d imagem</string>
         <key>many</key>
@@ -516,6 +572,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d vídeos</string>
         <key>one</key>
         <string>%d vídeo</string>
         <key>many</key>
@@ -534,6 +592,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d imagens</string>
         <key>one</key>
         <string>%d imagem</string>
         <key>many</key>
@@ -552,6 +612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>e %d vídeos</string>
         <key>one</key>
         <string>e %d vídeo</string>
         <key>many</key>
@@ -570,6 +632,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” e mais %d</string>
         <key>one</key>
         <string>“[A]” e mais %d</string>
         <key>many</key>
@@ -588,6 +652,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] de %d arquivos</string>
         <key>one</key>
         <string>[A] de %d arquivo</string>
         <key>many</key>
@@ -606,6 +672,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos</string>
         <key>one</key>
         <string>%d arquivo</string>
         <key>many</key>
@@ -624,6 +692,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Remover links</string>
         <key>one</key>
         <string>Remover link</string>
         <key>many</key>
@@ -642,6 +712,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Links removidos</string>
         <key>one</key>
         <string>Link removido</string>
         <key>many</key>
@@ -660,6 +732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Remover os links?</string>
         <key>one</key>
         <string>Remover o link?</string>
         <key>many</key>
@@ -678,6 +752,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los.</string>
         <key>one</key>
         <string>As pessoas com as quais você compartilhou este link já não poderão acessá-lo.</string>
         <key>many</key>
@@ -696,6 +772,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Compartilhar pastas</string>
         <key>one</key>
         <string>Compartilhar pasta</string>
         <key>many</key>
@@ -714,6 +792,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Compartilhar links</string>
         <key>one</key>
         <string>Compartilhar link</string>
         <key>many</key>
@@ -732,6 +812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Gerenciar links</string>
         <key>one</key>
         <string>Gerenciar link</string>
         <key>many</key>
@@ -750,6 +832,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Exportar arquivos</string>
         <key>one</key>
         <string>Exportar arquivo</string>
         <key>many</key>
@@ -768,6 +852,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d segundos</string>
         <key>one</key>
         <string>%d segundo</string>
         <key>many</key>
@@ -786,6 +872,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minutos</string>
         <key>one</key>
         <string>%d minuto</string>
         <key>many</key>
@@ -804,6 +892,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d horas</string>
         <key>one</key>
         <string>%d hora</string>
         <key>many</key>
@@ -822,6 +912,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d horas</string>
         <key>one</key>
         <string>%d hora</string>
         <key>many</key>
@@ -840,12 +932,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>e %d minutos</string>
         <key>one</key>
-        <string> e %d minuto</string>
+        <string>e %d minuto</string>
         <key>many</key>
-        <string> e %d de minutos</string>
+        <string>e %d de minutos</string>
         <key>other</key>
-        <string> e %d minutos</string>
+        <string>e %d minutos</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -858,6 +952,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minutos</string>
         <key>one</key>
         <string>%d minuto</string>
         <key>many</key>
@@ -876,6 +972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d horas</string>
         <key>one</key>
         <string>%d hora</string>
         <key>many</key>
@@ -894,6 +992,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minutos</string>
         <key>one</key>
         <string>%d minuto</string>
         <key>many</key>
@@ -912,6 +1012,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Estas pastas só podem ser compartilhadas como somente leitura porque são pastas de backup. Qualquer alteração no seu conteúdo pode desativar o backup.</string>
         <key>one</key>
         <string>Esta pasta só pode ser compartilhada como somente leitura porque é uma pasta de backup. Qualquer alteração no seu conteúdo pode desativar o backup.</string>
         <key>many</key>
@@ -930,6 +1032,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d horas</string>
         <key>one</key>
         <string>%d hora</string>
         <key>many</key>
@@ -948,6 +1052,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d minutos</string>
         <key>one</key>
         <string>%d minuto</string>
         <key>many</key>
@@ -966,6 +1072,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>horas</string>
         <key>one</key>
         <string>hora</string>
         <key>many</key>
@@ -984,6 +1092,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>minutos</string>
         <key>one</key>
         <string>minuto</string>
         <key>many</key>
@@ -1002,6 +1112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d mensagens não lidas</string>
         <key>one</key>
         <string>%d mensagem não lida</string>
         <key>many</key>
@@ -1020,6 +1132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Somente é possível adicionar %d itens por vez a um álbum.</string>
         <key>one</key>
         <string>Somente é possível adicionar %d item por vez a um álbum.</string>
         <key>many</key>
@@ -1038,6 +1152,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram adicionados a “[A]”</string>
         <key>one</key>
         <string>%d item foi adicionado a “[A]”</string>
         <key>many</key>
@@ -1056,6 +1172,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de %d vídeos não foi feito</string>
         <key>one</key>
         <string>Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload do vídeo não foi feito</string>
         <key>many</key>
@@ -1074,6 +1192,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos pendentes</string>
         <key>one</key>
         <string>%d arquivo pendente</string>
         <key>many</key>
@@ -1092,6 +1212,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Deletar (%d)</string>
         <key>one</key>
         <string>Deletar (%d)</string>
         <key>many</key>
@@ -1110,6 +1232,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Deletar os álbuns?</string>
         <key>one</key>
         <string>Deletar o álbum?</string>
         <key>many</key>
@@ -1128,6 +1252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Os álbuns serão deletados, mas o conteúdo deles permanecerá na sua linha do tempo.</string>
         <key>one</key>
         <string>O álbum será deletado, mas o conteúdo dele permanecerá na sua linha do tempo.</string>
         <key>many</key>
@@ -1146,6 +1272,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d álbuns foram deletados</string>
         <key>one</key>
         <string>“[A]” foi deletado</string>
         <key>many</key>
@@ -1164,6 +1292,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram eliminados de “[A]”</string>
         <key>one</key>
         <string>%d item foi eliminado de “[A]”</string>
         <key>many</key>
@@ -1182,12 +1312,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Remover links?</string>
         <key>one</key>
-        <string>Remover o link?</string>
+        <string>Remover link?</string>
         <key>many</key>
-        <string>Remover os links?</string>
+        <string>Remover links?</string>
         <key>other</key>
-        <string>Remover os links?</string>
+        <string>Remover links?</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
@@ -1200,6 +1332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Remover links</string>
         <key>one</key>
         <string>Remover link</string>
         <key>many</key>
@@ -1218,12 +1352,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>As pessoas com as quais você compartilhou estes links perderão o acesso aos álbuns.</string>
         <key>one</key>
-        <string>As pessoas com as quais você compartilhou esse link perderão o acesso ao álbum.</string>
+        <string>As pessoas com as quais você compartilhou este link perderão o acesso ao álbum.</string>
         <key>many</key>
-        <string>As pessoas com as quais você compartilhou esses links perderão o acesso aos álbuns.</string>
+        <string>As pessoas com as quais você compartilhou estes links perderão o acesso aos álbuns.</string>
         <key>other</key>
-        <string>As pessoas com as quais você compartilhou esses links perderão o acesso aos álbuns.</string>
+        <string>As pessoas com as quais você compartilhou estes links perderão o acesso aos álbuns.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -1236,6 +1372,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Links removidos</string>
         <key>one</key>
         <string>Link removido</string>
         <key>many</key>
@@ -1254,6 +1392,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Todos os dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
@@ -1272,6 +1412,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Todos os dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
@@ -1290,10 +1432,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDay], toda semana, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>[WeekDay], a cada %d de semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1308,10 +1452,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDay], toda semana, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>[WeekDay], a cada %d de semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1326,10 +1472,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDaysList] e [LastWeekDay], toda semana, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>[WeekDaysList] e [LastWeekDay], a cada %d de semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1344,10 +1492,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>[WeekDaysList] e [LastWeekDay], toda semana, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>[WeekDaysList] e [LastWeekDay], a cada %d de semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDaysList] e [LastWeekDay], a cada %d semanas, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1362,10 +1512,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Dia [MonthDay] de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Dia [MonthDay] do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Dia [MonthDay] de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Dia [MonthDay] de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Dia [MonthDay] de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1380,10 +1532,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Dia [MonthDay] de cada %d meses, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Dia [MonthDay] do mês, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Dia [MonthDay] de cada %d meses, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Dia [MonthDay] de cada %d de meses, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Dia [MonthDay] de cada %d meses, a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1398,10 +1552,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira segunda-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira segunda-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1416,10 +1572,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira segunda-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira segunda-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1434,10 +1592,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda segunda-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda segunda-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1452,10 +1612,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda segunda-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda segunda-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1470,10 +1632,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira segunda-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira segunda-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1488,10 +1652,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira segunda-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira segunda-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1506,10 +1672,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta segunda-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta segunda-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1524,10 +1692,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta segunda-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta segunda-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1542,10 +1712,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta segunda-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta segunda-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta segunda-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1560,10 +1732,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta segunda-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta segunda-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta segunda-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1578,10 +1752,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira terça-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira terça-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1596,10 +1772,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira terça-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira terça-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1614,10 +1792,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda terça-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda terça-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1632,10 +1812,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda terça-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda terça-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1650,10 +1832,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira terça-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira terça-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1668,10 +1852,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira terça-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira terça-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1686,10 +1872,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta terça-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta terça-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1704,10 +1892,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta terça-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta terça-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1722,10 +1912,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta terça-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta terça-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta terça-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1740,10 +1932,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta terça-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta terça-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta terça-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1758,10 +1952,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira quarta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira quarta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1776,10 +1972,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira quarta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira quarta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1794,10 +1992,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda quarta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda quarta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1812,10 +2012,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda quarta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda quarta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1830,10 +2032,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira quarta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira quarta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1848,10 +2052,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira quarta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira quarta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1866,10 +2072,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta quarta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta quarta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1884,10 +2092,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta quarta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta quarta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1902,10 +2112,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B</string>
         <key>one</key>
         <string>Quinta quarta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta quarta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta quarta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1920,10 +2132,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta quarta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta quarta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta quarta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1938,10 +2152,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira quinta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira quinta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1956,10 +2172,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira quinta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira quinta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1974,10 +2192,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda quinta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda quinta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -1992,10 +2212,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda quinta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda quinta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2010,10 +2232,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira quinta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira quinta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2028,10 +2252,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira quinta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira quinta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2046,10 +2272,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta quinta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta quinta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2064,10 +2292,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta quinta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta quinta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2082,10 +2312,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta quinta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta quinta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta quinta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2100,10 +2332,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta quinta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta quinta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta quinta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2118,10 +2352,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira sexta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira sexta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2136,10 +2372,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeira sexta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeira sexta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2154,10 +2392,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda sexta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda sexta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2172,10 +2412,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segunda sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segunda sexta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segunda sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segunda sexta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segunda sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2190,10 +2432,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira sexta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira sexta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2208,10 +2452,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceira sexta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceira sexta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceira sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2226,10 +2472,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta sexta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta sexta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2244,10 +2492,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarta sexta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarta sexta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2262,10 +2512,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta sexta-feira do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta sexta-feira de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta sexta-feira de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2280,10 +2532,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinta sexta-feira do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinta sexta-feira de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinta sexta-feira de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2298,10 +2552,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeiro sábado do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeiro sábado de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2316,10 +2572,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeiro sábado do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeiro sábado de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2334,10 +2592,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segundo sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segundo sábado do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segundo sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segundo sábado de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segundo sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2352,10 +2612,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segundo sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segundo sábado do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segundo sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segundo sábado de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segundo sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2370,10 +2632,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceiro sábado do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceiro sábado de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceiro sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2388,10 +2652,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceiro sábado do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceiro sábado de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceiro sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2406,10 +2672,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarto sábado do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarto sábado de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2424,10 +2692,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarto sábado do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarto sábado de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2442,10 +2712,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinto sábado do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinto sábado de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinto sábado de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2460,10 +2732,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinto sábado do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinto sábado de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinto sábado de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2478,10 +2752,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeiro domingo do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeiro domingo de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2496,10 +2772,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Primeiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Primeiro domingo do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Primeiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Primeiro domingo de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Primeiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2514,10 +2792,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segundo domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segundo domingo do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segundo domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segundo domingo de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segundo domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2532,10 +2812,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Segundo domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Segundo domingo do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Segundo domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Segundo domingo de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Segundo domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2550,10 +2832,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceiro domingo do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceiro domingo de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceiro domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2568,10 +2852,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Terceiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Terceiro domingo do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Terceiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Terceiro domingo de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Terceiro domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2586,10 +2872,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarto domingo do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarto domingo de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2604,10 +2892,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quarto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quarto domingo do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quarto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quarto domingo de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quarto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2622,10 +2912,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinto domingo do mês, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinto domingo de cada %d de meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinto domingo de cada %d meses, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2640,10 +2932,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quinto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>one</key>
         <string>Quinto domingo do mês a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>many</key>
-        <string>Quinto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <string>Quinto domingo de cada %d de meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
         <key>other</key>
         <string>Quinto domingo de cada %d meses a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
@@ -2658,6 +2952,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[Arquivos não decodificados]</string>
         <key>one</key>
         <string>[Arquivo não decodificado]</string>
         <key>many</key>
@@ -2676,6 +2972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dias restantes</string>
         <key>one</key>
         <string>%d dia restante</string>
         <key>many</key>
@@ -2694,6 +2992,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Válido por %d dias.</string>
         <key>one</key>
         <string>Válido por %d dia.</string>
         <key>many</key>
@@ -2712,6 +3012,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>válido por %d dias</string>
         <key>one</key>
         <string>válido por %d dia</string>
         <key>many</key>
@@ -2730,6 +3032,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>O bônus expira em %d dias.</string>
         <key>one</key>
         <string>O bônus expira em %d dia.</string>
         <key>many</key>
@@ -2748,6 +3052,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A mensagem deve ter pelo menos %d caracteres</string>
         <key>one</key>
         <string>A mensagem deve ter pelo menos %d caractere</string>
         <key>many</key>
@@ -2766,10 +3072,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Foi feito o upload de %d itens a “[B]”</string>
         <key>one</key>
-        <string>Foi feito o upload de “[A]“ a “[B]“</string>
+        <string>Foi feito o upload de “[A]” a “[B]”</string>
         <key>many</key>
-        <string>Foi feito o upload de %d de itens a “[B]“</string>
+        <string>Foi feito o upload de %d de itens a “[B]”</string>
         <key>other</key>
         <string>Foi feito o upload de %d itens a “[B]”</string>
       </dict>
@@ -2784,8 +3092,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Foi feito o upload de %d itens à Nuvem de arquivos</string>
         <key>one</key>
-        <string>Foi feito o upload de “[A]” item à Nuvem de arquivos</string>
+        <string>Foi feito o upload de “[A]” à Nuvem de arquivos</string>
         <key>many</key>
         <string>Foi feito o upload de %d de itens à Nuvem de arquivos</string>
         <key>other</key>
@@ -2802,6 +3112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Enviar “[A]” a todos os chats</string>
         <key>one</key>
         <string>Enviar “[A]” ao chat</string>
         <key>many</key>
@@ -2820,6 +3132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Enviar [A] a todos os chats</string>
         <key>one</key>
         <string>Enviar [A] ao chat</string>
         <key>many</key>
@@ -2838,10 +3152,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d dias</string>
         <key>one</key>
         <string>%d dia</string>
         <key>many</key>
-        <string>%d dias</string>
+        <string>%d de dias</string>
         <key>other</key>
         <string>%d dias</string>
       </dict>
@@ -2856,10 +3172,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d semanas</string>
         <key>one</key>
         <string>%d semana</string>
         <key>many</key>
-        <string>%d semanas</string>
+        <string>%d de semanas</string>
         <key>other</key>
         <string>%d semanas</string>
       </dict>
@@ -2874,10 +3192,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d meses</string>
         <key>one</key>
         <string>%d mês</string>
         <key>many</key>
-        <string>%d meses</string>
+        <string>%d de meses</string>
         <key>other</key>
         <string>%d meses</string>
       </dict>
@@ -2892,12 +3212,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai acontecer a cada %d dias.</string>
         <key>one</key>
-        <string>A reunião vai ser realizada todos os dias.</string>
+        <string>A reunião vai acontecer todos os dias.</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de dias.</string>
+        <string>A reunião vai acontecer a cada %d de dias.</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d dias.</string>
+        <string>A reunião vai acontecer a cada %d dias.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2910,12 +3232,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai seracontecer a cada %d semanas no(a) [weekDayName].</string>
         <key>one</key>
-        <string>A reunião vai ser realizada toda semana no(a) [weekDayName].</string>
+        <string>A reunião vaiacontecer toda semana no(a) [weekDayName].</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de semanas no(a) [weekDayName].</string>
+        <string>A reunião vai acontecer a cada %d de semanas no(a) [weekDayName].</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d semanas no(a) [weekDayName].</string>
+        <string>A reunião vai acontecer a cada %d semanas no(a) [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2928,12 +3252,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai acontecer a cada %d semanas no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
         <key>one</key>
-        <string>A reunião vai ser realizada toda semana no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
+        <string>A reunião vai acontecer toda semana no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de semanas no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
+        <string>A reunião vai acontecer a cada %d de semanas no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d semanas no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
+        <string>A reunião vai acontecer a cada %d semanas no(a) [weekDayNames] e no(a) [lastWeekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
@@ -2946,12 +3272,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai acontecer a cada %d meses no dia [cardinalDay].</string>
         <key>one</key>
-        <string>A reunião vai ser realizada todo mês no dia [cardinalDay].</string>
+        <string>A reunião vai acontecer todo mês no dia [cardinalDay].</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de meses no dia [cardinalDay].</string>
+        <string>A reunião vai acontecer a cada %d de meses no dia [cardinalDay].</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d meses no dia [cardinalDay].</string>
+        <string>A reunião vai acontecer a cada %d meses no dia [cardinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -2964,12 +3292,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai acontecer a cada %d meses no dia [cardinalDays] e no dia [cardinalLastDay].</string>
         <key>one</key>
-        <string>A reunião vai ser realizada todo mês no dia [cardinalDays] e no dia [cardinalLastDay].</string>
+        <string>A reunião vai acontecer todo mês no dia [cardinalDays] e no dia [cardinalLastDay].</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de meses no dia [cardinalDays] e no dia [cardinalLastDay].</string>
+        <string>A reunião vai acontecer a cada %d de meses no dia [cardinalDays] e no dia [cardinalLastDay].</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d meses no dia [cardinalDays] e no dia [cardinalLastDay].</string>
+        <string>A reunião vai acontecer a cada %d meses no dia [cardinalDays] e no dia [cardinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2982,12 +3312,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A reunião vai acontecer a cada %d meses no(a) [weekNumber] [weekDayName].</string>
         <key>one</key>
-        <string>A reunião vai ser realizada todo mês no(a) [weekNumber][weekDayName].</string>
+        <string>A reunião vai acontecer todo mês no(a) [weekNumber] [weekDayName].</string>
         <key>many</key>
-        <string>A reunião vai ser realizada a cada %d de meses no(a) [weekNumber][weekDayName].</string>
+        <string>A reunião vai acontecer a cada %d de meses no(a) [weekNumber] [weekDayName].</string>
         <key>other</key>
-        <string>A reunião vai ser realizada a cada %d meses no(a) [weekNumber][weekDayName].</string>
+        <string>A reunião vai acontecer a cada %d meses no(a) [weekNumber] [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -3000,6 +3332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d semanas no(a) [weekDayNames]</string>
         <key>one</key>
         <string>Toda semana no(a) [weekDayNames]</string>
         <key>many</key>
@@ -3018,6 +3352,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d meses no dia [cardinalNumber]</string>
         <key>one</key>
         <string>Todo mês no dia [cardinalNumber]</string>
         <key>many</key>
@@ -3036,10 +3372,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d meses no(a) [ordinalNumber] [weekDayName]</string>
         <key>one</key>
-        <string>Todo mês no(a) [ordinalNumber] [weekDayName] </string>
+        <string>Todo mês no(a) [ordinalNumber] [weekDayName]</string>
         <key>many</key>
-        <string>A cada %d de meses no(a) [ordinalNumber] [weekDayName] </string>
+        <string>A cada %d de meses no(a) [ordinalNumber] [weekDayName]</string>
         <key>other</key>
         <string>A cada %d meses no(a) [ordinalNumber] [weekDayName]</string>
       </dict>
@@ -3054,6 +3392,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Alguns meses não têm dia %d. Nestes meses, o agendamento será no último dia do mês.</string>
         <key>one</key>
         <string>Alguns meses não têm dia %d. Nestes meses, o agendamento será no último dia do mês.</string>
         <key>many</key>
@@ -3072,6 +3412,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A cada %d dias</string>
         <key>one</key>
         <string>Todo dia</string>
         <key>many</key>
@@ -3090,6 +3432,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos foram salvos na Nuvem de arquivos</string>
         <key>one</key>
         <string>%d arquivo foi salvo na Nuvem de arquivos</string>
         <key>many</key>
@@ -3108,6 +3452,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d downloads foram iniciados</string>
         <key>one</key>
         <string>Download iniciado</string>
         <key>many</key>
@@ -3126,12 +3472,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d participantes estão esperando para entrar em “[MeetingName]”</string>
         <key>one</key>
-        <string>[UserName] está esperando para entrar em “[MeetingName]“</string>
+        <string>[UserName] está esperando para entrar em “[MeetingName]”</string>
         <key>many</key>
-        <string>%d de participantes estão esperando para entrar em “[MeetingName]“</string>
+        <string>%d de participantes estão esperando para entrar em “[MeetingName]”</string>
         <key>other</key>
-        <string>%d participantes estão esperando para entrar em “[MeetingName]“</string>
+        <string>%d participantes estão esperando para entrar em “[MeetingName]”</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -3144,10 +3492,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d participantes estão esperando para entrar na chamada</string>
         <key>one</key>
         <string>[UserName] está esperando para entrar na chamada</string>
         <key>many</key>
-        <string>%d participantes estão esperando para entrar na chamada</string>
+        <string>%d de participantes estão esperando para entrar na chamada</string>
         <key>other</key>
         <string>%d participantes estão esperando para entrar na chamada</string>
       </dict>
@@ -3162,10 +3512,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d participantes</string>
         <key>one</key>
         <string>%d participante</string>
         <key>many</key>
-        <string>%d participantes</string>
+        <string>%d de participantes</string>
         <key>other</key>
         <string>%d participantes</string>
       </dict>
@@ -3180,6 +3532,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens selecionados</string>
         <key>one</key>
         <string>%d item selecionado</string>
         <key>many</key>
@@ -3198,6 +3552,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Arquivos enviados ao chat</string>
         <key>one</key>
         <string>Arquivo enviado ao chat</string>
         <key>many</key>
@@ -3216,6 +3572,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Arquivo enviado para %d chats</string>
         <key>one</key>
         <string>Arquivo enviado para %d chat</string>
         <key>many</key>
@@ -3234,6 +3592,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Arquivos enviados para %d chats</string>
         <key>one</key>
         <string>Arquivos enviados para %d chat</string>
         <key>many</key>
@@ -3252,6 +3612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d contatos</string>
         <key>one</key>
         <string>%d contato</string>
         <key>many</key>
@@ -3270,6 +3632,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Anexou %d arquivos</string>
         <key>one</key>
         <string>Anexou %d arquivo</string>
         <key>many</key>
@@ -3288,6 +3652,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Convidar %d contatos</string>
         <key>one</key>
         <string>Convidar %d contato</string>
         <key>many</key>
@@ -3306,10 +3672,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d participantes</string>
         <key>one</key>
         <string>%d participante</string>
         <key>many</key>
-        <string>%d participantes</string>
+        <string>%d de participantes</string>
         <key>other</key>
         <string>%d participantes</string>
       </dict>
@@ -3324,12 +3692,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>As notificações permanecerão silenciadas até às [Time]</string>
         <key>one</key>
-        <string>As notificações permanecerão silenciadas até a [Time]</string>
+        <string>As notificações permanecerão silenciadas até à [Time]</string>
         <key>many</key>
-        <string>As notificações permanecerão silenciadas até as [Time]</string>
+        <string>As notificações permanecerão silenciadas até às [Time]</string>
         <key>other</key>
-        <string>As notificações permanecerão silenciadas até as [Time]</string>
+        <string>As notificações permanecerão silenciadas até às [Time]</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -3342,6 +3712,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas compartilhadas</string>
         <key>one</key>
         <string>Pasta compartilhada</string>
         <key>many</key>
@@ -3360,6 +3732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>A sua chamada gratuita vai terminar em %d minutos</string>
         <key>one</key>
         <string>Esta chamada gratuita vai terminar em %d minuto</string>
         <key>many</key>
@@ -3378,6 +3752,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d vídeos foram adicionados a “[A]”</string>
         <key>one</key>
         <string>%d vídeo foi adicionado a “[A]”</string>
         <key>many</key>
@@ -3396,6 +3772,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d vídeos foram eliminados de “[A]”</string>
         <key>one</key>
         <string>%d vídeo foi eliminado de “[A]”</string>
         <key>many</key>
@@ -3414,6 +3792,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens ocultos</string>
         <key>one</key>
         <string>%d item oculto</string>
         <key>many</key>
@@ -3432,6 +3812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens já não estão ocultos</string>
         <key>one</key>
         <string>%d item já não está oculto</string>
         <key>many</key>
@@ -3450,6 +3832,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram adicionados a [A]</string>
         <key>one</key>
         <string>Adicionado a [A]</string>
         <key>many</key>
@@ -3468,6 +3852,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d arquivos adicionados</string>
         <key>one</key>
         <string>%d arquivo adicionado</string>
         <key>many</key>
@@ -3486,6 +3872,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d pastas adicionadas</string>
         <key>one</key>
         <string>%d pasta adicionada</string>
         <key>many</key>
@@ -3504,12 +3892,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Foram adicionados %d arquivo</string>
-        <key>many</key>
-        <string>Foram adicionados %d de arquivos</string>
-        <key>other</key>
+        <key>zero</key>
         <string>Foram adicionados %d arquivos</string>
+        <key>one</key>
+        <string>adicionou %d arquivo</string>
+        <key>many</key>
+        <string>adicionou %d de arquivos</string>
+        <key>other</key>
+        <string>adicionou %d arquivos</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3522,6 +3912,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>e %d pastas</string>
         <key>one</key>
         <string>e %d pasta</string>
         <key>many</key>
@@ -3540,6 +3932,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>one</key>
         <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
@@ -3558,6 +3952,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Embora tenhamos entrado em contato com você por email diversas vezes, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>one</key>
         <string>Embora tenhamos entrado em contato com você por email diversas vezes, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
@@ -3576,6 +3972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>one</key>
         <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
@@ -3594,6 +3992,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d versões de arquivos.</string>
         <key>one</key>
         <string>%d versão de arquivo.</string>
         <key>many</key>
@@ -3612,6 +4012,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Espaço ocupado por versões de arquivos: [storageSpace]</string>
         <key>one</key>
         <string>Espaço ocupado pela versão de arquivo: [storageSpace]</string>
         <key>many</key>
@@ -3630,6 +4032,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram adicionados a “[A]”</string>
         <key>one</key>
         <string>Adicionado a “[A]”</string>
         <key>many</key>
@@ -3648,12 +4052,14 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d itens foram removidos da fila</string>
         <key>one</key>
-        <string>“[A]” foi eliminado da pasta compartilhada</string>
+        <string>“[A]” foi eliminado da fila</string>
         <key>many</key>
-        <string>%d de itens foram removidos da lista</string>
+        <string>%d de itens foram removidos da fila</string>
         <key>other</key>
-        <string>%d itens foram removidos da lista</string>
+        <string>%d itens foram removidos da fila</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.uploading.items</key>
@@ -3666,6 +4072,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Fazendo upload: %u itens restantes</string>
         <key>one</key>
         <string>Fazendo upload: %u item restante</string>
         <key>many</key>
@@ -3684,6 +4092,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>Pausado: %u itens restantes</string>
         <key>one</key>
         <string>Pausado: %u item restante</string>
         <key>many</key>

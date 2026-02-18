@@ -1101,7 +1101,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="휴대 전화 번호를 추가하여 %@의 저장 공간을 받았습니다.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="휴대전화 번호를 추가하면 %@의 무료 저장 공간을 받게 되며, %2$@";
+"account.achievement.phoneNumber.incomplete.explaination.label"="휴대전화 번호를 추가하면 %@의 무료 저장 공간을 받게 되며, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="전화번호를 추가하고 %@를 무료로 받으세요. 이것은 당신의 연락처들이 당신을 MEGA에서 찾기 더 쉽게 해줍니다.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -2025,9 +2025,9 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="요금제";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 암호도 잊으셨다면, [B]MEGA도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다.[/B]";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 암호도 잊으셨다면, [B]MEGA도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다[/B].";
 /*  */
-"Business"="기업용";
+"Business"="비즈니스";
 /*  */
 "Administrator"="관리자";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
@@ -4828,19 +4828,25 @@
 "cloudDrive.emptyStateSubtitle"="영지식 암호화로 안전하게 보관하세요";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="복호화되지 않은 파일은 미리 보기할 수 없습니다";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="대형";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="소형";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="크게";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="작게";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="가장 작게";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="날짜";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="제한된 사진 접근";
 /* Undecrypted file open error snackBar message */
-"photo.picker.alert.limitAccess.message"="선택한 사진 중 일부가 MEGA에서 이용 불가능합니다. 접근 설정을 수정 하시겠습니까?";
+"photo.picker.alert.limitAccess.message"="선택한 사진 중 일부가 MEGA에서 이용 불가합니다. 접근 설정을 수정하시겠습니까?";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.availableOnly"="이용 가능한 사진 업로드";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="권한 수정";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="항목 추가";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="안녕하세요 %@ 님!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%2$@ 중 %1$@ 이용됨";

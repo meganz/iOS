@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="อัปโหลดรูปถ่ายที่สามารถเข้าถึงได้";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="อัปเดตการเข้าถึง";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="สวัสดี %@";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="ใช้ไป %1$@ จาก %2$@";

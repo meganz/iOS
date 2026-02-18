@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="Загрузить доступные фотографии";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Обновить доступ";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Привет, %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="Используется %1$@ из %2$@";

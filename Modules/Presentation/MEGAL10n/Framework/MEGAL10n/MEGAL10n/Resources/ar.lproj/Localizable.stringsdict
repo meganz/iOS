@@ -4165,17 +4165,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>%d مشارك ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <string>%d مشارك ينتظرون الانضمام إلى ”[MeetingName]“</string>
         <key>one</key>
-        <string>[UserName] ينتظر الانضمام إلى “[MeetingName]“</string>
+        <string>[UserName] ينتظر الانضمام إلى ”[MeetingName]“</string>
         <key>two</key>
-        <string>%d مشاركان ينتظران الانضمام إلى “[MeetingName]“</string>
+        <string>%d مشاركان ينتظران الانضمام إلى ”[MeetingName]“</string>
         <key>few</key>
-        <string>%d مشاركون ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <string>%d مشاركون ينتظرون الانضمام إلى ”[MeetingName]“</string>
         <key>many</key>
-        <string>%d مشاركاً ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <string>%d مشاركاً ينتظرون الانضمام إلى ”[MeetingName]“</string>
         <key>other</key>
-        <string>%d مشارك ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <string>%d مشارك ينتظرون الانضمام إلى ”[MeetingName]“</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -4884,10 +4884,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>جارٍ الرفع: لا عناصر متبقية</string>
         <key>one</key>
-        <string>Uploading: %u item left</string>
+        <string>جارٍ الرفع: عنصر واحد متبقٍ</string>
+        <key>two</key>
+        <string>جارٍ الرفع: عنصران متبقيان</string>
+        <key>few</key>
+        <string>جارٍ الرفع: %u عناصر متبقية</string>
+        <key>many</key>
+        <string>جارٍ الرفع: %u عنصرًا متبقيًا</string>
         <key>other</key>
-        <string>Uploading: %u items left</string>
+        <string>جارٍ الرفع: %u عنصر متبقٍ</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -4900,10 +4908,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>zero</key>
+        <string>متوقف مؤقتًا: لا عناصر متبقية</string>
         <key>one</key>
-        <string>Paused: %u item left</string>
+        <string>متوقف مؤقتًا: عنصر واحد متبقٍ</string>
+        <key>two</key>
+        <string>متوقف مؤقتًا: عنصران متبقيان</string>
+        <key>few</key>
+        <string>متوقف مؤقتًا: %u عناصر متبقية</string>
+        <key>many</key>
+        <string>متوقف مؤقتًا: %u عنصرًا متبقيًا</string>
         <key>other</key>
-        <string>Paused: %u items left</string>
+        <string>متوقف مؤقتًا: %u عنصر متبقٍ</string>
       </dict>
     </dict>
   </dict>

@@ -607,11 +607,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string> %d fișier</string>
+        <string>%d fișier</string>
         <key>few</key>
-        <string> %d fișiere</string>
+        <string>%d fișiere</string>
         <key>other</key>
-        <string> %d de fișiere</string>
+        <string>%d de fișiere</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -1349,7 +1349,7 @@
         <key>few</key>
         <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B] </string>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -3543,9 +3543,9 @@
         <key>one</key>
         <string>Deși v-am contactat prin e-mail pe[date], spațiul dvs. de stocare este încă plin. Aveți %d fișier care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul.[A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
         <key>few</key>
-        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A].</string>
         <key>other</key>
-        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>

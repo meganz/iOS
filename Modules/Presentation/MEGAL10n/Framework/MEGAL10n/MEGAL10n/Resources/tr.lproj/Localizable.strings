@@ -1727,7 +1727,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Ara";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
-"%1 of %2"="%2 öğeden %1 tanesi";
+"%1 of %2"="%1 / %2";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon ve kamerayı etkinleştir";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1977,7 +1977,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@ tarafından değiştirildi";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="\"%@\" ve %ld tane daha";
+"home.recent.multipleFileTitle"="\"%@\" ve %ld adet daha";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@ tarafından oluşturuldu";
 /* Message shown when the user has not recent activity in their account. */
@@ -4846,3 +4846,7 @@
 "photo.picker.alert.limitAccess.availableOnly"="Mevcut fotoğrafları yükle";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Erişimi güncelle";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Merhaba %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%2$@’nin %1$@’si kullanıldı";

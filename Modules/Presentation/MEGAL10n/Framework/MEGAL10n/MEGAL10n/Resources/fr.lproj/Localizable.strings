@@ -189,7 +189,7 @@
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Impossible d’enregistrer l’album";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
-"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Vous n’avez pas suffisamment d’espace de stockage pour enregistrer cet album dans votre Disque nuagique. Surclassez votre compte pour obtenir davantage d’espace de stockage.";
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Vous n’avez pas suffisamment d’espace de stockage pour enregistrer cet album dans votre disque Cloud. Surclassez votre compte pour obtenir davantage d’espace de stockage.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Télécharger";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -219,7 +219,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Le dossier est vide";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Aucun fichier dans votre Disque nuagique";
+"cloudDriveEmptyState_title"="Aucun fichier dans votre disque Cloud";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Ajouter des fichiers";
 /* Title shown when you make a search and there is 'No Results' */
@@ -291,7 +291,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Aucun téléversement";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Disque nuagique";
+"cloudDrive"="Disque Cloud";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En attente";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -357,7 +357,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Browser save to cloud drive select button title */
-"cloudDrive.browser.saveToCloudDrive.title"="Enregistrer sur mon Disque nuagique";
+"cloudDrive.browser.saveToCloudDrive.title"="Enregistrer sur mon disque Cloud";
 /* List option shown on the details of a file or folder after the user has copied it */
 "cloudDrive.browser.paste"="Coller";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
@@ -389,7 +389,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Avertissement sur le droit d’auteur à tous les utilisateurs";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique de MEGA se conforment aux lois sur le droit d’auteur.";
+"copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service Cloud de MEGA se conforment aux lois sur le droit d’auteur.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Il vous est strictement interdit d'utiliser le service MEGA Cloud pour enfreindre les droits d'auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, diffuser, distribuer, envoyer par e-mail, créer un lien vers, transmettre ou rendre disponible, de quelque manière que ce soit, tout fichier, toute donnée ou tout contenu qui enfreint les droits d'auteur ou d'autres droits de propriété intellectuelle de toute personne ou entité.";
 /* button caption text that the user clicks when he agrees */
@@ -477,17 +477,17 @@
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Vérifiez vos droits pour ce dossier";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Ajouter au Disque nuagique";
+"Import to Cloud Drive"="Ajouter au disque Cloud";
 /* Message shown when a file has been imported */
-"fileImported"="Le fichier a été enregistré dans le Disque nuagique";
+"fileImported"="Le fichier a été enregistré dans le disque Cloud";
 /* Message shown when some files have been imported */
-"filesImported"="Le fichier a été enregistré dans le Disque nuagique";
+"filesImported"="Le fichier a été enregistré dans le disque Cloud";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Sélectionner des éléments";
 /* Button title that skips the current action */
 "skipButton"="Ignorer";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre Disque nuagique.";
+"Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre disque Cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activer les Téléversements de l’appareil photo";
 /* Success message shown when Camera Uploads has been enabled */
@@ -543,9 +543,9 @@
 /* Alert presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Des éléments cachés sont présents dans cet album. Partager l’album implique que les éléments cachés sont visibles par les personnes avec qui vous le partagez. Les éléments resteront cachés sur votre Disque nuagique.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.single"="Des éléments cachés sont présents dans cet album. Partager l’album implique que les éléments cachés sont visibles par les personnes avec qui vous le partagez. Les éléments resteront cachés sur votre disque Cloud.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Des éléments cachés sont présents dans un ou plusieurs de ces albums. Partager les albums implique que les éléments cachés seront visibles par les personnes avec qui vous les partagez. Les éléments resteront cachés dans votre Disque nuagique.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Des éléments cachés sont présents dans un ou plusieurs de ces albums. Partager les albums implique que les éléments cachés seront visibles par les personnes avec qui vous les partagez. Les éléments resteront cachés dans votre disque Cloud.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Filtrer";
 /* Choose type headline within filter UI */
@@ -561,7 +561,7 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.allLocations"="Tous les emplacements";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.cloudDrive"="Disque nuagique";
+"cameraUploads.timeline.filter.location.cloudDrive"="Disque Cloud";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Téléversements de l’appareil photo";
 /* Filter UI remember preferences option */
@@ -1383,7 +1383,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Supprimer le message";
 /*  */
-"fromCloudDrive"="Du Disque nuagique";
+"fromCloudDrive"="Du disque Cloud";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Envoyer des contacts";
 /*  */
@@ -1919,7 +1919,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Cette action ne peut pas être menée à bien, car elle vous ferait dépasser votre limite de stockage actuelle";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Vos téléversements ne peuvent pas se poursuivre, car votre espace de stockage nuagique est saturé";
+"Your upload(s) cannot proceed because your account is full"="Vos téléversements ne peuvent pas se poursuivre, car votre espace de stockage Cloud est saturé";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permettre à vos contacts de voir la date et l’heure de votre dernière activité sur MEGA";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
@@ -2553,7 +2553,7 @@
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Changer d’écran de lancement";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Vous pouvez désormais sélectionner la section que l’appli ouvre au lancement. Choisissez celle qui correspond le mieux à vos besoins, que ce soit Dialogue en ligne, Disque nuagique ou Accueil.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Vous pouvez désormais sélectionner la section que l’appli ouvre au lancement. Choisissez celle qui correspond le mieux à vos besoins, que ce soit Dialogue en ligne, disque Cloud ou Accueil.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Changer le paramètre";
 /* Offline log out warning message */
@@ -2577,7 +2577,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Votre disque Cloud est presque plein. Mettez-le à niveau maintenant et obtenez jusqu'à %@ To d'espace de stockage cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Votre espace de stockage nuagique est saturé. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
+"dialog.storage.odq.detail"="Votre espace de stockage Cloud est saturé. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Le compte est verrouillé";
 /* Over Disk Quota paywall final title. */
@@ -2691,9 +2691,9 @@
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="La protection de vos renseignements personnels est importante";
 /* Guest user join Mega: paragraph 1 description */
-"meetings.joinMega.paragraph1.description"="Joignez-vous à la plus grande plateforme de stockage nuagique et de collaboration sécurisée au monde.";
+"meetings.joinMega.paragraph1.description"="Joignez-vous à la plus grande plateforme de stockage Cloud et de collaboration sécurisée au monde.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="Obtenir du stockage nuagique gratuit";
+"meetings.joinMega.paragraph2.title"="Obtenir du stockage Cloud gratuit";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="Inscrivez-vous maintenant et profitez gratuitement d’un espace de stockage généreux et de fonctions évoluées de collaboration.";
 /* Message shown when the user privilege is changed to moderator */
@@ -2955,7 +2955,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Aucun appareil dans les sauvegardes";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Vos fichiers et dossiers sauvegardés y sont stockés. Vos éléments sauvegardés sont en « lecture seulement » pour empêcher qu’ils soient modifiés par accident dans votre disque nuagique.\nVous pouvez sauvegarder des éléments de votre ordinateur vers MEGA grâce à notre appli pour ordinateur.";
+"backups.empty.state.description"="Vos fichiers et dossiers sauvegardés y sont stockés. Vos éléments sauvegardés sont en « lecture seulement » pour empêcher qu’ils soient modifiés par accident dans votre disque Cloud.\nVous pouvez sauvegarder des éléments de votre ordinateur vers MEGA grâce à notre appli pour ordinateur.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Annuler les transferts ?";
 /* Message for action of cancelling a transfer */
@@ -3541,7 +3541,7 @@
 /* Device Center backup error: Couldn't communicate with folder location */
 "device.center.backup.error.communicateWithFolderLocation"="Impossible de communiquer avec l’emplacement de la synchronisation. Vérifiez que l’emplacement est accessible et que les droits ont été accordés pour l’emplacement du dossier.";
 /* Show in Cloud Drive section action title */
-"device.center.show.in.cloud.drive.action.title"="Afficher dans le Disque nuagique";
+"device.center.show.in.cloud.drive.action.title"="Afficher dans le disque Cloud";
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Afficher dans Sauvegardes";
 /* Device Center rename device action title */
@@ -3749,17 +3749,17 @@
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="En apprendre davantage";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="« %@ » a été enregistré dans votre Disque nuagique";
+"albumLink.alert.message.albumSavedToCloudDrive"="« %@ » a été enregistré dans votre disque Cloud";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="« %@ » ne peut pas être enregistré dans le Disque nuagique. Réessayez plus tard et si le problème persiste, contactez la personne qui a partagé le lien avec vous.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="« %@ » ne peut pas être enregistré dans le disque Cloud. Réessayez plus tard et si le problème persiste, contactez la personne qui a partagé le lien avec vous.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Certains des contacts avec lesquels vous partagez des données n’ont pas été confirmés par vous. Pour renforcer la sécurité, nous vous recommandons de confirmer leur numéro d’identification dans Contacts en touchant le ⓘ à côté du contact que vous souhaitez confirmer.";
 /* Title of the dialog for sharing a folder containing sensitive items */
 "shareFolder.sensitive.alert.title"="Éléments cachés";
 /* Message of the dialog for sharing a folder containing sensitive items */
-"shareFolder.sensitive.alert.message.single"="Des éléments cachés sont présents dans ce dossier. Partager le dossier implique que les éléments cachés sont visibles par les personnes avec qui vous le partagez. Les éléments resteront cachés sur votre Disque nuagique.";
+"shareFolder.sensitive.alert.message.single"="Des éléments cachés sont présents dans ce dossier. Partager le dossier implique que les éléments cachés sont visibles par les personnes avec qui vous le partagez. Les éléments resteront cachés sur votre disque Cloud.";
 /* Message of the dialog for sharing folders containing sensitive items */
-"shareFolder.sensitive.alert.message.multi"="Des éléments cachés sont présents dans un ou plusieurs de ces dossiers. Partager les dossiers implique que les éléments cachés seront visibles par les personnes avec qui vous les partagez. Les éléments resteront cachés dans votre Disque nuagique.";
+"shareFolder.sensitive.alert.message.multi"="Des éléments cachés sont présents dans un ou plusieurs de ces dossiers. Partager les dossiers implique que les éléments cachés seront visibles par les personnes avec qui vous les partagez. Les éléments resteront cachés dans votre disque Cloud.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Renommer l’album";
 /* Rename public album alert message */
@@ -3921,7 +3921,7 @@
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Activer les Téléversements de l’appareil photo";
 /* Camera uploads banner enable state description */
-"cameraUploads.banner.enableState.description"="Sauvegardez automatiquement vos photos et vos vidéos dans votre Disque nuagique.";
+"cameraUploads.banner.enableState.description"="Sauvegardez automatiquement vos photos et vos vidéos dans votre disque Cloud.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="L’utilisateur [A] a quitté le dossier partagé [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
@@ -3981,7 +3981,7 @@
 /* Videos: videos filter option for all locations */
 "videos.tab.all.filter.location.option.allLocations"="Tous les emplacements";
 /* Videos: videos filter option for cloud drive */
-"videos.tab.all.filter.location.option.cloudDrive"="Disque nuagique";
+"videos.tab.all.filter.location.option.cloudDrive"="Disque Cloud";
 /* Videos: videos filter option for Camera uploads */
 "videos.tab.all.filter.location.option.cameraUploads"="Téléversements de l’appareil photo";
 /* Videos: videos filter option for shared items */
@@ -4053,7 +4053,7 @@
 /* Recently watched videos empty page content text */
 "videos.recentlyWatched.emptyState"="Aucune activité récente";
 /* Recently watched videos delete all alert title */
-"videos.recentlyWatched.deletion.alert.title"="Les vidéos seront supprimées de cette liste, mais pas de votre Disque nuagique";
+"videos.recentlyWatched.deletion.alert.title"="Les vidéos seront supprimées de cette liste, mais pas de votre disque Cloud";
 /* Recently watched videos delete all alert clear recently watched option */
 "videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched"="Effacer la liste";
 /* Calls: Floating panel participants empty list waiting room state */
@@ -4331,9 +4331,9 @@
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="Éléments cachés";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.single"="Cet élément est défini comme étant caché. Une fois que vous aurez partagé l’article, quiconque disposant du lien pourra le voir. Il restera caché dans votre Disque nuagique.";
+"getNodeLink.sensitive.alert.message.single"="Cet élément est défini comme étant caché. Une fois que vous aurez partagé l’article, quiconque disposant du lien pourra le voir. Il restera caché dans votre disque Cloud.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.multi"="Un ou plusieurs de ces éléments sont définis comme étant cachés. Une fois que vous aurez partagé les éléments cachés, quiconque disposant du lien pourra les voir. Les éléments resteront cachés dans votre Disque nuagique.";
+"getNodeLink.sensitive.alert.message.multi"="Un ou plusieurs de ces éléments sont définis comme étant cachés. Une fois que vous aurez partagé les éléments cachés, quiconque disposant du lien pourra les voir. Les éléments resteront cachés dans votre disque Cloud.";
 /* Title of the Show last seen option in the chat settings */
 "settings.calls.status.showLastSeen.title"="Afficher «[w]Vu pour la dernière fois[w]»";
 /* Snack bar message shown when local user raises hand in the call */
@@ -4433,7 +4433,7 @@
 /* App Store Screenshots string - Image 3 */
 "appstore.screenshot3"="Solutions de nuage chiffrées de bout en bout";
 /* App Store Screenshots string - Image 4 */
-"appstore.screenshot4"="Votre espace de stockage nuagique sécurisé";
+"appstore.screenshot4"="Votre espace de stockage Cloud sécurisé";
 /* App Store Screenshots string - Image 5 */
 "appstore.screenshot5"="Votre espace pour dialoguer en ligne en toute liberté";
 /* App Store Screenshots string - Image 6 */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="En cours";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ sur %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Offre Cyber Monday : %@ de réduction";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4827,14 +4827,14 @@
 /* The subtitle title displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="Protégez vos données grâce au chiffrement à divulgation nulle de connaissance";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
-"media.photoLibrary.zoom.large.title"="Grande";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="Compacte";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Aperçus indisponibles pour les fichiers non déchiffrés";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.large.title"="Grand";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Compact";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Le plus petit";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.album.sorting.date"="Date";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.title"="Accès limité aux photos";
@@ -4844,3 +4844,9 @@
 "photo.picker.alert.limitAccess.availableOnly"="Téléverser les photos disponibles";
 /* Undecrypted file open error snackBar message */
 "photo.picker.alert.limitAccess.selectMore"="Mettre à jour l'accès";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Ajouter des éléments";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Bonjour %@ !";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1$@ sur %2$@ utilisés";

@@ -4387,7 +4387,7 @@
 /* Toast message shown to the user when the node description is updated */
 "cloudDrive.nodeInfo.nodeDescription.savedState.descriptionUpdated"="Descrizione aggiornata";
 /* Title of the popup that appears when the user attempts to close the node info screen */
-"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Discard changes?";
+"cloudDrive.nodeInfo.nodeDescription.closePopup.title"="Scartare le modifiche?";
 /* Message in the popup that appears when the user attempts to close the node info screen */
 "cloudDrive.nodeInfo.nodeDescription.closePopup.message"="Vuoi salvare le modifiche apportate alla descrizione?";
 /* Button title to discard node description changes. This popup appears when the user attempts to close the node info screen */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Invita";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Try searching for media files";
+"photos.searchHistory.empty.description"="Cerca file multimediali";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Il tuo spazio di archiviazione è pieno";
 /* Button title to upgrade when storage is full */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="In corso";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ di %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Offerta del Cyber Monday: %@ di sconto";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4827,12 +4827,26 @@
 /* The subtitle title displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="Mantieni quello che vuoi al sicuro con la criptazione a conoscenza zero";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Anteprime non disponibili per i file non decriptati";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Grande";
-/* Title of Photo's compact zoom scale title */
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.compact.title"="compatto";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="più piccolo";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Data";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Accesso limitato alle foto";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Alcune foto che hai selezionato non sono disponibili per MEGA. Vuoi aggiornare le impostazioni di accesso?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Carica le foto disponibili";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Aggiorna l'accesso";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Aggiungi oggetti";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Ciao %@!";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="%1$@ di %2$@ utilizzati";

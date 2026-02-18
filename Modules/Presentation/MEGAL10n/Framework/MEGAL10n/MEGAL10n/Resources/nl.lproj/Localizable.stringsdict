@@ -3127,11 +3127,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>[UserName] wacht op aansluiting van “[MeetingName]“</string>
+        <string>[UserName] wacht op aansluiting van “[MeetingName]”</string>
         <key>one</key>
-        <string>[UserName] wacht op aansluiting van “[MeetingName]“</string>
+        <string>[UserName] wacht op aansluiting van “[MeetingName]”</string>
         <key>other</key>
-        <string>%d deelnemers wachten op aansluiting van “[MeetingName]“</string>
+        <string>%d deelnemers wachten op aansluiting van “[MeetingName]”</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>

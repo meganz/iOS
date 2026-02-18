@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] và %d người khác đang giơ tay</string>
         <key>other</key>
         <string>[A] và %d người khác đang giơ tay</string>
       </dict>
@@ -26,6 +28,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bạn và 0 người khác đang giơ tay</string>
         <key>other</key>
         <string>Bạn và %d người khác đang giơ tay</string>
       </dict>
@@ -40,6 +44,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tệp tin</string>
         <key>other</key>
         <string>%d tệp tin</string>
       </dict>
@@ -54,6 +60,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 mục đã bị xóa</string>
         <key>other</key>
         <string>%d mục đã bị xóa</string>
       </dict>
@@ -68,6 +76,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tệp tin</string>
         <key>other</key>
         <string>%d tệp tin</string>
       </dict>
@@ -82,6 +92,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 thư mục</string>
         <key>other</key>
         <string>%d thư mục</string>
       </dict>
@@ -96,6 +108,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 thư mục</string>
         <key>other</key>
         <string>%d thư mục</string>
       </dict>
@@ -110,8 +124,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bất kỳ ai có đường liên kết này đều có thể xem và tải xuống dữ liệu của bạn</string>
         <key>other</key>
-        <string>Bất kỳ ai có các đường liên kết này đều có thể xem và tải xuống dữ liệu của bạn</string>
+        <string>Bất kỳ ai có được đường liên kết này đều có thể xem và tải xuống dữ liệu của bạn</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -124,8 +140,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 đường liên kết đã được ghi vào bảng nhớ tạm</string>
         <key>other</key>
-        <string>Các đường liên kết đã được ghi vào bảng nhớ tạm</string>
+        <string>Đường liên kết đã được ghi vào bảng nhớ tạm</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -138,6 +156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 đường liên kết đã được tạo và ghi vào bảng nhớ tạm</string>
         <key>other</key>
         <string>Các đường liên kết đã được tạo và ghi vào bảng nhớ tạm</string>
       </dict>
@@ -152,8 +172,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Áp dụng cho tất cả 0 mục trùng lặp</string>
         <key>other</key>
-        <string>Áp dụng cho tất cả %d mục trùng lặp</string>
+        <string>Áp dụng cho tất cả %d mục trùng lặp</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -166,6 +188,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>tiếng</string>
         <key>other</key>
         <string>tiếng</string>
       </dict>
@@ -180,6 +204,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>ngày</string>
         <key>other</key>
         <string>ngày</string>
       </dict>
@@ -194,6 +220,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>tuần</string>
         <key>other</key>
         <string>tuần</string>
       </dict>
@@ -208,6 +236,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>tháng</string>
         <key>other</key>
         <string>tháng</string>
       </dict>
@@ -222,6 +252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>năm</string>
         <key>other</key>
         <string>năm</string>
       </dict>
@@ -236,8 +268,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giờ</string>
         <key>other</key>
-        <string>%d tiếng</string>
+        <string>%d giờ</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -250,6 +284,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d ngày</string>
         <key>other</key>
         <string>%d ngày</string>
       </dict>
@@ -264,6 +300,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d tuần</string>
         <key>other</key>
         <string>%d tuần</string>
       </dict>
@@ -278,6 +316,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d tháng</string>
         <key>other</key>
         <string>%d tháng</string>
       </dict>
@@ -292,6 +332,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d năm</string>
         <key>other</key>
         <string>%d năm</string>
       </dict>
@@ -306,8 +348,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d tệp tin</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -320,8 +364,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d thư mục</string>
         <key>other</key>
-        <string>%d thư mục</string>
+        <string>%d thư mục</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -334,8 +380,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d thư mục</string>
         <key>other</key>
-        <string>%d thư mục</string>
+        <string>%d thư mục</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -348,8 +396,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>• %d tệp tin</string>
         <key>other</key>
-        <string>• %d tệp tin</string>
+        <string>• %d tệp tin</string>
       </dict>
     </dict>
     <key>general.format.count.items</key>
@@ -362,6 +412,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d mục</string>
         <key>other</key>
         <string>%d mục</string>
       </dict>
@@ -376,6 +428,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d mục</string>
         <key>other</key>
         <string>%d mục</string>
       </dict>
@@ -390,6 +444,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d hình ảnh</string>
         <key>other</key>
         <string>%d hình ảnh</string>
       </dict>
@@ -404,8 +460,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>other</key>
+        <key>zero</key>
         <string>%d videos</string>
+        <key>other</key>
+        <string>%d video</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -418,6 +476,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d hình ảnh</string>
         <key>other</key>
         <string>%d hình ảnh</string>
       </dict>
@@ -432,8 +492,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>other</key>
+        <key>zero</key>
         <string>và %d videos</string>
+        <key>other</key>
+        <string>và %d video</string>
       </dict>
     </dict>
     <key>recents.section.multipleFile.title</key>
@@ -446,6 +508,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>“[A]” và 0 mục nữa</string>
         <key>other</key>
         <string>“[A]” và %d mục nữa</string>
       </dict>
@@ -460,6 +524,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[A] trong tổng 0 tệp tin</string>
         <key>other</key>
         <string>[A] trong tổng %d tệp</string>
       </dict>
@@ -474,6 +540,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d tệp tin</string>
         <key>other</key>
         <string>%d tệp tin</string>
       </dict>
@@ -488,8 +556,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Loại bỏ đường liên kết</string>
         <key>other</key>
-        <string>Loại bỏ đường liên kết</string>
+        <string>Loại bỏ đường liên kết</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.message.success</key>
@@ -502,8 +572,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đường liên kết đã bị loại bỏ</string>
         <key>other</key>
-        <string>Đường liên kết đã loại bỏ</string>
+        <string>Đường liên kết đã bị loại bỏ</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
@@ -516,8 +588,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>other</key>
+        <key>zero</key>
         <string>Loại bỏ các đường liên kết?</string>
+        <key>other</key>
+        <string>Loại bỏ đường liên kết?</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
@@ -530,8 +604,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Tất cả những người mà bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào được nữa.</string>
         <key>other</key>
-        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào được nữa.</string>
+        <string>Tất cả những người mà bạn đã chia sẻ đường liên kết này sẽ không thể truy cập vào được nữa.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -544,6 +620,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Chia sẻ thư mục</string>
         <key>other</key>
         <string>Chia sẻ thư mục</string>
       </dict>
@@ -558,8 +636,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Chia sẻ đường liên kết</string>
         <key>other</key>
-        <string>Chia sẻ đường liên kết</string>
+        <string>Chia sẻ đường liên kết</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -572,8 +652,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Quản lý đường liên kết</string>
         <key>other</key>
-        <string>Quản lý đường liên kết</string>
+        <string>Quản lý đường liên kết</string>
       </dict>
     </dict>
     <key>general.menuAction.exportFile.title</key>
@@ -586,8 +668,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Xuất các tệp tin</string>
         <key>other</key>
-        <string>Xuất tệp tin</string>
+        <string>Xuất tệp tin</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
@@ -600,6 +684,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giây</string>
         <key>other</key>
         <string>%d giây</string>
       </dict>
@@ -614,6 +700,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d phút</string>
         <key>other</key>
         <string>%d phút</string>
       </dict>
@@ -628,8 +716,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giờ</string>
         <key>other</key>
-        <string>%d tiếng</string>
+        <string>%d giờ</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -642,6 +732,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giờ</string>
         <key>other</key>
         <string>%d giờ</string>
       </dict>
@@ -656,6 +748,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>, %d phút</string>
         <key>other</key>
         <string>, %d phút</string>
       </dict>
@@ -670,6 +764,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d phút</string>
         <key>other</key>
         <string>%d phút</string>
       </dict>
@@ -684,8 +780,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giờ</string>
         <key>other</key>
-        <string>%d tiếng</string>
+        <string>%d giờ</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -698,6 +796,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d phút</string>
         <key>other</key>
         <string>%d phút</string>
       </dict>
@@ -712,8 +812,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Các thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì đây là các thư mục lưu dự phòng. Bất kỳ thay đổi với nội dung bên trong sẽ vô hiệu hóa việc sao lưu.</string>
         <key>other</key>
-        <string>Các thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì đây là các thư mục lưu dự phòng. Bất kỳ thay đổi trong nội dung sẽ vô hiệu hóa việc sao lưu.</string>
+        <string>Thư mục này chỉ được chia sẻ dưới dạng chỉ-được-xem bởi vì đây là thư mục lưu dự phòng. Bất kỳ thay đổi với nội dung bên trong sẽ vô hiệu hóa việc sao lưu.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>
@@ -726,6 +828,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d giờ</string>
         <key>other</key>
         <string>%d giờ</string>
       </dict>
@@ -740,6 +844,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d phút</string>
         <key>other</key>
         <string>%d phút</string>
       </dict>
@@ -754,6 +860,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>giờ</string>
         <key>other</key>
         <string>giờ</string>
       </dict>
@@ -768,6 +876,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>phút</string>
         <key>other</key>
         <string>phút</string>
       </dict>
@@ -782,6 +892,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tin nhắn chưa đọc</string>
         <key>other</key>
         <string>%d tin nhắn chưa đọc</string>
       </dict>
@@ -796,6 +908,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Bạn chỉ có thể chọn mỗi lần lên tới 0 mục để thêm vào một album.</string>
         <key>other</key>
         <string>Bạn chỉ có thể chọn mỗi lần lên tới %d mục để thêm vào một album.</string>
       </dict>
@@ -810,6 +924,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 mục vào “[A]”</string>
         <key>other</key>
         <string>Đã thêm %d mục vào “[A]”</string>
       </dict>
@@ -824,8 +940,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Các ảnh đã được tải lên. Tải lên cho video bị tắt: 0 video đã không tải lên</string>
         <key>other</key>
-        <string>Các ảnh đã được tải lên. Tải lên cho video bị tắt: %d video đã không tải lên.</string>
+        <string>Các ảnh đã được tải lên. Tải lên cho video bị tắt: %d video đã không tải lên</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -838,8 +956,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tệp tin đang chờ</string>
         <key>other</key>
-        <string>%d tệp tin đang chờ.</string>
+        <string>%d tệp tin đang chờ</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.delete</key>
@@ -852,6 +972,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Xóa (%d)</string>
         <key>other</key>
         <string>Xóa (%d)</string>
       </dict>
@@ -866,6 +988,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Xóa album?</string>
         <key>other</key>
         <string>Xóa album?</string>
       </dict>
@@ -880,8 +1004,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Các bộ albums sẽ bị xóa nhưng các nội dung có trong mỗi bộ sẽ vẫn giữ lại trên Dòng Thời Gian của bạn.</string>
         <key>other</key>
-        <string>Album sẽ bị xóa nhưng các nội dung có bên trong sẽ vẫn giữ lại trên Dòng Thời Gian của bạn.</string>
+        <string>Bộ album sẽ bị xóa nhưng các nội dung có trong mỗi bộ sẽ vẫn giữ lại trên Dòng Thời Gian của bạn.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumSuccess</key>
@@ -894,6 +1020,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã xóa %d album</string>
         <key>other</key>
         <string>Đã xóa %d album</string>
       </dict>
@@ -908,8 +1036,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã loại bỏ %d mục khỏi “[A]”</string>
         <key>other</key>
-        <string>Đã loại bỏ %d mục khỏi “[A]”</string>
+        <string>Đã loại bỏ %d mục khỏi “[A]”</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
@@ -922,8 +1052,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>other</key>
+        <key>zero</key>
         <string>Loại bỏ các đường liên kết?</string>
+        <key>other</key>
+        <string>Loại bỏ đường liên kết?</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
@@ -936,8 +1068,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Loại bỏ đường liên kết</string>
         <key>other</key>
-        <string>Loại bỏ liên kết</string>
+        <string>Loại bỏ đường liên kết</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
@@ -950,8 +1084,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào album được nữa.</string>
         <key>other</key>
-        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào album được nữa</string>
+        <string>Tất cả những người bạn đã chia sẻ đường liên kết này sẽ không thể truy cập vào album được nữa.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -964,8 +1100,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Các đường liên kết đã bị loại bỏ</string>
         <key>other</key>
-        <string>Các đường liên kết đã được loại bỏ</string>
+        <string>Đường liên kết đã bị loại bỏ</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.until</key>
@@ -978,6 +1116,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi %d ngày, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Mỗi %d ngày, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -992,6 +1132,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi %d ngày, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Mỗi %d ngày, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1006,6 +1148,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1020,6 +1164,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1034,6 +1180,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList] và [LastWeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDaysList] và [LastWeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1048,6 +1196,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[WeekDaysList] và [LastWeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>[WeekDaysList] và [LastWeekDay] mỗi %d tuần, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1062,6 +1212,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ngày [MonthDay] của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Ngày [MonthDay] của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1076,6 +1228,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Ngày [MonthDay] của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Ngày [MonthDay] của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1090,6 +1244,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1104,6 +1260,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1118,6 +1276,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1132,6 +1292,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1146,6 +1308,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ ba mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ ba mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1160,6 +1324,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ ba của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ ba của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1174,6 +1340,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ tư mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ tư mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1188,6 +1356,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ tư của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ tư của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1202,6 +1372,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ năm mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ năm mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1216,6 +1388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Hai lần thứ năm của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Hai lần thứ năm của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1230,6 +1404,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1244,6 +1420,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1258,6 +1436,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1272,6 +1452,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1286,6 +1468,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ ba mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ ba mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1300,6 +1484,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ ba của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ ba của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1314,6 +1500,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ tư mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ tư mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1328,6 +1516,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ tư của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ tư của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1342,6 +1532,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ năm mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ năm mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1356,6 +1548,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Ba lần thứ năm của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Ba lần thứ năm của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1370,6 +1564,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư đầu tiên của mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1384,6 +1580,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư đầu tiên của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1398,6 +1596,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ nhì của mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1412,6 +1612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ nhì của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1426,6 +1628,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ ba mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ ba mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1440,6 +1644,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ ba của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ ba của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1454,6 +1660,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ tư mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ tư mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1468,6 +1676,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ tư của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ tư của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1482,6 +1692,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ năm mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ năm mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1496,6 +1708,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Tư lần thứ năm của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Tư lần thứ năm của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1510,6 +1724,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Năm đầu tiên của mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Năm đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1524,6 +1740,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Năm đầu tiên của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Năm đầu tiên của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1538,6 +1756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Năm lần thứ nhì của mỗi 0 tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Năm lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -1552,6 +1772,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Thứ Năm lần thứ nhì của mỗi 0 tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
         <key>other</key>
         <string>Thứ Năm lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
@@ -2070,6 +2292,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>[các tệp tin chưa giải mã]</string>
         <key>other</key>
         <string>[tệp tin chưa giải mã]</string>
       </dict>
@@ -2084,6 +2308,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Còn lại 0 ngày</string>
         <key>other</key>
         <string>Còn lại %d ngày</string>
       </dict>
@@ -2098,6 +2324,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Có giá trị cho 0 ngày.</string>
         <key>other</key>
         <string>Có giá trị cho %d ngày.</string>
       </dict>
@@ -2112,6 +2340,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>có giá trị cho 0 ngày</string>
         <key>other</key>
         <string>có giá trị cho %d ngày</string>
       </dict>
@@ -2126,6 +2356,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Phần thưởng hết hạn trong 0 ngày.</string>
         <key>other</key>
         <string>Phần thưởng hết hạn trong %d ngày.</string>
       </dict>
@@ -2140,6 +2372,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Tin nhắn phải có ít nhất 0 ký tự</string>
         <key>other</key>
         <string>Tin nhắn phải có ít nhất %d ký tự</string>
       </dict>
@@ -2154,6 +2388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã tải lên 0mục vào “[B]”</string>
         <key>other</key>
         <string>Đã tải lên %d mục vào “[B]”</string>
       </dict>
@@ -2168,6 +2404,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã tải lên 0mục lên Ổ Mây</string>
         <key>other</key>
         <string>Đã tải lên %d mục lên Ổ Mây</string>
       </dict>
@@ -2182,8 +2420,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã gửi “[A]” tới các cuộc chat</string>
         <key>other</key>
-        <string>Đã gửi “[A]” tới tất cả cuộc chát</string>
+        <string>Đã gửi “[A]” tới cuộc chat</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -2196,8 +2436,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã gửi [A] tới các cuộc chat</string>
         <key>other</key>
-        <string>Đã gửi [A] tới tất cả cuộc chát</string>
+        <string>Đã gửi [A] tới cuộc chat</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.interval</key>
@@ -2210,6 +2452,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 ngày</string>
         <key>other</key>
         <string>%d ngày</string>
       </dict>
@@ -2224,6 +2468,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tuần</string>
         <key>other</key>
         <string>%d tuần</string>
       </dict>
@@ -2238,6 +2484,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tháng</string>
         <key>other</key>
         <string>%d tháng</string>
       </dict>
@@ -2252,6 +2500,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 ngày.</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d ngày.</string>
       </dict>
@@ -2266,6 +2516,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 tuần vào [weekDayName].</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d tuần vào [weekDayName].</string>
       </dict>
@@ -2280,6 +2532,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 tuần vào [weekDayNames] và [lastWeekDayName].</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d tuần vào [weekDayNames] và [lastWeekDayName].</string>
       </dict>
@@ -2294,6 +2548,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 tháng vào ngày [cardinalDay].</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào ngày [cardinalDay].</string>
       </dict>
@@ -2308,6 +2564,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 tháng vào ngày [cardinalDays] và ngày [cardinalLastDay].</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào ngày [cardinalDays] và ngày [cardinalLastDay].</string>
       </dict>
@@ -2322,6 +2580,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc họp sẽ diễn ra mỗi 0 tháng vào [weekDayName] [weekNumber].</string>
         <key>other</key>
         <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào [weekDayName] [weekNumber].</string>
       </dict>
@@ -2336,6 +2596,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi 0 tuần vào [weekDayNames]</string>
         <key>other</key>
         <string>Mỗi %d tuần vào [weekDayNames]</string>
       </dict>
@@ -2350,6 +2612,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi 0 tháng vào ngày [cardinalNumber]</string>
         <key>other</key>
         <string>Mỗi %d tháng vào ngày [cardinalNumber]</string>
       </dict>
@@ -2364,6 +2628,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi 0 tháng, [weekDayName] [ordinalNumber]</string>
         <key>other</key>
         <string>Mỗi %d tháng, [weekDayName] [ordinalNumber]</string>
       </dict>
@@ -2378,6 +2644,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Với những tháng không có 0 ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.</string>
         <key>other</key>
         <string>Với những tháng không có %d ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.</string>
       </dict>
@@ -2392,6 +2660,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mỗi 0 ngày</string>
         <key>other</key>
         <string>Mỗi %d ngày</string>
       </dict>
@@ -2406,6 +2676,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tệp tin đã được lưu vào Ổ Mây</string>
         <key>other</key>
         <string>%d tệp tin đã được lưu vào Ổ Mây</string>
       </dict>
@@ -2420,6 +2692,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 phiên tải xuống đã được bắt đầu</string>
         <key>other</key>
         <string>%d phiên tải xuống đã được bắt đầu</string>
       </dict>
@@ -2434,6 +2708,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 người đang chờ để tham gia “[MeetingName]”</string>
         <key>other</key>
         <string>%d người đang chờ để tham gia “[MeetingName]”</string>
       </dict>
@@ -2448,6 +2724,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0người đang chờ để tham gia cuộc gọi</string>
         <key>other</key>
         <string>%d người đang chờ để tham gia cuộc gọi</string>
       </dict>
@@ -2462,6 +2740,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 người tham gia</string>
         <key>other</key>
         <string>%d người tham gia</string>
       </dict>
@@ -2476,6 +2756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 mục đã được chọn</string>
         <key>other</key>
         <string>%d mục đã được chọn</string>
       </dict>
@@ -2490,8 +2772,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>other</key>
+        <key>zero</key>
         <string>Các tệp tin đã được gửi tới cuộc chat</string>
+        <key>other</key>
+        <string>Tệp tin đã được gửi tới cuộc chat</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -2504,6 +2788,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Tệp tin đã được gửi tới 0 cuộc chat</string>
         <key>other</key>
         <string>Tệp tin đã được gửi tới %d cuộc chat</string>
       </dict>
@@ -2518,6 +2804,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Các tệp tin đã được gửi tới 0 cuộc chat</string>
         <key>other</key>
         <string>Các tệp tin đã được gửi tới %d cuộc chat</string>
       </dict>
@@ -2532,6 +2820,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 tên liên lạc</string>
         <key>other</key>
         <string>%d tên liên lạc</string>
       </dict>
@@ -2546,8 +2836,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã đính kèm 0 tệp tin</string>
         <key>other</key>
-        <string>Đã đính kèm %d tệp tin</string>
+        <string>Đã đính kèm %d tệp tin</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2560,6 +2852,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mời 0 tên liên lạc</string>
         <key>other</key>
         <string>Mời %d tên liên lạc</string>
       </dict>
@@ -2574,6 +2868,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 người tham gia</string>
         <key>other</key>
         <string>%d người tham gia</string>
       </dict>
@@ -2588,6 +2884,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Tất cả các thông báo sẽ tắt tiếng cho đến [Time]</string>
         <key>other</key>
         <string>Tất cả các thông báo sẽ tắt tiếng cho đến [Time]</string>
       </dict>
@@ -2602,6 +2900,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 thư mục đã được chia sẻ</string>
         <key>other</key>
         <string>%d thư mục đã được chia sẻ</string>
       </dict>
@@ -2616,6 +2916,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Cuộc gọi miễn phí của bạn sẽ kết thúc sau 0 phút</string>
         <key>other</key>
         <string>Cuộc gọi miễn phí của bạn sẽ kết thúc sau %d phút</string>
       </dict>
@@ -2630,6 +2932,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 videos vào “[A]”</string>
         <key>other</key>
         <string>Đã thêm %d videos vào “[A]”</string>
       </dict>
@@ -2644,6 +2948,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã loại bỏ 0 video khỏi “[A]”</string>
         <key>other</key>
         <string>Đã loại bỏ %d video khỏi “[A]”</string>
       </dict>
@@ -2658,6 +2964,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 mục đã ẩn đi</string>
         <key>other</key>
         <string>%d mục đã ẩn đi</string>
       </dict>
@@ -2672,6 +2980,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 mục đã bỏ ẩn</string>
         <key>other</key>
         <string>%d mục đã bỏ ẩn</string>
       </dict>
@@ -2686,6 +2996,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 mục vào [A]</string>
         <key>other</key>
         <string>Đã thêm %d mục vào [A]</string>
       </dict>
@@ -2700,6 +3012,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 tệp</string>
         <key>other</key>
         <string>Đã thêm %d tệp</string>
       </dict>
@@ -2714,6 +3028,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 thư mục</string>
         <key>other</key>
         <string>Đã thêm %d thư mục</string>
       </dict>
@@ -2728,8 +3044,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 tệp tin</string>
         <key>other</key>
-        <string>Đã thêm %d tệp</string>
+        <string>Đã thêm %d tệp tin</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -2742,6 +3060,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>và 0 thư mục</string>
         <key>other</key>
         <string>và %d thư mục</string>
       </dict>
@@ -2756,8 +3076,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có 0 tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
         <key>other</key>
-        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2770,6 +3092,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email nhiều lần, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có 0 tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
         <key>other</key>
         <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email nhiều lần, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
@@ -2784,8 +3108,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email từ trước, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có 0 tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A].</string>
         <key>other</key>
-        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email từ trước, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email từ trước, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -2798,6 +3124,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>0 phiên bản tệp tin.</string>
         <key>other</key>
         <string>%d phiên bản tệp tin.</string>
       </dict>
@@ -2812,6 +3140,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Không gian bị chiếm dụng bởi phiên bản tệp tin: [storageSpace]</string>
         <key>other</key>
         <string>Không gian bị chiếm dụng bởi các phiên bản tệp tin: [storageSpace]</string>
       </dict>
@@ -2826,6 +3156,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã thêm 0 mục vào “[A]”</string>
         <key>other</key>
         <string>Đã thêm %d mục vào “[A]”</string>
       </dict>
@@ -2840,8 +3172,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>Đã loại bỏ 0mục khỏi xếp hàng chờ</string>
         <key>other</key>
-        <string>Đã loại bỏ %d mục khỏi xếp hàng chờ</string>
+        <string>Đã loại bỏ %d mục khỏi xếp hàng chờ</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.uploading.items</key>
@@ -2854,10 +3188,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>one</key>
-        <string>Uploading: %u item left</string>
+        <key>zero</key>
+        <string>Đang tải lên: còn 0 mục</string>
         <key>other</key>
-        <string>Uploading: %u items left</string>
+        <string>Đang tải lên: còn %u mục</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -2870,10 +3204,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>one</key>
-        <string>Paused: %u item left</string>
+        <key>zero</key>
+        <string>Tạm dừng: còn 0 mục</string>
         <key>other</key>
-        <string>Paused: %u items left</string>
+        <string>Tạm dừng: còn %u mục</string>
       </dict>
     </dict>
   </dict>

@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* Button title to clear something */
-"clear"="Dọn sạch";
+"clear"="Dọn";
 /*  */
 "yes"="Có";
 /*  */
@@ -141,7 +141,7 @@
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Sai mật khẩu";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Địa chỉ email này đã có người sử dụng.";
+"emailAlreadyInUse"="Địa chỉ email này đã có người sử dụng";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bạn cần tạo thêm không gian trống trong thiết bị của bạn";
 /* Message shown when you try to downlonad files bigger than the available memory. */
@@ -389,7 +389,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Cảnh báo bản quyền cho tất cả người dùng";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của tất cả đơn vị và yêu cầu người sử dụng dịch vụ MEGA Cloud nên tuân theo theo quy định của pháp luật về quyền tác giả.";
+"copyrightMessagePart1"="MEGA tôn trọng bản quyền của mỗi bên và yêu cầu người dùng dịch vụ MEGA Cloud phải tuân thủ các quy định pháp luật về bản quyền.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Quý vị bị nghiêm cấm sử dụng dịch vụ MEGA Cloud để vi phạm bản quyền. Quý vị không được tải lên, tải xuống, lưu trữ, chia sẻ, trình bày, phát trực tuyến, phân phối, gửi bằng email, tạo đường liên kết đến nội dung, truyền tải hoặc cung cấp bất kỳ tệp tin, dữ liệu hoặc nội dung nào có vi phạm bất kỳ bản quyền hoặc quyền sở hữu nào khác của bất kỳ cá nhân hoặc tổ chức nào.";
 /* button caption text that the user clicks when he agrees */
@@ -457,7 +457,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Đổi tên";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Nhập một tên mới.";
+"renameNodeMessage"="Nhập một tên mới";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Các ký tự này không được phép sử dụng: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -529,7 +529,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Đặt một cái tên khác.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Nhập một tên mới.";
+"cameraUploads.albums.create.alert.enterNewName"="Nhập một tên mới";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Thêm mục vào “%@”";
 /* Used in empty album view. */
@@ -721,7 +721,7 @@
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="Khuyên dùng H.264, định dạng video được tương tích với nhiều phương tiện.";
 /* Footer for video compression quality */
-"Compression quality when to transcode HEVC videos to H.264 format."="Nén chất lượng khi các video HEVC được chuyển mã thành định dạng H.264";
+"Compression quality when to transcode HEVC videos to H.264 format."="Chất lượng nén khi các video HEVC được chuyển mã sang định dạng H.264 để sử dụng.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Cho phép video được tải lên";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
@@ -745,7 +745,7 @@
 /* Title to show when device local storage is almost full */
 "Device Storage Almost Full"="Dung Lượng Của Thiết Bị Sắp Hết";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Thiết bị không còn đủ dung lượng cho việc đăng tải camêra. Xin xóa bớt các ứng dụng ít sử dụng, videos hay nhạc. Hoặc vào %@ để quản lý không gian.";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Thiết bị không đủ dung lượng cho đăng tải camêra. Hãy giải phóng không gian bằng cách xóa các ứng dụng, video và nhạc không cần thiết. Quản lý dung lượng trong %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Cài đặt > Cài đặt chung > Dung lượng %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
@@ -951,7 +951,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Bắt đầu tài khoản mới";
 /*  */
-"yourAccounHasBeenParked"="Tài khoản cũ của bạn đã được đặt thay mới. Bây giờ bạn có thể đăng nhập vào vào tài khoản mới này.";
+"yourAccounHasBeenParked"="Tài khoản cũ của bạn đã được đặt mới. Bây giờ bạn có thể đăng nhập vào tài khoản mới này.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Địa chỉ email mới";
 /* Button text for the user to confirm their change of email address. */
@@ -1065,7 +1065,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ thêm cho không gian lưu trữ từ việc cài app MEGA cho di động";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Di Động, bạn sẽ nhận được thêm %@ cho lưu trữ, %2$@. App MEGA cho Di Động còn có cho iOS và Android.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Di Động, bạn sẽ nhận được thêm %@ cho lưu trữ, %2$@. App MEGA cho Di Động còn có cho iOS và Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.freeTrial.detail.complete.label"="%1$@ thưởng thêm đã được áp dụng. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
@@ -1213,7 +1213,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Việc khôi phục đã dừng lại";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.io để được trợ giúp.";
+"failedRestore_message"="Có thể là yêu cầu đã bị hủy hoặc là không thể phục hồi lại giao dịch đã mua trước đây. Vui lòng thử lại sau, hoặc liên hệ ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Nâng cấp lên hạng Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -1439,7 +1439,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Các gói mua đăng ký  sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như lúc ban đầu khi gói được mua lần đầu tiên. Khách hàng có thể tắt tự động gia hạn gói MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán tiếp theo thông qua trang cài đặt tài khoản Apple của mình. Để quản lý gói đăng ký, chỉ cần chạm vào biểu tượng App Store trên thiết bị di động, đăng nhập với ID Apple của mình, ở dưới cùng của trang. Sau đó chạm vào Xem ID để được đưa đến trang tài khoản, rồi đi xuống đến phần Quản lý đăng ký ứng dụng. Từ đó, chọn vào gói MEGA Pro và xem ngày gia hạn dự kiến tiếp theo, chọn một gói khác hoặc chọn bật-tắt để ngắt việc tự động gia hạn gói đăng ký.";
+"autorenewableDescription"="Các gói đăng ký sẽ được tự động gia hạn cho các chu kỳ kế tiếp với cùng thời hạn và mức giá như kỳ ban đầu đã chọn. Khách hàng có thể tắt tự động gia hạn gói MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán tiếp theo thông qua trang cài đặt tài khoản Apple của mình. Để quản lý gói đăng ký, chỉ cần chạm vào biểu tượng App Store trên thiết bị di động, đăng nhập với ID Apple của mình, ở dưới cùng của trang (nếu chưa thực hiện). Sau đó chạm vào Xem ID để được đưa đến trang tài khoản, cuộn xuống phần Quản lý đăng ký ứng dụng. Từ đó, có thể chọn gói MEGA Pro để xem ngày gia hạn dự kiến, chọn gói khác hoặc gạt công tắc bật/tắt để vô hiệu hóa việc tự động gia hạn.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Mở app MEGA và đăng nhập để tiếp tục";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1777,7 +1777,7 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt tính năng tự động dọn Thùng Rác hoặc đặt thời gian trữ rác lâu hơn, bạn cần phải đăng ký một trong các gói của chúng tôi.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Thao tác này sẽ đăng xuất tài khoản ra khỏi tất cả các thiết bị đang sử dụng, ngoại trừ phiên hiện hành. Có chắc muốn tiến hành?";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Bạn có muốn đóng tất cả các phiên khác không? Hành động này sẽ đăng xuất bạn khỏi tất cả các phiên đang hoạt động ngoại trừ phiên hiện tại.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ tham gia vào cuộc gọi.";
 /* Message to inform the local user that someone has left the current group call */
@@ -2485,7 +2485,7 @@
 /* Cookie dialog description with cookie policy. */
 "dialog.cookies.description.cookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự để giúp chúng tôi cải thiện dịch vụ của mình. Tìm hiểu thêm về [A]Chính Sách Cookie[/A] của chúng tôi.";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự để giúp chúng tôi cải thiện dịch vụ của mình và cho mục đích quảng cáo. Với việc tiếp tục sử dụng MEGA là bạn đồng ý với các điều khoản được cập nhật nêu trong [A]Chính Sách Cookie[/A]";
+"dialog.cookies.description.adsCookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự để giúp chúng tôi cải thiện dịch vụ của mình và cho mục đích quảng cáo. Với việc tiếp tục sử dụng MEGA là bạn đồng ý với các điều khoản được cập nhật nêu trong [A]Chính Sách Cookie[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Chấp nhận cookies";
 /* Cookie dialog footer description */
@@ -2645,7 +2645,7 @@
 /* Meeting ended Alert button -- View Meeting Chat history. */
 "meetings.alert.meetingchat"="Xem lịch sử chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
-"meetings.alert.end.description"="Cuộc họp mặt bạn đang muốn tham gia đã kết thúc. Bạn vẫn có thể xem các tin nhắn của của họp trong lịch sử chát.";
+"meetings.alert.end.description"="Cuộc họp mặt bạn đang muốn tham gia đã kết thúc. Bạn vẫn có thể xem các tin nhắn của họp trong lịch sử chat.";
 /* Contacts selection screen header: Invite contacts to meetings */
 "meetings.panel.InviteParticipants"="Mời thêm thành viên";
 /* Meetings: Floating panel share link option */
@@ -2763,7 +2763,7 @@
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
 "general.filetype.rawImage"="Ảnh RAW";
 /* File extension: .3g2. Commercial names should be stay on English */
-"general.filetype.3g2"="Multimedia";
+"general.filetype.3g2"="Đa phương tiện";
 /* File extension: .7z. Commercial names should be stay on English */
 "general.filetype.7z"="Tệp nén 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
@@ -2801,7 +2801,7 @@
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
 "general.filetype.cgi"="Tập lệnh CGI";
 /* File extension: .class. Commercial names should be stay on English */
-"general.filetype.class"="Java class";
+"general.filetype.class"="Lớp Java";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Lệnh DOS";
 /* File extension: .css. Commercial names should be stay on English */
@@ -2845,7 +2845,7 @@
 /* File extension: .iso. Commercial names should be stay on English */
 "general.filetype.iso"="Ảnh đĩa ISO";
 /* File extension: .jar. Commercial names should be stay on English */
-"general.filetype.jar"="Java archive";
+"general.filetype.jar"="Lưu trữ Java";
 /* File extension: .java. Commercial names should be stay on English */
 "general.filetype.java"="Mã Java";
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
@@ -2901,7 +2901,7 @@
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Ảnh RAW của Panasonic";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Bash shell";
+"general.filetype.sh"="Trình bao Bash";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="HTML Máy chủ";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2955,7 +2955,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Không có thiết bị nào được sao lưu";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Đây là thư mục chứa các tệp tin và thư mục đã được sao lưu dự phòng. Các mục lưu dự phòng là dạng “chỉ-được-xem” để phòng tránh bị chỉnh sửa trong Ổ Mây của bạn.\nBạn có thể lưu dự phòng dữ liệu của mình từ máy tính lên MEGA bằng cách sử dụng App MEGA cho Máy Tính.";
+"backups.empty.state.description"="Đây là thư mục chứa các tệp tin và thư mục đã được sao lưu dự phòng. Các mục lưu dự phòng là dạng “chỉ-được-xem” để phòng tránh bị chỉnh sửa trong Ổ Mây của bạn. \nBạn có thể lưu dự phòng dữ liệu của mình từ máy tính lên MEGA bằng cách sử dụng App MEGA cho Máy Tính.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Hủy các phiên truyền tải?";
 /* Message for action of cancelling a transfer */
@@ -3265,9 +3265,9 @@
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] cuộc họp thành";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả của cuộc họp";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] đã hủy[/B] một cuộc họp được lên lịch vào ";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] đã hủy[/B] một cuộc họp đã lên lịch vào";
 /* In app notification description representing the day was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp thành";
 /* In app notification description representing the time was changed for one off meeting */
@@ -3281,7 +3281,7 @@
 /* In app notification description for multiple fields update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] cuộc họp thành";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp định kỳ";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả của cuộc họp định kỳ";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp định kỳ thành";
 /* In app notification description when time field is updated for recurring meeting. */
@@ -3351,7 +3351,7 @@
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Tắt mã số MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="Để sử dụng MEGA trong ứng dụng Tệp, hãy tắt mã số MEGA của bạn. Đi đến Thiết Đặt trong ứng dụng MEGA, chạm vào Bảo mật > Mã số";
+"picker.disable.passcode.description"="Để sử dụng MEGA trong ứng dụng Tệp, hãy tắt mã số MEGA của bạn. Đi đến Thiết Đặt trong ứng dụng MEGA, chạm vào Bảo mật > Mã số.";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Cuộc họp đang diễn ra";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
@@ -3547,7 +3547,7 @@
 /* Device Center rename device action title */
 "device.center.rename.device.title"="Tên thiết bị";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="Đã có một thiết bị với tên này rồi.";
+"device.center.rename.device.duplicated.name"="Đã có một thiết bị với tên này rồi";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Đặt một cái tên khác";
 /* Device Center rename device action invalid long name message */
@@ -3707,7 +3707,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Bắt đầu cuộc họp";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="Bạn có thể bắt đầu cuộc họp trước thời gian dự kiến ​​bằng cách chạm vào “Bắt đầu cuộc họp” khi ở trong phòng họp.";
+"meetings.scheduleMeeting.startMeetingTip.message"="Bạn có thể bắt đầu cuộc họp trước thời gian dự kiến bằng cách chạm vào “Bắt đầu cuộc họp” khi ở trong phòng họp.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Quản lý các cuộc họp định kỳ";
 /* Recurring meeting tip view message */
@@ -4015,7 +4015,7 @@
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="Tạo";
 /* Used in create video playlist popup video playlist name validation */
-"videos.tab.playlist.create.alert.enterNewName"="Nhập một tên mới.";
+"videos.tab.playlist.create.alert.enterNewName"="Nhập một tên mới";
 /* Used in create video playlist popup system video playlist name validation */
 "videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed"="Tên danh sách phát này không được cho phép";
 /* Used in create video playlist popup video playlist name validation */
@@ -4285,7 +4285,7 @@
 /* Cancel subscription survey follow up reason with id 1.a */
 "accounts.cancelSubscriptionSurvey.reason.one.a"="Tôi chỉ dùng MEGA để tải tệp tin";
 /* Cancel subscription survey follow up reason with id 1.b */
-"accounts.cancelSubscriptionSurvey.reason.one.b"="Tôi chỉ tạm thời cần lưu trữ tệp tin ";
+"accounts.cancelSubscriptionSurvey.reason.one.b"="Tôi chỉ tạm thời cần lưu trữ tệp tin";
 /* Cancel subscription survey follow up reason with id 1.c */
 "accounts.cancelSubscriptionSurvey.reason.one.c"="Tôi chỉ dùng MEGA để chia sẻ tệp tin";
 /* Cancel subscription survey reason with id 2 */
@@ -4293,7 +4293,7 @@
 /* Cancel subscription survey reason with id 3 */
 "accounts.cancelSubscriptionSurvey.reason.three"="Tôi không cần tất cả dung lượng trong gói của mình";
 /* Cancel subscription survey reason with id 4 */
-"accounts.cancelSubscriptionSurvey.reason.four"="Tôi cần sử đụng các tính năng mà MEGA không có có";
+"accounts.cancelSubscriptionSurvey.reason.four"="Tôi cần sử đụng các tính năng mà MEGA không có";
 /* Cancel subscription survey reason with id 5 */
 "accounts.cancelSubscriptionSurvey.reason.five"="Tôi chuyển sang sử dụng hãng khác";
 /* Cancel subscription survey reason with id 6 */
@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Mời";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Thử tìm kiếm các tệp tin tin đa phương tiện";
+"photos.searchHistory.empty.description"="Thử tìm kiếm các tệp tin đa phương tiện";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Không gian lưu trữ đã đầy";
 /* Button title to upgrade when storage is full */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục.";
+"ads.adFree.content.additionalSecurity.message"="Giúp cuộc sống trực tuyến an toàn, nhanh chóng và dễ dàng hơn với trình quản lý mật khẩu và VPN tốc độ cao";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Xem các gói Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4617,7 +4617,7 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="Luôn luôn giữ ảnh của bạn được an toàn";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Ký ức của bạn là thứ quan trọng\n\nĐăng tải camêra sẽ tự động sao lưu ảnh và video của bạn lên Ổ MEGA của bạn, vì vậy bạn không bao giờ phải lo lắng về chuyện mất đi hình ảnh quý giá.";
+"onboarding.cta.cameraBackups.explanation"="Ký ức là thứ quan trọng. Đăng tải camêra sẽ tự động sao lưu ảnh và video lên Ổ Mây MEGA của bạn, không còn bao giờ phải lo lắng về mất đi những kỷ niệm quý giá";
 /* Onboarding Camera Backups CTA note */
 "onboarding.cta.cameraBackups.note"="Đăng tải camêra yêu cầu [B]toàn quyền truy cập[/B] vào thư viện ảnh của thiết bị";
 /* Onboarding Camera Backups CTA *Enable* button */
@@ -4625,7 +4625,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Để lúc khác";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Các gói đăng ký được tự động gia hạn cho khoảng thời gian đăng ký kế tiếp có cùng thời lượng và ở cùng mức giá như khoảng thời gian ban đầu đã chọn.\n\nBạn có thể hủy gói Pro của mình bất cứ lúc nào, nhưng không được muộn hơn 24 giờ trước kỳ hạn thanh toán đăng ký tiếp theo. [L]Tìm hiểu cách quản lý gói đăng ký trong thiết đặt.[/L]";
+"subscriptionPurchase.autoRenewDescription"="Các gói đăng ký được tự động gia hạn cho khoảng thời gian đăng ký kế tiếp có cùng thời lượng và ở cùng mức giá như khoảng thời gian ban đầu đã chọn.\n\nBạn có thể hủy gói Pro của mình bất cứ lúc nào, nhưng không được muộn hơn 24 giờ trước kỳ hạn thanh toán đăng ký tiếp theo. [L]Tìm hiểu cách quản lý gói đăng ký trong thiết đặt[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Khởi đầu với gói miễn phí của chúng tôi";
 /* Description shown for the free plan card */
@@ -4733,7 +4733,7 @@
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Hình trong hình";
 /* Subscription benefit for rewind */
-"subscriptionPurchase.benefits.rewind.title"="Tua lại dữ liệu bị xóa lên đến 60 ngày ";
+"subscriptionPurchase.benefits.rewind.title"="Tua lại dữ liệu bị xóa lên đến 60 ngày";
 /* Subscription benefit for for calls and meetings */
 "subscriptionPurchase.benefits.callsAndMeetings.title"="Tổ chức các cuộc gọi và cuộc họp với thời gian và số lượng người tham gia không giới hạn";
 /* Subscription benefit for rubbish bin clearing */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Đang Truyền";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ của %@ %@/giây";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Khuyến mại ngày Thứ Hai Điện Tử: giảm giá %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4783,37 +4783,37 @@
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Giá chỉ %@/tháng";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Phiên đăng tải camêra đã tạm dừng do mức pin quá thấp. Hãy sạc pin để tiếp tục đăng tải camêra.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Phiên đăng tải camêra đã tạm dừng do nhiệt độ thiết bị quá nóng. Việc đăng tải sẽ tiếp tục khi thiết bị được hạ nhiệt.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads đã tạm dừng, không có internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Cho phép dùng mạng di dộng";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="Không gian lưu trữ đã đầy";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Để tiếp tục tải lên, hãy nâng cấp để có thêm không gian lưu trữ";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Nâng cấp ngay";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Để đảm bảo không bỏ lỡ bất kỳ kỷ niệm nào của bạn, MEGA cần có quyền truy cập đầy đủ vào thư viện ảnh của bạn";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Đặt quyền hạn";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Đã xong hết";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="Ảnh và videos mới sẽ hiện ở đây sau khi bạn chụp xong";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="Các phiên truyền tải khi diễn ra sẽ hiện ở đây";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="Các phiên truyền tải trong xếp hàng chờ sẽ hiện ở đây";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Thời điểm chia sẻ";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
 "sorting.linkCreated.title"="Liên kết đã tạo";
 /* Camera Uploads Checking For Uploads */
-"cameraUploads.checkingForUploads"="Đang kiểm tra các phiên tải lên…";
+"cameraUploads.checkingForUploads"="Đang kiểm tra các phiên tải lên…";
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Đăng tải camêra đã hoàn tất";
 /* Camera Uploads Up To Date */
@@ -4823,16 +4823,30 @@
 /* The title displayed in the empty view when Cloud Drive root is empty */
 "cloudDrive.emptyStateTitle.root"="Chưa có gì ở trong két sắt riêng của bạn";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
-"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+"cloudDrive.emptyStateTitle.nonRoot"="Thư mục này rỗng";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+"cloudDrive.emptyStateSubtitle"="Giữ cho mọi thứ luôn được an toàn với mô hình mã hóa vô kiến thức";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";
-/* Title of Photo's large zoom scale title */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Không thể xem trước các tệp tin chưa được giải mã";
+/* Undecrypted file open error snackBar message */
 "media.photoLibrary.zoom.large.title"="Lớn";
-/* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="nhỏ gọn";
-/* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Header title for the Date field in the album content sorting controls */
-"media.photoLibrary.album.sorting.date"="Date";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.compact.title"="Gọn";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.zoom.smallest.title"="Nhỏ nhất";
+/* Undecrypted file open error snackBar message */
+"media.photoLibrary.album.sorting.date"="Ngày";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.title"="Truy cập kho ảnh bị giới hạn";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.message"="Một số ảnh bạn đã chọn không khả dụng với MEGA. Bạn có muốn cài đặt lại quyền truy cập không?";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.availableOnly"="Tải lên những ảnh có sẵn";
+/* Undecrypted file open error snackBar message */
+"photo.picker.alert.limitAccess.selectMore"="Đặt lại quyền truy cập";
+/* Undecrypted file open error snackBar message */
+"general.addItems"="Thêm mục";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.storageUsage"="Đã dùng %1$@ trong tổng %2$@";
+/* Undecrypted file open error snackBar message */
+"home.widgets.accountDetails.nameTitle"="Chào %@!";
