@@ -130,6 +130,7 @@ public struct VideoListView: View {
             featureFlagProvider: viewModel.featureFlagProvider
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
+        .ignoreVerticalSafeAreaForLiquidGlass()
     }
     
     private func chipsView() -> some View {

@@ -44,6 +44,7 @@ struct AddToPlaylistView: View {
         VideoPlaylistsCollectionViewRepresenter(
             viewModel: viewModel,
             router: viewModel.router)
+        .ignoreVerticalSafeAreaForLiquidGlass()
     }
     
     private var empty: some View {

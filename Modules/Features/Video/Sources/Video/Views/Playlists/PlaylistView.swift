@@ -36,7 +36,6 @@ public struct PlaylistView: View {
                     image: MEGAAssets.Image.plus,
                     action: { viewModel.addPlaylistButtonTap() })
                 .padding(TokenSpacing._5)
-                .padding(.bottom, liquidGlassTabBarAvoidancePadding(isMediaRevampEnabled: viewModel.isMediaRevampEnabled))
             }
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
@@ -212,6 +211,7 @@ public struct PlaylistView: View {
         )
         .listStyle(PlainListStyle())
         .padding(.horizontal, 8)
+        .ignoreVerticalSafeAreaForLiquidGlass()
     }
     
     private var placeholder: some View {

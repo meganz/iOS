@@ -9,7 +9,6 @@ struct PhotoLibraryPicker: View {
     var body: some View {
         pickerView
             .padding(16)
-            .padding(.bottom, liquidGlassTabBarAvoidancePadding(isMediaRevampEnabled: isMediaRevampEnabled))
             .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
     }
 }
