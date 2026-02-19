@@ -23,6 +23,7 @@ public struct HomeView: View {
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
         let favouritesContextAction: @MainActor (HandleEntity, UIButton) -> Void
+        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -35,7 +36,8 @@ public struct HomeView: View {
             favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
-            favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void
+            favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -48,6 +50,7 @@ public struct HomeView: View {
             self.userImageUseCase = userImageUseCase
             self.avatarFetcher = avatarFetcher
             self.favouritesContextAction = favouritesContextAction
+            self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         }
     }
 
@@ -95,7 +98,8 @@ public struct HomeView: View {
                         searchResultsMapper: dependency.favouritesSearchResultsMapper,
                         downloadedNodesListener: dependency.downloadedNodesListener,
                         nodeUseCase: dependency.nodeUseCase,
-                        contextAction: dependency.favouritesContextAction
+                        contextAction: dependency.favouritesContextAction,
+                        sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
                     )
                 )
             case .offline, .videos:

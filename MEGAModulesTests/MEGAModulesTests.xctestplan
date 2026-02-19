@@ -17,14 +17,6 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Features\/MEGAPhotos",
-        "identifier" : "MEGAPhotosTests",
-        "name" : "MEGAPhotosTests"
-      }
-    },
-    {
       "enabled" : false,
       "parallelizable" : true,
       "target" : {
@@ -34,43 +26,12 @@
       }
     },
     {
+      "enabled" : false,
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Settings",
-        "identifier" : "SettingsTests",
-        "name" : "SettingsTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGAIntentDomain",
-        "identifier" : "MEGAIntentDomainTests",
-        "name" : "MEGAIntentDomainTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
-        "identifier" : "MEGAAnalyticsDomainTests",
-        "name" : "MEGAAnalyticsDomainTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGADomain",
-        "identifier" : "MEGADomainTests",
-        "name" : "MEGADomainTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Features\/Shared\/ContentLibraries",
-        "identifier" : "ContentLibrariesTests",
-        "name" : "ContentLibrariesTests"
+        "containerPath" : "container:Modules\/UI\/MEGAUIKit",
+        "identifier" : "MEGAUIKitTests",
+        "name" : "MEGAUIKitTests"
       }
     },
     {
@@ -84,25 +45,9 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Notifications",
-        "identifier" : "NotificationsTests",
-        "name" : "NotificationsTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Repository\/ChatRepo",
-        "identifier" : "ChatRepoTests",
-        "name" : "ChatRepoTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Repository\/MEGAAppSDKRepo",
-        "identifier" : "MEGAAppSDKRepoTests",
-        "name" : "MEGAAppSDKRepoTests"
+        "containerPath" : "container:Modules\/Features\/CloudDrive",
+        "identifier" : "CloudDriveTests",
+        "name" : "CloudDriveTests"
       }
     },
     {
@@ -116,9 +61,25 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Accounts",
-        "identifier" : "AccountsTests",
-        "name" : "AccountsTests"
+        "containerPath" : "container:Modules\/Repository\/MEGAAppSDKRepo",
+        "identifier" : "MEGAAppSDKRepoTests",
+        "name" : "MEGAAppSDKRepoTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Home",
+        "identifier" : "HomeTests",
+        "name" : "HomeTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Notifications",
+        "identifier" : "NotificationsTests",
+        "name" : "NotificationsTests"
       }
     },
     {
@@ -132,17 +93,73 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Video",
-        "identifier" : "VideoTests",
-        "name" : "VideoTests"
+        "containerPath" : "container:Modules\/Features\/Search",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
       }
     },
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Presentation\/MEGAAppPresentation",
-        "identifier" : "MEGAAppPresentationTests",
-        "name" : "MEGAAppPresentationTests"
+        "containerPath" : "container:Modules\/Features\/Settings",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/MEGAVideoPlayer",
+        "identifier" : "MEGAVideoPlayerTests",
+        "name" : "MEGAVideoPlayerTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Domain\/MEGAIntentDomain",
+        "identifier" : "MEGAIntentDomainTests",
+        "name" : "MEGAIntentDomainTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/MEGAPhotos",
+        "identifier" : "MEGAPhotosTests",
+        "name" : "MEGAPhotosTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Chat",
+        "identifier" : "ChatTests",
+        "name" : "ChatTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Repository\/MEGAPickerFileProviderRepo",
+        "identifier" : "MEGAPickerFileProviderRepoTests",
+        "name" : "MEGAPickerFileProviderRepoTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/MEGAAssets",
+        "identifier" : "MEGAAssetsTests",
+        "name" : "MEGAAssetsTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Video",
+        "identifier" : "VideoTests",
+        "name" : "VideoTests"
       }
     },
     {
@@ -156,9 +173,17 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Search",
-        "identifier" : "SearchTests",
-        "name" : "SearchTests"
+        "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
+        "identifier" : "MEGAAnalyticsDomainTests",
+        "name" : "MEGAAnalyticsDomainTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/DeviceCenter",
+        "identifier" : "DeviceCenterTests",
+        "name" : "DeviceCenterTests"
       }
     },
     {
@@ -175,12 +200,35 @@
       }
     },
     {
-      "enabled" : false,
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/UI\/MEGAUIKit",
-        "identifier" : "MEGAUIKitTests",
-        "name" : "MEGAUIKitTests"
+        "containerPath" : "container:Modules\/Domain\/MEGAPickerFileProviderDomain",
+        "identifier" : "MEGAPickerFileProviderDomainTests",
+        "name" : "MEGAPickerFileProviderDomainTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/MEGAAppPresentation",
+        "identifier" : "MEGAAppPresentationTests",
+        "name" : "MEGAAppPresentationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Shared\/ContentLibraries",
+        "identifier" : "ContentLibrariesTests",
+        "name" : "ContentLibrariesTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Repository\/ChatRepo",
+        "identifier" : "ChatRepoTests",
+        "name" : "ChatRepoTests"
       }
     },
     {
@@ -194,33 +242,25 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/CloudDrive",
-        "identifier" : "CloudDriveTests",
-        "name" : "CloudDriveTests"
+        "containerPath" : "container:Modules\/Domain\/MEGADomain",
+        "identifier" : "MEGADomainTests",
+        "name" : "MEGADomainTests"
       }
     },
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/DeviceCenter",
-        "identifier" : "DeviceCenterTests",
-        "name" : "DeviceCenterTests"
+        "containerPath" : "container:Modules\/Features\/Accounts",
+        "identifier" : "AccountsTests",
+        "name" : "AccountsTests"
       }
     },
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Repository\/MEGAPickerFileProviderRepo",
-        "identifier" : "MEGAPickerFileProviderRepoTests",
-        "name" : "MEGAPickerFileProviderRepoTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Features\/Chat",
-        "identifier" : "ChatTests",
-        "name" : "ChatTests"
+        "containerPath" : "container:Modules\/Features\/Favourites",
+        "identifier" : "FavouritesTests",
+        "name" : "FavouritesTests"
       }
     },
     {
@@ -229,30 +269,6 @@
         "containerPath" : "container:Modules\/Repository\/MEGARepo",
         "identifier" : "MEGARepoTests",
         "name" : "MEGARepoTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Presentation\/MEGAAssets",
-        "identifier" : "MEGAAssetsTests",
-        "name" : "MEGAAssetsTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Features\/MEGAVideoPlayer",
-        "identifier" : "MEGAVideoPlayerTests",
-        "name" : "MEGAVideoPlayerTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:Modules\/Domain\/MEGAPickerFileProviderDomain",
-        "identifier" : "MEGAPickerFileProviderDomainTests",
-        "name" : "MEGAPickerFileProviderDomainTests"
       }
     }
   ],

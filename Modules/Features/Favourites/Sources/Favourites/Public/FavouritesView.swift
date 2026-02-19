@@ -14,6 +14,7 @@ public struct FavouritesView: View {
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
         let contextAction: @MainActor (HandleEntity, UIButton) -> Void
+        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -21,7 +22,8 @@ public struct FavouritesView: View {
             searchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
-            contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void
+            contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -29,6 +31,7 @@ public struct FavouritesView: View {
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
             self.contextAction = contextAction
+            self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         }
     }
 
@@ -46,7 +49,8 @@ public struct FavouritesView: View {
                         nodeUseCase: dependency.nodeUseCase
                     )
                 ),
-                contextAction: dependency.contextAction
+                contextAction: dependency.contextAction,
+                sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
             )
         )
     }

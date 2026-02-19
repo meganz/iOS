@@ -51,7 +51,8 @@ extension HomeScreenFactory {
             favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
-            favouritesContextAction: makeFavouritesContextAction(navigationController: navigationController)
+            favouritesContextAction: makeFavouritesContextAction(navigationController: navigationController),
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
         )
         
         let homeView = HomeView(dependency: dependency)
@@ -200,6 +201,13 @@ extension HomeScreenFactory {
             nodeDataRepository: NodeDataRepository.newRepo,
             nodeValidationRepository: NodeValidationRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
+        )
+    }
+
+    private var sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol {
+        SortOrderPreferenceUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
         )
     }
 

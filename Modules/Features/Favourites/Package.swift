@@ -22,7 +22,8 @@ let package = Package(
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent")
     ],
     targets: [
         .target(
@@ -41,7 +42,12 @@ let package = Package(
         ),
         .testTarget(
             name: "FavouritesTests",
-            dependencies: ["Favourites"]
+            dependencies: [
+                "Favourites",
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "SearchMock", package: "Search"),
+                .product(name: "MEGAUIComponent", package: "MEGAUIComponent")
+            ]
         )
     ]
 )

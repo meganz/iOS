@@ -5,4 +5,5 @@ public enum AppearancePreferenceKeyEntity: String, Sendable {
     case homeVideos
     case homeVideoPlaylists
     case videoPlaylistContent
+    case homeFavourites
 }
