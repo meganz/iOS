@@ -1,10 +1,10 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import Search
 import SwiftUI
-import UIKit
 
 public struct FavouritesView: View {
     public struct Dependency {
@@ -15,6 +15,8 @@ public struct FavouritesView: View {
         let nodeUseCase: any NodeUseCaseProtocol
         let contextAction: @MainActor (HandleEntity, UIButton) -> Void
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let nodesActionHandler: any NodesActionHandling
+        let onEditingChanged: @MainActor (Bool) -> Void
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -23,7 +25,9 @@ public struct FavouritesView: View {
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
             contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            nodesActionHandler: some NodesActionHandling,
+            onEditingChanged: @escaping @MainActor (Bool) -> Void
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -32,32 +36,99 @@ public struct FavouritesView: View {
             self.nodeUseCase = nodeUseCase
             self.contextAction = contextAction
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+            self.nodesActionHandler = nodesActionHandler
+            self.onEditingChanged = onEditingChanged
         }
     }
 
-    private let viewModel: FavouritesViewModel
+    @StateObject private var viewModel: FavouritesViewModel
+    private let dependency: Dependency
 
     public init(dependency: Dependency) {
-        viewModel = FavouritesViewModel(
-            dependency: .init(
-                resultsProvider: FavouriteSearchResultsProvider(
-                    dependency: .init(
-                        fileSearchUseCase: dependency.fileSearchUseCase,
-                        sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
-                        searchResultsMapper: dependency.searchResultsMapper,
-                        downloadedNodesListener: dependency.downloadedNodesListener,
-                        nodeUseCase: dependency.nodeUseCase
-                    )
-                ),
-                contextAction: dependency.contextAction,
-                sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
+        _viewModel = StateObject(
+            wrappedValue: FavouritesViewModel(
+                dependency: .init(
+                    resultsProvider: FavouriteSearchResultsProvider(
+                        dependency: .init(
+                            fileSearchUseCase: dependency.fileSearchUseCase,
+                            sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
+                            searchResultsMapper: dependency.searchResultsMapper,
+                            downloadedNodesListener: dependency.downloadedNodesListener,
+                            nodeUseCase: dependency.nodeUseCase
+                        )
+                    ),
+                    contextAction: dependency.contextAction,
+                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
+                )
             )
         )
+        self.dependency = dependency
     }
 
     public var body: some View {
         SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
             .background(TokenColors.Background.page.swiftUI)
-            .navigationTitle(Strings.Localizable.Home.Favourites.title)
+            .navigationTitle(viewModel.editMode.isEditing ? selectionTitle : Strings.Localizable.Home.Favourites.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(viewModel.editMode.isEditing)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    if viewModel.editMode.isEditing {
+                        Button {
+                            viewModel.toggleSelectAll()
+                        } label: {
+                            Label {
+                                Text(Strings.Localizable.selectAll)
+                            } icon: {
+                                MEGAAssets.Image.checkStack
+                                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                            }
+                            .labelStyle(.iconOnly)
+                        }
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    if viewModel.editMode.isEditing {
+                        Button(Strings.Localizable.cancel) {
+                            viewModel.exitEditMode()
+                        }
+                    }
+                }
+                ToolbarItemGroup(placement: .bottomBar) {
+                    if viewModel.editMode.isEditing {
+                        bottomBar
+                            .disabled(viewModel.bottomBarDisabled)
+                    }
+                }
+            }
+            .environment(\.editMode, $viewModel.editMode)
+            .onChange(of: viewModel.editMode) { editMode in
+                dependency.onEditingChanged(editMode.isEditing)
+            }
+            .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
+                dependency.nodesActionHandler.handle(action: action)
+                viewModel.exitEditMode()
+            }
+    }
+
+    @ViewBuilder
+    private var bottomBar: some View {
+        BottomBarActionButton(action: .download, selection: $viewModel.bottomBarAction)
+        Spacer()
+        BottomBarActionButton(action: .removeFavourite, selection: $viewModel.bottomBarAction)
+        Spacer()
+        BottomBarActionButton(action: .shareLink, selection: $viewModel.bottomBarAction)
+        Spacer()
+        BottomBarActionButton(action: .moveToRubbishBin, selection: $viewModel.bottomBarAction)
+        Spacer()
+        BottomBarActionButton(action: .more, selection: $viewModel.bottomBarAction)
+    }
+
+    private var selectionTitle: String {
+        let count = viewModel.selectedNodeHandles.count
+        guard count > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(count)
     }
 }

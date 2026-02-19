@@ -26,7 +26,12 @@ package final class FavouritesViewModel: ObservableObject {
         }
     }
 
-    @Published var viewMode: SearchResultsViewMode = .list
+    @Published package var viewMode: SearchResultsViewMode = .list
+    @Published package var editMode: EditMode = .inactive
+    @Published package var selectedNodeHandles: Set<HandleEntity> = []
+    @Published package var bottomBarAction: BottomBarAction?
+    @Published package var nodesAction: NodesAction?
+    @Published package var bottomBarDisabled: Bool = true
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
@@ -48,6 +53,14 @@ package final class FavouritesViewModel: ObservableObject {
             self?.handleViewModeChanged(viewMode)
         }
 
+        searchBridge.editingChanged = { [weak self] editing in
+            self?.editMode = editing ? .active : .inactive
+        }
+
+        searchBridge.selectionChanged = { [weak self] handles in
+            self?.selectedNodeHandles = handles
+        }
+
         let searchConfig = SearchConfig.favourites
 
         let searchResultsViewModel = SearchResultsViewModel(
@@ -58,7 +71,7 @@ package final class FavouritesViewModel: ObservableObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: .favourites,
             listHeaderViewModel: nil,
-            isSelectionEnabled: false,
+            isSelectionEnabled: true,
             usesRevampedLayout: true,
             contentUnavailableViewModelProvider: FavouritesContentUnavailableProvider()
         )
@@ -93,6 +106,19 @@ package final class FavouritesViewModel: ObservableObject {
     package init(dependency: Dependency) {
         self.dependency = dependency
         listenToSortOrderChanges()
+        listenToEditingChanges()
+        listenToBottomBarActions()
+        listenToSelectionChanges()
+    }
+
+    package func exitEditMode() {
+        withAnimation {
+            editMode = .inactive
+        }
+    }
+
+    package func toggleSelectAll() {
+        searchResultsContainerViewModel.toggleSelectAll()
     }
 
     private func handleViewModeChanged(_ viewMode: SearchResultsViewMode) {
@@ -118,5 +144,53 @@ package final class FavouritesViewModel: ObservableObject {
                 self?.searchResultsContainerViewModel.changeSortOrder(sortOrder.toUIComponentSortOrderEntity())
             }
             .store(in: &subscriptions)
+    }
+
+    private func listenToBottomBarActions() {
+        $bottomBarAction
+            .dropFirst()
+            .compactMap { [weak self] action in
+                guard let self, let action else { return nil }
+                return switch action {
+                case .download:
+                    NodesAction.download(selectedNodeHandles)
+                case .removeFavourite:
+                    NodesAction.toggleFavourites(selectedNodeHandles)
+                case .shareLink:
+                    NodesAction.shareLink(selectedNodeHandles)
+                case .moveToRubbishBin:
+                    NodesAction.moveToRubbishBin(selectedNodeHandles)
+                case .more:
+                    NodesAction.more(selectedNodeHandles)
+                }
+            }
+            .assign(to: &$nodesAction)
+    }
+
+    private func listenToEditingChanges() {
+        $editMode
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] mode in
+                guard let self else { return }
+                let isEditing = mode.isEditing
+                searchResultsContainerViewModel.setEditing(isEditing)
+                if !isEditing {
+                    searchResultsContainerViewModel.clearSelection()
+                    selectedNodeHandles = []
+                    bottomBarAction = nil
+                }
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func listenToSelectionChanges() {
+        $selectedNodeHandles
+            .combineLatest($editMode)
+            .map { nodes, editMode in
+                guard editMode == .active else { return true }
+                return nodes.isEmpty
+            }
+            .assign(to: &$bottomBarDisabled)
     }
 }

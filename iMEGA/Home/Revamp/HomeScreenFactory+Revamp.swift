@@ -35,6 +35,14 @@ extension HomeScreenFactory {
         let fullNameHandler: @Sendable (CurrentUserSource) -> String = { $0.currentUser?.mnz_fullName ?? "" }
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
 
+        let favouritesNodesActionHandler = FavouritesNodesActionHandler(
+            navigationController: navigationController,
+            nodeUseCase: nodeUseCase,
+            favouriteUseCase: favouriteUseCase,
+            backupsUseCase: backupsUseCase,
+            sdk: MEGASdk.sharedSdk
+        )
+
         let router = HomeViewRouter(navigationController: navigationController)
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
@@ -52,7 +60,11 @@ extension HomeScreenFactory {
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
             favouritesContextAction: makeFavouritesContextAction(navigationController: navigationController),
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            favouritesNodesActionHandler: favouritesNodesActionHandler,
+            onFavouritesEditingChanged: { [weak tabBarController] isEditing in
+                tabBarController?.tabBar.isHidden = isEditing
+            }
         )
         
         let homeView = HomeView(dependency: dependency)
@@ -224,6 +236,19 @@ extension HomeScreenFactory {
                 ),
                 NodesSavedToOfflineListener(notificationCenter: .default)
             ]
+        )
+    }
+
+    private var backupsUseCase: some BackupsUseCaseProtocol {
+        BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+    }
+
+    private var favouriteUseCase: some NodeFavouriteActionUseCaseProtocol {
+        NodeFavouriteActionUseCase(
+            nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo
         )
     }
 }

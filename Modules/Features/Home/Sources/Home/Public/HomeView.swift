@@ -24,6 +24,8 @@ public struct HomeView: View {
         let nodeUseCase: any NodeUseCaseProtocol
         let favouritesContextAction: @MainActor (HandleEntity, UIButton) -> Void
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let favouritesNodesActionHandler: any NodesActionHandling
+        let onFavouritesEditingChanged: @MainActor (Bool) -> Void
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -37,7 +39,9 @@ public struct HomeView: View {
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
             favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            favouritesNodesActionHandler: some NodesActionHandling,
+            onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -51,6 +55,8 @@ public struct HomeView: View {
             self.avatarFetcher = avatarFetcher
             self.favouritesContextAction = favouritesContextAction
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+            self.favouritesNodesActionHandler = favouritesNodesActionHandler
+            self.onFavouritesEditingChanged = onFavouritesEditingChanged
         }
     }
 
@@ -99,7 +105,9 @@ public struct HomeView: View {
                         downloadedNodesListener: dependency.downloadedNodesListener,
                         nodeUseCase: dependency.nodeUseCase,
                         contextAction: dependency.favouritesContextAction,
-                        sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
+                        sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
+                        nodesActionHandler: dependency.favouritesNodesActionHandler,
+                        onEditingChanged: dependency.onFavouritesEditingChanged
                     )
                 )
             case .offline, .videos:

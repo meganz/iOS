@@ -2535,6 +2535,7 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
+		BFD971252F46BDCA0038892A /* FavouritesNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD971242F46BDCA0038892A /* FavouritesNodesActionHandler.swift */; };
 		BFD9A50F2E2DF27A001E4CF7 /* MainTabBarController+Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A50E2E2DF24E001E4CF7 /* MainTabBarController+Achievements.swift */; };
 		BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */; };
 		BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */; };
@@ -5429,6 +5430,7 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
+		BFD971242F46BDCA0038892A /* FavouritesNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesNodesActionHandler.swift; sourceTree = "<group>"; };
 		BFD9A50E2E2DF24E001E4CF7 /* MainTabBarController+Achievements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Achievements.swift"; sourceTree = "<group>"; };
 		BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerNavItemsFactory.swift; sourceTree = "<group>"; };
 		BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerMediaCheckerModeTests.swift; sourceTree = "<group>"; };
@@ -12671,6 +12673,7 @@
 		BF0BA1182F3AE68400066BC8 /* Revamp */ = {
 			isa = PBXGroup;
 			children = (
+				BFD971242F46BDCA0038892A /* FavouritesNodesActionHandler.swift */,
 				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
 				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
 			);
@@ -15261,6 +15264,7 @@
 				B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */,
 				B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */,
 				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
+				BFD971252F46BDCA0038892A /* FavouritesNodesActionHandler.swift in Sources */,
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
 				B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */,
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,

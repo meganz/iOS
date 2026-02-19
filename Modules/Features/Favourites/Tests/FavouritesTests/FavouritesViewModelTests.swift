@@ -1,9 +1,12 @@
-import Favourites
-import MEGADomainMock
-import SearchMock
-import Testing
 @testable import MEGAUIComponent
 @testable import Search
+import Combine
+import Favourites
+import MEGAAppPresentation
+import MEGADomainMock
+import SearchMock
+import SwiftUI
+import Testing
 
 @MainActor
 struct FavouritesViewModelTests {
@@ -61,6 +64,191 @@ struct FavouritesViewModelTests {
         #expect(useCase.messages.contains(.monitorSortOrder(key: .homeFavourites)))
     }
 
+    // MARK: - Edit mode
+
+    @Test
+    func initialEditModeIsInactive() {
+        let sut = makeSUT()
+
+        #expect(sut.editMode == .inactive)
+    }
+
+    @Test
+    func exitEditModeSetsEditModeToInactive() {
+        let sut = makeSUT()
+        sut.editMode = .active
+
+        sut.exitEditMode()
+
+        #expect(sut.editMode == .inactive)
+    }
+
+    @Test
+    func changingEditModeToInactiveClearsSelection() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        sut.editMode = .inactive
+
+        try await waitForCondition { sut.selectedNodeHandles.isEmpty }
+        #expect(sut.selectedNodeHandles.isEmpty)
+    }
+
+    // MARK: - Selection
+
+    @Test
+    func initialSelectedNodeHandlesIsEmpty() {
+        let sut = makeSUT()
+
+        #expect(sut.selectedNodeHandles.isEmpty)
+    }
+
+    @Test
+    func toggleSelectAllDelegatesToSearchResultsContainer() {
+        let sut = makeSUT()
+        sut.editMode = .active
+
+        sut.toggleSelectAll()
+
+        // This test verifies the method is called without error
+        // Actual selection behavior is tested in SearchResultsContainerViewModel tests
+    }
+
+    // MARK: - Bottom bar state
+
+    @Test
+    func bottomBarDisabledWhenEditModeIsInactive() {
+        let sut = makeSUT()
+        sut.editMode = .inactive
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        #expect(sut.bottomBarDisabled == true)
+    }
+
+    @Test
+    func bottomBarDisabledWhenNoNodesSelected() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+
+        sut.selectedNodeHandles = []
+
+        try await waitForCondition { sut.bottomBarDisabled == true }
+        #expect(sut.bottomBarDisabled == true)
+    }
+
+    @Test
+    func bottomBarEnabledWhenInEditModeWithSelection() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        try await waitForCondition { sut.bottomBarDisabled == false }
+        #expect(sut.bottomBarDisabled == false)
+    }
+
+    // MARK: - Bottom bar actions
+
+    @Test
+    func downloadActionCreatesDownloadNodesAction() async throws {
+        let sut = makeSUT()
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        sut.bottomBarAction = .download
+
+        try await waitForCondition {
+            if case .download = sut.nodesAction { return true }
+            return false
+        }
+        guard case .download(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected download action")
+            return
+        }
+        #expect(handles == [1, 2, 3])
+    }
+
+    @Test
+    func removeFavouriteActionCreatesToggleFavouritesNodesAction() async throws {
+        let sut = makeSUT()
+        sut.selectedNodeHandles = [4, 5]
+
+        sut.bottomBarAction = .removeFavourite
+
+        try await waitForCondition {
+            if case .toggleFavourites = sut.nodesAction { return true }
+            return false
+        }
+        guard case .toggleFavourites(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected toggleFavourites action")
+            return
+        }
+        #expect(handles == [4, 5])
+    }
+
+    @Test
+    func shareLinkActionCreatesShareLinkNodesAction() async throws {
+        let sut = makeSUT()
+        sut.selectedNodeHandles = [6, 7, 8]
+
+        sut.bottomBarAction = .shareLink
+
+        try await waitForCondition {
+            if case .shareLink = sut.nodesAction { return true }
+            return false
+        }
+        guard case .shareLink(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected shareLink action")
+            return
+        }
+        #expect(handles == [6, 7, 8])
+    }
+
+    @Test
+    func moveToRubbishBinActionCreatesMoveToRubbishBinNodesAction() async throws {
+        let sut = makeSUT()
+        sut.selectedNodeHandles = [9]
+
+        sut.bottomBarAction = .moveToRubbishBin
+
+        try await waitForCondition {
+            if case .moveToRubbishBin = sut.nodesAction { return true }
+            return false
+        }
+        guard case .moveToRubbishBin(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected moveToRubbishBin action")
+            return
+        }
+        #expect(handles == [9])
+    }
+
+    @Test
+    func moreActionCreatesMoreNodesAction() async throws {
+        let sut = makeSUT()
+        sut.selectedNodeHandles = [10, 11]
+
+        sut.bottomBarAction = .more
+
+        try await waitForCondition {
+            if case .more = sut.nodesAction { return true }
+            return false
+        }
+        guard case .more(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected more action")
+            return
+        }
+        #expect(handles == [10, 11])
+    }
+
+    // MARK: - View mode
+
+    @Test
+    func initialViewModeIsList() {
+        let sut = makeSUT()
+
+        #expect(sut.viewMode == .list)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -74,4 +262,21 @@ struct FavouritesViewModelTests {
             )
         )
     }
+
+    /// Wait for a condition to be true with timeout
+    private func waitForCondition(
+        timeout: Duration = .seconds(2),
+        pollingInterval: Duration = .milliseconds(10),
+        condition: @escaping () -> Bool
+    ) async throws {
+        let startTime = ContinuousClock.now
+        while !condition() {
+            if ContinuousClock.now - startTime > timeout {
+                throw TimeoutError()
+            }
+            try await Task.sleep(for: pollingInterval)
+        }
+    }
+
+    private struct TimeoutError: Error {}
 }
