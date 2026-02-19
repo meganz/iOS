@@ -20,7 +20,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
     private let tabSelectionIndicatorColor: Color
     private let backgroundColor: Color
     @Binding private var isTabSwitchingDisabled: Bool
-    private let ignoresBottomSafeArea: Bool
+    private let ignoresBottomContainerSafeArea: Bool
     @ViewBuilder private let content: (ID) -> Content
 
     public init(
@@ -31,7 +31,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         tabSelectionIndicatorColor: Color,
         backgroundColor: Color,
         isTabSwitchingDisabled: Binding<Bool>,
-        ignoresBottomSafeArea: Bool = false,
+        ignoresBottomContainerSafeArea: Bool = false,
         @ViewBuilder content: @escaping (ID) -> Content
     ) {
         self.tabs = tabs
@@ -41,7 +41,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         self.tabSelectionIndicatorColor = tabSelectionIndicatorColor
         self.backgroundColor = backgroundColor
         self._isTabSwitchingDisabled = isTabSwitchingDisabled
-        self.ignoresBottomSafeArea = ignoresBottomSafeArea
+        self.ignoresBottomContainerSafeArea = ignoresBottomContainerSafeArea
         self.content = content
     }
     
@@ -53,7 +53,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         tabSelectionIndicatorColor: Color,
         backgroundColor: Color,
         isTabSwitchingDisabled: Bool = false,
-        ignoresBottomSafeArea: Bool = false,
+        ignoresBottomContainerSafeArea: Bool = false,
         @ViewBuilder content: @escaping (ID) -> Content
     ) {
         self.init(
@@ -64,27 +64,26 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
             tabSelectionIndicatorColor: tabSelectionIndicatorColor,
             backgroundColor: backgroundColor,
             isTabSwitchingDisabled: .constant(isTabSwitchingDisabled),
-            ignoresBottomSafeArea: ignoresBottomSafeArea,
+            ignoresBottomContainerSafeArea: ignoresBottomContainerSafeArea,
             content: content
         )
     }
     
     public var body: some View {
-            VStack(spacing: 0) {
-                tabButtons
+        VStack(spacing: 0) {
+            tabButtons
 
-                TabView(selection: $selectedTab) {
-                    ForEach(tabs) { tab in
-                        content(tab.id)
-                            .id(tab.id)
-                            .tag(tab.id)
-                            .gesture(isTabSwitchingDisabled ? DragGesture() : nil)
-                            .ignoresSafeArea(edges: ignoresBottomSafeArea ? .bottom : [])
-                    }
+            TabView(selection: $selectedTab) {
+                ForEach(tabs) { tab in
+                    content(tab.id)
+                        .id(tab.id)
+                        .tag(tab.id)
+                        .gesture(isTabSwitchingDisabled ? DragGesture() : nil)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .ignoresSafeArea(edges: ignoresBottomSafeArea ? .bottom : [])
+            .tabViewStyle(.page(indexDisplayMode: .never))
+        }
+        .ignoresSafeArea(.container, edges: ignoresBottomContainerSafeArea ? .bottom : [])
     }
     
     private var tabButtons: some View {

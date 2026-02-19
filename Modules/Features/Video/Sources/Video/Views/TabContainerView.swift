@@ -51,14 +51,12 @@ struct TabContainerView: View {
                     )
                     .tag(VideosTab.all)
                     .gesture(syncModel.showsTabView ? nil : DragGesture())
-                    .ignoresSafeArea(edges: .bottom)
                     
                     PlaylistView(
                         viewModel: videoPlaylistViewModel,
                         videoConfig: videoConfig,
                         router: router
                     )
-                    .ignoresSafeArea(edges: .bottom)
                     .tag(VideosTab.playlist)
                     .gesture(syncModel.showsTabView ? nil : DragGesture())
                 }

@@ -54,7 +54,7 @@ struct MediaTabView: View {
                 get: { viewModel.editMode == .active },
                 set: { _ in }
             ),
-            ignoresBottomSafeArea: isLiquidGlassSupported
+            ignoresBottomContainerSafeArea: isLiquidGlassSupported
         ) { tab in
             contentView(for: tab)
         }
