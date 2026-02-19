@@ -9,12 +9,27 @@ import UIKit
 
 @MainActor
 final class FavouritesViewModel: ObservableObject {
+    struct Dependency {
+        let resultsProvider: any SearchResultsProviding
+        let contextAction: @MainActor (HandleEntity, UIButton) -> Void
+
+        init(
+            resultsProvider: any SearchResultsProviding,
+            contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void
+        ) {
+            self.resultsProvider = resultsProvider
+            self.contextAction = contextAction
+        }
+    }
+
     @Published var viewMode: SearchResultsViewMode = .list
 
     lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
             selection: { _ in },
-            context: { _, _ in },
+            context: { [weak self] result, button in
+                self?.dependency.contextAction(result.id, button)
+            },
             chipTapped: { _, _ in },
             sortingOrder: { .init(key: .name) },
             updateSortOrder: { _ in },
@@ -28,7 +43,7 @@ final class FavouritesViewModel: ObservableObject {
         let searchConfig = SearchConfig.favourites
 
         let searchResultsViewModel = SearchResultsViewModel(
-            resultsProvider: resultsProvider,
+            resultsProvider: dependency.resultsProvider,
             bridge: searchBridge,
             config: searchConfig,
             layout: .list,
@@ -57,12 +72,10 @@ final class FavouritesViewModel: ObservableObject {
         return containerVM
     }()
 
-    private let resultsProvider: any SearchResultsProviding
+    private let dependency: Dependency
 
-    init(
-        resultsProvider: some SearchResultsProviding,
-    ) {
-        self.resultsProvider = resultsProvider
+    init(dependency: Dependency) {
+        self.dependency = dependency
     }
 
     private func handleViewModeChanged(_ viewMode: SearchResultsViewMode) {

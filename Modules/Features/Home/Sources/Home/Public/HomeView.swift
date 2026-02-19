@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import SwiftUI
+import UIKit
 
 public struct HomeView: View {
     private enum NavigationRoute: Hashable {
@@ -21,6 +22,7 @@ public struct HomeView: View {
         let favouritesSearchResultsMapper: any FavouritesSearchResultsMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
+        let favouritesContextAction: @MainActor (HandleEntity, UIButton) -> Void
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -33,6 +35,7 @@ public struct HomeView: View {
             favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
+            favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -44,6 +47,7 @@ public struct HomeView: View {
             self.fullNameHandler = fullNameHandler
             self.userImageUseCase = userImageUseCase
             self.avatarFetcher = avatarFetcher
+            self.favouritesContextAction = favouritesContextAction
         }
     }
 
@@ -90,7 +94,8 @@ public struct HomeView: View {
                         sensitiveDisplayPreferenceUseCase: dependency.sensitiveDisplayPreferenceUseCase,
                         searchResultsMapper: dependency.favouritesSearchResultsMapper,
                         downloadedNodesListener: dependency.downloadedNodesListener,
-                        nodeUseCase: dependency.nodeUseCase
+                        nodeUseCase: dependency.nodeUseCase,
+                        contextAction: dependency.favouritesContextAction
                     )
                 )
             case .offline, .videos:

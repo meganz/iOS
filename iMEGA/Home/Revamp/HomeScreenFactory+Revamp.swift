@@ -51,6 +51,7 @@ extension HomeScreenFactory {
             favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
+            favouritesContextAction: makeFavouritesContextAction(navigationController: navigationController)
         )
         
         let homeView = HomeView(dependency: dependency)
@@ -111,6 +112,35 @@ extension HomeScreenFactory {
 
     private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
+    }
+
+    private func makeFavouritesContextAction(
+        navigationController: UINavigationController
+    ) -> @MainActor (HandleEntity, UIButton) -> Void {
+        { [weak navigationController] handle, button in
+            guard let navigationController else { return }
+            let backupsUseCase = BackupsUseCase(
+                backupsRepository: BackupsRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+            let isBackupNode = backupsUseCase.isBackupNodeHandle(handle)
+            let delegate = NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            )
+            guard let nodeActionViewController = NodeActionViewController(
+                node: handle,
+                delegate: delegate,
+                displayMode: .cloudDrive,
+                isIncoming: false,
+                isBackupNode: isBackupNode,
+                isFromSharedItem: false,
+                sender: button
+            ) else {
+                return
+            }
+            navigationController.present(nodeActionViewController, animated: true)
+        }
     }
 
     private func makeFavouritesSearchResultsMapper(
