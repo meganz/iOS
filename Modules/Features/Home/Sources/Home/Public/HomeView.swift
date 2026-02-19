@@ -14,6 +14,8 @@ public struct HomeView: View {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
         let router: any HomeViewRouting
         let fullNameHandler: @Sendable (CurrentUserSource) -> String
+        let userImageUseCase: any UserImageUseCaseProtocol
+        let avatarFetcher: @Sendable () async -> Image?
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
         let favouritesSearchResultsMapper: any FavouritesSearchResultsMapping
@@ -23,12 +25,14 @@ public struct HomeView: View {
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
+            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
+            userImageUseCase: some UserImageUseCaseProtocol,
+            avatarFetcher: @escaping @Sendable () async -> Image?,
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
             favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
-            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -38,6 +42,8 @@ public struct HomeView: View {
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
             self.fullNameHandler = fullNameHandler
+            self.userImageUseCase = userImageUseCase
+            self.avatarFetcher = avatarFetcher
         }
     }
 
@@ -108,7 +114,11 @@ public struct HomeView: View {
                     }
 
                 case .accountDetails:
-                    AccountDetailsWidgetView(dependency: .init(fullNameHandler: self.dependency.fullNameHandler))
+                    AccountDetailsWidgetView(dependency: .init(
+                        fullNameHandler: dependency.fullNameHandler,
+                        userImageUseCase: dependency.userImageUseCase,
+                        avatarFetcher: dependency.avatarFetcher
+                    ))
                 }
             }
             ForEach(0..<10, id: \.self) { index in

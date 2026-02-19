@@ -1,6 +1,6 @@
 import Foundation
-import MEGASwift
 import MEGAPreference
+import MEGASwift
 
 // MARK: - Use case protocol
 public protocol AccountStorageUseCaseProtocol: Sendable {
@@ -81,6 +81,9 @@ public protocol AccountStorageUseCaseProtocol: Sendable {
     ///
     /// - Returns: `true` if the account is paywalled.
     var isPaywalled: Bool { get }
+
+    // Sequenece of the storage amount consumed by user
+    var storageSumUpdates: AnyAsyncSequence<Int64> { get }
 }
 
 public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
@@ -176,5 +179,9 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     
     public var isPaywalled: Bool {
         accountRepository.isPaywalled
+    }
+
+    public var storageSumUpdates: AnyAsyncSequence<Int64> {
+        accountRepository.storageSumUpdates
     }
 }

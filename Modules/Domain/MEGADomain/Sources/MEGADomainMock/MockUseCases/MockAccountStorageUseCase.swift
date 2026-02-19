@@ -8,11 +8,13 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
     private let _isPaywalled: Bool
     public var _currentStorageStatus: StorageStatusEntity
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
+    public var storageSumUpdates: AnyAsyncSequence<Int64>
     public var shouldRefreshStorageStatus: Bool
     
     public init(
         willStorageQuotaExceed: Bool = false,
         onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        storageSumUpdates: AnyAsyncSequence<Int64> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         shouldRefreshAccountDetails: Bool = false,
         shouldShowStorageBanner: Bool = false,
@@ -23,6 +25,7 @@ public final class MockAccountStorageUseCase: AccountStorageUseCaseProtocol, @un
         self.onStorageStatusUpdates = onStorageStatusUpdates
         _currentStorageStatus = currentStorageStatus
         self.shouldRefreshStorageStatus = shouldRefreshAccountDetails
+        self.storageSumUpdates = storageSumUpdates
         _shouldShowStorageBanner = shouldShowStorageBanner
         _isUnlimitedStorageAccount = isUnlimitedStorageAccount
         _isPaywalled = isPaywalled

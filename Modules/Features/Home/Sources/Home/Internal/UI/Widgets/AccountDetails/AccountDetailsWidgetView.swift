@@ -8,6 +8,8 @@ import SwiftUI
 struct AccountDetailsWidgetView: View {
     struct Dependency {
         let fullNameHandler: @Sendable (CurrentUserSource) -> String
+        let userImageUseCase: any UserImageUseCaseProtocol
+        let avatarFetcher: @Sendable () async -> Image?
     }
 
     @StateObject private var viewModel: AccountDetailsWidgetViewModel
@@ -21,7 +23,9 @@ struct AccountDetailsWidgetView: View {
         _viewModel = StateObject(
             wrappedValue: AccountDetailsWidgetViewModel(
                 dependency: .init(
-                    fullNameHandler: dependency.fullNameHandler
+                    fullNameHandler: dependency.fullNameHandler,
+                    userImageUseCase: dependency.userImageUseCase,
+                    avatarFetcher: dependency.avatarFetcher
                 )
             )
         )
@@ -65,7 +69,7 @@ struct AccountDetailsWidgetView: View {
     }
 
     private var userName: some View {
-        Text(viewModel.userName)
+        Text(viewModel.title)
             .font(.callout)
             .fontWeight(.semibold)
             .foregroundStyle(TokenColors.Text.primary.swiftUI)
@@ -88,7 +92,7 @@ struct AccountDetailsWidgetView: View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .fill(TokenColors.Button.disabled.swiftUI)
+                    .fill(TokenColors.Background.surface3.swiftUI)
                 Rectangle()
                     .fill(viewModel.storageUsedFractionColor)
                     .frame(width: geometry.size.width * viewModel.storageUsedFraction)

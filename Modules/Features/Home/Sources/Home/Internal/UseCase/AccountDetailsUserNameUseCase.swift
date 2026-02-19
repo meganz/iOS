@@ -5,7 +5,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
 
-protocol AccountDetailsUserNameUseCaseProtocol: Sendable {
+package protocol AccountDetailsUserNameUseCaseProtocol: Sendable {
     var names: AnyAsyncSequence<String> { get }
 }
 

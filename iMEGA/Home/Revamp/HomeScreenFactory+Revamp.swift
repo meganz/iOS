@@ -3,11 +3,13 @@ import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAInfrastructure
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import SwiftUI
 
 // MARK: - Revamped Home
 extension HomeScreenFactory {
@@ -23,16 +25,32 @@ extension HomeScreenFactory {
             tabBarController: tabBarController
         )
 
+        let userImageUseCase = UserImageUseCase(
+            userImageRepo: UserImageRepository.newRepo,
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            thumbnailRepo: ThumbnailRepository.newRepo,
+            fileSystemRepo: FileSystemRepository.sharedRepo
+        )
+
+        let fullNameHandler: @Sendable (CurrentUserSource) -> String = { $0.currentUser?.mnz_fullName ?? "" }
+        let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+
         let router = HomeViewRouter(navigationController: navigationController)
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
+            fullNameHandler: fullNameHandler,
+            userImageUseCase: userImageUseCase,
+            avatarFetcher: makeAvatarFetcher(
+                fullNameHandler: fullNameHandler,
+                userImageUseCase: userImageUseCase,
+                megaHandleUseCase: megaHandleUseCase
+            ),
             fileSearchUseCase: fileSearchUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
-            fullNameHandler: { $0.currentUser?.mnz_fullName ?? "" }
         )
         
         let homeView = HomeView(dependency: dependency)
@@ -42,6 +60,38 @@ extension HomeScreenFactory {
         navigationController.viewControllers = [hostingController]
 
         return navigationController
+    }
+
+    private func makeAvatarFetcher(
+        fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
+        userImageUseCase: some UserImageUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol
+    ) -> (@Sendable () async -> Image?) {
+        return {
+            let currentUserSource = CurrentUserSource.shared
+            // Needs to be @MainActor because fullNameHandler access CoreData under the hood and
+            let fullNameTask = Task { @MainActor in
+                fullNameHandler(currentUserSource)
+            }
+            let fullName = await fullNameTask.value
+            let handle = currentUserSource.currentUserHandle ?? 0
+
+            guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: handle) else {
+                MEGALogError("base64 handle not found for handle \(handle)")
+                return nil
+            }
+
+            let backgroundColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle)
+
+            let avatarHandler = UserAvatarHandler(
+                userImageUseCase: userImageUseCase,
+                initials: fullName.initialForAvatar(),
+                avatarBackgroundColor: UIColor.colorFromHexString(backgroundColor) ?? TokenColors.Icon.primary
+            )
+
+            let image = await avatarHandler.avatar(for: base64Handle)
+            return Image(uiImage: image)
+        }
     }
 
     private func makeHomeAddMenuActionHandler(newChatRouter: NewChatRouter, navigationController: UINavigationController) -> HomeAddMenuActionHandler {

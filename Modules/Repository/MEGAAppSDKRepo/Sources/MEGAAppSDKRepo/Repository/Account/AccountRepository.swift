@@ -456,4 +456,15 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public func enableRichLinkPreview(_ enabled: Bool) {
         sdk.enableRichPreviews(enabled)
     }
+
+    public var storageSumUpdates: AnyAsyncSequence<Int64> {
+        MEGAUpdateHandlerManager.shared.eventUpdates
+            .filter {
+                $0.type == .storageSumChanged
+            }
+            .map { _ in
+                let accountDetails = try await self.refreshCurrentAccountDetails()
+                return accountDetails.storageUsed
+            }.eraseToAnyAsyncSequence()
+    }
 }

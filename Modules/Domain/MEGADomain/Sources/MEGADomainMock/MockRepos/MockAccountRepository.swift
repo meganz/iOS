@@ -60,6 +60,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public let onEventsUpdates: AnyAsyncSequence<EventEntity>
     public let onAccountUpdates: AnyAsyncSequence<Void>
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
+    public let storageSumUpdates: AnyAsyncSequence<Int64>
     public let _isMonitoringRefreshAccount: Bool
     private(set) public var setAccountStorageStatusCalledCount: Int = 0
     
@@ -125,7 +126,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onEventsUpdates: AnyAsyncSequence<EventEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        storageSumUpdate: AnyAsyncSequence<Int> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+        storageSumUpdates: AnyAsyncSequence<Int64> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         isMonitoringRefreshAccount: Bool = false,
         loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         requestResult: Result<Void, AccountErrorEntity> = .failure(.generic)
@@ -179,6 +182,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.onEventsUpdates = onEventsUpdates
         self.onAccountUpdates = onAccountUpdates
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
+        self.storageSumUpdates = storageSumUpdates
         self.loadUserDataResult = loadUserDataResult
         self.requestResult = requestResult
     }

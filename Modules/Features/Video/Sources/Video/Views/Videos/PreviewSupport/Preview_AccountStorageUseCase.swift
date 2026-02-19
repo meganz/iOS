@@ -2,6 +2,8 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_AccountStorageUseCase: AccountStorageUseCaseProtocol {
+    var storageSumUpdates: MEGASwift.AnyAsyncSequence<Int64> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+
     let onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     let currentStorageStatus: StorageStatusEntity = .noStorageProblems
     let shouldRefreshStorageStatus: Bool = false

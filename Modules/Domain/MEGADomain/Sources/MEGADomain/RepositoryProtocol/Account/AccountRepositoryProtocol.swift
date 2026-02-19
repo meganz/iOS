@@ -22,6 +22,10 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     ///
     /// - Returns: `true` if the account is paywalled.
     var isPaywalled: Bool { get }
+
+    // The sequence of the storage amount consumed by the user
+    var storageSumUpdates: AnyAsyncSequence<Int64> { get }
+
     func currentAccountPlan() async -> PlanEntity?
     /// Retrieves the current storage status of the user's account.
     /// - Returns: A `StorageStatusEntity` that provides the current status of the user's account storage.
