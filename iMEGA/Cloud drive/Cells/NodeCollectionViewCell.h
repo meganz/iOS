@@ -11,7 +11,7 @@ NS_SWIFT_UI_ACTOR
 
 @interface NodeCollectionViewCell : UICollectionViewCell
 
-@property (strong, nonatomic) NodeCollectionViewCellViewModel *viewModel;
+@property (strong, nonatomic, nullable) NodeCollectionViewCellViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
