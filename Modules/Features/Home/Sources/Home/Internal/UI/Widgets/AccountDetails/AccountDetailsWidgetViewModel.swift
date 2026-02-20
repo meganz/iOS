@@ -10,6 +10,19 @@ import UIKit
 // [IOS-11315]: Implement the logic to populate user data
 @MainActor
 final class AccountDetailsWidgetViewModel: ObservableObject {
+    enum Constants {
+        static let criticalStorageLevel = 0.9
+        static let warningStorageLevel = 0.8
+    }
+
+    // Enum type to represent storage availability
+    // In our code we use both StorageStatusEntity and used storage to demtermine progress bar color
+    // and to display the upgrade button. This enum unifies both StorageStatusEntity and the used storage
+    // into one single type for convenient computation
+    private enum StorageAvailabilityState {
+        case good, warning, critical
+    }
+
     struct Dependency {
         let userNameUseCase: any AccountDetailsUserNameUseCaseProtocol
         let planUseCase: any AccountDetailsPlanUseCaseProtocol
@@ -63,8 +76,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var plan: String = ""
     @Published var profilePicture: Image = Image(systemName: "person.crop.circle.fill")
-    @Published var storageUsage: String = ""
-    @Published var storageUsedFraction: Double = 0
+    @Published var storageDetail: AccountStorageDetails = .limited(0, storageMax: 0, storageStatus: .noStorageProblems)
 
     private var dependency: Dependency
 
@@ -80,6 +92,75 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
         async let storageTask: () = monitorStorage()
         async let profilePictureTask: () = monitorAvatar()
         _ = await (nameTask, planTask, storageTask, profilePictureTask)
+    }
+
+    var storageUsedFractionColor: Color {
+        switch storageAvailabilityState {
+        case .good:
+            TokenColors.Support.success.swiftUI
+        case .warning:
+            TokenColors.Support.warning.swiftUI
+        case .critical:
+            TokenColors.Support.error.swiftUI
+        }
+    }
+
+    var shouldShowUpgrade: Bool {
+        storageAvailabilityState == .critical || storageAvailabilityState == .warning
+    }
+
+    var storageUsage: String {
+        storageText(for: self.storageDetail)
+    }
+
+    var storageUsedFraction: Double {
+        storageFraction(for: storageDetail)
+    }
+
+    private var storageAvailabilityState: StorageAvailabilityState {
+        if storageStatus == .full || storageUsedFraction >= 0.9 {
+            .critical
+        } else if storageStatus == .almostFull || storageUsedFraction >= 0.8 {
+            .warning
+        } else {
+            .good
+        }
+    }
+
+    private var storageStatus: StorageStatusEntity {
+        switch storageDetail {
+        case .limited(_, _, let storageStatus):
+            storageStatus
+        case .unlimited:
+                .noStorageProblems
+        }
+    }
+
+    func titleText(for name: String) -> String {
+        Strings.Localizable.Home.Widgets.AccountDetails.nameTitle(name)
+    }
+
+    func storageText(for details: AccountStorageDetails?) -> String {
+        guard let details else { return "" }
+        switch details {
+        case .unlimited(let storageUsed):
+            let storageUsedString = String.memoryStyleString(fromByteCount: storageUsed).formattedByteCountString()
+            return Strings.Localizable.AccountMenu.BusinessAndProFlexiAccountsStorageUsed.title(storageUsedString)
+        case .limited(let storageUsed, let storageMax, _):
+            let storageUsedString = String.memoryStyleString(fromByteCount: storageUsed).formattedByteCountString()
+            let storageMaxString = String.memoryStyleString(fromByteCount: storageMax).formattedByteCountString()
+            return Strings.Localizable.Home.Widgets.AccountDetails.storageUsage(storageUsedString, storageMaxString)
+        }   
+    }
+
+    func storageFraction(for details: AccountStorageDetails?) -> Double {
+        guard let details else { return 0 }
+        switch details {
+        case .unlimited:
+            return 0
+        case .limited(let storageUsed, let storageMax, _):
+            return Double(storageUsed) / Double(storageMax)
+        }
     }
 
     private func monitorUserName() async {
@@ -101,42 +182,8 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private func monitorStorage() async {
-        for await storageDetail in dependency.storageUseCase.storageDetails {
-            storageUsage = storageText(for: storageDetail)
-            storageUsedFraction = storageFraction(for: storageDetail)
+        for await storageDetail in dependency.storageUseCase.storageDetails.compacted() {
+            self.storageDetail = storageDetail
         }
-    }
-
-    package func titleText(for name: String) -> String {
-        Strings.Localizable.Home.Widgets.AccountDetails.nameTitle(name)
-    }
-
-    package func storageText(for details: AccountStorageDetails?) -> String {
-        guard let details else { return "" }
-        switch details {
-        case .unlimited(let storageUsed):
-            let storageUsedString = String.memoryStyleString(fromByteCount: storageUsed).formattedByteCountString()
-            return Strings.Localizable.AccountMenu.BusinessAndProFlexiAccountsStorageUsed.title(storageUsedString)
-        case .limited(let storageUsed, let storageMax):
-            let storageUsedString = String.memoryStyleString(fromByteCount: storageUsed).formattedByteCountString()
-            let storageMaxString = String.memoryStyleString(fromByteCount: storageMax).formattedByteCountString()
-            return Strings.Localizable.Home.Widgets.AccountDetails.storageUsage(storageUsedString, storageMaxString)
-        }
-    }
-
-    package func storageFraction(for details: AccountStorageDetails?) -> Double {
-        guard let details else { return 0 }
-        switch details {
-        case .unlimited:
-            return 0
-        case .limited(let storageUsed, let storageMax):
-            return Double(storageUsed) / Double(storageMax)
-        }
-    }
-
-    var storageUsedFractionColor: Color {
-        if storageUsedFraction > 0.9 { return TokenColors.Support.error.swiftUI }
-        if storageUsedFraction > 0.8 { return TokenColors.Support.warning.swiftUI }
-        return TokenColors.Support.success.swiftUI
     }
 }

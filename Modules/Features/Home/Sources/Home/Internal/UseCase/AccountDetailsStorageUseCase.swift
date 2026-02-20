@@ -4,7 +4,7 @@ import MEGADomain
 import MEGASwift
 
 package enum AccountStorageDetails: Sendable, Equatable {
-    case limited(_ storageUsed: Int64, storageMax: Int64)
+    case limited(_ storageUsed: Int64, storageMax: Int64, storageStatus: StorageStatusEntity)
     case unlimited(_ storageUsed: Int64)
 }
 
@@ -33,7 +33,7 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
 
         let initialDetails: AccountStorageDetails? = {
             guard let details =  accountUseCase.currentAccountDetails else { return nil }
-            return AccountDetailsStorageUseCase.storageDetails(from: details)
+            return AccountDetailsStorageUseCase.storageDetails(from: details, storageStatus: accountStorageUseCase.currentStorageStatus)
         }()
         let subject = CurrentValueSubject<AccountStorageDetails?, Never>(initialDetails)
         self.storageSubject = subject
@@ -44,7 +44,8 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
                 for await _ in accountStorageUseCase.storageSumUpdates {
                     guard !Task.isCancelled else { break }
                     guard let accountDetails = accountUseCase.currentAccountDetails else { continue }
-                    subject.send(AccountDetailsStorageUseCase.storageDetails(from: accountDetails))
+                    let storageState = try? await accountStorageUseCase.refreshCurrentStorageState()
+                    subject.send(AccountDetailsStorageUseCase.storageDetails(from: accountDetails, storageStatus: storageState))
                 }
             }()
 
@@ -53,7 +54,8 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
                     guard !Task.isCancelled else { break }
                     guard Self.shouldRefreshStorage(for: result) else { continue }
                     guard let accountDetails = accountUseCase.currentAccountDetails else { continue }
-                    subject.send(AccountDetailsStorageUseCase.storageDetails(from: accountDetails))
+                    let storageState = try? await accountStorageUseCase.refreshCurrentStorageState()
+                    subject.send(AccountDetailsStorageUseCase.storageDetails(from: accountDetails, storageStatus: storageState))
                 }
             }()
 
@@ -66,14 +68,14 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
         monitorTask.cancel()
     }
 
-    private static func storageDetails(from accountDetails: AccountDetailsEntity) -> AccountStorageDetails {
+    private static func storageDetails(from accountDetails: AccountDetailsEntity, storageStatus: StorageStatusEntity?) -> AccountStorageDetails {
         if accountDetails.proLevel == .business || accountDetails.proLevel == .proFlexi {
             let storageUsed = accountDetails.storageUsed
             return .unlimited(storageUsed)
         } else {
             let storageUsed = accountDetails.storageUsed
             let storageMax = accountDetails.storageMax
-            return .limited(storageUsed, storageMax: storageMax)
+            return .limited(storageUsed, storageMax: storageMax, storageStatus: storageStatus ?? .noStorageProblems)
         }
     }
 

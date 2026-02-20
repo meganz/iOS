@@ -1,4 +1,6 @@
 import Home
+import MEGAAppSDKRepo
+import MEGADomain
 import SwiftUI
 import UIKit
 
@@ -14,6 +16,8 @@ final class HomeViewRouter: HomeViewRouting {
         switch type {
         case .shortcut(let shortcutType):
             route(to: shortcutType)
+        case .accountUpgrade:
+            showUpgradePlanView()
         }
     }
 
@@ -41,5 +45,21 @@ final class HomeViewRouter: HomeViewRouting {
         }
 
         FilesExplorerRouter(navigationController: navigationController, explorerType: .video).start()
+    }
+
+    private func showUpgradePlanView() {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        guard let accountDetails = accountUseCase.currentAccountDetails else {
+            MEGALogDebug("[Upgrade Account] Account details are empty")
+            return
+        }
+
+        SubscriptionPurchaseRouter(
+            presenter: UIApplication.mnz_visibleViewController(),
+            currentAccountDetails: accountDetails,
+            viewType: .upgrade,
+            accountUseCase: accountUseCase,
+            isFromAds: false)
+        .start()
     }
 }

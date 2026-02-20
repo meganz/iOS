@@ -24,7 +24,7 @@ struct AccountDetailsStorageUseCaseTests {
         var iterator = sut.storageDetails.makeAsyncIterator()
         let initial = await iterator.next()
 
-        #expect(initial == .limited(500, storageMax: 1000))
+        #expect(initial == .limited(500, storageMax: 1000, storageStatus: .noStorageProblems))
     }
 
     @Test("storageDetails emits .unlimited immediately for a business account")
@@ -81,7 +81,7 @@ struct AccountDetailsStorageUseCaseTests {
         var iterator = sut.storageDetails.makeAsyncIterator()
         let initial = await iterator.next()
 
-        #expect(initial == .limited(100, storageMax: 20_000))
+        #expect(initial == .limited(100, storageMax: 20_000, storageStatus: .noStorageProblems))
     }
 
     // MARK: - Reacting to storageSumUpdates
@@ -110,7 +110,7 @@ struct AccountDetailsStorageUseCaseTests {
         storageSumContinuation.yield(800)
 
         let updated = await iterator.next()
-        #expect(updated == .limited(800, storageMax: 1000))
+        #expect(updated == .limited(800, storageMax: 1000, storageStatus: .noStorageProblems))
     }
 
     @Test("storageDetails emits .unlimited when business account storage sum updates")
@@ -171,9 +171,9 @@ struct AccountDetailsStorageUseCaseTests {
         if let third = await iterator.next() { received.append(third) }
 
         #expect(received == [
-            .limited(100, storageMax: 1000),
-            .limited(400, storageMax: 1000),
-            .limited(900, storageMax: 1000)
+            .limited(100, storageMax: 1000, storageStatus: .noStorageProblems),
+            .limited(400, storageMax: 1000, storageStatus: .noStorageProblems),
+            .limited(900, storageMax: 1000, storageStatus: .noStorageProblems)
         ])
     }
 
@@ -201,7 +201,7 @@ struct AccountDetailsStorageUseCaseTests {
         continuation.yield(.success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
 
         let updated = await iterator.next()
-        #expect(updated == .limited(800, storageMax: 1000))
+        #expect(updated == .limited(800, storageMax: 1000, storageStatus: .noStorageProblems))
     }
 
     @Test("storageDetails emits .unlimited when account is upgraded to business after an accountDetails request")
@@ -292,8 +292,8 @@ struct AccountDetailsStorageUseCaseTests {
         if let third = await iterator.next() { received.append(third) }
 
         #expect(received == [
-            .limited(100, storageMax: 1000),
-            .limited(500, storageMax: 1000),
+            .limited(100, storageMax: 1000, storageStatus: .noStorageProblems),
+            .limited(500, storageMax: 1000, storageStatus: .noStorageProblems),
             .unlimited(500)
         ])
     }

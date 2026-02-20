@@ -13,13 +13,14 @@ struct AccountDetailsWidgetView: View {
     }
 
     @StateObject private var viewModel: AccountDetailsWidgetViewModel
+    private let accessoryButtonAction: @MainActor () -> Void
 
     private enum Constants {
         static let avatarSize = 32.0
         static let progressBarHeight = 2.0
     }
 
-    init(dependency: Dependency) {
+    init(dependency: Dependency, accessoryButtonAction: @escaping @MainActor () -> Void) {
         _viewModel = StateObject(
             wrappedValue: AccountDetailsWidgetViewModel(
                 dependency: .init(
@@ -29,6 +30,8 @@ struct AccountDetailsWidgetView: View {
                 )
             )
         )
+
+        self.accessoryButtonAction = accessoryButtonAction
     }
 
     var body: some View {
@@ -64,7 +67,9 @@ struct AccountDetailsWidgetView: View {
             userName
             plan
             storageUsage
-            progressBar
+            if viewModel.storageUsedFraction > 0 {
+                progressBar
+            }
         }
     }
 
@@ -99,20 +104,24 @@ struct AccountDetailsWidgetView: View {
             }
         }
         .frame(height: Constants.progressBarHeight)
+        .padding(.trailing, viewModel.shouldShowUpgrade ? 0 : TokenSpacing._5)
     }
 
+    @ViewBuilder
     private var trailingAccessory: some View {
-        Button {
-            // [IOS-11316]: Handle routing logic
-        } label: {
-            MEGAAssets.Image.chevronRight
-                .renderingMode(.template)
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .frame(width: 24, height: 24)
+        if viewModel.shouldShowUpgrade {
+            Button {
+                accessoryButtonAction()
+            } label: {
+                MEGAAssets.Image.chevronRight
+                    .renderingMode(.template)
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    .frame(width: 24, height: 24)
+            }
+            .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+            .padding(.trailing, TokenSpacing._5)
         }
 
-        .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
-        .padding(.trailing, TokenSpacing._5)
     }
 }
 
