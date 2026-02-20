@@ -93,6 +93,7 @@ extension NodeCollectionViewCell {
     }
     
     private func configureBlur(isSensitive: Bool) {
+        guard let viewModel else { return }
         let alpha: CGFloat = isSensitive ? 0.5 : 1
         [
             viewModel.hasThumbnail ? nil : thumbnailImageView,
@@ -109,7 +110,7 @@ extension NodeCollectionViewCell {
     }
     
     @objc func setDurationForVideo(path: String) {
-        viewModel.setDurationForVideo(path: path)
+        viewModel?.setDurationForVideo(path: path)
     }
     
     @objc func setThumbnail(url: URL) {
@@ -156,7 +157,7 @@ extension NodeCollectionViewCell {
     
     @objc func updateSelection() {
         // For Folder link, we need to update the selection state with the revamped UI when CD revamp is enabled
-        if isCloudDriveRevampEnabled, viewModel.isFromFolderLink {
+        if isCloudDriveRevampEnabled, viewModel?.isFromFolderLink == true {
             updateSelectionForRevampedUI()
         } else {
             updateSelectionForLegacyUI()
