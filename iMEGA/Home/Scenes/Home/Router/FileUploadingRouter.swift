@@ -194,6 +194,9 @@ final class FileUploadingRouter {
             as! DocScannerSaveSettingTableViewController
         docScanSettingViewController.parentNode = parentNode
         docScanSettingViewController.docs = images
+        if #available(iOS 26.0, *) {
+            docScanSettingViewController.navigationItem.leftBarButtonItem = nil
+        }
         return MEGANavigationController(rootViewController: docScanSettingViewController)
     }
 
