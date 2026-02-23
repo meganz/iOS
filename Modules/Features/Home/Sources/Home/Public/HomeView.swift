@@ -138,6 +138,8 @@ public struct HomeView: View {
                     )) {
                         dependency.router.route(to: .accountUpgrade)
                     }
+                case .promotionalBanners:
+                    PromotionalBannersWidgetView()
                 }
             }
         }
