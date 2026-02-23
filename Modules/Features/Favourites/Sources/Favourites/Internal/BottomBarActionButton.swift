@@ -35,15 +35,15 @@ private extension BottomBarAction {
     var icon: Image {
         switch self {
         case .download:
-            Image(uiImage: MEGAAssets.UIImage.offline)
+            Image(uiImage: MEGAAssets.UIImage.cloudDownload)
         case .removeFavourite:
-            Image(uiImage: MEGAAssets.UIImage.removeFavourite)
+            Image(uiImage: MEGAAssets.UIImage.heartBroken)
         case .shareLink:
-            Image(uiImage: MEGAAssets.UIImage.link)
+            Image(uiImage: MEGAAssets.UIImage.link01)
         case .moveToRubbishBin:
-            Image(uiImage: MEGAAssets.UIImage.rubbishBin)
+            Image(uiImage: MEGAAssets.UIImage.trash)
         case .more:
-            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+            Image(uiImage: MEGAAssets.UIImage.moreHorizontal)
         }
     }
 }
