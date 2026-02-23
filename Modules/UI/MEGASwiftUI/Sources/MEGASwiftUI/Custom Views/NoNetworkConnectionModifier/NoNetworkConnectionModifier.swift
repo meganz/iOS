@@ -21,6 +21,7 @@ struct NoNetworkConnectionModifier: ViewModifier {
     private var noNetworkContent: some View {
         ZStack {
             TokenColors.Background.page.swiftUI
+                .ignoresSafeArea(edges: [.bottom])
             VStack {
                 MEGAAssets.Image.glassNoCloud
                     .resizable()

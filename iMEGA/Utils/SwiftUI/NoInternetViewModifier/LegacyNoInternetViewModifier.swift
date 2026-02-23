@@ -30,6 +30,7 @@ struct LegacyNoInternetViewModifier: ViewModifier {
     private var noInternetConnectionView: some View {
         ZStack {
             TokenColors.Background.page.swiftUI
+                .ignoresSafeArea(edges: [.bottom])
             VStack {
                 MEGAAssets.Image.glassNoCloud
                     .resizable()
