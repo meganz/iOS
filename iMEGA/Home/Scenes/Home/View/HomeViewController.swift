@@ -329,7 +329,11 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupSearchResultExtendedLayout() {
-        edgesForExtendedLayout = .top
+        if #available(iOS 26.0, *) {
+            edgesForExtendedLayout = [.top, .bottom]
+        } else {
+            edgesForExtendedLayout = .top
+        }
         extendedLayoutIncludesOpaqueBars = true
     }
 
