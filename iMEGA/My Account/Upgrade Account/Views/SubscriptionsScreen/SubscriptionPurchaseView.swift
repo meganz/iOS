@@ -47,6 +47,7 @@ struct SubscriptionPurchaseView: View {
                     )
                 }
             }
+            .snackBar($viewModel.snackBar)
     }
 
     @ViewBuilder

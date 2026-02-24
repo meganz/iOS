@@ -897,6 +897,85 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertNil(sut.snackBar)
     }
         
+    // MARK: - Show unavailable plan message
+    @MainActor
+    func testShowUnavailablePlanMessage_selectedPlanExistsInTab_shouldNotShowSnackbar() async {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList: [PlanEntity] = [.proI_monthly, .proI_yearly]
+        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
+        await sut.setUpPlanTask?.value
+
+        sut.selectedCycleTab = .monthly
+
+        XCTAssertNil(sut.snackBar)
+    }
+
+    @MainActor
+    func testShowUnavailablePlanMessage_switchToMonthly_planOnlyInYearly_shouldShowYearlyAvailabilityMessage() async {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList: [PlanEntity] = [.proI_yearly, .proII_yearly]
+        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
+        await sut.setUpPlanTask?.value
+
+        sut.selectedCycleTab = .monthly
+
+        XCTAssertEqual(
+            sut.snackBar?.message,
+            Strings.Localizable.Account.Upgrade.Yearly.Availability.Snackbar.message(
+                AccountTypeEntity.proI.toAccountTypeDisplayName()
+            )
+        )
+    }
+
+    @MainActor
+    func testShowUnavailablePlanMessage_switchToYearly_planOnlyInMonthly_shouldShowMonthlyAvailabilityMessage() async {
+        let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly]
+        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
+        await sut.setUpPlanTask?.value
+
+        sut.selectedCycleTab = .yearly
+
+        XCTAssertEqual(
+            sut.snackBar?.message,
+            Strings.Localizable.Account.Upgrade.Monthly.Availability.Snackbar.message(
+                AccountTypeEntity.proII.toAccountTypeDisplayName()
+            )
+        )
+    }
+
+    @MainActor
+    func testShowUnavailablePlanMessage_proLiteYearlyOnlyAvailable_switchToMonthly_shouldShowYearlyAvailabilityMessage() async {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList: [PlanEntity] = [.proLite_yearly, .proI_monthly, .proI_yearly]
+        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
+        await sut.setUpPlanTask?.value
+
+        sut.setSelectedPlan(.proLite_yearly)
+        sut.selectedCycleTab = .monthly
+
+        XCTAssertEqual(
+            sut.snackBar?.message,
+            Strings.Localizable.Account.Upgrade.Yearly.Availability.Snackbar.message(
+                AccountTypeEntity.lite.toAccountTypeDisplayName()
+            )
+        )
+    }
+
+    @MainActor
+    func testShowUnavailablePlanMessage_proLiteSelectedSwitchToMonthly_proLiteMonthlyUser_shouldNotShowSnackbar() async {
+        let details = AccountDetailsEntity.build(proLevel: .lite, subscriptionCycle: .monthly)
+        let planList: [PlanEntity] = [.proLite_monthly, .proLite_yearly, .proI_monthly, .proI_yearly]
+        let (sut, _) = makeSUT(accountDetails: details, planList: planList)
+        await sut.setUpPlanTask?.value
+
+        sut.selectedCycleTab = .yearly
+        sut.setSelectedPlan(.proLite_yearly)
+        sut.selectedCycleTab = .monthly
+
+        XCTAssertNil(sut.snackBar)
+    }
+
     // MARK: - Ads
     @MainActor func testSetupExternalAds_externalAdsEnabled_shouldBeTrue() {
         assertSetupExternalAds(isExternalAdsFlagEnabled: true)

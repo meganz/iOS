@@ -70,6 +70,9 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         didSet {
             updateSelectedSubscriptionPurchaseChip()
             toggleBuyButton()
+
+            guard oldValue != selectedCycleTab else { return }
+            showUnavailablePlanMessageIfNeeded()
         }
     }
     @Published private(set) var selectedPlanType: AccountTypeEntity? {
@@ -259,6 +262,22 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         } else {
             hideBuyButtons()
         }
+    }
+
+    private func showUnavailablePlanMessageIfNeeded() {
+        guard let selectedPlanType, currentSelectedPlan == nil else { return }
+
+        let message: String? = switch selectedCycleTab {
+        case .monthly:
+            Strings.Localizable.Account.Upgrade.Yearly.Availability.Snackbar.message(selectedPlanType.toAccountTypeDisplayName())
+        case .yearly:
+            Strings.Localizable.Account.Upgrade.Monthly.Availability.Snackbar.message(selectedPlanType.toAccountTypeDisplayName())
+        case .none:
+            nil
+        }
+        guard let message else { return }
+
+        snackBar = .init(message: message)
     }
 
     private func hideBuyButtons() {
