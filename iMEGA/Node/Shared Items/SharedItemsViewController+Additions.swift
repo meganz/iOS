@@ -251,6 +251,10 @@ extension SharedItemsViewController {
             )
         )
         guard let vc else { return }
+        if #available(iOS 26.0, *) {
+            AppearanceManager.applyLiquidGlassAppearance(to: vc.navigationItem, backgroundColor: UIColor.surface1Background())
+            navigationController.navigationBar.isTranslucent = true
+        }
         navigationController.pushViewController(vc, animated: true)
     }
     

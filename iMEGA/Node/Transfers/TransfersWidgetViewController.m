@@ -73,6 +73,7 @@ static TransfersWidgetViewController* instance = nil;
     [super viewDidLoad];
     
     [self configureImages];
+    [self configureLiquidGlassNavigationBar];
     
     self.title = LocalizedString(@"transfers", @"Transfers");
     self.queuedUploadTransfers = NSMutableArray.new;
@@ -151,6 +152,7 @@ static TransfersWidgetViewController* instance = nil;
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self reloadView];
+        [self configureLiquidGlassNavigationBar];
         [AppearanceManager forceToolbarUpdate:self.toolbar];
     } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self reloadView];

@@ -58,6 +58,7 @@ class InviteContactViewController: UIViewController {
         MEGASdk.shared.contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
         setupColors()
+        configureLiquidGlassNavigationBar()
 
         contactPickerViewController.delegate = self
         tracker.trackInviteScreen()
@@ -65,16 +66,15 @@ class InviteContactViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        forceResetNavigationBar()
         navigationController?.presentationController?.delegate = self
         setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.inviteContact)
     }
     
     // MARK: - Private
     
-    private func forceResetNavigationBar() {
-        if #available(iOS 26.0, *), let navigationBar = navigationController?.navigationBar {
-            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+    private func configureLiquidGlassNavigationBar() {
+        if #available(iOS 26.0, *) {
+            setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
         } else {
             AppearanceManager.forceResetNavigationBar()
         }
@@ -165,7 +165,7 @@ extension InviteContactViewController: @preconcurrency MFMessageComposeViewContr
 
 extension InviteContactViewController: @preconcurrency CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        forceResetNavigationBar()
+        configureLiquidGlassNavigationBar()
         let phoneNumbers = contacts.extractPhoneNumbers()
         UIApplication.mnz_visibleViewController().dismiss(animated: true) { [weak self] in
             self?.presentComposeControllerForPhoneNumbers(phoneNumbers)
@@ -173,7 +173,7 @@ extension InviteContactViewController: @preconcurrency CNContactPickerDelegate {
     }
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
-        forceResetNavigationBar()
+        configureLiquidGlassNavigationBar()
     }
 }
 

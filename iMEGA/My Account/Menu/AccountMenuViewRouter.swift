@@ -192,6 +192,10 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
     func showAchievements() {
         let achievementsVC = UIStoryboard(name: "Achievements", bundle: nil)
             .instantiateViewController(withIdentifier: "AchievementsViewControllerID")
+        if #available(iOS 26.0, *) {
+            AppearanceManager.applyLiquidGlassAppearance(to: achievementsVC.navigationItem, backgroundColor: TokenColors.Background.surface1)
+            navigationController.navigationBar.isTranslucent = true
+        }
         navigationController.pushViewController(achievementsVC, animated: true)
     }
 
