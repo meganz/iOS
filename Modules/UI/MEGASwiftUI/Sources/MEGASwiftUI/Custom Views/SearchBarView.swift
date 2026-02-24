@@ -40,8 +40,8 @@ public struct SearchBarView: View {
                 .onChange(of: isSearchFieldFocused) { focused in
                     isEditing = focused
                 }
- 
-            if isEditing {
+
+            if isSearchFieldFocused {
                 SearchBarCancelButton(cancelTitle: cancelTitle) {
                     isEditing = false
                     text = ""

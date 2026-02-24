@@ -306,6 +306,7 @@ extension MEGAAssets {
         public static var rectangleImageStack: SwiftUI.Image { MEGAImageBundle.rectangleImageStack }
         public static var messageChatCircle: SwiftUI.Image { MEGAImageBundle.messageChatCircle }
         public static var x: SwiftUI.Image { MEGAImageBundle.x }
+        public static var glassHearts: SwiftUI.Image { MEGAImageBundle.glassHearts }
     }
 }
 

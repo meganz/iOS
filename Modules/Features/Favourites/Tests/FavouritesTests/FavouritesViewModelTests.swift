@@ -1,6 +1,5 @@
 @testable import MEGAUIComponent
 @testable import Search
-import Combine
 import Favourites
 import MEGAAppPresentation
 import MEGADomainMock
@@ -247,6 +246,75 @@ struct FavouritesViewModelTests {
         let sut = makeSUT()
 
         #expect(sut.viewMode == .list)
+    }
+
+    // MARK: - Search text
+
+    @Test
+    func initialSearchTextIsEmpty() {
+        let sut = makeSUT()
+        #expect(sut.searchText.isEmpty)
+    }
+
+    @Test
+    func searchTextChangesCallQueryChangedOnBridge() async throws {
+        let sut = makeSUT()
+        var queriedTexts: [String] = []
+        sut.searchResultsContainerViewModel.bridge.queryChanged = { queriedTexts.append($0) }
+
+        sut.searchText = "test query"
+
+        try await waitForCondition { queriedTexts.contains("test query") }
+        #expect(queriedTexts.contains("test query"))
+    }
+
+    @Test
+    func emptySearchTextWithInactiveSearchCallsQueryCleaned() async throws {
+        let sut = makeSUT()
+        sut.searchText = "initial"
+
+        var queryCleanedCalled = false
+        sut.searchResultsContainerViewModel.bridge.queryCleaned = { queryCleanedCalled = true }
+
+        sut.searchText = ""
+
+        try await waitForCondition { queryCleanedCalled }
+        #expect(queryCleanedCalled)
+    }
+
+    @Test
+    func emptySearchTextWithActiveSearchCallsQueryChangedNotCleaned() async throws {
+        let sut = makeSUT()
+        sut.searchBecameActive = true
+        sut.searchText = "something"
+
+        var queryCleanedCalled = false
+        var queriedTexts: [String] = []
+        sut.searchResultsContainerViewModel.bridge.queryCleaned = { queryCleanedCalled = true }
+        sut.searchResultsContainerViewModel.bridge.queryChanged = { queriedTexts.append($0) }
+
+        sut.searchText = ""
+
+        try await waitForCondition { queriedTexts.contains("") }
+        #expect(!queryCleanedCalled)
+        #expect(queriedTexts.contains(""))
+    }
+
+    // MARK: - Search active state
+
+    @Test
+    func initialSearchBecameActiveIsFalse() {
+        let sut = makeSUT()
+        #expect(sut.searchBecameActive == false)
+    }
+
+    @Test
+    func searchBecameActiveChangesArePropagated() {
+        let sut = makeSUT()
+        sut.searchBecameActive = true
+        #expect(sut.searchBecameActive == true)
+        sut.searchBecameActive = false
+        #expect(sut.searchBecameActive == false)
     }
 
     // MARK: - Helpers

@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import Search
 import SwiftUI
 
@@ -66,49 +67,60 @@ public struct FavouritesView: View {
     }
 
     public var body: some View {
-        SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
-            .background(TokenColors.Background.page.swiftUI)
-            .navigationTitle(viewModel.editMode.isEditing ? selectionTitle : Strings.Localizable.Home.Favourites.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(viewModel.editMode.isEditing)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    if viewModel.editMode.isEditing {
-                        Button {
-                            viewModel.toggleSelectAll()
-                        } label: {
-                            Label {
-                                Text(Strings.Localizable.selectAll)
-                            } icon: {
-                                MEGAAssets.Image.checkStack
-                                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                            }
-                            .labelStyle(.iconOnly)
+        VStack(spacing: 0) {
+            SearchBarView(
+                text: $viewModel.searchText,
+                isEditing: $viewModel.searchBecameActive,
+                placeholder: Strings.Localizable.search,
+                cancelTitle: Strings.Localizable.cancel
+            )
+            .padding(TokenSpacing._3)
+            .background(TokenColors.Background.surface1.swiftUI)
+
+            SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
+        }
+        .background(TokenColors.Background.page.swiftUI)
+        .navigationTitle(viewModel.editMode.isEditing ? selectionTitle : Strings.Localizable.Home.Favourites.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(viewModel.editMode.isEditing)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                if viewModel.editMode.isEditing {
+                    Button {
+                        viewModel.toggleSelectAll()
+                    } label: {
+                        Label {
+                            Text(Strings.Localizable.selectAll)
+                        } icon: {
+                            MEGAAssets.Image.checkStack
+                                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                         }
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    if viewModel.editMode.isEditing {
-                        Button(Strings.Localizable.cancel) {
-                            viewModel.exitEditMode()
-                        }
-                    }
-                }
-                ToolbarItemGroup(placement: .bottomBar) {
-                    if viewModel.editMode.isEditing {
-                        bottomBar
-                            .disabled(viewModel.bottomBarDisabled)
+                        .labelStyle(.iconOnly)
                     }
                 }
             }
-            .environment(\.editMode, $viewModel.editMode)
-            .onChange(of: viewModel.editMode) { editMode in
-                dependency.onEditingChanged(editMode.isEditing)
+            ToolbarItem(placement: .topBarTrailing) {
+                if viewModel.editMode.isEditing {
+                    Button(Strings.Localizable.cancel) {
+                        viewModel.exitEditMode()
+                    }
+                }
             }
-            .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
-                dependency.nodesActionHandler.handle(action: action)
-                viewModel.exitEditMode()
+            ToolbarItemGroup(placement: .bottomBar) {
+                if viewModel.editMode.isEditing {
+                    bottomBar
+                        .disabled(viewModel.bottomBarDisabled)
+                }
             }
+        }
+        .environment(\.editMode, $viewModel.editMode)
+        .onChange(of: viewModel.editMode) { editMode in
+            dependency.onEditingChanged(editMode.isEditing)
+        }
+        .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
+            dependency.nodesActionHandler.handle(action: action)
+            viewModel.exitEditMode()
+        }
     }
 
     @ViewBuilder

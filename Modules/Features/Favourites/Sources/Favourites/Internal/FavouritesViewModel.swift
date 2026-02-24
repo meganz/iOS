@@ -32,6 +32,8 @@ package final class FavouritesViewModel: ObservableObject {
     @Published package var bottomBarAction: BottomBarAction?
     @Published package var nodesAction: NodesAction?
     @Published package var bottomBarDisabled: Bool = true
+    @Published package var searchText: String = ""
+    @Published package var searchBecameActive: Bool = false
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
@@ -109,6 +111,8 @@ package final class FavouritesViewModel: ObservableObject {
         listenToEditingChanges()
         listenToBottomBarActions()
         listenToSelectionChanges()
+        listenToSearchUpdates()
+        listenToSearchActiveChanges()
     }
 
     package func exitEditMode() {
@@ -192,5 +196,31 @@ package final class FavouritesViewModel: ObservableObject {
                 return nodes.isEmpty
             }
             .assign(to: &$bottomBarDisabled)
+    }
+    
+    private func listenToSearchUpdates() {
+        Publishers
+            .CombineLatest($searchText, $searchBecameActive)
+            .removeDuplicates { lhs, rhs in
+                lhs.0 == rhs.0 && lhs.1 == rhs.1
+            }
+            .sink { [searchResultsContainerViewModel] text, isActive in
+                if !isActive, text.isEmpty {
+                    searchResultsContainerViewModel.bridge.queryCleaned()
+                } else {
+                    searchResultsContainerViewModel.bridge.queryChanged(text)
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func listenToSearchActiveChanges() {
+        $searchBecameActive
+            .removeDuplicates()
+            .dropFirst()
+            .sink { [searchResultsContainerViewModel] isActive in
+                searchResultsContainerViewModel.searchActiveDidChange(isActive)
+            }
+            .store(in: &subscriptions)
     }
 }

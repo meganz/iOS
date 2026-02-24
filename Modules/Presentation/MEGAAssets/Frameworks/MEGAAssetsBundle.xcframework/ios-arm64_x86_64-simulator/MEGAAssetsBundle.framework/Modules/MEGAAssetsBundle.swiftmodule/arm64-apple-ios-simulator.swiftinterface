@@ -883,6 +883,9 @@ public struct MEGAImageBundle {
   public static var messageChatCircle: SwiftUICore.Image {
     get
   }
+  public static var glassHearts: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

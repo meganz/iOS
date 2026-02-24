@@ -1,4 +1,5 @@
 import AsyncAlgorithms
+import Foundation
 import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
@@ -11,19 +12,25 @@ struct FavouriteSearchResultsProvider: SearchResultsProviding {
         let searchResultsMapper: any FavouritesSearchResultsMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
+        let availableChips: [SearchChipEntity]
 
         init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
             searchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
-            nodeUseCase: some NodeUseCaseProtocol
+            nodeUseCase: some NodeUseCaseProtocol,
+            availableChips: [SearchChipEntity] = SearchChipEntity.allChips(
+                currentDate: { .now },
+                calendar: .current
+            )
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
             self.searchResultsMapper = searchResultsMapper
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
+            self.availableChips = availableChips
         }
     }
 
@@ -64,21 +71,23 @@ struct FavouriteSearchResultsProvider: SearchResultsProviding {
                 searchTargetLocation: .folderTarget(.rootNode),
                 supportCancel: true,
                 sortOrderType: queryRequest.sorting.toDomainSortOrderEntity(),
-                formatType: .unknown,
+                formatType: queryRequest.selectedNodeFormat?.toNodeFormatEntity() ?? .unknown,
                 sensitiveFilterOption: await dependency.sensitiveDisplayPreferenceUseCase.excludeSensitives() ? .nonSensitiveOnly : .disabled,
                 favouriteFilterOption: .onlyFavourites,
+                nodeTypeEntity: queryRequest.selectedNodeType?.toNodeTypeEntity() ?? .unknown,
+                modificationTimeFrame: queryRequest.selectedModificationTimeFrame?.toSearchFilterTimeFrame(),
                 useAndForTextQuery: false
             ),
             cancelPreviousSearchIfNeeded: true
         )
 
         guard let nodes else {
-            return .init(results: [], availableChips: [], appliedChips: [])
+            return .init(results: [], availableChips: dependency.availableChips, appliedChips: [])
         }
 
         self.$nodes.mutate { $0 = nodes }
         let results = nodes.map { dependency.searchResultsMapper.map(node: $0) }
-        return .init(results: results, availableChips: [], appliedChips: [])
+        return .init(results: results, availableChips: dependency.availableChips, appliedChips: queryRequest.chips)
     }
 
     private func specificNodeUpdateSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
@@ -102,5 +111,43 @@ struct FavouriteSearchResultsProvider: SearchResultsProviding {
     private func nodeUpdateContainsCurrentSearchResultValue(nodeUpdates: [NodeEntity]) -> Bool {
         let currentResultIds = currentResultIds()
         return nodeUpdates.contains(where: { currentResultIds.contains($0.id) })
+    }
+}
+
+private extension SearchChipEntity.NodeType {
+    func toNodeTypeEntity() -> NodeTypeEntity {
+        switch self {
+        case .unknown:  .unknown
+        case .file:     .file
+        case .folder:   .folder
+        case .root:     .root
+        case .incoming: .incoming
+        case .rubbish:  .rubbish
+        }
+    }
+}
+
+extension SearchChipEntity.NodeFormat {
+    func toNodeFormatEntity() -> NodeFormatEntity {
+        switch self {
+        case .unknown:      .unknown
+        case .photo:        .photo
+        case .audio:        .audio
+        case .video:        .video
+        case .document:     .document
+        case .pdf:          .pdf
+        case .presentation: .presentation
+        case .archive:      .archive
+        case .program:      .program
+        case .misc:         .misc
+        case .spreadsheet:  .spreadsheet
+        case .allDocs:      .allDocs
+        }
+    }
+}
+
+extension SearchChipEntity.TimeFrame {
+    func toSearchFilterTimeFrame() -> SearchFilterEntity.TimeFrame {
+        SearchFilterEntity.TimeFrame(startDate: startDate, endDate: endDate)
     }
 }

@@ -290,4 +290,5 @@ public struct MEGAImageBundle {
     public static var glassAlbum: Image { Image(.glassAlbum) }
     public static var rectangleImageStack: Image { Image(.rectangleImageStack) }
     public static var messageChatCircle: Image { Image(.messageChatCircle) }
+    public static var glassHearts: Image { Image(.glassHearts) }
 }
