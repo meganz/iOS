@@ -119,6 +119,13 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     }
     
     @objc
+    func configureLiquidGlassNavigationBar() {
+        if #available(iOS 26.0, *) {
+            setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
+        }
+    }
+    
+    @objc
     func pauseQueuedTransfers() {
         viewModel.pauseQueuedTransfers()
     }
