@@ -9,7 +9,7 @@ final class MockUserBannerUseCase: UserBannerUseCaseProtocol {
         self.bannersResult = bannersResult
     }
     
-    func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+    func banners(variant: Int, completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
         if let bannersResult = bannersResult {
             completion(bannersResult)
         }

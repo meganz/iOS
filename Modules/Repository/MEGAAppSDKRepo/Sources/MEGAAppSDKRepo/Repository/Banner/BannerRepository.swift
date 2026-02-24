@@ -10,7 +10,7 @@ public struct BannerRepository: BannerRepositoryProtocol {
 
     // MARK: - BannerRepositoryProtocol
 
-    public func banners(completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+    public func banners(variant: Int, completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
 
         @Sendable func mapError(sdkError: MEGAErrorType) -> BannerErrorEntity {
             switch sdkError {
@@ -21,16 +21,12 @@ public struct BannerRepository: BannerRepositoryProtocol {
             }
         }
 
-        func mapValue(request: MEGARequest) -> [BannerEntity] {
-            request.bannerList?.bannerEntities ?? []
-        }
-
         sdk.getBanners(RequestDelegate { result in
             switch result {
             case .failure(let error):
                 completion(.failure(mapError(sdkError: error.type)))
             case .success(let request):
-                completion(.success(request.bannerList?.bannerEntities ?? []))
+                completion(.success(request.bannerList?.bannerEntities(variant: variant) ?? []))
             }
         })
     }

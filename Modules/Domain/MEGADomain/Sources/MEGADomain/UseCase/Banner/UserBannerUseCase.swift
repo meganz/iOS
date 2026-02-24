@@ -1,6 +1,13 @@
 public protocol UserBannerUseCaseProtocol {
-
-    func banners(completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void)
+    
+    /// Get the banners based on their variant
+    /// - Discussion:
+    /// - Parameters:
+    ///   - variant: The variant we want to fetch
+    ///           - variant = 0 means the legacy banners with longer description and no button text
+    ///           - variant = 1 is for the new, revamped banner with more concise description and have a button text
+    ///   - completion: completion handler for the result
+    func banners(variant: Int, completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void)
 
     func dismissBanner(withBannerId bannerId: Int,
                        completion: (@Sendable (Result<Void, BannerErrorEntity>) -> Void)?)
@@ -18,8 +25,8 @@ public struct UserBannerUseCase: UserBannerUseCaseProtocol {
 
     // MARK: - UserBannerUseCaseProtocol
 
-    public func banners(completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
-        userBannerRepository.banners(completion: completion)
+    public func banners(variant: Int, completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+        userBannerRepository.banners(variant: variant, completion: completion)
     }
 
     public func dismissBanner(withBannerId bannerId: Int,

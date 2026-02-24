@@ -75,7 +75,8 @@ final class HomeBannerVMTests: XCTestCase {
             title: "Test Banner",
             description: "Description",
             backgroundImageURL: self.anyURL,
-            imageURL: self.anyURL
+            imageURL: self.anyURL,
+            button: ""
         )
     }
     

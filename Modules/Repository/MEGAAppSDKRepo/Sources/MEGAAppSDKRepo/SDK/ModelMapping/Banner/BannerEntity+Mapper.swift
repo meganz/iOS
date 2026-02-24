@@ -8,7 +8,8 @@ extension MEGABanner {
               let imageBaseURL = URL(string: imageLocationURLString ?? ""),
               let backgroundImageFilename = backgroundImageFilename,
               let imageFilename = imageFilename,
-              let urlString = urlString
+              let urlString = urlString,
+              let button = button
         else { return nil }
 
         return BannerEntity(
@@ -17,7 +18,8 @@ extension MEGABanner {
             description: description,
             backgroundImageURL: imageBaseURL.appendingPathComponent(backgroundImageFilename),
             imageURL: imageBaseURL.appendingPathComponent(imageFilename),
-            url: URL(string: urlString)
+            url: URL(string: urlString),
+            button: button
         )
     }
 }

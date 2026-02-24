@@ -7,18 +7,22 @@ public struct BannerEntity: Sendable {
     public let backgroundImageURL: URL
     public let imageURL: URL
     public let url: URL?
-    
+    public let button: String
+
     public init(identifier: Int,
                 title: String,
                 description: String,
                 backgroundImageURL: URL,
                 imageURL: URL,
-                url: URL? = nil) {
+                url: URL? = nil,
+                button: String
+    ) {
         self.identifier = identifier
         self.title = title
         self.description = description
         self.backgroundImageURL = backgroundImageURL
         self.imageURL = imageURL
         self.url = url
+        self.button = button
     }
 }

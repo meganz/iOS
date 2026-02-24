@@ -25,7 +25,6 @@ struct AccountDetailsWidgetView: View {
             wrappedValue: AccountDetailsWidgetViewModel(
                 dependency: .init(
                     fullNameHandler: dependency.fullNameHandler,
-                    userImageUseCase: dependency.userImageUseCase,
                     avatarFetcher: dependency.avatarFetcher
                 )
             )

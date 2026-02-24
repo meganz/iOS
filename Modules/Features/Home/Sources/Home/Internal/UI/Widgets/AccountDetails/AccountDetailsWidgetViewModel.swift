@@ -44,7 +44,6 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
         init(
             currentUserSource: CurrentUserSource = .shared,
             fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
-            userImageUseCase: some UserImageUseCaseProtocol,
             avatarFetcher: @escaping @Sendable () async -> Image?
         ) {
             let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)

@@ -73,7 +73,7 @@ struct HomeBannerDisplayModel {
 extension HomeBannerViewModel: HomeBannerViewModelInputs {
 
     func viewIsReady() {
-        userBannerUseCase.banners { [weak self] bannersResult in
+        userBannerUseCase.banners(variant: 0) { [weak self] bannersResult in
             guard let self else { return }
             Task { @MainActor in
                 self.handleUserBanners(bannersResult: bannersResult)
