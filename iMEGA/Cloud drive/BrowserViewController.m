@@ -347,15 +347,15 @@
 }
 
 - (void)addSearchBar {
-    if (self.searchController && !self.tableView.tableHeaderView) {
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-        self.tableView.tableHeaderView = self.searchController.searchBar;
+    if (self.searchController && !self.navigationItem.searchController) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
     }
 }
 
 - (void)hideSearchBarIfNotActive {
     if (!self.searchController.isActive) {
-        self.tableView.tableHeaderView = nil;
+        self.navigationItem.searchController = nil;
     }
 }
 
