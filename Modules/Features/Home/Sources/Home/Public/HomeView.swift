@@ -26,6 +26,7 @@ public struct HomeView: View {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
+        let userBannerUseCase: any UserBannerUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -41,7 +42,8 @@ public struct HomeView: View {
             favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
-            onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void
+            onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
+            userBannerUseCase: some UserBannerUseCaseProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -57,6 +59,7 @@ public struct HomeView: View {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
+            self.userBannerUseCase = userBannerUseCase
         }
     }
 
@@ -139,7 +142,11 @@ public struct HomeView: View {
                         dependency.router.route(to: .accountUpgrade)
                     }
                 case .promotionalBanners:
-                    PromotionalBannersWidgetView()
+                    PromotionalBannersWidgetView(
+                        dependency: .init(bannerUseCase: dependency.userBannerUseCase)
+                    ) {
+                        dependency.router.route(to: .promotionalBanner($0))
+                    }
                 }
             }
         }

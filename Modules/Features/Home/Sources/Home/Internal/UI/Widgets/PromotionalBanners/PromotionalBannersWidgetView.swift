@@ -9,33 +9,50 @@ struct PromotionBannerInput: Identifiable, Sendable {
     let actionTitle: String
     let imageURL: URL
     let backgroundURL: URL
-    let link: String
-
-    // Test data - will be removed soon
-    static var test: PromotionBannerInput { .init(
-        id: (Int.random(in: 1...1000)),
-        title: "Get 5 GB extra storage when you try our password manager",
-        actionTitle: "Try it now!",
-        imageURL: URL(string: "https://eu.static.mega.co.nz/banners/vpn_paid_image@2x.png")!,
-        backgroundURL: URL(string: "https://eu.static.mega.co.nz/banners/vpn_paid_background@2x.png")!,
-        link: "google.com")
-    }
-
+    let link: URL?
 }
 
 struct PromotionalBannersWidgetView: View {
-    @StateObject private var viewModel = PromotionalBannersWidgetViewModel()
+    struct Dependency {
+        let bannerUseCase: any UserBannerUseCaseProtocol
+    }
+
+    @StateObject private var viewModel: PromotionalBannersWidgetViewModel
+    let urlSelectionHandler: @MainActor (URL) -> Void
+
+    init(
+        dependency: Dependency,
+        urlSelectionHandler: @escaping @MainActor (URL) -> Void
+    ) {
+        _viewModel = StateObject(wrappedValue: PromotionalBannersWidgetViewModel(bannerUseCase: dependency.bannerUseCase))
+        self.urlSelectionHandler = urlSelectionHandler
+    }
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: TokenSpacing._3) {
                 Spacer()
                     .frame(width: TokenSpacing._3)
                 ForEach(viewModel.bannerInputs) { input in
-                    PromotionalBanner(input: input)
+                    PromotionalBanner(
+                        input: input,
+                        actionHandler: {
+                            guard let url = input.link else { return }
+                            urlSelectionHandler(url)
+                        }, closeHandler: {
+                            Task {
+                                await viewModel.closeBanner(bannerIdentifier: input.id)
+                            }
+                        }
+                    )
+                    .transition(.opacity)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.bannerInputs.count)
                 }
-                Spacer()
-                    .frame(width: TokenSpacing._3)
             }
+        }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.bannerInputs.count)
+        .task {
+            await viewModel.onTask()
         }
     }
 }
@@ -53,6 +70,8 @@ private struct PromotionalBanner: View {
     @ScaledMetric private var bannerImageSize = Constants.bannerImageSize
 
     let input: PromotionBannerInput
+    let actionHandler: @MainActor () -> Void
+    let closeHandler: @MainActor () -> Void
 
     var body: some View {
         ZStack {
@@ -91,6 +110,7 @@ private struct PromotionalBanner: View {
             }
             .frame(width: bannerSize.width, height: bannerSize.height)
             .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
+            .contentShape(Rectangle())
         }
     }
 
@@ -108,16 +128,16 @@ private struct PromotionalBanner: View {
 
     private var actionButton: some View {
         Button(action: {
-            // IOS-11338: Handle action url
+            actionHandler()
         }, label: {
             Text(input.actionTitle)
                 .dynamicTypeSize(.xSmall ... .xxLarge)
                 .font(.caption2)
                 .fontWeight(.semibold)
-                .foregroundStyle(TokenColors.Text.inverseAccent.swiftUI)
+                .foregroundStyle(TokenColors.Text.onColorInverse.swiftUI)
                 .padding(.horizontal, TokenSpacing._5)
                 .padding(.vertical, TokenSpacing._3)
-                .background(TokenColors.Button.primary.swiftUI)
+                .background(TokenColors.Button.onColor.swiftUI)
                 .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
                 .padding([.bottom, .leading], TokenSpacing._4)
         })
@@ -143,7 +163,7 @@ private struct PromotionalBanner: View {
     private var closeButton: some View {
         VStack {
             Button(action: {
-                // IOS-11338: Handle close button
+                closeHandler()
             }, label: {
                 MEGAAssets.Image.x
                     .foregroundColor(TokenColors.Icon.onColor.swiftUI)

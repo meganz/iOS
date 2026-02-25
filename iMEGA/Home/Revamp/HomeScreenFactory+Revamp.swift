@@ -64,7 +64,8 @@ extension HomeScreenFactory {
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
-            }
+            },
+            userBannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo)
         )
         
         let homeView = HomeView(dependency: dependency)

@@ -1,5 +1,5 @@
-public protocol UserBannerUseCaseProtocol {
-    
+public protocol UserBannerUseCaseProtocol: Sendable {
+
     /// Get the banners based on their variant
     /// - Discussion:
     /// - Parameters:
@@ -47,5 +47,34 @@ public struct UserBannerUseCase: UserBannerUseCaseProtocol {
         case referal
         case achievement
         case undefined
+    }
+}
+
+extension UserBannerUseCaseProtocol {
+    public func dismissBanner(withBannerId bannerId: Int) async throws {
+        try await withCheckedThrowingContinuation {  continuation in
+            dismissBanner(withBannerId: bannerId) { result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+
+    }
+
+    public func banners(variant: Int) async throws -> [BannerEntity] {
+        try await withCheckedThrowingContinuation {  continuation in
+            banners(variant: variant) { result in
+                switch result {
+                case .success(let banners):
+                    continuation.resume(returning: banners)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 }

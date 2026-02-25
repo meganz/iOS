@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-final class MockUserBannerUseCase: UserBannerUseCaseProtocol {
+final class MockUserBannerUseCase: UserBannerUseCaseProtocol, @unchecked Sendable {
     private var bannersResult: Result<[BannerEntity], BannerErrorEntity>?
     private(set) var lastDismissedBannerId: Int?
     

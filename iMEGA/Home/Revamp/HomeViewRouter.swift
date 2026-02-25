@@ -17,7 +17,9 @@ final class HomeViewRouter: HomeViewRouting {
         case .shortcut(let shortcutType):
             route(to: shortcutType)
         case .accountUpgrade:
-            showUpgradePlanView()
+            showUpgradePlanView()		
+        case .promotionalBanner(let url):
+            routeToPromotionalUrl(url)
         }
     }
 
@@ -61,5 +63,15 @@ final class HomeViewRouter: HomeViewRouting {
             accountUseCase: accountUseCase,
             isFromAds: false)
         .start()
+    }
+
+    private func routeToPromotionalUrl(_ url: URL) {
+        guard let navigationController else {
+            assertionFailure("Navigation controller is nil when trying to route to promotional url \(url)")
+            return
+        }
+
+        HomeBannerRouter(navigationController: navigationController)
+            .didTrigger(from: .universalLink(url))
     }
 }
