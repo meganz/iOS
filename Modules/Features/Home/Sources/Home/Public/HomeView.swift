@@ -1,6 +1,7 @@
 import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import SwiftUI
@@ -91,7 +92,9 @@ public struct HomeView: View {
                 .onReceive(viewModel.$selectedFloatingButtonAction.compactMap { $0 }) {
                     dependency.homeAddMenuActionHandler.handleAction($0)
                 }
+                .background(HomeBackButtonConfigurator())
         }
+        .tint(TokenColors.Icon.primary.swiftUI)
     }
 
     @ViewBuilder
@@ -150,5 +153,24 @@ public struct HomeView: View {
                 }
             }
         }
+    }
+}
+
+// Sets backButtonDisplayMode = .minimal on the NavigationStack's root view controller
+// so that any pushed view (e.g. FavouritesView) shows only the chevron, not the "Home" title.
+// Scoped to iOS < 26 because iOS 26 already hides the back button text natively.
+private struct HomeBackButtonConfigurator: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> HomeBackButtonConfiguratorController {
+        HomeBackButtonConfiguratorController()
+    }
+
+    func updateUIViewController(_ uiViewController: HomeBackButtonConfiguratorController, context: Context) {}
+}
+
+private final class HomeBackButtonConfiguratorController: UIViewController {
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+        guard #unavailable(iOS 26) else { return }
+        parent?.navigationItem.backButtonDisplayMode = .minimal
     }
 }
