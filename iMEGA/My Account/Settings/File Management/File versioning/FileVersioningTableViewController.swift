@@ -55,7 +55,9 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
     private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
         tableView.separatorColor = TokenColors.Border.strong
-
+        
+        fileVersioningSwitch.onTintColor = TokenColors.Support.success
+        
         fileVersionsLabel.textColor = TokenColors.Text.primary
         fileVersioningLabel.textColor = TokenColors.Text.primary
         detailLabel.textColor = TokenColors.Text.secondary

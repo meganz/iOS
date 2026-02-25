@@ -17,6 +17,8 @@ extension RubbishBinTableViewController {
         clearRubbishBinDetailLabel.textColor = TokenColors.Text.secondary
         removeFilesOlderThanDetailLabel.textColor = TokenColors.Text.secondary
         clearRubbishBinLabel.textColor = TokenColors.Text.error
+        
+        rubbishBinCleaningSchedulerSwitch?.tintColor = TokenColors.Support.success
 
         setupTableViewHeaderAndFooter()
     }

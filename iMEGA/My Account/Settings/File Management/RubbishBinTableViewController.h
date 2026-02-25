@@ -6,6 +6,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *rubbishBinCleaningSchedulerLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *rubbishBinCleaningSchedulerSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanDetailLabel;

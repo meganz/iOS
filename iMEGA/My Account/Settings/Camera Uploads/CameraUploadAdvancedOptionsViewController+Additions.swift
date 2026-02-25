@@ -6,6 +6,7 @@ extension CameraUploadAdvancedOptionsViewController {
         uploadVideosForlivePhotosSwitch?.onTintColor = TokenColors.Support.success
         uploadHiddenAlbumSwitch?.onTintColor = TokenColors.Support.success
         uploadSharedAlbumsSwitch?.onTintColor = TokenColors.Support.success
+        uploadSyncedAlbumsSwitch?.onTintColor = TokenColors.Support.success
     }
     
     @objc func makeViewModel() -> CameraUploadsAdvancedOptionsViewModel {

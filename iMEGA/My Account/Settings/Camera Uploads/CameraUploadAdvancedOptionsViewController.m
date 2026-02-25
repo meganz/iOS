@@ -88,7 +88,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (IBAction)didChangeValueForSharedAlbumsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadSharedAlbums = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
-    [self trackLivePhotoVideoUploadsEvent: sender.isOn];
+    [self trackSharedAlbumsUploadEvent: sender.isOn];
 }
 
 - (IBAction)didChangeValueForSyncedAlbumsSwitch:(UISwitch *)sender {
