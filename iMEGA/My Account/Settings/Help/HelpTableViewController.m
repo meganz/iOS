@@ -1,7 +1,5 @@
 #import "HelpTableViewController.h"
 
-#import <MessageUI/MFMailComposeViewController.h>
-
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
@@ -11,10 +9,9 @@
 
 #import "LocalizationHelper.h"
 
-@interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
+@interface HelpTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *helpCentreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sendFeedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *joinBetaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rateUsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reportIssueLabel;
@@ -30,20 +27,12 @@
     
     self.navigationItem.title = LocalizedString(@"help", @"Menu item");
     
-    self.sendFeedbackLabel.text = LocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
     self.helpCentreLabel.text = LocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
     self.joinBetaLabel.text = LocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = LocalizedString(@"rateUsLabel", @"Title to rate the app");
     
     [self setupColors];
     self.reportIssueLabel.text = LocalizedString(@"help.reportIssue.title", @"");
-}
-
-- (SendFeedbackViewModel *)sendFeedbackViewModel {
-    if (_sendFeedbackViewModel == nil) {
-        _sendFeedbackViewModel = [self createSendFeedbackViewModel];
-    }
-    return _sendFeedbackViewModel;
 }
 
 #pragma mark - UITableViewDataSource
@@ -53,9 +42,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1) {
-        return 2;
-    }
     return 1;
 }
 
@@ -73,11 +59,7 @@
                 break;
                 
             case 1:
-                if (indexPath.row == 0) {
-                    [self sendUserFeedback];
-                } else {
-                    [self reportIssue];
-                }
+                [self reportIssue];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
                 
@@ -111,12 +93,6 @@
 - (void)rateApp {
     NSString *appStoreLink = @"https://itunes.apple.com/us/app/mega/id706857885?mt=8&action=write-review";
     [UIApplication.sharedApplication openURL:[NSURL URLWithString:appStoreLink] options:@{} completionHandler:nil];
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

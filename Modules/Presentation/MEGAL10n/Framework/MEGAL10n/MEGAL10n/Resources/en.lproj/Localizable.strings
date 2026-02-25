@@ -686,8 +686,6 @@
 "securityOptions"="Security options";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="About";
-/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Send feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Please write your feedback here:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
