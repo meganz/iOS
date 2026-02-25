@@ -197,6 +197,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         } label: {
             Image(uiImage: MEGAAssets.UIImage.backArrow)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                .padding(10)
         }
     }
     
