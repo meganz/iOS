@@ -24,7 +24,7 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
             try await bannerUseCase.dismissBanner(withBannerId: bannerIdentifier)
             bannerInputs.removeAll { $0.id == bannerIdentifier }
         } catch {
-            MEGALogError("Could not dismiss banner with id \(bannerIdentifier)")
+            MEGALogError("[Home Promotional Banners] Could not dismiss banner with id \(bannerIdentifier). Error: \(error.localizedDescription)")
         }
     }
 
@@ -33,7 +33,7 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
             let banners = try await bannerUseCase.banners(variant: 1).map(\.promotionalBannerInput)
             bannerInputs = banners
         } catch {
-            MEGALogError("Could not loead banners")
+            MEGALogError("[Home Promotional Banners] Could not load banners. Error: \(error.localizedDescription)")
         }
     }
 }
