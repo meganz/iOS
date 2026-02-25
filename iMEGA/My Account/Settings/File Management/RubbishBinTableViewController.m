@@ -20,8 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *clearRubbishBinAI;
 
-@property (weak, nonatomic) IBOutlet UISwitch *rubbishBinCleaningSchedulerSwitch;
-
 @property (weak, nonatomic) IBOutlet UIView *longerRetentionPeriodUpgradetoProView;
 @property (weak, nonatomic) IBOutlet UILabel *longerRetentionPeriodUpgradetoProLabel;
 
@@ -271,9 +269,9 @@
             
             self.rubbishBinAutopurgePeriod = request.number;
             if (self.rubbishBinAutopurgePeriod == 0) {
-                self.rubbishBinCleaningSchedulerSwitch.on = NO;
+                [self.rubbishBinCleaningSchedulerSwitch setOn:NO animated:YES];
             } else {
-                self.rubbishBinCleaningSchedulerSwitch.on = YES;
+                [self.rubbishBinCleaningSchedulerSwitch setOn:YES animated:YES];
             }
             self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
         }

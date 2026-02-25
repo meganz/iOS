@@ -94,8 +94,11 @@
     [self.autoAwayTimeSaveButton setTitleColor:[self disabledTextColor] forState:UIControlStateDisabled];
     
     self.autoAwaySwitch.tintColor = [self switchTintColor];
+    self.autoAwaySwitch.onTintColor = [self switchTintColor];
     self.statusPersistenceSwitch.tintColor = [self switchTintColor];
+    self.statusPersistenceSwitch.onTintColor = [self switchTintColor];
     self.lastActiveSwitch.tintColor = [self switchTintColor];
+    self.lastActiveSwitch.onTintColor = [self switchTintColor];
     
     self.tableView.separatorColor = [UIColor borderStrong];
 }

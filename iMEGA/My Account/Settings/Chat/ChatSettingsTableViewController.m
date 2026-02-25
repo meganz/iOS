@@ -156,6 +156,9 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 - (void)setupColors {
     self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
+    self.doNotDisturbSwitch.onTintColor = [UIColor supportSuccessColor];
+    self.chatNotificationsSwitch.onTintColor = [UIColor supportSuccessColor];
+    
     self.tableView.separatorColor = [UIColor borderStrong];
     self.tableView.backgroundColor = [UIColor pageBackgroundColor];
 }
