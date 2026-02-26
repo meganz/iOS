@@ -285,6 +285,9 @@ extension MEGAPhotoBrowserViewController {
     @objc func hideSlideShowButton(barButtonItem: UIBarButtonItem?) {
         barButtonItem?.image = nil
         barButtonItem?.isEnabled = false
+        if #available(iOS 26.0, *) {
+            barButtonItem?.hidesSharedBackground = true
+        }
     }
     
     @objc func viewNodeInFolder(_ node: MEGANode) {
