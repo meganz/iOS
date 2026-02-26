@@ -169,13 +169,13 @@ public class VideoRevampFactory {
             accountStorageUseCase: accountStorageUseCase,
             videoRevampRouter: router,
             featureFlagProvider: featureFlagProvider,
-            syncModel: syncModel
+            syncModel: syncModel,
+            videoSelection: videoSelection
         )
         
         let view = PlaylistContentScreen(
             viewModel: viewModel,
             videoConfig: videoConfig,
-            videoSelection: videoSelection,
             router: router
         )
         return UIHostingController(rootView: view)

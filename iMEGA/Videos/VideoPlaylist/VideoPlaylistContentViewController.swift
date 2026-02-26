@@ -206,6 +206,38 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     private func configureToolbar() {
+        if #available(iOS 26.0, *) {
+            configureToolbarForLiquidGlass()
+        } else {
+            configureToolbarLegacy()
+        }
+
+        configureToolbarAppearance()
+    }
+
+    @available(iOS 26.0, *)
+    private func configureToolbarForLiquidGlass() {
+        let downloadItem = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:)))
+        let linkItem = UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:)))
+        let saveToPhotosItem = UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:)))
+        let removeItem = UIBarButtonItem(image: MEGAAssets.UIImage.hudMinus, style: .plain, target: self, action: #selector(removeVideoFromPlaylistAction(_:)))
+        let moreItem = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
+
+        let allItems = [downloadItem, linkItem, saveToPhotosItem, removeItem, moreItem]
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        var toolbarItems = [UIBarButtonItem]()
+        toolbarItems.append(flexibleSpace)
+        for item in allItems {
+            let group = UIBarButtonItemGroup(barButtonItems: [item], representativeItem: nil)
+            toolbarItems.append(UIBarButtonItem(customView: createGroupView(group)))
+            toolbarItems.append(flexibleSpace)
+        }
+
+        toolbar.items = toolbarItems
+    }
+
+    private func configureToolbarLegacy() {
         toolbar.items = [
             UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:))),
             UIBarButtonItem.flexibleSpace(),
@@ -217,20 +249,79 @@ final class VideoPlaylistContentViewController: UIViewController {
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
         ]
-        
-        configureToolbarAppearance()
     }
-    
+
+    private func createGroupView(_ group: UIBarButtonItemGroup) -> UIView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+
+        for item in group.barButtonItems {
+            if let button = createButton(from: item) {
+                stackView.addArrangedSubview(button)
+            }
+        }
+
+        return stackView
+    }
+
+    private func createButton(from barButtonItem: UIBarButtonItem) -> UIButton? {
+        guard let image = barButtonItem.image,
+              let action = barButtonItem.action,
+              let target = barButtonItem.target else {
+            return nil
+        }
+
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        button.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor)
+        button.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+        return button
+    }
+
     private func configureToolbarAppearance() {
         videoToolbarViewModel.$isDisabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isDisabled in
-                self?.toolbar.items?.forEach { $0.isEnabled = !isDisabled }
+                guard let self else { return }
+                if #available(iOS 26.0, *) {
+                    self.setToolbarButtonsEnabled(!isDisabled)
+                } else {
+                    self.toolbar.items?.forEach { $0.isEnabled = !isDisabled }
+                }
             }
             .store(in: &subscriptions)
-        
-        toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
-        toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
+
+        if #available(iOS 26.0, *) {
+            let appearance = UIToolbarAppearance()
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundEffect = UIBlurEffect(style: .systemMaterial)
+            appearance.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor).withAlphaComponent(0.8)
+
+            toolbar.isTranslucent = true
+            toolbar.standardAppearance = appearance
+            toolbar.compactAppearance = appearance
+            toolbar.scrollEdgeAppearance = appearance
+        } else {
+            toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
+            toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
+        }
+    }
+
+    @available(iOS 26.0, *)
+    private func setToolbarButtonsEnabled(_ enabled: Bool) {
+        for item in toolbar.items ?? [] {
+            if let stackView = item.customView as? UIStackView {
+                for case let button as UIButton in stackView.arrangedSubviews {
+                    button.isEnabled = enabled
+                }
+            }
+            item.isEnabled = enabled
+        }
     }
     
     private func hideToolbar() {

@@ -29,6 +29,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     
     let featureFlagProvider: any FeatureFlagProviderProtocol
     let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private(set) var videoSelection: VideoSelection
+    @Published private(set) var isEditing = false
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private weak var selectionDelegate: (any VideoPlaylistContentViewModelSelectionDelegate)?
@@ -96,7 +98,8 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         videoRevampRouter: some VideoRevampRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        syncModel: VideoRevampSyncModel
+        syncModel: VideoRevampSyncModel,
+        videoSelection: VideoSelection
     ) {
         self.videoPlaylistEntity = videoPlaylistEntity
         self.videoPlaylistContentsUseCase = videoPlaylistContentsUseCase
@@ -116,6 +119,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.syncModel = syncModel
+        self.videoSelection = videoSelection
 
         self.sortHeaderConfig = SortHeaderConfig(
             title: Strings.Localizable.sortTitle,
@@ -133,6 +137,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         subscribeToSortOrder()
         subscribeToRemoveVideosFromVideoPlaylistAction()
         subscribeToDidSelectMoveVideoInVideoPlaylistContentToRubbishBinAction()
+        subscribeToEditMode()
     }
     
     func onViewAppeared() async {
@@ -341,6 +346,13 @@ final class VideoPlaylistContentViewModel: ObservableObject {
             guard let self else { return }
             _ = await videoPlaylistModificationUseCase.delete(videoPlaylists: [videoPlaylistEntity])
         }
+    }
+    
+    private func subscribeToEditMode() {
+        videoSelection.$editMode
+            .map(\.isEditing)
+            .removeDuplicates()
+            .assign(to: &$isEditing)
     }
     
     private func subscribeToSortOrder() {
