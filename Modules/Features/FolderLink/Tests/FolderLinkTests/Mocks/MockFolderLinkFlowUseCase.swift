@@ -3,6 +3,8 @@ import MEGADomain
 
 final class MockFolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol, @unchecked Sendable {
     private(set) var stopCalled = false
+    private(set) var stopCalledArguments: (Bool)?
+    
     private let initialStartResult: Result<HandleEntity, FolderLinkFlowErrorEntity>
     private let confirmDecryptionKeyResult: Result<HandleEntity, FolderLinkFlowErrorEntity>
     
@@ -22,5 +24,8 @@ final class MockFolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol, @unchecked
         try confirmDecryptionKeyResult.get()
     }
     
-    func stop() { stopCalled = true }
+    func stop(shouldLogout: Bool) {
+        stopCalledArguments = (shouldLogout)
+        stopCalled = true
+    }
 }

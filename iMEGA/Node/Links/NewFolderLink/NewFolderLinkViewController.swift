@@ -72,6 +72,7 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
         return FolderLinkView.Dependency(
             link: link,
             folderLinkBuilder: MEGAFolderLinkBuilder(),
+            folderLinkLogoutPolicy: FolderLinkLogoutPolicy(),
             searchResultsProvidingBuilder: FolderLinkSearchResultsProvidingBuilder(),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,

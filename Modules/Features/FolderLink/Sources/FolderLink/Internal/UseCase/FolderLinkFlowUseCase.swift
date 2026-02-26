@@ -9,7 +9,7 @@ package enum FolderLinkFlowErrorEntity: Error, Sendable, Equatable {
 package protocol FolderLinkFlowUseCaseProtocol: Sendable {
     func initialStart(with link: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity
     func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FolderLinkFlowErrorEntity) -> HandleEntity
-    func stop()
+    func stop(shouldLogout: Bool)
 }
 
 /// This handle the folder link flow: Login in to folder link -> fetchNodes to have the nodes are available -> get the root folder link node
@@ -86,7 +86,8 @@ package struct FolderLinkFlowUseCase: FolderLinkFlowUseCaseProtocol {
         }
     }
     
-    package func stop() {
+    package func stop(shouldLogout: Bool) {
+        guard shouldLogout else { return }
         folderLinkLogoutUseCase.logout()
     }
 }

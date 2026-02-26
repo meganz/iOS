@@ -130,12 +130,18 @@ struct FolderLinkFlowUseCaseTests {
     
     @Suite("Stop Flow")
     struct StopFlowTests {
-        @Test("stop calls logout on logout use case")
-        func stop_callsLogout() {
+        @Test(
+            "Stop Flow",
+            arguments: [
+                (true, true),
+                (false, false)
+            ]
+        )
+        func stopFlow(shouldLogout: Bool, logoutCalled: Bool) {
             let folderLinkLogoutUseCase = MockFolderLinkLogoutUseCase()
             let sut = makeSUT(folderLinkLogoutUseCase: folderLinkLogoutUseCase)
-            sut.stop()
-            #expect(folderLinkLogoutUseCase.logoutCalled == true)
+            sut.stop(shouldLogout: shouldLogout)
+            #expect(folderLinkLogoutUseCase.logoutCalled == logoutCalled)
         }
     }
     

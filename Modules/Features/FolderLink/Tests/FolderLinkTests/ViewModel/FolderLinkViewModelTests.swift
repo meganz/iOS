@@ -100,6 +100,28 @@ struct FolderLinkViewModelTests {
         #expect(pendingConnectionRetryUseCase.retryPendingConnectionsCalled == true)
     }
     
+    @Test(
+        "stopLoadingFolderLink should call stop on use case",
+        arguments: [
+            (true, true),
+            (false, false)
+        ]
+    )
+    func stopLoadingFolderLink(shouldLogout: Bool, expectedCalledStopShouldLogout: Bool) {
+        // Given
+        let folderLinkLogoutPolicy = MockFolderLinkLogoutPolicy(shouldLogout: shouldLogout)
+        let folderLinkFlowUseCase = MockFolderLinkFlowUseCase()
+        let sut = FolderLinkViewModelTests.makeSUT(folderLinkFlowUseCase: folderLinkFlowUseCase, folderLinkLogoutPolicy: folderLinkLogoutPolicy)
+        
+        // When
+        sut.stopLoadingFolderLink()
+        
+        // Then
+        #expect(folderLinkFlowUseCase.stopCalled == true)
+        let (calledShouldLogout) = folderLinkFlowUseCase.stopCalledArguments
+        #expect(calledShouldLogout == expectedCalledStopShouldLogout)
+    }
+    
     @MainActor
     @Suite("NoNetworkConnectionState Tests")
     struct NoNetworkConnectionState {
@@ -131,12 +153,14 @@ struct FolderLinkViewModelTests {
     private static func makeSUT(
         folderLinkFlowUseCase: MockFolderLinkFlowUseCase = MockFolderLinkFlowUseCase(),
         folderLinkBuilder: MockFolderlinkBuilder = MockFolderlinkBuilder(),
+        folderLinkLogoutPolicy: MockFolderLinkLogoutPolicy = MockFolderLinkLogoutPolicy(),
         networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
         pendingConnectionsRetryUseCase: MockFolderLinkPendingConnectionsRetryUseCase = MockFolderLinkPendingConnectionsRetryUseCase()
     ) -> FolderLinkViewModel {
         let dependency = FolderLinkViewModel.Dependency(
             link: "some_link",
             folderLinkBuilder: folderLinkBuilder,
+            folderLinkLogoutPolicy: folderLinkLogoutPolicy,
             folderLinkFlowUseCase: folderLinkFlowUseCase,
             pendingConnectionsRetryUseCase: pendingConnectionsRetryUseCase,
             networkUseCase: networkUseCase

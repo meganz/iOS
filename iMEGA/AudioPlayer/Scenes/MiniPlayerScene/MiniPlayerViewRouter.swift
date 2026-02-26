@@ -9,7 +9,7 @@ import UIKit
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     private weak var presenter: UIViewController?
     private var baseViewController: UIViewController?
-    private var configEntity: AudioPlayerConfigEntity
+    private(set) var configEntity: AudioPlayerConfigEntity
     private var folderSDKLogoutRequired: Bool = false
     
     init(
@@ -80,7 +80,11 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     }
     
     func isAFolderLinkPresenter() -> Bool {
-        presenter?.isKind(of: FolderLinkViewController.self) ?? false
+        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosNewFolderLink) {
+            presenter?.isKind(of: NewFolderLinkViewController.self) ?? false
+        } else {
+            presenter?.isKind(of: FolderLinkViewController.self) ?? false
+        }
     }
     
     func refresh(with newConfig: AudioPlayerConfigEntity) {

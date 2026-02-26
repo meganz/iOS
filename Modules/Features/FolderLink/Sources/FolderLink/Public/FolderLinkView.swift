@@ -11,6 +11,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     public struct Dependency {
         let link: String
         let folderLinkBuilder: any FolderLinkBuilderProtocol
+        let folderLinkLogoutPolicy: any FolderLinkLogoutPolicyProtocol
         let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
@@ -21,6 +22,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         public init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
+            folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol,
             searchResultsProvidingBuilder: some FolderLinkSearchResultsProvidingBuilderProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
@@ -30,6 +32,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         ) {
             self.link = link
             self.folderLinkBuilder = folderLinkBuilder
+            self.folderLinkLogoutPolicy = folderLinkLogoutPolicy
             self.searchResultsProvidingBuilder = searchResultsProvidingBuilder
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
@@ -63,7 +66,8 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             wrappedValue: FolderLinkViewModel(
                 dependency: FolderLinkViewModel.Dependency(
                     link: dependency.link,
-                    folderLinkBuilder: dependency.folderLinkBuilder
+                    folderLinkBuilder: dependency.folderLinkBuilder,
+                    folderLinkLogoutPolicy: dependency.folderLinkLogoutPolicy
                 )
             )
         )
