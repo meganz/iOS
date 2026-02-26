@@ -635,7 +635,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                                         publicLink:fileLinkURLString
                                       isFolderLink:false
                              adsSlotViewController:photoBrowserVC
-                                 presentationStyle:UIModalPresentationAutomatic];
+                                 presentationStyle:UIModalPresentationFullScreen];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO isFromSharedItem:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
