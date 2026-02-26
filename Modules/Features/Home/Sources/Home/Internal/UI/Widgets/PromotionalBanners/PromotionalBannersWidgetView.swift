@@ -13,18 +13,11 @@ struct PromotionBannerInput: Identifiable, Sendable {
 }
 
 struct PromotionalBannersWidgetView: View {
-    struct Dependency {
-        let bannerUseCase: any UserBannerUseCaseProtocol
-    }
 
-    @StateObject private var viewModel: PromotionalBannersWidgetViewModel
+    @StateObject private var viewModel = PromotionalBannersWidgetViewModel()
     let urlSelectionHandler: @MainActor (URL) -> Void
 
-    init(
-        dependency: Dependency,
-        urlSelectionHandler: @escaping @MainActor (URL) -> Void
-    ) {
-        _viewModel = StateObject(wrappedValue: PromotionalBannersWidgetViewModel(bannerUseCase: dependency.bannerUseCase))
+    init(urlSelectionHandler: @escaping @MainActor (URL) -> Void) {
         self.urlSelectionHandler = urlSelectionHandler
     }
 

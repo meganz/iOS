@@ -7,7 +7,6 @@ import MEGAPreference
 import SwiftUI
 import UIKit
 
-// [IOS-11315]: Implement the logic to populate user data
 @MainActor
 final class AccountDetailsWidgetViewModel: ObservableObject {
     enum Constants {

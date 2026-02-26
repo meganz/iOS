@@ -48,7 +48,7 @@ struct RevampedSearchResultThumbnailView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
-    @State private var highlighted = false // [IOS-10443]: Ensure highlight is retained when cell is selected in Edit mode
+    @State private var highlighted = false
 
     private let layout: ResultCellLayout = .thumbnail
 

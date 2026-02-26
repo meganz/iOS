@@ -97,15 +97,12 @@ public struct HomeView: View {
                 case .accountDetails:
                     AccountDetailsWidgetView(dependency: .init(
                         fullNameHandler: dependency.fullNameHandler,
-                        userImageUseCase: dependency.userImageUseCase,
                         avatarFetcher: dependency.avatarFetcher
                     )) {
                         dependency.router.route(to: .accountUpgrade)
                     }
                 case .promotionalBanners:
-                    PromotionalBannersWidgetView(
-                        dependency: .init(bannerUseCase: dependency.userBannerUseCase)
-                    ) {
+                    PromotionalBannersWidgetView {
                         dependency.router.route(to: .promotionalBanner($0))
                     }
                 }

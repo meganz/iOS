@@ -9,7 +9,11 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
 
     private let bannerUseCase: any UserBannerUseCaseProtocol
 
-    init(
+    convenience init() {
+        self.init(bannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo))
+    }
+
+    package init(
         bannerUseCase: some UserBannerUseCaseProtocol
     ) {
         self.bannerUseCase = bannerUseCase

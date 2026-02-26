@@ -9,7 +9,6 @@ extension HomeView {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
         let router: any HomeViewRouting
         let fullNameHandler: @Sendable (CurrentUserSource) -> String
-        let userImageUseCase: any UserImageUseCaseProtocol
         let avatarFetcher: @Sendable () async -> Image?
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
@@ -20,13 +19,11 @@ extension HomeView {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
-        let userBannerUseCase: any UserBannerUseCaseProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
             fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
-            userImageUseCase: some UserImageUseCaseProtocol,
             avatarFetcher: @escaping @Sendable () async -> Image?,
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
@@ -37,7 +34,6 @@ extension HomeView {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
-            userBannerUseCase: some UserBannerUseCaseProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -47,13 +43,11 @@ extension HomeView {
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
             self.fullNameHandler = fullNameHandler
-            self.userImageUseCase = userImageUseCase
             self.avatarFetcher = avatarFetcher
             self.favouritesContextAction = favouritesContextAction
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
-            self.userBannerUseCase = userBannerUseCase
         }
     }
 }

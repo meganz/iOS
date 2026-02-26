@@ -48,7 +48,6 @@ extension HomeScreenFactory {
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
             fullNameHandler: fullNameHandler,
-            userImageUseCase: userImageUseCase,
             avatarFetcher: makeAvatarFetcher(
                 fullNameHandler: fullNameHandler,
                 userImageUseCase: userImageUseCase,
@@ -64,8 +63,7 @@ extension HomeScreenFactory {
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
-            },
-            userBannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo)
+            }
         )
         
         let homeView = HomeView(dependency: dependency)

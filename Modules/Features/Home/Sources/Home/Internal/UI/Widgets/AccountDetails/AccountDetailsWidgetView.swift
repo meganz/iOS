@@ -8,7 +8,6 @@ import SwiftUI
 struct AccountDetailsWidgetView: View {
     struct Dependency {
         let fullNameHandler: @Sendable (CurrentUserSource) -> String
-        let userImageUseCase: any UserImageUseCaseProtocol
         let avatarFetcher: @Sendable () async -> Image?
     }
 
