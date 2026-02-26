@@ -155,7 +155,12 @@ final class SlideShowViewController: UIViewController, ViewType {
         setVisibility(false)
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
         let currentIndex = viewModel.currentSlideIndex
-        collectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .centeredHorizontally, animated: false)
+        let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        if isRTL {
+            scrollCollectionViewInRTL(collectionView, to: currentIndex)
+        } else {
+            collectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .centeredHorizontally, animated: false)
+        }
         self.collectionView.backgroundColor = .black
         self.view.backgroundColor = TokenColors.Background.page
         cell?.resetZoomScale()
@@ -191,8 +196,20 @@ final class SlideShowViewController: UIViewController, ViewType {
         CrashlyticsLogger.log("[SlideShow] restarted.")
         hideLoader()
         reload()
-        collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideIndex, section: 0), at: .left, animated: false)
+        let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        if isRTL {
+            scrollCollectionViewInRTL(collectionView, to: viewModel.currentSlideIndex)
+        } else {
+            collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideIndex, section: 0), at: .left, animated: false)
+        }
         play()
+    }
+    
+    private func scrollCollectionViewInRTL(_ collectionView: UICollectionView, to item: Int) {
+        let itemWidth = collectionView.bounds.size.width
+        let contentWidth = collectionView.contentSize.width
+        let targetOffsetX = contentWidth - CGFloat(item + 1) * itemWidth
+        collectionView.contentOffset = CGPoint(x: targetOffsetX, y: 0)
     }
 
     private func scrollToItem(index: Int, animate: Bool) {
@@ -309,7 +326,12 @@ final class SlideShowViewController: UIViewController, ViewType {
                 // For some unknown reasons `collectionView.scrollToItem()` won't work and contentOffset.x is zero,
                 // In that case we need to update collectionView.contentOffset explicitly
                 if collectionView.contentOffset.x == 0 {
-                    self.collectionView.contentOffset = CGPoint(x: collectionView.bounds.size.width * Double(currentIndex), y: 0)
+                    let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+                    if isRTL {
+                        scrollCollectionViewInRTL(collectionView, to: currentIndex)
+                    } else {
+                        collectionView.contentOffset = CGPoint(x: collectionView.bounds.size.width * Double(currentIndex), y: 0)
+                    }
                 }
 
                 DispatchQueue.main.async {
