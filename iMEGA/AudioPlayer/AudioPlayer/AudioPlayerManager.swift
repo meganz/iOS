@@ -562,4 +562,9 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
             return item.url == currentTrack.url
         } ?? items.first
     }
+    
+    func hasAlivePlayerThatStartedFromFolderLink() -> Bool {
+        guard let configEntity = miniPlayerRouter?.configEntity else { return false }
+        return isPlayerAlive() && configEntity.isFolderLink
+    }
 }

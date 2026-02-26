@@ -6,14 +6,15 @@ import MEGADomain
 package final class FolderLinkViewModel: ObservableObject {
     package struct Dependency {
         let link: String
-        let folderLinkBuilder: any FolderLinkBuilderProtocol
+        let folderLinkLogoutPolicy: any FolderLinkLogoutPolicyProtocol
         let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
         let pendingConnectionsRetryUseCase: any FolderLinkPendingConnectionsRetryUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
         
         init(
             link: String,
-            folderLinkBuilder: some FolderLinkBuilderProtocol
+            folderLinkBuilder: some FolderLinkBuilderProtocol,
+            folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol
         ) {
             let folderLinkFlowUseCase = FolderLinkFlowUseCase(
                 folderLinkLoginUseCase: FolderLinkLoginUseCase(),
@@ -24,22 +25,23 @@ package final class FolderLinkViewModel: ObservableObject {
             self.init(
                 link: link,
                 folderLinkBuilder: folderLinkBuilder,
+                folderLinkLogoutPolicy: folderLinkLogoutPolicy,
                 folderLinkFlowUseCase: folderLinkFlowUseCase,
                 pendingConnectionsRetryUseCase: FolderLinkPendingConnectionsRetryUseCase(),
-                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-                
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
             )
         }
         
         package init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
+            folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol,
             folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
             pendingConnectionsRetryUseCase: some FolderLinkPendingConnectionsRetryUseCaseProtocol,
             networkUseCase: some NetworkMonitorUseCaseProtocol
         ) {
             self.link = link
-            self.folderLinkBuilder = folderLinkBuilder
+            self.folderLinkLogoutPolicy = folderLinkLogoutPolicy
             self.folderLinkFlowUseCase = folderLinkFlowUseCase
             self.pendingConnectionsRetryUseCase = pendingConnectionsRetryUseCase
             self.networkUseCase = networkUseCase
@@ -87,7 +89,7 @@ package final class FolderLinkViewModel: ObservableObject {
     
     package func stopLoadingFolderLink() {
         folderLinkFlowStopped = true
-        folderLinkFlowUseCase.stop()
+        folderLinkFlowUseCase.stop(shouldLogout: dependency.folderLinkLogoutPolicy.shouldLogoutUponFolderLinkDismiss())
     }
     
     package func confirmDecryptionKey(_ key: String) async {

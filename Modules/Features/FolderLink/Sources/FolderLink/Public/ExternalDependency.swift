@@ -52,3 +52,8 @@ public protocol FolderLinkMediaDiscoveryContentBuilderProtocol {
 public protocol FolderLinkMediaDiscoveryContent: View {
     init(viewModel: FolderLinkMediaDiscoveryViewModel)
 }
+
+@MainActor
+public protocol FolderLinkLogoutPolicyProtocol {
+    func shouldLogoutUponFolderLinkDismiss() -> Bool
+}
