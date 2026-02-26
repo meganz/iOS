@@ -13,18 +13,15 @@ struct PlaylistContentScreen: View {
     @StateObject private var viewModel: VideoPlaylistContentViewModel
     
     private let videoConfig: VideoConfig
-    @StateObject private var videoSelection: VideoSelection
     private let router: any VideoRevampRouting
     
     init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistContentViewModel,
         videoConfig: VideoConfig,
-        videoSelection: @autoclosure @escaping () -> VideoSelection,
         router: some VideoRevampRouting
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         self.videoConfig = videoConfig
-        _videoSelection = StateObject(wrappedValue: videoSelection())
         self.router = router
     }
     
@@ -42,7 +39,8 @@ struct PlaylistContentScreen: View {
             nodeUseCase: viewModel.nodeUseCase,
             remoteFeatureFlagUseCase: viewModel.remoteFeatureFlagUseCase,
             featureFlagProvider: viewModel.featureFlagProvider,
-            videoSelection: videoSelection,
+            videoSelection: viewModel.videoSelection,
+            isEditing: viewModel.isEditing,
             sortHeaderConfig: viewModel.sortHeaderConfig,
             sortOrder: $viewModel.sortOrder,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
@@ -97,6 +95,7 @@ struct PlaylistContentScreen: View {
         .sheet(isPresented: $viewModel.shouldShowShareLinkView) {
             AnyView(router.showShareLink(videoPlaylist: viewModel.videoPlaylistEntity))
         }
+        .ignoresSafeArea(edges: .bottom)
     }
     
     private var deleteVideoPlaylistAlertView: some View {
@@ -124,7 +123,8 @@ struct PlaylistContentView: View {
     private let searchText: String?
     private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
-    @StateObject private var videoSelection: VideoSelection
+    private let videoSelection: VideoSelection
+    private let isEditing: Bool
     @Binding var sortOrder: MEGAUIComponent.SortOrder
     let sortHeaderConfig: SortHeaderConfig
     private let onTapAddButton: () -> Void
@@ -142,7 +142,8 @@ struct PlaylistContentView: View {
         nodeUseCase: some NodeUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        videoSelection: @autoclosure @escaping () -> VideoSelection,
+        videoSelection: VideoSelection,
+        isEditing: Bool,
         sortHeaderConfig: SortHeaderConfig,
         sortOrder: Binding<MEGAUIComponent.SortOrder>,
         onTapAddButton: @escaping () -> Void
@@ -159,7 +160,8 @@ struct PlaylistContentView: View {
         self.searchText = searchText
         self.playlistType = playlistType
         self.router = router
-        _videoSelection = StateObject(wrappedValue: videoSelection())
+        self.videoSelection = videoSelection
+        self.isEditing = isEditing
         self.sortHeaderConfig = sortHeaderConfig
         self._sortOrder = sortOrder
         self.onTapAddButton = onTapAddButton
@@ -171,7 +173,7 @@ struct PlaylistContentView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if !videoSelection.editMode.isEditing {
+            if !isEditing {
                 PlaylistContentHeaderView(
                     viewState: viewState,
                     previewEntity: previewEntity,
@@ -179,7 +181,7 @@ struct PlaylistContentView: View {
                     onTapAddButton: onTapAddButton
                 )
             }
-            if isMediaRevampEnabled && !videoSelection.editMode.isEditing {
+            if isMediaRevampEnabled && !isEditing {
                 sortHeaderView()
                     .frame(height: 36)
             }
@@ -191,7 +193,7 @@ struct PlaylistContentView: View {
                 action: { onTapAddButton() }
             )
             .padding(TokenSpacing._5)
-            .opacity(isMediaRevampEnabled && !videoSelection.editMode.isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
+            .opacity(isMediaRevampEnabled && !isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
     }
@@ -253,7 +255,7 @@ struct PlaylistContentView: View {
             selection: videoSelection,
             router: router,
             viewType: .playlistContent(type: playlistType),
-            sectionTopInset: (isMediaRevampEnabled && !videoSelection.editMode.isEditing) ? 0 : TokenSpacing._5,
+            sectionTopInset: (isMediaRevampEnabled && !isEditing) ? 0 : TokenSpacing._5,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,

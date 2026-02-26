@@ -1105,7 +1105,8 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             accountStorageUseCase: MockAccountStorageUseCase(),
             videoRevampRouter: MockVideoRevampRouter(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            syncModel: syncModel
+            syncModel: syncModel,
+            videoSelection: VideoSelection()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (
@@ -1230,7 +1231,8 @@ struct VideoPlaylistContentViewModelTestSuite {
             accountStorageUseCase: accountStorageUseCase,
             videoRevampRouter: videoRevampRouter,
             featureFlagProvider: featureFlagProvider,
-            syncModel: syncModel
+            syncModel: syncModel,
+            videoSelection: VideoSelection()
         )
     }
 }
