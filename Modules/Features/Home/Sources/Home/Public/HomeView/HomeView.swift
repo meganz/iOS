@@ -1,8 +1,5 @@
 import Favourites
-import MEGAAppPresentation
-import MEGAAppSDKRepo
 import MEGADesignToken
-import MEGADomain
 import MEGAL10n
 import SwiftUI
 import UIKit
@@ -12,67 +9,24 @@ public struct HomeView: View {
         case shortcut(ShortcutType)
     }
 
-    public struct Dependency {
-        let homeAddMenuActionHandler: any HomeAddMenuActionHandling
-        let router: any HomeViewRouting
-        let fullNameHandler: @Sendable (CurrentUserSource) -> String
-        let userImageUseCase: any UserImageUseCaseProtocol
-        let avatarFetcher: @Sendable () async -> Image?
-        let fileSearchUseCase: any FilesSearchUseCaseProtocol
-        let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
-        let favouritesSearchResultsMapper: any FavouritesSearchResultsMapping
-        let downloadedNodesListener: any DownloadedNodesListening
-        let nodeUseCase: any NodeUseCaseProtocol
-        let favouritesContextAction: @MainActor (HandleEntity, UIButton) -> Void
-        let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
-        let favouritesNodesActionHandler: any NodesActionHandling
-        let onFavouritesEditingChanged: @MainActor (Bool) -> Void
-        let userBannerUseCase: any UserBannerUseCaseProtocol
-
-        public init(
-            homeAddMenuActionHandler: some HomeAddMenuActionHandling,
-            router: some HomeViewRouting,
-            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
-            userImageUseCase: some UserImageUseCaseProtocol,
-            avatarFetcher: @escaping @Sendable () async -> Image?,
-            fileSearchUseCase: some FilesSearchUseCaseProtocol,
-            sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-            favouritesSearchResultsMapper: some FavouritesSearchResultsMapping,
-            downloadedNodesListener: some DownloadedNodesListening,
-            nodeUseCase: some NodeUseCaseProtocol,
-            favouritesContextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-            favouritesNodesActionHandler: some NodesActionHandling,
-            onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
-            userBannerUseCase: some UserBannerUseCaseProtocol
-        ) {
-            self.homeAddMenuActionHandler = homeAddMenuActionHandler
-            self.router = router
-            self.fileSearchUseCase = fileSearchUseCase
-            self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
-            self.favouritesSearchResultsMapper = favouritesSearchResultsMapper
-            self.downloadedNodesListener = downloadedNodesListener
-            self.nodeUseCase = nodeUseCase
-            self.fullNameHandler = fullNameHandler
-            self.userImageUseCase = userImageUseCase
-            self.avatarFetcher = avatarFetcher
-            self.favouritesContextAction = favouritesContextAction
-            self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
-            self.favouritesNodesActionHandler = favouritesNodesActionHandler
-            self.onFavouritesEditingChanged = onFavouritesEditingChanged
-            self.userBannerUseCase = userBannerUseCase
-        }
-    }
-
     @StateObject var viewModel = HomeViewModel()
     @State private var navigationPath = NavigationPath()
+
+    @State private var searchText = "" // [IOS-11361]: Handle searching logic
     private let dependency: Dependency
 
     public init(dependency: Dependency) {
         self.dependency = dependency
     }
-
+    
     public var body: some View {
+        HomeSearchableView(searchBecameActive: $viewModel.isSearching) {
+            content
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+    }
+    
+    var content: some View {
         NavigationStack(path: $navigationPath) {
             listContent
                 .navigationTitle(Strings.Localizable.home)
@@ -92,8 +46,13 @@ public struct HomeView: View {
                 .onReceive(viewModel.$selectedFloatingButtonAction.compactMap { $0 }) {
                     dependency.homeAddMenuActionHandler.handleAction($0)
                 }
-                .background(HomeBackButtonConfigurator())
+                .overlay {
+                    if viewModel.isSearching {
+                        searchContent
+                    }
+                }
         }
+        .background(HomeBackButtonConfigurator())
         .tint(TokenColors.Icon.primary.swiftUI)
     }
 
@@ -135,7 +94,6 @@ public struct HomeView: View {
                             dependency.router.route(to: .shortcut(shortcutType))
                         }
                     }
-
                 case .accountDetails:
                     AccountDetailsWidgetView(dependency: .init(
                         fullNameHandler: dependency.fullNameHandler,
@@ -152,6 +110,14 @@ public struct HomeView: View {
                     }
                 }
             }
+        }
+    }
+
+    // [IOS-11361]: Handle searching
+    private var searchContent: some View {
+        ZStack {
+            Color.white
+            Text("Search result goes here")
         }
     }
 }
