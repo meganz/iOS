@@ -11,8 +11,8 @@ final class ReportIssueViewModel: ObservableObject {
     private var transfer: TransferEntity?
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
+    private static let minimumDetailCharacterCount = 30
     private(set) var reportAlertType: ReportIssueAlertTypeModel = .none
-    private var networkMonitorTask: Task<Void, Never>?
     
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
@@ -29,7 +29,9 @@ final class ReportIssueViewModel: ObservableObject {
     
     @Published var progress: Float = 0
     @Published var isUploadingLog = false
-    @Published var details = ""
+    @Published var details = "" {
+        didSet { isNotReachingMinimumCharacter = false }
+    }
     @Published var isConnected = true
     @Published var showingReportIssueActionSheet = false
     @Published var showingReportIssueAlert = false
@@ -52,11 +54,6 @@ final class ReportIssueViewModel: ObservableObject {
         self.supportUseCase = supportUseCase
         self.monitorUseCase = monitorUseCase
         self.accountUseCase = accountUseCase
-    }
-    
-    deinit {
-        networkMonitorTask?.cancel()
-        networkMonitorTask = nil
     }
     
     private func uploadLogFileIfNeeded() async {
@@ -129,6 +126,14 @@ final class ReportIssueViewModel: ObservableObject {
         return await messageViewModel.generateReportIssueMessage(message: message, filename: filename ?? "No log file")
     }
     
+    func sendReport() async {
+        guard details.count > Self.minimumDetailCharacterCount else {
+            isNotReachingMinimumCharacter = true
+            return
+        }
+        await createTicket()
+    }
+
     func createTicket() async {
         if isSendLogFileToggleOn && areLogsEnabled {
             await uploadLogFileIfNeeded()
@@ -203,14 +208,9 @@ final class ReportIssueViewModel: ObservableObject {
         }
     }
     
-    @MainActor
-    func monitorNetworkChanges() {
-        let connectionSequence = monitorUseCase.connectionSequence
-        
-        networkMonitorTask = Task { [weak self] in
-            for await isConnected in connectionSequence {
-                self?.isConnected = isConnected
-            }
+    func monitorNetworkChanges() async {
+        for await isConnected in monitorUseCase.connectionSequence {
+            self.isConnected = isConnected
         }
     }
 }

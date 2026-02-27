@@ -38,3 +38,5 @@ scripts/ReleaseScripts/Resources/cache.json
 
 SwiftPackages/
 derivedData/
+
+.claude

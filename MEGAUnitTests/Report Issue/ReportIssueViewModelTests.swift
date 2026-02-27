@@ -181,12 +181,12 @@ final class ReportIssueViewModelTests: XCTestCase {
             results.forEach { continuation.yield($0) }
             continuation.finish()
         }.eraseToAnyAsyncSequence()
-        
+
         let (sut, _) = makeSUT(connectionSequence: stream)
         sut.$isConnected.dropFirst().sink {
             XCTAssertEqual($0, results.removeFirst())
         }.store(in: &subscriptions)
-        sut.monitorNetworkChanges()
+        await sut.monitorNetworkChanges()
     }
     
     @MainActor

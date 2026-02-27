@@ -5,40 +5,40 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ReportIssueView: View {
-    @StateObject var viewModel: ReportIssueViewModel
-    
+    @StateObject private var viewModel: ReportIssueViewModel
+    private let noConnectionBannerViewModel = WarningBannerViewModel(warningType: .noInternetConnection)
+
+    init(viewModel: @autoclosure @escaping () -> ReportIssueViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 navigationBar
-                
+
                 if !viewModel.isConnected {
-                    WarningBannerView(viewModel: WarningBannerViewModel(warningType: .noInternetConnection))
+                    WarningBannerView(viewModel: noConnectionBannerViewModel)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                
+
                 SubheadlineTextView(text: Strings.Localizable.Help.ReportIssue.describe)
                     .padding()
-                
+
                 Spacer()
-                
+
                 TextEditorView(
-                    text: $viewModel.details
-                        .onChange({ _ in
-                            Task { @MainActor in
-                                viewModel.isNotReachingMinimumCharacter = false
-                            }
-                        }),
+                    text: $viewModel.details,
                     placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
                 )
-                
+
                 VStack(spacing: 0) {
                     ErrorView(
                         error: Strings.Localizable.Help.ReportIssue.MinCharacterNotReach.error
                     )
                     .frame(height: 38)
                     .opacity(viewModel.isNotReachingMinimumCharacter ? 1 : 0)
-                        
+
                     if viewModel.areLogsEnabled {
                         TextWithToggleView(text: Strings.Localizable.Help.ReportIssue.sendLogFile, toggle: $viewModel.isSendLogFileToggleOn
                         )
@@ -46,14 +46,14 @@ struct ReportIssueView: View {
                     }
                 }.background(TokenColors.Background.page.swiftUI)
             }
-            
+
             .background(TokenColors.Background.surface1.swiftUI)
             .blur(radius: viewModel.isUploadingLog ? 1 : 0)
             .allowsHitTesting(viewModel.isUploadingLog ? false : true)
             .task {
-                viewModel.monitorNetworkChanges()
+                await viewModel.monitorNetworkChanges()
             }
-            
+
             if viewModel.shouldShowUploadLogFileView {
                 UploadLogFileView(title: Strings.Localizable.Help.ReportIssue.uploadingLogFile,
                                   progress: viewModel.progress) {
@@ -61,33 +61,25 @@ struct ReportIssueView: View {
                 }
             }
         }
-        .alert(isPresented: $viewModel.showingReportIssueAlert) {
+        .alert(viewModel.reportIssueAlertData().title, isPresented: $viewModel.showingReportIssueAlert) {
             let alertData = viewModel.reportIssueAlertData()
-            if let secondaryButtonAlert = alertData.secondaryButtonTitle {
-                return Alert(title: Text(alertData.title),
-                             message: Text(alertData.message),
-                             primaryButton: .cancel(Text(alertData.primaryButtonTitle), action: {
-                    Task {
-                        await alertData.primaryButtonAction?()
-                    }
-                })
-                             , secondaryButton: .destructive(Text(secondaryButtonAlert), action: {
+            Button(alertData.primaryButtonTitle) {
+                Task {
+                    await alertData.primaryButtonAction?()
+                }
+            }
+            if let secondaryButtonTitle = alertData.secondaryButtonTitle {
+                Button(secondaryButtonTitle, role: .destructive) {
                     Task {
                         await alertData.secondaryButtonAction?()
                     }
-                }))
-            } else {
-                return Alert(title: Text(alertData.title),
-                             message: Text(alertData.message),
-                             dismissButton: .default(Text(alertData.primaryButtonTitle), action: {
-                    Task {
-                        await alertData.primaryButtonAction?()
-                    }
-                }))
+                }
             }
+        } message: {
+            Text(viewModel.reportIssueAlertData().message)
         }
     }
-    
+
     private var navigationBar: some View {
         NavigationBarView(leading: {
             if #available(iOS 26.0, *) {
@@ -107,33 +99,26 @@ struct ReportIssueView: View {
             NavigationTitleView(title: Strings.Localizable.Help.ReportIssue.title)
         }, backgroundColor: TokenColors.Background.surface1.swiftUI)
     }
-    
+
     private var leftNavigationButton: some View {
         Button(Strings.Localizable.cancel) {
             viewModel.showReportIssueActionSheetIfNeeded()
         }
-        .accentColor(TokenColors.Text.primary.swiftUI)
-        .actionSheet(isPresented: $viewModel.showingReportIssueActionSheet) {
-            ActionSheet(title: Text(""), buttons: [
-                .destructive(Text(Strings.Localizable.Help.ReportIssue.discardReport)) {
-                    viewModel.dismissReport()
-                },
-                .cancel()
-            ])
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        .confirmationDialog("", isPresented: $viewModel.showingReportIssueActionSheet) {
+            Button(Strings.Localizable.Help.ReportIssue.discardReport, role: .destructive) {
+                viewModel.dismissReport()
+            }
         }
     }
-    
+
     private var rightNavigationBarButton: some View {
         Button(Strings.Localizable.send) {
-            guard viewModel.details.count > 10 else {
-                viewModel.isNotReachingMinimumCharacter = true
-                return
-            }
             Task {
-                await viewModel.createTicket()
+                await viewModel.sendReport()
             }
         }
-        .accentColor(TokenColors.Text.primary.swiftUI)
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
         .font(.body.bold())
         .disabled(viewModel.shouldDisableSendButton)
     }
