@@ -20,6 +20,8 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var labelImageView: UIImageView!
     @IBOutlet weak var favouriteView: UIView!
     @IBOutlet weak var favouriteImageView: UIImageView!
+    @IBOutlet weak var linkView: UIView!
+    @IBOutlet weak var linkImageView: UIImageView!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var permissionsButton: UIButton!
     @IBOutlet weak var infoButton: UIButton!
@@ -58,6 +60,8 @@ final class SharedItemsTableViewCell: UITableViewCell {
     private func configureImages() {
         contactVerifiedImageView.image = MEGAAssets.UIImage.image(named: "contactVerified")
         favouriteImageView.image = MEGAAssets.UIImage.image(named: "favouriteSmall")
+        linkImageView.image = MEGAAssets.UIImage.image(named: "linked")?.withRenderingMode(.alwaysTemplate)
+        linkImageView.tintColor = TokenColors.Icon.secondary
         permissionsButton.setImage(MEGAAssets.UIImage.image(named: "readPermissions"), for: .normal)
         infoButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .normal)
         infoButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .selected)

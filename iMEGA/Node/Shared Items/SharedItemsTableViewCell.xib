@@ -107,6 +107,23 @@
                                     <constraint firstItem="coL-3R-HLc" firstAttribute="centerX" secondItem="ybZ-tz-sPs" secondAttribute="centerX" id="tJs-d7-POW"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnk-Vw-1Xa">
+                                <rect key="frame" x="67" y="0.0" width="12" height="50"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linked" translatesAutoresizingMaskIntoConstraints="NO" id="lnk-Iv-2Xb">
+                                        <rect key="frame" x="0.0" y="19" width="12" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="12" id="lnk-W1-3Xc"/>
+                                            <constraint firstAttribute="height" constant="12" id="lnk-H1-4Xd"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="lnk-Iv-2Xb" firstAttribute="centerX" secondItem="lnk-Vw-1Xa" secondAttribute="centerX" id="lnk-Cx-5Xe"/>
+                                    <constraint firstItem="lnk-Iv-2Xb" firstAttribute="centerY" secondItem="lnk-Vw-1Xa" secondAttribute="centerY" id="lnk-Cy-6Xf"/>
+                                    <constraint firstAttribute="width" constant="12" id="lnk-Wd-7Xg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Dw6-9J-u3t" userLabel="Details Stack View">
@@ -208,6 +225,8 @@
                 <outlet property="infoLabel" destination="7Pq-NN-leh" id="zMz-hS-d0i"/>
                 <outlet property="labelImageView" destination="vnd-qw-tea" id="5dJ-gJ-l9c"/>
                 <outlet property="labelView" destination="QUK-4N-Nzs" id="DFB-cw-cYu"/>
+                <outlet property="linkImageView" destination="lnk-Iv-2Xb" id="lnk-OL-8Xh"/>
+                <outlet property="linkView" destination="lnk-Vw-1Xa" id="lnk-OV-9Xi"/>
                 <outlet property="nameLabel" destination="pZi-yf-YO1" id="ctD-oH-Djr"/>
                 <outlet property="permissionsButton" destination="KvU-63-1JG" id="LNA-yx-cwY"/>
                 <outlet property="tagsContainerView" destination="jiN-J5-mxu" id="UyG-Ux-vmM"/>
@@ -221,6 +240,7 @@
     <resources>
         <image name="contactVerified" width="14" height="14"/>
         <image name="favouriteSmall" width="12.5" height="12"/>
+        <image name="linked" width="12" height="12"/>
         <image name="moreList" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>
         <systemColor name="tableCellGroupedBackgroundColor">

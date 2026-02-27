@@ -569,6 +569,7 @@
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
         cell.labelImageView.image = [UIImage megaImageWithNamed:labelString];
     }
+    cell.linkView.hidden = ![node isExported];
 }
 
 - (void)startEditingModeAtIndex:(NSIndexPath *)indexPath {
