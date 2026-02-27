@@ -434,10 +434,16 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
-        case NewEmailTextFieldTag:
+        case NewEmailTextFieldTag: {
             [self.theNewEmailInputView setErrorState:NO withText:LocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
             
+            NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+            if (newText.length > 190) {
+                return NO;
+            }
+            
             break;
+        }
             
         case NewPasswordTextFieldTag:
             [self.theNewPasswordView setErrorState:NO withText:LocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
