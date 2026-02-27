@@ -367,7 +367,7 @@
     boolValue = boolValue && [MEGAReachabilityManager isReachable];
     
     MEGANode *firstNode = self.selectedNodesArray.firstObject;
-    self.toolBarMoveBarButtonItem.enabled = self.browserAction == BrowserActionMove && self.parentNode.handle != firstNode.parentHandle;
+    self.toolBarMoveBarButtonItem.enabled = boolValue && self.browserAction == BrowserActionMove && self.parentNode.handle != firstNode.parentHandle;
     self.toolBarCopyBarButtonItem.enabled = boolValue;
     self.toolBarNewFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
