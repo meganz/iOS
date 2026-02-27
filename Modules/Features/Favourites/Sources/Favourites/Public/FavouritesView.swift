@@ -14,10 +14,10 @@ public struct FavouritesView: View {
         let searchResultsMapper: any FavouritesSearchResultsMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
-        let contextAction: @MainActor (HandleEntity, UIButton) -> Void
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodesActionHandler: any NodesActionHandling
         let onEditingChanged: @MainActor (Bool) -> Void
+        let nodeSelectionHandler: @MainActor (HandleEntity, [HandleEntity]) -> Void
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -25,20 +25,20 @@ public struct FavouritesView: View {
             searchResultsMapper: some FavouritesSearchResultsMapping,
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
-            contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
-            onEditingChanged: @escaping @MainActor (Bool) -> Void
+            onEditingChanged: @escaping @MainActor (Bool) -> Void,
+            nodeSelectionHandler: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
             self.searchResultsMapper = searchResultsMapper
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
-            self.contextAction = contextAction
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.nodesActionHandler = nodesActionHandler
             self.onEditingChanged = onEditingChanged
+            self.nodeSelectionHandler = nodeSelectionHandler
         }
     }
 
@@ -58,7 +58,6 @@ public struct FavouritesView: View {
                             nodeUseCase: dependency.nodeUseCase
                         )
                     ),
-                    contextAction: dependency.contextAction,
                     sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
                 )
             )
@@ -120,6 +119,11 @@ public struct FavouritesView: View {
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
             viewModel.exitEditMode()
+        }
+        .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
+            dependency.nodeSelectionHandler(selection.result.id, selection.siblings())
+        }.onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
+            dependency.nodesActionHandler.handle(action: action)
         }
     }
 

@@ -58,12 +58,14 @@ extension HomeScreenFactory {
             favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
-            favouritesContextAction: makeFavouritesContextAction(navigationController: navigationController),
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
-            }
+            },
+            favouritesNodeSelectionAction: makeFavouritesNodeSelectionAction(
+                navigationController: navigationController
+            )
         )
         
         let homeView = HomeView(dependency: dependency)
@@ -126,32 +128,27 @@ extension HomeScreenFactory {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
     }
 
-    private func makeFavouritesContextAction(
+    private func makeFavouritesNodeSelectionAction(
         navigationController: UINavigationController
-    ) -> @MainActor (HandleEntity, UIButton) -> Void {
-        { [weak navigationController] handle, button in
+    ) -> @MainActor (HandleEntity, [HandleEntity]) -> Void {
+        { [weak navigationController, backupsUseCase, nodeUseCase] handle, siblings in
             guard let navigationController else { return }
-            let backupsUseCase = BackupsUseCase(
-                backupsRepository: BackupsRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
+            let router = HomeSearchResultRouter(
+                navigationController: navigationController,
+                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                    viewController: navigationController,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+                ),
+                backupsUseCase: backupsUseCase,
+                nodeUseCase: nodeUseCase
             )
-            let isBackupNode = backupsUseCase.isBackupNodeHandle(handle)
-            let delegate = NodeActionViewControllerGenericDelegate(
-                viewController: navigationController,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
-            )
-            guard let nodeActionViewController = NodeActionViewController(
-                node: handle,
-                delegate: delegate,
+            router.didTapNode(
+                nodeHandle: handle,
+                allNodeHandles: siblings.isEmpty ? nil : siblings,
                 displayMode: .cloudDrive,
-                isIncoming: false,
-                isBackupNode: isBackupNode,
                 isFromSharedItem: false,
-                sender: button
-            ) else {
-                return
-            }
-            navigationController.present(nodeActionViewController, animated: true)
+                warningViewModel: nil
+            )
         }
     }
 

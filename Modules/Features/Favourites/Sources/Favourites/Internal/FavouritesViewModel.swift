@@ -12,16 +12,13 @@ import UIKit
 package final class FavouritesViewModel: ObservableObject {
     package struct Dependency {
         let resultsProvider: any SearchResultsProviding
-        let contextAction: @MainActor (HandleEntity, UIButton) -> Void
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
 
         package init(
             resultsProvider: any SearchResultsProviding,
-            contextAction: @escaping @MainActor (HandleEntity, UIButton) -> Void,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
         ) {
             self.resultsProvider = resultsProvider
-            self.contextAction = contextAction
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         }
     }
@@ -34,12 +31,16 @@ package final class FavouritesViewModel: ObservableObject {
     @Published package var bottomBarDisabled: Bool = true
     @Published package var searchText: String = ""
     @Published package var searchBecameActive: Bool = false
+    @Published package var selection: SearchResultSelection?
+    @Published package var nodeAction: NodeAction?
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
-            selection: { _ in },
+            selection: { [weak self] selection in
+                self?.selection = selection
+            },
             context: { [weak self] result, button in
-                self?.dependency.contextAction(result.id, button)
+                self?.nodeAction = .init(handle: result.id, sender: button)
             },
             chipTapped: { _, _ in },
             sortingOrder: { [dependency] in

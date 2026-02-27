@@ -69,10 +69,10 @@ public struct HomeView: View {
                         searchResultsMapper: dependency.favouritesSearchResultsMapper,
                         downloadedNodesListener: dependency.downloadedNodesListener,
                         nodeUseCase: dependency.nodeUseCase,
-                        contextAction: dependency.favouritesContextAction,
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
-                        onEditingChanged: dependency.onFavouritesEditingChanged
+                        onEditingChanged: dependency.onFavouritesEditingChanged,
+                        nodeSelectionHandler: dependency.favouritesNodeSelectionAction
                     )
                 )
             case .offline, .videos:

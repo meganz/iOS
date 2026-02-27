@@ -1,11 +1,13 @@
-@testable import MEGAUIComponent
-@testable import Search
 import Favourites
 import MEGAAppPresentation
+import MEGADomain
 import MEGADomainMock
+@testable import MEGAUIComponent
+@testable import Search
 import SearchMock
 import SwiftUI
 import Testing
+import UIKit
 
 @MainActor
 struct FavouritesViewModelTests {
@@ -83,6 +85,27 @@ struct FavouritesViewModelTests {
     }
 
     @Test
+    func editingChangedTrueViaBridgeSetsEditModeToActive() async throws {
+        let sut = makeSUT()
+
+        sut.searchResultsContainerViewModel.bridge.editingChanged(true)
+
+        try await waitForCondition { sut.editMode == .active }
+        #expect(sut.editMode == .active)
+    }
+
+    @Test
+    func editingChangedFalseViaBridgeSetsEditModeToInactive() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+
+        sut.searchResultsContainerViewModel.bridge.editingChanged(false)
+
+        try await waitForCondition { sut.editMode == .inactive }
+        #expect(sut.editMode == .inactive)
+    }
+
+    @Test
     func changingEditModeToInactiveClearsSelection() async throws {
         let sut = makeSUT()
         sut.editMode = .active
@@ -112,6 +135,16 @@ struct FavouritesViewModelTests {
 
         // This test verifies the method is called without error
         // Actual selection behavior is tested in SearchResultsContainerViewModel tests
+    }
+
+    @Test
+    func selectionChangedViaBridgeUpdatesSelectedNodeHandles() async throws {
+        let sut = makeSUT()
+
+        sut.searchResultsContainerViewModel.bridge.selectionChanged([10, 20, 30])
+
+        try await waitForCondition { !sut.selectedNodeHandles.isEmpty }
+        #expect(sut.selectedNodeHandles == [10, 20, 30])
     }
 
     // MARK: - Bottom bar state
@@ -145,6 +178,18 @@ struct FavouritesViewModelTests {
 
         try await waitForCondition { sut.bottomBarDisabled == false }
         #expect(sut.bottomBarDisabled == false)
+    }
+
+    @Test
+    func exitingEditModeResetsBottomBarAction() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+        sut.bottomBarAction = .download
+
+        sut.editMode = .inactive
+
+        try await waitForCondition { sut.bottomBarAction == nil }
+        #expect(sut.bottomBarAction == nil)
     }
 
     // MARK: - Bottom bar actions
@@ -239,12 +284,49 @@ struct FavouritesViewModelTests {
         #expect(handles == [10, 11])
     }
 
+    // MARK: - Node action (context menu)
+
+    @Test
+    func contextActionSetsNodeActionWithCorrectHandle() async throws {
+        let sut = makeSUT()
+        let button = UIButton()
+        let result = SearchResult.resultWith(id: 99)
+
+        sut.searchResultsContainerViewModel.bridge.context(result, button)
+
+        try await waitForCondition { sut.nodeAction != nil }
+        #expect(sut.nodeAction?.handle == 99)
+        #expect(sut.nodeAction?.sender === button)
+    }
+
     // MARK: - View mode
 
     @Test
     func initialViewModeIsList() {
         let sut = makeSUT()
 
+        #expect(sut.viewMode == .list)
+    }
+
+    @Test
+    func viewModeChangedToGridViaBridgeUpdatesViewMode() async throws {
+        let sut = makeSUT()
+
+        sut.searchResultsContainerViewModel.bridge.viewModeChanged(.grid)
+
+        try await waitForCondition { sut.viewMode == .grid }
+        #expect(sut.viewMode == .grid)
+    }
+
+    @Test
+    func viewModeChangedBackToListViaBridgeUpdatesViewMode() async throws {
+        let sut = makeSUT()
+        sut.searchResultsContainerViewModel.bridge.viewModeChanged(.grid)
+        try await waitForCondition { sut.viewMode == .grid }
+
+        sut.searchResultsContainerViewModel.bridge.viewModeChanged(.list)
+
+        try await waitForCondition { sut.viewMode == .list }
         #expect(sut.viewMode == .list)
     }
 
@@ -317,6 +399,20 @@ struct FavouritesViewModelTests {
         #expect(sut.searchBecameActive == false)
     }
 
+    // MARK: - Node selection
+
+    @Test
+    func tappingNodeSetsSelectionWithCorrectHandleAndSiblings() async throws {
+        let sut = makeSUT()
+
+        let selection = SearchResultSelection.resultSelectionWith(id: 42, title: "test", siblings: [1, 2, 3])
+        sut.searchResultsContainerViewModel.bridge.selection(selection)
+
+        try await waitForCondition { sut.selection != nil }
+        #expect(sut.selection?.result.id == 42)
+        #expect(sut.selection?.siblings() == [1, 2, 3])
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -325,7 +421,6 @@ struct FavouritesViewModelTests {
         FavouritesViewModel(
             dependency: .init(
                 resultsProvider: MockSearchResultsProviding(),
-                contextAction: { _, _ in },
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
             )
         )

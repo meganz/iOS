@@ -39,6 +39,32 @@ struct FavouritesNodesActionHandler: NodesActionHandling {
         }
     }
 
+    func handle(action: MEGAAppPresentation.NodeAction) {
+        guard let navigationController else { return }
+        let backupsUseCase = BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+        let isBackupNode = backupsUseCase.isBackupNodeHandle(action.handle)
+        let delegate = NodeActionViewControllerGenericDelegate(
+            viewController: navigationController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+        )
+        guard let nodeActionViewController = NodeActionViewController(
+            node: action.handle,
+            delegate: delegate,
+            displayMode: .cloudDrive,
+            isIncoming: false,
+            isBackupNode: isBackupNode,
+            isFromSharedItem: false,
+            sender: action.sender
+        ) else {
+            return
+        }
+        
+        navigationController.present(nodeActionViewController, animated: true)
+    }
+
     private func download(nodeHandles: Set<HandleEntity>) {
         guard let navigationController, let nodes = nodes(from: nodeHandles) else { return }
 
