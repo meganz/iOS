@@ -17,28 +17,15 @@ struct MediaTabView: View {
     @State private var orientation = UIDevice.current.orientation
     
     var body: some View {
-        GeometryReader { geometry in
-            tabs
-                .overlay {
-                    if viewModel.isSearching {
-                        VisualMediaSearchResultsView(
-                            viewModel: viewModel.visualMediaSearchResultsViewModel
-                        )
-                    }
+        tabs
+            .ignoresSafeArea(.container, edges: isLiquidGlassSupported ? .bottom : [])
+            .overlay {
+                if viewModel.isSearching {
+                    VisualMediaSearchResultsView(
+                        viewModel: viewModel.visualMediaSearchResultsViewModel
+                    )
                 }
-                .onChange(of: geometry.safeAreaInsets) { _ in
-                    guard isLiquidGlassSupported else { return }
-                    viewModel.triggerLayoutRefresh()
-                }
-        }
-        .onRotate { newOrientation in
-            let isOrientationChanged = orientation.isLandscape != newOrientation.isLandscape
-            orientation = newOrientation
-
-            if isOrientationChanged, isLiquidGlassSupported {
-                viewModel.triggerLayoutRefresh()
             }
-        }
     }
     
     private var tabs: some View {
@@ -54,17 +41,14 @@ struct MediaTabView: View {
                 get: { viewModel.editMode == .active },
                 set: { _ in }
             ),
-            ignoresBottomContainerSafeArea: isLiquidGlassSupported
+            ignoresBottomContainerSafeArea: isLiquidGlassSupported,
+            disableScrollViewInsets: isLiquidGlassSupported
         ) { tab in
             contentView(for: tab)
         }
-        .id(viewModel.layoutRevision)
         .environment(\.editMode, $viewModel.editMode)
         .onAppear {
             viewModel.onViewAppear()
-            if isLiquidGlassSupported {
-                viewModel.triggerLayoutRefresh()
-            }
         }
     }
     
