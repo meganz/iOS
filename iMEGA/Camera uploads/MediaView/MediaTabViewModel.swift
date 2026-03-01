@@ -19,13 +19,6 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             tracker.trackTabSelectedEvent(for: selectedTab)
         }
     }
-    
-    /// Used to force rebuild TabView when layout changes (e.g., ads view appears/disappears)
-    @Published var layoutRevision: UUID = UUID()
-    
-    func triggerLayoutRefresh() {
-        layoutRevision = UUID()
-    }
 
     @Published var editMode: EditMode = .inactive {
         didSet {

@@ -23,6 +23,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://github.com/siteline/swiftui-introspect", exact: "26.0.0"),
         .package(path: "../MEGAUI"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
@@ -34,6 +35,7 @@ let package = Package(
         .target(
             name: "MEGASwiftUI",
             dependencies: [
+                .product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
                 "MEGAAssets",
                 "MEGAUI",
                 "MEGAAppPresentation",

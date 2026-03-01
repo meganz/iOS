@@ -63,6 +63,8 @@ final class MediaTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = TokenColors.Background.page
+
         setupContentView()
         setupNavigationBar()
         setupNavigationBarObservers()
@@ -74,27 +76,27 @@ final class MediaTabViewController: UIViewController {
         super.viewDidDisappear(animated)
         hideToolbar()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Fixes TabView layout issues caused by AdsSlotView loading ads at the bottom.
-        // This issue only occurs in iOS 26 Liquid Glass mode.
-        refreshLayoutIfNeeded()
-    }
-
-    private func refreshLayoutIfNeeded() {
-        guard #available(iOS 26.0, *) else { return }
-        viewModel.layoutRevision = UUID()
-    }
 
     // MARK: - Content View Setup
 
     private func setupContentView() {
         let rootView = MediaTabView(viewModel: viewModel)
         let hosting = UIHostingController(rootView: rootView)
+        hosting.view.backgroundColor = TokenColors.Background.page
         hostingController = hosting
-
-        add(hosting, container: view, animate: false)
+        
+        hosting.sizingOptions = []
+        
+        addChild(hosting)
+        hosting.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hosting.view)
+        NSLayoutConstraint.activate([
+            hosting.view.topAnchor.constraint(equalTo: view.topAnchor),
+            hosting.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hosting.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hosting.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        hosting.didMove(toParent: self)
     }
 
     // MARK: - Navigation Bar Setup

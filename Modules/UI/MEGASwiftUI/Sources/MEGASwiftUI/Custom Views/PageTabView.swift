@@ -1,4 +1,5 @@
 import SwiftUI
+@_spi(Advanced) import SwiftUIIntrospect
 
 public struct PageTabItem<ID: Hashable & Identifiable>: Identifiable {
     public let id: ID
@@ -21,6 +22,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
     private let backgroundColor: Color
     @Binding private var isTabSwitchingDisabled: Bool
     private let ignoresBottomContainerSafeArea: Bool
+    private let disableScrollViewInsets: Bool
     @ViewBuilder private let content: (ID) -> Content
 
     public init(
@@ -32,6 +34,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         backgroundColor: Color,
         isTabSwitchingDisabled: Binding<Bool>,
         ignoresBottomContainerSafeArea: Bool = false,
+        disableScrollViewInsets: Bool = false,
         @ViewBuilder content: @escaping (ID) -> Content
     ) {
         self.tabs = tabs
@@ -42,6 +45,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         self.backgroundColor = backgroundColor
         self._isTabSwitchingDisabled = isTabSwitchingDisabled
         self.ignoresBottomContainerSafeArea = ignoresBottomContainerSafeArea
+        self.disableScrollViewInsets = disableScrollViewInsets
         self.content = content
     }
     
@@ -54,6 +58,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
         backgroundColor: Color,
         isTabSwitchingDisabled: Bool = false,
         ignoresBottomContainerSafeArea: Bool = false,
+        disableScrollViewInsets: Bool = false,
         @ViewBuilder content: @escaping (ID) -> Content
     ) {
         self.init(
@@ -65,6 +70,7 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
             backgroundColor: backgroundColor,
             isTabSwitchingDisabled: .constant(isTabSwitchingDisabled),
             ignoresBottomContainerSafeArea: ignoresBottomContainerSafeArea,
+            disableScrollViewInsets: disableScrollViewInsets,
             content: content
         )
     }
@@ -82,6 +88,10 @@ public struct PageTabView<ID: Hashable & Identifiable, Content: View>: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .introspect(.scrollView, on: .iOS(.v26...)) { scrollView in
+                guard disableScrollViewInsets, scrollView.isPagingEnabled else { return }
+                scrollView.contentInsetAdjustmentBehavior = .never
+            }
         }
         .ignoresSafeArea(.container, edges: ignoresBottomContainerSafeArea ? .bottom : [])
     }
