@@ -67,10 +67,8 @@ extension HomeScreenFactory {
                 navigationController: navigationController
             )
         )
-        
-        let homeView = HomeView(dependency: dependency)
 
-        let hostingController = HomeViewHostingController(rootView: homeView)
+        let hostingController = HomeViewHostingController(dependency: dependency)
 
         navigationController.viewControllers = [hostingController]
 
