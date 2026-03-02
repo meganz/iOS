@@ -9,19 +9,22 @@ struct FavouritesNodesActionHandler: NodesActionHandling {
     private let favouriteUseCase: any NodeFavouriteActionUseCaseProtocol
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let sdk: MEGASdk
+    private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
 
     init(
         navigationController: UINavigationController,
         nodeUseCase: some NodeUseCaseProtocol,
         favouriteUseCase: any NodeFavouriteActionUseCaseProtocol,
         backupsUseCase: some BackupsUseCaseProtocol,
-        sdk: MEGASdk
+        sdk: MEGASdk,
+        nodeActionListener: @escaping (MegaNodeActionType?, [MEGANode]) -> Void
     ) {
         self.navigationController = navigationController
         self.nodeUseCase = nodeUseCase
         self.favouriteUseCase = favouriteUseCase
         self.backupsUseCase = backupsUseCase
         self.sdk = sdk
+        self.nodeActionListener = nodeActionListener
     }
 
     func handle(action: NodesAction) {
@@ -125,7 +128,8 @@ struct FavouritesNodesActionHandler: NodesActionHandling {
 
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+            nodeActionListener: nodeActionListener
         )
         let nodeActionsViewController = NodeActionViewController(
             nodes: nodes.compactMap { $0.toMEGANode(in: sdk) },

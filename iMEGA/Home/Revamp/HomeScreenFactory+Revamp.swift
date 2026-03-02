@@ -1,3 +1,4 @@
+import Combine
 import Favourites
 import Home
 import MEGAAppPresentation
@@ -35,12 +36,14 @@ extension HomeScreenFactory {
         let fullNameHandler: @Sendable (CurrentUserSource) -> String = { $0.currentUser?.mnz_fullName ?? "" }
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
 
+        let nodeActionHandledSubject = PassthroughSubject<Void, Never>()
         let favouritesNodesActionHandler = FavouritesNodesActionHandler(
             navigationController: navigationController,
             nodeUseCase: nodeUseCase,
             favouriteUseCase: favouriteUseCase,
             backupsUseCase: backupsUseCase,
-            sdk: MEGASdk.sharedSdk
+            sdk: MEGASdk.sharedSdk,
+            nodeActionListener: { _, _ in nodeActionHandledSubject.send() }
         )
 
         let router = HomeViewRouter(navigationController: navigationController)
@@ -65,7 +68,8 @@ extension HomeScreenFactory {
             },
             favouritesNodeSelectionAction: makeFavouritesNodeSelectionAction(
                 navigationController: navigationController
-            )
+            ),
+            onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher()
         )
 
         let hostingController = HomeViewHostingController(dependency: dependency)

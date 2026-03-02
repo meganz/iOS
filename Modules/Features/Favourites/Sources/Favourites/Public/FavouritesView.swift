@@ -1,3 +1,4 @@
+import Combine
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
@@ -18,6 +19,7 @@ public struct FavouritesView: View {
         let nodesActionHandler: any NodesActionHandling
         let onEditingChanged: @MainActor (Bool) -> Void
         let nodeSelectionHandler: @MainActor (HandleEntity, [HandleEntity]) -> Void
+        let onNodeActionPerformed: AnyPublisher<Void, Never>
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -28,7 +30,8 @@ public struct FavouritesView: View {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
             onEditingChanged: @escaping @MainActor (Bool) -> Void,
-            nodeSelectionHandler: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void
+            nodeSelectionHandler: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
+            onNodeActionPerformed: AnyPublisher<Void, Never>
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -39,6 +42,7 @@ public struct FavouritesView: View {
             self.nodesActionHandler = nodesActionHandler
             self.onEditingChanged = onEditingChanged
             self.nodeSelectionHandler = nodeSelectionHandler
+            self.onNodeActionPerformed = onNodeActionPerformed
         }
     }
 
@@ -118,12 +122,15 @@ public struct FavouritesView: View {
         }
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
-            viewModel.exitEditMode()
         }
         .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
             dependency.nodeSelectionHandler(selection.result.id, selection.siblings())
-        }.onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
+        }
+        .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
+        }
+        .onReceive(dependency.onNodeActionPerformed) { _ in
+            viewModel.exitEditMode()
         }
     }
 

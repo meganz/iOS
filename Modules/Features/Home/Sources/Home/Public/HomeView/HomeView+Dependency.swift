@@ -1,3 +1,4 @@
+import Combine
 import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -19,6 +20,7 @@ extension HomeView {
         let favouritesNodesActionHandler: any NodesActionHandling
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
         let favouritesNodeSelectionAction: @MainActor (HandleEntity, [HandleEntity]) -> Void
+        let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -33,7 +35,8 @@ extension HomeView {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
-            favouritesNodeSelectionAction: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void
+            favouritesNodeSelectionAction: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
+            onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -48,6 +51,7 @@ extension HomeView {
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
+            self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed
         }
     }
 }

@@ -114,6 +114,7 @@ package final class FavouritesViewModel: ObservableObject {
         listenToSelectionChanges()
         listenToSearchUpdates()
         listenToSearchActiveChanges()
+        listenToNodesActionChanges()
     }
 
     package func exitEditMode() {
@@ -221,6 +222,16 @@ package final class FavouritesViewModel: ObservableObject {
             .dropFirst()
             .sink { [searchResultsContainerViewModel] isActive in
                 searchResultsContainerViewModel.searchActiveDidChange(isActive)
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func listenToNodesActionChanges() {
+        $nodesAction
+            .compactMap { $0 }
+            .sink { [weak self] action in
+                if case .more = action { return }
+                self?.exitEditMode()
             }
             .store(in: &subscriptions)
     }

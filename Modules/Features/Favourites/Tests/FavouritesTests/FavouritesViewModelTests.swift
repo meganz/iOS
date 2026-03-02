@@ -180,18 +180,6 @@ struct FavouritesViewModelTests {
         #expect(sut.bottomBarDisabled == false)
     }
 
-    @Test
-    func exitingEditModeResetsBottomBarAction() async throws {
-        let sut = makeSUT()
-        sut.editMode = .active
-        sut.bottomBarAction = .download
-
-        sut.editMode = .inactive
-
-        try await waitForCondition { sut.bottomBarAction == nil }
-        #expect(sut.bottomBarAction == nil)
-    }
-
     // MARK: - Bottom bar actions
 
     @Test
@@ -282,6 +270,37 @@ struct FavouritesViewModelTests {
             return
         }
         #expect(handles == [10, 11])
+    }
+
+    // MARK: - Nodes action auto-exits edit mode
+
+    @Test(arguments: [BottomBarAction.download, .removeFavourite, .shareLink, .moveToRubbishBin])
+    func nonMoreBottomBarActionsExitEditMode(_ action: BottomBarAction) async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        sut.bottomBarAction = action
+
+        try await waitForCondition { sut.editMode == .inactive }
+        #expect(sut.editMode == .inactive)
+    }
+
+    @Test
+    func moreBottomBarActionDoesNotExitEditMode() async throws {
+        let sut = makeSUT()
+        sut.editMode = .active
+        sut.selectedNodeHandles = [1, 2, 3]
+
+        sut.bottomBarAction = .more
+
+        // Wait for nodesAction to be set so we know the action was processed
+        try await waitForCondition {
+            if case .more = sut.nodesAction { return true }
+            return false
+        }
+        // Edit mode stays active — it exits at the View layer via onNodeActionPerformed
+        #expect(sut.editMode == .active)
     }
 
     // MARK: - Node action (context menu)

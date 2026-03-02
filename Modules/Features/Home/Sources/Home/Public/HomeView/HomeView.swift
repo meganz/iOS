@@ -72,7 +72,8 @@ public struct HomeView: View {
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         onEditingChanged: dependency.onFavouritesEditingChanged,
-                        nodeSelectionHandler: dependency.favouritesNodeSelectionAction
+                        nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
+                        onNodeActionPerformed: dependency.onFavouritesNodeActionPerformed
                     )
                 )
             case .offline:
