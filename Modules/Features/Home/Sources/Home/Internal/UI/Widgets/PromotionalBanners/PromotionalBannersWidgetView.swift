@@ -97,7 +97,7 @@ private struct PromotionalBanner: View {
                         .resizable()
                         .scaledToFill()
                 } else {
-                    TokenColors.Background.inverse.swiftUI
+                    TokenColors.Background.surfaceInverseAccent.swiftUI
                 }
 
             }
@@ -144,9 +144,8 @@ private struct PromotionalBanner: View {
                         .resizable()
                         .scaledToFill()
                 } else {
-                    TokenColors.Background.inverse.swiftUI
+                    Color.clear
                 }
-
             }
             .frame(width: bannerImageSize, height: bannerImageSize)
             .clipped()
