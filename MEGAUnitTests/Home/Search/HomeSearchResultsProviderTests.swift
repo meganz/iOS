@@ -125,8 +125,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 nodeUseCase: nodeDataUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 mediaUseCase: mediaUseCase,
-                nodeActions: NodeActions.mock(),
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+                nodeActions: NodeActions.mock()
             )
             
             sut = HomeSearchResultsProvider(
@@ -142,7 +141,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                     calendar: .testCalendar
                 ),
                 sdk: sdk,
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
                 isFromSharedItem: isFromSharedItem
             )
             

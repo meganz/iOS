@@ -423,10 +423,10 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         hiddenNodesFeatureFlagActive: Bool = false
     ) -> GetCollectionsLinkViewModel {
-        GetCollectionsLinkViewModel(setEntities: setEntities,
-                               shareCollectionUseCase: shareCollectionUseCase,
-                               sectionViewModels: sectionViewModels,
-                               tracker: tracker,
-                               remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
+        GetCollectionsLinkViewModel(
+            setEntities: setEntities,
+            shareCollectionUseCase: shareCollectionUseCase,
+            sectionViewModels: sectionViewModels,
+            tracker: tracker)
     }
 }

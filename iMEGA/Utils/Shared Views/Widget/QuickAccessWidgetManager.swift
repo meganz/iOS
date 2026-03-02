@@ -40,8 +40,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             userUpdateRepository: UserUpdateRepository.newRepo,
             requestStatesRepository: RequestStatesRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo,
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+            nodeRepository: NodeRepository.newRepo)
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
         self.favouriteNodesUseCase = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
@@ -53,8 +52,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
                         repository: AccountRepository.newRepo)
                 ),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }))
+                    repo: UserAttributeRepository.newRepo)))
         self.widgetCentre = WidgetCenter.shared
         super.init()
     }
@@ -66,8 +64,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             userUpdateRepository: UserUpdateRepository.newRepo,
             requestStatesRepository: RequestStatesRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo,
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+            nodeRepository: NodeRepository.newRepo),
         favouriteItemsUseCase: some FavouriteItemsUseCaseProtocol = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance())),
         favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(
             repo: FavouriteNodesRepository.newRepo,
@@ -79,8 +76,7 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
                         repository: AccountRepository.newRepo)
                 ),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })),
+                    repo: UserAttributeRepository.newRepo))),
         widgetCentre: some WidgetCentreProtocol = WidgetCenter.shared
     ) {
         self.recentItemsUseCase = recentItemsUseCase

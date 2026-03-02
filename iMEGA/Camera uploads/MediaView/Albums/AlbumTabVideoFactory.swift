@@ -50,8 +50,7 @@ enum MediaTabAlbumFactory {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                    repo: UserAttributeRepository.newRepo)),
             overDiskQuotaChecker: OverDiskQuotaChecker(
                 accountStorageUseCase: AccountStorageUseCase(
                     accountRepository: AccountRepository.newRepo,
@@ -104,10 +103,7 @@ enum MediaTabAlbumFactory {
         return PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     
@@ -117,7 +113,6 @@ enum MediaTabAlbumFactory {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
 }

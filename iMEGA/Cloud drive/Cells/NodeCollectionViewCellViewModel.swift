@@ -19,7 +19,6 @@ import MEGASwift
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeIconUseCase: any NodeIconUsecaseProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var task: Task<Void, Never>?
     private var loadVideoDurationTask: Task<Void, Never>? {
         didSet {
@@ -32,8 +31,8 @@ import MEGASwift
          isFromFolderLink: Bool,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         nodeIconUseCase: some NodeIconUsecaseProtocol,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+         nodeIconUseCase: some NodeIconUsecaseProtocol
+    ) {
         
         self.node = node
         self.isFromSharedItem = isFromSharedItem
@@ -41,7 +40,6 @@ import MEGASwift
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeIconUseCase = nodeIconUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     deinit {
@@ -119,7 +117,6 @@ import MEGASwift
     
     private func applySensitiveConfiguration(for node: NodeEntity) async {
         guard !isFromSharedItem,
-              remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
               sensitiveNodeUseCase.isAccessible() else {
             isSensitive = false
             return

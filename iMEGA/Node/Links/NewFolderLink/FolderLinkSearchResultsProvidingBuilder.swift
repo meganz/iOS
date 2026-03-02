@@ -45,7 +45,7 @@ struct FolderLinkSearchResultsProvidingBuilder: FolderLinkSearchResultsProviding
         let sénitiveDisplayPreferenceUseCase = SensitiveDisplayPreferenceUseCase(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { false }
+            sensitiveFilteringEnabled: false
         )
         
         let searchResultMapper = FolderLinkSearchResultMapper(
@@ -66,7 +66,6 @@ struct FolderLinkSearchResultsProvidingBuilder: FolderLinkSearchResultsProviding
             resultsUpdates: FolderLinkSearchResultsUpdatesProvider(nodeRepository: nodeRepository),
             allChips: SearchChipEntity.allChips(currentDate: { .init() }, calendar: .autoupdatingCurrent),
             sdk: sharedFolderLink,
-            hiddenNodesFeatureEnabled: false,
             isFromSharedItem: false
         )
     }

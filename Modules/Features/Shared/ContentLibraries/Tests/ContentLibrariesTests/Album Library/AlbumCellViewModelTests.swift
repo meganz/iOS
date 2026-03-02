@@ -588,8 +588,7 @@ final class AlbumCellViewModelTests: XCTestCase {
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: coverImageContainer),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isInheritingSensitivityResult: .success(true)),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+                isInheritingSensitivityResult: .success(true))
         )
         
         let exp = expectation(description: "Should not update thumbnail container")
@@ -619,8 +618,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: coverImageContainer),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         var expectedImageContainer = [
@@ -662,8 +660,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         let exp = expectation(description: "Should note update album cover")
@@ -699,8 +696,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = makeAlbumCellViewModel(
             album: album,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         let exp = expectation(description: "Should not update image container")
@@ -775,23 +771,22 @@ final class AlbumCellViewModelTests: XCTestCase {
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
         onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         configuration: ContentLibraries.Configuration = .mockConfiguration(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumCellViewModel {
-        let sut = AlbumCellViewModel(thumbnailLoader: thumbnailLoader,
-                                     monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
-                                     nodeUseCase: nodeUseCase,
-                                     sensitiveNodeUseCase: sensitiveNodeUseCase,
-                                     sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-                                     albumCoverUseCase: albumCoverUseCase,
-                                     album: album,
-                                     selection: selection,
-                                     tracker: tracker,
-                                     onAlbumSelected: onAlbumSelected,
-                                     remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-                                     configuration: configuration)
+        let sut = AlbumCellViewModel(
+            thumbnailLoader: thumbnailLoader,
+            monitorUserAlbumPhotosUseCase: monitorUserAlbumPhotosUseCase,
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+            albumCoverUseCase: albumCoverUseCase,
+            album: album,
+            selection: selection,
+            tracker: tracker,
+            onAlbumSelected: onAlbumSelected,
+            configuration: configuration)
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 500_000_000, file: file, line: line)
         return sut
     }
@@ -882,7 +877,6 @@ struct AlbumCellViewModelTestSuite {
         selection: AlbumSelection = AlbumSelection(),
         tracker: some AnalyticsTracking = MockTracker(),
         onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         configuration: ContentLibraries.Configuration = .mockConfiguration()
     ) -> AlbumCellViewModel {
         .init(thumbnailLoader: thumbnailLoader,
@@ -895,7 +889,6 @@ struct AlbumCellViewModelTestSuite {
               selection: selection,
               tracker: tracker,
               onAlbumSelected: onAlbumSelected,
-              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
               configuration: configuration)
     }
 }

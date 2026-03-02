@@ -7,7 +7,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenFeatureIsDisabled_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]),
             nodeSource: .testNode,
             displayMode: .cloudDrive,
             isFromSharedItem: false
@@ -16,7 +15,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenInvokedFromSharedItem_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             nodeSource: .testNode,
             displayMode: .cloudDrive,
             isFromSharedItem: true
@@ -25,7 +23,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenDisplayModeOtherThanCloudDrive_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             nodeSource: .testNode,
             displayMode: .sharedItem,
             isFromSharedItem: false
@@ -34,7 +31,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenParentNodeIsNil_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             nodeSource: NodeSource.node { nil },
             displayMode: .sharedItem,
             isFromSharedItem: false
@@ -43,7 +39,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenNodeIsRoot_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             nodeSource: NodeSource.node { NodeEntity(parentHandle: .invalid) },
             displayMode: .sharedItem,
             isFromSharedItem: false
@@ -52,7 +47,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
 
     func testEvaluateNodeSensitivity_whenNodeIsAFile_shouldReturnNil() async {
         await assertEvaluateNodeSensitivityResultForNil(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             nodeSource: NodeSource.node { NodeEntity(isFile: true, isFolder: false) },
             displayMode: .sharedItem,
             isFromSharedItem: false
@@ -63,7 +57,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             isAccessible: false)
         let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         let result = await sut.evaluateNodeSensitivity(
@@ -80,7 +73,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
         let node = NodeEntity(isFolder: true)
         let systemGeneratedNodeUseCase = MockSystemGeneratedNodeUseCase(nodesForLocation: [.cameraUpload: node])
         let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
@@ -101,7 +93,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
                 isAccessible: true,
                 isInheritingSensitivityResult: inheritSensitiveResult)
             let sut = makeSUT(
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
                 systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase
             )
@@ -122,7 +113,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
             isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
@@ -142,7 +132,6 @@ final class NodeSensitivityCheckerTests: XCTestCase {
             isInheritingSensitivityResult: .success(false))
 
         let sut = makeSUT(
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
@@ -157,26 +146,23 @@ final class NodeSensitivityCheckerTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeSUT(
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase()
     ) -> NodeSensitivityChecker {
         .init(
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase
         )
     }
 
     private func assertEvaluateNodeSensitivityResultForNil(
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         nodeSource: NodeSource,
         displayMode: DisplayMode,
         isFromSharedItem: Bool,
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
-        let sut = makeSUT(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+        let sut = makeSUT()
         let result = await sut.evaluateNodeSensitivity(
             for: nodeSource,
             displayMode: displayMode,

@@ -34,7 +34,7 @@ final class FolderLinkMediaDiscoveryContentViewModel: ObservableObject, MediaDis
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
                 ),
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                hiddenNodesFeatureFlagEnabled: { false }
+                sensitiveFilteringEnabled: false
             )
         )
     }()

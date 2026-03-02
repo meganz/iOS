@@ -51,10 +51,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
 
         let viewModel = AlbumContentViewModel(
@@ -95,10 +92,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepository,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
 
         let viewModel = AlbumContentPickerViewModel(album: album,
@@ -182,10 +176,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         PhotoLibraryUseCase(
             photosRepository: PhotoLibraryRepository(cameraUploadNodeAccess: CameraUploadNodeAccess.shared),
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     
@@ -219,8 +210,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                    repo: UserAttributeRepository.newRepo))
         )
     }
     
@@ -230,7 +220,6 @@ struct AlbumContentRouter: AlbumContentRouting {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
 }

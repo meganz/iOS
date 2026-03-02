@@ -64,7 +64,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let onAlbumSelected: ((AlbumEntity) -> Void)?
     private let configuration: ContentLibraries.Configuration
     
@@ -87,7 +86,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         tracker: some AnalyticsTracking = DIContainer.tracker,
         onAlbumSelected: ((AlbumEntity) -> Void)? = nil,
         searchText: String? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) {
         self.thumbnailLoader = thumbnailLoader
@@ -101,7 +99,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.tracker = tracker
         self.onAlbumSelected = onAlbumSelected
         self.searchText = searchText
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         
         isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
@@ -171,8 +168,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     
     /// Monitor inherited sensitivity changes for album cover photo
     func monitorCoverPhotoSensitivity() async {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-              let coverNode = album.coverNode,
+        guard let coverNode = album.coverNode,
               !coverNode.isMarkedSensitive else { return }
         // Wait for initial thumbnail to load with sensitivity before checking inherited sensitivity updates
         _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })

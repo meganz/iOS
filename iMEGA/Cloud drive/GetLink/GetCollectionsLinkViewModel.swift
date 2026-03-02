@@ -14,7 +14,6 @@ final class GetCollectionsLinkViewModel: GetLinkViewModelType {
     private let setEntities: [SetEntity]
     private let shareCollectionUseCase: any ShareCollectionUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var albumLinks: [SetIdentifier: String]?
     private var loadingTask: Task<Void, Never>?
@@ -27,13 +26,12 @@ final class GetCollectionsLinkViewModel: GetLinkViewModelType {
     init(setEntities: [SetEntity],
          shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel],
-         tracker: some AnalyticsTracking,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+         tracker: some AnalyticsTracking
+    ) {
         self.setEntities = setEntities
         self.shareCollectionUseCase = shareCollectionUseCase
         self.sectionViewModels = sectionViewModels
         self.tracker = tracker
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     // MARK: - Dispatch action
@@ -98,7 +96,7 @@ final class GetCollectionsLinkViewModel: GetLinkViewModelType {
         
         let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
         
-        continuation.yield(remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+        continuation.yield(.unknown) // Set initial value
         
         for await status in stream {
             switch status {

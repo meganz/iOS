@@ -21,7 +21,6 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let nodeActions: NodeActions
-    private let hiddenNodesFeatureEnabled: Bool
     private let showHiddenNodeBlur: Bool
     private var isCloudDriveRevampEnabled: Bool
 
@@ -37,7 +36,6 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodeActions: NodeActions,
-        hiddenNodesFeatureEnabled: Bool,
         showHiddenNodeBlur: Bool = true,
         isCloudDriveRevampEnabled: Bool =  DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     ) {
@@ -48,7 +46,6 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.mediaUseCase = mediaUseCase
         self.nodeActions = nodeActions
-        self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         self.showHiddenNodeBlur = showHiddenNodeBlur
         self.isCloudDriveRevampEnabled = isCloudDriveRevampEnabled
     }
@@ -270,8 +267,7 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
     }
     
     private func isSensitive(node: NodeEntity) -> Bool {
-        guard hiddenNodesFeatureEnabled,
-              showHiddenNodeBlur,
+        guard showHiddenNodeBlur,
               sensitiveNodeUseCase.isAccessible() else { return false }
         if node.isMarkedSensitive {
             return true

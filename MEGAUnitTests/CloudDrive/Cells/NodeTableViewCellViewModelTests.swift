@@ -40,8 +40,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlags: [.hiddenNodes: true]
+                isInheritingSensitivityResult: .success(false))
             )
         
         await viewModel.configureCell().value
@@ -68,43 +67,12 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             nodes: nodes,
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: false),
-            featureFlags: [.hiddenNodes: true])
+                isAccessible: false))
         
         await viewModel.configureCell().value
 
         let expectation = expectation(description: "viewModel.isSensitive should return value")
         let subscription = viewModel.$isSensitive
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
-                expectation.fulfill()
-            }
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-        
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
-        let nodes = [
-            NodeEntity(handle: 1, isMarkedSensitive: true)
-        ]
-        let viewModel = sut(
-            nodes: nodes,
-            shouldApplySensitiveBehaviour: true,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlags: [.hiddenNodes: false]
-        )
-        
-        await viewModel.configureCell().value
-
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .first { !$0 }
             .sink { isSensitive in
                 XCTAssertFalse(isSensitive)
@@ -126,8 +94,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlags: [.hiddenNodes: true]
+                isInheritingSensitivityResult: .success(true))
             )
         
         await viewModel.configureCell().value
@@ -137,36 +104,6 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             .first { $0 }
             .sink { isSensitive in
                 XCTAssertTrue(isSensitive)
-                expectation.fulfill()
-            }
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-        
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
-        let nodes = [
-            NodeEntity(handle: 1, isMarkedSensitive: false)
-        ]
-        let viewModel = sut(
-            nodes: nodes,
-            shouldApplySensitiveBehaviour: true,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlags: [.hiddenNodes: false]
-        )
-
-        await viewModel.configureCell().value
-        
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
                 expectation.fulfill()
             }
         
@@ -186,8 +123,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
             shouldApplySensitiveBehaviour: true,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlags: [.hiddenNodes: true]
+                isInheritingSensitivityResult: .success(true))
             )
         
         await viewModel.configureCell().value
@@ -215,8 +151,7 @@ final class NodeTableViewCellViewModelTests: XCTestCase {
                 shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                     isAccessible: true,
-                    isInheritingSensitivityResult: .success(true)),
-                featureFlags: [.hiddenNodes: true]
+                    isInheritingSensitivityResult: .success(true))
             )
             
             await viewModel.configureCell().value
@@ -302,14 +237,13 @@ extension NodeTableViewCellViewModelTests {
              shouldApplySensitiveBehaviour: Bool = true,
              sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
              nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
-             thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-             featureFlags: [RemoteFeatureFlag: Bool] = [.hiddenNodes: false]) -> NodeTableViewCellViewModel {
+             thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase()
+    ) -> NodeTableViewCellViewModel {
         NodeTableViewCellViewModel(
             nodes: nodes,
             shouldApplySensitiveBehaviour: shouldApplySensitiveBehaviour,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            nodeIconUseCase: nodeIconUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: featureFlags))
+            nodeIconUseCase: nodeIconUseCase)
     }
 }

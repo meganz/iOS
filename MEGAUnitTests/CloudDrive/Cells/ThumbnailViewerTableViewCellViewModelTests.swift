@@ -50,7 +50,6 @@ extension ThumbnailViewerTableViewCellViewModelTests {
             nodes: nodes,
             sensitiveNodeUseCase: sensitiveNodeUseCase, 
             nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: Data()),
-            thumbnailUseCase: MockThumbnailUseCase(),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]))
+            thumbnailUseCase: MockThumbnailUseCase())
     }
 }

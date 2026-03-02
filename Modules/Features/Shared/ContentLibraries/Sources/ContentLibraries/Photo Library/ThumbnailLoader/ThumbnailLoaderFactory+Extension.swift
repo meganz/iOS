@@ -6,7 +6,6 @@ import MEGASwift
 
 extension ThumbnailLoaderFactory {
     public static func makeThumbnailLoader(
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         mode: PhotoLibraryContentMode? = nil,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) -> any ThumbnailLoaderProtocol {
@@ -15,12 +14,10 @@ extension ThumbnailLoaderFactory {
                 config: .sensitive(
                     sensitiveNodeUseCase: configuration.sensitiveNodeUseCase
                 ),
-                thumbnailUseCase: makeThumbnailUseCase(mode: mode),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                thumbnailUseCase: makeThumbnailUseCase(mode: mode))
         } else {
             makeThumbnailLoader(config: .general,
-                                thumbnailUseCase: makeThumbnailUseCase(mode: mode),
-                                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                                thumbnailUseCase: makeThumbnailUseCase(mode: mode))
         }
     }
     

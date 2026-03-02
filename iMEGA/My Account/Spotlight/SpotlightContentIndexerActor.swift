@@ -51,45 +51,24 @@ actor SpotlightContentIndexerActor {
     }
     
     func reindex(updatedNodes: [NodeEntity]) async {
+        let acceptedNodeChanges = updatedNodes
+            .nodes(for: [.favourite, .sensitive, .name, .removed])
         
-        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) {
-            
-            let acceptedNodeChanges = updatedNodes
-                .nodes(for: [.favourite, .sensitive, .name, .removed])
-            
-            guard acceptedNodeChanges.notContains(where: { $0.changeTypes.contains(.sensitive) && $0.isFolder }) else {
-                await indexSearchableItems()
-                return
-            }
-            
-            await withTaskGroup(of: Void.self) { taskGroup in
-                taskGroup.addTasksUnlessCancelled(for: acceptedNodeChanges) { [weak self] node in
-                    guard let self else {
-                        return
-                    }
-                    
-                    if node.isMarkedSensitive || !node.isFavourite || node.changeTypes.contains(.removed) {
-                        await deIndex(node: node)
-                    } else if node.isFavourite {
-                        await index(node: node)
-                    }
+        guard acceptedNodeChanges.notContains(where: { $0.changeTypes.contains(.sensitive) && $0.isFolder }) else {
+            await indexSearchableItems()
+            return
+        }
+        
+        await withTaskGroup(of: Void.self) { taskGroup in
+            taskGroup.addTasksUnlessCancelled(for: acceptedNodeChanges) { [weak self] node in
+                guard let self else {
+                    return
                 }
-            }
-        } else {
-            let acceptedNodeChanges = updatedNodes
-                .nodes(for: [.favourite, .name, .removed])
-
-            await withTaskGroup(of: Void.self) { taskGroup in
-                taskGroup.addTasksUnlessCancelled(for: acceptedNodeChanges) { [weak self] node in
-                    guard let self else {
-                        return
-                    }
-                    
-                    if !node.isFavourite || node.changeTypes.contains(.removed) {
-                        await deIndex(node: node)
-                    } else if node.isFavourite {
-                        await index(node: node)
-                    }
+                
+                if node.isMarkedSensitive || !node.isFavourite || node.changeTypes.contains(.removed) {
+                    await deIndex(node: node)
+                } else if node.isFavourite {
+                    await index(node: node)
                 }
             }
         }
@@ -99,7 +78,7 @@ actor SpotlightContentIndexerActor {
         try await favouritesUseCase
             .allFavouriteNodes(
                 searchString: nil,
-                excludeSensitives: remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
+                excludeSensitives: true,
                 limit: 100)
             .map(searchableItem(node:))
     }

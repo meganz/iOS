@@ -88,8 +88,7 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
     
     private func makeAlbumCoverUseCase() -> some AlbumCoverUseCaseProtocol {

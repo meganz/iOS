@@ -12,8 +12,7 @@ extension RecentsViewController {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             userUpdateRepository: UserUpdateRepository.newRepo,
             requestStatesRepository: RequestStatesRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo,
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+            nodeRepository: NodeRepository.newRepo
         )
         
         return RecentsViewModel(recentNodesUseCase: recentNodesUseCase)
@@ -149,11 +148,7 @@ extension RecentsViewController {
     }
     
     private func shouldExcludeSensitive() async -> Bool {
-        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) else {
-            return false
-        }
-        
-        return await !ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+        await !ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)
             .fetchSensitiveAttribute()
             .showHiddenNodes
     }

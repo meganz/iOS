@@ -1,4 +1,3 @@
-
 public protocol SensitiveDisplayPreferenceUseCaseProtocol: Sendable {
     ///  Determines whether sensitive content should be excluded.
     /// - Returns: A `Bool` indicating whether sensitive content should be excluded. It will always return `false` if the account type is invalid
@@ -9,20 +8,20 @@ public struct SensitiveDisplayPreferenceUseCase: SensitiveDisplayPreferenceUseCa
     
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
+    private let sensitiveFilteringEnabled: Bool
     
     public init(
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+        sensitiveFilteringEnabled: Bool = true
     ) {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
+        self.sensitiveFilteringEnabled = sensitiveFilteringEnabled
     }
     
     public func excludeSensitives() async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled(),
+        guard sensitiveFilteringEnabled,
               sensitiveNodeUseCase.isAccessible() else { return false }
         
         return await !contentConsumptionUserAttributeUseCase

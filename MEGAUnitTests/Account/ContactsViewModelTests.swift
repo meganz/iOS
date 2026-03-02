@@ -219,7 +219,7 @@ final class ContactsViewModelTests: XCTestCase {
     }
     
     func testShowAlertForSensitiveDescendants_hiddenNodesFeatureOff_shouldNotShowLoadingOrAlert() {
-        let sut = makeSUT(isHiddenNodesEnabled: false)
+        let sut = makeSUT()
         
         let exp = expectation(description: "Should not show loading indicator or alert")
         exp.isInverted = true
@@ -244,8 +244,7 @@ final class ContactsViewModelTests: XCTestCase {
     func testShowAlertForSensitiveDescendants_shareFolderWithModeNodesNotSensitive_shouldToggleIsLoadingCorrectlyAndNotShowAlert() {
         let sut = makeSUT(
             contactsMode: .shareFoldersWith,
-            containsSensitiveContent: [:],
-            isHiddenNodesEnabled: true)
+            containsSensitiveContent: [:])
         
         let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
         let alertExp = expectation(description: "Should not show alert")
@@ -271,8 +270,7 @@ final class ContactsViewModelTests: XCTestCase {
             }
             let sut = makeSUT(
                 contactsMode: .shareFoldersWith,
-                containsSensitiveContent: Dictionary(uniqueKeysWithValues: sensitiveNodes.map { ($0.handle, true) }),
-                isHiddenNodesEnabled: true)
+                containsSensitiveContent: Dictionary(uniqueKeysWithValues: sensitiveNodes.map { ($0.handle, true) }))
             
             let (expectationLoadingStates, loadingSubscription) = expectLoadingShowAndDismiss(on: sut)
             let dismissViewExp = expectation(description: "Should dismiss view on cancel action")
@@ -307,8 +305,7 @@ final class ContactsViewModelTests: XCTestCase {
         contactsMode: ContactsMode = .default,
         isContactVerificationWarningEnabled: Bool = false,
         isSharedFolderOwnerVerified: Bool = false,
-        containsSensitiveContent: [HandleEntity: Bool] = [:],
-        isHiddenNodesEnabled: Bool = false
+        containsSensitiveContent: [HandleEntity: Bool] = [:]
     ) -> ContactsViewModel {
         let sdk = MockSdk(
             isContactVerificationWarningEnabled: isContactVerificationWarningEnabled,
@@ -319,9 +316,7 @@ final class ContactsViewModelTests: XCTestCase {
             contactsMode: contactsMode,
             shareUseCase: MockShareUseCase(
                 containsSensitiveContent: containsSensitiveContent
-            ),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
-                list: [.hiddenNodes: isHiddenNodesEnabled])
+            )
         )
     }
     

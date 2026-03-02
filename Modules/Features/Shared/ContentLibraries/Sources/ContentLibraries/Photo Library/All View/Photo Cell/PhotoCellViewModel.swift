@@ -43,7 +43,6 @@ open class PhotoCellViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let selection: PhotoSelection
     private let configuration: ContentLibraries.Configuration
     private var subscriptions = Set<AnyCancellable>()
@@ -60,7 +59,6 @@ open class PhotoCellViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         self.isMediaRevamp = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
@@ -113,8 +111,7 @@ open class PhotoCellViewModel: ObservableObject {
     }
     
     func monitorInheritedSensitivityChanges() async {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-              sensitiveNodeUseCase != nil,
+        guard sensitiveNodeUseCase != nil,
               !photo.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else { return }
         
@@ -130,8 +127,7 @@ open class PhotoCellViewModel: ObservableObject {
     /// Monitor photo node and inherited sensitivity changes
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
     func monitorPhotoSensitivityChanges() async {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-              nodeUseCase != nil,
+        guard nodeUseCase != nil,
               sensitiveNodeUseCase != nil else { return }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
         _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })

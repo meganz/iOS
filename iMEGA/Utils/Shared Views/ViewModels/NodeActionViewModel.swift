@@ -57,8 +57,7 @@ struct NodeActionViewModel {
     /// - Parameter containsABackupNode: Indicates if the nodes contain a backup node
     /// - Returns: An `Optional<Bool>`: if value is nil, don't show entry point; if value is false, show hide action; if value is true, don't show hide action
     func isHidden(_ nodes: [NodeEntity], isFromSharedItem: Bool, containsBackupNode: Bool) async -> Bool? {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-              isFromSharedItem == false,
+        guard isFromSharedItem == false,
               !containsBackupNode,
               nodes.isNotEmpty else {
             return nil
@@ -71,7 +70,7 @@ struct NodeActionViewModel {
     }
     
     func isSensitive(node: NodeEntity) async -> Bool {
-        if !remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) || !hasValidProOrUnexpiredBusinessAccount {
+        if !hasValidProOrUnexpiredBusinessAccount {
             false
         } else if node.isMarkedSensitive {
             true

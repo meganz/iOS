@@ -60,23 +60,10 @@ final class SearchResultMapperTests: XCTestCase {
         XCTAssertTrue(result.properties.contains(.downloaded))
     }
     
-    func test_isSensitive_whenHiddenNodesFeatureIsOff_shouldReturnFalse() {
-        // given
-        let sut = makeSUT(hiddenNodesFeatureEnabled: false)
-        
-        // when
-        let node = NodeEntity(isMarkedSensitive: true)
-        let result = sut.map(node: node)
-        
-        // then
-        XCTAssertFalse(result.isSensitive)
-    }
-    
     func test_isSensitive_whenInvalidAccount_shouldReturnFalse() {
         // given
         let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-            hiddenNodesFeatureEnabled: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false))
         
         // when
         let node = NodeEntity(isMarkedSensitive: true)
@@ -89,8 +76,7 @@ final class SearchResultMapperTests: XCTestCase {
     func test_isSensitive_whenHiddenNodesFeatureIsOnAndNodeIsSensitive_shouldReturnTrue() {
         // given
         let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-            hiddenNodesFeatureEnabled: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true))
         
         // when
         let node = NodeEntity(isMarkedSensitive: true)
@@ -106,8 +92,7 @@ final class SearchResultMapperTests: XCTestCase {
             isAccessible: true,
             isInheritingSensitivityResult: .success(true))
         let sut = makeSUT(
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            hiddenNodesFeatureEnabled: true
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         // when
@@ -124,8 +109,7 @@ final class SearchResultMapperTests: XCTestCase {
             isAccessible: true,
             isInheritingSensitivityResult: .success(false))
         let sut = makeSUT(
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            hiddenNodesFeatureEnabled: true)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)
@@ -141,8 +125,7 @@ final class SearchResultMapperTests: XCTestCase {
             isAccessible: true,
             isInheritingSensitivityResult: .failure(GenericErrorEntity()))
         let sut = makeSUT(
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            hiddenNodesFeatureEnabled: true)
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         // when
         let node = NodeEntity(isMarkedSensitive: false)
@@ -154,7 +137,6 @@ final class SearchResultMapperTests: XCTestCase {
     
     func test_isSensitive_whenShowHiddenNodeBlurIsFalse_shouldReturnFalse() {
         let sut = makeSUT(
-            hiddenNodesFeatureEnabled: true,
             showHiddenNodeBlur: false)
         
         let node = NodeEntity(isMarkedSensitive: false)
@@ -175,7 +157,6 @@ final class SearchResultMapperTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
-        hiddenNodesFeatureEnabled: Bool = true,
         showHiddenNodeBlur: Bool = true,
         isCloudDriveRevampEnabled: Bool = false
     ) -> SUT {
@@ -187,7 +168,6 @@ final class SearchResultMapperTests: XCTestCase {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
             showHiddenNodeBlur: showHiddenNodeBlur,
             isCloudDriveRevampEnabled: isCloudDriveRevampEnabled
         )

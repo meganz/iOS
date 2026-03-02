@@ -110,8 +110,7 @@ struct MediaTabViewControllerFactory {
 
         let playlistTabViewModel = MediaTabPlaylistFactory.makePlaylistTabViewModel(
             syncModel: syncModel,
-            navigationController: navigationController,
-            hiddenNodesFeatureFlagEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            navigationController: navigationController
         )
 
         return [

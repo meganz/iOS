@@ -177,8 +177,7 @@ extension HomeScreenFactory {
             nodeActions: NodeActions.makeActions(
                 sdk: MEGASdk.sharedSdk,
                 navigationController: navigationController
-            ),
-            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            )
         )
     }
 
@@ -197,8 +196,7 @@ extension HomeScreenFactory {
                     repository: AccountRepository.newRepo)
             ),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+                repo: UserAttributeRepository.newRepo)
         )
     }
 

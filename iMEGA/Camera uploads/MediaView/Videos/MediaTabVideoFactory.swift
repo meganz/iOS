@@ -30,19 +30,13 @@ struct MediaTabVideoFactory {
             ),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo
-            ),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            )
         )
 
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
 
         let sensitiveNodeUseCase = SensitiveNodeUseCase(

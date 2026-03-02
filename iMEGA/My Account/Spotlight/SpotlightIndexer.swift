@@ -29,8 +29,7 @@ final class SpotlightIndexer: NSObject {
                             repository: AccountRepository.newRepo)
                     ),
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                        repo: UserAttributeRepository.newRepo),
-                    hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })),
+                        repo: UserAttributeRepository.newRepo))),
             nodeAttributeUseCase: NodeAttributeUseCase(
                 repo: NodeAttributeRepository.newRepo),
             spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase,

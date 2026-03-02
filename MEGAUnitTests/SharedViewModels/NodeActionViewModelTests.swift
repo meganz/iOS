@@ -82,22 +82,11 @@ struct NodeActionViewModelTests {
     
     @Suite("Calls isHidden")
     struct IsHidden {
-        @Test("When node feature is off should return nil")
-        func nodeFeatureOffIrrespectiveOfNodesSharedOrBackup() async {
-            let node = NodeEntity(handle: 65, isMarkedSensitive: true)
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false])
-            let sut = makeSUT(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
-            let result = await sut.isHidden([node], isFromSharedItem: Bool.random(), containsBackupNode: Bool.random())
-            #expect(result == nil)
-        }
-        
         @Test("When invalid account should return false")
         func invalidAccount() async throws {
             let nodes = makeSensitiveNodes(count: 100)
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false))
             
             let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
             let unwrappedResult = try #require(result as Bool?, "Result should be not nil")
@@ -107,10 +96,8 @@ struct NodeActionViewModelTests {
         @Test("When contains only sensitive nodes should return true")
         func nodesContainsOnlySensitiveNodes() async throws {
             let nodes = makeSensitiveNodes(count: 100)
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true))
             
             let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
             let unwrappedResult = try #require(result as Bool?, "Result should be not nil")
@@ -121,10 +108,8 @@ struct NodeActionViewModelTests {
         func nodesContainsNodeNotMarkedAsSensitive() async throws {
             var nodes = makeSensitiveNodes(count: 100)
             nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true))
             
             let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
             let unwrappedResult = try #require(result as Bool?, "Result should be not nil")
@@ -134,18 +119,14 @@ struct NodeActionViewModelTests {
         @Test("When is from shared items returns nil", arguments: [true, false])
         func isFromSharedItemIsTrue(isMarkedSensitive: Bool) async throws {
             let node = NodeEntity(handle: 65, isMarkedSensitive: isMarkedSensitive)
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
-            let sut = makeSUT(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+            let sut = makeSUT()
             let result = await sut.isHidden([node], isFromSharedItem: true, containsBackupNode: false)
             #expect(result == nil)
         }
         
         @Test("When nodes is empty returns nil")
         func nodesEmpty() async throws {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
-            let sut = makeSUT(
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
-            )
+            let sut = makeSUT()
             let result = await sut.isHidden([], isFromSharedItem: false, containsBackupNode: false)
             #expect(result == nil)
         }
@@ -163,11 +144,8 @@ struct NodeActionViewModelTests {
                 isAccessible: true,
                 isInheritingSensitivityResults: isInheritingSensitivityResults)
             
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: sensitiveNodeUseCase,
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
-            )
+                sensitiveNodeUseCase: sensitiveNodeUseCase)
             let result = await sut.isHidden(nodes, isFromSharedItem: false, containsBackupNode: false)
             #expect(result == nil)
         }
@@ -196,23 +174,10 @@ struct NodeActionViewModelTests {
     
     @Suite("Calls isSensitive")
     struct IsSensitive {
-        @Test("When feature flag disable returns false")
-        func featureFlagDisabled() async {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false])
-            let sut = makeSUT(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
-            let node = NodeEntity(handle: 1, isMarkedSensitive: true)
-            
-            let isSenstive = await sut.isSensitive(node: node)
-            
-            #expect(!isSenstive)
-        }
-        
         @Test("When invalid account returns false")
         func invalidAccount() async {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false))
             let node = NodeEntity(handle: 1, isMarkedSensitive: true)
             
             let isSenstive = await sut.isSensitive(node: node)
@@ -222,10 +187,8 @@ struct NodeActionViewModelTests {
         
         @Test("When feature flag enabled and node is sensitive returns true")
         func featureFlagEnabledAndNodeIsSensitive() async {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sut = makeSUT(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true))
             let node = NodeEntity(handle: 1, isMarkedSensitive: true)
             
             let isSenstive = await sut.isSensitive(node: node)
@@ -235,13 +198,11 @@ struct NodeActionViewModelTests {
         
         @Test("When feature flag enabled and parent node is not sensitive returns true")
         func featureFlagEnabledAndParentNodeIsSensitive() async {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
             let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
                 isAccessible: true,
                 isInheritingSensitivityResult: .success(true))
             let sut = makeSUT(
-                sensitiveNodeUseCase: sensitiveNodeUseCase,
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                sensitiveNodeUseCase: sensitiveNodeUseCase)
             let node = NodeEntity(handle: 1, isMarkedSensitive: false)
             
             let isSenstive = await sut.isSensitive(node: node)
@@ -340,14 +301,12 @@ struct NodeActionViewModelTests {
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         maxDetermineSensitivityTasks: Int = 10,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase()
     ) -> NodeActionViewModel {
         NodeActionViewModel(
             systemGeneratedNodeUseCase: systemGeneratedNodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             maxDetermineSensitivityTasks: maxDetermineSensitivityTasks,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             nodeUseCase: nodeUseCase)
     }
     

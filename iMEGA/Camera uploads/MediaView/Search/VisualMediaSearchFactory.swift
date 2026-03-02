@@ -58,10 +58,7 @@ enum VisualMediaSearchFactory {
         return PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     
@@ -71,8 +68,7 @@ enum VisualMediaSearchFactory {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
     
     private static func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {

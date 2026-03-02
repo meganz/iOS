@@ -20,8 +20,7 @@ extension BrowserViewController {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
                 ),
-                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo)),
             filesSearchUseCase: FilesSearchUseCase(repo: FilesSearchRepository.newRepo, nodeRepository: NodeRepository.newRepo),
             metadataUseCase: MetadataUseCase(metadataRepository: MetadataRepository(), fileSystemRepository: FileSystemRepository.sharedRepo, fileExtensionRepository: FileExtensionRepository(), nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo),
             browserUseCase: BrowserUseCase(

@@ -149,14 +149,12 @@ struct PhotoBrowserPickerCollectionViewCellViewModelTests {
         isFromSharedItem: Bool = false,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-        nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+        nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase()
     ) -> PhotoBrowserPickerCollectionViewCellViewModel {
         .init(node: node,
               isFromSharedItem: isFromSharedItem,
               sensitiveNodeUseCase: sensitiveNodeUseCase,
               thumbnailUseCase: thumbnailUseCase,
-              nodeIconUseCase: nodeIconUseCase,
-              remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+              nodeIconUseCase: nodeIconUseCase)
     }
 }

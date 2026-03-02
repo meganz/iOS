@@ -11,7 +11,7 @@ struct SensitiveDisplayPreferenceUseCaseTests {
             let sut = SensitiveDisplayPreferenceUseCase(
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                 contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(),
-                hiddenNodesFeatureFlagEnabled: { false })
+                sensitiveFilteringEnabled: false)
             
             #expect(await sut.excludeSensitives() == false)
         }
@@ -47,13 +47,14 @@ struct SensitiveDisplayPreferenceUseCaseTests {
         
         private func makeSUT(
             hasValidProOrUnexpiredBusinessAccount: Bool,
-            showHiddenNodes: Bool
+            showHiddenNodes: Bool,
+            sensitiveFilteringEnabled: Bool = true
         ) -> SensitiveDisplayPreferenceUseCase {
             SensitiveDisplayPreferenceUseCase(
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: hasValidProOrUnexpiredBusinessAccount),
                 contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
                     sensitiveNodesUserAttributeEntity: .init(onboarded: false, showHiddenNodes: showHiddenNodes)),
-                hiddenNodesFeatureFlagEnabled: { true }
+                sensitiveFilteringEnabled: sensitiveFilteringEnabled
             )
         }
     }

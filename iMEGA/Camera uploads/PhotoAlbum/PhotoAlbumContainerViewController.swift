@@ -164,7 +164,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
             let photoLibraryRepository = PhotoLibraryRepository(
                 cameraUploadNodeAccess: CameraUploadNodeAccess.shared)
             let fileSearchRepository = FilesSearchRepository.newRepo
-            let hiddenNodesFeatureFlagEnabled = { @Sendable in DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
             let photoLibraryUseCase = PhotoLibraryUseCase(
                 photosRepository: photoLibraryRepository,
                 searchRepository: fileSearchRepository,
@@ -173,9 +172,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
                         nodeRepository: NodeRepository.newRepo,
                         accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                     contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                        repo: UserAttributeRepository.newRepo),
-                    hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled),
-                hiddenNodesFeatureFlagEnabled: hiddenNodesFeatureFlagEnabled
+                        repo: UserAttributeRepository.newRepo))
             )
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
@@ -531,10 +528,7 @@ extension PhotoAlbumContainerViewController {
         return PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     
@@ -544,8 +538,7 @@ extension PhotoAlbumContainerViewController {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
     
     private func makeMonitorUserAlbumPhotosUseCase() -> some MonitorUserAlbumPhotosUseCaseProtocol {

@@ -22,7 +22,6 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
     private let userUpdateRepository: U
     private let requestStatesRepository: R
     private let nodeRepository: N
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
 
     public var recentActionBucketsUpdates: AnyAsyncSequence<Void> {
         let userUpdates = userUpdateRepository
@@ -58,15 +57,13 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
                 contentConsumptionUserAttributeUseCase: S,
                 userUpdateRepository: U,
                 requestStatesRepository: R,
-                nodeRepository: N,
-                hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool
+                nodeRepository: N
     ) {
         self.recentNodesRepository = recentNodesRepository
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.userUpdateRepository = userUpdateRepository
         self.requestStatesRepository = requestStatesRepository
         self.nodeRepository = nodeRepository
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     public func recentActionBuckets(limitCount: Int) async throws -> [RecentActionBucketEntity] {
@@ -85,10 +82,6 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
     }
     
     private func shouldExcludeSensitive(override: Bool?) async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled() else {
-            return false
-        }
-        
         guard let override else {
             return await !contentConsumptionUserAttributeUseCase.fetchSensitiveAttribute().showHiddenNodes
         }

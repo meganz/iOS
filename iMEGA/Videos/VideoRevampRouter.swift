@@ -44,10 +44,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
         let videoPlaylistUseCase = VideoPlaylistUseCase(
             fileSearchUseCase: fileSearchUseCase,
@@ -160,10 +157,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
         let nodeRepository = NodeRepository.newRepo
         let accountUseCase = AccountUseCase(
@@ -305,8 +299,7 @@ struct VideoRevampRouter: VideoRevampRouting {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
 }
 

@@ -16,10 +16,6 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         albumType == .favourite ? MEGAAssets.UIImage.removeFavourite : MEGAAssets.UIImage.favourite
     }
     
-    var isHiddenNodesEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-    }
-    
     var isMediaRevampEnabled: Bool {
         remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
@@ -131,16 +127,17 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     }
     
     override func toolbarItems(forNodes nodes: [MEGANode]?) -> [UIBarButtonItem] {
-        var barButtonItems = [
+        let barButtonItems = [
             downloadItem,
             flexibleItem,
             shareLinkItem,
             flexibleItem,
             exportItem,
             flexibleItem,
-            sendToChatItem
+            sendToChatItem,
+            flexibleItem,
+            moreItem
         ]
-        barButtonItems.append(contentsOf: additionalBarButtonItems(for: albumType))
         
         for barButtonItem in barButtonItems {
             barButtonItem.tintColor = TokenColors.Icon.primary
@@ -150,27 +147,5 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             nodes?.isNotEmpty == true,
             hasDisputedNodes: nodes?.contains(where: { $0.isTakenDown() }) == true,
             barButtonItems: barButtonItems)
-    }
-    
-    private func additionalBarButtonItems(for albumType: AlbumType) -> [UIBarButtonItem] {
-        switch albumType {
-        case .favourite:
-            return [
-                flexibleItem,
-                isHiddenNodesEnabled ?  moreItem : favouriteItem
-            ]
-        case .gif, .raw:
-            guard isHiddenNodesEnabled else { return [] }
-            
-            return [
-                flexibleItem,
-                moreItem
-            ]
-        case .user:
-            return [
-                flexibleItem,
-                isHiddenNodesEnabled ? moreItem : removeToRubbishBinItem
-            ]
-        }
     }
 }

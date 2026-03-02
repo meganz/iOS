@@ -76,8 +76,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -97,8 +96,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForInvalidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: false))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
@@ -118,34 +116,12 @@ final class AppearanceViewModelTests: XCTestCase {
     
     func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagEnabled_shouldReturnCorrectResults() {
         let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true))
         
         let expectedResult: [(AppearanceSection, Bool)] = [
             (.launch, true),
             (.layout, true),
             (.hiddenItems, true),
-            (.mediaDiscovery, true),
-            (.mediaDiscoverySubfolder, true),
-            (.recents, true),
-            (.appIcon, true)
-        ]
-        
-        expectedResult.forEach { section, result in
-            let isAppearanceSectionVisible = sut.isAppearanceSectionVisible(section: section)
-            XCTAssertEqual(isAppearanceSectionVisible, result, "AppearanceSection.\(section) should be \(result)")
-        }
-    }
-    
-    func testIsAppearanceSectionVisible_ForValidAccountAndHiddenNodesFlagDisabled_shouldReturnCorrectResults() {
-        let sut = makeSUT(
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isAccessible: true),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
-        
-        let expectedResult: [(AppearanceSection, Bool)] = [
-            (.launch, true),
-            (.layout, true),
-            (.hiddenItems, false),
             (.mediaDiscovery, true),
             (.mediaDiscoverySubfolder, true),
             (.recents, true),
@@ -196,14 +172,12 @@ final class AppearanceViewModelTests: XCTestCase {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]),
         file: StaticString = #filePath,
         line: UInt = #line) -> AppearanceViewModel {
             let sut = AppearanceViewModel(
                 preferenceUseCase: preferenceUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase
             )
             trackForMemoryLeaks(on: sut, file: file, line: line)
             return sut

@@ -396,8 +396,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
             viewModel.dispatch(.deletePhotos(selectedNodes.toNodeEntities()))
             endEditingMode()
         })
-        let isHiddenNodesEnabled = albumToolbarConfigurator?.isHiddenNodesEnabled ?? false
-        alertController.popoverPresentationController?.barButtonItem = isHiddenNodesEnabled ? albumToolbarConfigurator?.moreItem : albumToolbarConfigurator?.removeToRubbishBinItem
+        alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.moreItem
         present(alertController, animated: true)
     }
     

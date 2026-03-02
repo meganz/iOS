@@ -14,8 +14,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: false),
-            featureFlagHiddenNodes: true)
+                isAccessible: false))
         
         await viewModel.configureCell().value
 
@@ -39,8 +38,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: true)
+                isInheritingSensitivityResult: .success(false)))
         
         await viewModel.configureCell().value
 
@@ -52,33 +50,6 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
         
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-     
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
-        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
-
-        let viewModel = sut(
-            node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: false)
-        
-        await viewModel.configureCell().value
-
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
-                expectation.fulfill()
-            }
-                
         await fulfillment(of: [expectation], timeout: 1)
         
         subscription.cancel()
@@ -92,8 +63,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlagHiddenNodes: true)
+                isInheritingSensitivityResult: .success(true)))
         
         await viewModel.configureCell().value
 
@@ -102,33 +72,6 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
             .first { $0 }
             .sink { isSensitive in
                 XCTAssertTrue(isSensitive)
-                expectation.fulfill()
-            }
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-     
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
-        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
-
-        let viewModel = sut(
-            node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlagHiddenNodes: false)
-        
-        await viewModel.configureCell().value
-
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
                 expectation.fulfill()
             }
         
@@ -146,8 +89,7 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlagHiddenNodes: false)
+                isInheritingSensitivityResult: .success(true)))
         
         let taskFirstCall = viewModel.configureCell()
         let taskSecondCall = viewModel.configureCell()
@@ -196,17 +138,16 @@ final class ItemCollectionViewCellViewModelTests: XCTestCase {
 
 extension ItemCollectionViewCellViewModelTests {
     @MainActor
-    func sut(node: NodeEntity,
-             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-             nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
-             thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-             featureFlagHiddenNodes: Bool = false) -> ItemCollectionViewCellViewModel {
+    func sut(
+        node: NodeEntity,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
+        thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
+    ) -> ItemCollectionViewCellViewModel {
         ItemCollectionViewCellViewModel(
             node: node,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            nodeIconUseCase: nodeIconUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
-                list: [.hiddenNodes: featureFlagHiddenNodes]))
+            nodeIconUseCase: nodeIconUseCase)
     }
 }

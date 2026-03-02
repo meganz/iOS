@@ -36,8 +36,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: accountUseCase),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                    repo: UserAttributeRepository.newRepo)),
             albumCoverUseCase: AlbumCoverUseCase(nodeRepository: nodeRepository),
             album: album,
             selection: selection,
@@ -90,8 +89,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
+                    repo: UserAttributeRepository.newRepo)),
             overDiskQuotaChecker: OverDiskQuotaChecker(
                 accountStorageUseCase: AccountStorageUseCase(
                     accountRepository: AccountRepository.newRepo,
@@ -147,10 +145,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         return PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     
@@ -160,7 +155,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
 }

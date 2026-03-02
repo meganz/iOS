@@ -47,7 +47,6 @@ final class GetNodeLinkViewModel: ViewModelType {
     private let getLinkAnalyticsUseCase = GetLinkAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
     
     private let shareUseCase: any ShareUseCaseProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -57,10 +56,8 @@ final class GetNodeLinkViewModel: ViewModelType {
         loadingTask?.cancel()
     }
 
-    init(shareUseCase: some ShareUseCaseProtocol,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+    init(shareUseCase: some ShareUseCaseProtocol) {
         self.shareUseCase = shareUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
     
     func trackSetPassword() {
@@ -138,7 +135,7 @@ final class GetNodeLinkViewModel: ViewModelType {
         
         let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
         
-        continuation.yield(remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+        continuation.yield(.unknown) // Set initial value
 
         for await status in stream {
             switch status {

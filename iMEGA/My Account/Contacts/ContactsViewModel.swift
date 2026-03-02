@@ -10,7 +10,6 @@ import MEGAL10n
     private let sdk: MEGASdk
     private let contactsMode: ContactsMode
     private let shareUseCase: any ShareUseCaseProtocol
-    private let isHiddenNodesEnabled: Bool
     
     private var callLimitsSubscription: AnyCancellable?
     private var loadingTask: Task<Void, Never>? {
@@ -48,13 +47,11 @@ import MEGAL10n
         sdk: MEGASdk,
         contactsMode: ContactsMode,
         shareUseCase: some ShareUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.sdk = sdk
         self.contactsMode = contactsMode
         self.shareUseCase = shareUseCase
-        isHiddenNodesEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
         self.tracker = tracker
     }
     
@@ -123,8 +120,7 @@ import MEGAL10n
     }
     
     @objc func showAlertForSensitiveDescendants(_ nodes: [MEGANode]) {
-        guard isHiddenNodesEnabled,
-              contactsMode == .shareFoldersWith else { return }
+        guard contactsMode == .shareFoldersWith else { return }
         isLoading = true
         defer { isLoading = false }
         

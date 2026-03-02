@@ -107,7 +107,7 @@ final class GetCollectionLinkViewModel: GetLinkViewModelType {
         
         let (stream, continuation) = AsyncStream.makeStream(of: SensitiveContentAcknowledgementStatus.self, bufferingPolicy: .bufferingNewest(1))
         
-        continuation.yield(remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) ? .unknown : .authorized) // Set initial value
+        continuation.yield(.unknown) // Set initial value
 
         for await status in stream {
             switch status {

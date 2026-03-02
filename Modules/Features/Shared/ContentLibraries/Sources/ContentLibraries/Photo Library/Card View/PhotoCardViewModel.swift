@@ -58,8 +58,7 @@ public class PhotoCardViewModel: ObservableObject {
     }
         
     func monitorInheritedSensitivityChanges() async {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-              let coverPhoto,
+        guard let coverPhoto,
               !coverPhoto.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else {
             return
@@ -78,9 +77,7 @@ public class PhotoCardViewModel: ObservableObject {
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
     
     func monitorPhotoSensitivityChanges() async {
-        guard
-            remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-            let coverPhoto else {
+        guard let coverPhoto else {
             return
         }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder

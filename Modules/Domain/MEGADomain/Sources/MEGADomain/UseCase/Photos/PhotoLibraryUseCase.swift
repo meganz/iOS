@@ -28,18 +28,15 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     private let photosRepository: T
     private let searchRepository: U
     private let sensitiveDisplayPreferenceUseCase: V
-    private let hiddenNodesFeatureFlagEnabled: @Sendable () -> Bool
 
     public init(
         photosRepository: T,
         searchRepository: U,
-        sensitiveDisplayPreferenceUseCase: V,
-        hiddenNodesFeatureFlagEnabled: @escaping @Sendable () -> Bool,
+        sensitiveDisplayPreferenceUseCase: V
     ) {
         self.photosRepository = photosRepository
         self.searchRepository = searchRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
-        self.hiddenNodesFeatureFlagEnabled = hiddenNodesFeatureFlagEnabled
     }
     
     public func photoLibraryContainer() async -> PhotoLibraryContainerEntity {
@@ -71,10 +68,6 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     }
     
     private func shouldExcludeSensitive(override: Bool? = nil) async -> Bool {
-        guard hiddenNodesFeatureFlagEnabled() else {
-            return false
-        }
-        
         guard let override else {
             return await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         }

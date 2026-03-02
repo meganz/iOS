@@ -22,22 +22,19 @@ struct RecentNodesUseCaseTests {
             
             #expect(recentActionBuckets.count <= limitCount)
             let invocations = mockRepo.invocations
-            #expect(invocations == [.recentActionBuckets(limit: limitCount, excludeSensitive: false)])
+            #expect(invocations == [.recentActionBuckets(limit: limitCount, excludeSensitive: true)])
         }
         
         @Test(
             "When sensitive flag is set",
             arguments: [
-                (featureFlagActive: false, excludeSensitive: true, expectedResult: false),
-                (featureFlagActive: false, excludeSensitive: false, expectedResult: false),
-                (featureFlagActive: false, excludeSensitive: nil, expectedResult: false),
-                (featureFlagActive: true, excludeSensitive: true, expectedResult: true),
-                (featureFlagActive: true, excludeSensitive: false, expectedResult: false),
-                (featureFlagActive: true, excludeSensitive: nil, expectedResult: true)
+                (excludeSensitive: true, expectedResult: true),
+                (excludeSensitive: false, expectedResult: false),
+                (excludeSensitive: nil, expectedResult: true)
             ]
         )
         func shouldFilterByProvidedSenstiveRequirements(
-            arguments: (featureFlagActive: Bool, excludeSensitive: Bool?, expectedResult: Bool)
+            arguments: (excludeSensitive: Bool?, expectedResult: Bool)
         ) async throws {
             let allRecentActionBucket = (1...6).map { RecentActionBucketEntity(parentHandle: $0) }
             
@@ -46,8 +43,7 @@ struct RecentNodesUseCaseTests {
                 requestResult: .success
             )
             let sut = sut(
-                recentNodesRepository: mockRepo,
-                hiddenNodesFeatureFlagEnabled: arguments.featureFlagActive)
+                recentNodesRepository: mockRepo)
             
             let limitCount = Int.random(in: 0...10)
             let recentActionBuckets = if let excludeSensitive = arguments.excludeSensitive {
@@ -74,7 +70,7 @@ struct RecentNodesUseCaseTests {
                 errorThrown is GenericErrorEntity
             })
             
-            #expect(mockRepo.invocations == [.recentActionBuckets(limit: limitCount, excludeSensitive: false)])
+            #expect(mockRepo.invocations == [.recentActionBuckets(limit: limitCount, excludeSensitive: true)])
         }
     }
     
@@ -158,15 +154,13 @@ extension RecentNodesUseCaseTests {
         contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase = MockContentConsumptionUserAttributeUseCase(),
         userUpdateRepository: MockUserUpdateRepository = MockUserUpdateRepository(),
         requestStatesRepository: MockRequestStatesRepository = MockRequestStatesRepository(),
-        nodeRepository: MockNodeRepository = MockNodeRepository(),
-        hiddenNodesFeatureFlagEnabled: Bool = false
+        nodeRepository: MockNodeRepository = MockNodeRepository()
     ) -> RecentNodesUseCase<MockRecentNodesRepository, MockContentConsumptionUserAttributeUseCase, MockUserUpdateRepository, MockRequestStatesRepository, MockNodeRepository> {
         RecentNodesUseCase(
             recentNodesRepository: recentNodesRepository,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             userUpdateRepository: userUpdateRepository,
             requestStatesRepository: requestStatesRepository,
-            nodeRepository: nodeRepository,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled })
+            nodeRepository: nodeRepository)
     }
 }

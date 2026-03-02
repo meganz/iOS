@@ -109,8 +109,7 @@ final class PhotoCardViewModelTests: XCTestCase {
         let sut = makeSUT(
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         var expectedImageContainer = [
@@ -146,11 +145,11 @@ final class PhotoCardViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
         
-        let sut = makeSUT(coverPhoto: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            coverPhoto: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -179,11 +178,11 @@ final class PhotoCardViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
         
-        let sut = makeSUT(coverPhoto: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            coverPhoto: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -216,11 +215,11 @@ final class PhotoCardViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
         
-        let sut = makeSUT(coverPhoto: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            coverPhoto: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -257,11 +256,11 @@ final class PhotoCardViewModelTests: XCTestCase {
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence()
         )
         
-        let sut = makeSUT(coverPhoto: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            coverPhoto: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -310,11 +309,11 @@ final class PhotoCardViewModelTests: XCTestCase {
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence()
         )
         
-        let sut = makeSUT(coverPhoto: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            coverPhoto: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),

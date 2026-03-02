@@ -25,8 +25,7 @@ struct RecentActionBucketProviderTests {
             nodeUseCase: MockNodeUseCase(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             mediaUseCase: MockMediaUseCase(),
-            nodeActions: .mock(),
-            hiddenNodesFeatureEnabled: false
+            nodeActions: .mock()
         )
         init(results: [String] = []) {
             sut = RecentActionBucketProvider(

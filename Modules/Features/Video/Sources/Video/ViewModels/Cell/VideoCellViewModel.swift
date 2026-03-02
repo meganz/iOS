@@ -96,7 +96,6 @@ final class VideoCellViewModel: ObservableObject {
     
     func monitorInheritedSensitivityChanges() async {
         guard
-            remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
             !nodeEntity.isMarkedSensitive,
             await $previewEntity.values.contains(where: { @Sendable in $0.imageContainer.type != .placeholder }) else { return }
         

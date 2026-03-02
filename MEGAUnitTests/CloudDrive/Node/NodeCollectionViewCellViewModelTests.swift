@@ -91,8 +91,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         let viewModel = sut(
             node: NodeEntity(handle: 1, isMarkedSensitive: true),
             isFromSharedItem: true,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)))
         
         await viewModel.configureCell().value
 
@@ -113,8 +112,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
     func testConfigureCell_whenFeatureFlagOnAndIsFromSharedItem_shouldSetIsSensitiveFalse() async {
         let viewModel = sut(
             node: nil,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: true)
+            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(false)))
         
         await viewModel.configureCell().value
 
@@ -138,8 +136,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             isFromSharedItem: false,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: false),
-            featureFlagHiddenNodes: true)
+                isAccessible: false))
         
         await viewModel.configureCell().value
 
@@ -163,8 +160,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: true)
+                isInheritingSensitivityResult: .success(false)))
         
         await viewModel.configureCell().value
 
@@ -173,32 +169,6 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
             .first { $0 }
             .sink { isSensitive in
                 XCTAssertTrue(isSensitive)
-                expectation.fulfill()
-            }
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeIsSensitive_shouldSetIsSensitiveFalse() async {
-        let node = NodeEntity(handle: 1, isMarkedSensitive: true)
-        let viewModel = sut(
-            node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(
-                isAccessible: true,
-                isInheritingSensitivityResult: .success(false)),
-            featureFlagHiddenNodes: false)
-        
-        await viewModel.configureCell().value
-
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
                 expectation.fulfill()
             }
         
@@ -214,8 +184,7 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
             node: node,
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(
                 isAccessible: true,
-                isInheritingSensitivityResult: .success(true)),
-            featureFlagHiddenNodes: true)
+                isInheritingSensitivityResult: .success(true)))
         
         await viewModel.configureCell().value
 
@@ -224,30 +193,6 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
             .first { $0 }
             .sink { isSensitive in
                 XCTAssertTrue(isSensitive)
-                expectation.fulfill()
-            }
-        
-        await fulfillment(of: [expectation], timeout: 1)
-        
-        subscription.cancel()
-    }
-        
-    @MainActor
-    func testConfigureCell_whenFeatureFlagOffAndNodeInheritedSensitivity_shouldSetIsSensitiveFalse() async {
-        let node = NodeEntity(handle: 1, isMarkedSensitive: false)
-        let viewModel = sut(
-            node: node,
-            sensitiveNodeUseCase: MockSensitiveNodeUseCase(isInheritingSensitivityResult: .success(true)),
-            featureFlagHiddenNodes: false)
-
-        await viewModel.configureCell().value
-        
-        let expectation = expectation(description: "viewModel.isSensitive should return value")
-        let subscription = viewModel.$isSensitive
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .first { !$0 }
-            .sink { isSensitive in
-                XCTAssertFalse(isSensitive)
                 expectation.fulfill()
             }
         
@@ -317,20 +262,20 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
 
 extension NodeCollectionViewCellViewModelTests {
     @MainActor
-    private func sut(node: NodeEntity? = nil,
-                     isFromSharedItem: Bool = false,
-                     isFromFolderLinks: Bool = false,
-                     sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
-                     nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
-                     thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
-                     featureFlagHiddenNodes: Bool = false) -> NodeCollectionViewCellViewModel {
+    private func sut(
+        node: NodeEntity? = nil,
+        isFromSharedItem: Bool = false,
+        isFromFolderLinks: Bool = false,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
+        nodeIconUseCase: some NodeIconUsecaseProtocol = MockNodeIconUsecase(stubbedIconData: Data()),
+        thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase()
+    ) -> NodeCollectionViewCellViewModel {
         NodeCollectionViewCellViewModel(
             node: node,
             isFromSharedItem: isFromSharedItem,
             isFromFolderLink: isFromFolderLinks,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            nodeIconUseCase: nodeIconUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]))
+            nodeIconUseCase: nodeIconUseCase)
     }
 }

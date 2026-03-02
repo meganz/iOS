@@ -51,7 +51,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     @Atomic private var loadMorePagesOffset = 20
     @Atomic private var subscriptions = Set<AnyCancellable>()
 
-    private let hiddenNodesFeatureEnabled: Bool
     private let isFromSharedItem: Bool
 
     // The node from which we want start searching from,
@@ -71,7 +70,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         resultsUpdates: some SearchResultsUpdatesProvider,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
-        hiddenNodesFeatureEnabled: Bool,
         isFromSharedItem: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
@@ -82,7 +80,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.mapper = resultsMapper
         self.resultsUpdates = resultsUpdates
         self.availableChips = allChips
-        self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         self.isFromSharedItem = isFromSharedItem
     }
     
@@ -251,8 +248,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         }
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
 
-        return hiddenNodesFeatureEnabled
-        && excludeSensitives
+        return excludeSensitives
         && !isNodeARubbishBinRootOrInRubbishBin()
     }
 

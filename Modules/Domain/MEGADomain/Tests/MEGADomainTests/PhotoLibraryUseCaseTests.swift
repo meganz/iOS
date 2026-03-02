@@ -24,7 +24,9 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
         let expectedResult = videoNodes + imageNodes
         
-        let usecase = makeSUT(fileSearchRepository: fileSearchRepo)
+        let usecase = makeSUT(
+            fileSearchRepository: fileSearchRepo,
+            sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase(excludeSensitives: false))
 
         let photos = try await usecase.media(for: [.allMedia, .allLocations], searchText: "", sortOrder: .defaultDesc)
         XCTAssertEqual(Set(photos), Set(expectedResult))
@@ -77,7 +79,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
                                                      mediaUploadNode: mediaUploadNode)
         let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(excludeSensitives: true)
         
-        let expectedResult = nodesInCameraUpload + nodesInMediaUpload
+        let expectedResult = (nodesInCameraUpload + nodesInMediaUpload).filter { !$0.isMarkedSensitive }
         let usecase = makeSUT(
             photosRepository: photosRepo,
             fileSearchRepository: fileSearchRepo,
@@ -145,7 +147,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
 
         let expectedResult = (videoNodes + imageNodes)
-            .filter { $0.parentHandle == 1 }
+            .filter { $0.parentHandle == 1 && !$0.isMarkedSensitive }
         let usecase = makeSUT(
             photosRepository: photosRepo,
             fileSearchRepository: fileSearchRepo
@@ -203,7 +205,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
         let fileSearchRepo = MockFilesSearchRepository(nodesForLocation: [.rootNode: imageNodes + videoNodes])
-        let expectedResult = (videoNodes + imageNodes)
+        let expectedResult = (videoNodes + imageNodes).filter { !$0.isMarkedSensitive }
             .filter { $0.parentHandle == 1 }
         let sut = makeSUT(
             photosRepository: photosRepo,
@@ -247,8 +249,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         PhotoLibraryUseCase(
             photosRepository: photosRepository,
             searchRepository: fileSearchRepository,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: { hiddenNodesFeatureFlagEnabled }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
     }
 

@@ -74,8 +74,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
-            nodeEntity: video,
-            featureFlagHiddenNodes: true
+            nodeEntity: video
         )
         
         var expectedImageContainer = [
@@ -110,8 +109,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
-            nodeEntity: video,
-            featureFlagHiddenNodes: true
+            nodeEntity: video
         )
         
         let exp = expectation(description: "Should not update image container")
@@ -140,8 +138,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
-            nodeEntity: video,
-            featureFlagHiddenNodes: true
+            nodeEntity: video
         )
         
         let exp = expectation(description: "Should not update image container")
@@ -171,8 +168,7 @@ final class VideoCellViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
             sensitiveNodeUseCase: nodeUseCase,
-            nodeEntity: video,
-            featureFlagHiddenNodes: true
+            nodeEntity: video
         )
         
         let exp = expectation(description: "Should not update image container")
@@ -290,7 +286,6 @@ final class VideoCellViewModelTests: XCTestCase {
         viewContext: VideoCellViewModel.ViewContext = .allVideos,
         onTapMoreOptions: @escaping (_ node: NodeEntity, _ shouldShowSelection: Bool) -> Void = { _, _ in },
         onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
-        featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -306,7 +301,6 @@ final class VideoCellViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             onTapMoreOptions: onTapMoreOptions,
             onTapped: onTapped

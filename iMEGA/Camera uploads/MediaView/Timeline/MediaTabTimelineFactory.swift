@@ -28,16 +28,12 @@ enum MediaTabTimelineFactory {
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
         
         let photoLibraryUseCase =  PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
         let nodeUseCase = NodeUseCase(
             nodeDataRepository: NodeDataRepository.newRepo,

@@ -10,8 +10,7 @@ import Video
 struct MediaTabPlaylistFactory {
     @MainActor static func makePlaylistTabViewModel(
         syncModel: VideoRevampSyncModel,
-        navigationController: UINavigationController?,
-        hiddenNodesFeatureFlagEnabled: Bool
+        navigationController: UINavigationController?
     ) -> PlaylistTabViewModel {
         let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
@@ -36,19 +35,13 @@ struct MediaTabPlaylistFactory {
             ),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo
-            ),
-            hiddenNodesFeatureFlagEnabled: {
-                hiddenNodesFeatureFlagEnabled
-            }
+            )
         )
 
         let photoLibraryUseCase = PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: fileSearchRepo,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase
         )
 
         // Video playlist related use cases

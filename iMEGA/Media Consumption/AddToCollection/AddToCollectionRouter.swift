@@ -32,9 +32,7 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
         let sensitiveDisplayPreferenceUseCase = SensitiveDisplayPreferenceUseCase(
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }
+                repo: UserAttributeRepository.newRepo)
         )
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let photoLibraryUseCase = makePhotoLibraryUseCase()
@@ -132,9 +130,7 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
                 nodeRepository: NodeRepository.newRepo,
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                repo: UserAttributeRepository.newRepo),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                repo: UserAttributeRepository.newRepo))
     }
     
     private func makeMonitorAlbumsUseCase() -> MonitorAlbumsUseCase {
@@ -170,10 +166,7 @@ public final class AddToCollectionRouter: AddToCollectionRouting {
         return PhotoLibraryUseCase(
             photosRepository: photoLibraryRepository,
             searchRepository: FilesSearchRepository.newRepo,
-            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase(),
-            hiddenNodesFeatureFlagEnabled: {
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
-            }
+            sensitiveDisplayPreferenceUseCase: makeSensitiveDisplayPreferenceUseCase()
         )
     }
     

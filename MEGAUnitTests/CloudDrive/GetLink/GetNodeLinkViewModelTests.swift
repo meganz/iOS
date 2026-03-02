@@ -11,53 +11,48 @@ import XCTest
 
 final class GetNodeLinkViewModelTests: XCTestCase {
     
-    @MainActor func testDispatch_onViewReadyAndAllNodeExported_returnCorrectCommands() {
-        for hiddenNodesFeatureFlagActive in [true, false] {
-            
-            let nodes: [MEGANode] = [
-                MockNode(handle: 1, isNodeExported: true)
-            ]
-            let sut = sut(nodes: nodes,
-                          hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
-            
-            let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count)
-            
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
-                .configureView(
-                    title: expectedTitle,
-                    isMultilink: false,
-                    shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)),
-                .showHud(.status(Strings.Localizable.generatingLinks)),
-                .enableLinkActions,
-                .dismissHud,
-                .processNodes
-            ], expectationValidation: ==)
-        }
+    @MainActor
+    func testDispatch_onViewReadyAndAllNodeExported_returnCorrectCommands() {
+        
+        let nodes: [MEGANode] = [
+            MockNode(handle: 1, isNodeExported: true)
+        ]
+        let sut = sut(nodes: nodes)
+        
+        let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count)
+        
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            .configureView(
+                title: expectedTitle,
+                isMultilink: false,
+                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)),
+            .showHud(.status(Strings.Localizable.generatingLinks)),
+            .enableLinkActions,
+            .dismissHud,
+            .processNodes
+        ], expectationValidation: ==)
     }
     
-    @MainActor func testDispatch_onViewReadyAndSomeNodesNotExported_returnCorrectCommands() {
-        for hiddenNodesFeatureFlagActive in [true, false] {
-            
-            let nodes: [MEGANode] = [
-                MockNode(handle: 1, isNodeExported: true),
-                MockNode(handle: 2, isNodeExported: false)
-            ]
-            let sut = sut(nodes: nodes,
-                          hiddenNodesFeatureFlagActive: hiddenNodesFeatureFlagActive)
-            
-            let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
-            
-            test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
-                .configureView(
-                    title: expectedTitle,
-                    isMultilink: true,
-                    shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)),
-                .showHud(.status(Strings.Localizable.generatingLinks)),
-                .enableLinkActions,
-                .dismissHud,
-                .processNodes
-            ], expectationValidation: ==)
-        }
+    @MainActor
+    func testDispatch_onViewReadyAndSomeNodesNotExported_returnCorrectCommands() {
+        let nodes: [MEGANode] = [
+            MockNode(handle: 1, isNodeExported: true),
+            MockNode(handle: 2, isNodeExported: false)
+        ]
+        let sut = sut(nodes: nodes)
+        
+        let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
+        
+        test(viewModel: sut, actions: [.onViewReady, .onViewDidAppear], expectedCommands: [
+            .configureView(
+                title: expectedTitle,
+                isMultilink: true,
+                shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)),
+            .showHud(.status(Strings.Localizable.generatingLinks)),
+            .enableLinkActions,
+            .dismissHud,
+            .processNodes
+        ], expectationValidation: ==)
     }
     
     @MainActor func testDispatch_onViewReadyAndNodeContainsSensitiveDescendant_returnCorrectCommands() {
@@ -68,8 +63,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
-            hiddenNodesFeatureFlagActive: true
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true])
         )
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
@@ -100,8 +94,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
-            hiddenNodesFeatureFlagActive: true
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true])
         )
         
         let expectation = expectation(description: "Expect sensitive content alert to appear")
@@ -135,8 +128,7 @@ final class GetNodeLinkViewModelTests: XCTestCase {
         
         let sut = sut(
             nodes: nodes,
-            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true]),
-            hiddenNodesFeatureFlagActive: true
+            shareUseCase: MockShareUseCase(containsSensitiveContent: [nodes[1].handle: true])
         )
         
         let expectation = expectation(description: "Expect sensitive content alert to appear")
@@ -207,14 +199,12 @@ final class GetNodeLinkViewModelTests: XCTestCase {
 
 extension GetNodeLinkViewModelTests {
     @MainActor
-    private func sut(nodes: [MEGANode] = [],
-                     shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
-                     hiddenNodesFeatureFlagActive: Bool = false
+    private func sut(
+        nodes: [MEGANode] = [],
+        shareUseCase: some ShareUseCaseProtocol = MockShareUseCase()
     ) -> GetNodeLinkViewModel {
         let sut = GetNodeLinkViewModel(
-            shareUseCase: shareUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
-                list: [.hiddenNodes: hiddenNodesFeatureFlagActive]))
+            shareUseCase: shareUseCase)
         sut.nodes = nodes
         return sut
     }

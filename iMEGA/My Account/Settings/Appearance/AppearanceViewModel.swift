@@ -59,14 +59,11 @@ final class AppearanceViewModel {
     func isAppearanceSectionVisible(section: AppearanceSection?) -> Bool {
         switch section {
         case .hiddenItems:
-            guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) else {
-                return false
-            }
-            return sensitiveNodeUseCase.isAccessible()
+            sensitiveNodeUseCase.isAccessible()
         case .none:
-            return false
+            false
         case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .mediaDiscoverySubfolder:
-            return true
+            true
         }
     }
     

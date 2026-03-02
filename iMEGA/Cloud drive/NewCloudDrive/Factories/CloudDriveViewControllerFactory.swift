@@ -132,9 +132,7 @@ struct CloudDriveViewControllerFactory {
 
         let nodeActionBridge = NodeActionsBridge()
         let nodeAssetsManager = NodeAssetsManager.shared
-        let remoteFeatureFlagProvider = DIContainer.remoteFeatureFlagUseCase
         let calendar = Calendar.autoupdatingCurrent
-        let hiddenNodesEnabled = remoteFeatureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
 
         let resultsMapper = SearchResultMapper(
             sdk: sdk,
@@ -143,8 +141,7 @@ struct CloudDriveViewControllerFactory {
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
             mediaUseCase: homeFactory.makeMediaUseCase(),
-            nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesEnabled
+            nodeActions: nodeActions
         )
 
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
@@ -212,7 +209,6 @@ struct CloudDriveViewControllerFactory {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             nodeActions: nodeActions,
             nodeSensitivityChecker: NodeSensitivityChecker(
-                remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
                 systemGeneratedNodeUseCase: SystemGeneratedNodeUseCase(
                     systemGeneratedNodeRepository: SystemGeneratedNodeRepository.newRepo
                 ),
@@ -229,8 +225,7 @@ struct CloudDriveViewControllerFactory {
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
-                    repo: UserAttributeRepository.newRepo),
-                hiddenNodesFeatureFlagEnabled: { hiddenNodesEnabled }
+                    repo: UserAttributeRepository.newRepo)
             ),
             nodeActionsBridge: nodeActionBridge
         )
@@ -1228,8 +1223,7 @@ struct CloudDriveViewControllerFactory {
                 sensitiveNodeUseCase: SensitiveNodeUseCase(
                     nodeRepository: NodeRepository.newRepo,
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
-                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+                contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
         )
     }
 

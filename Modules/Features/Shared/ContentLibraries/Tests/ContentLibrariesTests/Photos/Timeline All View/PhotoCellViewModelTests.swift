@@ -774,8 +774,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+            sensitiveNodeUseCase: sensitiveNodeUseCase
         )
         
         var expectedImageContainer = [
@@ -810,8 +809,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let sut = makeSUT(photo: photo,
                           thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+                          sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -837,10 +835,10 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
-        let sut = makeSUT(photo: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -870,10 +868,10 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode)
         
-        let sut = makeSUT(photo: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -898,10 +896,10 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
         let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         
-        let sut = makeSUT(photo: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nil,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nil)
         
         let exp = expectation(description: "Should not update image container")
         exp.isInverted = true
@@ -935,11 +933,11 @@ final class PhotoCellViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
         
-        let sut = makeSUT(photo: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -985,11 +983,11 @@ final class PhotoCellViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
         
-        let sut = makeSUT(photo: photo,
-                          thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-                          nodeUseCase: nodeUseCase,
-                          sensitiveNodeUseCase: sensitiveNodeUseCase,
-                          remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         var expectedImageContainers = [
             imageContainer.toSensitiveImageContaining(isSensitive: false),
@@ -1042,7 +1040,8 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
+            configuration: configuration)
         addTeardownBlock { [weak sut] in
             // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel
             try await Task.sleep(nanoseconds: 100_000_000)

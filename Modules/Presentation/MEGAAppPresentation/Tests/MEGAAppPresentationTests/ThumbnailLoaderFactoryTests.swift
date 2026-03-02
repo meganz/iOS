@@ -16,20 +16,9 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
         
         let thumbnailLoader = ThumbnailLoaderFactory
             .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
-                                 thumbnailUseCase: MockThumbnailUseCase(),
-                                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]))
+                                 thumbnailUseCase: MockThumbnailUseCase())
         
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
-    }
-    
-    func testMakeThumbnailLoader_configIsSensitiveIfFeatureFlagOff_shouldReturnGeneralThumbnailLoader() {
-        
-        let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(config: .sensitive(sensitiveNodeUseCase: MockSensitiveNodeUseCase()),
-                                 thumbnailUseCase: MockThumbnailUseCase(),
-                                 remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]))
-        
-        XCTAssertTrue(thumbnailLoader is ThumbnailLoader)
     }
     
     // MARK: MakeThumbnailLoder with fallback
@@ -52,26 +41,10 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
                     sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
                     nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
                 ),
-                thumbnailUseCase: MockThumbnailUseCase(),
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true])
+                thumbnailUseCase: MockThumbnailUseCase()
             )
         
         XCTAssertTrue(thumbnailLoader is SensitiveThumbnailLoader)
-    }
-    
-    func testMakeThumbnailLoaderWithFallback_configIsSensitiveIfFeatureFlagOff_shouldReturnGeneralThumbnailLoader() {
-        
-        let thumbnailLoader = ThumbnailLoaderFactory
-            .makeThumbnailLoader(
-                config: .sensitiveWithFallbackIcon(
-                    sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                    nodeIconUseCase: MockNodeIconUsecase(stubbedIconData: anyData())
-                ),
-                thumbnailUseCase: MockThumbnailUseCase(),
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false])
-            )
-        
-        XCTAssertTrue(thumbnailLoader is ThumbnailLoaderWithFallbackIcon)
     }
     
     private func anyData() -> Data {

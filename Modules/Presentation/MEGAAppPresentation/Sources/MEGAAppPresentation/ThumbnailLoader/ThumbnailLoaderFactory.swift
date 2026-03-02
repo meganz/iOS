@@ -1,4 +1,3 @@
-import MEGAAppSDKRepo
 import MEGADomain
 
 /// Loader factory to provide the correct thumbnail loader for feature flag
@@ -24,14 +23,13 @@ public enum ThumbnailLoaderFactory {
     
     public static func makeThumbnailLoader(
         config: Configuration,
-        thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+        thumbnailUseCase: some ThumbnailUseCaseProtocol
     ) -> any ThumbnailLoaderProtocol {
         
         switch config {
         case .general:
             makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
-        case .sensitive(let sensitiveNodeUseCase) where remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes):
+        case .sensitive(let sensitiveNodeUseCase):
             makeSensitiveThumbnailLoader(
                 thumbnailUseCase: thumbnailUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase
@@ -42,20 +40,11 @@ public enum ThumbnailLoaderFactory {
                 nodeIconUseCase: nodeIconUseCase
             )
         case .sensitiveWithFallbackIcon(let sensitiveNodeUseCase, let nodeIconUseCase):
-            if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) {
-                makeSensitiveThumbnailLoaderWithFallbackIcon(
-                    thumbnailUseCase: thumbnailUseCase,
-                    sensitiveNodeUseCase: sensitiveNodeUseCase,
-                    nodeIconUseCase: nodeIconUseCase
-                )
-            } else {
-                makeThumbnailLoaderWithFallbackIcon(
-                    thumbnailUseCase: thumbnailUseCase,
-                    nodeIconUseCase: nodeIconUseCase
-                )
-            }
-        default:
-            makeThumbnailLoader(thumbnailUseCase: thumbnailUseCase)
+            makeSensitiveThumbnailLoaderWithFallbackIcon(
+                thumbnailUseCase: thumbnailUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase,
+                nodeIconUseCase: nodeIconUseCase
+            )
         }
     }
     

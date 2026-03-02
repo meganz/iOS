@@ -164,14 +164,12 @@ extension SpotlightContentIndexerActorTests {
         favouritesUseCase: some FavouriteNodesUseCaseProtocol = MockFavouriteNodesUseCase(),
         nodeAttributeUseCase: some NodeAttributeUseCaseProtocol = MockNodeAttributeUseCase(),
         spotlightSearchableIndexUseCase: some SpotlightSearchableIndexUseCaseProtocol = MockSpotlightSearchableIndexUseCase(),
-        featureFlagHiddenNodes: Bool = true,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider()
     ) -> SpotlightContentIndexerActor {
         let sut = SpotlightContentIndexerActor(
             favouritesUseCase: favouritesUseCase,
             nodeAttributeUseCase: nodeAttributeUseCase,
             spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: featureFlagHiddenNodes]),
             nodeUpdatesProvider: nodeUpdatesProvider)
         return sut
     }

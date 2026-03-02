@@ -10,16 +10,15 @@ import MEGADomain
     init(nodes: [NodeEntity],
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          nodeIconUseCase: some NodeIconUsecaseProtocol,
-         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
+         thumbnailUseCase: some ThumbnailUseCaseProtocol
+    ) {
         
         self.thumbnailViewModels = nodes.map {
             ItemCollectionViewCellViewModel(
                 node: $0,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 thumbnailUseCase: thumbnailUseCase,
-                nodeIconUseCase: nodeIconUseCase,
-                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+                nodeIconUseCase: nodeIconUseCase)
         }
     }
     
