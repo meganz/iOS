@@ -15,43 +15,61 @@ struct HangOrEndCallView: View {
         static let buttonsPadding: CGFloat = 36
     }
     
+    public static let presentationHeightForLiquidGlass: CGFloat = 220
+    
     var body: some View {
         VStack {
             Spacer()
-            VStack {
-                VStack(spacing: Constants.buttonsSpacing) {
-                    Button(action: {
-                        viewModel.leaveCall()
-                    }, label: {
-                        Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
-                            .font(.headline)
-                            .foregroundColor(TokenColors.Text.accent.swiftUI)
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(TokenColors.Button.secondary.swiftUI)
-                            .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
-                    })
-                    
-                    Button(action: {
-                        viewModel.endCallForAll()
-                    }, label: {
-                        Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
-                            .font(.headline)
-                            .foregroundColor(TokenColors.Text.primary.swiftUI)
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(TokenColors.Components.interactive.swiftUI)
-                            .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
-                    })
-                }
-                .padding(Constants.buttonsPadding)
-            }
-            .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
-            .background(TokenColors.Background.page.swiftUI
-                .edgesIgnoringSafeArea(.bottom)
-            )
+            sheets.modifier(LegacyBackgroundModifier())
         }
+    }
+    
+    struct LegacyBackgroundModifier: ViewModifier {
+        @ViewBuilder
+        func body(content: Content) -> some View {
+            if #available(iOS 26.0, *) {
+                content
+            } else {
+                content
+                    .background(
+                        TokenColors.Background.page.swiftUI
+                            .edgesIgnoringSafeArea(.bottom)
+                    )
+            }
+        }
+    }
+    
+    var sheets: some View {
+        VStack {
+            VStack(spacing: Constants.buttonsSpacing) {
+                Button(action: {
+                    viewModel.leaveCall()
+                }, label: {
+                    Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
+                        .font(.headline)
+                        .foregroundColor(TokenColors.Text.accent.swiftUI)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
+                        .background(TokenColors.Button.secondary.swiftUI)
+                        .cornerRadius(Constants.cornerRadius)
+                        .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                })
+                
+                Button(action: {
+                    viewModel.endCallForAll()
+                }, label: {
+                    Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
+                        .font(.headline)
+                        .foregroundColor(TokenColors.Text.primary.swiftUI)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
+                        .background(TokenColors.Components.interactive.swiftUI)
+                        .cornerRadius(Constants.cornerRadius)
+                        .shadow(color: TokenColors.Background.page.swiftUI.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                })
+            }
+            .padding(Constants.buttonsPadding)
+        }
+        .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
     }
 }
