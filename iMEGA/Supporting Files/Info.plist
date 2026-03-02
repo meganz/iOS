@@ -250,6 +250,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>mega.iOS.cameraUpload.backgroundFetch</string>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER).transfers.BGContinuedProcessingTask.*</string>
 	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>$(GOOGLE_ADS_APPID)</string>

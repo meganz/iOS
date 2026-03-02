@@ -1865,6 +1865,7 @@
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
+		A8D553012EDF150300B05C12 /* NodeBackgroundDownloader in Frameworks */ = {isa = PBXBuildFile; productRef = A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
 		A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */ = {isa = PBXBuildFile; productRef = A8DEA5072B9F157000E8806C /* MEGADomainMock */; };
@@ -4761,6 +4762,7 @@
 		A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1322D71C470030CE1B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGroupNameTextFieldDelegate.swift; sourceTree = "<group>"; };
+		A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NodeBackgroundDownloader; sourceTree = "<group>"; };
 		A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExpiredViewController.swift; sourceTree = "<group>"; };
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
@@ -5735,6 +5737,7 @@
 				A835E49D2ED0636B004CE294 /* MEGAUIMock in Frameworks */,
 				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
+				A8D553012EDF150300B05C12 /* NodeBackgroundDownloader in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */,
@@ -11057,6 +11060,7 @@
 				BF7758C92F21D6F40091DE2A /* Home */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
+				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
 				A52F1E382EBCE55800D3A2E9 /* Notifications */,
 				A52F1E392EBCE55800D3A2E9 /* PhotosBrowser */,
 				A52F1E3A2EBCE55800D3A2E9 /* Search */,
@@ -13876,6 +13880,7 @@
 				A5472CC62F04EF0900A49688 /* FolderLink */,
 				BF7758D02F21D8490091DE2A /* Home */,
 				BF26E7AE2F3EDB8800AF51E5 /* Favourites */,
+				A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -14278,6 +14283,7 @@
 				A5EA941D2EB5EE82009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Search" */,
 				A5EA941E2EB5EEB2009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Video" */,
 				A5EA941F2EB5EEE4009778D3 /* XCLocalSwiftPackageReference "Modules/Features/PhotosBrowser" */,
+				A8531BDC2EDF0FAB000B267A /* XCLocalSwiftPackageReference "Modules/Features/NodeBackgroundDownloader" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -19046,6 +19052,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/PhotosBrowser;
 		};
+		A8531BDC2EDF0FAB000B267A /* XCLocalSwiftPackageReference "Modules/Features/NodeBackgroundDownloader" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/NodeBackgroundDownloader;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -19506,6 +19516,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */;
 			productName = WSTagsField;
+		};
+		A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NodeBackgroundDownloader;
 		};
 		A8DEA5072B9F157000E8806C /* MEGADomainMock */ = {
 			isa = XCSwiftPackageProductDependency;

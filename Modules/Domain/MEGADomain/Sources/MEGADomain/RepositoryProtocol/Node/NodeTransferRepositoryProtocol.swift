@@ -12,6 +12,10 @@ public struct TransferResponseEntity: Sendable {
         self.transferEntity = transferEntity
         self.error = error
     }
+    
+    public func get() -> TransferEntity {
+        transferEntity
+    }
 }
 
 public protocol NodeTransferRepositoryProtocol: RepositoryProtocol, Sendable {

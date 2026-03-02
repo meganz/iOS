@@ -1,12 +1,16 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
+import NodeBackgroundDownloader
 
 @objc public final class PhotoBrowserViewModel: NSObject, ViewModelType {
     public enum Action: ActionType {
         case onViewDidLoad
         case onViewWillAppear
         case onViewWillDisappear
+        case nodeDownloadStarted(NodeEntity)
     }
     
     public enum Command: CommandType, Equatable {
@@ -23,6 +27,10 @@ import MEGADomain
             onViewWillAppear()
         case .onViewWillDisappear:
             onViewWillDisappear()
+        case let .nodeDownloadStarted(node):
+            if #available(iOS 26.0, *) {
+                processBackgroundDownload(for: node)
+            }
         }
     }
     
@@ -71,5 +79,19 @@ import MEGADomain
 
     @objc func trackAddToAlbumMenuItemEvent() {
         tracker.trackAnalyticsEvent(with: AddToAlbumMenuItemEvent())
+    }
+    
+    @available(iOS 26.0, *)
+    private func processBackgroundDownload(for node: NodeEntity) {
+        let featureEnabled = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosBackgroundContinuedProcessingTransfer)
+        // Note: consider using MediaUseCase
+        let isVideo = node.name.fileExtensionGroup.isVideo
+        
+        guard featureEnabled && isVideo else { return }
+        
+        Task {
+            await BackgroundDownloadHandler.shared.handleBackgroundDownload(for: node)
+        }
+        tracker.trackAnalyticsEvent(with: PhotoPreviewMakeAvailableOfflineBGContinuedProcessingTaskMenuItemEvent())
     }
 }

@@ -3282,5 +3282,21 @@
         <string>Paused: %u items left</string>
       </dict>
     </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d of [A] completed</string>
+        <key>other</key>
+        <string>%d of [A] completed</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

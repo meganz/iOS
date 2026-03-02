@@ -262,6 +262,17 @@ extension MEGAPhotoBrowserViewController {
         }
     }
     
+    @objc func download(_ node: MEGANode, isFolderLink: Bool) {
+        CancellableTransferRouter(presenter: self, transfers: transferViewEntities(fromNodes: [node]), transferType: .download, isFolderLink: isFolderLink).start()
+        
+        // After start downloading as usual, try start background task support if possible.
+        viewModel.dispatch(.nodeDownloadStarted(node.toNodeEntity()))
+    }
+    
+    private func transferViewEntities(fromNodes nodes: [MEGANode]) -> [CancellableTransfer] {
+        nodes.map { CancellableTransfer(handle: $0.handle, name: $0.name, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+    }
+    
     @objc func activateSlideShowButton(barButtonItem: UIBarButtonItem?) {
         Task {
             if await isSlideShowEnabled() {

@@ -4848,3 +4848,9 @@
 "account.upgrade.yearly.availability.snackbar.message" ="%@ is available with yearly billing";
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message" ="%@ is available with monthly billing";
+/* Message shown in a notification when a file transfer is currently in progress. Informs the user that they can cancel the transfer by going to the Transfers section of the app. */
+"notification.transfer.inProgress.message"="Transfer in progress. To cancel it, go to Transfers.";
+/* Message shown in a notification when a file transfer is paused because the app is not active. Informs the user that the transfer will automatically resume when they reopen the app. */
+"notification.transfer.paused.message"="Transfer paused. It will resume when you reopen the app.";
+/* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
+"notification.transfer.download.title"="Transferring files";
