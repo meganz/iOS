@@ -20,7 +20,7 @@ extension AlbumContentViewController: PhotoLibraryProvider {
     }
     
     func didSelectedPhotoCountChange(_ count: Int) {
-        updateNavigationTitle(withSelectedPhotoCount: count)
+        updateNavigationTitle(selectedPhotoCount: count)
         configureToolbarButtonsWithAlbumType()
     }
 }

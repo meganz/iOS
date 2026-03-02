@@ -164,7 +164,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         setEditing(true, animated: true)
         viewModel.dispatch(.onEditModeChange(true))
         enablePhotoLibraryEditMode(isEditing)
-        updateNavigationTitle(withSelectedPhotoCount: 0)
+        updateNavigationTitle(selectedPhotoCount: 0)
         
         configureBarButtons()
         configureToolbarButtonsWithAlbumType()
@@ -222,6 +222,20 @@ final class AlbumContentViewController: UIViewController, ViewType {
         case .startEditMode:
             presentedViewController?.dismiss(animated: true)
             startEditingMode()
+        }
+    }
+    
+    func updateNavigationTitle(selectedPhotoCount count: Int) {
+        let message = if count == 0 {
+            Strings.Localizable.selectTitle
+        } else {
+            Strings.Localizable.General.Format.itemsSelected(count)
+        }
+        
+        if #available(iOS 26.0, *) {
+            navigationItem.titleView = NavigationTitleView(title: message).toWrappedUIView(shouldEnableGlassEffect: false)
+        } else {
+            navigationItem.title = message
         }
     }
     
