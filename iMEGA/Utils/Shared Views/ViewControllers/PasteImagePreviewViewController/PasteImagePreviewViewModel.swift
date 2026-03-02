@@ -51,7 +51,7 @@ final class PasteImagePreviewViewModel: ViewModelType {
             return
         }
         Task {
-            await chatUploader.upload(image: image, chatRoomId: chatRoom.chatId)
+            await chatUploader.upload(image: image, chatRoom: chatRoom)
         }
     }
 }

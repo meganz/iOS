@@ -5,15 +5,7 @@ import MEGARepo
 import MEGASwift
 
 protocol ChatUploaderProtocol: Sendable {
-    func upload(image: UIImage, chatRoomId: UInt64) async
-    func upload(
-        filepath: String,
-        appData: String,
-        chatRoomId: UInt64,
-        parentNode: MEGANode,
-        isSourceTemporary: Bool,
-        delegate: MEGAStartUploadTransferDelegate
-    )
+    func upload(image: UIImage, chatRoom: ChatRoomEntity) async
     func upload(
         filepath: String,
         chatRoomId: UInt64,
@@ -55,7 +47,7 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
         MEGASdk.shared.add(self)
     }
     
-    func upload(image: UIImage, chatRoomId: UInt64) async {
+    func upload(image: UIImage, chatRoom: ChatRoomEntity) async {
         do {
             guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else {
                 MEGALogDebug("Could not load MyChatFiles target folder")
@@ -71,54 +63,33 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
             do {
                 try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
                 var appData = ""
-                appData = appData.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+                appData = appData.mnz_appDataToAttach(toChatID: chatRoom.chatId, asVoiceClip: false)
                 
                 if let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: tempPath) {
                     appData += formattedCoordinate
                 }
                 
-                ChatUploader.sharedInstance.upload(filepath: tempPath,
-                                                   appData: appData,
-                                                   chatRoomId: chatRoomId,
-                                                   parentNode: myChatFilesFolderNode,
-                                                   isSourceTemporary: false,
-                                                   delegate: MEGAStartUploadTransferDelegate(completion: nil))
+                let pitagTarget: PitagTargetEntity = chatRoom.pitagTarget
+                let options = UploadOptionsEntity(
+                    appData: appData,
+                    isSourceTemporary: false,
+                    pitagTrigger: .picker,
+                    isChatUpload: true,
+                    pitagTarget: pitagTarget
+                )
+                ChatUploader.sharedInstance.upload(
+                    filepath: tempPath,
+                    chatRoomId: chatRoom.chatId,
+                    parentNode: myChatFilesFolderNode,
+                    uploadOptions: options,
+                    delegate: MEGAStartUploadTransferDelegate(completion: nil)
+                )
                 
             } catch {
                 MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
             }
         } catch {
             MEGALogDebug("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
-        }
-    }
-    
-    func upload(filepath: String,
-                appData: String,
-                chatRoomId: UInt64,
-                parentNode: MEGANode,
-                isSourceTemporary: Bool,
-                delegate: MEGAStartUploadTransferDelegate) {
-        
-        MEGALogInfo("[ChatUploader] uploading File path \(filepath)")
-        cleanupDatabaseIfRequired()
-        guard let context = store.stack.newBackgroundContext() else { return }
-        
-        context.performAndWait {
-            MEGALogInfo("[ChatUploader] inserted new entry File path \(filepath)")
-            // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
-            self.store.insertChatUploadTransfer(withFilepath: filepath,
-                                                chatRoomId: String(chatRoomId),
-                                                transferTag: nil,
-                                                allowDuplicateFilePath: false,
-                                                context: context)
-            
-            MEGALogInfo("[ChatUploader] SDK upload started for File path \(filepath)")
-            MEGASdk.shared.startUploadForChat(withLocalPath: filepath,
-                                              parent: parentNode,
-                                              appData: appData,
-                                              isSourceTemporary: isSourceTemporary,
-                                              fileName: nil,
-                                              delegate: delegate)
         }
     }
     

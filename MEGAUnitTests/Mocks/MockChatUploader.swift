@@ -7,19 +7,8 @@ final class MockChatUploader: ChatUploaderProtocol, @unchecked Sendable {
     
     var uploadImageCalled: (() -> Void)?
     
-    func upload(image: UIImage, chatRoomId: UInt64) async {
+    func upload(image: UIImage, chatRoom: ChatRoomEntity) async {
         uploadImageCalled?()
-    }
-    
-    func upload(
-        filepath: String,
-        appData: String,
-        chatRoomId: UInt64,
-        parentNode: MEGANode,
-        isSourceTemporary: Bool,
-        delegate: MEGAStartUploadTransferDelegate
-    ) {
-        uploadFile_calledTimes += 1
     }
     
     func upload(
