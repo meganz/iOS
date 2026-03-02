@@ -145,6 +145,9 @@ final class NodeOpener {
             config: config
         )
         if let vc {
+            if #available(iOS 26.0, *), config.isFromSharedItem == true {
+                AppearanceManager.applyLiquidGlassAppearance(to: vc.navigationItem, backgroundColor: UIColor.surface1Background())
+            }
             navigationController?.pushViewController(vc, animated: true)
         }
     }
