@@ -74,6 +74,9 @@ final class PSASwiftUIBackedView: UIView, PSAViewType {
         let hc = UIHostingController(rootView: root)
         hc.view.backgroundColor = .clear
         hc.view.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 26.0, *) {
+            hc.safeAreaRegions = .container
+        }
         hostingController = hc
 
         addSubview(hc.view)

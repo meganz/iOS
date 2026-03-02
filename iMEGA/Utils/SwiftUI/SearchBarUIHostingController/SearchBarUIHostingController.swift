@@ -85,12 +85,12 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             if enabled {
                 addToolbar(for: config, animated: true)
                 if shouldSwitchTabbarVisibility {
-                    tabBarController?.tabBar.isHidden = true
+                    tabBarController?.tabBar.alpha = 0
                 }
             } else {
                 removeToolbar(animated: true)
                 if shouldSwitchTabbarVisibility {
-                    tabBarController?.tabBar.isHidden = false
+                    tabBarController?.tabBar.alpha = 1
                 }
             }
             if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
