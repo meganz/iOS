@@ -254,6 +254,12 @@ extension MainTabBarController: MEGANavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController!, willShow viewController: UIViewController!, animated: Bool) {
         updateBottomContainerVisibility(for: viewController)
     }
+    
+    public func navigationController(_ navigationController: UINavigationController!, didShow viewController: UIViewController!, animated: Bool) {
+        if #available(iOS 26.0, *) {
+            refreshBottomConstraint()
+        }
+    }
 }
 
 // MARK: - MEGAGlobalDelegate
