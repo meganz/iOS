@@ -32,6 +32,12 @@ public final class HangOrEndCallRouter: HangOrEndCallRouting {
         let hostingController = UIHostingController(rootView: hangOrEndCallView)
         hostingController.view.backgroundColor = .clear
         hostingController.overrideUserInterfaceStyle = .dark
+        if #available(iOS 26.0, *) {
+            if let sheet = hostingController.sheetPresentationController {
+                sheet.detents = [.custom { _ in HangOrEndCallView.presentationHeightForLiquidGlass }]
+                sheet.prefersGrabberVisible = true
+            }
+        }
         return hostingController
     }
     
