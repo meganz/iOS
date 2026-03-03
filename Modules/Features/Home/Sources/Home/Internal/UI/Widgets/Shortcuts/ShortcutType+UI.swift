@@ -9,7 +9,6 @@ extension ShortcutType {
     var title: String {
         switch self {
         case .favourites: Strings.Localizable.favourites
-        case .videos: Strings.Localizable.videos
         case .offline: Strings.Localizable.offline
         }
     }
@@ -17,7 +16,6 @@ extension ShortcutType {
     var icon: Image {
         switch self {
         case .favourites: MEGAAssets.Image.favouritesHomeChip
-        case .videos: MEGAAssets.Image.videosHomeChip
         case .offline: MEGAAssets.Image.offlineHomeChip
         }
     }

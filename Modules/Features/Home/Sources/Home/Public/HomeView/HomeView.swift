@@ -75,7 +75,7 @@ public struct HomeView: View {
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction
                     )
                 )
-            case .offline, .videos:
+            case .offline:
                 EmptyView() // Handled by UIKit routing
             }
         }
@@ -90,7 +90,7 @@ public struct HomeView: View {
                         switch shortcutType {
                         case .favourites:
                             navigationPath.append(NavigationRoute.shortcut(.favourites))
-                        case .offline, .videos:
+                        case .offline:
                             dependency.router.route(to: .shortcut(shortcutType))
                         }
                     }

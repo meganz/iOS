@@ -25,8 +25,6 @@ final class HomeViewRouter: HomeViewRouting {
 
     private func route(to shortcutType: ShortcutType) {
         switch shortcutType {
-        case .videos:
-            showVideos()
         case .offline:
             showOffline()
         case .favourites:
@@ -38,15 +36,6 @@ final class HomeViewRouter: HomeViewRouting {
         let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
         navigationController?.pushViewController(offlineVC, animated: true)
-    }
-
-    private func showVideos() {
-        guard let navigationController else {
-            assertionFailure("Navigation controller is nil when trying to push videos explorer view")
-            return
-        }
-
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .video).start()
     }
 
     private func showUpgradePlanView() {
