@@ -108,6 +108,10 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
         }
+        
+        if #available(iOS 26.0, *) {
+            clearBackBarButton()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
