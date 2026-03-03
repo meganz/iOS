@@ -1,5 +1,6 @@
 import DeviceCenter
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
@@ -221,7 +222,10 @@ extension AccountMenuViewRouter {
             isBackup: isBackup,
             warningMessage: warningMessage
         ) else { return }
-
+        
+        if #available(iOS 26.0, *) {
+            AppearanceManager.applyLiquidGlassAppearance(to: viewController.navigationItem, backgroundColor: TokenColors.Background.surface1)
+        }
         navigationController.pushViewController(viewController, animated: true)
     }
 
