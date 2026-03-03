@@ -155,8 +155,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
             break;
         case DisplayModeAlbumLink:
-            [self.leftToolbarItem setImage:NULL];
-            self.leftToolbarItem.enabled = NO;
+            [self hideBarButtonWithBarButtonItem:self.leftToolbarItem];
+            [self hideBarButtonWithBarButtonItem:self.centerToolbarItem];
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
         case DisplayModeTransfers:
@@ -710,7 +710,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         if (weakSelf.dataProvider.currentIndex == index) {
             weakSelf.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
             [weakSelf.pieChartView reloadData];
-            [weakSelf hideSlideShowButtonWithBarButtonItem:[weakSelf slideshowButton]];
+            [weakSelf hideBarButtonWithBarButtonItem:[weakSelf slideshowButton]];
             if (weakSelf.pieChartView.alpha < 1.0f) {
                 [UIView animateWithDuration:0.2 animations:^{
                     weakSelf.pieChartView.alpha = 1.0f;
