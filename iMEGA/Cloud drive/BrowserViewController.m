@@ -347,15 +347,28 @@
 }
 
 - (void)addSearchBar {
-    if (self.searchController && !self.navigationItem.searchController) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    if (!self.searchController) {
+        return;
+    }
+    if (self.isChildBrowser) {
+        if (!self.navigationItem.searchController) {
+            self.navigationItem.searchController = self.searchController;
+            self.navigationItem.hidesSearchBarWhenScrolling = NO;
+        }
+    } else {
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
     }
 }
 
 - (void)hideSearchBarIfNotActive {
     if (!self.searchController.isActive) {
-        self.navigationItem.searchController = nil;
+        if (self.isChildBrowser) {
+            self.navigationItem.searchController = nil;
+        } else {
+            self.tableView.tableHeaderView = nil;
+        }
     }
 }
 
