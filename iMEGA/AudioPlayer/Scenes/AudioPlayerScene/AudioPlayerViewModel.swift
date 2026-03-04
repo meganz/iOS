@@ -495,7 +495,7 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
             invokeCommand?(.updateSpeed(mode: speedModeState))
         case .updateCurrentTime(let percentage):
-            playerHandler.playerProgressCompleted(percentage: percentage)
+            playerHandler.playerSetProgress(to: percentage)
         case .onShuffle(let active):
             shuffleModeEnabled = active
         case .onPrevious:

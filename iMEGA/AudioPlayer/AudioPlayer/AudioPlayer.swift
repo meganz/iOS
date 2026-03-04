@@ -122,7 +122,12 @@ final class AudioPlayer: NSObject {
         get { queuePlayer.rate }
         set {
             if newValue == 0 { storedRate = queuePlayer.rate }
-            queuePlayer.rate = newValue
+            if newValue > 0 && !isPlaying {
+                storedRate = newValue
+            }
+            if newValue <= 0 || isPlaying {
+                queuePlayer.rate = newValue
+            }
         }
     }
     

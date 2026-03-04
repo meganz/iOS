@@ -95,6 +95,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         updateProgressCompleted_calledTimes += 1
     }
     
+    func playerSetProgress(to percentage: Float) {
+        updateProgressCompleted_calledTimes += 1
+    }
+    
     func playerResumePlayback(from timeInterval: TimeInterval) {
         playerResumePlayback_Calls.append(timeInterval)
         onPlayerResumePlaybackCompletion?()

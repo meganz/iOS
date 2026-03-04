@@ -213,6 +213,17 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
         }
     }
     
+    func playerSetProgress(to percentage: Float) {
+        guard let currentItem = playerCurrentItem() else { return }
+        let timeInterval = CMTimeGetSeconds(currentItem.duration) * Double(percentage)
+        currentSeekTask = Task { @MainActor [weak self] in
+            await self?.player?.setProgressCompleted(timeInterval)
+            if self?.player?.isPlaying == true {
+                self?.playerPlay()
+            }
+        }
+    }
+    
     func playNext() {
         playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()

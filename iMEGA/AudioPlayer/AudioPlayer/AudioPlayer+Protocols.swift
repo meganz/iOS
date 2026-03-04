@@ -87,6 +87,7 @@ extension AudioPlayerObserversProtocol {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem]) async
     func playerProgressCompleted(percentage: Float)
+    func playerSetProgress(to percentage: Float)
     func playerShuffle(active: Bool)
     func goBackward()
     func playPrevious()
