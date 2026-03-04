@@ -74,6 +74,10 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         }
         
         audioPlayer(hidden: true)
+        if #available(iOS 26.0, *) {
+            tabBarController?.tabBar.alpha = 0
+            toolbar.backgroundColor = .clear
+        }
     }
     
     override func endEditingMode() {
@@ -84,6 +88,9 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         listSource?.endEditingMode()
         
         audioPlayer(hidden: false)
+        if #available(iOS 26.0, *) {
+            tabBarController?.tabBar.alpha = 1
+        }
     }
 
     override func node(at location: CGPoint) -> MEGANode? {
