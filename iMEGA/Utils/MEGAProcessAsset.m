@@ -138,19 +138,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     } else if (self.assets) {
         for (NSUInteger i = 0; i < self.assets.count; i++) {
             PHAsset *asset = [self.assets objectAtIndex:i];
-            switch (asset.mediaType) {
-                case PHAssetMediaTypeImage: {
-                    [self requestImageAsset:asset];
-                    break;
-                }
-                    
-                case PHAssetMediaTypeVideo: {
-                    [self requestVideoAsset:asset];
-                    break;
-                }
-                    
-                default:
-                    break;
+            if (asset.mediaType == PHAssetMediaTypeVideo) {
+                [self requestVideoAsset:asset];
+            } else {
+                [self requestImageAsset:asset];
             }
             dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
         }
@@ -174,17 +165,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             }
         });
     } else {
-        switch (self.asset.mediaType) {
-            case PHAssetMediaTypeImage:
-                [self requestImageAsset:self.asset];
-                break;
-                
-            case PHAssetMediaTypeVideo:
-                [self requestVideoAsset:self.asset];
-                break;
-                
-            default:
-                break;
+        if (self.asset.mediaType == PHAssetMediaTypeVideo) {
+            [self requestVideoAsset:self.asset];
+        } else {
+            [self requestImageAsset:self.asset];
         }
     }
 }
@@ -497,15 +481,17 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         } else {
             name = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:name];
         }
-        if (!name) {
-            NSString *extension = [self extensionWithInfo:info asset:asset];
-            name = [[asset.localIdentifier stringByReplacingOccurrencesOfString:@"/" withString:@""] stringByAppendingPathExtension:extension];
-        }
+    } else if (asset.mediaType == PHAssetMediaTypeAudio) {
+        name = [self nameForAudioWithAsset:asset];
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
         name = [asset.creationDate.mnz_formattedDefaultNameForMedia stringByAppendingPathExtension:extension];
     }
     
+    if (!name) {
+        NSString *extension = [self extensionWithInfo:info asset:asset];
+        name = [[asset.localIdentifier stringByReplacingOccurrencesOfString:@"/" withString:@""] stringByAppendingPathExtension:extension];
+    }
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
     // If the same filename is already found, generate a unique one
     filePath = [self generateUniqueFilePathFrom:filePath allFilePaths:self.filePathsArray];

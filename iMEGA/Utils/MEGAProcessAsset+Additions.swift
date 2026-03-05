@@ -28,4 +28,9 @@ extension MEGAProcessAsset {
     private func containsFilename(_ filename: String, in paths: [String]) -> Bool {
         paths.contains { $0.lastPathComponent == filename }
     }
+    
+    @objc func nameForAudio(asset: PHAsset) -> String? {
+        let assetResource = PHAssetResource.assetResources(for: asset)
+        return assetResource.first?.originalFilename
+    }
 }
