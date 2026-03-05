@@ -3260,8 +3260,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>zero</key>
-        <string>Wird hochgeladen: Keine Dateien übrig</string>
         <key>one</key>
         <string>Wird hochgeladen: Noch %u Datei</string>
         <key>other</key>
@@ -3278,12 +3276,26 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>zero</key>
-        <string>Pausiert: Keine Dateien übrig</string>
         <key>one</key>
         <string>Pausiert: Noch %u Datei</string>
         <key>other</key>
         <string>Pausiert: Noch %u Dateien</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d von [A] abgeschlossen</string>
+        <key>other</key>
+        <string>%d von [A] abgeschlossen</string>
       </dict>
     </dict>
   </dict>

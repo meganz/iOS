@@ -174,8 +174,6 @@
         <string>d</string>
         <key>one</key>
         <string>Yinelemeye uygula</string>
-        <key>other</key>
-        <string>%d yinelemenin tümüne uygula</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -3280,6 +3278,22 @@
         <string>Duraklatıldı: %u öğe kaldı</string>
         <key>other</key>
         <string>Duraklatıldı: %u öğe kaldı</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d / [A] tamamlandı</string>
+        <key>other</key>
+        <string>%d / [A] tamamlandı</string>
       </dict>
     </dict>
   </dict>

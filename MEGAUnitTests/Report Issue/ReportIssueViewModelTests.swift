@@ -11,7 +11,7 @@ final class ReportIssueViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     private let defaultTransferEntity = TransferEntity(fileName: "test.log")
     private let emptyDetails = ""
-    private let placeholderDetails = "Describe the issue with at least 10 characters"
+    private let placeholderDetails = "Describe the issue with at least 30 characters"
     private let validDetails = "Some issue details"
     private let defaultTitle = Strings.Localizable.Help.ReportIssue.Success.title
     private let defaultMessage = Strings.Localizable.Help.ReportIssue.Success.message

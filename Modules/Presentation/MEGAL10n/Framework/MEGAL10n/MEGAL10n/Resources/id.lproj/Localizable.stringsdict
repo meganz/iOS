@@ -363,7 +363,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d barang</string>
+        <string>%d item</string>
       </dict>
     </dict>
     <key>recents.section.title.items</key>
@@ -2645,7 +2645,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Dihapus %d Vvdeo dari”[A]”</string>
+        <string>Dihapus %d Video dari”[A]”</string>
       </dict>
     </dict>
     <key>nodes.action.hideItems</key>
@@ -2827,7 +2827,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Menambahkan %d item untuk”[A]”</string>
+        <string>Menambahkan %d item untuk ”[A]”</string>
       </dict>
     </dict>
     <key>audio.playlist.removeTracks.snack.message</key>
@@ -2854,8 +2854,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>zero</key>
-        <string>Mengunggah: Tidak ada item tersisa</string>
         <key>other</key>
         <string>Mengunggah: %u item tersisa</string>
       </dict>
@@ -2870,10 +2868,22 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
-        <key>zero</key>
-        <string>Dijeda: Tidak ada item tersisa</string>
         <key>other</key>
         <string>Dijeda: %u item tersisa</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d selesai</string>
       </dict>
     </dict>
   </dict>

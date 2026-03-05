@@ -13,17 +13,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>[A] و %d آخر رفعوا أيديهم</string>
+        <string>%#@ignore@</string>
         <key>one</key>
-        <string>[A] و %d آخر رفعوا أيديهم</string>
+        <string>[A] و%d آخر رفعوا أيديهم</string>
         <key>two</key>
-        <string>[A] و %d آخران رفعوا أيديهم</string>
+        <string>[A] و%d آخران رفعوا أيديهم</string>
         <key>few</key>
         <string>[A] و %d آخرون رفعوا أيديهم</string>
         <key>many</key>
         <string>[A] و %d آخرون رفعوا أيديهم</string>
         <key>other</key>
-        <string>[A] و %d آخرون رفعوا أيديهم</string>
+        <string>[A] و%d آخرون رفعوا أيديهم</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -37,7 +37,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>أنت و %d آخر رفعتوا أيديكم</string>
+        <string>%#@ignore@</string>
         <key>one</key>
         <string>أنت و %d آخر رفعتوا أيديكم</string>
         <key>two</key>
@@ -4920,6 +4920,30 @@
         <string>متوقف مؤقتًا: %u عنصرًا متبقيًا</string>
         <key>other</key>
         <string>متوقف مؤقتًا: %u عنصر متبقٍ</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تم إكمال %d من [A]</string>
+        <key>one</key>
+        <string>تم إكمال %d من [A]</string>
+        <key>two</key>
+        <string>تم إكمال %d من [A]</string>
+        <key>few</key>
+        <string>تم إكمال %d من [A]</string>
+        <key>many</key>
+        <string>تم إكمال %d من [A]</string>
+        <key>other</key>
+        <string>تم إكمال %d من [A]</string>
       </dict>
     </dict>
   </dict>

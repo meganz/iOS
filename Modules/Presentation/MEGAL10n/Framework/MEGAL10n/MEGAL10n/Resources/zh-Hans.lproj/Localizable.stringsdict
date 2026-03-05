@@ -27,7 +27,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>您和其他%d个人举起手</string>
+        <string>您和其他%d个人举起了手</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -2870,6 +2870,20 @@
         <string>u</string>
         <key>other</key>
         <string>已暂停：剩下%u个项目</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>已完成 %d / [A]</string>
       </dict>
     </dict>
   </dict>

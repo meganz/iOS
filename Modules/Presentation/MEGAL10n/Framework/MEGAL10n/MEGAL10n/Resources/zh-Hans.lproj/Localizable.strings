@@ -4828,25 +4828,35 @@
 "cloudDrive.emptyStateSubtitle"="使用零知识加密保护数据的安全";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="无法预览未解密的文件";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="大号";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's compact zoom scale title */
 "media.photoLibrary.zoom.compact.title"="紧凑";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="Smallest";
-/* Undecrypted file open error snackBar message */
+/* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="日期";
-/* Undecrypted file open error snackBar message */
+/* Alert title in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.title"="照片访问受限";
-/* Undecrypted file open error snackBar message */
+/* Alert body in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.message"="您所选的某些照片MEGA无法访问。是否要更新您的访问权限设置？";
-/* Undecrypted file open error snackBar message */
+/* Alert cancel button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.availableOnly"="上传可用的照片";
-/* Undecrypted file open error snackBar message */
+/* Alert confirm button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.selectMore"="更新访问权限";
-/* Undecrypted file open error snackBar message */
+/* Add items */
 "general.addItems"="添加项目";
-/* Undecrypted file open error snackBar message */
+/* The title displayed in Home's account details widget */
 "home.widgets.accountDetails.nameTitle"="你好，%@！";
-/* Undecrypted file open error snackBar message */
+/* The text for the storage usage displayed in Home's account details widget */
 "home.widgets.accountDetails.storageUsage"="%2$@已使用%1$@";
+/* Message shown in a notification when a file transfer is currently in progress. Informs the user that they can cancel the transfer by going to the Transfers section of the app. */
+"notification.transfer.inProgress.message"="传输正在进行中。若要取消，请前往“传输”。";
+/* Message shown in a notification when a file transfer is paused because the app is not active. Informs the user that the transfer will automatically resume when they reopen the app. */
+"notification.transfer.paused.message"="传输已暂停。当您重新打开应用程序时，它将恢复。";
+/* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
+"notification.transfer.download.title"="正在传输文件";
+/* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
+"account.upgrade.yearly.availability.snackbar.message"="%@提供年度订阅";
+/* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
+"account.upgrade.monthly.availability.snackbar.message"="%@支持月度订阅";

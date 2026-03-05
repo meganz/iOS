@@ -3685,7 +3685,7 @@
 /* Description for alert cancelling last occurrence without messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="這是週期性會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被封存，而且所有參與者都將收到通知。";
 /* Description for alert cancelling last occurrence with messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被放在過去的會議中，而且所有參與者都將收到通知。";
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="這是週期性會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被放在過去的會議中，而且所有參與者都將收到通知。";
 /* Title for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.title"="取消%@事件？";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
@@ -4828,25 +4828,35 @@
 "cloudDrive.emptyStateSubtitle"="使用零知識加密技術保護資料安全";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="無法預覽未解密的檔案";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="大尺寸";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's compact zoom scale title */
 "media.photoLibrary.zoom.compact.title"="精簡";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="最小";
-/* Undecrypted file open error snackBar message */
+/* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="日期";
-/* Undecrypted file open error snackBar message */
+/* Alert title in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.title"="照片存取限受限";
-/* Undecrypted file open error snackBar message */
+/* Alert body in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.message"="您選擇的部分照片無法在MEGA上使用。想要更新您的存取權限設定嗎？";
-/* Undecrypted file open error snackBar message */
+/* Alert cancel button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.availableOnly"="上傳可用的照片";
-/* Undecrypted file open error snackBar message */
+/* Alert confirm button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.selectMore"="更新存取權限";
-/* Undecrypted file open error snackBar message */
+/* Add items */
 "general.addItems"="新增項目";
-/* Undecrypted file open error snackBar message */
+/* The title displayed in Home's account details widget */
 "home.widgets.accountDetails.nameTitle"="嗨 %@!";
-/* Undecrypted file open error snackBar message */
+/* The text for the storage usage displayed in Home's account details widget */
 "home.widgets.accountDetails.storageUsage"="已使用%1$@（共 %2$@）";
+/* Message shown in a notification when a file transfer is currently in progress. Informs the user that they can cancel the transfer by going to the Transfers section of the app. */
+"notification.transfer.inProgress.message"="傳輸正在進行中。如需取消，請前往傳輸頁面。";
+/* Message shown in a notification when a file transfer is paused because the app is not active. Informs the user that the transfer will automatically resume when they reopen the app. */
+"notification.transfer.paused.message"="傳輸已暫停。重新開啟應用程式時傳輸將繼續。";
+/* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
+"notification.transfer.download.title"="正在傳輸檔案";
+/* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
+"account.upgrade.yearly.availability.snackbar.message"="%@ 提供年度計費";
+/* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
+"account.upgrade.monthly.availability.snackbar.message"="%@ 提供按月收費方案";

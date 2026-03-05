@@ -12,6 +12,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>[A] et %d autre ont levé la main</string>
         <key>many</key>
         <string>[A] et %d autres ont levé la main</string>
         <key>other</key>
@@ -28,8 +30,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Vous et %d autre personne avez levé la main</string>
         <key>one</key>
         <string>Vous et %d autre personne avez levé la main</string>
         <key>many</key>
@@ -48,8 +48,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
@@ -68,8 +66,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d élément supprimé</string>
         <key>one</key>
         <string>%d élément supprimé</string>
         <key>many</key>
@@ -88,8 +84,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
@@ -108,8 +102,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
@@ -128,8 +120,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
@@ -148,8 +138,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Quiconque disposant de ce lien peut consulter et télécharger vos données</string>
         <key>one</key>
         <string>Quiconque disposant de ce lien peut consulter et télécharger vos données</string>
         <key>many</key>
@@ -168,8 +156,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Le lien a été copié dans le presse-papiers</string>
         <key>one</key>
         <string>Le lien a été copié dans le presse-papiers</string>
         <key>many</key>
@@ -188,8 +174,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Le lien a été créé et copié dans votre presse-papiers</string>
         <key>one</key>
         <string>Le lien a été créé et copié dans votre presse-papiers</string>
         <key>many</key>
@@ -208,8 +192,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Appliquer au doublon</string>
         <key>one</key>
         <string>Appliquer au doublon</string>
         <key>many</key>
@@ -228,8 +210,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>heure</string>
         <key>one</key>
         <string>heure</string>
         <key>many</key>
@@ -248,8 +228,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>jour</string>
         <key>one</key>
         <string>jour</string>
         <key>many</key>
@@ -268,8 +246,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>semaine</string>
         <key>one</key>
         <string>semaine</string>
         <key>many</key>
@@ -288,8 +264,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>mois</string>
         <key>one</key>
         <string>mois</string>
         <key>many</key>
@@ -308,8 +282,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>an</string>
         <key>one</key>
         <string>an</string>
         <key>many</key>
@@ -328,8 +300,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d heure</string>
         <key>one</key>
         <string>%d heure</string>
         <key>many</key>
@@ -348,8 +318,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d jour</string>
         <key>one</key>
         <string>%d jour</string>
         <key>many</key>
@@ -368,8 +336,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d semaine</string>
         <key>one</key>
         <string>%d semaine</string>
         <key>many</key>
@@ -388,8 +354,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d mois</string>
         <key>one</key>
         <string>%d mois</string>
         <key>many</key>
@@ -408,8 +372,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d an</string>
         <key>one</key>
         <string>%d an</string>
         <key>many</key>
@@ -428,8 +390,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
@@ -448,8 +408,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
@@ -468,8 +426,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d dossier</string>
         <key>one</key>
         <string>%d dossier</string>
         <key>many</key>
@@ -488,8 +444,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>• %d fichier</string>
         <key>one</key>
         <string>• %d fichier</string>
         <key>many</key>
@@ -508,8 +462,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d élément</string>
         <key>one</key>
         <string>%d élément</string>
         <key>many</key>
@@ -528,8 +480,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d élément</string>
         <key>one</key>
         <string>%d élément</string>
         <key>many</key>
@@ -548,8 +498,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d image</string>
         <key>one</key>
         <string>%d image</string>
         <key>many</key>
@@ -568,8 +516,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d vidéo</string>
         <key>one</key>
         <string>%d vidéo</string>
         <key>many</key>
@@ -588,8 +534,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d image</string>
         <key>one</key>
         <string>%d image</string>
         <key>many</key>
@@ -608,8 +552,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>et %d vidéo</string>
         <key>one</key>
         <string>et %d vidéo</string>
         <key>many</key>
@@ -628,8 +570,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>« [A] » et %d de plus</string>
         <key>one</key>
         <string>« [A] » et %d de plus</string>
         <key>many</key>
@@ -648,8 +588,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>[A] de %d fichier</string>
         <key>one</key>
         <string>[A] de %d fichier</string>
         <key>many</key>
@@ -668,8 +606,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>%d fichier</string>
         <key>one</key>
         <string>%d fichier</string>
         <key>many</key>
@@ -688,8 +624,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Supprimer le lien</string>
         <key>one</key>
         <string>Supprimer le lien</string>
         <key>many</key>
@@ -708,8 +642,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Lien supprimé</string>
         <key>one</key>
         <string>Lien supprimé</string>
         <key>many</key>
@@ -728,8 +660,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Supprimer le lien ?</string>
         <key>one</key>
         <string>Supprimer le lien ?</string>
         <key>many</key>
@@ -748,8 +678,6 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder.</string>
         <key>one</key>
         <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder.</string>
         <key>many</key>
@@ -1363,11 +1291,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] de chaque semaine du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] de chaque semaine du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDay] toutes les %d semaines du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] toutes les %d semaines du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] toutes les %d semaines du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] toutes les %d semaines du [B][StartDate] au [UntilDate][/B] de [B][StartTime] à [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -1381,11 +1309,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] chaque semaine à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] chaque semaine à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>many</key>
-        <string>[WeekDay] toutes les %d semaines à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] toutes les %d semaines à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDay] toutes les %d semaines à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
+        <string>Le [WeekDay] toutes les %d semaines à partir du [B][StartDate][/B] de [B][StartTime] à [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -2749,11 +2677,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Il reste %d jour</string>
+        <string>%d jour restant</string>
         <key>many</key>
-        <string>Il reste %d de jours</string>
+        <string>%d jours restants</string>
         <key>other</key>
-        <string>Il reste %d jours</string>
+        <string>%d jours restants</string>
       </dict>
     </dict>
     <key>account.achievement.validity.days</key>
@@ -2803,11 +2731,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>La prime arrivera à expiration dans %d jour.</string>
+        <string>Le bonus expire dans %d jour.</string>
         <key>many</key>
-        <string>La prime arrivera à expiration dans %d de jours.</string>
+        <string>Le bonus expire dans %d jours.</string>
         <key>other</key>
-        <string>La prime arrivera à expiration dans %d jours.</string>
+        <string>Le bonus expire dans %d jours.</string>
       </dict>
     </dict>
     <key>accounts.cancelSubscriptionSurvey.error.minimumRequiredCharacterCount</key>
@@ -2841,7 +2769,7 @@
         <key>one</key>
         <string>« [A] » a été téléversé dans « [B] »</string>
         <key>many</key>
-        <string>%d d’éléments ont été téléversés dans « [B] »</string>
+        <string>%d éléments ont été téléversés dans « [B] »</string>
         <key>other</key>
         <string>%d éléments ont été téléversés dans « [B] »</string>
       </dict>
@@ -2859,7 +2787,7 @@
         <key>one</key>
         <string>« [A] » a été téléversé dans le disque Cloud</string>
         <key>many</key>
-        <string>%d d’éléments ont été téléversés dans le disque Cloud</string>
+        <string>%d éléments ont été téléversés dans le disque Cloud</string>
         <key>other</key>
         <string>%d éléments ont été téléversés dans le disque Cloud</string>
       </dict>
@@ -2875,11 +2803,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>« [A] » a été envoyé vers la conversation</string>
+        <string>« [A] » a été envoyé dans la conversation</string>
         <key>many</key>
-        <string>« [A] » a été envoyé vers toutes les conversations</string>
+        <string>« [A] » a été envoyé dans toutes les conversations</string>
         <key>other</key>
-        <string>« [A] » a été envoyé vers toutes les conversations</string>
+        <string>« [A] » a été envoyé dans toutes les conversations</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -2893,11 +2821,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] été envoyé vers la conversation</string>
+        <string>[A] a été envoyé dans la conversation</string>
         <key>many</key>
-        <string>[A] ont été envoyés vers toutes les conversations</string>
+        <string>[A] a été envoyé dans toutes les conversations</string>
         <key>other</key>
-        <string>[A] ont été envoyés vers toutes les conversations</string>
+        <string>[A] a été envoyé dans toutes les conversations</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.interval</key>
@@ -2913,7 +2841,7 @@
         <key>one</key>
         <string>%d jour</string>
         <key>many</key>
-        <string>%d de jours</string>
+        <string>%d jours</string>
         <key>other</key>
         <string>%d jours</string>
       </dict>
@@ -2931,7 +2859,7 @@
         <key>one</key>
         <string>%d semaine</string>
         <key>many</key>
-        <string>%d de semaines</string>
+        <string>%d semaines</string>
         <key>other</key>
         <string>%d semaines</string>
       </dict>
@@ -2949,7 +2877,7 @@
         <key>one</key>
         <string>%d mois</string>
         <key>many</key>
-        <string>%d de mois</string>
+        <string>%d mois</string>
         <key>other</key>
         <string>%d mois</string>
       </dict>
@@ -2967,7 +2895,7 @@
         <key>one</key>
         <string>La réunion aura lieu tous les jours.</string>
         <key>many</key>
-        <string>La réunion aura lieu tous les %d de jours.</string>
+        <string>La réunion aura lieu tous les %d jours.</string>
         <key>other</key>
         <string>La réunion aura lieu tous les %d jours.</string>
       </dict>
@@ -2985,7 +2913,7 @@
         <key>one</key>
         <string>La réunion aura lieu le [weekDayName] de chaque semaine.</string>
         <key>many</key>
-        <string>La réunion aura lieu le [weekDayName] toutes les %d de semaines.</string>
+        <string>La réunion aura lieu le [weekDayName] toutes les %d semaines.</string>
         <key>other</key>
         <string>La réunion aura lieu le [weekDayName] toutes les %d semaines.</string>
       </dict>
@@ -3003,7 +2931,7 @@
         <key>one</key>
         <string>La réunion aura lieu le [weekDayNames] et le [lastWeekDayName] de chaque semaine.</string>
         <key>many</key>
-        <string>La réunion aura lieu le [weekDayNames] et le [lastWeekDayName] toutes les %d de semaines.</string>
+        <string>La réunion aura lieu le [weekDayNames] et le [lastWeekDayName] toutes les %d semaines.</string>
         <key>other</key>
         <string>La réunion aura lieu le [weekDayNames] et le [lastWeekDayName] toutes les %d semaines.</string>
       </dict>
@@ -3019,11 +2947,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>La réunion aura lieu tous les mois, le jour [cardinalDay].</string>
+        <string>La réunion aura lieu le [cardinalDay] tous les mois.</string>
         <key>many</key>
-        <string>La réunion aura lieu tous les %d mois, le jour [cardinalDay].</string>
+        <string>La réunion aura lieu le [cardinalDay] tous les %d mois.</string>
         <key>other</key>
-        <string>La réunion aura lieu tous les %d mois, le jour [cardinalDay].</string>
+        <string>La réunion aura lieu le [cardinalDay] tous les %d mois.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -3037,11 +2965,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>La réunion aura lieu tous les mois, le jour [cardinalDays] et le jour [cardinalLastDay].</string>
+        <string>La réunion aura lieu le [cardinalDays] et le [cardinalLastDay] tous les mois.</string>
         <key>many</key>
-        <string>La réunion aura lieu tous les %d mois, le jour [cardinalDays] et le jour [cardinalLastDay].</string>
+        <string>La réunion aura lieu le [cardinalDays] et le [cardinalLastDay] tous les %d mois.</string>
         <key>other</key>
-        <string>La réunion aura lieu tous les %d mois, le jour [cardinalDays] et le jour [cardinalLastDay].</string>
+        <string>La réunion aura lieu le [cardinalDays] et le [cardinalLastDay] tous les %d mois.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -3057,7 +2985,7 @@
         <key>one</key>
         <string>La réunion aura lieu le [weekNumber] [weekDayName] de chaque mois.</string>
         <key>many</key>
-        <string>La réunion aura lieu le [weekNumber] [weekDayName] tous les %d de mois.</string>
+        <string>La réunion aura lieu le [weekNumber] [weekDayName] tous les %d mois.</string>
         <key>other</key>
         <string>La réunion aura lieu le [weekNumber] [weekDayName] tous les %d mois.</string>
       </dict>
@@ -3075,7 +3003,7 @@
         <key>one</key>
         <string>Le [weekDayNames] de chaque semaine</string>
         <key>many</key>
-        <string>Le [weekDayNames] toutes les %d de semaines</string>
+        <string>Le [weekDayNames] toutes les %d semaines</string>
         <key>other</key>
         <string>Le [weekDayNames] toutes les %d semaines</string>
       </dict>
@@ -3109,11 +3037,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le [ordinalNumber] [weekDayName] de chaque mois</string>
+        <string>Le [ordinalNumber]e [weekDayName] de chaque mois</string>
         <key>many</key>
-        <string>Le [ordinalNumber] [weekDayName] tous les %d de mois</string>
+        <string>Le [ordinalNumber]e [weekDayName] tous les %d de mois</string>
         <key>other</key>
-        <string>Le [ordinalNumber] [weekDayName] tous les %d mois</string>
+        <string>Le [ordinalNumber]e [weekDayName] tous les %d mois</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
@@ -3147,7 +3075,7 @@
         <key>one</key>
         <string>Tous les jours</string>
         <key>many</key>
-        <string>Tous les %d de jours</string>
+        <string>Tous les %d jours</string>
         <key>other</key>
         <string>Tous les %d jours</string>
       </dict>
@@ -3165,7 +3093,7 @@
         <key>one</key>
         <string>%d fichier a été enregistré dans le disque Cloud.</string>
         <key>many</key>
-        <string>%d de fichiers ont été enregistrés dans le disque Cloud.</string>
+        <string>%d fichiers ont été enregistrés dans le disque Cloud.</string>
         <key>other</key>
         <string>%d fichiers ont été enregistrés dans le disque Cloud.</string>
       </dict>
@@ -3181,11 +3109,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le téléchargement est lancé</string>
+        <string>Téléchargement lancé</string>
         <key>many</key>
-        <string>%d de téléchargements sont lancés</string>
+        <string>%d téléchargements lancés</string>
         <key>other</key>
-        <string>%d téléchargements sont lancés</string>
+        <string>%d téléchargements lancés</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
@@ -3201,7 +3129,7 @@
         <key>one</key>
         <string>[UserName] attend de se joindre à « [MeetingName] »</string>
         <key>many</key>
-        <string>%d de participants attendent de se joindre à « [MeetingName] »</string>
+        <string>%d participants attendent de se joindre à « [MeetingName] »</string>
         <key>other</key>
         <string>%d participants attendent de se joindre à « [MeetingName] »</string>
       </dict>
@@ -3219,7 +3147,7 @@
         <key>one</key>
         <string>[UserName] attend de se joindre à l’appel</string>
         <key>many</key>
-        <string>%d de participants attendent de se joindre à l’appel</string>
+        <string>%d participants attendent de se joindre à l’appel</string>
         <key>other</key>
         <string>%d participants attendent de se joindre à l’appel</string>
       </dict>
@@ -3237,7 +3165,7 @@
         <key>one</key>
         <string>%d participant</string>
         <key>many</key>
-        <string>%d de participants</string>
+        <string>%d participants</string>
         <key>other</key>
         <string>%d participants</string>
       </dict>
@@ -3253,11 +3181,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d élément a été sélectionné.</string>
+        <string>%d élément sélectionné</string>
         <key>many</key>
-        <string>%d d’éléments ont été sélectionnés</string>
+        <string>%d éléments sélectionnés</string>
         <key>other</key>
-        <string>%d éléments ont été sélectionnés</string>
+        <string>%d éléments sélectionnés</string>
       </dict>
     </dict>
     <key>chat.message.filesSentToAChat</key>
@@ -3271,11 +3199,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le fichier a été envoyé vers la conversation</string>
+        <string>Le fichier a été envoyé dans la conversation</string>
         <key>many</key>
-        <string>Les fichiers ont été envoyés vers la conversation</string>
+        <string>Les fichiers ont été envoyés dans la conversation</string>
         <key>other</key>
-        <string>Les fichiers ont été envoyés vers la conversation</string>
+        <string>Les fichiers ont été envoyés dans la conversation</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -3289,11 +3217,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le fichier a été envoyé vers %d conversation</string>
+        <string>Fichier envoyé dans %d conversation</string>
         <key>many</key>
-        <string>Le fichier a été envoyé vers %d de conversations</string>
+        <string>Fichier envoyé dans %d conversations</string>
         <key>other</key>
-        <string>Le fichier a été envoyé vers %d conversations</string>
+        <string>Fichier envoyé dans %d conversations</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
@@ -3307,11 +3235,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Les fichiers ont été envoyés vers %d conversation</string>
+        <string>Fichiers envoyés dans %d conversation</string>
         <key>many</key>
-        <string>Les fichiers ont été envoyés vers %d de conversations</string>
+        <string>Fichiers envoyés dans %d conversations</string>
         <key>other</key>
-        <string>Les fichiers ont été envoyés vers %d conversations</string>
+        <string>Fichiers envoyés dans %d conversations</string>
       </dict>
     </dict>
     <key>chat.message.numberOfContacts</key>
@@ -3327,7 +3255,7 @@
         <key>one</key>
         <string>%d contact</string>
         <key>many</key>
-        <string>%d de contacts</string>
+        <string>%d contacts</string>
         <key>other</key>
         <string>%d contacts</string>
       </dict>
@@ -3345,7 +3273,7 @@
         <key>one</key>
         <string>%d fichier a été joint</string>
         <key>many</key>
-        <string>%d de fichiers ont été joints</string>
+        <string>%d fichiers ont été joints</string>
         <key>other</key>
         <string>%d fichiers ont été joints</string>
       </dict>
@@ -3363,7 +3291,7 @@
         <key>one</key>
         <string>Inviter %d contact</string>
         <key>many</key>
-        <string>Inviter %d de contacts</string>
+        <string>Inviter %d contacts</string>
         <key>other</key>
         <string>Inviter %d contacts</string>
       </dict>
@@ -3381,7 +3309,7 @@
         <key>one</key>
         <string>%d participant</string>
         <key>many</key>
-        <string>%d de participants</string>
+        <string>%d participants</string>
         <key>other</key>
         <string>%d participants</string>
       </dict>
@@ -3415,11 +3343,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le dossier a été partagé</string>
+        <string>Dossier partagé</string>
         <key>many</key>
-        <string>%d de dossiers ont été partagés</string>
+        <string>%d dossiers partagés</string>
         <key>other</key>
-        <string>%d dossiers ont été partagés</string>
+        <string>%d dossiers partagés</string>
       </dict>
     </dict>
     <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
@@ -3471,7 +3399,7 @@
         <key>one</key>
         <string>%d vidéo a été supprimée de « [A] »</string>
         <key>many</key>
-        <string>%d de vidéos ont été supprimées de « [A] »</string>
+        <string>%d vidéos ont été supprimées de « [A] »</string>
         <key>other</key>
         <string>%d vidéos ont été supprimées de « [A] »</string>
       </dict>
@@ -3487,11 +3415,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d élément caché</string>
+        <string>%d élément caché</string>
         <key>many</key>
-        <string>%d d’éléments cachés</string>
+        <string>%d éléments cachés</string>
         <key>other</key>
-        <string>%d éléments cachés</string>
+        <string>%d éléments cachés</string>
       </dict>
     </dict>
     <key>nodes.action.unhideItems</key>
@@ -3505,11 +3433,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d élément non caché</string>
+        <string>%d élément affiché</string>
         <key>many</key>
-        <string>%d d’éléments non cachés</string>
+        <string>%d éléments affichés</string>
         <key>other</key>
-        <string>%d élément non cachés</string>
+        <string>%d élément affichés</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -3525,9 +3453,9 @@
         <key>one</key>
         <string>Ajouté à [A]</string>
         <key>many</key>
-        <string>Ajouté %d éléments à [A]</string>
+        <string>%d éléments ajoutés à [A]</string>
         <key>other</key>
-        <string>Ajouté %d éléments à [A]</string>
+        <string>%d éléments ajoutés à [A]</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -3541,11 +3469,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ajouté %d fichier</string>
+        <string>A ajouté %d fichier</string>
         <key>many</key>
-        <string>Ajouté %d fichiers</string>
+        <string>A ajouté %d fichiers</string>
         <key>other</key>
-        <string>Ajouté %d fichiers</string>
+        <string>A ajouté %d fichiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3559,11 +3487,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ajouté %d dossier</string>
+        <string>A ajouté %d dossier</string>
         <key>many</key>
-        <string>Ajouté %d dossiers</string>
+        <string>A ajouté %d dossiers</string>
         <key>other</key>
-        <string>Ajouté %d dossiers</string>
+        <string>A ajouté %d dossiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3577,11 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ajouté %d fichier</string>
+        <string>A ajouté %d fichier</string>
         <key>many</key>
-        <string>Ajouté %d fichiers</string>
+        <string>A ajouté %d fichiers</string>
         <key>other</key>
-        <string>Ajouté %d fichiers</string>
+        <string>A ajouté %d fichiers</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3595,11 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>et %d dossier</string>
+        <string>et %d dossier</string>
         <key>many</key>
-        <string>et %d dossiers</string>
+        <string>et %d dossiers</string>
         <key>other</key>
-        <string>et %d dossiers</string>
+        <string>et %d dossiers</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
@@ -3613,11 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email le [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email le [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email le [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3631,11 +3559,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par email, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par email, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par email, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3649,11 +3577,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>many</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
+        <string>Bien que nous vous ayons contacté par email, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre disque Cloud, et votre compte a été verrouillé. Passez à un abonnement [plan] pour augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En savoir plus sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3667,11 +3595,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d version du fichier.</string>
+        <string>%d version de fichier.</string>
         <key>many</key>
-        <string>%d versions de fichiers.</string>
+        <string>%d versions de fichier.</string>
         <key>other</key>
-        <string>%d versions de fichiers.</string>
+        <string>%d versions de fichier.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -3687,9 +3615,9 @@
         <key>one</key>
         <string>Taille totale utilisée par version de fichier : [storageSpace]</string>
         <key>many</key>
-        <string>Taille totale utilisée par les versions de fichiers : [storageSpace]</string>
+        <string>Taille totale utilisée par les versions de fichier : [storageSpace]</string>
         <key>other</key>
-        <string>Taille totale utilisée par les versions de fichiers : [storageSpace]</string>
+        <string>Taille totale utilisée par les versions de fichier : [storageSpace]</string>
       </dict>
     </dict>
     <key>set.addTo.snackbar.message</key>
@@ -3705,9 +3633,9 @@
         <key>one</key>
         <string>Ajouté à «[A]»</string>
         <key>many</key>
-        <string>Ajouté %d éléments à «[A]»</string>
+        <string>%d éléments ajoutés à «[A]»</string>
         <key>other</key>
-        <string>Ajouté %d éléments à «[A]»</string>
+        <string>%d éléments ajoutés à «[A]»</string>
       </dict>
     </dict>
     <key>audio.playlist.removeTracks.snack.message</key>
@@ -3723,9 +3651,9 @@
         <key>one</key>
         <string>« [A] » supprimé de la file d'attente</string>
         <key>many</key>
-        <string>%d éléments supprimés de la file d'attente</string>
+        <string>%d éléments supprimés de la file d'attente</string>
         <key>other</key>
-        <string>%d éléments supprimés de la file d'attente</string>
+        <string>%d éléments supprimés de la file d'attente</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.uploading.items</key>
@@ -3739,11 +3667,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Téléversement : %u élément restant</string>
+        <string>Téléversement : %u élément restant</string>
         <key>many</key>
-        <string>Téléversement : %u éléments restants</string>
+        <string>Téléversement : %u éléments restants</string>
         <key>other</key>
-        <string>Téléversement : %u éléments restants</string>
+        <string>Téléversement : %u éléments restants</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3757,11 +3685,29 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>En pause : %u élément restant</string>
+        <string>En pause : %u élément restant</string>
         <key>many</key>
-        <string>En pause : %u éléments restants</string>
+        <string>En pause : %u éléments restants</string>
         <key>other</key>
-        <string>En pause : %u éléments restants</string>
+        <string>En pause : %u éléments restants</string>
+      </dict>
+    </dict>
+    <key>notification.transfer.download.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d sur [A] terminé</string>
+        <key>many</key>
+        <string>%d sur [A] terminés</string>
+        <key>other</key>
+        <string>%d sur [A] terminés</string>
       </dict>
     </dict>
   </dict>

@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="ادعو";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="جرب البحث عن ملفات الوسائط";
+"photos.searchHistory.empty.description"="حاول البحث عن ملفات الوسائط";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="مساحة التخزين الخاصة بك ممتلئة";
 /* Button title to upgrade when storage is full */
@@ -4781,33 +4781,33 @@
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="الدفعة سنوياً";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="فقط %@/شهر";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="فقط %@/شهريًا";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="تحميلات الكاميرا متوقفة، مستوى البطارية منخفض جدًا. اشحن البطارية لاستئناف تحميلات الكاميرا.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="تم إيقاف ترفيعات الكاميرا مؤقتاً، مستوى البطارية منخفض جداً. اشحن البطارية لاستئناف ترفيعات الكاميرا.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="تحميلات الكاميرا متوقفة، درجة حرارة الجهاز مرتفعة جدًا. ستستأنف التحميلات بمجرد أن يبرد جهازك.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="تم إيقاف ترفيعات الكاميرا مؤقتاً، درجة حرارة الجهاز عالية جداً. ستستأنف الترفيعات بمجرد أن يبرد جهازك.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="تحميلات الكاميرا متوقفة، لا يوجد اتصال بالإنترنت";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="ترفيعات الكاميرا متوقفة، لا يوجد اتصال بالإنترنت.";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="السماح ببيانات الهاتف المحمول";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="مساحة التخزين الخاصة بك ممتلئة";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="للاستمرار في التحميل، قم بالتحديث الآن للحصول على مساحة تخزين إضافية";
+"cameraUploads.progress.banner.storageFull.subtitle"="للاستمرار في الترفيع، قم بالتحديث الآن للحصول على مساحة تخزين إضافية";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="رق حسابك الآن";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="للتأكد من أننا لن نفقد أي من ذكرياتك، يحتاج MEGA إلى وصول كامل إلى مكتبة صورك";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="للتأكد من أننا لن نفقد أي من ذكرياتك، يحتاج ميغا MEGA إلى إذن وصول كامل إلى مكتبة صورك";
 /* Camera Uploads Banner Limited Access Button Title */
 "cameraUploads.progress.banner.limitedAccess.button.title"="تحديث الأذونات";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="لقد اطلعت على كل شيء";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="سيظهر هنا الصور ومقاطع الفيديو الجديدة بعد التقاطها";
+"cameraUploads.progress.uploadsComplete.subtitle"="سيتم عرض الصور والفيديوهات الجديدة هنا بعد التقاطها";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="سيظهر هنا النقل الجاري";
+"cameraUploads.progress.row.emptyInProgress.title"="ستظهر التحويلات الجارية هنا";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="سيظهر هنا النقلات في قائمة الانتظار";
+"cameraUploads.progress.row.emptyInQueue.title"="التحويلات في قائمة الانتظار ستظهر هنا";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="تم انشاء المشاركة";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,7 +4817,7 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="اكتملت ترفيعات الكاميرا";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="تحميلات الكاميرا محدثة";
+"cameraUploads.upToDate"="ترفيعات الكاميرا محدثة حتى الآن";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="يمكنك فقط الكشف عن الملفات المخفية إما بشكل فردي أو عن طريق عرض العناصر المخفية مؤقتًا من [A]إعدادات[/A].";
 /* The title displayed in the empty view when Cloud Drive root is empty */
@@ -4827,26 +4827,36 @@
 /* The subtitle title displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="احفظ شيئاً آمناً بتشفير بمعرفة صفرية";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="المعاينات غير متاحة للملفات غير المفكوكة";
-/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="العرض غير متاح للملفات غير المشفرة";
+/* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="كبير";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's compact zoom scale title */
 "media.photoLibrary.zoom.compact.title"="مصغّر";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="الاصغر";
-/* Undecrypted file open error snackBar message */
+/* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="التاريخ";
-/* Undecrypted file open error snackBar message */
+/* Alert title in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.title"="إمكانية وصول محدود إلى الصور";
-/* Undecrypted file open error snackBar message */
-"photo.picker.alert.limitAccess.message"="تظهر رسالة تنبيه في منتقي الصور عند عدم وجود إذن على الصور المحددة.";
-/* Undecrypted file open error snackBar message */
-"photo.picker.alert.limitAccess.availableOnly"="يظهر زر إلغاء التنبيه في منتقي الصور عندما عدم وجود إذن على الصور المحددة.";
-/* Undecrypted file open error snackBar message */
-"photo.picker.alert.limitAccess.selectMore"="يظهر زر تأكيد التنبيه في منتقي الصور عند عدم وجود إذن على الصور المحددة.";
-/* Undecrypted file open error snackBar message */
+/* Alert body in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.message"="بعض الصور التي اخترتها غير متاحة على ميغا MEGA. هل تريد تحديث إعدادات إذون الوصول الخاصة بك؟";
+/* Alert cancel button in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.availableOnly"="قم بترفيع الصور المتاحة";
+/* Alert confirm button in Photo Picker shown when selected photos lack permission. */
+"photo.picker.alert.limitAccess.selectMore"="تحديث إذونات الوصول";
+/* Add items */
 "general.addItems"="أضف عناصر";
-/* Undecrypted file open error snackBar message */
+/* The title displayed in Home's account details widget */
 "home.widgets.accountDetails.nameTitle"="مرحباً %@!";
-/* Undecrypted file open error snackBar message */
+/* The text for the storage usage displayed in Home's account details widget */
 "home.widgets.accountDetails.storageUsage"="تم استخدام %1$@ من %2$@";
+/* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
+"account.upgrade.yearly.availability.snackbar.message"="%@ متاح مع الفوترة السنوية";
+/* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
+"account.upgrade.monthly.availability.snackbar.message"="%@ متاح بفواتير شهرية";
+/* Message shown in a notification when a file transfer is currently in progress. Informs the user that they can cancel the transfer by going to the Transfers section of the app. */
+"notification.transfer.inProgress.message"="التراسل جارٍ. لإلغائه، انتقل إلى التراسلات.";
+/* Message shown in a notification when a file transfer is paused because the app is not active. Informs the user that the transfer will automatically resume when they reopen the app. */
+"notification.transfer.paused.message"="تم إيقاف التراسل مؤقتاً. وسيستأنف عند إعادة فتح التطبيق.";
+/* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
+"notification.transfer.download.title"="جارٍ تراسل الملفات";

@@ -4828,25 +4828,35 @@
 "cloudDrive.emptyStateSubtitle"="Sıfır bilgi şifrelemesi ile bir şeyleri güvende tutun";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Şifresi çözülmemiş dosyalar için ön izlemeler kullanılamıyor";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="Büyük";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's compact zoom scale title */
 "media.photoLibrary.zoom.compact.title"="Kompakt";
-/* Undecrypted file open error snackBar message */
+/* Title of Photo's smallest zoom scale title */
 "media.photoLibrary.zoom.smallest.title"="En küçük";
-/* Undecrypted file open error snackBar message */
+/* Add items */
 "general.addItems"="Öğe ekle";
-/* Undecrypted file open error snackBar message */
+/* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Tarih";
-/* Undecrypted file open error snackBar message */
+/* Alert title in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.title"="Sınırlı fotoğraf erişimi";
-/* Undecrypted file open error snackBar message */
+/* Alert body in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.message"="MEGA, seçtiğiniz bazı fotoğraflara erişemiyor. Erişim ayarlarınızı güncellemek ister misiniz?";
-/* Undecrypted file open error snackBar message */
+/* Alert cancel button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.availableOnly"="Mevcut fotoğrafları yükle";
-/* Undecrypted file open error snackBar message */
+/* Alert confirm button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.selectMore"="Erişimi güncelle";
-/* Undecrypted file open error snackBar message */
+/* The title displayed in Home's account details widget */
 "home.widgets.accountDetails.nameTitle"="Merhaba %@!";
-/* Undecrypted file open error snackBar message */
+/* The text for the storage usage displayed in Home's account details widget */
 "home.widgets.accountDetails.storageUsage"="%2$@’nin %1$@’si kullanıldı";
+/* Message shown in a notification when a file transfer is currently in progress. Informs the user that they can cancel the transfer by going to the Transfers section of the app. */
+"notification.transfer.inProgress.message"="Aktarım devam ediyor. İptal etmek için Aktarımlar’a gidin.";
+/* Message shown in a notification when a file transfer is paused because the app is not active. Informs the user that the transfer will automatically resume when they reopen the app. */
+"notification.transfer.paused.message"="Aktarım duraklatıldı. Uygulamayı tekrar açtığınızda devam edecektir.";
+/* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
+"notification.transfer.download.title"="Dosyalar aktarılıyor";
+/* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
+"account.upgrade.yearly.availability.snackbar.message"="%@, yıllık faturalandırma ile sunulur";
+/* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
+"account.upgrade.monthly.availability.snackbar.message"="%@ aylık faturalandırma ile mevcut";
