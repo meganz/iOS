@@ -229,6 +229,15 @@ extension MEGAPhotoBrowserViewController {
                 isFolderLink: true)
             .saveToPhotos(nodes: [node.toNodeEntity()])
             
+        case .albumLink:
+            SaveToPhotosCoordinator(
+                messageDisplay: MEGAPhotoBrowserErrorMessageDisplay(showSnackBar: { [weak self] message in
+                    self?.showSnackBar(snackBar: SnackBar(message: message))
+                }),
+                isFolderLink: false,
+                nodeProvider: PublicAlbumNodeProvider.shared)
+            .saveToPhotos(nodes: [node.toNodeEntity()])
+
         default:
             SaveToPhotosCoordinator(
                 messageDisplay: MEGAPhotoBrowserErrorMessageDisplay(showSnackBar: { [weak self] message in

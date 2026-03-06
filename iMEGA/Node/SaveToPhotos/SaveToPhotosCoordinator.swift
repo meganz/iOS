@@ -14,7 +14,7 @@ protocol SaveToPhotosMessageDisplay {
 @MainActor
 final class SaveToPhotosCoordinator: SaveToPhotosCoordinatorProtocol {
     private let messageDisplay: any SaveToPhotosMessageDisplay
-    private let isFolderLink: Bool
+    private let downloadFileRepository: DownloadFileRepository
     
     private lazy var permissionHandler = DevicePermissionsHandler.makeHandler()
     private lazy var viewModel: SaveToPhotosViewModel = {
@@ -28,9 +28,7 @@ final class SaveToPhotosCoordinator: SaveToPhotosCoordinatorProtocol {
                 appDelegateRouter: AppDelegateRouter()),
             devicePermissionsHandling: permissionHandler,
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
-                downloadFileRepository: DownloadFileRepository(
-                    sdk: MEGASdk.sharedSdk,
-                    sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil),
+                downloadFileRepository: downloadFileRepository,
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo,
                 chatNodeRepository: ChatNodeRepository.newRepo,
@@ -43,7 +41,21 @@ final class SaveToPhotosCoordinator: SaveToPhotosCoordinatorProtocol {
         isFolderLink: Bool
     ) {
         self.messageDisplay = messageDisplay
-        self.isFolderLink = isFolderLink
+        self.downloadFileRepository = DownloadFileRepository(
+            sdk: MEGASdk.sharedSdk,
+            sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil)
+    }
+
+    init(
+        messageDisplay: some SaveToPhotosMessageDisplay,
+        isFolderLink: Bool,
+        nodeProvider: some MEGANodeProviderProtocol
+    ) {
+        self.messageDisplay = messageDisplay
+        self.downloadFileRepository = DownloadFileRepository(
+            sdk: MEGASdk.sharedSdk,
+            sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil,
+            nodeProvider: nodeProvider)
     }
     
     func saveToPhotos(nodes: [NodeEntity], onComplete: (() -> Void)? = nil) {
