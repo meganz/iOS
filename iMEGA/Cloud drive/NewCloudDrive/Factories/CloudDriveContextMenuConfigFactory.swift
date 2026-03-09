@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGASdk
 
 /// Factory mean to be used as a single point of creating CMConfigEntity inside new Cloud Drive (NodeBrowserView)
 /// Previous implementation is sprinkled throughout CloudDriveViewController extensions and impossible to refactor out with high confidence
@@ -102,7 +103,8 @@ struct CloudDriveContextMenuConfigFactory {
         isTakenDownFolder: Bool,
         isS4Container: Bool
     ) -> CMConfigEntity {
-        .init(
+        let isOutShareOrPending = parentNode.isOutShare || isPendingOutShare(parentNode)
+        return CMConfigEntity(
             menuType: .menu(type: .display),
             viewMode: currentViewMode,
             accessLevel: nodeAccessType.toShareAccessLevel(),
@@ -112,7 +114,7 @@ struct CloudDriveContextMenuConfigFactory {
             isViewInFolder: isFromViewInFolder,
             isIncomingShareChild: isIncomingSharedRootChild(parentNode: parentNode, nodeAccessType: nodeAccessType),
             isSelectHidden: isSelectionHidden,
-            isOutShare: parentNode.isOutShare,
+            isOutShare: isOutShareOrPending,
             isExported: parentNode.isExported,
             showMediaDiscovery: showMediaDiscovery,
             isHidden: isHidden,
@@ -137,7 +139,8 @@ struct CloudDriveContextMenuConfigFactory {
         displayMode: DisplayMode,
         isFromViewInFolder: Bool
     ) -> CMConfigEntity? {
-        .init(
+        let isOutShareOrPending = parentNode.isOutShare || isPendingOutShare(parentNode)
+        return CMConfigEntity(
             menuType: .menu(type: .display),
             viewMode: currentViewMode,
             accessLevel: nodeAccessType.toShareAccessLevelEntity(),
@@ -148,10 +151,15 @@ struct CloudDriveContextMenuConfigFactory {
             isIncomingShareChild: isIncomingSharedRootChild(parentNode: parentNode, nodeAccessType: nodeAccessType),
             isBackupsRootNode: isBackupsRoot(node: parentNode),
             isBackupsChild: isBackupsChild(node: parentNode),
-            isOutShare: parentNode.isOutShare,
+            isOutShare: isOutShareOrPending,
             isExported: parentNode.isExported,
             showMediaDiscovery: mediaDiscoveryEnabled
         )
+    }
+    
+    private func isPendingOutShare(_ node: NodeEntity) -> Bool {
+        guard let megaNode = MEGASdk.shared.node(forHandle: node.handle) else { return false }
+        return megaNode.mnz_hasPendingOrActiveOutShares()
     }
     
     private func isBackupsRoot(node: NodeEntity) -> Bool {

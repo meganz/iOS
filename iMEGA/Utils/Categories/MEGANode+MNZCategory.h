@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Shares
 
 - (nonnull NSMutableArray <MEGAShare *> *)outShares;
+- (BOOL)mnz_hasPendingOrActiveOutShares;
 
 #pragma mark - Versions
 

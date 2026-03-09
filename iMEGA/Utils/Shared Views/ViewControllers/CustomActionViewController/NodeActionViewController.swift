@@ -593,6 +593,7 @@ class NodeActionViewController: ActionSheetViewController {
             !sharedFolder.isVerified
             let isS4ContainerNode = viewModel.isS4Container(node: nodeEntity)
             let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user)
+            let isOutShareOrPending = node.isOutShare() || node.mnz_hasPendingOrActiveOutShares()
             
             let actions = NodeActionBuilder()
                 .setDisplayMode(displayMode)
@@ -609,7 +610,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsPdf(node.name?.pathExtension == "pdf")
                 .setisIncomingShareChildView(isIncoming)
                 .setIsExported(node.isExported())
-                .setIsOutshare(node.isOutShare())
+                .setIsOutshare(isOutShareOrPending)
                 .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
                 .setIsInVersionsView(isInVersionsView)
                 .setIsTakedown(isTakedown)

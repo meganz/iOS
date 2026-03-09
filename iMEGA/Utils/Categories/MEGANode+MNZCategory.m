@@ -765,6 +765,10 @@
     return outSharesForNodeMutableArray;
 }
 
+- (BOOL)mnz_hasPendingOrActiveOutShares {
+    return [MEGASdk.shared outSharesForNode:self].size > 0;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {

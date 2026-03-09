@@ -2,6 +2,7 @@ import Foundation
 import MEGAAssets
 import MEGADomain
 import MEGAL10n
+import MEGASdk
 import MEGASwift
 import UIKit
 
@@ -135,7 +136,14 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     private func defaultFolderImage(forNode node: NodeEntity) -> UIImage? {
         guard node.isFolder else { return nil }
         if node.isInShare { return UIImage.mnz_incomingFolder() }
-        if node.isOutShare { return UIImage.mnz_outgoingFolder() }
+        if node.isOutShare || hasPendingOrActiveOutShare(nodeHandle: node.handle) {
+            return UIImage.mnz_outgoingFolder()
+        }
         return node.labelImage
+    }
+    
+    private func hasPendingOrActiveOutShare(nodeHandle: HandleEntity) -> Bool {
+        guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else { return false }
+        return node.mnz_hasPendingOrActiveOutShares()
     }
 }
