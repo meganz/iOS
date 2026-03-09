@@ -281,6 +281,8 @@
     [self shouldShowShimmer:showShimmer];
     [self setParentNodeForBrowserAction];
     [self setParentShareType];
+    // Refresh toolbar state before async node loading to avoid a brief enabled flash in read-only folders.
+    [self reloadToolbarItemsUI];
     [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
     [self setNodesWithCompletion:^{
