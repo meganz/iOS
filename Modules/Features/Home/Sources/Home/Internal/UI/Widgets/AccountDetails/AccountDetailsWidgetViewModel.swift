@@ -157,7 +157,8 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
         case .unlimited:
             return 0
         case .limited(let storageUsed, let storageMax, _):
-            return Double(storageUsed) / Double(storageMax)
+            // Fraction is capped at 1.0 because went from Pro -> Free, storageUsed will exceed storageMax
+            return min(Double(storageUsed) / Double(storageMax), 1.0)
         }
     }
 
