@@ -36,6 +36,9 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     /// where storage limits do not apply. These accounts are charged based on actual usage and have no storage restrictions.
     /// This property can be used to avoid showing storage-related warnings or banners for these account types.
     var isUnlimitedStorageAccount: Bool { get }
+    
+    /// The last account pro level stored after successfully completing`accountDidFinishFetchAccountDetails`.
+    var lastKnownProLevel: AccountTypeEntity? { get }
 
     // User and session management
     func isLoggedIn() -> Bool

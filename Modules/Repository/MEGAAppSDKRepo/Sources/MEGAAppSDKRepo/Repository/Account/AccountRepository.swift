@@ -1,27 +1,34 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGAPreference
 import MEGASdk
 import MEGASwift
 
 public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public static var newRepo: AccountRepository {
-        AccountRepository(backupsRootFolderNodeAccess: BackupRootNodeAccess.shared)
+        AccountRepository(
+            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared,
+            preferenceRepository: PreferenceRepository.newRepo
+        )
     }
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     private let backupsRootFolderNodeAccess: any NodeAccessProtocol
+    private let preferenceRepository: any PreferenceRepositoryProtocol
     private let fullStorageLimit = 1.0
     private let almostFullStorageLimit = 0.9
     
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
-        backupsRootFolderNodeAccess: some NodeAccessProtocol
+        backupsRootFolderNodeAccess: some NodeAccessProtocol,
+        preferenceRepository: some PreferenceRepositoryProtocol
     ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
         self.backupsRootFolderNodeAccess = backupsRootFolderNodeAccess
+        self.preferenceRepository = preferenceRepository
     }
 
     // MARK: - User authentication status and identifiers
@@ -98,6 +105,12 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
         accountProPlans()?.first
     }
     
+    public var lastKnownProLevel: AccountTypeEntity? {
+        guard let lastKnownProLevel: Int = preferenceRepository[PreferenceKeyEntity.lastKnownProLevel.rawValue] else { return nil }
+        
+        return MEGAAccountType(rawValue: lastKnownProLevel)?.toAccountTypeEntity()
+    }
+    
     public func currentSubscription() -> AccountSubscriptionEntity? {
         guard let subscriptions = accountSubscriptions(),
               let currentProPlan else {
@@ -113,9 +126,9 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     public func isAccountType(_ type: AccountTypeEntity) -> Bool {
-        guard let currentAccountDetails else { return false }
+        guard let proLevel = currentAccountDetails?.proLevel ?? lastKnownProLevel else { return false }
         
-        return currentAccountDetails.proLevel == type
+        return proLevel == type
     }
     
     public var isMonitoringRefreshAccount: Bool {

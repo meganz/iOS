@@ -54,4 +54,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case shouldConvertHEICPhoto = "ShouldConvertHEICPhoto"
     case lastEnableCameraUploadBannerDismissedDate
     case limitedPhotoAccessBannerDismissedDate
+    case lastKnownProLevel
 }

@@ -168,7 +168,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
             nodeRepository: mockNodeRepository,
             accountUseCase: MockAccountUseCase(
                 currentAccountDetails: .build(proLevel: hasValidProOrUnexpiredBusinessAccount ? .proI : .free),
-                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount
+                hasValidProOrUnexpiredBusinessAccount: hasValidProOrUnexpiredBusinessAccount,
+                proLevel: hasValidProOrUnexpiredBusinessAccount ? .proI : .free
             ))
     }
 }
@@ -201,8 +202,10 @@ struct SensitiveNodeUseCaseSuite {
         func whenUserHasValidProAccountTypes(accountType: AccountTypeEntity) async throws {
             let sut = makeSUT(
                 accountUseCase: MockAccountUseCase(
-                    currentAccountDetails: .build(proLevel: accountType),
-                    hasValidProOrUnexpiredBusinessAccount: true))
+                    hasValidProOrUnexpiredBusinessAccount: true,
+                    proLevel: accountType)
+            )
+            
             #expect(sut.isAccessible() == true)
         }
         
@@ -283,7 +286,8 @@ struct SensitiveNodeUseCaseSuite {
     struct InheritedSensitivityCache {
         let accountUseCase = MockAccountUseCase(
             currentAccountDetails: .build(proLevel: .proI),
-            hasValidProOrUnexpiredBusinessAccount: true
+            hasValidProOrUnexpiredBusinessAccount: true,
+            proLevel: .proI
         )
         // Flaky, disable and investigate.
 //        @Test func emptyCacheWhenInheritedSensitivityMonitoringHasNotStarted() async throws {

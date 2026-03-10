@@ -62,6 +62,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
     public let storageSumUpdates: AnyAsyncSequence<Int64>
     public let _isMonitoringRefreshAccount: Bool
+    public let lastKnownProLevel: AccountTypeEntity?
     private(set) public var setAccountStorageStatusCalledCount: Int = 0
     
     // MARK: - Node Sizes
@@ -131,7 +132,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         storageSumUpdates: AnyAsyncSequence<Int64> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         isMonitoringRefreshAccount: Bool = false,
         loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic),
-        requestResult: Result<Void, AccountErrorEntity> = .failure(.generic)
+        requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
+        lastKnownProLevel: AccountTypeEntity? = nil
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -185,6 +187,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.storageSumUpdates = storageSumUpdates
         self.loadUserDataResult = loadUserDataResult
         self.requestResult = requestResult
+        self.lastKnownProLevel = lastKnownProLevel
     }
     
     // MARK: - AccountRepositoryProtocol Implementation

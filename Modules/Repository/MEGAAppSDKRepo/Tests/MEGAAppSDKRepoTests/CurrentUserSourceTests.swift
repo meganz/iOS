@@ -111,13 +111,20 @@ final class CurrentUserSourceTests: XCTestCase {
         XCTAssertFalse(source.isGuest)
     }
     
-    func testAccountDetails_fetchAccountDetailsNotif_shouldUpdate() {
-        let source = CurrentUserSource(sdk: MockSdk())
-        let accountDetails = AccountDetailsEntity.build(proLevel: .proI)
+    func testAccountDetails_fetchAccountDetailsNotification_shouldUpdate() throws {
+        let userDefaults = UserDefaults()
+        let source = CurrentUserSource(
+            sdk: MockSdk(),
+            userDefaults: userDefaults)
+        
+        let proLevel: AccountTypeEntity = .proI
+        let accountDetails = AccountDetailsEntity.build(proLevel: proLevel)
         NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
-        let exp = expectation(description: "accountDetails from notif")
+        let exp = expectation(description: "accountDetails from notification")
         _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(accountDetails, source.accountDetails)
+        let accountType = try XCTUnwrap(userDefaults.integer(forKey: PreferenceKeyEntity.lastKnownProLevel.rawValue))
+        XCTAssertEqual(MEGAAccountType(rawValue: accountType)?.toAccountTypeEntity(), proLevel)
     }
     
     func testAccountDetails_fetchAccountDetails_shouldUpdate() {

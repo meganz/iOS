@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGASwift
 import MEGATest
+import Testing
 import XCTest
 
 final class AccountUseCaseTests: XCTestCase {
@@ -676,5 +677,46 @@ final class AccountUserCaseProtocolTests: XCTestCase {
             let useCase = MockAccountUseCase(currentAccountDetails: AccountDetailsEntity.build(proLevel: level))
             XCTAssertFalse(useCase.isFreeTierUser)
         }
+    }
+}
+
+@Suite("AccountUseCase Tests")
+struct AccountUseCaseTestSuite {
+    struct ProLevel {
+        @Test("Current account details available should return the current account pro level",
+              arguments: AccountTypeEntity.allCases)
+        func currentAccountDetails(proLevel: AccountTypeEntity) async throws {
+            let repository = MockAccountRepository(
+                currentAccountDetails: .build(
+                    proLevel: proLevel)
+            )
+            let sut = makeSUT(repository: repository)
+            
+            #expect(sut.proLevel == proLevel)
+        }
+        
+        @Test("Use last known pro level",
+              arguments: AccountTypeEntity.allCases)
+        func currentAccountNotAvailable(proLevel: AccountTypeEntity) {
+            let repository = MockAccountRepository(
+                lastKnownProLevel: proLevel
+            )
+            let sut = makeSUT(repository: repository)
+            
+            #expect(sut.proLevel == proLevel)
+        }
+        
+        @Test("No current details or last stored should return nil")
+        func noCurrentOrStored() async throws {
+            let sut = makeSUT()
+            
+            #expect(sut.proLevel == nil)
+        }
+    }
+    
+    private static func makeSUT(
+        repository: MockAccountRepository = MockAccountRepository()
+    ) -> AccountUseCase<MockAccountRepository> {
+        .init(repository: repository)
     }
 }

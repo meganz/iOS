@@ -9,6 +9,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     
     private let sdk: MEGASdk
     private let notificationCenter: NotificationCenter
+    private let userDefaults: UserDefaults
     private var subscriptions = Set<AnyCancellable>()
     private var _currentUserHandle: Atomic<HandleEntity?>
     private var _currentUserEmail: Atomic<String?>
@@ -37,10 +38,12 @@ public final class CurrentUserSource: @unchecked Sendable {
     
     public init(
         sdk: MEGASdk,
-        notificationCenter: NotificationCenter = .default
+        notificationCenter: NotificationCenter = .default,
+        userDefaults: UserDefaults = .standard
     ) {
         self.sdk = sdk
         self.notificationCenter = notificationCenter
+        self.userDefaults = userDefaults
         let user = sdk.myUser
         _currentUserHandle = Atomic(wrappedValue: user?.handle)
         _currentUserEmail = Atomic(wrappedValue: user?.email)
@@ -106,6 +109,7 @@ public final class CurrentUserSource: @unchecked Sendable {
                 Task {
                     await RemoteFeatureFlagReadySource.shared.reset()
                 }
+                userDefaults.removeObject(forKey: PreferenceKeyEntity.lastKnownProLevel.rawValue)
             }
             .store(in: &subscriptions)
         
@@ -157,6 +161,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     
     public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity?) {
         $_accountDetails.mutate { $0 = userAccountDetails }
+        userDefaults.set(userAccountDetails?.proLevel.toMEGAAccountType().rawValue, forKey: PreferenceKeyEntity.lastKnownProLevel.rawValue)
     }
     
     public func setStorageStatus(_ storageStatus: StorageStatusEntity) {

@@ -3,6 +3,8 @@ import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
+import MEGAPreferenceMocks
 import MEGASwift
 import Testing
 import XCTest
@@ -674,7 +676,8 @@ final class AccountRepositoryTests: XCTestCase {
         return (AccountRepository(
             sdk: mockSdk,
             currentUserSource: currentUserSource,
-            backupsRootFolderNodeAccess: backupsRootNodeAccess
+            backupsRootFolderNodeAccess: backupsRootNodeAccess,
+            preferenceRepository: MockPreferenceRepository()
         ), mockSdk)
     }
     
@@ -737,15 +740,34 @@ struct AccountRepositoryTestSuite {
         }
     }
     
+    @Suite
+    struct AccountType {
+        @Test("Should use last known pro level if account details not available",
+              arguments: AccountTypeEntity.allCases)
+        func isAccountTypeNoAccountDetails(type: AccountTypeEntity) async throws {
+            let preferenceRepository = MockPreferenceRepository()
+            preferenceRepository.$userDefaults.mutate { $0[PreferenceKeyEntity.lastKnownProLevel.rawValue] = type.toMEGAAccountType().rawValue  }
+            let currentUserSource = CurrentUserSource(
+                sdk: MockSdk())
+            let sut = makeSUT(
+                currentUserSource: currentUserSource,
+            preferenceRepository: preferenceRepository)
+            
+            #expect(sut.isAccountType(type))
+        }
+    }
+    
     private static func makeSUT(
         sdk: MEGASdk = MockSdk(),
         currentUserSource: CurrentUserSource = .shared,
-        backupsRootFolderNodeAccess: some NodeAccessProtocol = MockNodeAccess()
+        backupsRootFolderNodeAccess: some NodeAccessProtocol = MockNodeAccess(),
+        preferenceRepository: some PreferenceRepositoryProtocol = MockPreferenceRepository()
     ) -> AccountRepository {
         .init(
             sdk: sdk,
             currentUserSource: currentUserSource,
-            backupsRootFolderNodeAccess: backupsRootFolderNodeAccess
+            backupsRootFolderNodeAccess: backupsRootFolderNodeAccess,
+            preferenceRepository: preferenceRepository
         )
     }
 }

@@ -46,6 +46,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _hasActiveProFlexiAccount: Bool
     private let _hasExpiredBusinessAccount: Bool
     private let _hasExpiredProFlexiAccount: Bool
+    public let proLevel: AccountTypeEntity?
     public private(set) var refreshAccountDetails_calledCount: Int = 0
     public private(set) var refreshAccountDetailsWithMonitoringUpdate_calledCount: Int = 0
     public private(set) var enableRichLinkPreview_calledCount: Int = 0
@@ -107,7 +108,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        proLevel: AccountTypeEntity? = nil
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -158,6 +160,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         self.onAccountRequestFinish = onAccountRequestFinish
         self.onContactRequestsUpdates = onContactRequestsUpdates
         self.onUserAlertsUpdates = onUserAlertsUpdates
+        self.proLevel = proLevel
     }
     
     // MARK: - User authentication status and identifiers

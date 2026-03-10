@@ -22,6 +22,11 @@ public protocol AccountUseCaseProtocol: Sendable {
     var isMasterBusinessAccount: Bool { get }
     var isSmsAllowed: Bool { get }
     var isAchievementsEnabled: Bool { get }
+    /// Current account pro level
+    /// - Returns the latest account pro level when account details have been successfully fetched.
+    /// - Falls back to the last stored cached pro level if the account fetch process has not yet completed.
+    /// - May be `nil` if neither live nor stored account data is available.
+    var proLevel: AccountTypeEntity? { get }
     func currentAccountPlan() async -> PlanEntity?
     var currentProPlan: AccountPlanEntity? { get }
     func currentSubscription() -> AccountSubscriptionEntity?
@@ -180,6 +185,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         }
 
         return true
+    }
+    
+    public var proLevel: AccountTypeEntity? {
+        currentAccountDetails?.proLevel ?? repository.lastKnownProLevel
     }
 
     public func currentAccountPlan() async -> PlanEntity? {

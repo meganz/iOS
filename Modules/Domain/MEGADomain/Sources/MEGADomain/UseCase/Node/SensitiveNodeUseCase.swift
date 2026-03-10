@@ -64,7 +64,7 @@ public struct SensitiveNodeUseCase<T: NodeRepositoryProtocol, U: AccountUseCaseP
     }
     
     public func isAccessible() -> Bool {
-        switch accountUseCase.currentAccountDetails?.proLevel {
+        switch accountUseCase.proLevel {
         case .lite, .proI, .proII, .proIII, .business, .proFlexi:
             accountUseCase.hasValidProOrUnexpiredBusinessAccount()
         case .starter, .basic, .essential:
