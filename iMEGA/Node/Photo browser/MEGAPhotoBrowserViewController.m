@@ -1116,7 +1116,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     
                 case DisplayModeNodeInsideFolderLink:
                     if (node != nil) {
-                        [self downloadFromFolderLink:@[node]];
+                        [self downloadFromFolderLink:node];
                     }
                     break;
                     

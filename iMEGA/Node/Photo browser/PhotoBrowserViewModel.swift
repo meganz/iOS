@@ -1,3 +1,4 @@
+import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -11,6 +12,7 @@ import NodeBackgroundDownloader
         case onViewWillAppear
         case onViewWillDisappear
         case nodeDownloadStarted(NodeEntity)
+        case downloadFileLink(URL)
     }
     
     public enum Command: CommandType, Equatable {
@@ -30,6 +32,10 @@ import NodeBackgroundDownloader
         case let .nodeDownloadStarted(node):
             if #available(iOS 26.0, *) {
                 processBackgroundDownload(for: node)
+            }
+        case let .downloadFileLink(url):
+            if #available(iOS 26.0, *) {
+                downloadFileLink(url: url)
             }
         }
     }
@@ -93,5 +99,18 @@ import NodeBackgroundDownloader
             await BackgroundDownloadHandler.shared.handleBackgroundDownload(for: node)
         }
         tracker.trackAnalyticsEvent(with: PhotoPreviewMakeAvailableOfflineBGContinuedProcessingTaskMenuItemEvent())
+    }
+    
+    @available(iOS 26.0, *)
+    private func downloadFileLink(url: URL) {
+        let fileLink = FileLinkEntity(linkURL: url)
+        Task {
+            do {
+                let node = try await photoBrowserUseCase.nodeFor(fileLink: fileLink)
+                processBackgroundDownload(for: node)
+            } catch {
+                MEGALogWarning("[Photo Browser] Failed to get node for file link: \(url) with error: \(error)")
+            }
+        }
     }
 }

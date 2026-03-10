@@ -2,6 +2,7 @@ import MEGASwift
 
 public protocol PhotoBrowserUseCaseProtocol: Sendable {
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
+    func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
 }
 
 public struct PhotoBrowserUseCase<N: NodeRepositoryProtocol>: PhotoBrowserUseCaseProtocol {
@@ -13,5 +14,9 @@ public struct PhotoBrowserUseCase<N: NodeRepositoryProtocol>: PhotoBrowserUseCas
     
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         nodeRepository.nodeUpdates
+    }
+    
+    public func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
+        try await nodeRepository.nodeFor(fileLink: fileLink)
     }
 }

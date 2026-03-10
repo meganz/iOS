@@ -251,10 +251,15 @@ extension MEGAPhotoBrowserViewController {
     @objc func downloadFileLink() {
         guard let linkUrl = URL(string: publicLink) else { return }
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
+        if #available(iOS 26.0, *) {
+            viewModel.dispatch(.downloadFileLink(linkUrl))
+        }
     }
     
-    @objc func downloadFromFolderLink(_ nodes: [MEGANode]) {
-        DownloadLinkRouter(nodes: nodes.toNodeEntities(), isFolderLink: true, presenter: self).start()
+    @objc func downloadFromFolderLink(_ node: MEGANode) {
+        let nodeEntity = node.toNodeEntity()
+        DownloadLinkRouter(nodes: [nodeEntity], isFolderLink: true, presenter: self).start()
+        viewModel.dispatch(.nodeDownloadStarted(nodeEntity))
     }
 
     @objc func openSlideShow() {
