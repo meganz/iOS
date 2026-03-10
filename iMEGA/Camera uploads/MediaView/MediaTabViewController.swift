@@ -112,11 +112,51 @@ final class MediaTabViewController: UIViewController {
             subtitle: viewModel.navigationSubtitle
         )
         titleView.sizeToFit()
+        
+        // Cap the width so UINavigationBar doesn't shift the title off-center
+        // to avoid overlapping with bar button items.
+        let maxWidth = maxCenteredTitleWidth()
+        if titleView.bounds.width > maxWidth {
+            titleView.frame.size.width = maxWidth
+        }
+
         return titleView
     }
 
     private func updateTitleView() {
         navigationItem.titleView = makeTitleView()
+        // UINavigationBar doesn't reposition a newly assigned titleView on its own.
+        // Re-assigning the existing bar button items forces a full layout pass.
+        let leftItems = navigationItem.leftBarButtonItems
+        navigationItem.leftBarButtonItems = leftItems
+    }
+
+    /// The maximum titleView width that allows it to stay centered between bar button items.
+    private func maxCenteredTitleWidth() -> CGFloat {
+        guard let navBar = navigationController?.navigationBar else {
+            return .greatestFiniteMagnitude
+        }
+
+        let navBarCenter = navBar.bounds.width / 2
+
+        var leftItemsEnd: CGFloat = 0
+        for item in navigationItem.leftBarButtonItems ?? [] {
+            guard let cv = item.customView else { continue }
+            leftItemsEnd = max(leftItemsEnd, cv.convert(cv.bounds, to: navBar).maxX)
+        }
+
+        var rightItemsStart: CGFloat = navBar.bounds.width
+        for item in navigationItem.rightBarButtonItems ?? [] {
+            guard let cv = item.customView else { continue }
+            rightItemsStart = min(rightItemsStart, cv.convert(cv.bounds, to: navBar).minX)
+        }
+
+        // UINavigationBar requires ~16pt margin between titleView and bar button items.
+        // Without this margin, the system shifts the title off-center to avoid overlap.
+        let margin: CGFloat = 16
+        let spaceLeft = navBarCenter - leftItemsEnd - margin
+        let spaceRight = rightItemsStart - navBarCenter - margin
+        return max(min(spaceLeft, spaceRight) * 2, 0)
     }
 
     private func updateNavigationBarItems() {
