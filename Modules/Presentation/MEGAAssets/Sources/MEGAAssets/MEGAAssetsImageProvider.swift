@@ -142,6 +142,7 @@ extension MEGAAssets {
         public static var newFolder: SwiftUI.Image { MEGAImageBundle.newFolder }
         public static var scanDocument: SwiftUI.Image { MEGAImageBundle.scanDocument }
         public static var chatEmptyStateNew: SwiftUI.Image { MEGAImageBundle.chatEmptyStateNew }
+        public static var recentsClock: SwiftUI.Image { MEGAImageBundle.recentsClock }
         public static var meetingsEmptyStateNew: SwiftUI.Image { MEGAImageBundle.meetingsEmptyStateNew }
         public static var newChatEmptyContacts: SwiftUI.Image { MEGAImageBundle.newChatEmptyContacts }
         public static var readOnlyChat: SwiftUI.Image { MEGAImageBundle.readOnlyChat }

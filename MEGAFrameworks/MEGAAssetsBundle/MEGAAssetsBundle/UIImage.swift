@@ -168,6 +168,7 @@ public struct MEGAUIImageBundle {
     public static var capture: UIImage { UIImage.capture }
     public static var scanDocument: UIImage { UIImage.scanDocument }
     public static var explorerCardFavourites: UIImage { UIImage.explorerCardFavourites }
+    public static var recentsClock: UIImage { UIImage.recentsClock }
     public static var explorerCardDocs: UIImage { UIImage.explorerCardDocs }
     public static var explorerCardAudio: UIImage { UIImage.explorerCardAudio }
     public static var explorerCardVideoPlayBlue: UIImage { UIImage.explorerCardVideoPlayBlue }

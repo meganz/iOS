@@ -22,7 +22,8 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../Repository/MEGAAppSDKRepo")
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../MEGASharedRepo/MEGAPreference")
     ],
     targets: [
         .target(
@@ -36,7 +37,8 @@ let package = Package(
                 "Search",
                 "MEGAAppPresentation",
                 "MEGADomain",
-                "MEGAAppSDKRepo"
+                "MEGAAppSDKRepo",
+                "MEGAPreference"
                 ]
         ),
         .testTarget(

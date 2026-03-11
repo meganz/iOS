@@ -4,6 +4,7 @@ import Foundation
 enum HomeWidgetType: CaseIterable, Identifiable {
     var id: Self { self }
     case shortcuts
+    case recents
     case accountDetails
     case promotionalBanners
 }

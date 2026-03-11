@@ -106,6 +106,8 @@ public struct HomeView: View {
                     PromotionalBannersWidgetView {
                         dependency.router.route(to: .promotionalBanner($0))
                     }
+                case .recents:
+                    RecentsWidgetView()
                 }
             }
         }

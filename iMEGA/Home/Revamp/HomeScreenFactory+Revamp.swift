@@ -211,7 +211,7 @@ extension HomeScreenFactory {
             nodeRepository: NodeRepository.newRepo
         )
     }
-
+    
     private var sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol {
         SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,

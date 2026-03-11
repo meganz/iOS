@@ -86,6 +86,7 @@ public struct MEGAImageBundle {
     public static var newFolder: Image { Image(.newFolder) }
     public static var scanDocument: Image { Image(.scanDocument) }
     public static var chatEmptyStateNew: Image { Image(.chatEmptyStateNew) }
+    public static var recentsClock: Image { Image(.recentsClock) }
     public static var meetingsEmptyStateNew: Image { Image(.meetingsEmptyStateNew) }
     public static var newChatEmptyContacts: Image { Image(.newChatEmptyContacts) }
     public static var readOnlyChat: Image { Image(.readOnlyChat) }
