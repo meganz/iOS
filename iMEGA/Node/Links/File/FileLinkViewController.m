@@ -70,6 +70,7 @@
     [self setupColors];
     [self configureContextMenuManager];
     [self configureViewModel];
+    [self configLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -60,6 +60,14 @@ extension FileLinkViewController {
             nodes: [node],
             presenter: self).start()
     }
+    
+    @objc func configLiquidGlass() {
+        if #available(iOS 26.0, *) {
+            self.clearBackBarButton()
+            edgesForExtendedLayout = .bottom
+            extendedLayoutIncludesOpaqueBars = true
+        }
+    }
 }
 
 extension FileLinkViewController {
