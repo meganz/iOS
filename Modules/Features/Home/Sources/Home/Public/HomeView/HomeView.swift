@@ -1,6 +1,7 @@
 import Favourites
 import MEGADesignToken
 import MEGAL10n
+import Search
 import SwiftUI
 import UIKit
 
@@ -9,10 +10,10 @@ public struct HomeView: View {
         case shortcut(ShortcutType)
     }
 
-    @StateObject var viewModel = HomeViewModel()
+    @StateObject private var viewModel = HomeViewModel()
     @State private var navigationPath = NavigationPath()
 
-    @State private var searchText = "" // [IOS-11361]: Handle searching logic
+    @State private var searchText = ""
     private let dependency: Dependency
 
     public init(dependency: Dependency) {
@@ -113,12 +114,16 @@ public struct HomeView: View {
         }
     }
 
-    // [IOS-11361]: Handle searching
     private var searchContent: some View {
-        ZStack {
-            Color.white
-            Text("Search result goes here")
-        }
+        HomeSearchResultsView(
+            dependency: HomeSearchResultsView.Dependency(
+                searchConfig: SearchConfig.homeSearchConfig,
+                resultsProvider: dependency.searchResultsProvider,
+                searchResultsSelectionHandler: dependency.searchResultsSelectionHandler,
+                searchResultNodeActionHandler: dependency.searchResultNodeActionHandler
+            ),
+            searchText: $searchText
+        )
     }
 }
 

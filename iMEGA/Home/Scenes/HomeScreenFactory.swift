@@ -22,7 +22,7 @@ import SwiftUI
 @MainActor
 final class HomeScreenFactory: NSObject {
     
-    private var sdk: MEGASdk {
+     var sdk: MEGASdk {
         MEGASdk.sharedSdk
     }
     
@@ -307,7 +307,7 @@ final class HomeScreenFactory: NSObject {
         )
     }
 
-    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
+    func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
         { action, _ in
             switch action {
             case .saveToPhotos:

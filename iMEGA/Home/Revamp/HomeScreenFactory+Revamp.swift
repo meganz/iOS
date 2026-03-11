@@ -10,6 +10,7 @@ import MEGAInfrastructure
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import Search
 import SwiftUI
 
 // MARK: - Revamped Home
@@ -47,6 +48,12 @@ extension HomeScreenFactory {
         )
 
         let router = HomeViewRouter(navigationController: navigationController)
+
+        let searchResultsProvider = makeResultsProvider(
+            parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
+            navigationController: navigationController
+        )
+
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
@@ -69,11 +76,14 @@ extension HomeScreenFactory {
             favouritesNodeSelectionAction: makeFavouritesNodeSelectionAction(
                 navigationController: navigationController
             ),
-            onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher()
+            onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher(),
+            searchResultsProvider: searchResultsProvider,
+            searchResultsSelectionHandler: makeSearchResultSelectionHandler(navigationController: navigationController),
+            searchResultNodeActionHandler: makeSearchResultsNodeActionHandler(navigationController: navigationController)
         )
-
+        
         let hostingController = HomeViewHostingController(dependency: dependency)
-
+        
         navigationController.viewControllers = [hostingController]
 
         return navigationController
@@ -128,6 +138,54 @@ extension HomeScreenFactory {
 
     private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
+    }
+
+    private func makeSearchResultsNodeActionHandler(
+        navigationController: UINavigationController,
+    ) -> @MainActor (MEGAAppPresentation.NodeAction) -> Void {
+        {  [weak navigationController, backupsUseCase, nodeUseCase] nodeAction in
+            guard let navigationController else { return }
+            let router = HomeSearchResultRouter(
+                navigationController: navigationController,
+                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                    viewController: navigationController,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                    nodeActionListener: { _, _ in
+                        // [IOS-11393]: [Home Search] Handle analytics tracking
+                    }
+                ),
+                backupsUseCase: backupsUseCase,
+                nodeUseCase: nodeUseCase
+            )
+
+            // button reference is required to position popover on the iPad correctly
+            router.didTapMoreAction(on: nodeAction.handle, button: nodeAction.sender, isFromSharedItem: false)
+        }
+    }
+
+    private func makeSearchResultSelectionHandler(
+        navigationController: UINavigationController
+    ) -> @MainActor (SearchResultSelection) -> Void {
+        { [weak navigationController, backupsUseCase, nodeUseCase] selection in
+            guard let navigationController else { return }
+            let siblings = selection.siblings()
+            let router = HomeSearchResultRouter(
+                navigationController: navigationController,
+                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                    viewController: navigationController,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+                ),
+                backupsUseCase: backupsUseCase,
+                nodeUseCase: nodeUseCase
+            )
+            router.didTapNode(
+                nodeHandle: selection.result.id,
+                allNodeHandles: siblings.isEmpty ? nil : siblings,
+                displayMode: .cloudDrive,
+                isFromSharedItem: false,
+                warningViewModel: nil
+            )
+        }
     }
 
     private func makeFavouritesNodeSelectionAction(
@@ -298,3 +356,16 @@ private struct HomeAddMenuActionHandler: HomeAddMenuActionHandling {
 // Most fields come from `NodeEntity` with some customization. We could introduce a protocol (instead of `SearchResult`)
 // and let each client construct its own model.
 extension SearchResultMapper: FavouritesSearchResultsMapping { }
+
+private class HomeSearchViewModeStore: ViewModeStoringObjC {
+    // For Home search we always display .list mode
+    func viewMode(
+        for location: ViewModeLocation_ObjWrapper
+    ) -> ViewModePreferenceEntity {
+        .list
+    }
+    func save(
+        viewMode: ViewModePreferenceEntity,
+        forObjC location: ViewModeLocation_ObjWrapper
+    ) {}
+}

@@ -3,6 +3,7 @@ import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import Search
 import SwiftUI
 
 extension HomeView {
@@ -21,6 +22,10 @@ extension HomeView {
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
         let favouritesNodeSelectionAction: @MainActor (HandleEntity, [HandleEntity]) -> Void
         let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
+        // Search result dependencies
+        let searchResultsProvider: any SearchResultsProviding
+        let searchResultsSelectionHandler: @MainActor (SearchResultSelection) -> Void
+        let searchResultNodeActionHandler: @MainActor (NodeAction) -> Void
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -36,7 +41,10 @@ extension HomeView {
             favouritesNodesActionHandler: some NodesActionHandling,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
             favouritesNodeSelectionAction: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
-            onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
+            onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
+            searchResultsProvider: some SearchResultsProviding,
+            searchResultsSelectionHandler: @escaping @MainActor (SearchResultSelection) -> Void,
+            searchResultNodeActionHandler: @escaping @MainActor (NodeAction) -> Void
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -52,6 +60,9 @@ extension HomeView {
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
             self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed
+            self.searchResultsProvider = searchResultsProvider
+            self.searchResultsSelectionHandler = searchResultsSelectionHandler
+            self.searchResultNodeActionHandler = searchResultNodeActionHandler
         }
     }
 }

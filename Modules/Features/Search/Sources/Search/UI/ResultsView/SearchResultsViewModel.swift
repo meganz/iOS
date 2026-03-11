@@ -69,9 +69,6 @@ public final class SearchResultsViewModel: ObservableObject {
     // delay after we should display loading placeholder, in seconds
     private let showLoadingPlaceholderDelay: Double
 
-    // delay after which we trigger searching after the user stops typing, in seconds
-    private let searchInputDebounceDelay: Double
-
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
 
     private let viewDisplayMode: ViewDisplayMode
@@ -115,7 +112,6 @@ public final class SearchResultsViewModel: ObservableObject {
         self.bridge = bridge
         self.config = config
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
-        self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
         self.viewDisplayMode = viewDisplayMode
         self.layout = layout
@@ -131,7 +127,6 @@ public final class SearchResultsViewModel: ObservableObject {
             _self?.debounceTask?.cancel()
             _self?.debounceTask = Task {
                 try await Task.sleep(nanoseconds: UInt64(searchInputDebounceDelay*1_000_000_000))
-
                 if Task.isCancelled { return }
                 await _self?.showLoadingPlaceholderIfNeeded()
                 await _self?.queryChanged(to: query, isSearchActive: true)
@@ -353,13 +348,11 @@ public final class SearchResultsViewModel: ObservableObject {
         }
 
         if Task.isCancelled { return }
-        
         let results = await resultsProvider.search(queryRequest: query, lastItemIndex: lastItemIndex)
 
         if Task.isCancelled { return }
         
         guard let results else { return }
-
         if lastItemIndex == nil {
             clearSearchResults()
         }
