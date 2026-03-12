@@ -186,6 +186,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func configureExpiryDate(isOn: Bool) {
+        let previousRows = expireDateRows()
         getLinkVM.expiryDate = isOn
         if !getLinkVM.expiryDate && getLinkVM.date != nil {
             nodesToExportCount = 1
@@ -193,8 +194,26 @@ class GetLinkViewController: UIViewController {
         }
         getLinkVM.date = nil
         getLinkVM.selectDate = false
+        let updatedRows = expireDateRows()
         guard let expiryDateSection = sections().firstIndex(of: .expiryDate), let linkSection = sections().firstIndex(of: .link) else { return }
-        tableView.reloadSections([expiryDateSection, linkSection], with: .automatic)
+
+        tableView.beginUpdates()
+        // Calculate rows to insert/delete (skip row 0 which is the switch itself)
+        let previousExtraRows = Set(previousRows).subtracting([.activateExpiryDate])
+        let updatedExtraRows = Set(updatedRows).subtracting([.activateExpiryDate])
+        let rowsToDelete = previousExtraRows.subtracting(updatedExtraRows)
+        let rowsToInsert = updatedExtraRows.subtracting(previousExtraRows)
+        let deleteIndexPaths = rowsToDelete.compactMap { row in
+            previousRows.firstIndex(of: row).map { IndexPath(row: $0, section: expiryDateSection) }
+        }
+        let insertIndexPaths = rowsToInsert.compactMap { row in
+            updatedRows.firstIndex(of: row).map { IndexPath(row: $0, section: expiryDateSection) }
+        }
+        tableView.deleteRows(at: deleteIndexPaths, with: .automatic)
+        tableView.insertRows(at: insertIndexPaths, with: .automatic)
+        tableView.endUpdates()
+
+        tableView.reloadSections([linkSection], with: .automatic)
     }
     
     private func copyKeyToPasteBoard() {
