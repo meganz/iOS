@@ -115,7 +115,7 @@
     } else {
         self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingImageView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_folder-incoming"];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_users"];
     }
     
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage megaImageWithNamed:@"versioned"] : [UIImage megaImageWithNamed:@"recentUpload"];
