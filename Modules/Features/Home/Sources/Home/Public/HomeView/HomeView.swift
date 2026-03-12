@@ -108,7 +108,9 @@ public struct HomeView: View {
                         dependency.router.route(to: .promotionalBanner($0))
                     }
                 case .recents:
-                    RecentsWidgetView()
+                    RecentsWidgetView(
+                        dependency: RecentsWidgetView.Dependency(userNameProvider: dependency.userNameProvider)
+                    )
                 }
             }
         }

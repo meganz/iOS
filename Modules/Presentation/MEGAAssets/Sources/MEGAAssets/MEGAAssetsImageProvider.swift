@@ -61,6 +61,7 @@ extension MEGAAssets {
         public static var favouritesEmptyState: SwiftUI.Image { MEGAImageBundle.favouritesEmptyState }
         public static var offlineEmptyState: SwiftUI.Image { MEGAImageBundle.offlineEmptyState }
         public static var filetypeGeneric: SwiftUI.Image { MEGAImageBundle.filetypeGeneric }
+        public static var filetypeGenericStack: SwiftUI.Image { MEGAImageBundle.filetypeGenericStack }
         public static var versioned: SwiftUI.Image { MEGAImageBundle.versioned }
         public static var recentUpload: SwiftUI.Image { MEGAImageBundle.recentUpload }
         public static var standardDisclosureIndicatorDesignToken: SwiftUI.Image { MEGAImageBundle.standardDisclosureIndicatorDesignToken }
@@ -199,6 +200,7 @@ extension MEGAAssets {
         public static var zoomSquare: SwiftUI.Image { MEGAImageBundle.zoomSquare }
         public static var filetypeWebData: SwiftUI.Image { MEGAImageBundle.filetypeWebData }
         public static var filetypeImages: SwiftUI.Image { MEGAImageBundle.filetypeImages }
+        public static var filetypeImagesStack: SwiftUI.Image { MEGAImageBundle.filetypeImagesStack }
         public static var favouritesHomeChip: SwiftUI.Image { MEGAImageBundle.favouritesHomeChip }
         public static var videosHomeChip: SwiftUI.Image { MEGAImageBundle.videosHomeChip }
         public static var offlineHomeChip: SwiftUI.Image { MEGAImageBundle.offlineHomeChip }

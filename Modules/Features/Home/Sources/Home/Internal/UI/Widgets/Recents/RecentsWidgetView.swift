@@ -4,15 +4,23 @@ import MEGAL10n
 import SwiftUI
 
 struct RecentsWidgetView: View {
+    struct Dependency {
+        let userNameProvider: any UserNameProviderProtocol
+    }
+    
+    private let dependency: Dependency
     @StateObject private var viewModel = RecentsWidgetViewModel()
 
+    init(dependency: Dependency) {
+        self.dependency = dependency
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             header
             content
         }
         .padding(.vertical, TokenSpacing._4)
-        .padding(.horizontal, TokenSpacing._5)
         .task {
             await viewModel.onTask()
         }
@@ -42,13 +50,14 @@ struct RecentsWidgetView: View {
             })
         }
         .padding(.bottom, TokenSpacing._3)
+        .padding(.horizontal, TokenSpacing._5)
     }
 
     @ViewBuilder
     private var content: some View {
         switch viewModel.state {
-        case .nonEmpty:
-            nonEmptyContent
+        case let .nonEmpty(buckets):
+            nonEmptyContent(buckets: buckets)
         case .empty, .hidden:
             emptyOrHiddenContent
         }
@@ -61,21 +70,15 @@ struct RecentsWidgetView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var nonEmptyContent: some View {
+    private func nonEmptyContent(buckets: [RecentActionBucketEntity]) -> some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
-            Text(RecentsWidgetViewModel.placeholderDescription)
-                .font(.footnote)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-
-            RoundedRectangle(cornerRadius: TokenRadius.medium)
-                .stroke(TokenColors.Border.strong.swiftUI, style: StrokeStyle(lineWidth: 1, dash: [4]))
-                .frame(height: 72)
-                .overlay(
-                    Text("Non-empty content placeholder")
-                        .font(.footnote)
-                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            RecentWidgetBucketListView(
+                dependency: RecentWidgetBucketListView.Dependency(
+                    buckets: buckets,
+                    userNameProvider: dependency.userNameProvider
                 )
-
+            )
+            
             Button {
                 viewModel.didTapLowerButton()
             } label: {
@@ -87,6 +90,7 @@ struct RecentsWidgetView: View {
                     .frame(height: 32, alignment: .center)
             }
             .padding(.bottom, TokenSpacing._2)
+            .padding(.horizontal, TokenSpacing._5)
         }
     }
 }

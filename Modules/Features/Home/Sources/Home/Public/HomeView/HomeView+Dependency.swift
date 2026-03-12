@@ -6,6 +6,12 @@ import MEGADomain
 import Search
 import SwiftUI
 
+/// @MainActor is required as its conformer would be MEGAStore from main target
+@MainActor
+public protocol UserNameProviderProtocol: Sendable {
+    func displayName(for userEmail: String) -> String?
+}
+
 extension HomeView {
     public struct Dependency {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
@@ -19,6 +25,7 @@ extension HomeView {
         let nodeUseCase: any NodeUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
+        let userNameProvider: any UserNameProviderProtocol
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
         let favouritesNodeSelectionAction: @MainActor (HandleEntity, [HandleEntity]) -> Void
         let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
@@ -26,7 +33,7 @@ extension HomeView {
         let searchResultsProvider: any SearchResultsProviding
         let searchResultsSelectionHandler: @MainActor (SearchResultSelection) -> Void
         let searchResultNodeActionHandler: @MainActor (NodeAction) -> Void
-
+        
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
@@ -39,6 +46,7 @@ extension HomeView {
             nodeUseCase: some NodeUseCaseProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
+            userNameProvider: some UserNameProviderProtocol,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
             favouritesNodeSelectionAction: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
             onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
@@ -57,6 +65,7 @@ extension HomeView {
             self.avatarFetcher = avatarFetcher
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
+            self.userNameProvider = userNameProvider
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
             self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed

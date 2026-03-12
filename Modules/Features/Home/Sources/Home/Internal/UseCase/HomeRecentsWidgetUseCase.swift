@@ -6,31 +6,21 @@ protocol HomeRecentsWidgetUseCaseProtocol: Sendable {
 }
 
 struct HomeRecentsWidgetUseCase: HomeRecentsWidgetUseCaseProtocol, Sendable {
-    private enum Constants {
-        static let recentActionBucketsLimit = 1
-    }
-
-    private let recentNodesUseCase: any RecentNodesUseCaseProtocol
+    private let maxShowingBuckets = 4
+    private let recentActionBucketRepository: any RecentActionBucketRepositoryProtocol
 
     init() {
-        self.init(
-            recentNodesUseCase: RecentNodesUseCase(
-                recentNodesRepository: RecentNodesRepository.newRepo,
-                contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
-                userUpdateRepository: UserUpdateRepository.newRepo,
-                requestStatesRepository: RequestStatesRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
-            )
-        )
+        self.init(recentActionBucketRepository: RecentActionBucketRepository.newRepo)
     }
 
-    package init(recentNodesUseCase: some RecentNodesUseCaseProtocol) {
-        self.recentNodesUseCase = recentNodesUseCase
+    package init(recentActionBucketRepository: some RecentActionBucketRepositoryProtocol) {
+        self.recentActionBucketRepository = recentActionBucketRepository
     }
 
     func recentBuckets() async -> [RecentActionBucketEntity]? {
         do {
-            return try await recentNodesUseCase.recentActionBuckets(limitCount: Constants.recentActionBucketsLimit)
+            let buckets = try await recentActionBucketRepository.getRecentActionBuckets()
+            return Array(buckets.prefix(maxShowingBuckets))
         } catch is CancellationError {
             return nil
         } catch {

@@ -1690,6 +1690,7 @@
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
 		A576CF392F10D4C300F57373 /* FolderLinkNodeActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */; };
 		A57DA72D2EB49EC800D3B486 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = A57DA72C2EB49EC800D3B486 /* MEGATest */; };
+		A58358212F61618800B4B519 /* HomeRecentUserNameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583581F2F61617400B4B519 /* HomeRecentUserNameProvider.swift */; };
 		A588C5E52F338C6600F7547B /* FolderLinkMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588C5E42F338C5C00F7547B /* FolderLinkMiniPlayerView.swift */; };
 		A588C6232F3482E100F7547B /* FolderLinkMiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588C6222F3482E000F7547B /* FolderLinkMiniPlayerViewController.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
@@ -4575,6 +4576,7 @@
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A576CF372F10D4B800F57373 /* FolderLinkNodeActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkNodeActionHandler.swift; sourceTree = "<group>"; };
+		A583581F2F61617400B4B519 /* HomeRecentUserNameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecentUserNameProvider.swift; sourceTree = "<group>"; };
 		A588C5E42F338C5C00F7547B /* FolderLinkMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMiniPlayerView.swift; sourceTree = "<group>"; };
 		A588C6222F3482E000F7547B /* FolderLinkMiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMiniPlayerViewController.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
@@ -12661,6 +12663,7 @@
 			isa = PBXGroup;
 			children = (
 				BFD971242F46BDCA0038892A /* FavouritesNodesActionHandler.swift */,
+				A583581F2F61617400B4B519 /* HomeRecentUserNameProvider.swift */,
 				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
 				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
 			);
@@ -15386,6 +15389,7 @@
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */,
+				A58358212F61618800B4B519 /* HomeRecentUserNameProvider.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				C41388F52F3418DF00C560C5 /* HomeScreenFactory+Revamp.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,

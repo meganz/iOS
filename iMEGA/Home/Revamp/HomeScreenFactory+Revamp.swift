@@ -70,6 +70,7 @@ extension HomeScreenFactory {
             nodeUseCase: nodeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
+            userNameProvider: HomeRecentUserNameProvider(),
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
             },

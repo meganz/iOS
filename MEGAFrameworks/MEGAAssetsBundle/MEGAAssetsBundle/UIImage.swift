@@ -355,6 +355,7 @@ public struct MEGAUIImageBundle {
     public static var filetypeExecutable: UIImage { UIImage.filetypeExecutable }
     public static var filetypeVector: UIImage { UIImage.filetypeVector }
     public static var filetypeImages: UIImage { UIImage.filetypeImages }
+    public static var filetypeImagesStack: UIImage { UIImage.filetypeImageStack }
     public static var filetypeWebData: UIImage { UIImage.filetypeWebData }
     public static var filetypeWord: UIImage { UIImage.filetypeWord }
     public static var filetypeCAD: UIImage { UIImage.filetypeCAD }
@@ -366,6 +367,7 @@ public struct MEGAUIImageBundle {
     public static var filetypeKeynote: UIImage { UIImage.filetypeKeynote }
     public static var filetypeNumbers: UIImage { UIImage.filetypeNumbers }
     public static var filetypeGeneric: UIImage { UIImage.filetypeGeneric }
+    public static var filetypeGenericStack: UIImage { UIImage.filetypeGenericStack }
     public static var filetypeOpenoffice: UIImage { UIImage.filetypeOpenoffice }
     public static var filetypeExcel: UIImage { UIImage.filetypeExcel }
     public static var filetypePages: UIImage { UIImage.filetypePages }

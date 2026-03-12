@@ -4854,3 +4854,5 @@
 "notification.transfer.paused.message"="Transfer paused. It will resume when you reopen the app.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Transferring files";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="Added by %@";

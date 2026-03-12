@@ -156,6 +156,7 @@ public struct MEGAImageBundle {
     public static var filetypeExecutable: Image { Image(.filetypeExecutable) }
     public static var filetypeVector: Image { Image(.filetypeVector) }
     public static var filetypeImages: Image { Image(.filetypeImages) }
+    public static var filetypeImagesStack: Image { Image(.filetypeImageStack) }
     public static var filetypeWebData: Image { Image(.filetypeWebData) }
     public static var filetypeWord: Image { Image(.filetypeWord) }
     public static var filetypeCAD: Image { Image(.filetypeCAD) }
@@ -167,6 +168,7 @@ public struct MEGAImageBundle {
     public static var filetypeKeynote: Image { Image(.filetypeKeynote) }
     public static var filetypeNumbers: Image { Image(.filetypeNumbers) }
     public static var filetypeGeneric: Image { Image(.filetypeGeneric) }
+    public static var filetypeGenericStack: Image { Image(.filetypeGenericStack) }
     public static var filetypeOpenoffice: Image { Image(.filetypeOpenoffice) }
     public static var filetypeExcel: Image { Image(.filetypeExcel) }
     public static var filetypePages: Image { Image(.filetypePages) }

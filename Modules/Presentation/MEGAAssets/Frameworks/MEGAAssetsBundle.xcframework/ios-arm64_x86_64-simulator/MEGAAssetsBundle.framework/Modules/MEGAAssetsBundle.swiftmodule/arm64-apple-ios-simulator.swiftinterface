@@ -499,6 +499,9 @@ public struct MEGAImageBundle {
   public static var filetypeImages: SwiftUICore.Image {
     get
   }
+  public static var filetypeImagesStack: SwiftUICore.Image {
+    get
+  }
   public static var filetypeWebData: SwiftUICore.Image {
     get
   }
@@ -530,6 +533,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var filetypeGeneric: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeGenericStack: SwiftUICore.Image {
     get
   }
   public static var filetypeOpenoffice: SwiftUICore.Image {
@@ -2138,6 +2144,9 @@ public struct MEGAUIImageBundle {
   public static var filetypeImages: UIKit.UIImage {
     get
   }
+  public static var filetypeImagesStack: UIKit.UIImage {
+    get
+  }
   public static var filetypeWebData: UIKit.UIImage {
     get
   }
@@ -2169,6 +2178,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var filetypeGeneric: UIKit.UIImage {
+    get
+  }
+  public static var filetypeGenericStack: UIKit.UIImage {
     get
   }
   public static var filetypeOpenoffice: UIKit.UIImage {
