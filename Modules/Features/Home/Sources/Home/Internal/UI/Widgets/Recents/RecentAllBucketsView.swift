@@ -1,3 +1,4 @@
+import MEGAL10n
 import SwiftUI
 
 @MainActor
@@ -33,5 +34,7 @@ struct RecentAllBucketsView: View {
                 )
             )
         }
+        .navigationTitle(Strings.Localizable.recents)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -6,7 +6,7 @@ import MEGAPreference
 final class RecentsWidgetViewModel: ObservableObject {
     enum State {
         case empty
-        case nonEmpty([RecentActionBucketEntity])
+        case nonEmpty([DailyRecentActionBucketGroup])
         case hidden
     }
     
@@ -46,7 +46,14 @@ final class RecentsWidgetViewModel: ObservableObject {
             return
         }
 
-        guard let buckets = await homeRecentsWidgetUseCase.recentBuckets() else { return }
-        state = buckets.isEmpty ? .empty : .nonEmpty(buckets)
+        do throws(HomeRecentWidgetsErrorEntity) {
+            let bucketGroups = try await homeRecentsWidgetUseCase.recentBuckets()
+            state = bucketGroups.isEmpty ? .empty : .nonEmpty(bucketGroups)
+        } catch {
+            switch error {
+            case .cancellation:
+                break
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ public struct HomeView: View {
     }
 
     @StateObject private var viewModel = HomeViewModel()
-    @State private var navigationPath = NavigationPath()
+    @StateObject private var navigator = HomeNavigation()
 
     @State private var searchText = ""
     private let dependency: Dependency
@@ -28,7 +28,7 @@ public struct HomeView: View {
     }
     
     var content: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack(path: $navigator.path) {
             listContent
                 .navigationTitle(Strings.Localizable.home)
                 .navigationBarTitleDisplayMode(.inline)
@@ -55,6 +55,7 @@ public struct HomeView: View {
         }
         .background(HomeBackButtonConfigurator())
         .tint(TokenColors.Icon.primary.swiftUI)
+        .environmentObject(navigator)
     }
 
     @ViewBuilder
@@ -84,14 +85,14 @@ public struct HomeView: View {
     }
 
     private var listContent: some View {
-        LazyVStack(spacing: 0) {
+        VStack(spacing: 0) {
             ForEach(viewModel.widgets) { widget in
                 switch widget {
                 case .shortcuts:
                     ShortcutsWidgetView { shortcutType in
                         switch shortcutType {
                         case .favourites:
-                            navigationPath.append(NavigationRoute.shortcut(.favourites))
+                            navigator.append(NavigationRoute.shortcut(.favourites))
                         case .offline:
                             dependency.router.route(to: .shortcut(shortcutType))
                         }

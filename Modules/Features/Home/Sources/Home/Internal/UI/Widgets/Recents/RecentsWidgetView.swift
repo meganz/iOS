@@ -56,8 +56,8 @@ struct RecentsWidgetView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.state {
-        case let .nonEmpty(buckets):
-            nonEmptyContent(buckets: buckets)
+        case let .nonEmpty(bucketGroups):
+            nonEmptyContent(bucketGroups: bucketGroups)
         case .empty, .hidden:
             emptyOrHiddenContent
         }
@@ -70,27 +70,12 @@ struct RecentsWidgetView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func nonEmptyContent(buckets: [RecentActionBucketEntity]) -> some View {
-        VStack(alignment: .leading, spacing: TokenSpacing._3) {
-            RecentWidgetBucketListView(
-                dependency: RecentWidgetBucketListView.Dependency(
-                    buckets: buckets,
-                    userNameProvider: dependency.userNameProvider
-                )
+    private func nonEmptyContent(bucketGroups: [DailyRecentActionBucketGroup]) -> some View {
+        RecentWidgetBucketListView(
+            dependency: RecentWidgetBucketListView.Dependency(
+                bucketGroups: bucketGroups,
+                userNameProvider: dependency.userNameProvider
             )
-            
-            Button {
-                viewModel.didTapLowerButton()
-            } label: {
-                Text(RecentsWidgetViewModel.placeholderButtonTitle)
-                    .font(.callout)
-                    .fontWeight(.semibold)
-                    .underline()
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                    .frame(height: 32, alignment: .center)
-            }
-            .padding(.bottom, TokenSpacing._2)
-            .padding(.horizontal, TokenSpacing._5)
-        }
+        )
     }
 }
