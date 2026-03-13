@@ -27,7 +27,7 @@ struct FolderLinkContentUnavailableProvider: ContentUnavailableViewModelProvidin
             ContentUnavailableViewModel.emptyFolder
         // no search query but has chip applied => show chip-related empty
         case (_, false, true):
-            if let nodeFormatChip = appliedChips.first(where: { $0.type.isNodeFormatChip }) {
+            if let nodeFormatChip = appliedChips.first(where: { $0.type.isNodeFormatChip || $0.type.isNodeTypeChip }) {
                 ContentUnavailableViewModel.noResults(for: nodeFormatChip)
             } else {
                 ContentUnavailableViewModel.noResults

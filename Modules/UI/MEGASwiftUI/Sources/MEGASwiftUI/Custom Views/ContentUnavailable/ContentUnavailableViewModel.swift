@@ -1,3 +1,6 @@
+import MEGAAssets
+import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 public struct ContentUnavailableViewModel {
@@ -64,5 +67,96 @@ public struct ContentUnavailableViewModel {
         self.font = font
         self.titleTextColor = titleTextColor
         self.actions = actions
+    }
+}
+
+public extension ContentUnavailableViewModel {
+    static var noResults: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassSearch02,
+            title: Strings.Localizable.noResults,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noDocs: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassFile,
+            title: Strings.Localizable.Home.Search.Empty.noDocuments,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noAudios: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassAudio,
+            title: Strings.Localizable.Home.Search.Empty.noAudio,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noVideos: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassVideo,
+            title: Strings.Localizable.Home.Search.Empty.noVideos,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noImages: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassImage,
+            title: Strings.Localizable.Home.Search.Empty.noImages,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+    static var noPdfs: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassFile,
+            title: Strings.Localizable.Home.Search.Empty.noPdfs,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noPresentations: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassPlaylist,
+            title: Strings.Localizable.Home.Search.Empty.noPresentations,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noFolders: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassFolder,
+            title: Strings.Localizable.Home.Search.Empty.noFolders,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noArchives: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassObjects,
+            title: Strings.Localizable.Home.Search.Empty.noArchives,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
+    }
+
+    static var noSpreadSheets: Self {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassFile,
+            title: Strings.Localizable.Home.Search.Empty.noSpreadsheets,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
     }
 }

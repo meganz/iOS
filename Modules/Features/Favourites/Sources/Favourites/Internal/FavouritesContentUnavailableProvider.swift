@@ -20,8 +20,8 @@ struct FavouritesContentUnavailableProvider: ContentUnavailableViewModelProvidin
         case (false, false, false):
             ContentUnavailableViewModel.noFavourites
         case (_, false, true):
-            if let nodeFormatChip = appliedChips.first(where: { $0.type.isNodeFormatChip }) {
-                ContentUnavailableViewModel.noResults(for: nodeFormatChip)
+            if let nodeFormatChip = appliedChips.first(where: { $0.type.isNodeFormatChip || $0.type.isNodeTypeChip }) {
+                noResults(for: nodeFormatChip)
             } else {
                 ContentUnavailableViewModel.noResults
             }
@@ -29,18 +29,34 @@ struct FavouritesContentUnavailableProvider: ContentUnavailableViewModelProvidin
             ContentUnavailableViewModel.noResults
         }
     }
+    
+    private func noResults(for chip: SearchChipEntity) -> ContentUnavailableViewModel {
+        switch chip.id {
+        case SearchChipEntity.docs.id:
+                .noDocs
+        case SearchChipEntity.audio.id:
+                .noAudios
+        case SearchChipEntity.video.id:
+                .noVideos
+        case SearchChipEntity.images.id:
+                .noImages
+        case SearchChipEntity.folders.id:
+                .noFolders
+        case SearchChipEntity.pdf.id:
+                .noPdfs
+        case SearchChipEntity.presentation.id:
+                .noPresentations
+        case SearchChipEntity.archives.id:
+                .noArchives
+        case SearchChipEntity.spreadsheets.id:
+                .noSpreadSheets
+        default:
+                .noResults
+        }
+    }
 }
 
 fileprivate extension ContentUnavailableViewModel {
-    static var noResults: Self {
-        ContentUnavailableViewModel(
-            image: MEGAAssets.Image.glassSearch02,
-            title: Strings.Localizable.noResults,
-            font: .body,
-            titleTextColor: TokenColors.Icon.secondary.swiftUI
-        )
-    }
-    
     static var noFavourites: Self {
         ContentUnavailableViewModel(
             image: MEGAAssets.Image.glassHearts,
@@ -48,75 +64,5 @@ fileprivate extension ContentUnavailableViewModel {
             font: .body,
             titleTextColor: TokenColors.Icon.secondary.swiftUI
         )
-    }
-    
-    static func noResults(for chip: SearchChipEntity) -> Self {
-        switch chip.id {
-        case SearchChipEntity.docs.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassFile,
-                title: Strings.Localizable.Home.Search.Empty.noDocuments,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.audio.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassAudio,
-                title: Strings.Localizable.Home.Search.Empty.noAudio,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.video.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassVideo,
-                title: Strings.Localizable.Home.Search.Empty.noVideos,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.images.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassImage,
-                title: Strings.Localizable.Home.Search.Empty.noImages,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.folders.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassFolder,
-                title: Strings.Localizable.Home.Search.Empty.noFolders,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.pdf.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassFile,
-                title: Strings.Localizable.Home.Search.Empty.noPdfs,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.presentation.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassPlaylist,
-                title: Strings.Localizable.Home.Search.Empty.noPresentations,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.archives.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassObjects,
-                title: Strings.Localizable.Home.Search.Empty.noArchives,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        case SearchChipEntity.spreadsheets.id:
-            ContentUnavailableViewModel(
-                image: MEGAAssets.Image.glassFile,
-                title: Strings.Localizable.Home.Search.Empty.noSpreadsheets,
-                font: .body,
-                titleTextColor: TokenColors.Icon.secondary.swiftUI
-            )
-        default:
-            ContentUnavailableViewModel.noResults
-        }
     }
 }
