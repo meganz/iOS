@@ -116,7 +116,7 @@ struct AlbumContentPickerView: View {
         } label: {
             Text(Strings.Localizable.done)
                 .font(.body.bold())
-                .foregroundStyle(TokenColors.Icon.secondary.swiftUI.opacity(viewModel.isDoneButtonDisabled ? 0.5 : 1))
+                .foregroundStyle(viewModel.isDoneButtonDisabled ? TokenColors.Icon.secondary.swiftUI.opacity(0.5) : TokenColors.Text.accent.swiftUI)
         }.padding(10)
         .disabled(viewModel.isDoneButtonDisabled)
     }
@@ -146,7 +146,7 @@ struct AlbumContentPickerView: View {
         } label: {
             Text(Strings.Localizable.filter)
                 .font(.body)
-                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }.padding(20)
     }
     
