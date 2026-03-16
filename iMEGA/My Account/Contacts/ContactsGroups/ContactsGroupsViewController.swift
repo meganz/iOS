@@ -39,6 +39,7 @@ class ContactsGroupsViewController: UIViewController {
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar)
         
         setupColors()
+        setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
         
         fetchGroupChatsList()
     }

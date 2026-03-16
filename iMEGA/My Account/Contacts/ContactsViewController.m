@@ -1203,6 +1203,7 @@
         [self presentViewController:addContactAlertController animated:YES completion:nil];
     } else {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+        [self prepareSearchBarForPushTransition];
         [self.navigationController pushViewController:inviteContacts animated:YES];
     }
 }

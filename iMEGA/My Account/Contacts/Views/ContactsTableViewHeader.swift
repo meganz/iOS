@@ -62,13 +62,13 @@ class ContactsTableViewHeader: UIView {
     
     @IBAction func requestsTapped(_ sender: UITapGestureRecognizer) {
         let contactRequestsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsRequestsViewControllerID")
-        
+        (navigationController.topViewController as? ContactsViewController)?.prepareSearchBarForPushTransition()
         navigationController.pushViewController(contactRequestsVC, animated: true)
     }
     
     @IBAction func groupsTapped(_ sender: UITapGestureRecognizer) {
         let contactsGroupsVC = UIStoryboard(name: "ContactsGroups", bundle: nil).instantiateViewController(withIdentifier: "ContactsGroupsViewControllerID")
-        
+        (navigationController.topViewController as? ContactsViewController)?.prepareSearchBarForPushTransition()
         navigationController.pushViewController(contactsGroupsVC, animated: true)
     }
 }

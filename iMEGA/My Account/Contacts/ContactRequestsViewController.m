@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     self.tableView.emptyDataSetDelegate = self;
     
     self.navigationItem.titleView = self.contactRequestsSegmentedControl;
+    [self setupLiquidGlassNavigationBarWith:[UIColor surface1Background]];
     
     self.relativeDateTimeFormatter = NSRelativeDateTimeFormatter.alloc.init;
     [self setupColors];

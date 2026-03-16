@@ -353,4 +353,21 @@ extension ContactsViewController {
             self?.navigationController?.navigationBar.setNeedsLayout()
         }
     }
+    
+    @objc func prepareSearchBarForPushTransition() {
+        if searchController.isActive {
+            searchController.isActive = false
+        }
+        
+        navigationItem.searchController = nil
+        markNavigationBarNeedsLayoutForLiquidGlass()
+        
+        if #available(iOS 26.0, *),
+           let navigationController,
+           !navigationController.navigationBar.isHidden {
+            // Force the shared navigation bar to rebuild so the removed search bar background does not linger during the push to Invite.
+            navigationController.setNavigationBarHidden(true, animated: false)
+            navigationController.setNavigationBarHidden(false, animated: false)
+        }
+    }
 }
