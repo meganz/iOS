@@ -19,6 +19,7 @@ public struct PhotoCellImage: View {
                 .overlay(
                     container.image
                 )
+                .sensitive(container)
                 .clipped()
         } else {
             thumbnail()
