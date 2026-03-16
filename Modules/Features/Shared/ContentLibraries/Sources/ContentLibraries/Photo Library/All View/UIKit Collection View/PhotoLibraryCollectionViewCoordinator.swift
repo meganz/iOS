@@ -54,6 +54,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private weak var globalHeaderView: UICollectionViewCell?
     private var visibleSectionHeaders: Set<Int> = []
     private var subscriptions = Set<AnyCancellable>()
+    private weak var dragSelectionPanGesture: UIPanGestureRecognizer?
 
     private var dragInitialIndexPath: IndexPath?
     private var dragLastIndexPath: IndexPath?
@@ -181,6 +182,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         if ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
             panGesture.delegate = self
+            dragSelectionPanGesture = panGesture
             collectionView.addGestureRecognizer(panGesture)
         }
 
@@ -287,9 +289,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
                   let photo = photoLibraryDataSource.photo(at: indexPath) else {
                 return
             }
-            
-            collectionView?.isScrollEnabled = false
-            
+
             dragInitialIndexPath = indexPath
             dragLastIndexPath = indexPath
             dragSelectionMode = viewModel.libraryViewModel.selection.isPhotoSelected(photo) ? .deselect : .select
@@ -308,7 +308,6 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             }
             
         case .ended, .cancelled, .failed:
-            collectionView?.isScrollEnabled = true
             dragInitialIndexPath = nil
             dragLastIndexPath = nil
             dragSelectionMode = nil
@@ -461,6 +460,7 @@ extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrol
 extension PhotoLibraryCollectionViewCoordinator: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer,
+              gestureRecognizer === dragSelectionPanGesture,
               viewModel.isEditing else {
             return false
         }
@@ -476,6 +476,18 @@ extension PhotoLibraryCollectionViewCoordinator: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer === dragSelectionPanGesture else {
+            return false
+        }
+
+        if otherGestureRecognizer === collectionView?.panGestureRecognizer {
+            return false
+        }
+
         return true
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        gestureRecognizer === collectionView?.panGestureRecognizer && otherGestureRecognizer === dragSelectionPanGesture
     }
 }
