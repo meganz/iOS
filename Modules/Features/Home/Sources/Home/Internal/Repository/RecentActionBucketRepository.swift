@@ -4,7 +4,8 @@ import MEGASdk
 import MEGASwift
 
 protocol RecentActionBucketRepositoryProtocol: RepositoryProtocol, Sendable {
-    func getRecentActionBuckets() async throws -> [RecentActionBucketEntity]
+    func getRecentActionBuckets(excludeSensitives: Bool) async throws -> [RecentActionBucketEntity]
+    func clearRecentActionBuckets(until: Date) async throws
 }
 
 struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
@@ -18,12 +19,25 @@ struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func getRecentActionBuckets() async throws -> [RecentActionBucketEntity] {
+    func getRecentActionBuckets(excludeSensitives: Bool) async throws -> [RecentActionBucketEntity] {
         try await withAsyncThrowingValue(in: { completion in
-            sdk.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: false, delegate: RequestDelegate { result in
+            sdk.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: excludeSensitives, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
                     completion(.success(request.recentActionsBuckets?.compactMap { bucketEntity(from: $0) } ?? []))
+                case .failure:
+                    completion(.failure(GenericErrorEntity()))
+                }
+            })
+        })
+    }
+
+    func clearRecentActionBuckets(until date: Date) async throws {
+        try await withAsyncThrowingVoidValue(in: { completion in
+            sdk.clearRecentActionHistory(until: Int64(date.timeIntervalSince1970), delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
                 case .failure:
                     completion(.failure(GenericErrorEntity()))
                 }
@@ -47,8 +61,8 @@ struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
             }
         }
         
-        let changesOwnerType: RecentActionBucketChangesOwnerType = if let userEmail = bucket.userEmail, userEmail != sdk.myEmail {
-            .otherUser(userEmail)
+        let changesOwnerType: RecentActionBucketChangesOwnerType = if let user = sdk.contact(forEmail: bucket.userEmail), user.email != sdk.myEmail {
+            .otherUser(user.toUserEntity())
         } else {
             .currentUser
         }

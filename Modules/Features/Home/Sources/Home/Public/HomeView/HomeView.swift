@@ -52,6 +52,8 @@ public struct HomeView: View {
                         searchContent
                     }
                 }
+                .background(TokenColors.Background.page.swiftUI)
+                .snackBar($navigator.snackBar)
         }
         .background(HomeBackButtonConfigurator())
         .tint(TokenColors.Icon.primary.swiftUI)

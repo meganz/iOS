@@ -25,6 +25,14 @@ public protocol ContentConsumptionUserAttributeUseCaseProtocol: Sendable {
     func saveSensitiveSetting(onboarded: Bool) async throws
 }
 
+extension ContentConsumptionUserAttributeUseCaseProtocol {
+    public var shouldShowHiddenNodes: Bool {
+        get async {
+            await fetchSensitiveAttribute().showHiddenNodes
+        }
+    }
+}
+
 public struct ContentConsumptionUserAttributeUseCase<T: UserAttributeRepositoryProtocol>: ContentConsumptionUserAttributeUseCaseProtocol {
     
     private let repo: T

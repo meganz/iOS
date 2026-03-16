@@ -9,7 +9,7 @@ import SwiftUI
 /// @MainActor is required as its conformer would be MEGAStore from main target
 @MainActor
 public protocol UserNameProviderProtocol: Sendable {
-    func displayName(for userEmail: String) -> String?
+    func displayName(for user: UserEntity) -> String?
 }
 
 extension HomeView {

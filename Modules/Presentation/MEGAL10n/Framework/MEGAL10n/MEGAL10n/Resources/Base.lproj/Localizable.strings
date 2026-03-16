@@ -4862,4 +4862,11 @@
 "home.recent.addedByLabel"="Added by %@";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
 "recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
-
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="Clear recent activity";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="Are you sure you want to clear all recent activity? This cannot be undone.";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="Your recent activity has been hidden";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="Your recent activity has been cleared";

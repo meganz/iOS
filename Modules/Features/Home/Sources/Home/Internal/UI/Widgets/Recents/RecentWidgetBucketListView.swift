@@ -2,12 +2,6 @@ import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
-struct RecentActionBucketSection: Identifiable {
-    var id: String { title }
-    let title: String
-    let buckets: [RecentActionBucketEntity]
-}
-
 struct RecentWidgetBucketListView: View {
     struct Dependency {
         let bucketGroups: [DailyRecentActionBucketGroup]
@@ -86,8 +80,8 @@ struct RecentWidgetBucketListView: View {
     private func navigationDestination(for route: Route) -> some View {
         switch route {
         case .viewAllBuckets:
-            RecentAllBucketsView(
-                dependency: RecentAllBucketsView.Dependency(
+            RecentActionBucketsListView(
+                dependency: RecentActionBucketsListView.Dependency(
                     userNameProvider: dependency.userNameProvider
                 )
             )

@@ -118,10 +118,9 @@ struct RecentActionBucketView: View {
                 Label {
                     Text(Strings.Localizable.more)
                 } icon: {
-                    MEGAAssets.Image.moreList
+                    MEGAAssets.Image.moreHorizontal
                         .renderingMode(.template)
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundStyle( TokenColors.Icon.secondary.swiftUI)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                 }
                 .labelStyle(.iconOnly)
             }

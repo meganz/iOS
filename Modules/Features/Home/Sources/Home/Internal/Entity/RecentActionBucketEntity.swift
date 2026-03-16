@@ -10,7 +10,7 @@ enum RecentActionBucketType: Sendable {
 
 enum RecentActionBucketChangesOwnerType: Sendable {
     case currentUser
-    case otherUser(_ email: String)
+    case otherUser(_ user: UserEntity)
 }
 
 enum RecentActionBucketShareOriginType: Sendable {

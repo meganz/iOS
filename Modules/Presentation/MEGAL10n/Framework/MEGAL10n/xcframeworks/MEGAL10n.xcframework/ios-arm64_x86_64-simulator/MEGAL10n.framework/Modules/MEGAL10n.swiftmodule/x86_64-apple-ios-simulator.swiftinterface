@@ -2996,6 +2996,24 @@ public enum Strings {
         public static func createdByLabel(_ p1: Any) -> Swift.String
         public static func modifiedByLabel(_ p1: Any) -> Swift.String
         public static func multipleFileTitle(_ p1: Any, _ p2: Swift.Int) -> Swift.String
+        public enum ClearRecentActivity {
+          public enum Alert {
+            public static let message: Swift.String
+          }
+          public enum Snackbar {
+            public static let message: Swift.String
+          }
+        }
+        public enum HideRecentActivity {
+          public enum Snackbar {
+            public static let message: Swift.String
+          }
+        }
+        public enum Menu {
+          public enum Action {
+            public static let clearRecentActivity: Swift.String
+          }
+        }
         public enum Widget {
           public static let viewAll: Swift.String
         }

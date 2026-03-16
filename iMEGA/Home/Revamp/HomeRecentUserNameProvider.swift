@@ -8,7 +8,7 @@ struct HomeRecentUserNameProvider: UserNameProviderProtocol {
         self.userStoreRepository = userStoreRepository
     }
     
-    func displayName(for userEmail: String) -> String? {
-        userStoreRepository.userDisplayName(forEmail: userEmail)
+    func displayName(for user: UserEntity) -> String? {
+        userStoreRepository.getDisplayName(forUserHandle: user.handle)
     }
 }
