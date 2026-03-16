@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="로그 파일 업로드 중";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="의견을 보내주셔서 고맙습니다";
+"help.reportIssue.success.title"="보고서를 보내주셔서 감사합니다";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="고맙습니다. 이 문제를 확인해보고 우리 팀원이 연락을 드리겠습니다.";
+"help.reportIssue.success.message"="이 문제를 확인해보고 우리 팀원이 연락을 드리겠습니다";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="보고를 접수할 수 없습니다. 다시 시도하세요.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="전송 일시정지. 앱을 다시 열면 재개됩니다.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="파일 전송 중";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 import MEGAPreference
 
 @MainActor
@@ -8,10 +9,28 @@ final class RecentsWidgetViewModel: ObservableObject {
         case empty
         case nonEmpty([DailyRecentActionBucketGroup])
         case hidden
+        
+        var actionButtonTitle: String {
+            switch self {
+            case .empty, .nonEmpty:
+                Strings.Localizable.upload
+            case .hidden:
+                Strings.Localizable.Recents.EmptyState.ActivityHidden.button
+            }
+        }
+
+        var messageText: String {
+            switch self {
+            case .empty:
+                Strings.Localizable.Recents.EmptyState.Empty.message
+            case .nonEmpty:
+                // WIP, L10n Strings
+                "Recent activity placeholder"
+            case .hidden:
+                Strings.Localizable.Recents.EmptyState.ActivityHidden.title
+            }
+        }
     }
-    
-    static let placeholderDescription = "Recents placeholder"
-    static let placeholderButtonTitle = "Placeholder"
 
     @Published private(set) var state: State = .hidden
     
@@ -30,10 +49,6 @@ final class RecentsWidgetViewModel: ObservableObject {
 
     func onTask() async {
         await refreshState()
-    }
-
-    func didTapLowerButton() {
-        // Out of scope for now: lower button action.
     }
 
     func didTapMoreButton() {

@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="ログファイルのアップロード中";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="ご意見をお寄せいただきありがとうございます";
+"help.reportIssue.success.title"="ご報告ありがとうございます";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="ありがとうございます。この問題を調査し、担当者からご連絡させていただきます。";
+"help.reportIssue.success.message"="この問題を調査し、担当者からご連絡させていただきます";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="報告を送信できません。もう一度やり直してください。";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="転送は一時停止されています。アプリを再度開くと再開されます。";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="ファイルを転送中";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Mengunggah Log File";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Terima kasih atas tanggapan anda";
+"help.reportIssue.success.title"="Terima kasih atas laporannya";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Terima kasih. Kami akan menyelidiki masalah ini dan anggota tim kami akan menghubungi anda kembali.";
+"help.reportIssue.success.message"="Kami akan menyelidiki masalah ini dan anggota tim kami akan menghubungi anda kembali";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Tidak dapat mengirimkan laporan anda. Silakan coba lagi.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="Transfer dijeda. Transfer akan dilanjutkan saat anda membuka kembali aplikasi.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Sedang mentransfer berkas";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

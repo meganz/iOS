@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Protokolldatei wird hochgeladen";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Vielen Dank für Ihr Feedback";
+"help.reportIssue.success.title"="Vielen Dank für Ihren Bericht";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Vielen Dank. Wir sehen uns dieses Problem an und ein Mitglied unseres Teams wird sich mit Ihnen in Verbindung setzen.";
+"help.reportIssue.success.message"="Wir sehen uns dieses Problem an und ein Mitglied unseres Teams wird sich mit Ihnen in Verbindung setzen";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Ihr Bericht konnte nicht übermittelt werden. Bitte versuchen Sie es noch einmal.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "account.upgrade.yearly.availability.snackbar.message"="%@ ist mit jährlicher Abrechnung verfügbar";
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message"="%@ ist mit monatlicher Abrechnung verfügbar";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

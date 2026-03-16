@@ -2995,7 +2995,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="กำลังอัปโหลดไฟล์บันทึก";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="ขอบคุณสำหรับคำติชมของคุณ";
+"help.reportIssue.success.title"="ขอบคุณสำหรับรายงานของคุณ";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="ขอบคุณ เราจะตรวจสอบปัญหานี้และสมาชิกในทีมของเราจะติดต่อกลับหาคุณ";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="หยุดการถ่ายโอนชั่วคราว และจะดำเนินการต่อเมื่อคุณเปิดแอปอีกครั้ง";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="กำลังถ่ายโอนไฟล์";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

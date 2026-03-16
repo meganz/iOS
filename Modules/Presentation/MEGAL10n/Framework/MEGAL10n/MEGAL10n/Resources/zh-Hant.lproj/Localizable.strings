@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="正在上傳日誌檔案";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="感謝您的意見回饋";
+"help.reportIssue.success.title"="感謝您的報告";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="謝謝。我們將調查此問題並儘快回覆您。";
+"help.reportIssue.success.message"="我們將調查此問題並儘快回覆您";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="無法提交您的問題回報。請再試一次。";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -3625,7 +3625,7 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.save"="在我們的網站上購買（便宜%@）";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="在我們的網站上購買（最多可省%@）";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="在我們的網站上購買（最多可節省%@）";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="在應用程式中繼續（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4860,3 +4860,5 @@
 "account.upgrade.yearly.availability.snackbar.message"="%@ 提供年度計費";
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message"="%@ 提供按月收費方案";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Se încarcă fișierul log";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Îți mulțumim pentru feedback";
+"help.reportIssue.success.title"="Vă mulțumesc pentru raportul dumneavoastră";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Multumesc. Vom analiza această problemă și un membru al echipei noastre vă va răspunde.";
+"help.reportIssue.success.message"="Vom analiza această problemă și un membru al echipei noastre vă va răspunde";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Imposibil de trimis raportul. Vă rugăm să încercați din nou.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="Transferul întrerupt. Se va relua când redeschideți aplicația.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Transfer în curs";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

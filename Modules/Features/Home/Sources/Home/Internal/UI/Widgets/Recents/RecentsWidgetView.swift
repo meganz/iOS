@@ -8,11 +8,26 @@ struct RecentsWidgetView: View {
         let userNameProvider: any UserNameProviderProtocol
     }
     
+    private let supportedMenuActions: [HomeAddMenuAction] = [
+        .chooseFromPhotos,
+        .capture,
+        .importFromFiles,
+        .scanDocument,
+        .newTextFile
+    ]
+    
     private let dependency: Dependency
-    @StateObject private var viewModel = RecentsWidgetViewModel()
+    @State private var presentsSheet = false
+    @StateObject private var viewModel: RecentsWidgetViewModel
 
-    init(dependency: Dependency) {
+    private let addMenuActionHandler: any HomeAddMenuActionHandling
+
+    init(dependency: Dependency, addMenuActionHandler: some HomeAddMenuActionHandling) {
+        self.addMenuActionHandler = addMenuActionHandler
         self.dependency = dependency
+        _viewModel = StateObject(
+            wrappedValue: RecentsWidgetViewModel(homeRecentsWidgetUseCase: HomeRecentsWidgetUseCase())
+        )
     }
     
     var body: some View {
@@ -23,6 +38,13 @@ struct RecentsWidgetView: View {
         .padding(.vertical, TokenSpacing._4)
         .task {
             await viewModel.onTask()
+        }
+        .sheet(isPresented: $presentsSheet) {
+            HomeMenuActionsSheetView(
+                menuActions: supportedMenuActions,
+                actionHandler: addMenuActionHandler,
+                isPresented: $presentsSheet
+            )
         }
     }
 
@@ -58,16 +80,15 @@ struct RecentsWidgetView: View {
         switch viewModel.state {
         case let .nonEmpty(bucketGroups):
             nonEmptyContent(bucketGroups: bucketGroups)
-        case .empty, .hidden:
-            emptyOrHiddenContent
+        case .empty:
+            EmptyRecentsContentView {
+                presentsSheet = true
+            }
+        case .hidden:
+            HiddenRecentsContentView {
+                presentsSheet = true
+            }
         }
-    }
-
-    private var emptyOrHiddenContent: some View {
-        Text(RecentsWidgetViewModel.placeholderDescription)
-            .font(.footnote)
-            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func nonEmptyContent(bucketGroups: [DailyRecentActionBucketGroup]) -> some View {
@@ -77,5 +98,79 @@ struct RecentsWidgetView: View {
                 userNameProvider: dependency.userNameProvider
             )
         )
+    }
+}
+
+private struct EmptyRecentsContentView: View {
+    let uploadAction: @MainActor () -> Void
+
+    var body: some View {
+        HStack(spacing: TokenSpacing._4) {
+            VStack(alignment: .leading, spacing: TokenSpacing._2) {
+                Text(Strings.Localizable.Recents.EmptyState.Empty.message)
+                    .font(.footnote)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                uploadButton
+            }
+
+            MEGAAssets.Image.recentsClock
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+        }
+        .padding(.horizontal, TokenSpacing._5)
+    }
+
+    private var uploadButton: some View {
+        Button {
+            uploadAction()
+        } label: {
+            Text(Strings.Localizable.upload)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .underline()
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .frame(height: 32, alignment: .center)
+        }
+        .padding(.bottom, TokenSpacing._2)
+    }
+}
+
+private struct HiddenRecentsContentView: View {
+    let showActivityAction: @MainActor () -> Void
+
+    var body: some View {
+        HStack(spacing: TokenSpacing._4) {
+            VStack(alignment: .leading, spacing: TokenSpacing._2) {
+                Text(Strings.Localizable.Recents.EmptyState.ActivityHidden.title)
+                    .font(.footnote)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                showActivityButton
+            }
+
+            MEGAAssets.Image.recentsClock
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+        }
+        .padding(.horizontal, TokenSpacing._5)
+    }
+
+    private var showActivityButton: some View {
+        Button {
+            showActivityAction()
+        } label: {
+            Text(Strings.Localizable.Recents.EmptyState.ActivityHidden.button)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .underline()
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .frame(height: 32, alignment: .center)
+        }
+        .padding(.bottom, TokenSpacing._2)
     }
 }

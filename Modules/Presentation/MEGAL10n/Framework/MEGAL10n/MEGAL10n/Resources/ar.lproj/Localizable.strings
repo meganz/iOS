@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="تحميل ملف السجل";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="شكراً لملاحظاتك";
+"help.reportIssue.success.title"="شكرًا لك على تقريرك";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="شكرا. سننظر في هذه المشكلة وسيتواصل معك أحد أعضاء فريقنا.";
+"help.reportIssue.success.message"="سننظر في هذه المشكلة وسيتواصل معك أحد أعضاء فريقنا";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="غير قادر على تقديم التقرير الخاص بك. حاول مرة اخرى.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="تم إيقاف التراسل مؤقتاً. وسيستأنف عند إعادة فتح التطبيق.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="جارٍ تراسل الملفات";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

@@ -2,19 +2,20 @@ import MEGADesignToken
 import SwiftUI
 
 struct HomeMenuActionsSheetView: View {
-
-    private var menuActions: [HomeAddMenuAction] = HomeAddMenuAction.allCases
+    private let menuActions: [HomeAddMenuAction]
+    private let actionHandler: any HomeAddMenuActionHandling
     // Binding variable to dismiss the sheet upon action selection.
     @Binding var isPresented: Bool
-    @Binding var selection: HomeAddMenuAction?
     @State private var savedAction: HomeAddMenuAction?
 
     public init(
+        menuActions: [HomeAddMenuAction] = HomeAddMenuAction.allCases,
+        actionHandler: some HomeAddMenuActionHandling,
         isPresented: Binding<Bool>,
-        selection: Binding<HomeAddMenuAction?>
     ) {
+        self.menuActions = menuActions
+        self.actionHandler = actionHandler
         _isPresented = isPresented
-        _selection = selection
     }
 
     public var body: some View {
@@ -40,7 +41,8 @@ struct HomeMenuActionsSheetView: View {
             .presentationDetents([.height(allActionsHeight + proxy.safeAreaInsets.bottom)])
         }
         .onDisappear {
-            selection = savedAction
+            guard let savedAction else { return }
+            actionHandler.handleAction(savedAction)
         }
         .presentationDragIndicator(.visible)
     }

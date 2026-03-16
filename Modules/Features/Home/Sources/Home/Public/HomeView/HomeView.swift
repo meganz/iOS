@@ -42,10 +42,10 @@ public struct HomeView: View {
                     viewModel.presentsSheet.toggle()
                 }
                 .sheet(isPresented: $viewModel.presentsSheet) {
-                    HomeMenuActionsSheetView(isPresented: $viewModel.presentsSheet, selection: $viewModel.selectedFloatingButtonAction)
-                }
-                .onReceive(viewModel.$selectedFloatingButtonAction.compactMap { $0 }) {
-                    dependency.homeAddMenuActionHandler.handleAction($0)
+                    HomeMenuActionsSheetView(
+                        actionHandler: dependency.homeAddMenuActionHandler,
+                        isPresented: $viewModel.presentsSheet
+                    )
                 }
                 .overlay {
                     if viewModel.isSearching {
@@ -110,7 +110,8 @@ public struct HomeView: View {
                     }
                 case .recents:
                     RecentsWidgetView(
-                        dependency: RecentsWidgetView.Dependency(userNameProvider: dependency.userNameProvider)
+                        dependency: RecentsWidgetView.Dependency(userNameProvider: dependency.userNameProvider),
+                        addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )
                 }
             }

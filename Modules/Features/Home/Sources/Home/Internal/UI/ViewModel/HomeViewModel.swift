@@ -5,6 +5,5 @@ final class HomeViewModel: ObservableObject {
     @Published var isSearching: Bool = false
     @Published var presentsSheet = false
     @Published var hidesFloatingActionsButton: Bool = false
-    @Published var selectedFloatingButtonAction: HomeAddMenuAction?
     let widgets: [HomeWidgetType] = [.shortcuts, .accountDetails, .promotionalBanners, .recents]
 }

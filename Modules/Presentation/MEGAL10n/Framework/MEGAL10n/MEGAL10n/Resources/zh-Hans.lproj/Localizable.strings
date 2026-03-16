@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="正在上传日志文件";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="感谢您的反馈";
+"help.reportIssue.success.title"="感谢您的报告";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="谢谢。我们将调查此问题并尽快与您取得联系。";
+"help.reportIssue.success.message"="我们将调查此问题并尽快与您取得联系";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="无法提交您的问题。请再试一次。";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "account.upgrade.yearly.availability.snackbar.message"="%@提供年度订阅";
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message"="%@支持月度订阅";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

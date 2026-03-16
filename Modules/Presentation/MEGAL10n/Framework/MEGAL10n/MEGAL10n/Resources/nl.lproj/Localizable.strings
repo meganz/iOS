@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Logbestand Uploaden";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Bedankt voor uw feedback";
+"help.reportIssue.success.title"="Bedankt voor uw rapport";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Bedankt. We zullen dit probleem onderzoeken en een lid van ons team zal contact met u opnemen.";
+"help.reportIssue.success.message"="We zullen dit probleem onderzoeken en een lid van ons team zal contact met u opnemen";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Kan uw melding niet indienen. Probeer het opnieuw.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="De overdracht is gepauzeerd. Het wordt hervat wanneer u de applicatie opnieuw opent.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Bestanden overdragen";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";

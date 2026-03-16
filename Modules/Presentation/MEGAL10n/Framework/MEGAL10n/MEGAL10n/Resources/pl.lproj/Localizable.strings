@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Przesyłanie pliku dziennika";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Dziękujemy za opinię";
+"help.reportIssue.success.title"="Dziękuję za zgłoszenie";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Dziękujemy. Przyjrzymy się temu problemowi i skontaktuje się z Tobą członek naszego zespołu.";
+"help.reportIssue.success.message"="Przyjrzymy się temu problemowi i skontaktuje się z Tobą członek naszego zespołu";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Nie można wysłać zgłoszenia. Proszę spróbować ponownie.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4860,3 +4860,5 @@
 "notification.transfer.paused.message"="Transfer wstrzymany. Zostanie wznowiony po ponownym otwarciu aplikacji.";
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Przesyłanie plików";
+/* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
+"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
