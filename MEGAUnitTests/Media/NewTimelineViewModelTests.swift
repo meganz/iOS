@@ -197,6 +197,8 @@ struct NewTimelineViewModelTests {
         #expect(sut.photoFilterOptions == newFilter)
         #expect(sut.loadPhotosTaskId != taskId)
         
+        await sut.saveFiltersTask?.value
+        
         #expect(contentConsumption.savedTimelineUserAttribute == .init(mediaType: .images, location: .allLocations, usePreference: true))
     }
     

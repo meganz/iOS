@@ -33,6 +33,9 @@ final class NewTimelineViewModel: ObservableObject {
     private(set) var sortPhotoLibraryTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
+    private(set) var saveFiltersTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     init(
         photoLibraryContentViewModel: PhotoLibraryContentViewModel,
@@ -57,6 +60,7 @@ final class NewTimelineViewModel: ObservableObject {
     func onViewDisappear() {
         currentNodeUpdateTask = nil
         sortPhotoLibraryTask = nil
+        saveFiltersTask = nil
     }
     
     func loadPhotos() async {
@@ -135,16 +139,21 @@ final class NewTimelineViewModel: ObservableObject {
         tracker.trackFilterChange(new: option)
         photoFilterOptions = newFilterOptions
         loadPhotosTaskId = UUID()
-        await saveFilters()
+        
+        let filterOptionsToSave = newFilterOptions
+        saveFiltersTask = Task { [weak self] in
+            guard let self else { return }
+            await saveFilters(filterOptions: filterOptionsToSave)
+        }
     }
     
     func updateEditMode(_ mode: EditMode) {
         photoLibraryContentViewModel.selection.editMode = mode
     }
     
-    private func saveFilters() async {
-        guard let mediaType = photoFilterOptions.mediaSelection.toTimelineUserAttributeMediaTypeEntity(),
-              let location = photoFilterOptions.locationSelection.toTimelineUserAttributeMediaLocationEntity() else { return }
+    private func saveFilters(filterOptions: PhotosFilterOptionsEntity) async {
+        guard let mediaType = filterOptions.mediaSelection.toTimelineUserAttributeMediaTypeEntity(),
+              let location = filterOptions.locationSelection.toTimelineUserAttributeMediaLocationEntity() else { return }
         
         do {
             let timeline = TimelineUserAttributeEntity(
