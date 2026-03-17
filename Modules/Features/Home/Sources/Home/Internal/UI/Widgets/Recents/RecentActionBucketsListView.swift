@@ -1,12 +1,22 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import Search
 import SwiftUI
 
 struct RecentActionBucketsListView: View {
     struct Dependency {
         let userNameProvider: any UserNameProviderProtocol
+        let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
+        let selectionHandler: any NodeSelectionHandling
+        let nodeActionHandler: any NodesActionHandling
+    }
+
+    enum Route: Hashable {
+        case bucketItems([NodeEntity])
     }
     
     private let dependency: Dependency
@@ -27,6 +37,9 @@ struct RecentActionBucketsListView: View {
                 }
             }
             .background(TokenColors.Background.page.swiftUI)
+            .navigationDestination(for: Route.self) { route in
+                navigationDestination(for: route)
+            }
             .alert(
                 Strings.Localizable.Home.Recent.Menu.Action.clearRecentActivity,
                 isPresented: $viewModel.isConfirmingClearRecentActivity,
@@ -125,7 +138,12 @@ struct RecentActionBucketsListView: View {
                                     print(node.name)
                                 },
                                 bucketSelectionHandler: { bucket in
-                                    print(bucket.type)
+                                    switch bucket.type {
+                                    case let .mixedFiles(nodes):
+                                        navigator.append(Route.bucketItems(nodes))
+                                    default:
+                                        break
+                                    }
                                 }
                             )
                         )
@@ -147,5 +165,20 @@ struct RecentActionBucketsListView: View {
             }
         }
         .listStyle(.plain)
+    }
+
+    @ViewBuilder
+    private func navigationDestination(for route: Route) -> some View {
+        switch route {
+        case let .bucketItems(nodes):
+            RecentActionBucketItemsView(
+                dependency: RecentActionBucketItemsView.Dependency(
+                    nodes: nodes,
+                    resultMapper: dependency.recentActionBucketItemResultMapper,
+                    selectionHandler: dependency.selectionHandler,
+                    nodeActionHandler: dependency.nodeActionHandler
+                )
+            )
+        }
     }
 }

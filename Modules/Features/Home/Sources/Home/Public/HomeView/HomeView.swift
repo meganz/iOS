@@ -125,7 +125,12 @@ public struct HomeView: View {
                     }
                 case .recents:
                     RecentsWidgetView(
-                        dependency: RecentsWidgetView.Dependency(userNameProvider: dependency.userNameProvider),
+                        dependency: RecentsWidgetView.Dependency(
+                            userNameProvider: dependency.userNameProvider,
+                            recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                            selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+                            nodeActionHandler: dependency.recentActionBucketNodesActionHandler
+                        ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )
                 }

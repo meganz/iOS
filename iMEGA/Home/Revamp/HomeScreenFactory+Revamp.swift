@@ -63,7 +63,9 @@ extension HomeScreenFactory {
             parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
             navigationController: navigationController
         )
-
+        
+        let searchResultMapper = makeSearchResultMapper(with: navigationController)
+        
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
@@ -75,12 +77,13 @@ extension HomeScreenFactory {
             ),
             fileSearchUseCase: fileSearchUseCase,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
-            favouritesSearchResultsMapper: makeFavouritesSearchResultsMapper(with: navigationController),
+            favouritesSearchResultsMapper: searchResultMapper,
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             userNameProvider: HomeRecentUserNameProvider(),
+            recentActionBucketItemResultMapper: searchResultMapper,
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
             },
@@ -89,7 +92,9 @@ extension HomeScreenFactory {
             searchResultsProvider: searchResultsProvider,
             offlineFilesUseCase: offlineFilesUseCase,
             searchResultsSelectionHandler: HomeSearchNodeSelectionHandler(nodeRouter: nodeRouter),
-            searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter)
+            searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter),
+            recentActionBucketNodeSelectionHandler: RecentActionBucketNodeSelectionHandler(nodeRouter: nodeRouter),
+            recentActionBucketNodesActionHandler: RecentActionBucketNodesActionHandler(nodeRouter: nodeRouter)
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -149,10 +154,10 @@ extension HomeScreenFactory {
     private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
     }
-
-    private func makeFavouritesSearchResultsMapper(
+    
+    private func makeSearchResultMapper(
         with navigationController: UINavigationController
-    ) -> some FavouritesSearchResultsMapping {
+    ) -> SearchResultMapper {
         SearchResultMapper(
             sdk: MEGASdk.sharedSdk,
             nodeIconUsecase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared),
@@ -265,6 +270,8 @@ extension HomeScreenFactory {
 // Most fields come from `NodeEntity` with some customization. We could introduce a protocol (instead of `SearchResult`)
 // and let each client construct its own model.
 extension SearchResultMapper: FavouritesSearchResultsMapping { }
+
+extension SearchResultMapper: RecentActionBucketItemResultMapping {}
 
 private class HomeSearchViewModeStore: ViewModeStoringObjC {
     // For Home search we always display .list mode

@@ -1,6 +1,6 @@
 import MEGAAppPresentation
 
-struct HomeSearchNodesActionHandler: NodesActionHandling {
+struct RecentActionBucketNodesActionHandler: NodesActionHandling {
     private let nodeRouter: any NodeRouting
     
     init(nodeRouter: some NodeRouting) {
@@ -8,9 +8,9 @@ struct HomeSearchNodesActionHandler: NodesActionHandling {
     }
     
     func handle(action: MEGAAppPresentation.NodeAction) {
-        nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .cloudDrive, isFromSharedItem: false)
+        nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .recents, isFromSharedItem: false)
     }
     
-    /// Home Search doesn't support Edit mode.
+    /// To be handle separately with bottom bar action
     func handle(action: MEGAAppPresentation.NodesAction) {}
 }

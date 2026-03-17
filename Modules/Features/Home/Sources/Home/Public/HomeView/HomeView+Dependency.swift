@@ -12,6 +12,10 @@ public protocol UserNameProviderProtocol: Sendable {
     func displayName(for user: UserEntity) -> String?
 }
 
+public protocol RecentActionBucketItemResultMapping: Sendable {
+    func map(node: NodeEntity) -> SearchResult
+}
+
 extension HomeView {
     public struct Dependency {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
@@ -26,6 +30,7 @@ extension HomeView {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
         let userNameProvider: any UserNameProviderProtocol
+        let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
         let favouritesNodeSelectionAction: any NodeSelectionHandling
         let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
@@ -33,10 +38,12 @@ extension HomeView {
         let searchResultsProvider: any SearchResultsProviding
         let searchResultsSelectionHandler: any NodeSelectionHandling
         let searchResultNodeActionHandler: any NodesActionHandling
-
         // No internet state
         let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
-
+        // recent action bucket
+        let recentActionBucketNodeSelectionHandler: any NodeSelectionHandling
+        let recentActionBucketNodesActionHandler: any NodesActionHandling
+        
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
@@ -50,13 +57,16 @@ extension HomeView {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
             userNameProvider: some UserNameProviderProtocol,
+            recentActionBucketItemResultMapper: some RecentActionBucketItemResultMapping,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
             favouritesNodeSelectionAction: some NodeSelectionHandling,
             onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
             searchResultsProvider: some SearchResultsProviding,
             offlineFilesUseCase: some OfflineFilesUseCaseProtocol,
-            searchResultsSelectionHandler: NodeSelectionHandling,
-            searchResultNodeActionHandler: NodesActionHandling
+            searchResultsSelectionHandler: some NodeSelectionHandling,
+            searchResultNodeActionHandler: some NodesActionHandling,
+            recentActionBucketNodeSelectionHandler: some NodeSelectionHandling,
+            recentActionBucketNodesActionHandler: some NodesActionHandling
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -70,6 +80,7 @@ extension HomeView {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.userNameProvider = userNameProvider
+            self.recentActionBucketItemResultMapper = recentActionBucketItemResultMapper
             self.onFavouritesEditingChanged = onFavouritesEditingChanged
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
             self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed
@@ -77,6 +88,8 @@ extension HomeView {
             self.searchResultsSelectionHandler = searchResultsSelectionHandler
             self.searchResultNodeActionHandler = searchResultNodeActionHandler
             self.offlineFilesUseCase = offlineFilesUseCase
+            self.recentActionBucketNodeSelectionHandler = recentActionBucketNodeSelectionHandler
+            self.recentActionBucketNodesActionHandler = recentActionBucketNodesActionHandler
         }
     }
 }

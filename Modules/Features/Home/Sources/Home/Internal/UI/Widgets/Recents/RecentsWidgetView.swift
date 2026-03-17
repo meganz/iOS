@@ -1,11 +1,16 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import Search
 import SwiftUI
 
 struct RecentsWidgetView: View {
     struct Dependency {
         let userNameProvider: any UserNameProviderProtocol
+        let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
+        let selectionHandler: any NodeSelectionHandling
+        let nodeActionHandler: any NodesActionHandling
     }
     
     private let supportedMenuActions: [HomeAddMenuAction] = [
@@ -93,11 +98,14 @@ struct RecentsWidgetView: View {
         }
     }
 
-    private func nonEmptyContent(bucketGroups: [DailyRecentActionBucketGroup]) -> some View {
+    private func nonEmptyContent(bucketGroups: [DailyRecentActionBucketGroup]) -> RecentWidgetBucketListView {
         RecentWidgetBucketListView(
             dependency: RecentWidgetBucketListView.Dependency(
                 bucketGroups: bucketGroups,
-                userNameProvider: dependency.userNameProvider
+                userNameProvider: dependency.userNameProvider,
+                recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                selectionHandler: dependency.selectionHandler,
+                nodeActionHandler: dependency.nodeActionHandler
             )
         )
     }

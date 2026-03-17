@@ -1682,6 +1682,8 @@
 		A563A5342F6A6BC900DD8BFD /* HomeSearchNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */; };
 		A563A5392F6A6BD300DD8BFD /* HomeSearchNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */; };
 		A563A5492F6A77F100DD8BFD /* HomeAddMenuActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */; };
+		A563A5692F6A874200DD8BFD /* RecentActionBucketNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */; };
+		A563A56D2F6A879900DD8BFD /* RecentActionBucketNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A56C2F6A878F00DD8BFD /* RecentActionBucketNodeSelectionHandler.swift */; };
 		A56582792F2C5D840089CD6D /* FolderLinkFlowUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56582782F2C5D7F0089CD6D /* FolderLinkFlowUseCase.swift */; };
 		A56582802F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565827D2F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift */; };
 		A56582812F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565827F2F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift */; };
@@ -4574,6 +4576,8 @@
 		A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodeSelectionHandler.swift; sourceTree = "<group>"; };
 		A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodesActionHandler.swift; sourceTree = "<group>"; };
 		A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAddMenuActionHandler.swift; sourceTree = "<group>"; };
+		A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketNodesActionHandler.swift; sourceTree = "<group>"; };
+		A563A56C2F6A878F00DD8BFD /* RecentActionBucketNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketNodeSelectionHandler.swift; sourceTree = "<group>"; };
 		A56582782F2C5D7F0089CD6D /* FolderLinkFlowUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkFlowUseCase.swift; sourceTree = "<group>"; };
 		A565827D2F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkFetchNodesUseCase.swift; sourceTree = "<group>"; };
 		A565827E2F2C6B0E0089CD6D /* FolderLinkLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkLoginUseCase.swift; sourceTree = "<group>"; };
@@ -12678,6 +12682,8 @@
 				A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */,
 				A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */,
 				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
+				A563A5682F6A872A00DD8BFD /* RecentActionBucketNodesActionHandler.swift */,
+				A563A56C2F6A878F00DD8BFD /* RecentActionBucketNodeSelectionHandler.swift */,
 			);
 			path = Revamp;
 			sourceTree = "<group>";
@@ -16015,6 +16021,8 @@
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */,
 				94A21A092D49753D00D11905 /* RecentActionBucket.swift in Sources */,
+				A563A5692F6A874200DD8BFD /* RecentActionBucketNodesActionHandler.swift in Sources */,
+				A563A56D2F6A879900DD8BFD /* RecentActionBucketNodeSelectionHandler.swift in Sources */,
 				94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */,
 				83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */,
 				94B273EC2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift in Sources */,

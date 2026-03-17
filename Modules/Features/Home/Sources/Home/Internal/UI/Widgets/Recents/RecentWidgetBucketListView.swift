@@ -1,15 +1,22 @@
+import MEGAAppPresentation
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
+import Search
 import SwiftUI
 
 struct RecentWidgetBucketListView: View {
     struct Dependency {
         let bucketGroups: [DailyRecentActionBucketGroup]
         let userNameProvider: any UserNameProviderProtocol
+        let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
+        let selectionHandler: any NodeSelectionHandling
+        let nodeActionHandler: any NodesActionHandling
     }
     
-    enum Route {
+    enum Route: Hashable {
         case viewAllBuckets
+        case bucketItems([NodeEntity])
     }
     
     private let dependency: Dependency
@@ -47,7 +54,12 @@ struct RecentWidgetBucketListView: View {
                                 print(node.name)
                             },
                             bucketSelectionHandler: { bucket in
-                                print(bucket.type)
+                                switch bucket.type {
+                                case let .mixedFiles(nodes):
+                                    navigator.append(Route.bucketItems(nodes))
+                                default:
+                                    break
+                                }
                             }
                         )
                     )
@@ -82,7 +94,19 @@ struct RecentWidgetBucketListView: View {
         case .viewAllBuckets:
             RecentActionBucketsListView(
                 dependency: RecentActionBucketsListView.Dependency(
-                    userNameProvider: dependency.userNameProvider
+                    userNameProvider: dependency.userNameProvider,
+                    recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                    selectionHandler: dependency.selectionHandler,
+                    nodeActionHandler: dependency.nodeActionHandler
+                )
+            )
+        case let .bucketItems(nodes):
+            RecentActionBucketItemsView(
+                dependency: RecentActionBucketItemsView.Dependency(
+                    nodes: nodes,
+                    resultMapper: dependency.recentActionBucketItemResultMapper,
+                    selectionHandler: dependency.selectionHandler,
+                    nodeActionHandler: dependency.nodeActionHandler
                 )
             )
         }
