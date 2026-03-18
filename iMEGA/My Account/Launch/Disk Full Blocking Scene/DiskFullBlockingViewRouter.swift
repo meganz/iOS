@@ -18,6 +18,7 @@ final class DiskFullBlockingViewRouter: NSObject, DiskFullBlockingViewRouting {
     }
     
     func manageDiskSpace() {
+        CameraUploadManager.shared().appWillTerminate()
         MEGASdkCleanUp.deleteSharedSdks()
         exit(0)
     }

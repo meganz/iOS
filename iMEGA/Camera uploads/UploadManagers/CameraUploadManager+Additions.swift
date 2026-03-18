@@ -44,6 +44,15 @@ extension CameraUploadManager {
     func videoQueuePausedReason() -> CameraUploadMediaTypePausedReason? {
         concurrentCountCalculator.videoQueuePausedReason()
     }
+    
+    @objc func appWillTerminate() {
+        guard !isAppWillTerminateHandled else {
+            return
+        }
+        isAppWillTerminateHandled = true
+        MEGALogDebug("[Camera Upload] app will terminate")
+        cancelAllPendingOperations()
+    }
 }
 
 extension CameraUploadManager: @unchecked Sendable { }

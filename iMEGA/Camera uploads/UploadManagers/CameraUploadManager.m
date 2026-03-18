@@ -797,8 +797,7 @@ static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 }
 
 - (void)didReceiveApplicationWillTerminateNotification {
-    MEGALogDebug(@"[Camera Upload] app will terminate");
-    [self cancelAllPendingOperations];
+    [self appWillTerminate];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {

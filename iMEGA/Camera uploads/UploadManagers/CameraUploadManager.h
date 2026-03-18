@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL photoUploadPaused;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL videoUploadPaused;
 @property (readonly) BOOL isDiskStorageFull;
+@property (nonatomic, assign) BOOL isAppWillTerminateHandled;
 
 /**
  @return a shared camera upload manager instance
@@ -48,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
 
 - (void)loadUploadStatsForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
+
+#pragma mark - cancel upload
+- (void)cancelAllPendingOperations;
 
 @end
 
