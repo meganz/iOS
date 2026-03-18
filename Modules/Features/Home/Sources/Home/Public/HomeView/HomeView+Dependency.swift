@@ -33,7 +33,10 @@ extension HomeView {
         let searchResultsProvider: any SearchResultsProviding
         let searchResultsSelectionHandler: @MainActor (SearchResultSelection) -> Void
         let searchResultNodeActionHandler: @MainActor (NodeAction) -> Void
-        
+
+        // No internet state
+        let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
+
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
@@ -52,7 +55,8 @@ extension HomeView {
             onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
             searchResultsProvider: some SearchResultsProviding,
             searchResultsSelectionHandler: @escaping @MainActor (SearchResultSelection) -> Void,
-            searchResultNodeActionHandler: @escaping @MainActor (NodeAction) -> Void
+            searchResultNodeActionHandler: @escaping @MainActor (NodeAction) -> Void,
+            offlineFilesUseCase: some OfflineFilesUseCaseProtocol,
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -72,6 +76,7 @@ extension HomeView {
             self.searchResultsProvider = searchResultsProvider
             self.searchResultsSelectionHandler = searchResultsSelectionHandler
             self.searchResultNodeActionHandler = searchResultNodeActionHandler
+            self.offlineFilesUseCase = offlineFilesUseCase
         }
     }
 }

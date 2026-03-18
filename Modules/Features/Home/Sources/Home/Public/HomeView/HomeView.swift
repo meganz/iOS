@@ -1,6 +1,8 @@
 import Favourites
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import Search
 import SwiftUI
 import UIKit
@@ -25,16 +27,13 @@ public struct HomeView: View {
             content
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .task { await viewModel.onTask() }
     }
     
     var content: some View {
         NavigationStack(path: $navigator.path) {
             listContent
-                .navigationTitle(Strings.Localizable.home)
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationDestination(for: NavigationRoute.self) { route in
-                    navigationDestinationBuilder(with: route)
-                }
                 .embedInScrollViewWithDirectionChangeHandler {
                     viewModel.hidesFloatingActionsButton = $0
                 }
@@ -43,17 +42,26 @@ public struct HomeView: View {
                 }
                 .sheet(isPresented: $viewModel.presentsSheet) {
                     HomeMenuActionsSheetView(
-                        actionHandler: dependency.homeAddMenuActionHandler,
-                        isPresented: $viewModel.presentsSheet
-                    )
+                                            actionHandler: dependency.homeAddMenuActionHandler,
+                                            isPresented: $viewModel.presentsSheet
+                                        )
                 }
                 .overlay {
                     if viewModel.isSearching {
                         searchContent
                     }
                 }
+                .noNetworkConnection {
+                    noInternetView
+                }
+                .noInternetViewModifier(layout: .onTop)
                 .background(TokenColors.Background.page.swiftUI)
                 .snackBar($navigator.snackBar)
+                .navigationTitle(Strings.Localizable.home)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: NavigationRoute.self) { route in
+                    navigationDestinationBuilder(with: route)
+                }
         }
         .background(HomeBackButtonConfigurator())
         .tint(TokenColors.Icon.primary.swiftUI)
@@ -129,6 +137,12 @@ public struct HomeView: View {
                 searchResultNodeActionHandler: dependency.searchResultNodeActionHandler
             ),
             searchText: $searchText
+        )
+    }
+
+    private var noInternetView: some View {
+        NoInternetView(
+            dependency: .init(homeViewRouter: dependency.router, offlineFilesUseCase: dependency.offlineFilesUseCase)
         )
     }
 }

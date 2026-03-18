@@ -80,7 +80,8 @@ extension HomeScreenFactory {
             onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher(),
             searchResultsProvider: searchResultsProvider,
             searchResultsSelectionHandler: makeSearchResultSelectionHandler(navigationController: navigationController),
-            searchResultNodeActionHandler: makeSearchResultsNodeActionHandler(navigationController: navigationController)
+            searchResultNodeActionHandler: makeSearchResultsNodeActionHandler(navigationController: navigationController),
+            offlineFilesUseCase: offlineFilesUseCase
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -304,6 +305,12 @@ extension HomeScreenFactory {
     private var favouriteUseCase: some NodeFavouriteActionUseCaseProtocol {
         NodeFavouriteActionUseCase(
             nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo
+        )
+    }
+
+    private var offlineFilesUseCase: some OfflineFilesUseCaseProtocol {
+        OfflineFilesUseCase(
+            repo: OfflineFileFetcherRepository.newRepo
         )
     }
 }

@@ -187,7 +187,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             MEGALogDebug("nodeListEntity without parentNode, retrying...")
             // Allow 1s delay between retries
             try await Task.sleep(nanoseconds: 1_000_000_000)
-            MEGALogDebug("==> nodeListEntity about to retry with \(maxRetries - 1)")
+            MEGALogDebug("nodeListEntity about to retry with \(maxRetries - 1)")
             try Task.checkCancellation()
             return try await nodeListEntity(from: searchQuery, maxRetries: maxRetries - 1)
         }

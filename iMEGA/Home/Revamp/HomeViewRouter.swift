@@ -20,6 +20,8 @@ final class HomeViewRouter: HomeViewRouting {
             showUpgradePlanView()		
         case .promotionalBanner(let url):
             routeToPromotionalUrl(url)
+        case .offline:
+            showOffline()
         }
     }
 
