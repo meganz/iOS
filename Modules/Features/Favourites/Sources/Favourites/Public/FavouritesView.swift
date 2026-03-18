@@ -18,7 +18,7 @@ public struct FavouritesView: View {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodesActionHandler: any NodesActionHandling
         let onEditingChanged: @MainActor (Bool) -> Void
-        let nodeSelectionHandler: @MainActor (HandleEntity, [HandleEntity]) -> Void
+        let nodeSelectionHandler: any NodeSelectionHandling
         let onNodeActionPerformed: AnyPublisher<Void, Never>
 
         public init(
@@ -30,7 +30,7 @@ public struct FavouritesView: View {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
             onEditingChanged: @escaping @MainActor (Bool) -> Void,
-            nodeSelectionHandler: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
+            nodeSelectionHandler: some NodeSelectionHandling,
             onNodeActionPerformed: AnyPublisher<Void, Never>
         ) {
             self.fileSearchUseCase = fileSearchUseCase
@@ -124,7 +124,7 @@ public struct FavouritesView: View {
             dependency.nodesActionHandler.handle(action: action)
         }
         .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
-            dependency.nodeSelectionHandler(selection.result.id, selection.siblings())
+            dependency.nodeSelectionHandler.handle(selection: selection)
         }
         .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)

@@ -19,8 +19,23 @@ public struct NodeAction {
     }
 }
 
+public struct NodeSelection {
+    public let handle: HandleEntity
+    public let siblings: [HandleEntity]
+    
+    public init(handle: HandleEntity, siblings: [HandleEntity]) {
+        self.handle = handle
+        self.siblings = siblings
+    }
+}
+
 @MainActor
 public protocol NodesActionHandling {
     func handle(action: NodeAction)
     func handle(action: NodesAction)
+}
+
+@MainActor
+public protocol NodeSelectionHandling {
+    func handle(selection: NodeSelection)
 }

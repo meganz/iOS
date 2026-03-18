@@ -31,13 +31,13 @@ package final class FavouritesViewModel: ObservableObject {
     @Published package var bottomBarDisabled: Bool = true
     @Published package var searchText: String = ""
     @Published package var searchBecameActive: Bool = false
-    @Published package var selection: SearchResultSelection?
+    @Published package var selection: NodeSelection?
     @Published package var nodeAction: NodeAction?
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
-            selection: { [weak self] selection in
-                self?.selection = selection
+            selection: { [weak self] in
+                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings())
             },
             context: { [weak self] result, button in
                 self?.nodeAction = .init(handle: result.id, sender: button)

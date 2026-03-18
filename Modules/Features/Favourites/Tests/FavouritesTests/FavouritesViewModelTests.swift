@@ -428,8 +428,8 @@ struct FavouritesViewModelTests {
         sut.searchResultsContainerViewModel.bridge.selection(selection)
 
         try await waitForCondition { sut.selection != nil }
-        #expect(sut.selection?.result.id == 42)
-        #expect(sut.selection?.siblings() == [1, 2, 3])
+        #expect(sut.selection?.handle == 42)
+        #expect(sut.selection?.siblings == [1, 2, 3])
     }
 
     // MARK: - Helpers

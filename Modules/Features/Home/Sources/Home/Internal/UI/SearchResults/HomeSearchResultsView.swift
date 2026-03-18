@@ -9,8 +9,8 @@ struct HomeSearchResultsView: View {
     struct Dependency {
         let searchConfig: SearchConfig
         let resultsProvider: any SearchResultsProviding
-        let searchResultsSelectionHandler: @MainActor (SearchResultSelection) -> Void
-        let searchResultNodeActionHandler: @MainActor (NodeAction) -> Void
+        let searchResultsSelectionHandler: any NodeSelectionHandling
+        let searchResultNodeActionHandler: any NodesActionHandling
     }
 
     @StateObject private var viewModel: HomeSearchResultsViewModel
@@ -37,10 +37,10 @@ struct HomeSearchResultsView: View {
                 viewModel.searchText = $0
             }
             .onReceive(viewModel.$selection.compactMap { $0 }) {
-                dependency.searchResultsSelectionHandler($0)
+                dependency.searchResultsSelectionHandler.handle(selection: $0)
             }
             .onReceive(viewModel.$nodeAction.compactMap { $0 }) {
-                dependency.searchResultNodeActionHandler($0)
+                dependency.searchResultNodeActionHandler.handle(action: $0)
             }
     }
 }

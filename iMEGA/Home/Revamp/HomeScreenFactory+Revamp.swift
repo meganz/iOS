@@ -49,6 +49,16 @@ extension HomeScreenFactory {
 
         let router = HomeViewRouter(navigationController: navigationController)
 
+        let nodeRouter = HomeSearchResultRouter(
+            navigationController: navigationController,
+            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            ),
+            backupsUseCase: backupsUseCase,
+            nodeUseCase: nodeUseCase
+        )
+        
         let searchResultsProvider = makeResultsProvider(
             parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
             navigationController: navigationController
@@ -74,14 +84,12 @@ extension HomeScreenFactory {
             onFavouritesEditingChanged: { [weak tabBarController] isEditing in
                 tabBarController?.tabBar.isHidden = isEditing
             },
-            favouritesNodeSelectionAction: makeFavouritesNodeSelectionAction(
-                navigationController: navigationController
-            ),
+            favouritesNodeSelectionAction: FavouritesNodeSelectionHandler(nodeRouter: nodeRouter),
             onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher(),
             searchResultsProvider: searchResultsProvider,
-            searchResultsSelectionHandler: makeSearchResultSelectionHandler(navigationController: navigationController),
-            searchResultNodeActionHandler: makeSearchResultsNodeActionHandler(navigationController: navigationController),
-            offlineFilesUseCase: offlineFilesUseCase
+            offlineFilesUseCase: offlineFilesUseCase,
+            searchResultsSelectionHandler: HomeSearchNodeSelectionHandler(nodeRouter: nodeRouter),
+            searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter)
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -140,78 +148,6 @@ extension HomeScreenFactory {
 
     private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
         CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
-    }
-
-    private func makeSearchResultsNodeActionHandler(
-        navigationController: UINavigationController,
-    ) -> @MainActor (MEGAAppPresentation.NodeAction) -> Void {
-        {  [weak navigationController, backupsUseCase, nodeUseCase] nodeAction in
-            guard let navigationController else { return }
-            let router = HomeSearchResultRouter(
-                navigationController: navigationController,
-                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController,
-                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-                    nodeActionListener: { _, _ in
-                        // [IOS-11393]: [Home Search] Handle analytics tracking
-                    }
-                ),
-                backupsUseCase: backupsUseCase,
-                nodeUseCase: nodeUseCase
-            )
-
-            // button reference is required to position popover on the iPad correctly
-            router.didTapMoreAction(on: nodeAction.handle, button: nodeAction.sender, isFromSharedItem: false)
-        }
-    }
-
-    private func makeSearchResultSelectionHandler(
-        navigationController: UINavigationController
-    ) -> @MainActor (SearchResultSelection) -> Void {
-        { [weak navigationController, backupsUseCase, nodeUseCase] selection in
-            guard let navigationController else { return }
-            let siblings = selection.siblings()
-            let router = HomeSearchResultRouter(
-                navigationController: navigationController,
-                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController,
-                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
-                ),
-                backupsUseCase: backupsUseCase,
-                nodeUseCase: nodeUseCase
-            )
-            router.didTapNode(
-                nodeHandle: selection.result.id,
-                allNodeHandles: siblings.isEmpty ? nil : siblings,
-                displayMode: .cloudDrive,
-                isFromSharedItem: false,
-                warningViewModel: nil
-            )
-        }
-    }
-
-    private func makeFavouritesNodeSelectionAction(
-        navigationController: UINavigationController
-    ) -> @MainActor (HandleEntity, [HandleEntity]) -> Void {
-        { [weak navigationController, backupsUseCase, nodeUseCase] handle, siblings in
-            guard let navigationController else { return }
-            let router = HomeSearchResultRouter(
-                navigationController: navigationController,
-                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController,
-                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
-                ),
-                backupsUseCase: backupsUseCase,
-                nodeUseCase: nodeUseCase
-            )
-            router.didTapNode(
-                nodeHandle: handle,
-                allNodeHandles: siblings.isEmpty ? nil : siblings,
-                displayMode: .cloudDrive,
-                isFromSharedItem: false,
-                warningViewModel: nil
-            )
-        }
     }
 
     private func makeFavouritesSearchResultsMapper(
@@ -312,41 +248,6 @@ extension HomeScreenFactory {
         OfflineFilesUseCase(
             repo: OfflineFileFetcherRepository.newRepo
         )
-    }
-}
-
-@MainActor
-private struct HomeAddMenuActionHandler: HomeAddMenuActionHandling {
-
-    private let uploadAddMenuDelegateHandler: UploadAddMenuDelegateHandler
-    private let newChatRouter: NewChatRouter
-    private unowned let navigationController: UINavigationController
-
-    init(
-        uploadAddMenuDelegateHandler: UploadAddMenuDelegateHandler,
-        newChatRouter: NewChatRouter,
-        navigationController: UINavigationController
-    ) {
-        self.uploadAddMenuDelegateHandler = uploadAddMenuDelegateHandler
-        self.newChatRouter = newChatRouter
-        self.navigationController = navigationController
-    }
-
-    func handleAction(_ action: HomeAddMenuAction) {
-        switch action {
-        case .chooseFromPhotos:
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .chooseFromPhotos)
-        case .capture:
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .capture)
-        case .importFromFiles:
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .importFrom)
-        case .scanDocument:
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .scanDocument)
-        case .newTextFile:
-            uploadAddMenuDelegateHandler.uploadAddMenu(didSelect: .newTextFile)
-        case .newChat:
-            newChatRouter.presentNewChat(from: navigationController)
-        }
     }
 }
 

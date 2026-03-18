@@ -27,12 +27,12 @@ extension HomeView {
         let favouritesNodesActionHandler: any NodesActionHandling
         let userNameProvider: any UserNameProviderProtocol
         let onFavouritesEditingChanged: @MainActor (Bool) -> Void
-        let favouritesNodeSelectionAction: @MainActor (HandleEntity, [HandleEntity]) -> Void
+        let favouritesNodeSelectionAction: any NodeSelectionHandling
         let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
         // Search result dependencies
         let searchResultsProvider: any SearchResultsProviding
-        let searchResultsSelectionHandler: @MainActor (SearchResultSelection) -> Void
-        let searchResultNodeActionHandler: @MainActor (NodeAction) -> Void
+        let searchResultsSelectionHandler: any NodeSelectionHandling
+        let searchResultNodeActionHandler: any NodesActionHandling
 
         // No internet state
         let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
@@ -51,12 +51,12 @@ extension HomeView {
             favouritesNodesActionHandler: some NodesActionHandling,
             userNameProvider: some UserNameProviderProtocol,
             onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
-            favouritesNodeSelectionAction: @escaping @MainActor (HandleEntity, [HandleEntity]) -> Void,
+            favouritesNodeSelectionAction: some NodeSelectionHandling,
             onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
             searchResultsProvider: some SearchResultsProviding,
-            searchResultsSelectionHandler: @escaping @MainActor (SearchResultSelection) -> Void,
-            searchResultNodeActionHandler: @escaping @MainActor (NodeAction) -> Void,
             offlineFilesUseCase: some OfflineFilesUseCaseProtocol,
+            searchResultsSelectionHandler: NodeSelectionHandling,
+            searchResultNodeActionHandler: NodesActionHandling
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router

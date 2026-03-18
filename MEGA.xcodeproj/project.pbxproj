@@ -1678,6 +1678,10 @@
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
 		A5629FDE2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */; };
 		A5629FDF2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */; };
+		A563A52E2F6A6A0C00DD8BFD /* FavouritesNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A52D2F6A6A0400DD8BFD /* FavouritesNodeSelectionHandler.swift */; };
+		A563A5342F6A6BC900DD8BFD /* HomeSearchNodeSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */; };
+		A563A5392F6A6BD300DD8BFD /* HomeSearchNodesActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */; };
+		A563A5492F6A77F100DD8BFD /* HomeAddMenuActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */; };
 		A56582792F2C5D840089CD6D /* FolderLinkFlowUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56582782F2C5D7F0089CD6D /* FolderLinkFlowUseCase.swift */; };
 		A56582802F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565827D2F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift */; };
 		A56582812F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565827F2F2C6B0E0089CD6D /* FolderLinkLogoutUseCase.swift */; };
@@ -4566,6 +4570,10 @@
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
 		A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
+		A563A52D2F6A6A0400DD8BFD /* FavouritesNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesNodeSelectionHandler.swift; sourceTree = "<group>"; };
+		A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodeSelectionHandler.swift; sourceTree = "<group>"; };
+		A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchNodesActionHandler.swift; sourceTree = "<group>"; };
+		A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAddMenuActionHandler.swift; sourceTree = "<group>"; };
 		A56582782F2C5D7F0089CD6D /* FolderLinkFlowUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkFlowUseCase.swift; sourceTree = "<group>"; };
 		A565827D2F2C6B0E0089CD6D /* FolderLinkFetchNodesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkFetchNodesUseCase.swift; sourceTree = "<group>"; };
 		A565827E2F2C6B0E0089CD6D /* FolderLinkLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkLoginUseCase.swift; sourceTree = "<group>"; };
@@ -12663,8 +12671,12 @@
 			isa = PBXGroup;
 			children = (
 				BFD971242F46BDCA0038892A /* FavouritesNodesActionHandler.swift */,
+				A563A52D2F6A6A0400DD8BFD /* FavouritesNodeSelectionHandler.swift */,
+				A563A5482F6A77EF00DD8BFD /* HomeAddMenuActionHandler.swift */,
 				A583581F2F61617400B4B519 /* HomeRecentUserNameProvider.swift */,
 				C41388F42F3418D700C560C5 /* HomeScreenFactory+Revamp.swift */,
+				A563A5362F6A6BCD00DD8BFD /* HomeSearchNodesActionHandler.swift */,
+				A563A5322F6A6BBD00DD8BFD /* HomeSearchNodeSelectionHandler.swift */,
 				BF2388E92F396C1500520512 /* HomeViewRouter.swift */,
 			);
 			path = Revamp;
@@ -15257,6 +15269,7 @@
 				B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */,
 				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
 				BFD971252F46BDCA0038892A /* FavouritesNodesActionHandler.swift in Sources */,
+				A563A52E2F6A6A0C00DD8BFD /* FavouritesNodeSelectionHandler.swift in Sources */,
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
 				B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */,
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,
@@ -15385,6 +15398,7 @@
 				0E385A7D2BB3C66700261892 /* HideFilesAndFoldersRouter.swift in Sources */,
 				0E385A792BB3BCD900261892 /* HideFilesAndFoldersViewModel.swift in Sources */,
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
+				A563A5492F6A77F100DD8BFD /* HomeAddMenuActionHandler.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
@@ -15393,6 +15407,8 @@
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				C41388F52F3418DF00C560C5 /* HomeScreenFactory+Revamp.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
+				A563A5392F6A6BD300DD8BFD /* HomeSearchNodesActionHandler.swift in Sources */,
+				A563A5342F6A6BC900DD8BFD /* HomeSearchNodeSelectionHandler.swift in Sources */,
 				5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */,
 				947DC5E32AC1C863002C1D7C /* HomeSearchResultsAdditions.swift in Sources */,
 				94712EF02A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift in Sources */,

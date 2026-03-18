@@ -16,7 +16,7 @@ final class HomeSearchResultsViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var searchBecameActive: Bool = false
 
-    @Published package var selection: SearchResultSelection?
+    @Published package var selection: NodeSelection?
     @Published package var nodeAction: NodeAction?
     private let dependency: Dependency
 
@@ -24,7 +24,7 @@ final class HomeSearchResultsViewModel: ObservableObject {
 
         let searchBridge = SearchBridge(
             selection: { [weak self] in
-                self?.selection = $0
+                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings())
             },
             context: { [weak self] in
                 self?.nodeAction = .init(handle: $0.id, sender: $1)
