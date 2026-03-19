@@ -5,6 +5,11 @@ import SwiftUI
 final class HomeNavigation: ObservableObject {
     @Published var path = NavigationPath()
     @Published var snackBar: SnackBar?
+    @Binding var tabBarHidden: Bool
+    
+    init(tabBarHidden: Binding<Bool>) {
+        _tabBarHidden = tabBarHidden
+    }
     
     func append<Route>(_ route: Route) where Route: Hashable {
         path.append(route)

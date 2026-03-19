@@ -13,13 +13,17 @@ public struct HomeView: View {
     }
 
     @StateObject private var viewModel = HomeViewModel()
-    @StateObject private var navigator = HomeNavigation()
+    @StateObject private var navigator: HomeNavigation
 
     @State private var searchText = ""
     private let dependency: Dependency
 
-    public init(dependency: Dependency) {
+    public init(
+        dependency: Dependency,
+        tabBarHidden: Binding<Bool>
+    ) {
         self.dependency = dependency
+        _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
     }
     
     public var body: some View {
@@ -88,10 +92,10 @@ public struct HomeView: View {
                         nodeUseCase: dependency.nodeUseCase,
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
-                        onEditingChanged: dependency.onFavouritesEditingChanged,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
                         onNodeActionPerformed: dependency.onFavouritesNodeActionPerformed
-                    )
+                    ),
+                    tabBarHidden: $navigator.tabBarHidden
                 )
             case .offline:
                 EmptyView() // Handled by UIKit routing

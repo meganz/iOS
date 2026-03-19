@@ -32,4 +32,16 @@ struct RecentActionBucketEntity: Identifiable {
     let changesType: RecentActionBucketChangesType
     let changesOwnerType: RecentActionBucketChangesOwnerType
     let shareOriginType: RecentActionBucketShareOriginType
+
+    var nodes: [NodeEntity] {
+        switch type {
+        case .singleFile(let node), .singleMedia(let node): [node]
+        case .multipleMedia(let nodes), .mixedFiles(let nodes): nodes
+        }
+    }
+}
+
+extension RecentActionBucketEntity: Hashable {
+    static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }

@@ -2,8 +2,19 @@ import Home
 import SwiftUI
 
 final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
-
+    private var isTabBarHidden: Binding<Bool> {
+        Binding(
+            get: {
+                self.tabBarController?.tabBar.isHidden ?? false
+            },
+            set: {
+                self.tabBarController?.tabBar.isHidden = $0
+            }
+        )
+    }
+    
     private let dependency: HomeView.Dependency
+    
     init(dependency: HomeView.Dependency) {
         self.dependency = dependency
         super.init(nibName: nil, bundle: nil)
@@ -46,7 +57,10 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
     }
 
     private func setupHomeView() {
-        let homeView = HomeView(dependency: dependency)
+        let homeView = HomeView(
+            dependency: dependency,
+            tabBarHidden: isTabBarHidden
+        )
         let hostingViewController = UIHostingController(rootView: homeView)
         addChild(hostingViewController)
         

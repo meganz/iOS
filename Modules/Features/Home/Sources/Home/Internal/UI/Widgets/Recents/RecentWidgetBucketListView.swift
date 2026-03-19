@@ -16,7 +16,7 @@ struct RecentWidgetBucketListView: View {
     
     enum Route: Hashable {
         case viewAllBuckets
-        case bucketItems([NodeEntity])
+        case bucketItems(RecentActionBucketEntity)
     }
     
     private let dependency: Dependency
@@ -55,8 +55,8 @@ struct RecentWidgetBucketListView: View {
                             },
                             bucketSelectionHandler: { bucket in
                                 switch bucket.type {
-                                case let .mixedFiles(nodes):
-                                    navigator.append(Route.bucketItems(nodes))
+                                case .mixedFiles:
+                                    navigator.append(Route.bucketItems(bucket))
                                 default:
                                     break
                                 }
@@ -100,10 +100,10 @@ struct RecentWidgetBucketListView: View {
                     nodeActionHandler: dependency.nodeActionHandler
                 )
             )
-        case let .bucketItems(nodes):
+        case let .bucketItems(bucket):
             RecentActionBucketItemsView(
                 dependency: RecentActionBucketItemsView.Dependency(
-                    nodes: nodes,
+                    bucket: bucket,
                     resultMapper: dependency.recentActionBucketItemResultMapper,
                     selectionHandler: dependency.selectionHandler,
                     nodeActionHandler: dependency.nodeActionHandler

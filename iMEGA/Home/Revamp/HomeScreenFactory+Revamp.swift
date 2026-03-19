@@ -84,9 +84,6 @@ extension HomeScreenFactory {
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             userNameProvider: HomeRecentUserNameProvider(),
             recentActionBucketItemResultMapper: searchResultMapper,
-            onFavouritesEditingChanged: { [weak tabBarController] isEditing in
-                tabBarController?.tabBar.isHidden = isEditing
-            },
             favouritesNodeSelectionAction: FavouritesNodeSelectionHandler(nodeRouter: nodeRouter),
             onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher(),
             searchResultsProvider: searchResultsProvider,

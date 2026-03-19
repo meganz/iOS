@@ -17,7 +17,6 @@ public struct FavouritesView: View {
         let nodeUseCase: any NodeUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodesActionHandler: any NodesActionHandling
-        let onEditingChanged: @MainActor (Bool) -> Void
         let nodeSelectionHandler: any NodeSelectionHandling
         let onNodeActionPerformed: AnyPublisher<Void, Never>
 
@@ -29,7 +28,6 @@ public struct FavouritesView: View {
             nodeUseCase: some NodeUseCaseProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
-            onEditingChanged: @escaping @MainActor (Bool) -> Void,
             nodeSelectionHandler: some NodeSelectionHandling,
             onNodeActionPerformed: AnyPublisher<Void, Never>
         ) {
@@ -40,16 +38,19 @@ public struct FavouritesView: View {
             self.nodeUseCase = nodeUseCase
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.nodesActionHandler = nodesActionHandler
-            self.onEditingChanged = onEditingChanged
             self.nodeSelectionHandler = nodeSelectionHandler
             self.onNodeActionPerformed = onNodeActionPerformed
         }
     }
 
     @StateObject private var viewModel: FavouritesViewModel
+    @Binding private var tabBarHidden: Bool
     private let dependency: Dependency
 
-    public init(dependency: Dependency) {
+    public init(
+        dependency: Dependency,
+        tabBarHidden: Binding<Bool>
+    ) {
         _viewModel = StateObject(
             wrappedValue: FavouritesViewModel(
                 dependency: .init(
@@ -67,6 +68,7 @@ public struct FavouritesView: View {
             )
         )
         self.dependency = dependency
+        _tabBarHidden = tabBarHidden
     }
 
     public var body: some View {
@@ -118,7 +120,7 @@ public struct FavouritesView: View {
         }
         .environment(\.editMode, $viewModel.editMode)
         .onChange(of: viewModel.editMode) { editMode in
-            dependency.onEditingChanged(editMode.isEditing)
+            tabBarHidden = editMode.isEditing
         }
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)

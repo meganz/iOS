@@ -3,11 +3,11 @@ import MEGASwift
 import Search
 
 struct RecentActionBucketItemsProvider: SearchResultsProviding {
-    private let nodes: [NodeEntity]
+    private let bucket: RecentActionBucketEntity
     private let resultMapper: any RecentActionBucketItemResultMapping
     
-    init(nodes: [NodeEntity], resultMapper: any RecentActionBucketItemResultMapping) {
-        self.nodes = nodes
+    init(bucket: RecentActionBucketEntity, resultMapper: any RecentActionBucketItemResultMapping) {
+        self.bucket = bucket
         self.resultMapper = resultMapper
     }
     
@@ -21,14 +21,14 @@ struct RecentActionBucketItemsProvider: SearchResultsProviding {
         }
         
         return SearchResultsEntity(
-            results: nodes.map { resultMapper.map(node: $0) },
+            results: bucket.nodes.map { resultMapper.map(node: $0) },
             availableChips: [],
             appliedChips: []
         )
     }
     
     func currentResultIds() -> [Search.ResultId] {
-        nodes.map(\.handle)
+        bucket.nodes.map(\.handle)
     }
     
     func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {

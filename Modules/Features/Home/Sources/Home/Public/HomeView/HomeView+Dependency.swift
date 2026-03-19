@@ -31,7 +31,6 @@ extension HomeView {
         let favouritesNodesActionHandler: any NodesActionHandling
         let userNameProvider: any UserNameProviderProtocol
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
-        let onFavouritesEditingChanged: @MainActor (Bool) -> Void
         let favouritesNodeSelectionAction: any NodeSelectionHandling
         let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
         // Search result dependencies
@@ -58,7 +57,6 @@ extension HomeView {
             favouritesNodesActionHandler: some NodesActionHandling,
             userNameProvider: some UserNameProviderProtocol,
             recentActionBucketItemResultMapper: some RecentActionBucketItemResultMapping,
-            onFavouritesEditingChanged: @escaping @MainActor (Bool) -> Void,
             favouritesNodeSelectionAction: some NodeSelectionHandling,
             onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
             searchResultsProvider: some SearchResultsProviding,
@@ -81,7 +79,6 @@ extension HomeView {
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.userNameProvider = userNameProvider
             self.recentActionBucketItemResultMapper = recentActionBucketItemResultMapper
-            self.onFavouritesEditingChanged = onFavouritesEditingChanged
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
             self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed
             self.searchResultsProvider = searchResultsProvider

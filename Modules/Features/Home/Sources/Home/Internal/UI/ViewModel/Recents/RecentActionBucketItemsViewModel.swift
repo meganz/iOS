@@ -1,6 +1,7 @@
 import Combine
 import MEGAAppPresentation
 import MEGADomain
+import MEGAL10n
 import MEGAUIComponent
 import MEGAUIKit
 import Search
@@ -9,14 +10,18 @@ import SwiftUI
 @MainActor
 final class RecentActionBucketItemsViewModel: ObservableObject {
     struct Dependency {
-        let nodes: [NodeEntity]
+        let bucket: RecentActionBucketEntity
         let resultMapper: any RecentActionBucketItemResultMapping
+        var titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
     }
-    
+
     @Published var editMode: EditMode = .inactive
     @Published var selection: NodeSelection?
     @Published var nodeAction: NodeAction?
-    
+    @Published var navigationTitle: String = ""
+    @Published var navigationSubtitle: String?
+    @Published private var selectedNodes: Set<HandleEntity> = []
+
     private let dependency: Dependency
     private var cancellables: Set<AnyCancellable> = []
 
@@ -31,8 +36,8 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         } updateSortOrder: { _ in }
         chipPickerShowedHandler: { _ in }
         
-        searchBridge.selectionChanged = { results in
-            print(results)
+        searchBridge.selectionChanged = { [weak self] results in
+            self?.selectedNodes = results
         }
         
         searchBridge.editingChanged = { [weak self] editing in
@@ -42,7 +47,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         let searchConfig = SearchConfig.recentAction
         
         let searchResultsViewModel = SearchResultsViewModel(
-            resultsProvider: RecentActionBucketItemsProvider(nodes: dependency.nodes, resultMapper: dependency.resultMapper),
+            resultsProvider: RecentActionBucketItemsProvider(bucket: dependency.bucket, resultMapper: dependency.resultMapper),
             bridge: searchBridge,
             config: searchConfig,
             layout: .list,
@@ -51,7 +56,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
             usesRevampedLayout: true,
-            contentUnavailableViewModelProvider: RecentActionBucketItemsContentUnvailableProvider()
+            contentUnavailableViewModelProvider: RecentActionBucketItemsContentUnavailableProvider()
         )
         
         return SearchResultsContainerViewModel(
@@ -82,6 +87,32 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
                 searchResultsContainerViewModel.setEditing(isEditing)
                 if !isEditing {
                     searchResultsContainerViewModel.clearSelection()
+                }
+            }
+            .store(in: &cancellables)
+
+        $selectedNodes
+            .combineLatest($editMode)
+            .map { [dependency] nodes, mode in
+                dependency.titleUseCase.title(
+                    for: dependency.bucket,
+                    editingState: mode.isEditing ? .active(selectedCount: nodes.count) : .inactive
+                )
+            }
+            .sink { [weak self] result in
+                guard let self else { return }
+                navigationTitle = switch result.title {
+                case let .all(count):
+                    Strings.Localizable.General.Format.Count.file(count)
+                case let .selected(count):
+                    Strings.Localizable.General.Format.itemsSelected(count)
+                }
+                
+                navigationSubtitle = switch result.subtitle {
+                case let .addedBy(parentName):
+                    Strings.Localizable.Home.Recent.addedByLabel(parentName)
+                case .none:
+                    nil
                 }
             }
             .store(in: &cancellables)
