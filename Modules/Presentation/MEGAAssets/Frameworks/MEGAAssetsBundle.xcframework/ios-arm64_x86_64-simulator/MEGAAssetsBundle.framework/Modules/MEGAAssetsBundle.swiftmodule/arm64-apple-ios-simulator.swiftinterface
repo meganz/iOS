@@ -109,6 +109,9 @@ public struct MEGAImageBundle {
   public static var allPhotosEmptyState: SwiftUICore.Image {
     get
   }
+  public static var transferIndicator: SwiftUICore.Image {
+    get
+  }
   public static var videoEmptyState: SwiftUICore.Image {
     get
   }
@@ -1902,6 +1905,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var startChat: UIKit.UIImage {
+    get
+  }
+  public static var transferIndicator: UIKit.UIImage {
     get
   }
   public static var uploadFile: UIKit.UIImage {

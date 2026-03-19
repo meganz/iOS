@@ -275,6 +275,7 @@ public struct MEGAUIImageBundle {
     public static var accountUpgradeSecurity: UIImage { UIImage.accountUpgradeSecurity }
     public static var upgradePro: UIImage { UIImage.upgradePro }
     public static var startChat: UIImage { UIImage.startChat }
+    public static var transferIndicator: UIImage { UIImage.transferIndicator }
     public static var uploadFile: UIImage { UIImage.uploadFile }
     public static var phoneCallAll: UIImage { UIImage.phoneCallAll }
     public static var userMicOn: UIImage { UIImage.userMicOn }

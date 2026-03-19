@@ -26,6 +26,7 @@ public struct MEGAImageBundle {
     public static var closeBanner: Image { Image(.closeBanner) }
     public static var upgradeToProPlan: Image { Image(.upgradeToProPlan) }
     public static var allPhotosEmptyState: Image { Image(.allPhotosEmptyState) }
+    public static var transferIndicator: Image { Image(.transferIndicator) }
     public static var videoEmptyState: Image { Image(.videoEmptyState) }
     public static var cameraEmptyState: Image { Image(.cameraEmptyState) }
     public static var info: Image { Image(.info) }

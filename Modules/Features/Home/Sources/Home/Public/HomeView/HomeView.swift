@@ -59,6 +59,11 @@ public struct HomeView: View {
                 .snackBar($navigator.snackBar)
                 .navigationTitle(Strings.Localizable.home)
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        HomeTransferIndicatorView(progress: viewModel.transferProgress)
+                    }
+                }
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
                 }

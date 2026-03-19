@@ -1,4 +1,5 @@
 import Combine
+import CoreGraphics
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -10,6 +11,7 @@ final class HomeViewModel: ObservableObject {
     @Published var presentsSheet = false
     @Published var hidesFloatingActionsButton: Bool = false
     @Published var isNetworkConnected = false
+    @Published var transferProgress: CGFloat = 0.0
     
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
 

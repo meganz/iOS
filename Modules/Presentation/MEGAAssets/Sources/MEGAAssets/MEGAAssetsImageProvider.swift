@@ -83,6 +83,7 @@ extension MEGAAssets {
         public static var closeBanner: SwiftUI.Image { MEGAImageBundle.closeBanner }
         public static var upgradeToProPlan: SwiftUI.Image { MEGAImageBundle.upgradeToProPlan }
         public static var allPhotosEmptyState: SwiftUI.Image { MEGAImageBundle.allPhotosEmptyState }
+        public static var transferIndicator: SwiftUI.Image { MEGAImageBundle.transferIndicator }
         public static var videoEmptyState: SwiftUI.Image { MEGAImageBundle.videoEmptyState }
         public static var cameraEmptyState: SwiftUI.Image { MEGAImageBundle.cameraEmptyState }
         public static var info: SwiftUI.Image { MEGAImageBundle.info }
