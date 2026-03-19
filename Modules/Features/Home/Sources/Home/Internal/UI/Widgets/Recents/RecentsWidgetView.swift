@@ -86,7 +86,9 @@ struct RecentsWidgetView: View {
             }
         case .hidden:
             HiddenRecentsContentView {
-                presentsSheet = true
+                Task {
+                    await viewModel.didTapShowActivityButton()
+                }
             }
         }
     }
@@ -106,7 +108,7 @@ private struct EmptyRecentsContentView: View {
 
     var body: some View {
         HStack(spacing: TokenSpacing._4) {
-            VStack(alignment: .leading, spacing: TokenSpacing._2) {
+            VStack(alignment: .leading, spacing: TokenSpacing._1) {
                 Text(Strings.Localizable.Recents.EmptyState.Empty.message)
                     .font(.footnote)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
@@ -114,6 +116,8 @@ private struct EmptyRecentsContentView: View {
 
                 uploadButton
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, TokenSpacing._3)
 
             MEGAAssets.Image.recentsClock
                 .resizable()
@@ -134,7 +138,6 @@ private struct EmptyRecentsContentView: View {
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .frame(height: 32, alignment: .center)
         }
-        .padding(.bottom, TokenSpacing._2)
     }
 }
 
@@ -143,7 +146,7 @@ private struct HiddenRecentsContentView: View {
 
     var body: some View {
         HStack(spacing: TokenSpacing._4) {
-            VStack(alignment: .leading, spacing: TokenSpacing._2) {
+            VStack(alignment: .leading, spacing: TokenSpacing._1) {
                 Text(Strings.Localizable.Recents.EmptyState.ActivityHidden.title)
                     .font(.footnote)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
@@ -151,6 +154,8 @@ private struct HiddenRecentsContentView: View {
 
                 showActivityButton
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, TokenSpacing._3)
 
             MEGAAssets.Image.recentsClock
                 .resizable()
@@ -171,6 +176,5 @@ private struct HiddenRecentsContentView: View {
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .frame(height: 32, alignment: .center)
         }
-        .padding(.bottom, TokenSpacing._2)
     }
 }

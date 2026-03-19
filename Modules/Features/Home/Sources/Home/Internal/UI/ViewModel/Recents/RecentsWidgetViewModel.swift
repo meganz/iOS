@@ -18,18 +18,6 @@ final class RecentsWidgetViewModel: ObservableObject {
                 Strings.Localizable.Recents.EmptyState.ActivityHidden.button
             }
         }
-
-        var messageText: String {
-            switch self {
-            case .empty:
-                Strings.Localizable.Recents.EmptyState.Empty.message
-            case .nonEmpty:
-                // WIP, L10n Strings
-                "Recent activity placeholder"
-            case .hidden:
-                Strings.Localizable.Recents.EmptyState.ActivityHidden.title
-            }
-        }
     }
 
     @Published private(set) var state: State = .hidden
@@ -48,6 +36,11 @@ final class RecentsWidgetViewModel: ObservableObject {
     }
 
     func onTask() async {
+        await refreshState()
+    }
+
+    func didTapShowActivityButton() async {
+        showRecentsPreference = true
         await refreshState()
     }
 
