@@ -13,11 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] i %d inny podnieśli ręce</string>
+        <string>[A] i jeszcze %d osoba podnieśli ręce</string>
         <key>few</key>
-        <string>[A] a %d inni podnieśli ręce</string>
+        <string>[A] i jeszcze %d osoby podniosły ręce</string>
         <key>many</key>
-        <string>[A] a %d inni podnieśli ręce</string>
+        <string>[A] i jeszcze %d osób podniosło ręce</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>

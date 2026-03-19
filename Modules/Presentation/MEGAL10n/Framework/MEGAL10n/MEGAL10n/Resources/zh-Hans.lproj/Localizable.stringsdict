@@ -153,7 +153,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>适用于所有%d个重复文件</string>
+        <string>应用于所有%d个重复文件</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -461,7 +461,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>第[A]个文件，共%d个文件</string>
+        <string>[A] / %d个文件</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -811,7 +811,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>已添加%d项目到”[A]“</string>
+        <string>已添加%d个项目到“[A]”</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
@@ -825,7 +825,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>照片已上传。视频上传已关闭：%d视频未上传</string>
+        <string>照片已上传。视频上传已关闭：%d个视频未上传</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -979,7 +979,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -993,7 +993,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[B][StartDate][/B]起，每%d天的[B][StartTime]到[EndTime][/B]</string>
+        <string>[B][StartDate][/B]起，每%d天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -1007,7 +1007,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate]，每%d周[WeekDay][/B]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate]，每%d周[WeekDay][/B]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -1021,7 +1021,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -1035,7 +1035,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -1049,7 +1049,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -1063,7 +1063,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第[MonthDay]天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第[MonthDay]天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -1077,7 +1077,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第[MonthDay]天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第[MonthDay]天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -1091,7 +1091,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -1105,7 +1105,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1119,7 +1119,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1133,7 +1133,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1147,7 +1147,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1161,7 +1161,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1175,7 +1175,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1189,7 +1189,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1203,7 +1203,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1217,7 +1217,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期一的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期一的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1231,7 +1231,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1245,7 +1245,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1259,7 +1259,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1273,7 +1273,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1287,7 +1287,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1301,7 +1301,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1315,7 +1315,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1329,7 +1329,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1343,7 +1343,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1357,7 +1357,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期二的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期二的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1371,7 +1371,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1385,7 +1385,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1399,7 +1399,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1413,7 +1413,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1427,7 +1427,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1441,7 +1441,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1455,7 +1455,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -1469,7 +1469,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1483,7 +1483,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1497,7 +1497,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期三的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期三的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1511,7 +1511,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1525,7 +1525,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1539,7 +1539,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1553,7 +1553,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1567,7 +1567,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1581,7 +1581,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1595,7 +1595,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -1609,7 +1609,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1623,7 +1623,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1637,7 +1637,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期四的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期四的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1651,7 +1651,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1665,7 +1665,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1679,7 +1679,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1693,7 +1693,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1707,7 +1707,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1721,7 +1721,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1735,7 +1735,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -1749,7 +1749,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -1763,7 +1763,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -1777,7 +1777,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期五的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期五的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -1791,7 +1791,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -1805,7 +1805,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -1819,7 +1819,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -1833,7 +1833,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -1847,7 +1847,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -1861,7 +1861,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -1875,7 +1875,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -1889,7 +1889,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -1903,7 +1903,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -1917,7 +1917,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期六的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期六的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -1931,7 +1931,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第一个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -1945,7 +1945,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第一个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第一个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -1959,7 +1959,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第二个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -1973,7 +1973,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第二个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第二个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -1987,7 +1987,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第三个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2001,7 +2001,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第三个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第三个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2015,7 +2015,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -2029,7 +2029,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第四个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第四个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2043,7 +2043,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第四个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d个月第五个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2057,7 +2057,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d个月第五个星期天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d个月第五个星期天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -2323,7 +2323,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>会议将在每%d月的[weekNumber] [weekDayName]举行一次。</string>
+        <string>会议将在每%d月的[weekNumber] [weekDayName]举行。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2673,7 +2673,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d个项目未隐藏</string>
+        <string>%d个项目取消隐藏</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -2757,7 +2757,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>尽管我们已于[date]通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。 </string>
+        <string>尽管我们已于[date]通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]空间，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。 </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2771,7 +2771,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>尽管我们已多次通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。 </string>
+        <string>尽管我们已多次通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]空间，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。 </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2785,7 +2785,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>尽管我们已通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。</string>
+        <string>尽管我们已通过电子邮件与您联系，您的存储空间仍然已满。您的云盘中有%d个文件，共使用了[storageSpace]空间，您的帐户现已被锁定。请升级到[plan]方案以增加您的存储空间并解锁您的帐户。如果您不尽快采取行动，您的数据将被删除。立即升级以保护您的文件。[A]了解更多关于您存储限制的信息[/A]。</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

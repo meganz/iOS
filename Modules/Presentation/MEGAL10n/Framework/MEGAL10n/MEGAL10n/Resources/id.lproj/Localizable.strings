@@ -2995,7 +2995,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Mengunggah Log File";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Terima kasih atas laporannya";
+"help.reportIssue.success.title"="Terima kasih atas laporan anda";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Kami akan menyelidiki masalah ini dan anggota tim kami akan menghubungi anda kembali";
 /* Error message shown when some error occurs during uploading a bug report. */

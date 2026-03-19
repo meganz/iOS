@@ -2995,9 +2995,9 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="กำลังอัปโหลดไฟล์บันทึก";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="ขอบคุณสำหรับรายงานของคุณ";
+"help.reportIssue.success.title"="ขอบคุณที่แจ้งรายงานให้เราทราบ";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="ขอบคุณ เราจะตรวจสอบปัญหานี้และสมาชิกในทีมของเราจะติดต่อกลับหาคุณ";
+"help.reportIssue.success.message"="เจ้าหน้าที่จะตรวจสอบปัญหานี้และติดต่อกลับหาคุณโดยเร็วที่สุด";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="ไม่สามารถส่งรายงานของคุณได้ กรุณาลองอีกครั้ง";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="กำลังดำเนินการ";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ จาก %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ จาก %@ %@/วินาที";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="ดีล Cyber Monday ลด %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4861,4 +4861,16 @@
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="กำลังถ่ายโอนไฟล์";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="กิจกรรมไฟล์และโฟลเดอร์ล่าสุดจะแสดงที่นี่";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="เพิ่มโดย %@";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="ดูทั้งหมด";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="ล้างกิจกรรมล่าสุด";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="คุณแน่ใจหรือไม่ว่าต้องการล้างกิจกรรมล่าสุดทั้งหมด การดำเนินการนี้จะไม่สามารถย้อนคืนได้ภายหลัง";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="ซ่อนกิจกรรมล่าสุดของคุณเรียบร้อยแล้ว";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="ล้างกิจกรรมล่าสุดของคุณเรียบร้อยแล้ว";

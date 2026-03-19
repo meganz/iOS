@@ -2995,7 +2995,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Günlük dosyası yükleniyor";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Raporunuz için teşekkür ederim";
+"help.reportIssue.success.title"="Raporunuz için teşekkürler";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Bu sorunu inceleyeceğiz ve ekibimizden bir üye size geri dönecektir";
 /* Error message shown when some error occurs during uploading a bug report. */

@@ -2997,7 +2997,7 @@
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="感谢您的报告";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="我们将调查此问题并尽快与您取得联系";
+"help.reportIssue.success.message"="我们将对这个问题进行调查，我们的团队成员会与您联系";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="无法提交您的问题。请再试一次。";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="进行中的传输";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ / %@项 %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="网络星期一特惠：%@折扣";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4833,7 +4833,7 @@
 /* Title of Photo's compact zoom scale title */
 "media.photoLibrary.zoom.compact.title"="紧凑";
 /* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="Smallest";
+"media.photoLibrary.zoom.smallest.title"="最小";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="日期";
 /* Alert title in Photo Picker shown when selected photos lack permission. */
@@ -4861,4 +4861,16 @@
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message"="%@支持月度订阅";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="您最近的所有文件和文件夹活动将显示在这里";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="由 %@ 添加";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="查看全部";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="清除最近的活动";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="您确定要清除所有最近活动吗？此操作无法撤销。";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="您最近的活动已被隐藏";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="您的最近活动已被清除";

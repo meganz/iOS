@@ -147,7 +147,7 @@
 /* Message shown when you try to downlonad files bigger than the available memory. */
 "MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="O MEGA precisa de um mínimo de %@. Libere espaço excluindo aplicativos que você já não usa, ou deletando arquivos de vídeo grandes da sua galeria. Você também pode gerenciar o que o MEGA armazena no seu dispositivo.";
 /* Title for the file link view */
-"fileLink"="Link do arquivo";
+"fileLink"="Link de arquivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Abrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -177,9 +177,9 @@
 /* Message shown when a download starts */
 "downloadStarted"="Download iniciado";
 /* Title for the folder link view */
-"folderLink"="Link da pasta";
+"folderLink"="Link de pasta";
 /* Title for the album/collection link view */
-"albumLink"="Link do álbum";
+"albumLink"="Link de álbum";
 /* Alert title for invalid album link */
 "albumLink.invalidAlbum.alert.title"="Não foi possível acessar o álbum";
 /* Alert message for invalid album link */
@@ -4861,4 +4861,16 @@
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Transferindo arquivos";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="Todas a sua atividade recente de arquivos e pastas será mostrada aqui";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="Adicionado por %@";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="Ver tudo";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="Deletar a atividade recente";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="Você tem certeza de que quer deletar toda a atividade recente? Esta ação não pode ser desfeita.";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="A sua atividade recente foi ocultada";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="A sua atividade recente foi deletada";

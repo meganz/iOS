@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* Button title to clear something */
-"clear"="비우기";
+"clear"="지우기";
 /*  */
 "yes"="예";
 /*  */
@@ -103,7 +103,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="암호";
 /* Account, Change Password view. Error shown when you type your current password. */
-"account.changePassword.error.currentPassword"="현재 비밀번호를 입력하였습니다.";
+"account.changePassword.error.currentPassword"="현재 암호를 입력하였습니다.";
 /*  */
 "pleaseStrengthenYourPassword"="당신의 암호를 강화하세요.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
@@ -145,7 +145,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="메가는 최소 %@가 필요합니다. 더 이상 사용하지 않는 앱이나 갤러리에서 용량이 큰 동영상 파일을 삭제함으로써 여유 공간을 확보해주세요. MEGA에 당신의 기기에 보관하는 것을 당신이 관리할 수도 있습니다.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA는 최소 %@의 용량이 필요합니다. 더 이상 사용하지 않는 앱이나 갤러리에서 용량이 큰 동영상 파일을 삭제함으로써 여유 공간을 확보해주세요. MEGA에 당신의 장치에 보관하는 것을 당신이 관리할 수도 있습니다.";
 /* Title for the file link view */
 "fileLink"="파일 링크";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -401,7 +401,7 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="키가 있는 링크";
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
-"sharedItems.link.accessInfoPasswordProtected"="비밀번호가 있는 사람만 링크를 열 수 있습니다";
+"sharedItems.link.accessInfoPasswordProtected"="암호가 있는 사람만 링크를 열 수 있습니다";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="링크가 업데이트 되었습니다. 다시 복사하세요.";
 /* An alert dialog for the Get Link feature */
@@ -693,7 +693,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="개인정보 처리 방침";
+"privacyPolicyLabel"="개인정보 처리방침";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -743,7 +743,7 @@
 /* Title for custom settings */
 "Custom Settings"="개별 설정";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="기기 저장소가 거의 가득 참";
+"Device Storage Almost Full"="장치 저장소가 거의 가득 참";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="앞으로의 카메라 업로드를 위한 공간이 충분하지 않습니다. 불필요한 앱, 동영상 또는 음악을 삭제함으로써 공간을 확보하세요. %@에서 저장소를 관리할 수 있습니다";
 /* Navigation path for Storage settings in iOS */
@@ -763,11 +763,11 @@
 /* Footer description when upload all burst photos is disabled */
 "Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 가장 좋아하는 사진만 업로드 됩니다.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 장치의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="공유된 사진첩 업로드";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드될 것입니다.";
+"Shared Albums from your device's Photos app will be uploaded."="장치의 사진 앱의 공유된 앨범이 업로드될 것입니다.";
 /* Footer description for Upload Shared Albums title when option disabled */
 "Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다.";
 /* Title of the switch to config whether to upload synced albums */
@@ -851,7 +851,7 @@
 /* Alert description explaining the impact of clearing offline files */
 "settings.fileManagement.clearOfflineFiles.alert.description"="이 파일들을 보려면, 인터넷 연결이 필요합니다.";
 /* Button label to confirm clearing offline files */
-"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="비우기";
+"settings.fileManagement.clearOfflineFiles.alert.confirmationButton"="지우기";
 /* Confirmation message displayed after clearing offline files */
 "settings.fileManagement.clearOfflineFiles.done.message"="오프라인 파일 삭제함";
 /* File versioning menu subTitle */
@@ -985,7 +985,7 @@
 /* Menu item */
 "help"="도움말";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="도움 센터";
+"helpCentreLabel"="고객센터";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="베타 참여";
 /* Title to rate the app */
@@ -2995,7 +2995,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="로그 파일 업로드 중";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="보고서를 보내주셔서 감사합니다";
+"help.reportIssue.success.title"="신고해주셔서 고맙습니다";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="이 문제를 확인해보고 우리 팀원이 연락을 드리겠습니다";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -4167,7 +4167,7 @@
 /* The alert message shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.message"="이 파일 형식은 iOS에서 지원되지 않습니다. 오프라인에서 이용 가능하게 만드시겠습니까?";
 /* Password protected links title */
-"password.protected.links.title"="비밀번호로 보호된 링크";
+"password.protected.links.title"="암호로 보호된 링크";
 /* Links with expiry dates title */
 "links.with.expiry.dates.title"="만료일이 있는 링크";
 /* Transfer sharing title */
@@ -4327,7 +4327,7 @@
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="알겠습니다";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
-"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="지원 부서에 연락";
+"accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="고객센터에 연락";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.title"="숨겨진 항목";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="진행중";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ 중 %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ 중 %@ %@/초";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="사이버 먼데이 할인: %@ 할인";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4861,4 +4861,16 @@
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="파일 전송 중";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="모든 최근 파일과 폴더 활동이 여기에 나타납니다";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="%@ 님이 추가함";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="모두 보기";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="최근 활동 지우기";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="모든 최근 활동을 지울까요? 이것은 되돌릴 수 없습니다.";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="최근 활동이 숨겨져 있습니다";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="최근 활동이 지워졌습니다";

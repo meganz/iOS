@@ -2529,7 +2529,7 @@
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="從您的收藏中快速存取檔案";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="從近期活動中快速存取檔案";
+"Quickly access files on Recents section"="快速存取近期使用的檔案";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="從可離線使用部份快速存取檔案";
 /* Dialog title for the no enough device storage screen */
@@ -2979,7 +2979,7 @@
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="請不要關閉應用程式。如果關閉，未在佇列中的傳輸將遺失。";
+"transfers.cancellable.donotclose"="請不要關閉應用程式。如果關閉，未排入佇列的傳輸將遺失。";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="已取消傳輸";
 /* Title of the dialog used to send bug reports to support team. */
@@ -4807,7 +4807,7 @@
 /* Camera Uploads Empty In Progress Row title */
 "cameraUploads.progress.row.emptyInProgress.title"="傳輸進度將顯示在此";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="佇列中的傳輸將顯示在此";
+"cameraUploads.progress.row.emptyInQueue.title"="排入佇列的傳輸將顯示在此";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="共享已建立";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */

@@ -4861,4 +4861,8 @@
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Transfer în curs";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="Toată activitatea dvs. recentă de fișier și folder va apărea aici";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="Adăugat de %@";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="Șterge activitatea recentă";
