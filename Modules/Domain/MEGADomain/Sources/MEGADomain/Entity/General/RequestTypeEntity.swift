@@ -63,7 +63,7 @@ public enum RequestTypeEntity: Sendable {
     case chatUrl
     case chatGrantAccess
     case chatRemoveAccess
-    case useHttpsOnly
+    case useHttpsOnly // obsolete
     case setProxy
     case getRecoveryLink
     case queryRecoveryLink

@@ -140,8 +140,6 @@
             [self addShareDestinationView];
             [self checkPasscode];
         }
-        
-        [MEGASdk.shared useHttpsOnly:YES];
     } else {
         [self openApp];
     }

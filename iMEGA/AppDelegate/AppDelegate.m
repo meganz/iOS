@@ -242,8 +242,6 @@
             }
         }
         
-        [MEGASdk.shared useHttpsOnly:YES];
-        
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
