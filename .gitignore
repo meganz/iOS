@@ -37,7 +37,6 @@ scripts/ReleaseScripts/Resources/values.env
 scripts/ReleaseScripts/Resources/cache.json
 
 ## Claude
-.claude/agent-memory/
 .claude/settings.local.json
 
 SwiftPackages/
