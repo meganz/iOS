@@ -1,5 +1,3 @@
-import MEGAL10n
-
 enum RecentActionBucketItemsEditingState {
     case inactive
     case active(selectedCount: Int)

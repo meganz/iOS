@@ -12,6 +12,7 @@ struct RecentActionBucketItemsView: View {
         let resultMapper: any RecentActionBucketItemResultMapping
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
+        let moreActionsPresenter: any MoreNodeActionsPresenting
     }
 
     @StateObject private var viewModel: RecentActionBucketItemsViewModel
@@ -51,7 +52,14 @@ struct RecentActionBucketItemsView: View {
                 
                 if viewModel.editMode.isEditing {
                     ToolbarItemGroup(placement: .bottomBar) {
-                        bottomBar
+                        RecentActionBucketItemsBottomBarView(
+                            bucket: dependency.bucket,
+                            bottomBarAction: $viewModel.bottomBarAction
+                        ) {
+                            dependency.moreActionsPresenter.presentActions(for: viewModel.selectedNodes) {
+                                viewModel.editMode = .inactive
+                            }
+                        }
                     }
                 }
             }
@@ -60,6 +68,9 @@ struct RecentActionBucketItemsView: View {
                 dependency.selectionHandler.handle(selection: selection)
             }
             .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
+                dependency.nodeActionHandler.handle(action: action)
+            }
+            .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
             .onChange(of: viewModel.editMode) { mode in
@@ -104,49 +115,4 @@ struct RecentActionBucketItemsView: View {
         }
     }
     
-    @ViewBuilder
-    private var bottomBar: some View {
-        Button {
-            
-        } label: {
-            Label(title: { Text("Offline") }, icon: { MEGAAssets.Image.cloudDownload })
-        }
-        .labelStyle(.iconOnly)
-        
-        Spacer()
-        
-        Button {
-            
-        } label: {
-            Label(title: { Text("Share") }, icon: { MEGAAssets.Image.link01 })
-        }
-        .labelStyle(.iconOnly)
-        
-        Spacer()
-        
-        Button {
-            
-        } label: {
-            Label(title: { Text("Move") }, icon: { MEGAAssets.Image.moveMono })
-        }
-        .labelStyle(.iconOnly)
-        
-        Spacer()
-        
-        Button {
-            
-        } label: {
-            Label(title: { Text("Remove") }, icon: { MEGAAssets.Image.trash })
-        }
-        .labelStyle(.iconOnly)
-        
-        Spacer()
-        
-        Button {
-            
-        } label: {
-            Label(title: { Text("More") }, icon: { MEGAAssets.Image.moreHorizontal })
-        }
-        .labelStyle(.iconOnly)
-    }
 }

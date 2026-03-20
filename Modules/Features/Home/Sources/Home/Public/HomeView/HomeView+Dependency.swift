@@ -29,10 +29,10 @@ extension HomeView {
         let nodeUseCase: any NodeUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
+        let favouritesMoreActionsPresenter: any MoreNodeActionsPresenting
         let userNameProvider: any UserNameProviderProtocol
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let favouritesNodeSelectionAction: any NodeSelectionHandling
-        let onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>
         // Search result dependencies
         let searchResultsProvider: any SearchResultsProviding
         let searchResultsSelectionHandler: any NodeSelectionHandling
@@ -42,7 +42,8 @@ extension HomeView {
         // recent action bucket
         let recentActionBucketNodeSelectionHandler: any NodeSelectionHandling
         let recentActionBucketNodesActionHandler: any NodesActionHandling
-        
+        let recentActionBucketMoreActionsPresenter: any MoreNodeActionsPresenting
+
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
@@ -55,16 +56,17 @@ extension HomeView {
             nodeUseCase: some NodeUseCaseProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
+            favouritesMoreActionsPresenter: some MoreNodeActionsPresenting,
             userNameProvider: some UserNameProviderProtocol,
             recentActionBucketItemResultMapper: some RecentActionBucketItemResultMapping,
             favouritesNodeSelectionAction: some NodeSelectionHandling,
-            onFavouritesNodeActionPerformed: AnyPublisher<Void, Never>,
             searchResultsProvider: some SearchResultsProviding,
             offlineFilesUseCase: some OfflineFilesUseCaseProtocol,
             searchResultsSelectionHandler: some NodeSelectionHandling,
             searchResultNodeActionHandler: some NodesActionHandling,
             recentActionBucketNodeSelectionHandler: some NodeSelectionHandling,
-            recentActionBucketNodesActionHandler: some NodesActionHandling
+            recentActionBucketNodesActionHandler: some NodesActionHandling,
+            recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -77,16 +79,17 @@ extension HomeView {
             self.avatarFetcher = avatarFetcher
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
+            self.favouritesMoreActionsPresenter = favouritesMoreActionsPresenter
             self.userNameProvider = userNameProvider
             self.recentActionBucketItemResultMapper = recentActionBucketItemResultMapper
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
-            self.onFavouritesNodeActionPerformed = onFavouritesNodeActionPerformed
             self.searchResultsProvider = searchResultsProvider
             self.searchResultsSelectionHandler = searchResultsSelectionHandler
             self.searchResultNodeActionHandler = searchResultNodeActionHandler
             self.offlineFilesUseCase = offlineFilesUseCase
             self.recentActionBucketNodeSelectionHandler = recentActionBucketNodeSelectionHandler
             self.recentActionBucketNodesActionHandler = recentActionBucketNodesActionHandler
+            self.recentActionBucketMoreActionsPresenter = recentActionBucketMoreActionsPresenter
         }
     }
 }

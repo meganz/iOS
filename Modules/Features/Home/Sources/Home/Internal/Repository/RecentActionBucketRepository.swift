@@ -67,13 +67,16 @@ struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
             .currentUser
         }
         
+        let nodeAccessType = sdk.accessLevel(forNodeHande: bucket.parentHandle).toNodeAccessTypeEntity()
+
         return RecentActionBucketEntity(
             date: bucket.timestamp ?? Date(),
             parent: sdk.node(forHandle: bucket.parentHandle)?.toNodeEntity(),
             type: bucketType,
             changesType: changesType(of: bucket),
             changesOwnerType: changesOwnerType,
-            shareOriginType: shareOriginType(of: bucket)
+            shareOriginType: shareOriginType(of: bucket),
+            nodeAccessType: nodeAccessType
         )
     }
     

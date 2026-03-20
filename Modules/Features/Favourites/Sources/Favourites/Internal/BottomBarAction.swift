@@ -6,5 +6,4 @@ package enum BottomBarAction {
     case removeFavourite
     case shareLink
     case moveToRubbishBin
-    case more
 }

@@ -11,6 +11,7 @@ struct RecentsWidgetView: View {
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
+        let moreActionsPresenter: any MoreNodeActionsPresenting
     }
     
     private let supportedMenuActions: [HomeAddMenuAction] = [
@@ -105,7 +106,8 @@ struct RecentsWidgetView: View {
                 userNameProvider: dependency.userNameProvider,
                 recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                 selectionHandler: dependency.selectionHandler,
-                nodeActionHandler: dependency.nodeActionHandler
+                nodeActionHandler: dependency.nodeActionHandler,
+                moreActionsPresenter: dependency.moreActionsPresenter
             )
         )
     }

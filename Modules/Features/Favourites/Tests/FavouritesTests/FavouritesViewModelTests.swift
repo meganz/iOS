@@ -254,28 +254,10 @@ struct FavouritesViewModelTests {
         #expect(handles == [9])
     }
 
-    @Test
-    func moreActionCreatesMoreNodesAction() async throws {
-        let sut = makeSUT()
-        sut.selectedNodeHandles = [10, 11]
-
-        sut.bottomBarAction = .more
-
-        try await waitForCondition {
-            if case .more = sut.nodesAction { return true }
-            return false
-        }
-        guard case .more(let handles) = sut.nodesAction else {
-            #expect(Bool(false), "Expected more action")
-            return
-        }
-        #expect(handles == [10, 11])
-    }
-
     // MARK: - Nodes action auto-exits edit mode
 
     @Test(arguments: [BottomBarAction.download, .removeFavourite, .shareLink, .moveToRubbishBin])
-    func nonMoreBottomBarActionsExitEditMode(_ action: BottomBarAction) async throws {
+    func bottomBarActionsExitEditMode(_ action: BottomBarAction) async throws {
         let sut = makeSUT()
         sut.editMode = .active
         sut.selectedNodeHandles = [1, 2, 3]
@@ -284,23 +266,6 @@ struct FavouritesViewModelTests {
 
         try await waitForCondition { sut.editMode == .inactive }
         #expect(sut.editMode == .inactive)
-    }
-
-    @Test
-    func moreBottomBarActionDoesNotExitEditMode() async throws {
-        let sut = makeSUT()
-        sut.editMode = .active
-        sut.selectedNodeHandles = [1, 2, 3]
-
-        sut.bottomBarAction = .more
-
-        // Wait for nodesAction to be set so we know the action was processed
-        try await waitForCondition {
-            if case .more = sut.nodesAction { return true }
-            return false
-        }
-        // Edit mode stays active — it exits at the View layer via onNodeActionPerformed
-        #expect(sut.editMode == .active)
     }
 
     // MARK: - Node action (context menu)

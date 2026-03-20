@@ -18,7 +18,7 @@ public struct FavouritesView: View {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodesActionHandler: any NodesActionHandling
         let nodeSelectionHandler: any NodeSelectionHandling
-        let onNodeActionPerformed: AnyPublisher<Void, Never>
+        let moreActionsPresenter: any MoreNodeActionsPresenting
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -29,7 +29,7 @@ public struct FavouritesView: View {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
             nodeSelectionHandler: some NodeSelectionHandling,
-            onNodeActionPerformed: AnyPublisher<Void, Never>
+            moreActionsPresenter: some MoreNodeActionsPresenting
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -39,7 +39,7 @@ public struct FavouritesView: View {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.nodesActionHandler = nodesActionHandler
             self.nodeSelectionHandler = nodeSelectionHandler
-            self.onNodeActionPerformed = onNodeActionPerformed
+            self.moreActionsPresenter = moreActionsPresenter
         }
     }
 
@@ -131,9 +131,6 @@ public struct FavouritesView: View {
         .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
         }
-        .onReceive(dependency.onNodeActionPerformed) { _ in
-            viewModel.exitEditMode()
-        }
     }
 
     @ViewBuilder
@@ -146,7 +143,18 @@ public struct FavouritesView: View {
         Spacer()
         BottomBarActionButton(action: .moveToRubbishBin, selection: $viewModel.bottomBarAction)
         Spacer()
-        BottomBarActionButton(action: .more, selection: $viewModel.bottomBarAction)
+        Button {
+            dependency.moreActionsPresenter.presentActions(for: viewModel.selectedNodeHandles) {
+                viewModel.exitEditMode()
+            }
+        } label: {
+            Label {
+                Text(Strings.Localizable.more)
+            } icon: {
+                MEGAAssets.Image.moreHorizontal
+            }
+            .labelStyle(.iconOnly)
+        }
     }
 
     private var selectionTitle: String {

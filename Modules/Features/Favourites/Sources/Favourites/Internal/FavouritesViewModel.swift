@@ -166,8 +166,6 @@ package final class FavouritesViewModel: ObservableObject {
                     NodesAction.shareLink(selectedNodeHandles)
                 case .moveToRubbishBin:
                     NodesAction.moveToRubbishBin(selectedNodeHandles)
-                case .more:
-                    NodesAction.more(selectedNodeHandles)
                 }
             }
             .assign(to: &$nodesAction)
@@ -229,8 +227,7 @@ package final class FavouritesViewModel: ObservableObject {
     private func listenToNodesActionChanges() {
         $nodesAction
             .compactMap { $0 }
-            .sink { [weak self] action in
-                if case .more = action { return }
+            .sink { [weak self] _ in
                 self?.exitEditMode()
             }
             .store(in: &subscriptions)

@@ -37,14 +37,12 @@ extension HomeScreenFactory {
         let fullNameHandler: @Sendable (CurrentUserSource) -> String = { $0.currentUser?.mnz_fullName ?? "" }
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
 
-        let nodeActionHandledSubject = PassthroughSubject<Void, Never>()
         let favouritesNodesActionHandler = FavouritesNodesActionHandler(
             navigationController: navigationController,
             nodeUseCase: nodeUseCase,
             favouriteUseCase: favouriteUseCase,
             backupsUseCase: backupsUseCase,
-            sdk: MEGASdk.sharedSdk,
-            nodeActionListener: { _, _ in nodeActionHandledSubject.send() }
+            sdk: MEGASdk.sharedSdk
         )
 
         let router = HomeViewRouter(navigationController: navigationController)
@@ -66,6 +64,16 @@ extension HomeScreenFactory {
         
         let searchResultMapper = makeSearchResultMapper(with: navigationController)
         
+        let nodeActions = NodeActions.makeActions(sdk: .shared, navigationController: navigationController)
+        let nodeActionsHandler = nodeActions.makeNodeActionsHandler(toggleEditMode: { _ in })
+        
+        let recentActionBucketMoreActionsPresenter = RecentActionBucketMoreActionsPresenter(
+            navigationController: navigationController,
+            nodeUseCase: nodeUseCase,
+            backupsUseCase: backupsUseCase,
+            sdk: MEGASdk.sharedSdk
+        )
+
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
@@ -82,16 +90,20 @@ extension HomeScreenFactory {
             nodeUseCase: nodeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
+            favouritesMoreActionsPresenter: favouritesNodesActionHandler,
             userNameProvider: HomeRecentUserNameProvider(),
             recentActionBucketItemResultMapper: searchResultMapper,
             favouritesNodeSelectionAction: FavouritesNodeSelectionHandler(nodeRouter: nodeRouter),
-            onFavouritesNodeActionPerformed: nodeActionHandledSubject.eraseToAnyPublisher(),
             searchResultsProvider: searchResultsProvider,
             offlineFilesUseCase: offlineFilesUseCase,
             searchResultsSelectionHandler: HomeSearchNodeSelectionHandler(nodeRouter: nodeRouter),
             searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter),
             recentActionBucketNodeSelectionHandler: RecentActionBucketNodeSelectionHandler(nodeRouter: nodeRouter),
-            recentActionBucketNodesActionHandler: RecentActionBucketNodesActionHandler(nodeRouter: nodeRouter)
+            recentActionBucketNodesActionHandler: RecentActionBucketNodesActionHandler(
+                nodeRouter: nodeRouter,
+                nodesActionHandler: nodeActionsHandler
+            ),
+            recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)

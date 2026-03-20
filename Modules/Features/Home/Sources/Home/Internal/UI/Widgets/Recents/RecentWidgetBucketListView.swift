@@ -12,6 +12,7 @@ struct RecentWidgetBucketListView: View {
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
+        let moreActionsPresenter: any MoreNodeActionsPresenting
     }
     
     enum Route: Hashable {
@@ -97,7 +98,8 @@ struct RecentWidgetBucketListView: View {
                     userNameProvider: dependency.userNameProvider,
                     recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                     selectionHandler: dependency.selectionHandler,
-                    nodeActionHandler: dependency.nodeActionHandler
+                    nodeActionHandler: dependency.nodeActionHandler,
+                    moreActionsPresenter: dependency.moreActionsPresenter
                 )
             )
         case let .bucketItems(bucket):
@@ -106,7 +108,8 @@ struct RecentWidgetBucketListView: View {
                     bucket: bucket,
                     resultMapper: dependency.recentActionBucketItemResultMapper,
                     selectionHandler: dependency.selectionHandler,
-                    nodeActionHandler: dependency.nodeActionHandler
+                    nodeActionHandler: dependency.nodeActionHandler,
+                    moreActionsPresenter: dependency.moreActionsPresenter
                 )
             )
         }

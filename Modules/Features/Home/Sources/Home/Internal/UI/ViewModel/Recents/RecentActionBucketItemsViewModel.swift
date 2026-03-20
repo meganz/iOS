@@ -15,12 +15,14 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         var titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
     }
 
+    @Published var bottomBarAction: RecentActionBottomBarAction?
     @Published var editMode: EditMode = .inactive
-    @Published var selection: NodeSelection?
-    @Published var nodeAction: NodeAction?
-    @Published var navigationTitle: String = ""
-    @Published var navigationSubtitle: String?
-    @Published private var selectedNodes: Set<HandleEntity> = []
+    @Published private(set) var selection: NodeSelection?
+    @Published private(set) var nodeAction: NodeAction?
+    @Published private(set) var nodesAction: NodesAction?
+    @Published private(set) var navigationTitle: String = ""
+    @Published private(set) var navigationSubtitle: String?
+    @Published private(set) var selectedNodes: Set<HandleEntity> = []
 
     private let dependency: Dependency
     private var cancellables: Set<AnyCancellable> = []
@@ -88,6 +90,20 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
                 if !isEditing {
                     searchResultsContainerViewModel.clearSelection()
                 }
+            }
+            .store(in: &cancellables)
+
+        $bottomBarAction
+            .compactMap { [weak self] action in
+                guard let action, let self else { return nil }
+                return action.toNodesAction(handles: selectedNodes)
+            }
+            .assign(to: &$nodesAction)
+        
+        $nodesAction
+            .compactMap { $0 }
+            .sink { [weak self] _ in
+                self?.editMode = .inactive
             }
             .store(in: &cancellables)
 

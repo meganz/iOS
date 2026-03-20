@@ -27,8 +27,6 @@ private extension BottomBarAction {
             Strings.Localizable.Meetings.Panel.shareLink
         case .moveToRubbishBin:
             Strings.Localizable.General.MenuAction.moveToRubbishBin
-        case .more:
-            Strings.Localizable.more
         }
     }
 
@@ -42,8 +40,6 @@ private extension BottomBarAction {
             Image(uiImage: MEGAAssets.UIImage.link01)
         case .moveToRubbishBin:
             Image(uiImage: MEGAAssets.UIImage.trash)
-        case .more:
-            Image(uiImage: MEGAAssets.UIImage.moreHorizontal)
         }
     }
 }

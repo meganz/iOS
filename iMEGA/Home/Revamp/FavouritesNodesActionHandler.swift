@@ -3,28 +3,25 @@ import MEGAAppSDKRepo
 import MEGADomain
 
 @MainActor
-struct FavouritesNodesActionHandler: NodesActionHandling {
+struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresenting {
     private weak var navigationController: UINavigationController?
     private let nodeUseCase: any NodeUseCaseProtocol
     private let favouriteUseCase: any NodeFavouriteActionUseCaseProtocol
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let sdk: MEGASdk
-    private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
 
     init(
         navigationController: UINavigationController,
         nodeUseCase: some NodeUseCaseProtocol,
         favouriteUseCase: any NodeFavouriteActionUseCaseProtocol,
         backupsUseCase: some BackupsUseCaseProtocol,
-        sdk: MEGASdk,
-        nodeActionListener: @escaping (MegaNodeActionType?, [MEGANode]) -> Void
+        sdk: MEGASdk
     ) {
         self.navigationController = navigationController
         self.nodeUseCase = nodeUseCase
         self.favouriteUseCase = favouriteUseCase
         self.backupsUseCase = backupsUseCase
         self.sdk = sdk
-        self.nodeActionListener = nodeActionListener
     }
 
     func handle(action: NodesAction) {
@@ -35,10 +32,10 @@ struct FavouritesNodesActionHandler: NodesActionHandling {
             shareLink(for: handles)
         case .moveToRubbishBin(let handles):
             moveToRubbishBin(nodeHandles: handles)
-        case .more(let handles):
-            showMore(for: handles)
         case .toggleFavourites(let handles):
             toggleFavourites(for: handles)
+        default:
+            break
         }
     }
 
@@ -123,13 +120,19 @@ struct FavouritesNodesActionHandler: NodesActionHandling {
             }
     }
 
-    private func showMore(for nodeHandles: Set<HandleEntity>) {
+    func presentActions(for nodeHandles: Set<HandleEntity>, completion: @escaping () -> Void) {
+        showMore(for: nodeHandles, completion: completion)
+    }
+
+    private func showMore(for nodeHandles: Set<HandleEntity>, completion: @escaping () -> Void) {
         guard let navigationController, let nodes = nodes(from: nodeHandles) else { return }
 
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-            nodeActionListener: nodeActionListener
+            nodeActionListener: { _, _ in
+                completion()
+            }
         )
         let nodeActionsViewController = NodeActionViewController(
             nodes: nodes.compactMap { $0.toMEGANode(in: sdk) },

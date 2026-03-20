@@ -1,16 +1,44 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
+import MEGADomain
 
 struct RecentActionBucketNodesActionHandler: NodesActionHandling {
     private let nodeRouter: any NodeRouting
+    private let nodesActionHandler: NodeActionsDelegateHandler
+    private let nodeRepository: any NodeRepositoryProtocol
     
-    init(nodeRouter: some NodeRouting) {
+    init(
+        nodeRouter: some NodeRouting,
+        nodesActionHandler: NodeActionsDelegateHandler,
+        nodeRepository: some NodeRepositoryProtocol = NodeRepository.newRepo
+    ) {
         self.nodeRouter = nodeRouter
+        self.nodesActionHandler = nodesActionHandler
+        self.nodeRepository = nodeRepository
     }
     
     func handle(action: MEGAAppPresentation.NodeAction) {
         nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .recents, isFromSharedItem: false)
     }
     
-    /// To be handle separately with bottom bar action
-    func handle(action: MEGAAppPresentation.NodesAction) {}
+    func handle(action: MEGAAppPresentation.NodesAction) {
+        switch action {
+        case let .download(handles):
+            nodesActionHandler.download(nodes(from: handles))
+        case let .shareLink(handles):
+            nodesActionHandler.shareOrManageLink(nodes(from: handles))
+        case let .copy(handles):
+            nodesActionHandler.browserAction(.copy, nodes(from: handles))
+        case let .move(handles):
+            nodesActionHandler.browserAction(.move, nodes(from: handles))
+        case let .moveToRubbishBin(handles):
+            nodesActionHandler.moveToRubbishBin(nodes(from: handles))
+        default:
+            break
+        }
+    }
+    
+    private func nodes(from handles: Set<HandleEntity>) -> [NodeEntity] {
+        handles.compactMap(nodeRepository.nodeForHandle)
+    }
 }

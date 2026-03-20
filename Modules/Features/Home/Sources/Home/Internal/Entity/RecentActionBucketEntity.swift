@@ -32,6 +32,7 @@ struct RecentActionBucketEntity: Identifiable {
     let changesType: RecentActionBucketChangesType
     let changesOwnerType: RecentActionBucketChangesOwnerType
     let shareOriginType: RecentActionBucketShareOriginType
+    let nodeAccessType: NodeAccessTypeEntity
 
     var nodes: [NodeEntity] {
         switch type {

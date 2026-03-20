@@ -93,7 +93,7 @@ public struct HomeView: View {
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
-                        onNodeActionPerformed: dependency.onFavouritesNodeActionPerformed
+                        moreActionsPresenter: dependency.favouritesMoreActionsPresenter
                     ),
                     tabBarHidden: $navigator.tabBarHidden
                 )
@@ -133,7 +133,8 @@ public struct HomeView: View {
                             userNameProvider: dependency.userNameProvider,
                             recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                             selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
-                            nodeActionHandler: dependency.recentActionBucketNodesActionHandler
+                            nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+                            moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter
                         ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )
