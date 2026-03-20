@@ -4726,6 +4726,30 @@
 "videoPlayer.snapshot.snackBar.title"="Image saved to your device";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="Subtitles";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Add subtitle from Cloud drive";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="Off";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Add subtitle";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="Cancel";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="No subtitles found";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Upload subtitles in SRT format to your Cloud drive";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Unable to add subtitle";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="There was an issue with the subtitle file.\nSelect a different subtitle file or try again.";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="OK, got it";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="Select a subtitle file";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="No search results were found";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Rewind up to 60 days of deleted data";
 /* Subscription benefit for for calls and meetings */

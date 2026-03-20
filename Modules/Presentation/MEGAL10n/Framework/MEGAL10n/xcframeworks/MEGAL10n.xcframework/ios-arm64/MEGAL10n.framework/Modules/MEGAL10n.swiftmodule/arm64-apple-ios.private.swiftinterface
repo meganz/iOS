@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2.4 effective-5.10 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
 // swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAL10n
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.4
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import Foundation
 import Swift
 import _Concurrency
@@ -4944,6 +4944,32 @@ public enum Strings {
         }
         public enum SnackBar {
           public static let title: Swift.String
+        }
+      }
+      public enum Subtitles {
+        public enum BottomSheet {
+          public static let title: Swift.String
+        }
+        public enum Menu {
+          public static let addFromCloudDrive: Swift.String
+          public static let off: Swift.String
+        }
+        public enum Select {
+          public static let addSubtitle: Swift.String
+          public static let cancel: Swift.String
+          public static let title: Swift.String
+          public enum Empty {
+            public static let content: Swift.String
+            public static let title: Swift.String
+          }
+          public enum Error {
+            public static let content: Swift.String
+            public static let ok: Swift.String
+            public static let title: Swift.String
+          }
+          public enum Search {
+            public static let noResults: Swift.String
+          }
         }
       }
     }

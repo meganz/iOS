@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "subtitles_playlist.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -491,7 +491,7 @@ extension PlayerOverlayView {
     }
 
     private var bottomMoreSheetHeight: Int {
-        3 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+        4 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
     }
 
     private var playbackSpeedsSelectionListView: some View {
@@ -549,6 +549,12 @@ extension PlayerOverlayView {
                     await viewModel.didTapSnapshot()
                 }
             }
+            
+            bottomMoreSheetRowView(
+                icon: "subtitles_icon",
+                title: Strings.Localizable.VideoPlayer.Subtitles.BottomSheet.title,
+                action: viewModel.didTapSubtitle
+            )
             
             bottomMoreSheetRowView(
                 icon: "pictureInPicture",

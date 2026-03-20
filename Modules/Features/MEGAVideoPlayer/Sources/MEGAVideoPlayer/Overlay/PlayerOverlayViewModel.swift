@@ -343,6 +343,10 @@ extension PlayerOverlayViewModel {
         didTapPictureInPictureAction()
         resetAutoHide()
     }
+    
+    func didTapSubtitle() {
+        isBottomMoreSheetPresented = false
+    }
 
     func handlePinchGesture(scale: CGFloat) {
         let threshold: CGFloat = 1.0
