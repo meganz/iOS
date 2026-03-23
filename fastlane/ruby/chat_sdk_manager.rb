@@ -25,6 +25,12 @@ class ChatSDKManager
         FileUtils.cp_r "#{sdk_third_party_private_folder}/MEGANodeList+init.h",  "#{@chat_third_party_path}/include", remove_destination: true, :verbose => true
         FileUtils.cp_r "#{sdk_third_party_private_folder}/MEGASdk+init.h",  "#{@chat_third_party_path}/include", remove_destination: true, :verbose => true
         FileUtils.cp_r "#{sdk_third_party_private_folder}/MEGAStringList+init.h",  "#{@chat_third_party_path}/include", remove_destination: true, :verbose => true
-        FileUtils.cp_r "#{sdk_root_path}/third_party/ccronexpr/ccronexpr.h",  "#{@chat_third_party_path}/include", remove_destination: true, :verbose => true
+        third_party_path = File.join(sdk_root_path, "third_party")
+        Dir.glob("#{third_party_path}/**/*.h").each do |header|
+            relative_path = Pathname.new(header).relative_path_from(third_party_path).to_s
+            dest = File.join(@chat_third_party_path, "include", relative_path)
+            FileUtils.mkdir_p File.dirname(dest)
+            FileUtils.cp header, dest, :verbose => true
+        end
     end
 end
