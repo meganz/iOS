@@ -39,7 +39,7 @@ package final class AccountDetailsAvatarUseCase: AccountDetailsAvatarUseCaseProt
             // Observe user name change, in case user doesn't have a profile pic we'll display the
             // First initial letter of user's name
             async let nameTracking: () = {
-                for await _ in userNameUseCase.names {
+                for await _ in await userNameUseCase.names {
                     guard !Task.isCancelled else { break }
                     if let fetchedAvatar = await avatarFetcher() {
                         subject.send(fetchedAvatar)

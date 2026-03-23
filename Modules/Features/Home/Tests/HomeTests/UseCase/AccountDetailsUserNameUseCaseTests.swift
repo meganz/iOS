@@ -1,5 +1,5 @@
-import Home
 import Foundation
+import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
@@ -12,14 +12,14 @@ import Testing
 @MainActor
 struct AccountDetailsUserNameUseCaseTests {
 
-    @Test("names emits the current full name immediately on subscription")
+    @Test("names emits the current full name after initialization")
     func namesEmitsCurrentNameImmediately() async throws {
-        let sut = makeSUT(fullNameHandler: { _ in "Name" })
+        let sut = makeSUT(userNameProvider: MockUserNameProvider(stubbedDisplayName: "Name"))
 
-        var iterator = sut.names.makeAsyncIterator()
-        let firstName = await iterator.next()
+        let names = await sut.names
+        let name = try await firstNonEmptyValue(from: names)
 
-        #expect(firstName == "Name")
+        #expect(name == "Name")
     }
 
     @Test("names emits an updated name when a firstName attribute request finishes")
@@ -28,15 +28,20 @@ struct AccountDetailsUserNameUseCaseTests {
         @Atomic var callCount = 0
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in
+            userNameProvider: MockUserNameProvider { _ in
                 $callCount.mutate { $0 += 1 }
                 return callCount == 1 ? "Old" : "New"
             }
         )
 
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
+
         continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .firstName, email: nil)))
 
-        let name = try await firstValue(after: "Old", from: sut.names)
+        let name = try await firstValue(after: "Old", from: names)
         #expect(name == "New")
     }
 
@@ -46,15 +51,20 @@ struct AccountDetailsUserNameUseCaseTests {
         @Atomic var callCount = 0
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in
+            userNameProvider: MockUserNameProvider { _ in
                 $callCount.mutate { $0 += 1 }
                 return callCount == 1 ? "Old" : "New"
             }
         )
 
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
+
         continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .lastName, email: nil)))
 
-        let name = try await firstValue(after: "Old", from: sut.names)
+        let name = try await firstValue(after: "Old", from: names)
         #expect(name == "New")
     }
 
@@ -63,12 +73,17 @@ struct AccountDetailsUserNameUseCaseTests {
         let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in "Old" }
+            userNameProvider: MockUserNameProvider(stubbedDisplayName: "Old")
         )
+
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
 
         continuation.yield(.success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
 
-        let didReceiveUpdate = await valueReceived(from: sut.names, after: "Old", timeout: 0.3)
+        let didReceiveUpdate = await valueReceived(from: names, after: "Old", timeout: 0.5)
         #expect(didReceiveUpdate == false)
     }
 
@@ -77,12 +92,17 @@ struct AccountDetailsUserNameUseCaseTests {
         let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in "Old" }
+            userNameProvider: MockUserNameProvider(stubbedDisplayName: "Old")
         )
+
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
 
         continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .firstName, email: "contact@example.com")))
 
-        let didReceiveUpdate = await valueReceived(from: sut.names, after: "Old", timeout: 0.3)
+        let didReceiveUpdate = await valueReceived(from: names, after: "Old", timeout: 0.5)
         #expect(didReceiveUpdate == false)
     }
 
@@ -91,12 +111,17 @@ struct AccountDetailsUserNameUseCaseTests {
         let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in "Old" }
+            userNameProvider: MockUserNameProvider(stubbedDisplayName: "Old")
         )
+
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
 
         continuation.yield(.failure(MockError()))
 
-        let didReceiveUpdate = await valueReceived(from: sut.names, after: "Old", timeout: 0.3)
+        let didReceiveUpdate = await valueReceived(from: names, after: "Old", timeout: 0.5)
         #expect(didReceiveUpdate == false)
     }
 
@@ -105,56 +130,97 @@ struct AccountDetailsUserNameUseCaseTests {
         let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in "Old" }  // handler always returns the same name
+            userNameProvider: MockUserNameProvider(stubbedDisplayName: "Old") // provider always returns the same name
         )
+
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
 
         continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .firstName, email: nil)))
 
-        let didReceiveUpdate = await valueReceived(from: sut.names, after: "Old", timeout: 0.3)
+        let didReceiveUpdate = await valueReceived(from: names, after: "Old", timeout: 0.3)
         #expect(didReceiveUpdate == false)
     }
 
     @Test("names emits each distinct update in order")
     func namesEmitsMultipleDistinctUpdates() async throws {
         let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
-        let names = ["Name1", "Name2", "Name3"]
+        let expectedNames = ["Name1", "Name2", "Name3"]
         @Atomic var index = 0
         let sut = makeSUT(
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
-            fullNameHandler: { _ in
-                let name = names[min(index, names.count - 1)]
+            userNameProvider: MockUserNameProvider { _ in
+                let name = expectedNames[min(index, expectedNames.count - 1)]
                 $index.mutate { $0 += 1 }
                 return name
             }
         )
 
-        var received: [String] = []
-        var iterator = sut.names.makeAsyncIterator()
-
-        // Initial emission
-        if let first = await iterator.next() { received.append(first) }
-
-        // Trigger two more updates
-        continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .firstName, email: nil)))
-        if let second = await iterator.next() { received.append(second) }
-
-        continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .lastName, email: nil)))
-        if let third = await iterator.next() { received.append(third) }
+        let names = await sut.names
+        let received = try await collectNames(
+            from: names,
+            triggeringUpdates: {
+                try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+                continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .firstName, email: nil)))
+                try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+                continuation.yield(.success(AccountRequestEntity(type: .getAttrUser, file: nil, userAttribute: .lastName, email: nil)))
+            },
+            expectedCount: 3
+        )
 
         #expect(received == ["Name1", "Name2", "Name3"])
+    }
+
+    @Test("names emits an updated name when a fetchNodes request finishes")
+    func namesEmitsUpdateOnFetchNodes() async throws {
+        let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
+        @Atomic var callCount = 0
+        let sut = makeSUT(
+            onAccountRequestFinish: stream.eraseToAnyAsyncSequence(),
+            userNameProvider: MockUserNameProvider { _ in
+                $callCount.mutate { $0 += 1 }
+                return callCount == 1 ? "Old" : "New"
+            }
+        )
+
+        let names = await sut.names
+
+        // Wait for initial name to be emitted
+        _ = try await firstNonEmptyValue(from: names)
+
+        continuation.yield(.success(AccountRequestEntity(type: .fetchNodes, file: nil, userAttribute: nil, email: nil)))
+
+        let name = try await firstValue(after: "Old", from: names)
+        #expect(name == "New")
     }
 
     // MARK: - Helpers
 
     private func makeSUT(
         onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = AsyncStream<Result<AccountRequestEntity, any Error>> { _ in }.eraseToAnyAsyncSequence(),
-        fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String = { _ in "" }
+        userNameProvider: MockUserNameProvider = MockUserNameProvider(stubbedDisplayName: "")
     ) -> AccountDetailsUserNameUseCase {
         AccountDetailsUserNameUseCase(
-            currentUserSource: CurrentUserSource(sdk: MockSdk()),
+            currentUserSource: CurrentUserSource(sdk: MockSdk(myUser: MockUser(handle: 1))),
             accountUseCase: MockAccountUseCase(onAccountRequestFinish: onAccountRequestFinish),
-            fullNameHandler: fullNameHandler
+            userNameProvider: userNameProvider
         )
+    }
+
+    /// Waits for the first non-empty value emitted, with a timeout.
+    /// Returns the value, or throws if the timeout is exceeded.
+    private func firstNonEmptyValue(
+        from sequence: AnyAsyncSequence<String>,
+        timeout: TimeInterval = 2.0
+    ) async throws -> String {
+        try await withTimeout(seconds: timeout) {
+            for await value in sequence where !value.isEmpty {
+                return value
+            }
+            throw TimedOutError()
+        }
     }
 
     /// Waits for the first value emitted after `initialValue`, with a timeout.
@@ -164,20 +230,11 @@ struct AccountDetailsUserNameUseCaseTests {
         from sequence: AnyAsyncSequence<String>,
         timeout: TimeInterval = 2.0
     ) async throws -> String {
-        try await withThrowingTaskGroup(of: String?.self) { group in
-            group.addTask {
-                for await value in sequence where value != initialValue {
-                    return value
-                }
-                return nil
+        try await withTimeout(seconds: timeout) {
+            for await value in sequence where value != initialValue {
+                return value
             }
-            group.addTask {
-                try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                return nil
-            }
-            let result = try await group.next() ?? nil
-            group.cancelAll()
-            return try #require(result, "Timed out waiting for a value after '\(initialValue)'")
+            throw TimedOutError()
         }
     }
 
@@ -187,22 +244,60 @@ struct AccountDetailsUserNameUseCaseTests {
         after initialValue: String,
         timeout: TimeInterval
     ) async -> Bool {
-        await withTaskGroup(of: Bool.self) { group in
-            group.addTask {
+        do {
+            _ = try await withTimeout(seconds: timeout) {
                 for await value in sequence where value != initialValue {
-                    return true
+                    return value
                 }
-                return false
+                throw TimedOutError()
             }
-            group.addTask {
-                try? await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                return false
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    /// Collects names from a single iteration, triggering updates after the first value.
+    /// Uses a single iterator to avoid the single-consumer AsyncStream issue.
+    private func collectNames(
+        from sequence: AnyAsyncSequence<String>,
+        triggeringUpdates: @Sendable @escaping () async -> Void,
+        expectedCount: Int,
+        timeout: TimeInterval = 2.0
+    ) async throws -> [String] {
+        try await withTimeout(seconds: timeout) {
+            var collected: [String] = []
+            var triggeredUpdates = false
+            for await value in sequence {
+                guard !value.isEmpty else { continue }
+                collected.append(value)
+                if !triggeredUpdates {
+                    triggeredUpdates = true
+                    await triggeringUpdates()
+                }
+                if collected.count >= expectedCount {
+                    return collected
+                }
             }
-            let result = await group.next() ?? false
-            group.cancelAll()
-            return result
+            throw TimedOutError()
         }
     }
 }
 
 private struct MockError: Error {}
+
+private final class MockUserNameProvider: UserNameProviderProtocol, @unchecked Sendable {
+    private let displayNameHandler: @Sendable (UserEntity) -> String?
+
+    init(stubbedDisplayName: String?) {
+        self.displayNameHandler = { _ in stubbedDisplayName }
+    }
+
+    init(displayNameHandler: @escaping @Sendable (UserEntity) -> String?) {
+        self.displayNameHandler = displayNameHandler
+    }
+
+    func displayName(for user: UserEntity) -> String? {
+        displayNameHandler(user)
+    }
+}

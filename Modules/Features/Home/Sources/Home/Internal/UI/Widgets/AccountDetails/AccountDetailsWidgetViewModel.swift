@@ -42,7 +42,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
 
         init(
             currentUserSource: CurrentUserSource = .shared,
-            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
+            userNameProvider: some UserNameProviderProtocol,
             avatarFetcher: @escaping @Sendable () async -> Image?
         ) {
             let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
@@ -54,7 +54,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
             let userNameUseCase = AccountDetailsUserNameUseCase(
                 currentUserSource: currentUserSource,
                 accountUseCase: accountUseCase,
-                fullNameHandler: fullNameHandler
+                userNameProvider: userNameProvider
             )
             
             self.userNameUseCase = userNameUseCase
@@ -163,7 +163,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private func monitorUserName() async {
-        for await name in dependency.userNameUseCase.names {
+        for await name in await dependency.userNameUseCase.names {
             title = titleText(for: name)
         }
     }

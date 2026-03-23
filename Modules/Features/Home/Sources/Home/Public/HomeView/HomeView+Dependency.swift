@@ -20,7 +20,6 @@ extension HomeView {
     public struct Dependency {
         let homeAddMenuActionHandler: any HomeAddMenuActionHandling
         let router: any HomeViewRouting
-        let fullNameHandler: @Sendable (CurrentUserSource) -> String
         let avatarFetcher: @Sendable () async -> Image?
         let fileSearchUseCase: any FilesSearchUseCaseProtocol
         let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
@@ -47,7 +46,6 @@ extension HomeView {
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
             router: some HomeViewRouting,
-            fullNameHandler: @escaping @Sendable (CurrentUserSource) -> String,
             avatarFetcher: @escaping @Sendable () async -> Image?,
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
             sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
@@ -75,7 +73,6 @@ extension HomeView {
             self.favouritesSearchResultsMapper = favouritesSearchResultsMapper
             self.downloadedNodesListener = downloadedNodesListener
             self.nodeUseCase = nodeUseCase
-            self.fullNameHandler = fullNameHandler
             self.avatarFetcher = avatarFetcher
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler

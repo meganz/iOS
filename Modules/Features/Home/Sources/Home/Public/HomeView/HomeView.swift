@@ -118,7 +118,7 @@ public struct HomeView: View {
                     }
                 case .accountDetails:
                     AccountDetailsWidgetView(dependency: .init(
-                        fullNameHandler: dependency.fullNameHandler,
+                        userNameProvider: dependency.userNameProvider,
                         avatarFetcher: dependency.avatarFetcher
                     )) {
                         dependency.router.route(to: .accountUpgrade)

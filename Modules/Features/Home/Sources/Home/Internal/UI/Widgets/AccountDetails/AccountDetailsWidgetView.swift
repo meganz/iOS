@@ -7,7 +7,7 @@ import SwiftUI
 
 struct AccountDetailsWidgetView: View {
     struct Dependency {
-        let fullNameHandler: @Sendable (CurrentUserSource) -> String
+        let userNameProvider: any UserNameProviderProtocol
         let avatarFetcher: @Sendable () async -> Image?
     }
 
@@ -23,7 +23,7 @@ struct AccountDetailsWidgetView: View {
         _viewModel = StateObject(
             wrappedValue: AccountDetailsWidgetViewModel(
                 dependency: .init(
-                    fullNameHandler: dependency.fullNameHandler,
+                    userNameProvider: dependency.userNameProvider,
                     avatarFetcher: dependency.avatarFetcher
                 )
             )

@@ -25,7 +25,6 @@ let package = Package(
         .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity")
-
     ],
     targets: [
         .target(
