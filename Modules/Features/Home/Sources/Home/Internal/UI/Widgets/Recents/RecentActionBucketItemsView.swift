@@ -10,6 +10,7 @@ struct RecentActionBucketItemsView: View {
     struct Dependency {
         let bucket: RecentActionBucketEntity
         let resultMapper: any RecentActionBucketItemResultMapping
+        let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
@@ -25,7 +26,8 @@ struct RecentActionBucketItemsView: View {
             wrappedValue: RecentActionBucketItemsViewModel(
                 dependency: RecentActionBucketItemsViewModel.Dependency(
                     bucket: dependency.bucket,
-                    resultMapper: dependency.resultMapper
+                    resultMapper: dependency.resultMapper,
+                    downloadedNodesListener: dependency.downloadedNodesListener
                 )
             )
         )
@@ -60,6 +62,7 @@ struct RecentActionBucketItemsView: View {
                                 viewModel.editMode = .inactive
                             }
                         }
+                        .disabled(viewModel.selectedNodes.isEmpty)
                     }
                 }
             }

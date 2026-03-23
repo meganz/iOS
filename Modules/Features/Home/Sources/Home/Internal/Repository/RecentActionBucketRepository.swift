@@ -6,6 +6,7 @@ import MEGASwift
 protocol RecentActionBucketRepositoryProtocol: RepositoryProtocol, Sendable {
     func getRecentActionBuckets(excludeSensitives: Bool) async throws -> [RecentActionBucketEntity]
     func clearRecentActionBuckets(until: Date) async throws
+    func getRecentActionBucket(byId id: String) async throws -> RecentActionBucketEntity
 }
 
 struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
@@ -31,6 +32,23 @@ struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
             })
         })
     }
+    
+    func getRecentActionBucket(byId id: String) async throws -> RecentActionBucketEntity {
+            try await withAsyncThrowingValue(in: { completion in
+                sdk.getRecentAction(byBucketId: id, delegate: RequestDelegate { result in
+                    switch result {
+                    case .success(let request):
+                        if let bucket = request.recentActionsBuckets?.first.flatMap({ bucketEntity(from: $0) }) {
+                            completion(.success(bucket))
+                        } else {
+                            completion(.failure(GenericErrorEntity()))
+                        }
+                    case .failure:
+                        completion(.failure(GenericErrorEntity()))
+                    }
+                })
+            })
+        }
 
     func clearRecentActionBuckets(until date: Date) async throws {
         try await withAsyncThrowingVoidValue(in: { completion in

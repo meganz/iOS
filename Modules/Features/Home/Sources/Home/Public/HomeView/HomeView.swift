@@ -132,6 +132,7 @@ public struct HomeView: View {
                         dependency: RecentsWidgetView.Dependency(
                             userNameProvider: dependency.userNameProvider,
                             recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                            downloadedNodesListener: dependency.downloadedNodesListener,
                             selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
                             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter

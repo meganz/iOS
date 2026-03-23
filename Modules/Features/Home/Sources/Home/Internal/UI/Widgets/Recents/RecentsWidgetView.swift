@@ -9,6 +9,7 @@ struct RecentsWidgetView: View {
     struct Dependency {
         let userNameProvider: any UserNameProviderProtocol
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
+        let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
@@ -105,6 +106,7 @@ struct RecentsWidgetView: View {
                 bucketGroups: bucketGroups,
                 userNameProvider: dependency.userNameProvider,
                 recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                downloadedNodesListener: dependency.downloadedNodesListener,
                 selectionHandler: dependency.selectionHandler,
                 nodeActionHandler: dependency.nodeActionHandler,
                 moreActionsPresenter: dependency.moreActionsPresenter

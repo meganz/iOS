@@ -12,6 +12,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
     struct Dependency {
         let bucket: RecentActionBucketEntity
         let resultMapper: any RecentActionBucketItemResultMapping
+        let downloadedNodesListener: any DownloadedNodesListening
         var titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
     }
 
@@ -49,7 +50,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         let searchConfig = SearchConfig.recentAction
         
         let searchResultsViewModel = SearchResultsViewModel(
-            resultsProvider: RecentActionBucketItemsProvider(bucket: dependency.bucket, resultMapper: dependency.resultMapper),
+            resultsProvider: RecentActionBucketItemsProvider(bucketId: dependency.bucket.id, resultMapper: dependency.resultMapper, downloadedNodesListener: dependency.downloadedNodesListener),
             bridge: searchBridge,
             config: searchConfig,
             layout: .list,
