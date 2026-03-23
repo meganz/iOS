@@ -32,7 +32,7 @@ struct RecentsWidgetView: View {
         self.addMenuActionHandler = addMenuActionHandler
         self.dependency = dependency
         _viewModel = StateObject(
-            wrappedValue: RecentsWidgetViewModel(homeRecentsWidgetUseCase: HomeRecentsWidgetUseCase())
+            wrappedValue: RecentsWidgetViewModel()
         )
     }
     

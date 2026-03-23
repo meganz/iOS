@@ -119,14 +119,12 @@ struct RecentNodesUseCaseTests {
             "Node updates",
             arguments: zip(
                 [
-                    NodeEntity(changeTypes: .removed, handle: 1, isFolder: true),
-                    NodeEntity(changeTypes: .removed, handle: 2, isFolder: false),
                     NodeEntity(changeTypes: .new, handle: 3, isFolder: true),
                     NodeEntity(changeTypes: .name, handle: 4, isFolder: true),
                     NodeEntity(changeTypes: .new, handle: 5, isFolder: false),
                     NodeEntity(changeTypes: .name, handle: 6, isFolder: false)
                 ],
-                [false, false, false, true, true, true]
+                [false, true, true, true]
             )
         )
         func shouldYieldRecentActionBucketsUpdates(

@@ -40,8 +40,7 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol, S: ContentCon
                 $0.contains { nodeEntity in
                     let isNotFolder = !nodeEntity.isFolder
                     let isNotNewNode = !nodeEntity.changeTypes.contains(.new)
-                    let isNotRemoved = !nodeEntity.changeTypes.contains(.removed)
-                    return (isNotFolder || isNotNewNode) && isNotRemoved
+                    return isNotFolder || isNotNewNode
                 }
             }
             .map { _ in () }

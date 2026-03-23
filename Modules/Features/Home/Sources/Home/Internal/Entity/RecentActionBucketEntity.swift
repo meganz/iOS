@@ -25,7 +25,7 @@ enum RecentActionBucketChangesType: Sendable {
 }
 
 struct RecentActionBucketEntity: Identifiable {
-    let id = UUID()
+    let id: String
     let date: Date
     let parent: NodeEntity?
     let type: RecentActionBucketType

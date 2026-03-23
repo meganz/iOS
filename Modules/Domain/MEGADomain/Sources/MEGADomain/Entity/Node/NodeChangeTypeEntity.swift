@@ -23,5 +23,4 @@ public struct ChangeTypeEntity: OptionSet, Sendable {
     public static let pwd              = ChangeTypeEntity(rawValue: 1 << 15) // 32768 0x8000
     public static let description      = ChangeTypeEntity(rawValue: 1 << 15) // 65536 0x10000
     public static let tags             = ChangeTypeEntity(rawValue: 1 << 17) // 131072 0x20000
-
 }

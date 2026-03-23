@@ -70,6 +70,7 @@ struct RecentActionBucketRepository: RecentActionBucketRepositoryProtocol {
         let nodeAccessType = sdk.accessLevel(forNodeHande: bucket.parentHandle).toNodeAccessTypeEntity()
 
         return RecentActionBucketEntity(
+            id: bucket.bucketId ?? "", 
             date: bucket.timestamp ?? Date(),
             parent: sdk.node(forHandle: bucket.parentHandle)?.toNodeEntity(),
             type: bucketType,

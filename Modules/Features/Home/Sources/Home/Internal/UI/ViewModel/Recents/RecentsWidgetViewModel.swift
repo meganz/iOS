@@ -1,42 +1,34 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
 
 @MainActor
 final class RecentsWidgetViewModel: ObservableObject {
-    enum State {
-        case empty
-        case nonEmpty([DailyRecentActionBucketGroup])
-        case hidden
-        
-        var actionButtonTitle: String {
-            switch self {
-            case .empty, .nonEmpty:
-                Strings.Localizable.upload
-            case .hidden:
-                Strings.Localizable.Recents.EmptyState.ActivityHidden.button
-            }
-        }
-    }
 
-    @Published private(set) var state: State = .hidden
-    
+    @Published private(set) var state: RecentWidgetUseCaseState = .hidden
+
     @PreferenceWrapper(key: PreferenceKeyEntity.showRecents, defaultValue: true, useCase: PreferenceUseCase.default)
     private var showRecentsPreference: Bool
-    
-    private let homeRecentsWidgetUseCase: any HomeRecentsWidgetUseCaseProtocol
+
+    private let recentsActionsStatesUseCase: any RecentsActionsStatesUseCaseProtocol
 
     convenience init() {
-        self.init(homeRecentsWidgetUseCase: HomeRecentsWidgetUseCase())
+        self.init(
+            recentsActionsStatesUseCase: RecentsActionsStatesUseCase()
+        )
     }
     
-    package init(homeRecentsWidgetUseCase: some HomeRecentsWidgetUseCaseProtocol) {
-        self.homeRecentsWidgetUseCase = homeRecentsWidgetUseCase
+    package init(
+        recentsActionsStatesUseCase: some RecentsActionsStatesUseCaseProtocol
+    ) {
+        self.recentsActionsStatesUseCase = recentsActionsStatesUseCase
     }
 
     func onTask() async {
         await refreshState()
+        await observeRecentBucketUpdates()
     }
 
     func didTapShowActivityButton() async {
@@ -48,20 +40,24 @@ final class RecentsWidgetViewModel: ObservableObject {
         // Waiting for product/design decision for the top-right menu action.
     }
 
-    private func refreshState() async {
-        if !showRecentsPreference {
-            state = .hidden
-            return
+    private func observeRecentBucketUpdates() async {
+        for await _ in recentsActionsStatesUseCase.states {
+            await refreshState()
         }
+    }
 
-        do throws(HomeRecentWidgetsErrorEntity) {
-            let bucketGroups = try await homeRecentsWidgetUseCase.recentBuckets()
-            state = bucketGroups.isEmpty ? .empty : .nonEmpty(bucketGroups)
-        } catch {
-            switch error {
-            case .cancellation:
-                break
-            }
+    private func refreshState() async {
+        state = await recentsActionsStatesUseCase.getLatestBucketState()
+    }
+}
+
+private extension RecentWidgetUseCaseState {
+    var actionButtonTitle: String {
+        switch self {
+        case .empty, .nonEmpty:
+            Strings.Localizable.upload
+        case .hidden:
+            Strings.Localizable.Recents.EmptyState.ActivityHidden.button
         }
     }
 }
