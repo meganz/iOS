@@ -4874,3 +4874,35 @@
 "home.recent.hideRecentActivity.snackbar.message"="最近のアクティビティを非表示にしました";
 /* Snackbar message shown after the user clears all recent activity */
 "home.recent.clearRecentActivity.snackbar.message"="最近のアクティビティを消去しました";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="キャンセル";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="はい、わかりました。";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="字幕";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="クラウドドライブから字幕を追加";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="オフ";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="字幕を追加";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="字幕が見つかりません";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="SRT形式の字幕をクラウドドライブにアップロードしてください";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="字幕を追加できません";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="字幕ファイルに問題が発生しました。\n別の字幕ファイルを選択するか、もう一度お試しください。";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="字幕ファイルを選択";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="検索結果が見つかりませんでした";
+/* The title of the No Internet state in Home screen */
+"home.noInternet.title"="You’re offline";
+/* The subtitle of the No Internet state in Home screen when there are no offline files */
+"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+/* The subtitle of the No Internet state in Home screen when there are offline files */
+"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+/* The title of the CTA button in Home screen's No Internet state when offline files are available */
+"home.noInternet.viewOfflineFiles"="View Offline files";

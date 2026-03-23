@@ -4874,3 +4874,15 @@
 "home.recent.hideRecentActivity.snackbar.message"="Ваша недавняя активность была скрыта";
 /* Snackbar message shown after the user clears all recent activity */
 "home.recent.clearRecentActivity.snackbar.message"="Недавняя активность очищена";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="Отмена";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="Понятно";
+/* The title of the No Internet state in Home screen */
+"home.noInternet.title"="You’re offline";
+/* The subtitle of the No Internet state in Home screen when there are no offline files */
+"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+/* The subtitle of the No Internet state in Home screen when there are offline files */
+"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+/* The title of the CTA button in Home screen's No Internet state when offline files are available */
+"home.noInternet.viewOfflineFiles"="View Offline files";

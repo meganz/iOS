@@ -4866,3 +4866,23 @@
 "home.recent.addedByLabel"="Adăugat de %@";
 /* The title for menu action button that will clear the recent activity */
 "home.recent.menu.action.clearRecentActivity"="Șterge activitatea recentă";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="Activitatea ta recentă a fost ascunsă";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="Ești sigur că vrei să ștergi întreaga activitate recentă? Aceasta nu poate fi anulată.";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="Activitatea ta recentă a fost ștearsă";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="Vezi toate";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="Anulați";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="Bine, am înțeles";
+/* The title of the No Internet state in Home screen */
+"home.noInternet.title"="You’re offline";
+/* The subtitle of the No Internet state in Home screen when there are no offline files */
+"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+/* The subtitle of the No Internet state in Home screen when there are offline files */
+"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+/* The title of the CTA button in Home screen's No Internet state when offline files are available */
+"home.noInternet.viewOfflineFiles"="View Offline files";

@@ -4866,3 +4866,23 @@
 "home.recent.widget.viewAll"="Alle anzeigen";
 /* Snackbar message shown after the user hides recent activity */
 "home.recent.hideRecentActivity.snackbar.message"="Ihre kürzlichen Aktivitäten wurden ausgeblendet";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="Möchten Sie wirklich alle kürzlichen Aktivitäten löschen? Dies kann nicht rückgängig gemacht werden.";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="Hinzugefügt von %@";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="Ihre kürzlichen Aktivitäten wurden gelöscht";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="Letzte Aktivitäten löschen";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="Abbrechen";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="Alles klar";
+/* The title of the No Internet state in Home screen */
+"home.noInternet.title"="You’re offline";
+/* The subtitle of the No Internet state in Home screen when there are no offline files */
+"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+/* The subtitle of the No Internet state in Home screen when there are offline files */
+"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+/* The title of the CTA button in Home screen's No Internet state when offline files are available */
+"home.noInternet.viewOfflineFiles"="View Offline files";

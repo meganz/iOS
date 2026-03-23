@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -9,6 +10,9 @@ final class NoInternetViewViewModel {
     private let homeViewRouter: any HomeViewRouting
     private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
 
+    private var hasOfflineFiles: Bool {
+        offlineFilesUseCase.offlineFiles().isNotEmpty
+    }
     init(
         homeViewRouter: some HomeViewRouting,
         offlineFilesUseCase: some OfflineFilesUseCaseProtocol
@@ -17,13 +21,19 @@ final class NoInternetViewViewModel {
         self.homeViewRouter = homeViewRouter
     }
 
-    private var hasOfflineFiles: Bool {
-        offlineFilesUseCase.offlineFiles().isNotEmpty
+    var title: String {
+        Strings.Localizable.Home.NoInternet.title
+    }
+
+    var subtitle: String {
+        hasOfflineFiles
+        ? Strings.Localizable.Home.NoInternet.Subtitle.hasOfflineFiles
+        : Strings.Localizable.Home.NoInternet.Subtitle.noOfflineFiles
     }
 
     var viewOfflinesActions: [ContentUnavailableViewModel.ButtonAction] {
         hasOfflineFiles ? [ContentUnavailableViewModel.ButtonAction(
-            title: "View Offline files",
+            title: Strings.Localizable.Home.NoInternet.viewOfflineFiles,
             image: nil,
             handler: { [weak self] in
                 self?.homeViewRouter.route(to: .offline)
@@ -49,8 +59,8 @@ struct NoInternetView: View {
         RevampedContentUnavailableView(
             viewModel: .init(
                 image: MEGAAssets.Image.glassNoCloud,
-                title: "You're offline",
-                subtitle: "If you make files available offline, you’ll still be able to access them without a connection.",
+                title: viewModel.title,
+                subtitle: viewModel.subtitle,
                 font: .callout,
                 titleTextColor: TokenColors.Text.secondary.swiftUI,
                 actions: viewModel.viewOfflinesActions

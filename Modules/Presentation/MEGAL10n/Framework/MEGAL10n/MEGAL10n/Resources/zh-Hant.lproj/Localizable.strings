@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="進行中";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ 中的 %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ 的 %@ %@/秒";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="網路星期一優惠：%@折扣";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4861,4 +4861,48 @@
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
 "account.upgrade.monthly.availability.snackbar.message"="%@ 提供按月收費方案";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
-"recents.emptyState.empty.message"="All your recent file and folder activity will appear here";
+"recents.emptyState.empty.message"="所有您近期的檔案和資料夾活動將顯示在此";
+/* Snackbar message shown after the user hides recent activity */
+"home.recent.hideRecentActivity.snackbar.message"="您近期的活動已被隱藏";
+/* The title for View all button in Home Recent Widget */
+"home.recent.widget.viewAll"="查看全部";
+/* Alert message shown when confirming the action to clear all recent activity */
+"home.recent.clearRecentActivity.alert.message"="您確定要清除所有近期活動記錄嗎？此操作無法還原。";
+/* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
+"home.recent.addedByLabel"="新增者：%@";
+/* Snackbar message shown after the user clears all recent activity */
+"home.recent.clearRecentActivity.snackbar.message"="您最近的活動已清除";
+/* The title for menu action button that will clear the recent activity */
+"home.recent.menu.action.clearRecentActivity"="清除近期的活動";
+/* The cancel button in subtitle selection page */
+"videoPlayer.subtitles.select.cancel"="取消";
+/* The error state button in subtitle selection page */
+"videoPlayer.subtitles.select.error.ok"="好的，明白了";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="字幕";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="從雲端硬碟加入字幕";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="關閉";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="加入字幕";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="未找到字幕檔案";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="上傳SRT字幕檔案到雲端硬碟";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="無法加入字幕";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="字幕檔案有問題。請選擇其它字幕檔案或重試。";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="選擇字幕檔案";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="未找到搜尋結果";
+/* The title of the No Internet state in Home screen */
+"home.noInternet.title"="You’re offline";
+/* The subtitle of the No Internet state in Home screen when there are no offline files */
+"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+/* The subtitle of the No Internet state in Home screen when there are offline files */
+"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+/* The title of the CTA button in Home screen's No Internet state when offline files are available */
+"home.noInternet.viewOfflineFiles"="View Offline files";
