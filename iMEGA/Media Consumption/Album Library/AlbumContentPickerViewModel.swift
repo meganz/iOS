@@ -11,7 +11,9 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let completion: (AlbumEntity, [NodeEntity]) -> Void
     private var subscriptions = Set<AnyCancellable>()
-    var photosLoadingTask: Task<Void, Never>?
+    var photosLoadingTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     let selectLimit: Int
     @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
@@ -40,6 +42,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumPicker,
                                                                     configuration: configuration)
+        photoLibraryContentViewModel.isLoading = true
         navigationTitle = normalNavigationTitle
         isDoneButtonDisabled = !isNewAlbum
         setupSubscriptions(isNewAlbum: isNewAlbum)
@@ -97,17 +100,28 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     private func loadPhotos(forPhotoLocation filterLocation: PhotosFilterLocation) {
+        photoLibraryContentViewModel.isLoading = true
         photosLoadingTask = Task(priority: .userInitiated) { [photoLibraryUseCase] in
             do {
                 let cloudDrivePhotos = try await photoLibraryUseCase.media(for: [.cloudDrive, .allMedia], excludeSensitive: nil)
+                try Task.checkCancellation()
                 let cameraUploadPhotos = try await photoLibraryUseCase.media(for: [.cameraUploads, .allMedia], excludeSensitive: nil)
+                try Task.checkCancellation()
+
+                let cloudDriveDisplayPhotos = cloudDrivePhotos.filter(\.hasThumbnail)
+                let cameraUploadDisplayPhotos = cameraUploadPhotos.filter(\.hasThumbnail)
+
                 hideFilter(cloudDrivePhotos.isEmpty || cameraUploadPhotos.isEmpty)
                 updatePhotoSourceLocationIfRequired(filterLocation: filterLocation,
-                                                          isCloudDriveEmpty: cloudDrivePhotos.isEmpty,
-                                                          isCameraUploadsEmpty: cameraUploadPhotos.isEmpty)
+                                                          isCloudDriveEmpty: cloudDriveDisplayPhotos.isEmpty,
+                                                          isCameraUploadsEmpty: cameraUploadDisplayPhotos.isEmpty)
                 updatePhotoSourceLocationNavigationTitleIfRequired()
-                updatePhotoLibraryContent(cloudDrivePhotos: cloudDrivePhotos, cameraUploadPhotos: cameraUploadPhotos)
+                updatePhotoLibraryContent(cloudDrivePhotos: cloudDriveDisplayPhotos, cameraUploadPhotos: cameraUploadDisplayPhotos)
+                photoLibraryContentViewModel.isLoading = false
+            } catch is CancellationError {
+                // Ignore cancellations triggered by filter changes.
             } catch {
+                photoLibraryContentViewModel.isLoading = false
                 MEGALogError("Error occurred when loading photos. \(error.localizedDescription)")
             }
         }
@@ -115,7 +129,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
     
     private func updatePhotoLibraryContent(cloudDrivePhotos: [NodeEntity], cameraUploadPhotos: [NodeEntity]) {
         let filteredPhotos = photoNodes(for: photoSourceLocation, from: cloudDrivePhotos, and: cameraUploadPhotos)
-            .filter { $0.hasThumbnail }
         photoLibraryContentViewModel.library = filteredPhotos.toPhotoLibrary(withSortType: .modificationDesc)
         photoLibraryContentViewModel.selection.editMode = .active
     }

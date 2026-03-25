@@ -53,7 +53,7 @@ public struct PhotoLibraryContentView: View {
         }
     }
     private var placeholder: some View {
-        PhotoLibraryPlaceholderView(isActive: viewModel.library.isEmpty)
+        PhotoLibraryPlaceholderView(isActive: viewModel.isLoading && viewModel.library.isEmpty)
     }
     
     @ViewBuilder

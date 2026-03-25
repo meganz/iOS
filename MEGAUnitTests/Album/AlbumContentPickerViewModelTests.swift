@@ -72,6 +72,32 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
             .allPhotos
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
     }
+
+    @MainActor
+    func testLoadPhotos_initLoadPhotos_shouldUpdateLoadingState() async {
+        let sut = makeAlbumContentPickerViewModel(
+            allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+            allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)]
+        )
+
+        XCTAssertTrue(sut.photoLibraryContentViewModel.isLoading)
+
+        await sut.photosLoadingTask?.value
+
+        XCTAssertFalse(sut.photoLibraryContentViewModel.isLoading)
+    }
+
+    @MainActor
+    func testLoadPhotos_whenLoadFails_shouldStopLoading() async {
+        let sut = makeAlbumContentPickerViewModel(succesfullyLoadMedia: false)
+
+        XCTAssertTrue(sut.photoLibraryContentViewModel.isLoading)
+
+        await sut.photosLoadingTask?.value
+
+        XCTAssertFalse(sut.photoLibraryContentViewModel.isLoading)
+        XCTAssertTrue(sut.photoLibraryContentViewModel.library.isEmpty)
+    }
     
     @MainActor
     func testNavigationTitle_whenAddedContent_shouldReturnThreeDifferentResults() {
@@ -226,6 +252,26 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, expectedPhotos)
         XCTAssertEqual(sut.photoSourceLocation, .cameraUploads)
     }
+
+    @MainActor
+    func testContentLibrary_onContentCameraUploadWithNoThumbnails_shouldFallbackToCloudDrivePhotos() async {
+        let cloudDrivePhotos = [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)]
+        let cameraUploadPhotos = [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: false)]
+        let sut = makeAlbumContentPickerViewModel(
+            allPhotosFromCloudDriveOnly: cloudDrivePhotos,
+            allPhotosFromCameraUpload: cameraUploadPhotos
+        )
+        await sut.photosLoadingTask?.value
+
+        sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .cameraUploads
+        await sut.photosLoadingTask?.value
+
+        XCTAssertEqual(sut.photoSourceLocation, .cloudDrive)
+        XCTAssertEqual(
+            sut.photoLibraryContentViewModel.library.allPhotos,
+            cloudDrivePhotos.toPhotoLibrary(withSortType: .modificationDesc).allPhotos
+        )
+    }
     
     @MainActor
     func testShouldRemoveFilter_onPhotoRetrieval_shouldNotHideFilterIfCloudDriveAndCameraUploadContainsPhotos() async {
@@ -233,6 +279,18 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                   allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: true)])
         XCTAssertTrue(sut.shouldRemoveFilter)
         await sut.photosLoadingTask?.value
+        XCTAssertFalse(sut.shouldRemoveFilter)
+    }
+
+    @MainActor
+    func testShouldRemoveFilter_onPhotoRetrieval_shouldNotHideFilterIfSourcesContainRawPhotosWithoutThumbnails() async {
+        let sut = makeAlbumContentPickerViewModel(
+            allPhotosFromCloudDriveOnly: [NodeEntity(name: "Test 1.jpg", handle: 1, hasThumbnail: true)],
+            allPhotosFromCameraUpload: [NodeEntity(name: "Test 2.jpg", handle: 2, hasThumbnail: false)]
+        )
+
+        await sut.photosLoadingTask?.value
+
         XCTAssertFalse(sut.shouldRemoveFilter)
     }
     
@@ -336,6 +394,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
                                                  allPhotosFromCloudDriveOnly: [NodeEntity] = [],
                                                  allPhotosFromCameraUpload: [NodeEntity] = [],
+                                                 succesfullyLoadMedia: Bool = true,
                                                  completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in },
                                                  configuration: PhotoLibraryContentConfiguration = PhotoLibraryContentConfiguration()) -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
@@ -344,7 +403,8 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                             MockPhotoLibraryUseCase(
                                                 allPhotos: allPhotos,
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
-                                                allPhotosFromCameraUpload: allPhotosFromCameraUpload),
+                                                allPhotosFromCameraUpload: allPhotosFromCameraUpload,
+                                                succesfullyLoadMedia: succesfullyLoadMedia),
                                            completion: completion,
                                            configuration: configuration)
     }

@@ -59,6 +59,7 @@ struct AlbumContentPickerView: View {
                 dismiss()
             }
         }
+        .emptyState(emptyViewModel, usesRevampLayout: true)
         .edgesIgnoringSafeArea(.vertical)
     }
     
@@ -152,5 +153,19 @@ struct AlbumContentPickerView: View {
     
     private func dismiss() {
         presentationMode.wrappedValue.dismiss()
+    }
+
+    private var emptyViewModel: ContentUnavailableViewModel? {
+        guard !viewModel.photoLibraryContentViewModel.isLoading,
+              viewModel.photoLibraryContentViewModel.library.isEmpty else {
+            return nil
+        }
+
+        return ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassImage,
+            title: Strings.Localizable.noResults,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
     }
 }

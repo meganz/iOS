@@ -9,6 +9,7 @@ import SwiftUI
 @MainActor
 @objc public final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published public var library: PhotoLibrary
+    @Published public var isLoading = true
     @Published public var selectedMode: PhotoLibraryViewMode = .all {
         didSet {
             guard selectedMode != oldValue else { return }
