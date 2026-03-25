@@ -76,3 +76,29 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
         hostingViewController.didMove(toParent: self)
     }
 }
+
+// MARK: - SnackBarLayoutCustomizable
+
+extension HomeViewHostingController: SnackBarLayoutCustomizable {
+    /// Temporary quick fix for the Home snackbar overlap on pre-iOS 26.
+    ///
+    /// Home currently shows the hide/unhide snackbar through the UIKit snackbar
+    /// path, which anchors to this controller's `safeAreaLayoutGuide.bottomAnchor`.
+    /// In the current Home hosting setup, combined with
+    /// `extendedLayoutIncludesOpaqueBars = true`, that anchor can end up too low
+    /// and place the snackbar behind the main tab bar.
+    ///
+    /// This inset compensates for the missing tab bar height so the snackbar is
+    /// displayed correctly today. Keep this workaround narrow: our investigation
+    /// suggests the root cause is architectural/layout-related, and likely tied
+    /// to Home's hosting/container geometry differing from Cloud Drive.
+    var additionalSnackBarBottomInset: CGFloat {
+        guard #unavailable(iOS 26),
+              let tabBar = tabBarController?.tabBar,
+              !tabBar.isHidden else {
+            return 0
+        }
+        
+        return max(tabBar.frame.height - view.safeAreaInsets.bottom, 0)
+    }
+}
