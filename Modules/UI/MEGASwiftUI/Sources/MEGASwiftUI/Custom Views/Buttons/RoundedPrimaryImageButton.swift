@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAInfrastructure
 import SwiftUI
 
 public struct RoundedPrimaryImageButton: View {
@@ -16,7 +17,10 @@ public struct RoundedPrimaryImageButton: View {
     
     @ViewBuilder
     private var buttonView: some View {
-        if #available(iOS 26.0, *) {
+        // on iOS 26.0 beta the Swift runtime crashes when instantiating a value of a type
+        // that includes the glassEffect modifier, due to __swift_instantiateConcreteTypeFromMangledNameV2
+        // failing to instantiate the concrete glassEffect type. Skip on iOS 26.0 beta and use the fallback directly.
+        if #available(iOS 26.0, *), !ProcessInfo.isRunningIOS26_0Beta {
             Button(action: action) {
                 imageContent
             }

@@ -32,7 +32,8 @@ let package = Package(
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(path: "../../../MEGASharedRepo/MEGAPreference"),
-        .package(path: "../../../Infrastracture/MEGAPermissions")
+        .package(path: "../../../Infrastracture/MEGAPermissions"),
+        .package(path: "../../../MEGASharedRepo/MEGAInfrastructure")
     ],
     targets: [
         .target(
@@ -48,6 +49,7 @@ let package = Package(
                 "MEGAAppSDKRepo",
                 "MEGAUIComponent",
                 "MEGAPermissions",
+                "MEGAInfrastructure",
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],
