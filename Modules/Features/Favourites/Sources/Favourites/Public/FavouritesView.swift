@@ -87,7 +87,7 @@ public struct FavouritesView: View {
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(viewModel.editMode.isEditing ? selectionTitle : Strings.Localizable.Home.Favourites.title)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(viewModel.editMode.isEditing)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 if viewModel.editMode.isEditing {
@@ -102,6 +102,8 @@ public struct FavouritesView: View {
                         }
                         .labelStyle(.iconOnly)
                     }
+                } else {
+                    BackButton()
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {

@@ -4900,3 +4900,5 @@
 "home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
 "home.noInternet.viewOfflineFiles"="View Offline files";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Added to %@";

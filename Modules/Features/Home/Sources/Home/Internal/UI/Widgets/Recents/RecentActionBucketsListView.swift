@@ -33,7 +33,12 @@ struct RecentActionBucketsListView: View {
         content
             .navigationTitle(Strings.Localizable.recents)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    BackButton()
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     moreOptionsButton
                 }

@@ -3001,6 +3001,7 @@ public enum Strings {
       }
       public enum Recent {
         public static func addedByLabel(_ p1: Any) -> Swift.String
+        public static func addedToLabel(_ p1: Any) -> Swift.String
         public static func createdByLabel(_ p1: Any) -> Swift.String
         public static func modifiedByLabel(_ p1: Any) -> Swift.String
         public static func multipleFileTitle(_ p1: Any, _ p2: Swift.Int) -> Swift.String

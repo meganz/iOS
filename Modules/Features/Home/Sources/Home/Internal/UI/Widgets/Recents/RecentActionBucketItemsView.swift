@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import Search
 import SwiftUI
 
@@ -98,14 +99,7 @@ struct RecentActionBucketItemsView: View {
                 .labelStyle(.iconOnly)
             }
         } else {
-            Button {
-                navigator.removeLast()
-            } label: {
-                Image(uiImage: MEGAAssets.UIImage.backArrow)
-                    .renderingMode(.template)
-                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                    .padding(10)
-            }
+            BackButton()
         }
     }
 
