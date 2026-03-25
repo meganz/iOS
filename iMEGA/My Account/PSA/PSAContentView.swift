@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
 import SwiftUI
 
@@ -83,7 +84,10 @@ struct PSAContentView: View {
     }
 
     var body: some View {
-        if #available(iOS 26.0, *) {
+        // on iOS 26.0 beta the Swift runtime crashes when instantiating a value of a type
+        // that includes the glassEffect modifier, due to __swift_instantiateConcreteTypeFromMangledNameV2
+        // failing to instantiate the concrete glassEffect type. Skip on iOS 26.0 beta and use the fallback directly.
+        if #available(iOS 26.0, *), !ProcessInfo.isRunningIOS26_0Beta {
             content
                 .padding(innerContentPadding)   // horizontal/vertical padding inside content
                 .glassEffect(.regular, in: .rect(cornerRadius: cardCornerRadius, style: .continuous))

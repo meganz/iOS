@@ -1,3 +1,4 @@
+import MEGAInfrastructure
 import MEGASwiftUI
 import SwiftUI
 
@@ -28,7 +29,10 @@ private extension PhotoLibraryPicker {
     
     @ViewBuilder
     private var pickerView: some View {
-        if #available(iOS 26.0, *) {
+        // on iOS 26.0 beta the Swift runtime crashes when instantiating a value of a type
+        // that includes the glassEffect modifier, due to __swift_instantiateConcreteTypeFromMangledNameV2
+        // failing to instantiate the concrete glassEffect type. Skip on iOS 26.0 beta and use the fallback directly.
+        if #available(iOS 26.0, *), !ProcessInfo.isRunningIOS26_0Beta {
             basePicker
                 .glassEffect(.regular)
         } else {

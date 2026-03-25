@@ -1,3 +1,4 @@
+import MEGAInfrastructure
 import SwiftUI
 import UIKit
 
@@ -13,7 +14,10 @@ public extension View {
         shouldEnableGlassEffect: Bool = false,
         padding edges: EdgeInsets = .init(top: 4.0, leading: 8.0, bottom: 4.0, trailing: 8.0)
     ) -> UIView {
-        if #available(iOS 26.0, *), shouldEnableGlassEffect {
+        // on iOS 26.0 beta the Swift runtime crashes when instantiating a value of a type
+        // that includes the glassEffect modifier, due to __swift_instantiateConcreteTypeFromMangledNameV2
+        // failing to instantiate the concrete glassEffect type. Skip on iOS 26.0 beta and use the fallback directly.
+        if #available(iOS 26.0, *), shouldEnableGlassEffect, !ProcessInfo.isRunningIOS26_0Beta {
             let glassEffectView = self.padding(edges).glassEffect(.regular.interactive())
             return WrappedUIView(rootView: glassEffectView)
         } else {
