@@ -52,9 +52,7 @@ struct RecentWidgetBucketListView: View {
                         dependency: RecentActionBucketContainerView.Dependency(
                             bucket: bucket,
                             userNameProvider: dependency.userNameProvider,
-                            nodeActionHandler: { node in
-                                print(node.name)
-                            },
+                            nodeActionHandler: dependency.nodeActionHandler,
                             bucketSelectionHandler: { bucket in
                                 switch bucket.type {
                                 case .mixedFiles:

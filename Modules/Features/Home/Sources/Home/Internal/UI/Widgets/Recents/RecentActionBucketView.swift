@@ -2,7 +2,9 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
+import UIKit
 
 struct RecentActionBucketModel {
     let thumbnail: Image
@@ -19,7 +21,7 @@ struct RecentActionBucketView: View {
         let userNameProvider: any UserNameProviderProtocol
     }
     
-    typealias MoreActionHandler = @MainActor () -> Void
+    typealias MoreActionHandler = @MainActor (UIButton) -> Void
     private let bucketModel: RecentActionBucketModel
     private let moreActionHandler: MoreActionHandler?
     
@@ -112,17 +114,11 @@ struct RecentActionBucketView: View {
     @ViewBuilder
     private var moreActionView: some View {
         if let moreActionHandler {
-            Button {
-                moreActionHandler()
-            } label: {
-                Label {
-                    Text(Strings.Localizable.more)
-                } icon: {
-                    MEGAAssets.Image.moreHorizontal
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                }
-                .labelStyle(.iconOnly)
+            ImageButtonWrapper(
+                image: MEGAAssets.Image.moreHorizontal,
+                imageColor: TokenColors.Icon.secondary.swiftUI
+            ) { button in
+                moreActionHandler(button)
             }
             .frame(width: 40, height: 40)
         }
