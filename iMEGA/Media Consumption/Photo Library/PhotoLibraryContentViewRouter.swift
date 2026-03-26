@@ -123,6 +123,8 @@ extension PhotoLibraryContentMode {
             .albumLink
         case .mediaDiscoveryFolderLink:
             .nodeInsideFolderLink
+        case .recentBucket:
+            .recents
         }
     }
 }

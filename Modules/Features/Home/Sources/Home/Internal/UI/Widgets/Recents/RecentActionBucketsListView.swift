@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
@@ -15,10 +16,12 @@ struct RecentActionBucketsListView: View {
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
+        let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
     }
 
     enum Route: Hashable {
         case bucketItems(RecentActionBucketEntity)
+        case multipleMedia(String, RecentActionBucketEntity)
     }
     
     private let dependency: Dependency
@@ -146,8 +149,10 @@ struct RecentActionBucketsListView: View {
                                     switch bucket.type {
                                     case .mixedFiles:
                                         navigator.append(Route.bucketItems(bucket))
-                                    default:
-                                        break
+                                    case .multipleMedia:
+                                        navigator.append(Route.multipleMedia(section.title, bucket))
+                                    case let .singleFile(node), let .singleMedia(node):
+                                        dependency.selectionHandler.handle(selection: NodeSelection(handle: node.handle, siblings: []))
                                     }
                                 }
                             )
@@ -182,6 +187,16 @@ struct RecentActionBucketsListView: View {
                     resultMapper: dependency.recentActionBucketItemResultMapper,
                     downloadedNodesListener: dependency.downloadedNodesListener,
                     selectionHandler: dependency.selectionHandler,
+                    nodeActionHandler: dependency.nodeActionHandler,
+                    moreActionsPresenter: dependency.moreActionsPresenter
+                )
+            )
+        case let .multipleMedia(headerTitle, bucket):
+            RecentActionBucketMediaView(
+                headerTitle: headerTitle,
+                bucket: bucket,
+                dependency: RecentActionBucketMediaView.Dependency(
+                    router: dependency.photoLibraryContentViewRouter,
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter
                 )

@@ -135,7 +135,8 @@ public struct HomeView: View {
                             downloadedNodesListener: dependency.downloadedNodesListener,
                             selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
                             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
-                            moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter
+                            moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
+                            photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
                         ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )

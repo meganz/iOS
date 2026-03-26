@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -42,6 +43,7 @@ extension HomeView {
         let recentActionBucketNodeSelectionHandler: any NodeSelectionHandling
         let recentActionBucketNodesActionHandler: any NodesActionHandling
         let recentActionBucketMoreActionsPresenter: any MoreNodeActionsPresenting
+        let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -64,7 +66,8 @@ extension HomeView {
             searchResultNodeActionHandler: some NodesActionHandling,
             recentActionBucketNodeSelectionHandler: some NodeSelectionHandling,
             recentActionBucketNodesActionHandler: some NodesActionHandling,
-            recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting
+            recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting,
+            photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -87,6 +90,7 @@ extension HomeView {
             self.recentActionBucketNodeSelectionHandler = recentActionBucketNodeSelectionHandler
             self.recentActionBucketNodesActionHandler = recentActionBucketNodesActionHandler
             self.recentActionBucketMoreActionsPresenter = recentActionBucketMoreActionsPresenter
+            self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
         }
     }
 }

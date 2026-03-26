@@ -67,4 +67,8 @@ public final class PhotoSelection: ObservableObject {
     public func deselectPhoto(_ photo: NodeEntity) {
         photos.removeValue(forKey: photo.handle)
     }
+    
+    public func clear() {
+        photos.removeAll()
+    }
 }

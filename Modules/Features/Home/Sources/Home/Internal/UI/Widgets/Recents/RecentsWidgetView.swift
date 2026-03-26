@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
@@ -13,6 +14,7 @@ struct RecentsWidgetView: View {
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
+        let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
     }
     
     private let supportedMenuActions: [HomeAddMenuAction] = [
@@ -109,7 +111,8 @@ struct RecentsWidgetView: View {
                 downloadedNodesListener: dependency.downloadedNodesListener,
                 selectionHandler: dependency.selectionHandler,
                 nodeActionHandler: dependency.nodeActionHandler,
-                moreActionsPresenter: dependency.moreActionsPresenter
+                moreActionsPresenter: dependency.moreActionsPresenter,
+                photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
             )
         )
     }

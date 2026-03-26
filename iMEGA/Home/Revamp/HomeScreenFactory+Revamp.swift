@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 import Favourites
 import Home
 import MEGAAppPresentation
@@ -103,7 +104,8 @@ extension HomeScreenFactory {
                 nodeRouter: nodeRouter,
                 nodesActionHandler: nodeActionsHandler
             ),
-            recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter
+            recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
+            photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket)
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)

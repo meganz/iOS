@@ -8,4 +8,5 @@ public enum PhotoLibraryContentMode: Sendable {
     case mediaDiscovery
     case mediaDiscoveryFolderLink
     case mediaDiscoverySharedItems
+    case recentBucket
 }

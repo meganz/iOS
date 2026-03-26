@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
@@ -14,11 +15,13 @@ struct RecentWidgetBucketListView: View {
         let selectionHandler: any NodeSelectionHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
+        let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
     }
-    
+
     enum Route: Hashable {
         case viewAllBuckets
         case bucketItems(RecentActionBucketEntity)
+        case multipleMedia(String, RecentActionBucketEntity)
     }
     
     private let dependency: Dependency
@@ -57,8 +60,10 @@ struct RecentWidgetBucketListView: View {
                                 switch bucket.type {
                                 case .mixedFiles:
                                     navigator.append(Route.bucketItems(bucket))
-                                default:
-                                    break
+                                case .multipleMedia:
+                                    navigator.append(Route.multipleMedia(section.title, bucket))
+                                case let .singleFile(node), let .singleMedia(node):
+                                    dependency.selectionHandler.handle(selection: NodeSelection(handle: node.handle, siblings: []))
                                 }
                             }
                         )
@@ -99,7 +104,8 @@ struct RecentWidgetBucketListView: View {
                     downloadedNodesListener: dependency.downloadedNodesListener,
                     selectionHandler: dependency.selectionHandler,
                     nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter
+                    moreActionsPresenter: dependency.moreActionsPresenter,
+                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
                 )
             )
         case let .bucketItems(bucket):
@@ -109,6 +115,16 @@ struct RecentWidgetBucketListView: View {
                     resultMapper: dependency.recentActionBucketItemResultMapper,
                     downloadedNodesListener: dependency.downloadedNodesListener,
                     selectionHandler: dependency.selectionHandler,
+                    nodeActionHandler: dependency.nodeActionHandler,
+                    moreActionsPresenter: dependency.moreActionsPresenter
+                )
+            )
+        case let .multipleMedia(headerTitle, bucket):
+            RecentActionBucketMediaView(
+                headerTitle: headerTitle,
+                bucket: bucket,
+                dependency: RecentActionBucketMediaView.Dependency(
+                    router: dependency.photoLibraryContentViewRouter,
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter
                 )

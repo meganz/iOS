@@ -24,7 +24,8 @@ let package = Package(
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
-        .package(path: "../../MEGASharedRepo/MEGAConnectivity")
+        .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
+        .package(path: "../Shared/ContentLibraries")
     ],
     targets: [
         .target(
@@ -40,7 +41,8 @@ let package = Package(
                 "MEGADomain",
                 "MEGAAppSDKRepo",
                 "MEGAPreference",
-                "MEGAConnectivity"
+                "MEGAConnectivity",
+                "ContentLibraries"
                 ]
         ),
         .testTarget(
