@@ -130,6 +130,10 @@ final class AlbumContentViewModel: ViewModelType {
         )
     }()
     
+    var photoSectionHeaderType: PhotoSectionHeaderType {
+        isMediaRevampEnabled ? .sort(headerSortViewModel) : .photoDate
+    }
+    
     // MARK: - Init
     
     init(

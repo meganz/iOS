@@ -772,6 +772,28 @@ struct AlbumContentViewModelTestSuite {
     }
     
     @MainActor
+    struct PhotoSectionHeader {
+        @Test
+        func legacyFlow_usesPhotoDateHeader() {
+            let sut = makeSUT(
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: false]))
+            
+            #expect(sut.photoSectionHeaderType == .photoDate)
+        }
+        
+        @Test
+        func revampFlow_usesSortHeader() {
+            let sut = makeSUT(
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
+            
+            guard case .sort = sut.photoSectionHeaderType else {
+                Issue.record("Expected sort header when media revamp is enabled")
+                return
+            }
+        }
+    }
+    
+    @MainActor
     struct MoreButtonTapped {
         @Test(arguments: [
             (SharedLinkStatusEntity.unavailable, true, [
