@@ -639,6 +639,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         shareList
     }
     
+    public override func outShares(for node: MEGANode) -> MEGAShareList {
+        shareList
+    }
+    
     public override func openShareDialog(_ node: MEGANode, delegate: any MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: node.handle)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())

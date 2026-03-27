@@ -144,6 +144,6 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     
     private func hasPendingOrActiveOutShare(nodeHandle: HandleEntity) -> Bool {
         guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else { return false }
-        return node.mnz_hasPendingOrActiveOutShares()
+        return MEGASdk.shared.outShares(for: node).size > 0
     }
 }
