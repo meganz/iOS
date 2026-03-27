@@ -53,6 +53,8 @@ extension DisplayMode {
                 .albumLink
         case .videoPlaylistContent:
                 .videoPlaylistContent
+        case .homeSearch:
+                .homeSearch
         @unknown default:
                 .unknown
         }

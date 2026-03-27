@@ -8,7 +8,7 @@ struct HomeSearchNodesActionHandler: NodesActionHandling {
     }
     
     func handle(action: MEGAAppPresentation.NodeAction) {
-        nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .cloudDrive, isFromSharedItem: false)
+        nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .homeSearch, isFromSharedItem: false)
     }
     
     /// Home Search doesn't support Edit mode.

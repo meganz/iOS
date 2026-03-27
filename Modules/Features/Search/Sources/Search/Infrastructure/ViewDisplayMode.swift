@@ -26,7 +26,7 @@ public enum ViewDisplayMode: Sendable, CaseIterable {
     case photosTimeline
     case previewPdfPage
     case albumLink
-    case home
+    case homeSearch
     case videoPlaylistContent
     case favourites
 }

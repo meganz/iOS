@@ -43,7 +43,7 @@ final class HomeSearchResultsViewModel: ObservableObject {
             config: dependency.searchConfig,
             layout: dependency.pageLayout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
-            viewDisplayMode: .folderLink,
+            viewDisplayMode: .homeSearch,
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
             usesRevampedLayout: true,

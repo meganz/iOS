@@ -537,7 +537,7 @@ final class NodeActionBuilder {
         switch displayMode {
         case .unknown:
             break
-        case .cloudDrive, .sharedItem, .nodeInfo, .recents, .photosTimeline, .photosAlbum:
+        case .cloudDrive, .sharedItem, .nodeInfo, .recents, .photosTimeline, .photosAlbum, .homeSearch:
             if isBackupNode {
                 nodeActions = backupsNodeActions()
             } else {
@@ -586,7 +586,7 @@ final class NodeActionBuilder {
             return albumLinkActions()
         case .videoPlaylistContent:
             return videoPlaylistContentActions()
-        default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
+        default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents, .homeSearch
             var actions = [NodeAction]()
             switch accessLevel {
             case .accessUnknown:
@@ -600,8 +600,10 @@ final class NodeActionBuilder {
             default:
                 actions = []
             }
-            // We don't allow "select" for .recents
-            return displayMode != .recents ? actions : actions.filter { $0 != .selectAction() }
+            // We don't allow "select" for .recents and .homeSearch
+            return (displayMode != .recents && displayMode != .homeSearch)
+            ? actions
+            : actions.filter { $0 != .selectAction() }
         }
     }
 

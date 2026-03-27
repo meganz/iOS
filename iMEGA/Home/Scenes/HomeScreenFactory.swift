@@ -278,7 +278,7 @@ final class HomeScreenFactory: NSObject {
             config: config,
             layout: viewMode.pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
-            viewDisplayMode: .home,
+            viewDisplayMode: .homeSearch,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
             usesRevampedLayout: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),

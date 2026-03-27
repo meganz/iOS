@@ -15,7 +15,7 @@ final class SearchResultMapperTests: XCTestCase {
     }
 
     func testSwipeActions_withViewModeHomeScreen_shouldReturnSwipeActionsAsEmpty() {
-        assertSwipeActions(displayMode: .home, accessLevel: .owner, expectedSwipeActionsCount: 0)
+        assertSwipeActions(displayMode: .homeSearch, accessLevel: .owner, expectedSwipeActionsCount: 0)
     }
 
     func testSwipeActions_withRestoreOption_whenTheNodeIsInRubbishBin() {
