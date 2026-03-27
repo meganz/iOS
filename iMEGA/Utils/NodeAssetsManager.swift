@@ -69,12 +69,16 @@ import MEGARepo
             return true
         }
         guard let megaNode = sdk.node(forHandle: node.handle) else { return false }
-        return megaNode.mnz_hasPendingOrActiveOutShares()
+        return hasPendingOrActiveOutShares(for: megaNode)
     }
     
     private func hasOutgoingOrPendingShare(for node: MEGANode) -> Bool {
         guard node.isFolder() else { return false }
-        return node.isOutShare() || node.mnz_hasPendingOrActiveOutShares()
+        return node.isOutShare() || hasPendingOrActiveOutShares(for: node)
+    }
+    
+    private func hasPendingOrActiveOutShares(for node: MEGANode) -> Bool {
+        sdk.outShares(for: node).size > 0
     }
 }
 
