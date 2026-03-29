@@ -18,7 +18,7 @@ struct RecentActionBucketsListView: View {
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
     }
-
+    
     enum Route: Hashable {
         case bucketItems(RecentActionBucketEntity)
         case multipleMedia(String, RecentActionBucketEntity)
@@ -79,21 +79,29 @@ struct RecentActionBucketsListView: View {
     
     @ViewBuilder
     private var content: some View {
-        switch viewModel.viewState {
-        case .loading:
-            ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(TokenColors.Background.page.swiftUI)
-                .onFirstLoad {
-                    await viewModel.loadRecentActionBuckets()
-                }
-        case let .results(sections):
-            if #available(iOS 17.0, *) {
-                bucketsContent(sections: sections)
-                    .listSectionSpacing(0)
-            } else {
-                bucketsContent(sections: sections)
+        Group {
+            switch viewModel.viewState {
+            case .loading:
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(TokenColors.Background.page.swiftUI)
+            case let .results(sections):
+                resultsContent(sections: sections)
             }
+        }
+        .task {
+            await viewModel.loadRecentActionBuckets()
+            await viewModel.observeRecentBucketUpdates()
+        }
+        
+    }
+    
+    @ViewBuilder func resultsContent(sections: [RecentActionBucketSection]) -> some View {
+        if #available(iOS 17.0, *) {
+            bucketsContent(sections: sections)
+                .listSectionSpacing(0)
+        } else {
+            bucketsContent(sections: sections)
         }
     }
     
@@ -176,7 +184,7 @@ struct RecentActionBucketsListView: View {
         }
         .listStyle(.plain)
     }
-
+    
     @ViewBuilder
     private func navigationDestination(for route: Route) -> some View {
         switch route {
