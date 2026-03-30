@@ -1,8 +1,8 @@
-public struct NodeListEntity: @unchecked Sendable {
+public struct NodeListEntity: Sendable {
     public let nodesCount: Int
-    public let nodeAt: ((Int) -> NodeEntity?)
+    public let nodeAt: (@Sendable (Int) -> NodeEntity?)
 
-    public init(nodesCount: Int, nodeAt: @escaping ((Int) -> NodeEntity?)) {
+    public init(nodesCount: Int, nodeAt: @escaping (@Sendable (Int) -> NodeEntity?)) {
         self.nodeAt = nodeAt
         self.nodesCount = nodesCount
     }
