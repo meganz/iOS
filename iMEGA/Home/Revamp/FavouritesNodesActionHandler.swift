@@ -9,19 +9,22 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
     private let favouriteUseCase: any NodeFavouriteActionUseCaseProtocol
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let sdk: MEGASdk
+    private let onSelectAction: (HandleEntity) -> Void
 
     init(
         navigationController: UINavigationController,
         nodeUseCase: some NodeUseCaseProtocol,
         favouriteUseCase: any NodeFavouriteActionUseCaseProtocol,
         backupsUseCase: some BackupsUseCaseProtocol,
-        sdk: MEGASdk
+        sdk: MEGASdk,
+        onSelectAction: @escaping (HandleEntity) -> Void = { _ in }
     ) {
         self.navigationController = navigationController
         self.nodeUseCase = nodeUseCase
         self.favouriteUseCase = favouriteUseCase
         self.backupsUseCase = backupsUseCase
         self.sdk = sdk
+        self.onSelectAction = onSelectAction
     }
 
     func handle(action: NodesAction) {
@@ -48,7 +51,15 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
         let isBackupNode = backupsUseCase.isBackupNodeHandle(action.handle)
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+            nodeActionListener: { actionType, _ in
+                switch actionType {
+                case .select:
+                    onSelectAction(action.handle)
+                default:
+                    break
+                }
+            }
         )
         guard let nodeActionViewController = NodeActionViewController(
             node: action.handle,
@@ -57,6 +68,7 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             isIncoming: false,
             isBackupNode: isBackupNode,
             isFromSharedItem: false,
+            isSelectionEnabled: true,
             sender: action.sender
         ) else {
             return

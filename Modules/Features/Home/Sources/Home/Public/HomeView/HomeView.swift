@@ -95,7 +95,8 @@ public struct HomeView: View {
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
-                        moreActionsPresenter: dependency.favouritesMoreActionsPresenter
+                        moreActionsPresenter: dependency.favouritesMoreActionsPresenter,
+                        selectActionPublisher: dependency.favouritesSelectActionPublisher
                     ),
                     tabBarHidden: $navigator.tabBarHidden
                 )

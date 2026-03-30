@@ -117,6 +117,10 @@ package final class FavouritesViewModel: ObservableObject {
         listenToNodesActionChanges()
     }
 
+    package func selectNode(handle: HandleEntity) {
+        searchResultsContainerViewModel.selectResult(with: handle)
+    }
+
     package func exitEditMode() {
         withAnimation {
             editMode = .inactive

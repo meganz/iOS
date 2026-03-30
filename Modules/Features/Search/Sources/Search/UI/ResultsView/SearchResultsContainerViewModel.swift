@@ -347,6 +347,11 @@ public extension SearchResultsContainerViewModel {
         searchResultsViewModel.selectSearchResults(results)
     }
 
+    func selectResult(with id: ResultId) {
+        guard let result = searchResultsViewModel.listItems.first(where: { $0.result.id == id })?.result else { return }
+        searchResultsViewModel.selectSearchResults([result])
+    }
+
     func toggleSelectAll() {
         searchResultsViewModel.toggleSelectAll()
     }

@@ -39,12 +39,14 @@ extension HomeScreenFactory {
 
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
 
+        let favouritesSelectActionSubject = PassthroughSubject<HandleEntity, Never>()
         let favouritesNodesActionHandler = FavouritesNodesActionHandler(
             navigationController: navigationController,
             nodeUseCase: nodeUseCase,
             favouriteUseCase: favouriteUseCase,
             backupsUseCase: backupsUseCase,
-            sdk: MEGASdk.sharedSdk
+            sdk: MEGASdk.sharedSdk,
+            onSelectAction: { favouritesSelectActionSubject.send($0) }
         )
 
         let router = HomeViewRouter(navigationController: navigationController)
@@ -92,6 +94,7 @@ extension HomeScreenFactory {
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             favouritesMoreActionsPresenter: favouritesNodesActionHandler,
+            favouritesSelectActionPublisher: favouritesSelectActionSubject.eraseToAnyPublisher(),
             userNameProvider: userNameProvider,
             recentActionBucketItemResultMapper: searchResultMapper,
             favouritesNodeSelectionAction: FavouritesNodeSelectionHandler(nodeRouter: nodeRouter),

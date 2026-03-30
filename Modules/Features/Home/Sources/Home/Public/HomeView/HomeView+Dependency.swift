@@ -30,6 +30,7 @@ extension HomeView {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
         let favouritesMoreActionsPresenter: any MoreNodeActionsPresenting
+        let favouritesSelectActionPublisher: AnyPublisher<HandleEntity, Never>
         let userNameProvider: any UserNameProviderProtocol
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let favouritesNodeSelectionAction: any NodeSelectionHandling
@@ -57,6 +58,7 @@ extension HomeView {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
             favouritesMoreActionsPresenter: some MoreNodeActionsPresenting,
+            favouritesSelectActionPublisher: AnyPublisher<HandleEntity, Never>,
             userNameProvider: some UserNameProviderProtocol,
             recentActionBucketItemResultMapper: some RecentActionBucketItemResultMapping,
             favouritesNodeSelectionAction: some NodeSelectionHandling,
@@ -80,6 +82,7 @@ extension HomeView {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.favouritesMoreActionsPresenter = favouritesMoreActionsPresenter
+            self.favouritesSelectActionPublisher = favouritesSelectActionPublisher
             self.userNameProvider = userNameProvider
             self.recentActionBucketItemResultMapper = recentActionBucketItemResultMapper
             self.favouritesNodeSelectionAction = favouritesNodeSelectionAction
