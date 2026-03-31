@@ -4879,10 +4879,32 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="โอเค เข้าใจแล้ว";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="ขณะนี้คุณออฟไลน์อยู่";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="หากเลือกบันทึกไฟล์แบบออฟไลน์ไว้ จะยังสามารถเข้าถึงไฟล์ได้แม้ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="รายการที่บันทึกออฟไลน์ไว้ยังคงพร้อมใช้งานตามปกติ";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="เรียกดูไฟล์ออฟไลน์";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="คำบรรยาย";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="เพิ่มคำบรรยายจากคลาวด์ไดร์ฟ";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="ปิด";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="เพิ่มคำบรรยาย";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="ไม่พบคำบรรยาย";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="อัปโหลดคำบรรยายรูปแบบ SRT ไปยังคลาวด์ไดร์ฟ";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="เพิ่มคำบรรยายไม่ได้";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="เกิดข้อผิดพลาดกับไฟล์คำบรรยาย \n กรุณาเลือกไฟล์อื่นหรือลองใหม่อีกครั้ง";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="เลือกไฟล์คำบรรยาย";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="ไม่พบผลลัพธ์การค้นหา";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="เพิ่มใน %@ เรียบร้อยแล้ว";

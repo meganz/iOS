@@ -4879,10 +4879,32 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="OK, capito";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="Sei offline";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="Se rendi disponibili i file offline, potrai comunque accedervi anche senza connessione.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="Gli elementi salvati per l'uso offline sono ancora disponibili.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="Visualizza file offline";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="Sottotitoli";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="Off";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="Nessun sottotitolo trovato";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="Seleziona un file di sottotitoli";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="Nessun risultato";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Aggiungi sottotitolo dal Cloud Drive";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Aggiungi sottotitolo";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Carica sottotitoli in formato SRT sul tuo Cloud Drive";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Impossibile aggiungere sottotitolo";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="C'è stato un problema con il file dei sottotitoli.\nSeleziona un file di sottotitoli diverso o riprova.";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Aggiunti a %@";

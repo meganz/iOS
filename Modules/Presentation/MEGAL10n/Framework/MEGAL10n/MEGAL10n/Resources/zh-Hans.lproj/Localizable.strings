@@ -4879,10 +4879,32 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="好的，明白了";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="您已离线";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="如果您将文件设为离线可用，在没有网络连接的情况下，您仍然可以访问它们。";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="您已保存以供离线使用的项目仍然可用。";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="查看离线文件";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="字幕";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="从云盘添加字幕";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="关闭";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="添加字幕";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="未找到字幕";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="将 SRT 格式的字幕上传到您的云盘";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="无法添加字幕";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="字幕文件有问题。\n请选择另一份字幕文件，或重试。";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="选择一个字幕文件";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="无搜索结果";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="已添加到%s";

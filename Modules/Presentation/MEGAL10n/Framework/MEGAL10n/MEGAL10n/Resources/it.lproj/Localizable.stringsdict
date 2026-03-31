@@ -15,7 +15,7 @@
         <key>one</key>
         <string>[A] e %d persona hanno alzato la propria mano</string>
         <key>many</key>
-        <string>[A] e %d di persone hanno alzato la propria mano</string>
+        <string>[A] e %d di altre persone hanno alzato la propria mano</string>
         <key>other</key>
         <string>[A] e altre %d persone hanno alzato la propria mano</string>
       </dict>

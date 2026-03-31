@@ -4879,10 +4879,30 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="OK, ik snap het";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="U bent offline";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="Als u bestanden offline beschikbaar maakt, kunt u ze nog steeds openen zonder internetverbinding.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="Items die u heeft opgeslagen voor offline gebruik zijn nog steeds beschikbaar.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="Offline bestanden weergeven";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="Ondertitels";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Voeg ondertitels toe vanuit de Cloud schijf";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="Uit";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Ondertiteling toevoegen";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="Geen ondertiteling gevonden";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Upload ondertiteling in een SRT bestand naar uw Cloud schijf";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Ondertitels kunnen niet worden toegevoegd";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="Er is een probleem met het ondertitelingsbestand. \nSelecteer een ander ondertitelingsbestand of probeer het opnieuw.";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="Selecteer een ondertitel bestand";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="Geen zoek resultaten";

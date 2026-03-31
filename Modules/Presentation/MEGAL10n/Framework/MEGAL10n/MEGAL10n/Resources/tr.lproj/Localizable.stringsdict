@@ -173,7 +173,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Yinelemeye uygula</string>
+        <string>Aynı adlı öğeye uygula</string>
+        <key>other</key>
+        <string>%d aynı adlı öğeye uygula</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>

@@ -4886,3 +4886,13 @@
 "home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
 "home.noInternet.viewOfflineFiles"="View Offline files";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="Tệp phụ đề";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="Tắt";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="Không có phụ đề nào";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="Chọn một tệp tin phụ đề";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="Không tìm được kết quả nào";

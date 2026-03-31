@@ -4899,10 +4899,12 @@
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="لم يتم العثور على نتائج بحث";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="أنت غير متصل بالإنترنت";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="إذا جعلت الملفات متاحة دون اتصال بالانترنت فسيظل بإمكانك الوصول إليها بدون اتصال.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="الملفات التي حفظتها للوصول دون اتصال بالانترنت لا تزال متاحة.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="عرض الملفات دون اتصال بالإنترنت";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="تمت الإضافة إلى %@";

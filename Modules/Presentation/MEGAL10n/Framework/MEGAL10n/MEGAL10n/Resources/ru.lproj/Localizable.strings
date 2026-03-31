@@ -4879,10 +4879,32 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="Понятно";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="Ва не в сети";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="Если сделать файлы доступными локально, их можно будет открыть без Интернета.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="Элементы, сохранённые для локального использования, по-прежнему доступны.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="Просмотреть локальные файлы";
+/* The Subtitles video player option in bottom more menu */
+"videoPlayer.subtitles.bottomSheet.title"="Субтитры";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Добавить субтитры из Облачного диска";
+/* The off option in subtitle menu */
+"videoPlayer.subtitles.menu.off"="Нет";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Добавить субтитры";
+/* The empty state title in subtitle selection page */
+"videoPlayer.subtitles.select.empty.title"="Субтитры не найдены";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Загрузите субтитры в формате SRT на Облачный диск";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Не удаётся добавить субтитры";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="Проблема с файлом субтитров.\nВыберите другой файл субтитров или попробуйте ещё раз.";
+/* The title in subtitle selection page */
+"videoPlayer.subtitles.select.title"="Выберите файл субтитров";
+/* The no search results title in subtitle selection page */
+"videoPlayer.subtitles.select.search.noResults"="Ничего не найдено";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Добавлено в %@";
