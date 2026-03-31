@@ -51,8 +51,9 @@ Use this when a developer has added new string keys to the source files and need
 ./iosTransifex/weblate/lang.sh -a ios -u -c infoplist
 ```
 
-**Shared repo strings** (run from the MEGASharedRepo directory):
+**Shared repo strings** — MEGASharedRepo has its **own** `iosTransifex/` directory with its own `translate.json` and `lang.sh`. You must `cd` into the MEGASharedRepo directory and run its local script, NOT the main repo's script:
 ```bash
+cd Modules/MEGASharedRepo
 ./iosTransifex/weblate/lang.sh -a ios -u -l ios-lib
 ```
 
@@ -68,12 +69,19 @@ Use this when a developer has added new string keys to the source files and need
 
 Use this during the release phase after translators have finished their work. Downloads all language translations for all components.
 
+**Main app translations** (run from project root):
 ```bash
 ./iosTransifex/weblate/lang.sh -a ios -p
 ```
 
 This production (`-p`) download covers: `localizable`, `plurals`, `infoplist`, and `changelogs` components.
 Translated files are written to the appropriate `<lang>.lproj/` folders beside `Base.lproj` and `en.lproj`.
+
+**Shared repo translations** — must `cd` into MEGASharedRepo and use its own `iosTransifex/` script:
+```bash
+cd Modules/MEGASharedRepo
+./iosTransifex/weblate/lang.sh -a ios -p -l ios-lib
+```
 
 After downloading, review the diff before committing:
 ```bash
