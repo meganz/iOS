@@ -231,7 +231,7 @@ public struct VideoPlaylistContentsUseCase: VideoPlaylistContentsUseCaseProtocol
                 .compactMap { updatedPhotos -> [NodeEntity]? in
                     let playlistVideoIds = await userVideoPlaylistRepository.videoPlaylistContent(
                         by: playlist.id,
-                        includeElementsInRubbishBin: false)
+                        includeElementsInRubbishBin: true)
                     guard playlistVideoIds.isNotEmpty,
                           updatedPhotos.contains(where: { photoNode in playlistVideoIds.contains(where: { albumPhotoId in albumPhotoId.nodeId == photoNode.handle }) })
                     else { return nil }
