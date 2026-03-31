@@ -96,16 +96,6 @@ merge_libraries() {
 
   libtool -static -o "${MERGED_DEVICE_DIR}/libmegathirdparty.a" \
     "${VCPKG_DEVICE_LIB}"/*.a
-
-  echo -e "${BOLD}Merging ccronexpr library into SDK libraries for arm64 iOS and iOS Simulator${NORMAL}"
-
-  libtool -static -o "${MERGED_DEVICE_DIR}/libSDKlib.a" \
-    "${BUILD_DIR_DEVICE}/third-party/mega/libSDKlib.a" \
-    "${BUILD_DIR_DEVICE}/third-party/mega/third_party/ccronexpr/libccronexpr.a"
-
-  libtool -static -o "${MERGED_SIMULATOR_DIR}/libSDKlib.a" \
-    "${BUILD_DIR_SIMULATOR}/third-party/mega/libSDKlib.a" \
-    "${BUILD_DIR_SIMULATOR}/third-party/mega/third_party/ccronexpr/libccronexpr.a"
 }
 
 create_xcframeworks() {
@@ -127,9 +117,9 @@ create_xcframeworks() {
   cp "${SDK_SRC}/include/megaapi.h" temp_sdk_include
 
   xcodebuild -create-xcframework \
-    -library "${MERGED_DEVICE_DIR}/libSDKlib.a" \
+    -library "${BUILD_DIR_DEVICE}/third-party/mega/libSDKlib.a" \
     -headers "temp_sdk_include" \
-    -library "${MERGED_SIMULATOR_DIR}/libSDKlib.a" \
+    -library "${BUILD_DIR_SIMULATOR}/third-party/mega/libSDKlib.a" \
     -headers "temp_sdk_include" \
     -output "xcframework/libmegasdk.xcframework"
 
