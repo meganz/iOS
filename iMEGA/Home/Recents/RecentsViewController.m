@@ -57,6 +57,11 @@
     [self onViewDidLoad];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self updateFooterViewIfNeeded];
+}
+
 - (void)removeFromParentViewController {
     [super removeFromParentViewController];
     

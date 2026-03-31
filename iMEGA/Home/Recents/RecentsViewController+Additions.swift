@@ -62,6 +62,28 @@ extension RecentsViewController {
             return .init(frame: .zero)
         }
     }
+
+    @objc func updateFooterViewIfNeeded() {
+        if #available(iOS 26.0, *) {
+            return
+        }
+
+        guard let tableView,
+              let parentView = parent?.view else { return }
+
+        // In the top docking position, slidePanelView.top = safeArea.top - 20
+        // and slidePanelView.height = view.height, so the panel overshoots
+        // below the view by (safeArea.top - 20). The constant 20 must match
+        // constraintToTopPosition in HomeViewController.xib.
+        let footerHeight = max(0, parentView.safeAreaInsets.top - 20)
+
+        let currentFooterHeight = tableView.tableFooterView?.frame.height ?? 0
+        if abs(currentFooterHeight - footerHeight) > 0.5 {
+            let footer = tableView.tableFooterView ?? UIView()
+            footer.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: footerHeight)
+            tableView.tableFooterView = footer
+        }
+    }
     
     private func initMiniPlayer(node: MEGANode?) {
         AudioPlayerManager.shared.initMiniPlayer(
