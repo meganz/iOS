@@ -19,7 +19,8 @@ struct RecentActionBucketMediaView: View {
     private let bucket: RecentActionBucketEntity
     private let headerTitle: String
     @EnvironmentObject var navigator: HomeNavigation
-
+    @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
+    
     init(
         headerTitle: String,
         bucket: RecentActionBucketEntity,
@@ -56,12 +57,14 @@ struct RecentActionBucketMediaView: View {
                     }
                 }
             }
+            .miniPlayerAware()
             .task { await viewModel.monitorBucketUpdates() }
             .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
             .onChange(of: viewModel.editMode) { mode in
                 navigator.tabBarHidden = mode.isEditing
+                miniPlayerVisibility.isHidden = mode.isEditing
             }
     }
 

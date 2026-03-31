@@ -69,6 +69,7 @@ public struct HomeView: View {
                         HomeTransferIndicatorView(progress: viewModel.transferProgress)
                     }
                 }
+                .miniPlayerAware()
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
                 }

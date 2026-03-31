@@ -89,11 +89,11 @@ struct RecentActionBucketsListView: View {
                 resultsContent(sections: sections)
             }
         }
+        .miniPlayerAware()
         .task {
             await viewModel.loadRecentActionBuckets()
             await viewModel.observeRecentBucketUpdates()
         }
-        
     }
     
     @ViewBuilder func resultsContent(sections: [RecentActionBucketSection]) -> some View {

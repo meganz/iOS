@@ -1,4 +1,7 @@
+import Combine
 import Home
+import MEGAAppPresentation
+import MEGASwiftUI
 import SwiftUI
 
 final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
@@ -14,6 +17,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
     }
     
     private let dependency: HomeView.Dependency
+    private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
+    private var cancelables: Set<AnyCancellable> = []
     
     init(dependency: HomeView.Dependency) {
         self.dependency = dependency
@@ -26,6 +31,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupMiniPlayerVisibility()
         setupHomeView()
         navigationItem.backButtonDisplayMode = .minimal
 
@@ -61,6 +67,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
             dependency: dependency,
             tabBarHidden: isTabBarHidden
         )
+        .environmentObject(miniPlayerVisibility)
+        
         let hostingViewController = UIHostingController(rootView: homeView)
         addChild(hostingViewController)
         
@@ -100,5 +108,26 @@ extension HomeViewHostingController: SnackBarLayoutCustomizable {
         }
         
         return max(tabBar.frame.height - view.safeAreaInsets.bottom, 0)
+    }
+}
+
+extension HomeViewHostingController: AudioPlayerPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        miniPlayerVisibility.height = height
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        miniPlayerVisibility.height != 0
+    }
+    
+    func setupMiniPlayerVisibility() {
+        miniPlayerVisibility
+            .$isHidden
+            .sink { hidden in
+                if AudioPlayerManager.shared.isPlayerAlive() {
+                    AudioPlayerManager.shared.playerHidden(hidden)
+                }
+            }
+            .store(in: &cancelables)
     }
 }

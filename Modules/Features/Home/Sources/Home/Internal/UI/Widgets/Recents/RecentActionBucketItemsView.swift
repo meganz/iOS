@@ -20,7 +20,8 @@ struct RecentActionBucketItemsView: View {
     @StateObject private var viewModel: RecentActionBucketItemsViewModel
     private let dependency: Dependency
     @EnvironmentObject var navigator: HomeNavigation
-
+    @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
+    
     init(dependency: Dependency) {
         self.dependency = dependency
         _viewModel = StateObject(
@@ -67,6 +68,7 @@ struct RecentActionBucketItemsView: View {
                     }
                 }
             }
+            .miniPlayerAware()
             .environment(\.editMode, $viewModel.editMode)
             .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
                 dependency.selectionHandler.handle(selection: selection)
@@ -79,6 +81,7 @@ struct RecentActionBucketItemsView: View {
             }
             .onChange(of: viewModel.editMode) { mode in
                 navigator.tabBarHidden = mode.isEditing
+                miniPlayerVisibility.isHidden = mode.isEditing
             }
     }
 

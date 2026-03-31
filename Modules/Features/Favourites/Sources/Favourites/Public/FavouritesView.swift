@@ -46,7 +46,8 @@ public struct FavouritesView: View {
     @StateObject private var viewModel: FavouritesViewModel
     @Binding private var tabBarHidden: Bool
     private let dependency: Dependency
-
+    @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
+    
     public init(
         dependency: Dependency,
         tabBarHidden: Binding<Bool>
@@ -120,9 +121,11 @@ public struct FavouritesView: View {
                 }
             }
         }
+        .miniPlayerAware()
         .environment(\.editMode, $viewModel.editMode)
         .onChange(of: viewModel.editMode) { editMode in
             tabBarHidden = editMode.isEditing
+            miniPlayerVisibility.isHidden = editMode.isEditing
         }
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)
