@@ -60,6 +60,7 @@ public struct HomeView: View {
                 }
                 .noInternetViewModifier(layout: .onTop)
                 .background(TokenColors.Background.page.swiftUI)
+                .searchableTransitionWorkaround()
                 .snackBar($navigator.snackBar)
                 .navigationTitle(Strings.Localizable.home)
                 .navigationBarTitleDisplayMode(.inline)
