@@ -229,7 +229,7 @@ extension CameraUploadQueueState {
     }
 }
 
-private struct CameraUploadQueueStates: Sendable {
+struct CameraUploadQueueStates: Sendable {
     let photoUploadState: CameraUploadQueueState
     let videoUploadState: CameraUploadQueueState
 }
@@ -244,10 +244,10 @@ extension CameraUploadQueueStates {
     }
     
     var videoConcurrentCount: Int {
-        photoUploadState.videoConcurrentCount
+        videoUploadState.videoConcurrentCount
     }
     
     var videoPausedReason: CameraUploadMediaTypePausedReason? {
-        photoUploadState.videoPausedReason
+        videoUploadState.videoPausedReason
     }
 }
