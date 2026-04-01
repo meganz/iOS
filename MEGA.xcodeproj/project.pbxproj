@@ -166,6 +166,7 @@
 		0EC69C582EA97B4B004E9601 /* CameraUploadSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */; };
 		0ECABE452E2762F6000A15C1 /* CameraUploadQueueStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */; };
 		0ECB216A2DC2E2C100534925 /* LoginViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */; };
+		0ECD29D92F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECD29D82F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
@@ -3038,6 +3039,7 @@
 		0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadSections.swift; sourceTree = "<group>"; };
 		0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadQueueStateTest.swift; sourceTree = "<group>"; };
 		0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewRouter.swift; sourceTree = "<group>"; };
+		0ECD29D82F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadQueueStatesTests.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
@@ -7973,6 +7975,7 @@
 				25B774C22B141722001F623A /* Timeline */,
 				25A58F8F2B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift */,
 				0E171B7F2EB31B63000B3B36 /* CameraUploadPaginationManagerTests.swift */,
+				0ECD29D82F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift */,
 				0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */,
 				0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */,
 				0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */,
@@ -16850,6 +16853,7 @@
 				0E171B802EB31B63000B3B36 /* CameraUploadPaginationManagerTests.swift in Sources */,
 				0E827D062EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift in Sources */,
 				0EEB29F12EC2B62800FABD8D /* CameraUploadProgressViewModelTests.swift in Sources */,
+				0ECD29D92F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift in Sources */,
 				0ECABE452E2762F6000A15C1 /* CameraUploadQueueStateTest.swift in Sources */,
 				94F3B7612DB0150F00C285A5 /* CameraUploadsAdvancedOptionsViewModelTests.swift in Sources */,
 				94F3B7662DB0151F00C285A5 /* CameraUploadsSettingsViewModelTests.swift in Sources */,
