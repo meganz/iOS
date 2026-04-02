@@ -113,7 +113,7 @@ extension RecentActionBucketItemsNavigationTitle {
     var displayableTitle: String {
         switch title {
         case let .all(count):
-            Strings.Localizable.General.Format.Count.file(count)
+            Strings.Localizable.Recents.Section.Thumbnail.Count.image(count)
         case let .selected(count):
             Strings.Localizable.General.Format.itemsSelected(count)
         }
