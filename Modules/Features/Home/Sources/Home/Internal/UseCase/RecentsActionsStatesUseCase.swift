@@ -12,9 +12,11 @@ protocol RecentsActionsStatesUseCaseProtocol: Sendable {
 }
 
 enum RecentWidgetUseCaseState {
-        case hidden
-        case empty
-        case nonEmpty([DailyRecentActionBucketGroup])
+    case loading
+    case hidden
+    case empty
+    case error
+    case nonEmpty([DailyRecentActionBucketGroup])
 }
 
 struct RecentsActionsStatesUseCase: RecentsActionsStatesUseCaseProtocol {
@@ -79,17 +81,16 @@ struct RecentsActionsStatesUseCase: RecentsActionsStatesUseCaseProtocol {
     }
 
     func getLatestBucketState() async -> RecentWidgetUseCaseState {
-        if !showRecentsPreference {
+        guard showRecentsPreference else {
             return .hidden
-        } else if let latestBucketGroups = await getLatestBucketGroups() {
-            return .nonEmpty(latestBucketGroups)
-        } else {
-            return .empty
         }
-    }
-
-    private func getLatestBucketGroups() async -> [DailyRecentActionBucketGroup]? {
-
-        try? await homeRecentsWidgetUseCase.recentBuckets()
+        do {
+            let bucketGroups = try await homeRecentsWidgetUseCase.recentBuckets()
+            return bucketGroups.isEmpty ? .empty : .nonEmpty(bucketGroups)
+        } catch HomeRecentWidgetsErrorEntity.cancellation {
+            return .empty
+        } catch {
+            return .error
+        }
     }
 }

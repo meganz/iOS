@@ -36,6 +36,11 @@ final class RecentsWidgetViewModel: ObservableObject {
         await refreshState()
     }
 
+    func didTapRetryButton() async {
+        state = .loading
+        await refreshState()
+    }
+
     func didTapMoreButton() {
         // Waiting for product/design decision for the top-right menu action.
     }
@@ -58,6 +63,10 @@ private extension RecentWidgetUseCaseState {
             Strings.Localizable.upload
         case .hidden:
             Strings.Localizable.Recents.EmptyState.ActivityHidden.button
+        case .error:
+            Strings.Localizable.retry
+        case .loading:
+            ""
         }
     }
 }

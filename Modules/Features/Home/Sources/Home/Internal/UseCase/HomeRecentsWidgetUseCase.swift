@@ -3,6 +3,7 @@ import MEGADomain
 
 enum HomeRecentWidgetsErrorEntity: Error {
     case cancellation
+    case fetchFailed
 }
 
 protocol HomeRecentsWidgetUseCaseProtocol: Sendable {
@@ -44,7 +45,7 @@ struct HomeRecentsWidgetUseCase: HomeRecentsWidgetUseCaseProtocol, Sendable {
             throw .cancellation
         } catch {
             MEGALogError("[RecentsWidget] Failed to fetch recent nodes: \(error)")
-            return []
+            throw .fetchFailed
         }
     }
 }

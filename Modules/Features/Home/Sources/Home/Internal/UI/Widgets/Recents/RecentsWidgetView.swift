@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import Search
 import SwiftUI
 
@@ -87,6 +88,8 @@ struct RecentsWidgetView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.state {
+        case .loading:
+            RecentsLoadingContentView()
         case let .nonEmpty(bucketGroups):
             nonEmptyContent(bucketGroups: bucketGroups)
         case .empty:
@@ -97,6 +100,12 @@ struct RecentsWidgetView: View {
             HiddenRecentsContentView {
                 Task {
                     await viewModel.didTapShowActivityButton()
+                }
+            }
+        case .error:
+            ErrorRecentsContentView {
+                Task {
+                    await viewModel.didTapRetryButton()
                 }
             }
         }
@@ -191,5 +200,69 @@ private struct HiddenRecentsContentView: View {
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .frame(height: 32, alignment: .center)
         }
+    }
+}
+
+private struct ErrorRecentsContentView: View {
+    let retryAction: @MainActor () -> Void
+
+    var body: some View {
+        HStack(spacing: TokenSpacing._4) {
+            VStack(alignment: .leading, spacing: TokenSpacing._1) {
+                Text(Strings.Localizable.Home.Recent.Widget.Error.message)
+                    .font(.footnote)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                retryButton
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, TokenSpacing._3)
+
+            MEGAAssets.Image.recentsClock
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+        }
+        .padding(.horizontal, TokenSpacing._5)
+    }
+
+    private var retryButton: some View {
+        Button {
+            retryAction()
+        } label: {
+            Text(Strings.Localizable.retry)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .underline()
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .frame(height: 32, alignment: .center)
+        }
+    }
+}
+
+private struct RecentsLoadingContentView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: TokenSpacing._3) {
+            ForEach(0..<2, id: \.self) { _ in
+                HStack(spacing: TokenSpacing._4) {
+                    RoundedRectangle(cornerRadius: 6)
+                        .frame(width: 32, height: 32)
+
+                    VStack(alignment: .leading, spacing: TokenSpacing._1) {
+                        Text(String(repeating: " ", count: 20))
+                            .font(.subheadline)
+
+                        Text(String(repeating: " ", count: 12))
+                            .font(.caption)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+        }
+        .padding(.horizontal, TokenSpacing._5)
+        .padding(.vertical, TokenSpacing._3)
+        .redacted(reason: .placeholder)
+        .shimmering()
     }
 }
