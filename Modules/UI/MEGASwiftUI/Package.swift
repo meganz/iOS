@@ -25,6 +25,7 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://github.com/siteline/swiftui-introspect", exact: "26.0.0"),
         .package(path: "../MEGAUI"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Presentation/MEGAAssets"),
@@ -39,6 +40,7 @@ let package = Package(
                 .product(name: "SwiftUIIntrospect", package: "swiftui-introspect"),
                 "MEGAAssets",
                 "MEGAUI",
+                .product(name: "MEGASwift", package: "MEGASwift"),
                 "MEGAAppPresentation",
                 "MEGAFoundation",
                 "MEGAInfrastructure",
@@ -55,6 +57,7 @@ let package = Package(
             name: "MEGASwiftUITests",
             dependencies: ["MEGASwiftUI",
                            "MEGASwiftUIMock",
+                           .product(name: "MEGASwift", package: "MEGASwift"),
                            "MEGAL10n",
                            "MEGATest"
                           ],

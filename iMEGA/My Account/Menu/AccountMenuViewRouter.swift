@@ -212,11 +212,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
     }
 
     func showTransfers() {
-        let transferVC = UIStoryboard(name: "Transfers", bundle: nil)
-            .instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")
-        transferVC.navigationItem.leftBarButtonItem = nil
         CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers widget from MyAccountHall")
-        navigationController.pushViewController(transferVC, animated: true)
+        TransfersRouter(navigationController: navigationController).showTransfers()
     }
 
     func showOfflineFiles() {

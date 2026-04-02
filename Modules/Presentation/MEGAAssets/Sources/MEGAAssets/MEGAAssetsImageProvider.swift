@@ -84,6 +84,10 @@ extension MEGAAssets {
         public static var upgradeToProPlan: SwiftUI.Image { MEGAImageBundle.upgradeToProPlan }
         public static var allPhotosEmptyState: SwiftUI.Image { MEGAImageBundle.allPhotosEmptyState }
         public static var transferIndicator: SwiftUI.Image { MEGAImageBundle.transferIndicator }
+        public static var transferError: SwiftUI.Image { MEGAImageBundle.transferError }
+        public static var transferPause: SwiftUI.Image { MEGAImageBundle.transferPause }
+        public static var transferSuccess: SwiftUI.Image { MEGAImageBundle.transferSuccess }
+        public static var transferWarning: SwiftUI.Image { MEGAImageBundle.transferWarning }
         public static var videoEmptyState: SwiftUI.Image { MEGAImageBundle.videoEmptyState }
         public static var cameraEmptyState: SwiftUI.Image { MEGAImageBundle.cameraEmptyState }
         public static var info: SwiftUI.Image { MEGAImageBundle.info }
@@ -643,6 +647,11 @@ extension MEGAAssets {
         public static var accountUpgradeSecurity: UIKit.UIImage { MEGAUIImageBundle.accountUpgradeSecurity }
         public static var upgradePro: UIKit.UIImage { MEGAUIImageBundle.upgradePro }
         public static var startChat: UIKit.UIImage { MEGAUIImageBundle.startChat }
+        public static var transferIndicator: UIKit.UIImage { MEGAUIImageBundle.transferIndicator }
+        public static var transferError: UIKit.UIImage { MEGAUIImageBundle.transferError }
+        public static var transferPause: UIKit.UIImage { MEGAUIImageBundle.transferPause }
+        public static var transferSuccess: UIKit.UIImage { MEGAUIImageBundle.transferSuccess }
+        public static var transferWarning: UIKit.UIImage { MEGAUIImageBundle.transferWarning }
         public static var uploadFile: UIKit.UIImage { MEGAUIImageBundle.uploadFile }
         public static var phoneCallAll: UIKit.UIImage { MEGAUIImageBundle.phoneCallAll }
         public static var userMicOn: UIKit.UIImage { MEGAUIImageBundle.userMicOn }

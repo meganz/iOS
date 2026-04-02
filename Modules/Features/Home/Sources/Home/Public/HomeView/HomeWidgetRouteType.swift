@@ -5,4 +5,5 @@ public enum HomeWidgetRouteType {
     case accountUpgrade
     case promotionalBanner(_ url: URL)
     case offline
+    case transfers
 }

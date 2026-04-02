@@ -714,6 +714,7 @@
 		5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA53FE82462B26000D168B9 /* InviteContact.storyboard */; };
 		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */; };
+		7F2C6A643607000100A1B2C3 /* TransfersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */; };
 		5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */; };
@@ -3625,6 +3626,7 @@
 		5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+InAppPurchase.swift"; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
 		5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransfersWidgetViewController+Additions.swift"; sourceTree = "<group>"; };
+		7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRouter.swift; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
 		5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -4203,6 +4205,7 @@
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
+		844A439E2F7D20B600AE5D17 /* Transfer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transfer; sourceTree = "<group>"; };
 		940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryTests.swift; sourceTree = "<group>"; };
 		940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveBottomToolbarFactoryTests.swift; sourceTree = "<group>"; };
@@ -11087,6 +11090,7 @@
 				A52F1E3A2EBCE55800D3A2E9 /* Search */,
 				A52F1E3B2EBCE55800D3A2E9 /* Settings */,
 				A52F1E312EBCE55800D3A2E9 /* Shared */,
+				844A439E2F7D20B600AE5D17 /* Transfer */,
 				A52F1E3C2EBCE55800D3A2E9 /* Video */,
 			);
 			path = Features;
@@ -13761,6 +13765,7 @@
 				A86AE2542E9661C5006AEBBF /* TransferBadgeState.swift */,
 				94614C742910554200503174 /* TransferNodeTableViewCell.xib */,
 				2F6F0881253E387500C5B5D7 /* Transfers.storyboard */,
+				7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */,
 				5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */,
 				2F6F088C253E387600C5B5D7 /* TransfersWidgetViewController.h */,
 				2F6F0884253E387500C5B5D7 /* TransfersWidgetViewController.m */,
@@ -16317,6 +16322,7 @@
 				0E1B79312E7914C1007351A1 /* TransferSessionManager+Additions.swift in Sources */,
 				B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */,
 				B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */,
+				7F2C6A643607000100A1B2C3 /* TransfersRouter.swift in Sources */,
 				83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
 				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,

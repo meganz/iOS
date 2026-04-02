@@ -7,9 +7,11 @@ import UIKit
 @MainActor
 final class HomeViewRouter: HomeViewRouting {
     private weak var navigationController: UINavigationController?
+    private let transfersRouter: TransfersRouter
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.transfersRouter = TransfersRouter(navigationController: navigationController)
     }
 
     func route(to type: HomeWidgetRouteType) {
@@ -22,6 +24,8 @@ final class HomeViewRouter: HomeViewRouting {
             routeToPromotionalUrl(url)
         case .offline:
             showOffline()
+        case .transfers:
+            showTransfers()
         }
     }
 
@@ -38,6 +42,10 @@ final class HomeViewRouter: HomeViewRouting {
         let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
         navigationController?.pushViewController(offlineVC, animated: true)
+    }
+
+    private func showTransfers() {
+        transfersRouter.showTransfers()
     }
 
     private func showUpgradePlanView() {

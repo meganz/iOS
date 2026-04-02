@@ -112,6 +112,18 @@ public struct MEGAImageBundle {
   public static var transferIndicator: SwiftUICore.Image {
     get
   }
+  public static var transferError: SwiftUICore.Image {
+    get
+  }
+  public static var transferPause: SwiftUICore.Image {
+    get
+  }
+  public static var transferSuccess: SwiftUICore.Image {
+    get
+  }
+  public static var transferWarning: SwiftUICore.Image {
+    get
+  }
   public static var videoEmptyState: SwiftUICore.Image {
     get
   }
@@ -1908,6 +1920,18 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var transferIndicator: UIKit.UIImage {
+    get
+  }
+  public static var transferError: UIKit.UIImage {
+    get
+  }
+  public static var transferPause: UIKit.UIImage {
+    get
+  }
+  public static var transferSuccess: UIKit.UIImage {
+    get
+  }
+  public static var transferWarning: UIKit.UIImage {
     get
   }
   public static var uploadFile: UIKit.UIImage {

@@ -11,8 +11,10 @@ import MEGAInfrastructure
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 // MARK: - Revamped Home
 extension HomeScreenFactory {

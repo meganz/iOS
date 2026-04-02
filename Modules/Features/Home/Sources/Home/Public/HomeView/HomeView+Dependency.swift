@@ -4,8 +4,10 @@ import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 /// @MainActor is required as its conformer would be MEGAStore from main target
 @MainActor

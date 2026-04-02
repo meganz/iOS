@@ -7,6 +7,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAUIKit
+import Transfer
 
 @MainActor let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
@@ -20,6 +21,10 @@ extension MainTabBarController {
     }
 
     @objc func loadTabViewControllers() {
+        let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
+        SharedTransferIndicator.configure {
+            !transferInventoryUseCaseHelper.queuedUploadTransfers().isEmpty
+        }
         let appTabs = TabManager.appTabs
 
         let viewControllers = appTabs.map {

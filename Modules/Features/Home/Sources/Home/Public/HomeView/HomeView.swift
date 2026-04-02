@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 import UIKit
 
 public struct HomeView: View {
@@ -66,7 +67,9 @@ public struct HomeView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        HomeTransferIndicatorView(progress: viewModel.transferProgress)
+                        TransferIndicatorView {
+                            dependency.router.route(to: .transfers)
+                        }
                     }
                 }
                 .miniPlayerAware()

@@ -3,6 +3,16 @@
     {
       "filename" : "transferIndicator.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "icon.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
