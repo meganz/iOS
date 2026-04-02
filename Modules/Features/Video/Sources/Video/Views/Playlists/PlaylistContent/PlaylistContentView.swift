@@ -181,7 +181,7 @@ struct PlaylistContentView: View {
                     onTapAddButton: onTapAddButton
                 )
             }
-            if isMediaRevampEnabled && !isEditing {
+            if isMediaRevampEnabled && !isEditing && viewState != .empty {
                 sortHeaderView()
                     .frame(height: 36)
             }

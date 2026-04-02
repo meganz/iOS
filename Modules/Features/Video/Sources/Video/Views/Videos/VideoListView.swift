@@ -49,7 +49,7 @@ public struct VideoListView: View {
         VStack(spacing: 0) {
             if viewModel.mediaRevampEnabled {
                 sortHeaderView()
-                    .frame(height: viewModel.showSortHeader ? 36 : 0)
+                    .frame(height: (viewModel.showSortHeader && viewModel.viewState != .empty) ? 36 : 0)
                     .clipped()
             } else {
                 chipsView()
