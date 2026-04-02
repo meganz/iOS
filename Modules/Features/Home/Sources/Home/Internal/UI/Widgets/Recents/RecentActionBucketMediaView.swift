@@ -108,8 +108,25 @@ struct RecentActionBucketMediaView: View {
                 viewModel.exitEditMode()
             }
         } else {
-            Button(Strings.Localizable.select) {
-                viewModel.enterEditMode()
+            Menu {
+                Button {
+                    viewModel.enterEditMode()
+                } label: {
+                    Label {
+                        Text(Strings.Localizable.select)
+                    } icon: {
+                        Image(uiImage: MEGAAssets.UIImage.checkCircle)
+                    }
+                }
+            } label: {
+                Label {
+                    Text(Strings.Localizable.more)
+                } icon: {
+                    MEGAAssets.Image.moreHorizontal
+                        .renderingMode(.template)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                }
+                .labelStyle(.iconOnly)
             }
         }
     }
