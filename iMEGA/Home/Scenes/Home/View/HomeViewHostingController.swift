@@ -4,7 +4,7 @@ import MEGAAppPresentation
 import MEGASwiftUI
 import SwiftUI
 
-final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
+final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, SearchActivatable {
     private var isTabBarHidden: Binding<Bool> {
         Binding(
             get: {
@@ -18,6 +18,9 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
     
     private let dependency: HomeView.Dependency
     private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
+    private let homeDeepLink: HomeDeepLink = HomeDeepLink()
+    private var shouldHandleSearchDeeplink = false
+    
     private var cancelables: Set<AnyCancellable> = []
     
     init(dependency: HomeView.Dependency) {
@@ -65,6 +68,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
     private func setupHomeView() {
         let homeView = HomeView(
             dependency: dependency,
+            homeDeepLink: homeDeepLink,
             tabBarHidden: isTabBarHidden
         )
         .environmentObject(miniPlayerVisibility)
@@ -82,6 +86,10 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable {
             hostingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         hostingViewController.didMove(toParent: self)
+    }
+    
+    @objc func activateSearch() {
+        homeDeepLink.homeSearch = true
     }
 }
 

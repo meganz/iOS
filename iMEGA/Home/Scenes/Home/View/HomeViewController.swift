@@ -21,9 +21,14 @@ protocol HomeRouting: NSObjectProtocol {
     func showFavouritesNode(_ base64Handle: Base64HandleEntity)
 }
 
-final class HomeViewController: UIViewController, DisplayMenuDelegate {
+@MainActor
+@objc protocol SearchActivatable {
+    func activateSearch()
+}
 
-    @objc var homeQuickActionSearch: Bool = false
+extension HomeViewController: SearchActivatable {}
+
+final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     // MARK: - View Model
 
@@ -181,9 +186,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         homeViewModel?.trackHomeScreenEvent()
-        if homeQuickActionSearch {
-            homeQuickActionSearch = false
-        }
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
         configureViewMode()
         configureAdsVisibility()
@@ -423,7 +425,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         router.didTap(on: .newChat)
     }
     
-    @objc func activateSearch() {
+    func activateSearch() {
         _ = searchBarView?.becomeFirstResponder()
     }
     

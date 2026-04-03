@@ -1,6 +1,7 @@
 import SwiftUI
+import UIKit
 
-extension View {
+public extension View {
     @ViewBuilder
     func searchableVisible(
         text: Binding<String>,
@@ -8,18 +9,12 @@ extension View {
         placement: SearchFieldPlacement = .navigationBarDrawer(displayMode: .always)
     ) -> some View {
         if isPresented.wrappedValue {
-            if #available(iOS 17.0, *) {
-                self.searchable(
-                    text: text,
-                    isPresented: isPresented,
-                    placement: placement
-                )
+            if #available(iOS 17, *) {
+                self
+                    .searchable(text: text, isPresented: isPresented, placement: placement)
             } else {
                 self
-                    .searchable(
-                        text: text,
-                        placement: placement
-                    )
+                    .searchable(text: text, placement: placement)
                     .background(
                         SearchControllerObserver(isPresented: isPresented)
                             .frame(width: 0, height: 0)

@@ -1,4 +1,5 @@
 import Favourites
+import MEGAAssets
 import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
@@ -8,78 +9,94 @@ import SwiftUI
 import Transfer
 import UIKit
 
+@MainActor
+public final class HomeDeepLink: ObservableObject {
+    @Published public var homeSearch: Bool = false
+    
+    public init() {}
+}
+
 public struct HomeView: View {
     private enum NavigationRoute: Hashable {
         case shortcut(ShortcutType)
     }
 
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel: HomeViewModel
     @StateObject private var navigator: HomeNavigation
-
     @State private var searchText = ""
+    
     private let dependency: Dependency
 
     public init(
         dependency: Dependency,
+        homeDeepLink: HomeDeepLink,
         tabBarHidden: Binding<Bool>
     ) {
         self.dependency = dependency
+        _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
     }
     
     public var body: some View {
-        HomeSearchableView(searchBecameActive: $viewModel.isSearching) {
+        NavigationStack(path: $navigator.path) {
             content
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .background(HomeBackButtonConfigurator())
+        .tint(TokenColors.Icon.primary.swiftUI)
+        .environmentObject(navigator)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .task { await viewModel.onTask() }
     }
     
     var content: some View {
-        NavigationStack(path: $navigator.path) {
-            listContent
-                .embedInScrollViewWithDirectionChangeHandler {
-                    viewModel.hidesFloatingActionsButton = $0
+        listContent
+            .searchableVisible(text: $searchText, isPresented: $viewModel.isSearching, placement: .navigationBarDrawer(displayMode: .always))
+            .embedInScrollViewWithDirectionChangeHandler {
+                viewModel.hidesFloatingActionsButton = $0
+            }
+            .floatingButton(isHidden: viewModel.hidesFloatingActionsButton) {
+                viewModel.presentsSheet.toggle()
+            }
+            .sheet(isPresented: $viewModel.presentsSheet) {
+                HomeMenuActionsSheetView(
+                                        actionHandler: dependency.homeAddMenuActionHandler,
+                                        isPresented: $viewModel.presentsSheet
+                                    )
+            }
+            .overlay {
+                if viewModel.isSearching {
+                    searchContent
                 }
-                .floatingButton(isHidden: viewModel.hidesFloatingActionsButton) {
-                    viewModel.presentsSheet.toggle()
-                }
-                .sheet(isPresented: $viewModel.presentsSheet) {
-                    HomeMenuActionsSheetView(
-                                            actionHandler: dependency.homeAddMenuActionHandler,
-                                            isPresented: $viewModel.presentsSheet
-                                        )
-                }
-                .overlay {
-                    if viewModel.isSearching {
-                        searchContent
+            }
+            .noNetworkConnection {
+                noInternetView
+            }
+            .noInternetViewModifier(layout: .onTop)
+            .background(TokenColors.Background.page.swiftUI)
+            .searchableTransitionWorkaround()
+            .snackBar($navigator.snackBar)
+            .navigationTitle(Strings.Localizable.home)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    TransferIndicatorView {
+                        dependency.router.route(to: .transfers)
                     }
                 }
-                .noNetworkConnection {
-                    noInternetView
-                }
-                .noInternetViewModifier(layout: .onTop)
-                .background(TokenColors.Background.page.swiftUI)
-                .searchableTransitionWorkaround()
-                .snackBar($navigator.snackBar)
-                .navigationTitle(Strings.Localizable.home)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        TransferIndicatorView {
-                            dependency.router.route(to: .transfers)
-                        }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.isSearching = true
+                    } label: {
+                        Image(uiImage: MEGAAssets.UIImage.search)
                     }
+
                 }
-                .miniPlayerAware()
-                .navigationDestination(for: NavigationRoute.self) { route in
-                    navigationDestinationBuilder(with: route)
-                }
-        }
-        .background(HomeBackButtonConfigurator())
-        .tint(TokenColors.Icon.primary.swiftUI)
-        .environmentObject(navigator)
+            }
+            .miniPlayerAware()
+            .navigationDestination(for: NavigationRoute.self) { route in
+                navigationDestinationBuilder(with: route)
+            }
     }
 
     @ViewBuilder

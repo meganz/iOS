@@ -654,18 +654,12 @@
     if ([AppDelegate matchQuickAction:type with:@"search"]) {
         self.mainTBC.selectedIndex = [TabManager homeTabIndex];
         MEGANavigationController *navigationController = self.mainTBC.selectedViewController;
-        HomeViewController *homeVC = navigationController.viewControllers.firstObject;
-        if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                [homeVC activateSearch]; // Home already presented, so activate search bar
-            } else {
-                homeVC.homeQuickActionSearch = YES; // Search will become active after the Home did appear
-            }
-        } else {
-            [homeVC activateSearch];
+        UIViewController *homeVC = navigationController.viewControllers.firstObject;
+        if([homeVC conformsToProtocol:@protocol(SearchActivatable)]) {
+            id<SearchActivatable> searchActivatable = (id<SearchActivatable>)homeVC;
+            
+            [searchActivatable activateSearch];
         }
-        
-        
     } else if ([AppDelegate matchQuickAction:type with: @"upload"]) {
         [self handleQuickUploadAction];
     } else if ([AppDelegate matchQuickAction:type with: @"offline"]) {
