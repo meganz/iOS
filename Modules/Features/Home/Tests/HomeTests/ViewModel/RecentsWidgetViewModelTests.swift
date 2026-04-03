@@ -8,7 +8,7 @@ struct RecentsWidgetViewModelTests {
     @Test("retry enters loading state before applying the refreshed result")
     func retryEntersLoadingStateBeforeApplyingRefreshedResult() async {
         let useCase = MockRecentsActionsStatesUseCase()
-        let sut = RecentsWidgetViewModel(recentsActionsStatesUseCase: useCase)
+        let sut = makeSUT(recentsActionsStatesUseCase: useCase)
 
         let task = Task {
             await sut.didTapRetryButton()
@@ -33,7 +33,7 @@ struct RecentsWidgetViewModelTests {
     @Test("initial state is hidden before onTask completes")
     func initialStateIsHiddenBeforeOnTaskCompletes() async {
         let useCase = MockRecentsActionsStatesUseCase()
-        let sut = RecentsWidgetViewModel(recentsActionsStatesUseCase: useCase)
+        let sut = makeSUT(recentsActionsStatesUseCase: useCase)
 
         guard case .hidden = sut.state else {
             Issue.record("Expected hidden as the initial state")
@@ -54,6 +54,16 @@ struct RecentsWidgetViewModelTests {
             Issue.record("Expected empty state after onTask finishes")
             return
         }
+    }
+    
+    private func makeSUT(
+        recentsActionsStatesUseCase: MockRecentsActionsStatesUseCase = MockRecentsActionsStatesUseCase(),
+        clearRecentActionHistoryUseCase: MockClearRecentActionHistoryUseCase = MockClearRecentActionHistoryUseCase()
+    ) -> RecentsWidgetViewModel {
+       RecentsWidgetViewModel(
+        recentsActionsStatesUseCase: recentsActionsStatesUseCase,
+        clearRecentActionHistoryUseCase: clearRecentActionHistoryUseCase
+       )
     }
 }
 

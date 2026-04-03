@@ -50,29 +50,19 @@ struct RecentActionBucketsListView: View {
             .navigationDestination(for: Route.self) { route in
                 navigationDestination(for: route)
             }
-            .alert(
-                Strings.Localizable.Home.Recent.Menu.Action.clearRecentActivity,
-                isPresented: $viewModel.isConfirmingClearRecentActivity,
-                actions: {
-                    Button(Strings.Localizable.dismiss, action: {})
-                    Button(Strings.Localizable.clear) {
-                        Task {
-                            await viewModel.clearRecentActivity()
-                            navigator.removeLast()
-                        }
-                    }
-                },
-                message: {
-                    Text(Strings.Localizable.Home.Recent.ClearRecentActivity.Alert.message)
+            .confirmClearRecentActivityAlert(isPresented: $viewModel.isConfirmingClearRecentActivity) {
+                Task {
+                    await viewModel.clearRecentActivity()
+                    navigator.removeLast()
                 }
-            )
+            }
             .onDisappear {
-                if let snackBar = viewModel.recentActivityHiddenSnackBar {
-                    navigator.showSnackBar(snackBar)
+                if let message = viewModel.recentActivityHiddenSnackBarMessage {
+                    navigator.showSnackBar(SnackBar(message: message))
                 }
                 
-                if let snackBar = viewModel.recentActivityClearedSnackBar {
-                    navigator.showSnackBar(snackBar)
+                if let message = viewModel.recentActivityClearedSnackBarMessage {
+                    navigator.showSnackBar(SnackBar(message: message))
                 }
             }
     }
@@ -107,29 +97,13 @@ struct RecentActionBucketsListView: View {
     
     private var moreOptionsButton: some View {
         Menu {
-            Button {
+            HideRecentActivityMenuItemView {
                 viewModel.hideRecentActivity()
                 navigator.removeLast()
-            } label: {
-                Label {
-                    Text(Strings.Localizable.Settings.UserInterface.hideRecentActivity)
-                } icon: {
-                    MEGAAssets.Image.eyeOff
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                }
             }
             
-            Button {
+            ClearRecentActivityMenuItemView {
                 viewModel.confirmClearRecentActivity()
-            } label: {
-                Label {
-                    Text(Strings.Localizable.Home.Recent.Menu.Action.clearRecentActivity)
-                } icon: {
-                    MEGAAssets.Image.clearChatHistory
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                }
             }
         } label: {
             Label {

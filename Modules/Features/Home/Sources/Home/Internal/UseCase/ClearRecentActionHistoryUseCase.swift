@@ -1,4 +1,4 @@
-protocol ClearRecentActionHistoryUseCaseProtocol: Sendable {
+package protocol ClearRecentActionHistoryUseCaseProtocol: Sendable {
     func clearRecentActionHistory() async throws
 }
 

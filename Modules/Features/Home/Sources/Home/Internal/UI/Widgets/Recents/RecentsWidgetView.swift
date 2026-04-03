@@ -29,7 +29,8 @@ struct RecentsWidgetView: View {
     private let dependency: Dependency
     @State private var presentsSheet = false
     @StateObject private var viewModel: RecentsWidgetViewModel
-
+    @State private var confirmingClearRecentActivity = false
+    @EnvironmentObject var navigator: HomeNavigation
     private let addMenuActionHandler: any HomeAddMenuActionHandling
 
     init(dependency: Dependency, addMenuActionHandler: some HomeAddMenuActionHandling) {
@@ -56,6 +57,12 @@ struct RecentsWidgetView: View {
                 isPresented: $presentsSheet
             )
         }
+        .confirmClearRecentActivityAlert(isPresented: $confirmingClearRecentActivity) {
+            Task {
+                guard let message = await viewModel.clearRecentActivity() else { return }
+                navigator.showSnackBar(SnackBar(message: message))
+            }
+        }
     }
 
     private var header: some View {
@@ -67,22 +74,77 @@ struct RecentsWidgetView: View {
 
             Spacer()
 
-            Button(action: {
-                viewModel.didTapMoreButton()
-            }, label: {
-                Label {
-                    Text(Strings.Localizable.more)
-                } icon: {
-                    MEGAAssets.Image.moreHorizontal
-                        .renderingMode(.template)
-                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                        .frame(width: 24, height: 24)
-                }
-                .labelStyle(.iconOnly)
-            })
+            moreOptionsMenu
         }
         .padding(.bottom, TokenSpacing._3)
         .padding(.horizontal, TokenSpacing._5)
+    }
+    
+    @ViewBuilder
+    private var moreOptionsMenuLabel: some View {
+        Button(
+           action: {},
+           label: {
+               Label {
+                   Text(Strings.Localizable.more)
+               } icon: {
+                   MEGAAssets.Image.moreHorizontal
+                       .renderingMode(.template)
+                       .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                       .frame(width: 24, height: 24)
+               }
+               .labelStyle(.iconOnly)
+           }
+        )
+    }
+    
+    @ViewBuilder
+    private var moreOptionsMenu: some View {
+        switch viewModel.state {
+        case .hidden:
+            Menu {
+                ShowRecentActivityMenuItemView {
+                    Task {
+                        await viewModel.didTapShowActivityButton()
+                    }
+                }
+                ClearRecentActivityMenuItemView {
+                    confirmingClearRecentActivity = true
+                }
+            } label: {
+                moreOptionsMenuLabel
+            }
+
+        case .empty:
+            Menu {
+                HideRecentActivityMenuItemView {
+                    Task {
+                        await viewModel.hideRecentActivity()
+                        navigator.showSnackBar(SnackBar(message: Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message))
+                    }
+                }
+            } label: {
+                moreOptionsMenuLabel
+            }
+            
+        case .nonEmpty:
+            Menu {
+                HideRecentActivityMenuItemView {
+                    Task {
+                        await viewModel.hideRecentActivity()
+                        navigator.showSnackBar(SnackBar(message: Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message))
+                    }
+                }
+                
+                ClearRecentActivityMenuItemView {
+                    confirmingClearRecentActivity = true
+                }
+            } label: {
+                moreOptionsMenuLabel
+            }
+        case .error, .loading:
+            EmptyView()
+        }
     }
 
     @ViewBuilder

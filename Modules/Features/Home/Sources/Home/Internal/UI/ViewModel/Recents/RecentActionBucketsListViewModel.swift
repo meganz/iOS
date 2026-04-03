@@ -5,7 +5,6 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 import MEGASwift
-import MEGASwiftUI
 
 @MainActor
 final class RecentActionBucketsListViewModel: ObservableObject {
@@ -17,8 +16,8 @@ final class RecentActionBucketsListViewModel: ObservableObject {
     @Published var viewState: ViewState = .loading
     @Published var isConfirmingClearRecentActivity: Bool = false
 
-    private(set) var recentActivityHiddenSnackBar: SnackBar?
-    private(set) var recentActivityClearedSnackBar: SnackBar?
+    private(set) var recentActivityHiddenSnackBarMessage: String?
+    private(set) var recentActivityClearedSnackBarMessage: String?
 
     @PreferenceWrapper(key: PreferenceKeyEntity.showRecents, defaultValue: true, useCase: PreferenceUseCase.default)
     private var showRecentActivityEnabled: Bool
@@ -67,7 +66,7 @@ final class RecentActionBucketsListViewModel: ObservableObject {
 
     func hideRecentActivity() {
         showRecentActivityEnabled = false
-        recentActivityHiddenSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message)
+        recentActivityHiddenSnackBarMessage = Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message
     }
     
     func confirmClearRecentActivity() {
@@ -77,7 +76,7 @@ final class RecentActionBucketsListViewModel: ObservableObject {
     func clearRecentActivity() async {
         do {
             try await clearRecentActionHistoryUseCase.clearRecentActionHistory()
-            recentActivityClearedSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.ClearRecentActivity.Snackbar.message)
+            recentActivityClearedSnackBarMessage = Strings.Localizable.Home.Recent.ClearRecentActivity.Snackbar.message
         } catch {}
     }
 }
