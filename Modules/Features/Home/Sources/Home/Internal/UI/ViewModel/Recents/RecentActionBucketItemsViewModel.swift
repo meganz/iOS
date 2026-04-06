@@ -126,8 +126,9 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
                 }
                 
                 navigationSubtitle = switch result.subtitle {
-                case let .addedBy(parentName):
-                    Strings.Localizable.Home.Recent.addedToLabel(parentName)
+                case let .addedBy(parentName, nodesCount):
+                    Strings.Localizable.Recents.BucketDetails.subtitle(nodesCount)
+                        .replacingOccurrences(of: "[A]", with: parentName)
                 case .none:
                     nil
                 }

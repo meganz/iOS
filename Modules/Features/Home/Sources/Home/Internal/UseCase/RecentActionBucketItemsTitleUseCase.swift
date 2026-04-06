@@ -12,8 +12,8 @@ struct RecentActionBucketItemsNavigationTitle {
     }
     
     enum SubtitleType {
-        /// Editing is inactive, associated value is parent folder name
-        case addedBy(String)
+        /// Editing is inactive, associated values are parent folder name and bucket nodes count
+        case addedBy(String, Int)
         /// While editing, do not show subtitle.
         case none
     }
@@ -44,7 +44,7 @@ struct RecentActionBucketItemsTitleUseCase: RecentActionBucketItemsTitleUseCaseP
         case .inactive:
             title = .all(bucket.nodes.count)
             subtitle = if let parentFolderName = bucket.parent?.name {
-                .addedBy(parentFolderName)
+                .addedBy(parentFolderName, bucket.nodes.count)
             } else {
                 .none
             }
