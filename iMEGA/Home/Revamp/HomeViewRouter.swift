@@ -64,6 +64,7 @@ final class HomeViewRouter: HomeViewRouting {
     private func showOffline() {
         let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
+        offlineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(offlineVC, animated: true)
     }
 
