@@ -14,9 +14,25 @@ public struct HomeView: View {
 
     @StateObject private var viewModel = HomeViewModel()
     @StateObject private var navigator: HomeNavigation
-
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var searchText = ""
     private let dependency: Dependency
+
+    private var isIphoneInLandscape: Bool {
+        verticalSizeClass == .compact
+    }
+
+    private var isLiquidGlassSupported: Bool {
+        if #available(iOS 26.0, *) {
+            true
+        } else {
+            false
+        }
+    }
+
+    private var shouldAddLiquidGlassPadding: Bool {
+        isLiquidGlassSupported && isIphoneInLandscape
+    }
 
     public init(
         dependency: Dependency,
@@ -58,7 +74,7 @@ public struct HomeView: View {
                 .noNetworkConnection {
                     noInternetView
                 }
-                .noInternetViewModifier(layout: .onTop)
+                .modifier(LandscapeNoInternetViewModifier(verticalSizeClass: verticalSizeClass))
                 .background(TokenColors.Background.page.swiftUI)
                 .searchableTransitionWorkaround()
                 .snackBar($navigator.snackBar)
@@ -160,9 +176,30 @@ public struct HomeView: View {
     }
 
     private var noInternetView: some View {
-        NoInternetView(
-            dependency: .init(homeViewRouter: dependency.router, offlineFilesUseCase: dependency.offlineFilesUseCase)
-        )
+        GeometryReader { proxy in
+            ScrollView {
+                VStack {
+                    NoInternetView(
+                        dependency: .init(homeViewRouter: dependency.router, offlineFilesUseCase: dependency.offlineFilesUseCase)
+                    )
+                }
+                .frame(minHeight: proxy.size.height + (shouldAddLiquidGlassPadding ? proxy.safeAreaInsets.bottom : 0))
+            }
+            .scrollDisabled(!isIphoneInLandscape)
+        }
+    }
+}
+
+// Applies noInternetViewModifier only when iPhone is in landscape mode (verticalSizeClass == .compact)
+private struct LandscapeNoInternetViewModifier: ViewModifier {
+    let verticalSizeClass: UserInterfaceSizeClass?
+
+    func body(content: Content) -> some View {
+        if verticalSizeClass == .compact {
+            content
+        } else {
+            content.noInternetViewModifier(layout: .onTop)
+        }
     }
 }
 
