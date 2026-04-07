@@ -25,20 +25,32 @@ private final class SearchableTransitionController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
         guard !isMovingFromParent,
               let parent,
-              let searchController = parent.navigationItem.searchController else {
+              let searchController = parent.navigationItem.searchController,
+              let navigationController = parent.navigationController,
+              !navigationController.navigationBar.isHidden else {
+            return
+        }
+
+        // Only apply the workaround for push transitions within the navigation stack.
+        // Use transitionCoordinator.viewController(forKey:) to reliably detect a push.
+        // So we skip — tab switches don't need this visual fix and running the
+        // synchronous toggle in that context causes a main-thread hang
+        // (os_unfair_lock contention in CALayerGetSuperlayer during _UIAfterCACommitBlock).
+        guard let coordinator = navigationController.transitionCoordinator,
+              coordinator.viewController(forKey: .from) === parent else {
             return
         }
 
         cachedSearchController = searchController
         parent.navigationItem.searchController = nil
 
-        if let navigationController = parent.navigationController,
-           !navigationController.navigationBar.isHidden {
+        coordinator.animate(alongsideTransition: { _ in
             navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setNavigationBarHidden(false, animated: false)
-        }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
