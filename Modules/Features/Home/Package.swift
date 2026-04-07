@@ -26,7 +26,8 @@ let package = Package(
         .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
-        .package(path: "../Shared/ContentLibraries")
+        .package(path: "../Shared/ContentLibraries"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -44,8 +45,8 @@ let package = Package(
                 "MEGAAppSDKRepo",
                 "MEGAPreference",
                 "MEGAConnectivity",
-                "ContentLibraries"
-                ]
+                "ContentLibraries",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")]
         ),
         .testTarget(
             name: "HomeTests",

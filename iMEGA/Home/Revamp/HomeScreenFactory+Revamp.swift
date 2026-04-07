@@ -2,6 +2,7 @@ import Combine
 import ContentLibraries
 import Favourites
 import Home
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -75,7 +76,6 @@ extension HomeScreenFactory {
         let searchResultMapper = makeSearchResultMapper(with: navigationController)
         
         let nodeActions = NodeActions.makeActions(sdk: .shared, navigationController: navigationController)
-        let nodeActionsHandler = nodeActions.makeNodeActionsHandler(toggleEditMode: { _ in })
         
         let recentActionBucketMoreActionsPresenter = RecentActionBucketMoreActionsPresenter(
             navigationController: navigationController,
@@ -109,9 +109,9 @@ extension HomeScreenFactory {
             searchResultsSelectionHandler: HomeSearchNodeSelectionHandler(nodeRouter: nodeRouter),
             searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter),
             recentActionBucketNodeSelectionHandler: RecentActionBucketNodeSelectionHandler(nodeRouter: nodeRouter),
-            recentActionBucketNodesActionHandler: RecentActionBucketNodesActionHandler(
-                nodeRouter: nodeRouter,
-                nodesActionHandler: nodeActionsHandler
+            recentActionBucketNodesActionHandler: makeRecentActionBucketNodesActionHandler(
+                navigationController: navigationController,
+                nodeActions: nodeActions
             ),
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket)
@@ -171,6 +171,33 @@ extension HomeScreenFactory {
                 sdk: MEGASdk.sharedSdk,
                 navigationController: navigationController
             )
+        )
+    }
+
+    private func makeRecentActionBucketNodesActionHandler(
+        navigationController: MEGANavigationController,
+        nodeActions: NodeActions
+    ) -> RecentActionBucketNodesActionHandler {
+        let nodeRouter = HomeSearchResultRouter(
+            navigationController: navigationController,
+            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                nodeActionListener: { nodeActionType, _ in
+                    if nodeActionType == .hide {
+                        DIContainer.tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
+                    }
+                }
+            ),
+            backupsUseCase: backupsUseCase,
+            nodeUseCase: nodeUseCase
+
+        )
+        let nodeActionsHandler = nodeActions.makeNodeActionsHandler(toggleEditMode: { _ in })
+
+        return RecentActionBucketNodesActionHandler(
+            nodeRouter: nodeRouter,
+            nodesActionHandler: nodeActionsHandler
         )
     }
 

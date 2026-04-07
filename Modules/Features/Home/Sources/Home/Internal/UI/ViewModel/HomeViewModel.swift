@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -12,23 +14,27 @@ final class HomeViewModel: ObservableObject {
     @Published var isNetworkConnected = false
     private let homeDeepLink: HomeDeepLink
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     convenience init(
-        homeDeepLink: HomeDeepLink
+        homeDeepLink: HomeDeepLink,
     ) {
         self.init(
             homeDeepLink: homeDeepLink,
-            networkMonitoringUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+            networkMonitoringUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            tracker: DIContainer.tracker
         )
     }
 
     package init(
         homeDeepLink: HomeDeepLink,
-        networkMonitoringUseCase: some NetworkMonitorUseCaseProtocol
+        networkMonitoringUseCase: some NetworkMonitorUseCaseProtocol,
+        tracker: some AnalyticsTracking
     ) {
         self.homeDeepLink = homeDeepLink
         self.networkMonitoringUseCase = networkMonitoringUseCase
         self.isSearching = homeDeepLink.homeSearch
+        self.tracker = tracker
         isNetworkConnected = networkMonitoringUseCase.isConnected()
         
         homeDeepLink
@@ -37,7 +43,9 @@ final class HomeViewModel: ObservableObject {
             .assign(to: &$isSearching)
     }
 
+
     func onTask() async {
+        tracker.trackAnalyticsEvent(with: HomeScreenEvent())
         for await connected in networkMonitoringUseCase.connectionSequence {
             isNetworkConnected = connected
         }
