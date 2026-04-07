@@ -8,10 +8,18 @@ import UIKit
 final class HomeViewRouter: HomeViewRouting {
     private weak var navigationController: UINavigationController?
     private let transfersRouter: TransfersRouter
+    private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
+    private let legacyHomeRouter: any HomeRouterProtocol
 
-    init(navigationController: UINavigationController) {
+    init(
+        navigationController: UINavigationController,
+        offlineFilesUseCase: some OfflineFilesUseCaseProtocol,
+        legacyHomeRouter: some HomeRouterProtocol,
+    ) {
         self.navigationController = navigationController
         self.transfersRouter = TransfersRouter(navigationController: navigationController)
+        self.offlineFilesUseCase = offlineFilesUseCase
+        self.legacyHomeRouter = legacyHomeRouter
     }
 
     func route(to type: HomeWidgetRouteType) {
@@ -27,6 +35,21 @@ final class HomeViewRouter: HomeViewRouting {
         case .transfers:
             showTransfers()
         }
+    }
+
+    func openOfflineFile(base64Handle: String) {
+        guard let handle = offlineFilesUseCase.offlineFile(for: base64Handle)?.localPath,
+              let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
+            .instantiateViewController(withIdentifier: "OfflineViewControllerID") as? OfflineViewController else {
+            return
+        }
+        navigationController?.popToRootViewController(animated: false)
+        navigationController?.pushViewController(offlineVC, animated: true)
+        offlineVC.openFileFromWidget(with: handle)
+    }
+
+    func openNode(base64Handle: String) {
+        legacyHomeRouter.showNode(base64Handle)
     }
 
     private func route(to shortcutType: ShortcutType) {

@@ -483,7 +483,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypePresentFavouritesNode:
             if ([Helper hasSession_alertIfNot] && UIApplication.mainTabBarRootViewController) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
-                (MEGALinkManager.urlType == URLTypeShowFavourites) ? [mainTBC showFavouritesNodeWithHandle:nil] : [mainTBC showFavouritesNodeWithHandle:url.lastPathComponent];
+                (MEGALinkManager.urlType == URLTypeShowFavourites) ? [mainTBC showFavouritesWithNodeHandle:nil] : [mainTBC showFavouritesWithNodeHandle:url.lastPathComponent];
                 [self resetLinkAndURLType];
             }
             break;

@@ -1,3 +1,4 @@
+import Combine
 import Favourites
 import MEGAAssets
 import MEGAConnectivity
@@ -19,13 +20,14 @@ public final class HomeDeepLink: ObservableObject {
 public struct HomeView: View {
     private enum NavigationRoute: Hashable {
         case shortcut(ShortcutType)
+        case recents
     }
 
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var navigator: HomeNavigation
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var searchText = ""
-    
+    private let quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
     private let dependency: Dependency
 
     private var isIphoneInLandscape: Bool {
@@ -47,13 +49,15 @@ public struct HomeView: View {
     public init(
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
-        tabBarHidden: Binding<Bool>
+        tabBarHidden: Binding<Bool>,
+        quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
     ) {
         self.dependency = dependency
         _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
+        self.quickAccessRoutePublisher = quickAccessRoutePublisher
     }
-    
+
     public var body: some View {
         NavigationStack(path: $navigator.path) {
             content
@@ -63,8 +67,22 @@ public struct HomeView: View {
         .environmentObject(navigator)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .task { await viewModel.onTask() }
+        .onReceive(quickAccessRoutePublisher.compactMap { $0 }) {
+            switch $0 {
+            case .recents:
+                navigator.append(NavigationRoute.recents)
+            case .offlines:
+                dependency.router.route(to: .shortcut(.offline))
+            case .offlineFile(let base64Handle):
+                dependency.router.openOfflineFile(base64Handle: base64Handle)
+            case .favourites:
+                navigator.append(NavigationRoute.shortcut(.favourites))
+            case .favouriteNode(let handle):
+                dependency.router.openNode(base64Handle: handle)
+            }
+        }
     }
-    
+
     var content: some View {
         listContent
             .searchableVisible(text: $searchText, isPresented: $viewModel.isSearching, placement: .navigationBarDrawer(displayMode: .always))
@@ -139,6 +157,18 @@ public struct HomeView: View {
             case .offline:
                 EmptyView() // Handled by UIKit routing
             }
+        case .recents:
+            RecentActionBucketsListView(
+                dependency: RecentActionBucketsListView.Dependency(
+                    userNameProvider: dependency.userNameProvider,
+                    recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+                    downloadedNodesListener: dependency.downloadedNodesListener,
+                    selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+                    nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+                    moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
+                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
+                )
+            )
         }
     }
 

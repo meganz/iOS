@@ -15,7 +15,9 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
             }
         )
     }
-    
+
+    @Published var quickAccessRoute: QuickAccessRoute?
+
     private let dependency: HomeView.Dependency
     private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
     private let homeDeepLink: HomeDeepLink = HomeDeepLink()
@@ -69,7 +71,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
         let homeView = HomeView(
             dependency: dependency,
             homeDeepLink: homeDeepLink,
-            tabBarHidden: isTabBarHidden
+            tabBarHidden: isTabBarHidden,
+            quickAccessRoutePublisher: $quickAccessRoute.eraseToAnyPublisher()
         )
         .environmentObject(miniPlayerVisibility)
         
@@ -94,7 +97,6 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
 }
 
 // MARK: - SnackBarLayoutCustomizable
-
 extension HomeViewHostingController: SnackBarLayoutCustomizable {
     /// Temporary quick fix for the Home snackbar overlap on pre-iOS 26.
     ///
@@ -114,7 +116,7 @@ extension HomeViewHostingController: SnackBarLayoutCustomizable {
               !tabBar.isHidden else {
             return 0
         }
-        
+
         return max(tabBar.frame.height - view.safeAreaInsets.bottom, 0)
     }
 }
@@ -123,11 +125,11 @@ extension HomeViewHostingController: AudioPlayerPresenterProtocol {
     public func updateContentView(_ height: CGFloat) {
         miniPlayerVisibility.height = height
     }
-    
+
     public func hasUpdatedContentView() -> Bool {
         miniPlayerVisibility.height != 0
     }
-    
+
     func setupMiniPlayerVisibility() {
         miniPlayerVisibility
             .$isHidden
@@ -137,5 +139,10 @@ extension HomeViewHostingController: AudioPlayerPresenterProtocol {
                 }
             }
             .store(in: &cancelables)
+    }
+}
+extension HomeViewHostingController: QuickAccessRouting {
+    func handle(quickAccessRoute: QuickAccessRoute) {
+        self.quickAccessRoute = quickAccessRoute
     }
 }

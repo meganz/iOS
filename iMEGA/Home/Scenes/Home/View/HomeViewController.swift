@@ -1,3 +1,4 @@
+import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -820,4 +821,22 @@ extension ViewModePreferenceEntity {
             return nil
         }
     }
+}
+
+extension HomeViewController: QuickAccessRouting {
+    func handle(quickAccessRoute: Home.QuickAccessRoute) {
+        switch quickAccessRoute {
+        case .recents:
+            showRecents()
+        case .offlines:
+            showOfflines()
+        case .offlineFile(let handle):
+            showOfflineFile(handle)
+        case .favourites:
+            showFavourites()
+        case .favouriteNode(let handle):
+            router.showNode(handle)
+        }
+    }
+
 }

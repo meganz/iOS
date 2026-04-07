@@ -94,39 +94,6 @@
     [self showAchievementsScreen];
 }
 
-- (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle {
-    NSInteger homeTabIndex = [TabManager homeTabIndex];
-    self.selectedIndex = homeTabIndex;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
-    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
-    if (base64handle) {
-        [homeRouting showOfflineFile:base64handle];
-    } else {
-        [homeRouting showOfflines];
-    }
-}
-
-- (void)showFavouritesNodeWithHandle:(NSString * _Nullable )base64handle {
-    NSInteger homeTabIndex = [TabManager homeTabIndex];
-    self.selectedIndex = homeTabIndex;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
-    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
-    if (base64handle) {
-        [homeRouting showFavouritesNode:base64handle];
-    } else {
-        [homeRouting showFavourites];
-    }
-}
-
-- (void)showRecents {
-    NSInteger homeTabIndex = [TabManager homeTabIndex];
-    self.selectedIndex = homeTabIndex;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
-
-    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
-    [homeRouting showRecents];
-}
-
 - (void)showAddContact {
     InviteContactViewController *inviteContactVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
     MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];

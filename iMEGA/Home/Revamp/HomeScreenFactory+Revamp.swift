@@ -51,7 +51,11 @@ extension HomeScreenFactory {
             onSelectAction: { favouritesSelectActionSubject.send($0) }
         )
 
-        let router = HomeViewRouter(navigationController: navigationController)
+        let legacyHomeRouter = HomeRouter(
+            navigationController: navigationController,
+            tabBarController: tabBarController
+        )
+        let router = HomeViewRouter(navigationController: navigationController, offlineFilesUseCase: offlineFilesUseCase, legacyHomeRouter: legacyHomeRouter)
 
         let nodeRouter = HomeSearchResultRouter(
             navigationController: navigationController,

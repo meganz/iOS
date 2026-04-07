@@ -1,6 +1,7 @@
 import Accounts
 import ChatRepo
 import Combine
+import Home
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -236,6 +237,47 @@ extension MainTabBarController {
               navController.viewControllers.last as? (any BottomOverlayPresenterProtocol) != nil else { return }
         
         showPSAViewIfNeeded()
+    }
+
+    @objc func showRecents() {
+        let homeTabIndex = TabManager.homeTabIndex()
+        selectedIndex = homeTabIndex
+        guard let quickAccessRouter = getQuickAccessRouter() else { return }
+        quickAccessRouter.handle(quickAccessRoute: .recents)
+    }
+
+    @objc func showOfflineAndPresentFile(handle base64handle: String?) {
+        let homeTabIndex = TabManager.homeTabIndex()
+        selectedIndex = homeTabIndex
+        guard let quickAccessRouter = getQuickAccessRouter() else { return }
+        if let base64handle {
+            quickAccessRouter.handle(quickAccessRoute: .offlineFile(base64handle))
+        } else {
+            quickAccessRouter.handle(quickAccessRoute: .offlines)
+        }
+    }
+
+    @objc func showFavourites(nodeHandle base64handle: String?) {
+        let homeTabIndex = TabManager.homeTabIndex()
+        selectedIndex = homeTabIndex
+        guard let quickAccessRouter = getQuickAccessRouter() else { return }
+        if let base64handle {
+            quickAccessRouter.handle(quickAccessRoute: .favouriteNode(base64handle))
+        } else {
+            quickAccessRouter.handle(quickAccessRoute: .favourites)
+        }
+    }
+    
+    private func getQuickAccessRouter() -> (any QuickAccessRouting)? {
+        guard let navigationController = selectedViewController as? MEGANavigationController else {
+            MEGALogError("Could not get quick access router with selectedViewController: \(String(describing: selectedViewController))")
+            return nil
+        }
+        guard let quickAccessRouter = navigationController.viewControllers.first as? (any QuickAccessRouting) else {
+            MEGALogError("Could not get quick access router with navigation's root view controller: \(String(describing: navigationController.viewControllers.first))")
+            return nil
+        }
+        return quickAccessRouter
     }
 }
 
