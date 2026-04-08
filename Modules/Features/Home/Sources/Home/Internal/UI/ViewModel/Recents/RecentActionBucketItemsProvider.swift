@@ -11,6 +11,7 @@ final class RecentActionBucketItemsProvider: SearchResultsProviding {
     private let recentActionBucketRepository: any RecentActionBucketRepositoryProtocol
     private let resultMapper: any RecentActionBucketItemResultMapping
     private let downloadedNodesListener: any DownloadedNodesListening
+    private let userAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let recentNodesUseCase: any RecentNodesUseCaseProtocol
     private let currentNodes: Atomic<[NodeEntity]> = Atomic(wrappedValue: [])
 
@@ -19,6 +20,7 @@ final class RecentActionBucketItemsProvider: SearchResultsProviding {
         recentActionBucketRepository: some RecentActionBucketRepositoryProtocol = RecentActionBucketRepository.newRepo,
         resultMapper: any RecentActionBucketItemResultMapping,
         downloadedNodesListener: some DownloadedNodesListening,
+        userAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
         recentNodesUseCase: some RecentNodesUseCaseProtocol = RecentNodesUseCase(
             recentNodesRepository: RecentNodesRepository.newRepo,
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
@@ -31,6 +33,7 @@ final class RecentActionBucketItemsProvider: SearchResultsProviding {
         self.recentActionBucketRepository = recentActionBucketRepository
         self.resultMapper = resultMapper
         self.downloadedNodesListener = downloadedNodesListener
+        self.userAttributeUseCase = userAttributeUseCase
         self.recentNodesUseCase = recentNodesUseCase
     }
 
@@ -43,7 +46,10 @@ final class RecentActionBucketItemsProvider: SearchResultsProviding {
             return SearchResultsEntity(results: [], availableChips: [], appliedChips: [])
         }
 
-        guard let bucket = try? await recentActionBucketRepository.getRecentActionBucket(byId: bucketId) else { return nil }
+        guard let bucket = try? await recentActionBucketRepository.getRecentActionBucket(
+            byId: bucketId,
+            excludeSensitives: !userAttributeUseCase.shouldShowHiddenNodes
+        ) else { return nil }
 
         currentNodes.mutate { $0 = bucket.nodes }
         return SearchResultsEntity(

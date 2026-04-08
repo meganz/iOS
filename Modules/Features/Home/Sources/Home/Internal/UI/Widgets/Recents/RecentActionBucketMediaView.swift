@@ -58,13 +58,25 @@ struct RecentActionBucketMediaView: View {
                 }
             }
             .miniPlayerAware()
-            .task { await viewModel.monitorBucketUpdates() }
+            .task {
+                await viewModel.loadBucketItems()
+                await viewModel.monitorBucketUpdates()
+            }
             .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
             .onChange(of: viewModel.editMode) { mode in
                 navigator.tabBarHidden = mode.isEditing
                 miniPlayerVisibility.isHidden = mode.isEditing
+            }
+            .onChange(of: viewModel.isBucketEmpty) { isEmpty in
+                guard isEmpty else { return }
+                navigator.removeLast()
+            }
+            .onDisappear {
+                if let snackBar = viewModel.fileNoLongerAvailableSnackBar {
+                    navigator.showSnackBar(snackBar)
+                }
             }
     }
 

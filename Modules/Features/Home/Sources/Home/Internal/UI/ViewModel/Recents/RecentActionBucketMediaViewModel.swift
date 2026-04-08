@@ -3,6 +3,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 @MainActor
@@ -16,15 +17,19 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
     @Published private(set) var selectedPhotos: [HandleEntity: NodeEntity] = [:]
     @Published private(set) var bottomBarDisabled: Bool = false
     @Published private var bucket: RecentActionBucketEntity
-    
+    @Published private(set) var isBucketEmpty: Bool = false
+    @Published private(set) var fileNoLongerAvailableSnackBar: SnackBar?
+
     private let titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol
+    private let bucketItemsUseCase: any RecentActionBucketItemsUseCaseProtocol
     private let bucketItemsUpdateUseCase: any RecentActionBucketItemsUpdateUseCaseProtocol
     private var cancellables: Set<AnyCancellable> = []
     
     init(
         bucket: RecentActionBucketEntity,
         titleUseCase: some RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase(),
-        bucketItemsUpdateUseCase: some RecentActionBucketItemsUpdateUseCaseProtocol = RecentActionBucketItemsUpdateUseCase()
+        bucketItemsUpdateUseCase: some RecentActionBucketItemsUpdateUseCaseProtocol = RecentActionBucketItemsUpdateUseCase(),
+        bucketItemsUseCase: some RecentActionBucketItemsUseCaseProtocol = RecentActionBucketItemsUseCase(),
     ) {
         self.bucket = bucket
         self.titleUseCase = titleUseCase
@@ -35,6 +40,7 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
             contentMode: .recentBucket,
             globalHeaderType: .none
         )
+        self.bucketItemsUseCase = bucketItemsUseCase
 
         photoLibraryContentViewModel
             .selection
@@ -80,13 +86,15 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
                 )
             }
             .assign(to: &$navigationTitle)
-        
+
         $bucket
             .dropFirst()
-            .map {
-                $0.photoLibrary
+            .sink { [weak self] updatedBucket in
+                guard let self else { return }
+                photoLibraryContentViewModel.library = updatedBucket.photoLibrary
+                synchronizeSelection(with: updatedBucket)
             }
-            .assign(to: &photoLibraryContentViewModel.$library)
+            .store(in: &cancellables)
     }
 
     func enterEditMode() {
@@ -101,10 +109,42 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
 
-    func monitorBucketUpdates() async {
-        for await updatedBucket in bucketItemsUpdateUseCase.bucketUpdates(forId: bucket.id) {
-            guard !Task.isCancelled else { break }
+    func loadBucketItems() async {
+        guard let updatedBucket = await bucketItemsUseCase.fetchBucketContent(forId: bucket.id) else {
+            return setupSnackBarAndExit()
+        }
+        if updatedBucket.nodes.map(\.handle) != bucket.nodes.map(\.handle) {
             bucket = updatedBucket
+        }
+    }
+
+    func monitorBucketUpdates() async {
+        for await update in bucketItemsUpdateUseCase.bucketUpdates(forId: bucket.id) {
+            guard !Task.isCancelled else { break }
+            switch update {
+            case .available(let updatedBucket):
+                bucket = updatedBucket
+            case .unavailable:
+                setupSnackBarAndExit()
+            }
+            if isBucketEmpty { break } // once the bucket becomes empty, we don't need to observe updates anymore
+        }
+    }
+
+    private func setupSnackBarAndExit() {
+        fileNoLongerAvailableSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.MixedFileBucket.Snackbar.filesNotAvailable)
+        isBucketEmpty = true
+    }
+
+    private func synchronizeSelection(with updatedBucket: RecentActionBucketEntity) {
+        let currentSelection = photoLibraryContentViewModel.selection.photos
+        guard !currentSelection.isEmpty else { return }
+
+        let updatedNodes = Dictionary(uniqueKeysWithValues: updatedBucket.nodes.map { ($0.handle, $0) })
+        let validSelection = currentSelection.keys.compactMap { updatedNodes[$0] }
+
+        if validSelection.count != currentSelection.count {
+            photoLibraryContentViewModel.selection.setSelectedPhotos(validSelection)
         }
     }
 }

@@ -2,6 +2,7 @@ import Combine
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
 import Search
@@ -13,7 +14,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         let bucket: RecentActionBucketEntity
         let resultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
-        var titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
+        let titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
     }
 
     @Published var bottomBarAction: RecentActionBottomBarAction?
@@ -24,9 +25,13 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
     @Published private(set) var navigationTitle: String = ""
     @Published private(set) var navigationSubtitle: String?
     @Published private(set) var selectedNodes: Set<HandleEntity> = []
+    @Published private(set) var isBucketEmpty: Bool = false
+    @Published private(set) var fileNoLongerAvailableSnackBar: SnackBar?
 
     private let dependency: Dependency
     private var cancellables: Set<AnyCancellable> = []
+
+    private let bucketItemsUpdateUseCase: any RecentActionBucketItemsUpdateUseCaseProtocol
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge { [weak self] in
@@ -73,14 +78,14 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
             sortHeaderViewPressedEvent: {}
         )
     }()
-    
-    func toggleSelectAll() {
-        searchResultsContainerViewModel.toggleSelectAll()
-    }
 
-    init(dependency: Dependency) {
+    init(
+        dependency: Dependency,
+        bucketItemsUpdateUseCase: some RecentActionBucketItemsUpdateUseCaseProtocol = RecentActionBucketItemsUpdateUseCase()
+    ) {
         self.dependency = dependency
-        
+        self.bucketItemsUpdateUseCase = bucketItemsUpdateUseCase
+
         $editMode
             .dropFirst()
             .removeDuplicates()
@@ -134,5 +139,15 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+
+    func toggleSelectAll() {
+        searchResultsContainerViewModel.toggleSelectAll()
+    }
+    
+    func observeEmptyItemsEvent() async {
+        _ = await bucketItemsUpdateUseCase.bucketUpdates(forId: dependency.bucket.id).first { @Sendable in $0 == RecentActionBucketUpdatesEntity.unavailable }
+        isBucketEmpty = true
+        fileNoLongerAvailableSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.MixedFileBucket.Snackbar.filesNotAvailable)
     }
 }

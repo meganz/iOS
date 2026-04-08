@@ -83,6 +83,18 @@ struct RecentActionBucketItemsView: View {
                 navigator.tabBarHidden = mode.isEditing
                 miniPlayerVisibility.isHidden = mode.isEditing
             }
+            .onChange(of: viewModel.isBucketEmpty) { isEmpty in
+                guard isEmpty else { return }
+                navigator.removeLast()
+            }
+            .task {
+                await viewModel.observeEmptyItemsEvent()
+            }
+            .onDisappear {
+                if let snackBar = viewModel.fileNoLongerAvailableSnackBar {
+                    navigator.showSnackBar(snackBar)
+                }
+            }
     }
 
     @ViewBuilder

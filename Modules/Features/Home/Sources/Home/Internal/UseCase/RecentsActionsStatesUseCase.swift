@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -59,23 +60,27 @@ struct RecentsActionsStatesUseCase: RecentsActionsStatesUseCaseProtocol {
     var states: AnyAsyncSequence<RecentWidgetUseCaseState> {
         let interval = throttleInterval
         let updates = recentNodesUseCase.recentActionBucketsUpdates
-
         return AsyncStream { continuation in
-            let task = Task {
-                var lastEmitTime: ContinuousClock.Instant?
-                for await _ in updates {
-                    let now = ContinuousClock.now
-                    if let last = lastEmitTime, now < last + .seconds(interval) {
-                        // Within throttle window, skip this event
-                        continue
+            let subject = PassthroughSubject<Void, Never>()
+
+            let cancellable = subject
+                .throttle(for: .seconds(interval), scheduler: DispatchQueue.main, latest: true)
+                .sink {
+                    Task {
+                        continuation.yield(await self.getLatestBucketState())
                     }
-                    lastEmitTime = now
-                    continuation.yield(await self.getLatestBucketState())
+                }
+
+            let task = Task {
+                for await _ in updates {
+                    subject.send(())
                 }
                 continuation.finish()
             }
+
             continuation.onTermination = { _ in
                 task.cancel()
+                cancellable.cancel()
             }
         }.eraseToAnyAsyncSequence()
     }
