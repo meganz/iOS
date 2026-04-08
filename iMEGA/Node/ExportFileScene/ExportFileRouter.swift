@@ -10,10 +10,12 @@ import UIKit
 final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?
     private let sender: Any?
+    private let popoverSourceRect: CGRect?
     
-    init(presenter: UIViewController, sender: Any?) {
+    init(presenter: UIViewController, sender: Any?, popoverSourceRect: CGRect? = nil) {
         self.presenter = presenter
         self.sender = sender
+        self.popoverSourceRect = popoverSourceRect
     }
     
     // MARK: - Dispatch actions without viewcontroller -
@@ -68,6 +70,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         
         if let viewSender = sender as? UIView {
             activityViewController.popoverPresentationController?.sourceView = viewSender
+            activityViewController.popoverPresentationController?.sourceRect = popoverSourceRect ?? viewSender.bounds
         } else if let buttonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = buttonSender
         }

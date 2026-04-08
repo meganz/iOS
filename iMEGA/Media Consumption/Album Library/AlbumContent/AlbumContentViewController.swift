@@ -419,10 +419,30 @@ final class AlbumContentViewController: UIViewController, ViewType {
               !selectedNodes.isEmpty else {
             return
         }
-        
-        ExportFileRouter(presenter: self, sender: sender)
+
+        ExportFileRouter(
+            presenter: self,
+            sender: exportPopoverSourceView(for: sender),
+            popoverSourceRect: exportPopoverSourceRect(for: sender)
+        )
             .export(nodes: selectedNodes.toNodeEntities())
         endEditingMode()
+    }
+
+    private func exportPopoverSourceView(for sender: Any) -> Any? {
+        guard sender is UIBarButtonItem, toolbar.superview != nil else {
+            return sender
+        }
+
+        return view
+    }
+
+    private func exportPopoverSourceRect(for sender: Any) -> CGRect? {
+        guard sender is UIBarButtonItem, toolbar.superview != nil else {
+            return nil
+        }
+
+        return toolbar.frame
     }
     
     private func addFloatingAddButton() {
