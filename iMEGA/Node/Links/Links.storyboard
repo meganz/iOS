@@ -219,7 +219,11 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="OBP-SX-HhZ"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonsBottomPaddingConstraint" destination="Gfh-Ba-Fi5" id="bpc-ol-k9z"/>
+                        <outlet property="buttonsStackView" destination="QLD-dk-7iA" id="bsv-ol-k9z"/>
                         <outlet property="cancelBarButtonItem" destination="4wR-WW-9ce" id="Iku-jO-YKe"/>
+                        <outlet property="importButtonWidthConstraint" destination="V7Q-eF-e0r" id="ibw-ol-k9z"/>
+                        <outlet property="openButtonWidthConstraint" destination="Stc-Uk-Yag" id="obw-ol-k9z"/>
                         <outlet property="importButton" destination="CVa-wS-olB" id="Wsc-Hn-jNu"/>
                         <outlet property="mainView" destination="GzC-xY-ksk" id="qVK-lQ-voh"/>
                         <outlet property="moreBarButtonItem" destination="kO4-pI-oRB" id="0jT-ds-EvU"/>

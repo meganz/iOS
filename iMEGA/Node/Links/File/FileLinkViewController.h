@@ -10,6 +10,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIStackView *buttonsStackView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *importButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *openButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsBottomPaddingConstraint;
 
 @property (strong, nonatomic, nullable) MEGANode *node;
 @property (nonatomic, strong, nullable) NSString *publicLinkString;

@@ -66,6 +66,37 @@ extension FileLinkViewController {
             self.clearBackBarButton()
             edgesForExtendedLayout = .bottom
             extendedLayoutIncludesOpaqueBars = true
+            setupButtonsLayoutForLandscape()
+        }
+    }
+
+    private func setupButtonsLayoutForLandscape() {
+        guard #available(iOS 26.0, *),
+              let stackView = buttonsStackView,
+              let parent = stackView.superview else { return }
+
+        let landscapeConstraints = [
+            stackView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 16),
+            parent.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16)
+        ]
+        
+        let importWidthConstraint = importButtonWidthConstraint
+        let openWidthConstraint = openButtonWidthConstraint
+        let bottomPaddingConstraint = buttonsBottomPaddingConstraint
+
+        let apply: (FileLinkViewController) -> Void = { vc in
+            let landscape = vc.traitCollection.verticalSizeClass == .compact
+            stackView.axis = landscape ? .horizontal : .vertical
+            stackView.distribution = landscape ? .fillEqually : .fill
+            landscapeConstraints.forEach { $0.isActive = landscape }
+            importWidthConstraint?.isActive = !landscape
+            openWidthConstraint?.isActive = !landscape
+            bottomPaddingConstraint?.isActive = !landscape
+        }
+
+        apply(self)
+        registerForTraitChanges([UITraitVerticalSizeClass.self]) { (vc: FileLinkViewController, _) in
+            apply(vc)
         }
     }
 }
