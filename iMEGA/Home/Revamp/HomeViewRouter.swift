@@ -54,6 +54,8 @@ final class HomeViewRouter: HomeViewRouting {
 
     private func route(to shortcutType: ShortcutType) {
         switch shortcutType {
+        case .audios:
+            showAudios()
         case .offline:
             showOffline()
         case .favourites:
@@ -70,6 +72,15 @@ final class HomeViewRouter: HomeViewRouting {
 
     private func showTransfers() {
         transfersRouter.showTransfers()
+    }
+    
+    private func showAudios() {
+        guard let navigationController else {
+            assertionFailure("Navigation controller is nil when trying to push videos explorer view")
+            return
+        }
+
+        FilesExplorerRouter(navigationController: navigationController, explorerType: .audio).start()
     }
 
     private func showUpgradePlanView() {

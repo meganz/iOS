@@ -209,6 +209,8 @@ extension MEGAAssets {
         public static var favouritesHomeChip: SwiftUI.Image { MEGAImageBundle.favouritesHomeChip }
         public static var videosHomeChip: SwiftUI.Image { MEGAImageBundle.videosHomeChip }
         public static var offlineHomeChip: SwiftUI.Image { MEGAImageBundle.offlineHomeChip }
+        public static var audiosHomeChip: SwiftUI.Image { MEGAImageBundle.audiosHomeChip }
+        
         // MARK: - DeviceCenter
         public static var android: SwiftUI.Image { MEGAImageBundle.android }
         public static var drive: SwiftUI.Image { MEGAImageBundle.drive }

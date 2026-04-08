@@ -154,7 +154,7 @@ public struct HomeView: View {
                     ),
                     tabBarHidden: $navigator.tabBarHidden
                 )
-            case .offline:
+            case .offline, .audios:
                 EmptyView() // Handled by UIKit routing
             }
         case .recents:
@@ -181,7 +181,7 @@ public struct HomeView: View {
                         switch shortcutType {
                         case .favourites:
                             navigator.append(NavigationRoute.shortcut(.favourites))
-                        case .offline:
+                        case .offline, .audios:
                             dependency.router.route(to: .shortcut(shortcutType))
                         }
                     }

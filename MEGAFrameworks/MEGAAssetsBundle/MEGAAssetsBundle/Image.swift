@@ -186,6 +186,8 @@ public struct MEGAImageBundle {
     public static var favouritesHomeChip: Image { Image(.favouritesHomeChip)}
     public static var videosHomeChip: Image { Image(.videosHomeChip) }
     public static var offlineHomeChip: Image { Image(.offlineHomeChip) }
+    public static var audiosHomeChip: Image { Image(.audiosHomeChip) }
+    
     // MARK: - Device Center
     public static var android: Image { Image(.android) }
     public static var drive: Image { Image(.drive) }
