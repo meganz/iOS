@@ -487,6 +487,21 @@ extension PhotoLibraryCollectionViewCoordinator: UIGestureRecognizerDelegate {
         return true
     }
 
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // In album picker mode, the sheet dismiss gesture (an external pan
+        // gesture) must wait for drag selection to fail before it can begin.
+        // Drag selection fails when the pan doesn't start on a photo cell,
+        // allowing the sheet to be dismissed from non-cell areas.
+        if gestureRecognizer === dragSelectionPanGesture,
+           representer.contentMode == .albumPicker,
+           viewModel.isEditing,
+           otherGestureRecognizer is UIPanGestureRecognizer,
+           otherGestureRecognizer !== collectionView?.panGestureRecognizer {
+            return true
+        }
+        return false
+    }
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         gestureRecognizer === collectionView?.panGestureRecognizer && otherGestureRecognizer === dragSelectionPanGesture
     }
