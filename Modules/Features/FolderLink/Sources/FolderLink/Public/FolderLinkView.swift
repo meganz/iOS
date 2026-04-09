@@ -197,6 +197,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     
     private var backButton: some View {
         Button {
+            guard !navigationPath.isEmpty else { return }
             navigationPath.removeLast()
         } label: {
             Image(uiImage: MEGAAssets.UIImage.backArrow)
