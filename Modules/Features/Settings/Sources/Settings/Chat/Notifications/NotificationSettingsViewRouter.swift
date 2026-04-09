@@ -7,11 +7,14 @@ import UIKit
 public final class NotificationSettingsViewRouter: Routing {
     private weak var navigationController: UINavigationController?
     private weak var baseViewController: UIViewController?
+    private let transferIndicatorConfigurator: ((UIViewController) -> Void)?
 
     public init(
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil
     ) {
         self.navigationController = navigationController
+        self.transferIndicatorConfigurator = transferIndicatorConfigurator
     }
     
     public func build() -> UIViewController {
@@ -26,6 +29,8 @@ public final class NotificationSettingsViewRouter: Routing {
     }
     
     public func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let viewController = build()
+        transferIndicatorConfigurator?(viewController)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

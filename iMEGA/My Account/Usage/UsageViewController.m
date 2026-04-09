@@ -35,6 +35,7 @@
     [super viewWillAppear:animated];
     
     self.navigationItem.title = LocalizedString(@"Storage", @"Navigate title for the storage information screen");
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
 }
 
 - (void)setUpPieChartView {

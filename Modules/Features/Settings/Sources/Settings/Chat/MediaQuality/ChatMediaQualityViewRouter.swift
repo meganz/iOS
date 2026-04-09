@@ -9,9 +9,14 @@ import UIKit
 public final class ChatMediaQualityViewRouter: Routing {
     private weak var navigationController: UINavigationController?
     private weak var baseViewController: UIViewController?
-    
-    public init(navigationController: UINavigationController?) {
+    private let transferIndicatorConfigurator: ((UIViewController) -> Void)?
+
+    public init(
+        navigationController: UINavigationController?,
+        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil
+    ) {
         self.navigationController = navigationController
+        self.transferIndicatorConfigurator = transferIndicatorConfigurator
     }
     
     public func build() -> UIViewController {
@@ -29,6 +34,8 @@ public final class ChatMediaQualityViewRouter: Routing {
     }
     
     public func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let viewController = build()
+        transferIndicatorConfigurator?(viewController)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

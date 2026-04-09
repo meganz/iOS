@@ -150,6 +150,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             navigationItem.rightBarButtonItems = [moreBarButtonItem]
         }
         setupContextMenuBarButton()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
         
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar)

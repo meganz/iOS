@@ -328,6 +328,7 @@
         }
             
     }
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
 }
 
 - (void)showInviteToolbarButtonIfNeeded {
@@ -1244,6 +1245,7 @@
 
 - (IBAction)backAction:(UIBarButtonItem *)sender {
     self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     switch (self.contactsMode) {
         case ContactsModeChatNamingGroup:
             [self.navigationController popViewControllerAnimated:YES];
@@ -1263,6 +1265,7 @@
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         self.navigationItem.leftBarButtonItems = enableEditing ? @[self.selectAllBarButtonItem] : @[];
+        [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     }
     
     [self setTableViewEditing:enableEditing animated:YES];

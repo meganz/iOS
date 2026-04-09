@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 struct RecentActionBucketsListView: View {
     struct Dependency {
@@ -17,6 +18,7 @@ struct RecentActionBucketsListView: View {
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
     }
     
     enum Route: Hashable {
@@ -42,6 +44,8 @@ struct RecentActionBucketsListView: View {
                     BackButton()
                 }
                 
+                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+
                 ToolbarItem(placement: .topBarTrailing) {
                     moreOptionsButton
                 }
@@ -180,7 +184,8 @@ struct RecentActionBucketsListView: View {
                 dependency: RecentActionBucketMediaView.Dependency(
                     router: dependency.photoLibraryContentViewRouter,
                     nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter
+                    moreActionsPresenter: dependency.moreActionsPresenter,
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 )
             )
         }

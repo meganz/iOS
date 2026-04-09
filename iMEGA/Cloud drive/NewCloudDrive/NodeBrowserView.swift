@@ -7,6 +7,7 @@ import MEGASwiftUI
 import MEGAUIComponent
 import Search
 import SwiftUI
+import Transfer
 import UIKit
 
 struct NodeBrowserView: View {
@@ -26,12 +27,16 @@ struct NodeBrowserView: View {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     leftToolbarContent
                 }
-                
+
                 toolbarNavigationTitle
-                
+
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     rightToolbarContent
                 }
+
+                TransferIndicatorBarItemConfigurator.toolbarFactory.toolbarContent(
+                    trailingItemCount: transferIndicatorTrailingItemCount
+                )
             }.navigationBarBackButtonHidden(viewModel.hidesBackButton)
     }
     
@@ -158,5 +163,12 @@ struct NodeBrowserView: View {
     
     private var searchResultsBottomInset: CGFloat {
         shouldShowFloatingAddButton ? 70.0 : 0
+    }
+
+    private var transferIndicatorTrailingItemCount: Int {
+        if case .regular = viewModel.viewState {
+            return (!isCloudDriveRevampEnabled || viewModel.viewModeAwareMediaDiscoveryViewModel != nil) ? 2 : 1
+        }
+        return 0
     }
 }

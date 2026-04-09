@@ -7,6 +7,14 @@ import MEGARepo
 @MainActor
 public enum SharedTransferIndicator {
     private static var configuredViewModel: TransferIndicatorViewModel?
+    
+    /// Marks whether the currently stored view model is only a temporary fallback
+    /// created before the shared indicator is properly configured. This allows
+    /// `configure()` to later replace it with the real implementation.
+    private static var isFallback = false
+
+    /// Whether `configure()` has been called with a real use case.
+    public static var isConfigured: Bool { configuredViewModel != nil && !isFallback }
 
     /// Shared Transfer Indicator ViewModel consumed across screens.
     ///
@@ -20,16 +28,29 @@ public enum SharedTransferIndicator {
         assertionFailure("SharedTransferIndicator must be configured before use.")
         let fallback = TransferIndicatorViewModel(useCase: HiddenTransferIndicatorUseCase())
         configuredViewModel = fallback
+        isFallback = true
         return fallback
     }
 
-    /// Configures the shared transfer indicator once, injecting only the pieces that
+    /// Current visibility snapshot. Returns `false` when not yet configured.
+    public static var isCurrentlyVisible: Bool {
+        guard isConfigured else { return false }
+        return viewModel.isVisible
+    }
+
+    /// Publisher that emits whether the transfer indicator should be visible.
+    /// Returns `nil` when not yet configured — callers should skip subscription.
+    public static var isVisiblePublisher: AnyPublisher<Bool, Never>? {
+        guard isConfigured else { return nil }
+        return viewModel.$isVisible.eraseToAnyPublisher()
+    }
+
+    /// Configures the shared transfer indicator, injecting only the pieces that
     /// still need app-side knowledge while keeping the rest of the setup in-package.
     ///
-    /// The shared ViewModel and its monitoring lifecycle stay encapsulated within the
-    /// package, so callers only need to invoke this one-time setup entry point.
+    /// Safe to call even if an early fallback was created — will replace it.
     public static func configure(hasPendingUploads: @escaping @Sendable () -> Bool) {
-        guard configuredViewModel == nil else { return }
+        guard !isConfigured else { return }
 
         let useCase = TransferIndicatorUseCase(
             transferCounterUseCase: TransferCounterUseCase(
@@ -52,6 +73,7 @@ public enum SharedTransferIndicator {
         let viewModel = TransferIndicatorViewModel(useCase: useCase)
         viewModel.startMonitoring()
         configuredViewModel = viewModel
+        isFallback = false
     }
 }
 

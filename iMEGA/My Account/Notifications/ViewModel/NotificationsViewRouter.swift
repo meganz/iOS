@@ -47,7 +47,9 @@ struct NotificationsViewRouter: NotificationsViewRouting {
     }
     
     func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let vc = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: vc)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func navigateThroughNodeHierarchy(

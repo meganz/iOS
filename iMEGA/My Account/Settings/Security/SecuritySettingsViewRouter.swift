@@ -17,6 +17,7 @@ struct SecuritySettingsViewRouter: Routing {
     func start() {
         let viewController = build()
         viewController.title = Strings.Localizable.Settings.Section.security
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
         presenter?.pushViewController(viewController, animated: true)
     }
 }

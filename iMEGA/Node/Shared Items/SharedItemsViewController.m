@@ -116,6 +116,7 @@
     [self reloadUI];
     
     [self setBackBarButton];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
 
     // Update the search results when the search controller is active and the keyboard isn't shown.
     if (self.searchController.isActive) {

@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 struct RecentsWidgetView: View {
     struct Dependency {
@@ -16,6 +17,7 @@ struct RecentsWidgetView: View {
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
     }
     
     private let supportedMenuActions: [HomeAddMenuAction] = [
@@ -183,7 +185,8 @@ struct RecentsWidgetView: View {
                 selectionHandler: dependency.selectionHandler,
                 nodeActionHandler: dependency.nodeActionHandler,
                 moreActionsPresenter: dependency.moreActionsPresenter,
-                photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
+                photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
+                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
             )
         )
     }

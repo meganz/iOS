@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAUIKit
 import SwiftUI
+import Transfer
 
 public protocol DeviceListRouting: Routing {
     func showDeviceBackups(_ device: DeviceEntity, deviceIcon: String, isCurrentDevice: Bool)
@@ -26,6 +27,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let backupStatusProvider: any BackupStatusProviding
     private let deviceIconProvider: any DeviceIconProviding
     private let hidesBottomBarWhenPushed: Bool
+    private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory?
 
     public init(
         navigationController: UINavigationController?,
@@ -38,7 +40,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         deviceCenterActions: [ContextAction],
         deviceIconProvider: some DeviceIconProviding = DeviceIconProvider(),
         backupStatusProvider: some BackupStatusProviding = BackupStatusProvider(),
-        hidesBottomBarWhenPushed: Bool = false
+        hidesBottomBarWhenPushed: Bool = false,
+        transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory? = nil
     ) {
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
@@ -54,6 +57,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.backupStatusProvider = backupStatusProvider
         self.deviceIconProvider = deviceIconProvider
         self.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
+        self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
 
         super.init()
     }
@@ -112,10 +116,11 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
             deviceCenterActions: deviceCenterActions,
-            backupStatusProvider: backupStatusProvider
+            backupStatusProvider: backupStatusProvider,
+            transferIndicatorToolbarFactory: transferIndicatorToolbarFactory
         ).start()
     }
-    
+
     public func showCurrentDeviceEmptyState(
         _ deviceId: String,
         deviceName: String,
@@ -138,7 +143,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
             deviceCenterActions: deviceCenterActions,
-            backupStatusProvider: backupStatusProvider
+            backupStatusProvider: backupStatusProvider,
+            transferIndicatorToolbarFactory: transferIndicatorToolbarFactory
         ).start()
     }
 }

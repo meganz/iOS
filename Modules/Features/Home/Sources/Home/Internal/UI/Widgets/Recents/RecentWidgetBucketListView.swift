@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import Search
 import SwiftUI
+import Transfer
 
 struct RecentWidgetBucketListView: View {
     struct Dependency {
@@ -16,6 +17,7 @@ struct RecentWidgetBucketListView: View {
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
     }
 
     enum Route: Hashable {
@@ -105,7 +107,8 @@ struct RecentWidgetBucketListView: View {
                     selectionHandler: dependency.selectionHandler,
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter,
-                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
+                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 )
             )
         case let .bucketItems(bucket):
@@ -126,7 +129,8 @@ struct RecentWidgetBucketListView: View {
                 dependency: RecentActionBucketMediaView.Dependency(
                     router: dependency.photoLibraryContentViewRouter,
                     nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter
+                    moreActionsPresenter: dependency.moreActionsPresenter,
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 )
             )
         }

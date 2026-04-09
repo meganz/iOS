@@ -8,9 +8,14 @@ import SwiftUI
 public struct AccountMenuView: View {
     @StateObject var viewModel: AccountMenuViewModel
     private let headerHeight: CGFloat = 52
+    private let transferIndicator: AnyView
 
-    public init(viewModel: @autoclosure @escaping () -> AccountMenuViewModel) {
+    public init<TransferIndicator: View>(
+        viewModel: @autoclosure @escaping () -> AccountMenuViewModel,
+        @ViewBuilder transferIndicator: () -> TransferIndicator = { EmptyView() }
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
+        self.transferIndicator = AnyView(transferIndicator())
     }
 
     public var body: some View {
@@ -19,10 +24,10 @@ public struct AccountMenuView: View {
             AccountMenuHeaderView(
                 hideHeaderBackground: viewModel.isAtTop,
                 notificationCount: viewModel.appNotificationsCount,
-                headerHeight: headerHeight
-            ) {
-                viewModel.notificationButtonTapped()
-            }
+                headerHeight: headerHeight,
+                buttonTapped: { viewModel.notificationButtonTapped() },
+                transferIndicator: transferIndicator
+            )
         }
         .background(TokenColors.Background.page.swiftUI)
         .toolbar(.hidden)
@@ -110,6 +115,7 @@ private struct AccountMenuHeaderView: View {
     let notificationCount: Int
     let headerHeight: CGFloat
     let buttonTapped: () -> Void
+    let transferIndicator: AnyView
 
     var body: some View {
         headerView
@@ -123,6 +129,7 @@ private struct AccountMenuHeaderView: View {
     private var headerView: some View {
         HStack {
             Spacer()
+            transferIndicator
             NotificationsView(
                 notificationCount: notificationCount,
                 buttonTapped: buttonTapped,

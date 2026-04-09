@@ -37,23 +37,31 @@ final class ChatSettingsViewRouter: Routing {
     
     func start() {
         let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
         presenter?.pushViewController(viewController, animated: true)
     }
-    
+
     func navigateToStatus() {
         guard let presenter else { return }
-        SetStatusViewRouter(navigationController: presenter).start()
+        SetStatusViewRouter(
+            navigationController: presenter,
+            transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }
+        ).start()
     }
-    
+
     func navigateToNotifications() {
         guard let presenter else { return }
         NotificationSettingsViewRouter(
-            navigationController: presenter
+            navigationController: presenter,
+            transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }
         ).start()
     }
-    
+
     func navigateToMediaQuality() {
         guard let presenter else { return }
-        ChatMediaQualityViewRouter(navigationController: presenter).start()
+        ChatMediaQualityViewRouter(
+            navigationController: presenter,
+            transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }
+        ).start()
     }
 }

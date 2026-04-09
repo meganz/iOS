@@ -15,17 +15,20 @@ public final class AboutViewRouter: Routing {
     private let appBundle: Bundle
     private let systemVersion: String
     private let deviceName: String
-    
+    private let transferIndicatorConfigurator: ((UIViewController) -> Void)?
+
     public init(
         presenter: UINavigationController?,
         appBundle: Bundle,
         systemVersion: String,
-        deviceName: String
+        deviceName: String,
+        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil
     ) {
         self.presenter = presenter
         self.appBundle = appBundle
         self.systemVersion = systemVersion
         self.deviceName = deviceName
+        self.transferIndicatorConfigurator = transferIndicatorConfigurator
     }
     
     public func build() -> UIViewController {
@@ -50,6 +53,8 @@ public final class AboutViewRouter: Routing {
     }
     
     public func start() {
-        presenter?.pushViewController(build(), animated: true)
+        let viewController = build()
+        transferIndicatorConfigurator?(viewController)
+        presenter?.pushViewController(viewController, animated: true)
     }
 }

@@ -713,7 +713,6 @@
 		5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA53FE82462B26000D168B9 /* InviteContact.storyboard */; };
 		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */; };
-		7F2C6A643607000100A1B2C3 /* TransfersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */; };
 		5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */; };
@@ -946,6 +945,7 @@
 		77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
+		7F2C6A643607000100A1B2C3 /* TransfersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */; };
 		830294AF2C11BB1F0002DF63 /* CallControlsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */; };
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
@@ -1311,6 +1311,7 @@
 		83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */; };
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
+		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
 		940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */; };
 		940196D72DAD1E0100181689 /* QRSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */; };
 		9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */; };
@@ -3624,7 +3625,6 @@
 		5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+InAppPurchase.swift"; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
 		5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransfersWidgetViewController+Additions.swift"; sourceTree = "<group>"; };
-		7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRouter.swift; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
 		5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -3843,6 +3843,7 @@
 		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
 		77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareDestinationTableViewController.m; sourceTree = "<group>"; };
+		7F2C6A633607000100A1B2C3 /* TransfersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersRouter.swift; sourceTree = "<group>"; };
 		830294AE2C11BB1F0002DF63 /* CallControlsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallControlsViewModelTests.swift; sourceTree = "<group>"; };
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
@@ -4204,6 +4205,7 @@
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
 		844A439E2F7D20B600AE5D17 /* Transfer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transfer; sourceTree = "<group>"; };
+		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
 		940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryTests.swift; sourceTree = "<group>"; };
 		940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveBottomToolbarFactoryTests.swift; sourceTree = "<group>"; };
@@ -7509,6 +7511,7 @@
 				C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */,
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
 				947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */,
+				84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */,
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
 				947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */,
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
@@ -16312,6 +16315,7 @@
 				94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				A86AE2552E9661C5006AEBBF /* TransferBadgeState.swift in Sources */,
+				84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */,
 				B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,
 				B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */,

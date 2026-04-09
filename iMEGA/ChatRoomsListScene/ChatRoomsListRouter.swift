@@ -60,6 +60,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     
     func showInviteContactScreen() {
         let controller = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "InviteContactViewControllerID")
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: controller)
         navigationController?.pushViewController(controller, animated: true)
     }
             

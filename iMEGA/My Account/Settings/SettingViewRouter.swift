@@ -103,7 +103,8 @@ extension SettingViewRouter {
                                  router: AboutViewRouter(presenter: presenter,
                                                          appBundle: .main,
                                                          systemVersion: UIDevice.current.systemVersion,
-                                                         deviceName: UIDevice.current.deviceName() ?? ""))
+                                                         deviceName: UIDevice.current.deviceName() ?? "",
+                                                         transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }))
             
             SettingCellViewModel(
                 image: MEGAAssets.UIImage.termsAndPoliciesSettings,
@@ -111,7 +112,8 @@ extension SettingViewRouter {
                 router: TermsAndPoliciesRouter(
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                     domainNameHandler: { DIContainer.domainName },
-                    navigationController: presenter
+                    navigationController: presenter,
+                    transferIndicatorConfigurator: { TransferIndicatorBarItemConfigurator.injectIfNeeded(into: $0) }
                 )
             )
             

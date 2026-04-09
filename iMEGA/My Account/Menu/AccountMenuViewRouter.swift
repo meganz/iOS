@@ -8,6 +8,7 @@ import MEGAPreference
 import MEGARepo
 import MEGASwiftUI
 import SwiftUI
+import Transfer
 
 @MainActor
 public protocol AccountMenuItemsNavigating {
@@ -124,7 +125,11 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         )
 
         let hostingViewController = UIHostingController(
-            rootView: AccountMenuView(viewModel: viewModel)
+            rootView: AccountMenuView(
+                viewModel: viewModel
+            ) {
+                TransferIndicatorBarItemConfigurator.toolbarFactory.content
+            }
         )
 
         hostingViewController.navigationItem.backButtonTitle = ""
@@ -208,6 +213,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         }
 
         vc.hidesBottomBarWhenPushed = true
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: vc)
         navigationController.pushViewController(vc, animated: true)
     }
 

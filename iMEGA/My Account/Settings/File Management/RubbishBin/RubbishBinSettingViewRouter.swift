@@ -31,6 +31,8 @@ final class RubbishBinSettingViewRouter: Routing {
     }
     
     func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

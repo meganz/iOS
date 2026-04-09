@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 public struct FavouritesView: View {
     public struct Dependency {
@@ -20,6 +21,7 @@ public struct FavouritesView: View {
         let nodeSelectionHandler: any NodeSelectionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let selectActionPublisher: AnyPublisher<HandleEntity, Never>
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
         public init(
             fileSearchUseCase: some FilesSearchUseCaseProtocol,
@@ -31,7 +33,8 @@ public struct FavouritesView: View {
             nodesActionHandler: some NodesActionHandling,
             nodeSelectionHandler: some NodeSelectionHandling,
             moreActionsPresenter: some MoreNodeActionsPresenting,
-            selectActionPublisher: AnyPublisher<HandleEntity, Never>
+            selectActionPublisher: AnyPublisher<HandleEntity, Never>,
+            transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         ) {
             self.fileSearchUseCase = fileSearchUseCase
             self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
@@ -43,6 +46,7 @@ public struct FavouritesView: View {
             self.nodeSelectionHandler = nodeSelectionHandler
             self.moreActionsPresenter = moreActionsPresenter
             self.selectActionPublisher = selectActionPublisher
+            self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
         }
     }
 
@@ -117,6 +121,7 @@ public struct FavouritesView: View {
                     }
                 }
             }
+            dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
             ToolbarItemGroup(placement: .bottomBar) {
                 if viewModel.editMode.isEditing {
                     bottomBar

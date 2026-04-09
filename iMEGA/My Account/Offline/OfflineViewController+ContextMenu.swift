@@ -16,6 +16,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     @objc func configureNavigationBarButtons() {
         guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
             navigationItem.rightBarButtonItems = nil
+            TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
             return
         }
 
@@ -27,6 +28,7 @@ extension OfflineViewController: DisplayMenuDelegate {
         contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
         
         navigationItem.rightBarButtonItems = [contextBarButtonItem]
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {

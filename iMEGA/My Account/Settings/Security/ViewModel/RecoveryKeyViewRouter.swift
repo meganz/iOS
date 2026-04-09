@@ -45,7 +45,9 @@ final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
             return
         }
 
-        navigationController.pushViewController(build(), animated: true)
+        let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentView() {

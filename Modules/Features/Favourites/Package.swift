@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../Transfer"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../Search"),
@@ -30,6 +31,7 @@ let package = Package(
             name: "Favourites",
             dependencies: [
                 "MEGASwiftUI",
+                "Transfer",
                 "MEGADesignToken",
                 "MEGAAssets",
                 "MEGADomain",

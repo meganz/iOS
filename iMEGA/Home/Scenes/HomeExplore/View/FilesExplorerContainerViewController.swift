@@ -79,6 +79,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
             style: .plain,
             target: self,
             action: #selector(cancelButtonPressed(_:)))]
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     func showSelectAllBarButton() {
@@ -105,6 +106,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         navigationItem.leftBarButtonItem = nil
         updateTitle(currentState.title)
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: currentState.title ?? "")
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     func setViewModePreference(_ preference: ViewModePreferenceEntity) {
@@ -126,6 +128,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
             showCancelRightBarButton()
         } else {
             navigationItem.rightBarButtonItem = nil
+            TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
         }
     }
 
@@ -138,6 +141,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         } else {
             [contextBarButtonItem]
         }
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     func audioPlayer(hidden: Bool) {

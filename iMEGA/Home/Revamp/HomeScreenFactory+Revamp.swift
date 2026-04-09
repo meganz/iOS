@@ -87,6 +87,11 @@ extension HomeScreenFactory {
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
             router: router,
+            transferIndicatorToolbarFactory: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne)
+                ? .indicator {
+                    router.route(to: .transfers)
+                }
+                : .hidden,
             avatarFetcher: makeAvatarFetcher(
                 userNameProvider: userNameProvider,
                 userImageUseCase: userImageUseCase,

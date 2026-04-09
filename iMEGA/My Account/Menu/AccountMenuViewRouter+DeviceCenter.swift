@@ -22,7 +22,7 @@ extension AccountMenuViewRouter {
     }
 
     func showDeviceCentre() {
-        DeviceListViewRouter(
+        let router = DeviceListViewRouter(
             navigationController: navigationController,
             deviceCenterBridge: makeDeviceCenterBridge(),
             deviceCenterUseCase:
@@ -43,8 +43,13 @@ extension AccountMenuViewRouter {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationCenter: NotificationCenter.default,
             deviceCenterActions: makeDeviceCenterActionList(),
-            hidesBottomBarWhenPushed: true
-        ).start()
+            hidesBottomBarWhenPushed: true,
+            transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory
+        )
+
+        let viewController = router.build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
     private func makeDeviceCenterBridge() -> DeviceCenterBridge {

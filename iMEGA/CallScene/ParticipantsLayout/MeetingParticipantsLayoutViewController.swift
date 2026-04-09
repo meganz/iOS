@@ -509,10 +509,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.backArrow, style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     private func updateRightBarItems() {
         navigationItem.rightBarButtonItems = rightBarButtons()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     private func rightBarButtons() -> [UIBarButtonItem] {

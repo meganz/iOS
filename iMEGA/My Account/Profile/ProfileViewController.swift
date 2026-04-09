@@ -9,6 +9,8 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import MEGASwiftUI
+import SwiftUI
+import Transfer
 import UIKit
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
@@ -58,6 +60,7 @@ import UIKit
         avatarViewHeightConstraint.constant = avatarCollapsedPosition
         
         backButton.setImage(MEGAAssets.UIImage.backArrow, for: .normal)
+        setupTransferIndicator()
         
         nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) ?? "" }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -436,6 +439,25 @@ extension ProfileViewController: UITableViewDelegate {
         }
         UpgradeSubscriptionRouter(presenter: navigationController)
             .showUpgradeAccount()
+    }
+}
+
+// MARK: - Transfer Indicator
+
+extension ProfileViewController {
+    func setupTransferIndicator() {
+        let indicator = TransferIndicatorBarItemConfigurator.toolbarFactory.content
+        let hostingController = UIHostingController(rootView: indicator)
+        hostingController.view.backgroundColor = .clear
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+
+        NSLayoutConstraint.activate([
+            hostingController.view.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
     }
 }
 

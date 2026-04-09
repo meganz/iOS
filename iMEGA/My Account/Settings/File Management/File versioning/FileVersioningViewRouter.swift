@@ -37,7 +37,9 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     }
     
     @objc func start() {
-        navigationController?.pushViewController(build(), animated: true)
+        let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func showDisableAlert(completion: @escaping (Bool) -> Void) {

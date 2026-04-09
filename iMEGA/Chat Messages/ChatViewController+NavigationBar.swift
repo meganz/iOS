@@ -7,17 +7,37 @@ import MEGADomain
 
 extension ChatViewController {
     func configureNavigationBar() {
+        setupLeftBarButtons()
         addRightBarButtons()
         setTitleView()
         setupLiquidGlassNavigationBar()
+    }
+
+    /// Explicitly sets a back button as a `leftBarButtonItem` so the transfer
+    /// indicator can share the leading side without replacing the system back button.
+    private func setupLeftBarButtons() {
+        guard presentingViewController == nil else { return }
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.backward"),
+            style: .plain,
+            target: self,
+            action: #selector(popBack)
+        )
+        navigationItem.leftBarButtonItems = [backButton]
+    }
+
+    @objc private func popBack() {
+        navigationController?.popViewController(animated: true)
     }
     
     func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = createNavBarRightButtonItems(isEditing: true)
+            TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
             return
         }
         navigationItem.rightBarButtonItems = createNavBarRightButtonItems()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
                 
         chatContentViewModel.dispatch(.updateCallNavigationBarButtons)
     }

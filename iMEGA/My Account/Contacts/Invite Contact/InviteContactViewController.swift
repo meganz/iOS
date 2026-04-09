@@ -125,6 +125,7 @@ class InviteContactViewController: UIViewController {
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
         guard let enterEmailVC = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
         tracker.trackEnterEmailAddressTapped()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: enterEmailVC)
         navigationController?.pushViewController(enterEmailVC, animated: true)
     }
 

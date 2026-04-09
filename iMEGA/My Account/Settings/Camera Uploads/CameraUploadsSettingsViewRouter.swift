@@ -21,6 +21,7 @@ struct CameraUploadsSettingsViewRouter: Routing {
     
     func start() {
         let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
         presenter?.pushViewController(viewController, animated: true)
     }
 }

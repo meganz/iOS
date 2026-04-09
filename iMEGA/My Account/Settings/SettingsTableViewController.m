@@ -23,6 +23,7 @@
     NSString *title = LocalizedString(@"settingsTitle", @"");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle:title];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
 }
 
 #pragma mark - Private

@@ -4,6 +4,7 @@ import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
+import Transfer
 
 struct ChatRoomsListView: View {
     @ObservedObject var viewModel: ChatRoomsListViewModel
@@ -29,6 +30,8 @@ struct ChatRoomsListView: View {
             }
         }
         .toolbar {
+            TransferIndicatorBarItemConfigurator.toolbarFactory.toolbarContent(trailingItemCount: 2)
+
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text(viewModel.title)

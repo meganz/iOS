@@ -6,12 +6,14 @@ import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
+import Transfer
 
 struct RecentActionBucketMediaView: View {
     struct Dependency {
         let router: any PhotoLibraryContentViewRouting
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
     }
 
     @StateObject private var viewModel: RecentActionBucketMediaViewModel
@@ -42,15 +44,17 @@ struct RecentActionBucketMediaView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     leadingBarButton
                 }
-                
+
                 ToolbarItem(placement: .principal) {
                     titleView
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     trailingBarButton
                 }
-                
+
+                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+
                 if viewModel.editMode.isEditing {
                     ToolbarItemGroup(placement: .bottomBar) {
                         bottomBar

@@ -100,6 +100,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private func configureBarButtons() {
         configureLeftBarButton()
         configureRightBarButton()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     private func configureLeftBarButton() {

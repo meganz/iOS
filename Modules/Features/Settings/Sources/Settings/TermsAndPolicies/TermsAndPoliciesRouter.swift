@@ -14,17 +14,20 @@ public struct TermsAndPoliciesRouter: TermsAndPoliciesRouting {
     private weak var presenter: UIViewController?
     private let accountUseCase: any AccountUseCaseProtocol
     private let domainNameHandler: () -> String
+    private let transferIndicatorConfigurator: ((UIViewController) -> Void)?
 
     public init(
         accountUseCase: some AccountUseCaseProtocol,
         domainNameHandler: @escaping () -> String,
         navigationController: UINavigationController? = nil,
-        presenter: UIViewController? = nil
+        presenter: UIViewController? = nil,
+        transferIndicatorConfigurator: ((UIViewController) -> Void)? = nil
     ) {
         self.accountUseCase = accountUseCase
         self.domainNameHandler = domainNameHandler
         self.navigationController = navigationController
         self.presenter = presenter
+        self.transferIndicatorConfigurator = transferIndicatorConfigurator
     }
 
     public func build() -> UIViewController {
@@ -41,10 +44,12 @@ public struct TermsAndPoliciesRouter: TermsAndPoliciesRouting {
     }
     
     public func start() {
+        let viewController = build()
+        transferIndicatorConfigurator?(viewController)
         if let navigationController {
-            navigationController.pushViewController(build(), animated: true)
+            navigationController.pushViewController(viewController, animated: true)
         } else if let presenter {
-            presenter.present(build(), animated: true)
+            presenter.present(viewController, animated: true)
         }
     }
     

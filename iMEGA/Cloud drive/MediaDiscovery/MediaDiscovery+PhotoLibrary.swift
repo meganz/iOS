@@ -20,5 +20,6 @@ extension MediaDiscoveryViewController: PhotoLibraryProvider {
     
     func hideNavigationEditBarButton(_ hide: Bool) {
         navigationItem.rightBarButtonItem = hide ? nil : rightBarButtonItem
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
 }

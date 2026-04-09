@@ -3,13 +3,15 @@ import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
+import Transfer
 
 struct BackupListView: View {
     @ObservedObject var viewModel: BackupListViewModel
-    
+    var transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory?
+
     var body: some View {
         SearchableView(
-            wrappedView: BackupListContentView(viewModel: viewModel),
+            wrappedView: BackupListContentView(viewModel: viewModel, transferIndicatorToolbarFactory: transferIndicatorToolbarFactory),
             searchText: $viewModel.searchText,
             isEditing: $viewModel.isSearchActive,
             isFilteredListEmpty: viewModel.isFilteredBackupsEmpty,
@@ -20,6 +22,7 @@ struct BackupListView: View {
 
 struct BackupListContentView: View {
     @ObservedObject var viewModel: BackupListViewModel
+    var transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory?
     @State private var selectedBackupViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
@@ -46,6 +49,9 @@ struct BackupListContentView: View {
                 .listStyle(.plain)
                 .background()
             }.toolbar {
+                if let transferIndicatorToolbarFactory {
+                    transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     DeviceCenterMenu(
                         viewModel: viewModel,

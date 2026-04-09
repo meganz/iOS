@@ -113,11 +113,7 @@ public struct HomeView: View {
             .navigationTitle(Strings.Localizable.home)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    TransferIndicatorView {
-                        dependency.router.route(to: .transfers)
-                    }
-                }
+                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         viewModel.isSearching = true
@@ -150,7 +146,8 @@ public struct HomeView: View {
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
                         moreActionsPresenter: dependency.favouritesMoreActionsPresenter,
-                        selectActionPublisher: dependency.favouritesSelectActionPublisher
+                        selectActionPublisher: dependency.favouritesSelectActionPublisher,
+                        transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                     ),
                     tabBarHidden: $navigator.tabBarHidden
                 )
@@ -166,7 +163,8 @@ public struct HomeView: View {
                     selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
                     nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                     moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
-                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
+                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 )
             )
         }
@@ -205,7 +203,8 @@ public struct HomeView: View {
                             selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
                             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
-                            photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter
+                            photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
+                            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                         ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )

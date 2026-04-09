@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAUIKit
 import SwiftUI
+import Transfer
 
 public protocol BackupListRouting: Routing {
     func updateTitle(_ title: String)
@@ -22,7 +23,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let deviceCenterActions: [ContextAction]
     private let backupStatusProvider: any BackupStatusProviding
     private let folderIconProvider: any FolderIconProviding
-    
+    private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory?
+
     public init(
         selectedDevice: SelectedDevice,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
@@ -35,7 +37,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         deviceCenterBridge: DeviceCenterBridge,
         deviceCenterActions: [ContextAction],
         backupStatusProvider: some BackupStatusProviding = BackupStatusProvider(),
-        folderIconProvider: some FolderIconProviding = FolderIconProvider()
+        folderIconProvider: some FolderIconProviding = FolderIconProvider(),
+        transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory? = nil
     ) {
         self.selectedDevice = selectedDevice
         self.devicesUpdatePublisher = devicesUpdatePublisher
@@ -49,6 +52,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.deviceCenterActions = deviceCenterActions
         self.backupStatusProvider = backupStatusProvider
         self.folderIconProvider = folderIconProvider
+        self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
     }
     
     public func build() -> UIViewController {
@@ -66,7 +70,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             folderIconProvider: folderIconProvider,
             deviceCenterActions: deviceCenterActions
         )
-        let backupListView = BackupListView(viewModel: backupListViewModel)
+        let backupListView = BackupListView(viewModel: backupListViewModel, transferIndicatorToolbarFactory: transferIndicatorToolbarFactory)
         let hostingController = AudioPlayerHostingController(rootView: backupListView)
         baseViewController = hostingController
         updateTitle(selectedDevice.name)

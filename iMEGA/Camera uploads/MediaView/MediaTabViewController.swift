@@ -174,6 +174,8 @@ final class MediaTabViewController: UIViewController {
         } else {
             trailingViewModels.reversed().map { makeBarButtonItem(from: $0) }
         }
+
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
 
     private func makeBarButtonItem(from viewModel: NavigationBarItemViewModel) -> UIBarButtonItem {

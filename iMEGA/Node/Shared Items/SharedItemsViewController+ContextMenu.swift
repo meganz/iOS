@@ -65,6 +65,8 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             
             navigationItem.rightBarButtonItem = contextBarButtonItem
         }
+
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {

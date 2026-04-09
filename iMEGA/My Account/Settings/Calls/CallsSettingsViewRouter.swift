@@ -26,6 +26,7 @@ final class CallsSettingsViewRouter: Routing {
     func start() {
         let viewController = build()
         viewController.title = Strings.Localizable.Settings.Section.Calls.title
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
         presenter?.pushViewController(viewController, animated: true)
     }
 }

@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
+@MainActor
 public struct TransferIndicatorView: View {
     private let action: (() -> Void)?
     private let previewState: TransferIndicatorViewState?

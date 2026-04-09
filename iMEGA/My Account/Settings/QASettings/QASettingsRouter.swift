@@ -32,7 +32,9 @@ struct QASettingsRouter: QASettingsRouting {
     }
     
     func start() {
-        presenter?.pushViewController(build(), animated: true)
+        let viewController = build()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: viewController)
+        presenter?.pushViewController(viewController, animated: true)
     }
     
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction]) {

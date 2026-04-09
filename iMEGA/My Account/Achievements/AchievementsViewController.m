@@ -80,6 +80,8 @@
                                                                           action:@selector(dismissViewController)];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
     }
+
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     
     [self setupColors];
 }

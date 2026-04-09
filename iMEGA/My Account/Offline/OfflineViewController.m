@@ -761,6 +761,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateAudioPlayerVisibility:editing];
     
     [self updateBottomInset:editing];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
 }
 
 - (void)updateNavigationBarTitle {
