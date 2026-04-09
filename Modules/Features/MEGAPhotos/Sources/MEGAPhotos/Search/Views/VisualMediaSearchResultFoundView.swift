@@ -23,6 +23,7 @@ struct VisualMediaSearchResultFoundView: UIViewRepresentable {
             )
         )
         collectionView.backgroundColor = TokenColors.Background.page
+        collectionView.keyboardDismissMode = .onDrag
         context.coordinator.configureDataSource(for: collectionView)
         return collectionView
     }
