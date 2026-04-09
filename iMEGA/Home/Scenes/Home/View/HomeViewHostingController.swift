@@ -22,7 +22,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
     private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
     private let homeDeepLink: HomeDeepLink = HomeDeepLink()
     private var shouldHandleSearchDeeplink = false
-    
+
     private var cancelables: Set<AnyCancellable> = []
     
     init(dependency: HomeView.Dependency) {
@@ -37,6 +37,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMiniPlayerVisibility()
+        startStreamingInfoServerIfNeeded()
         setupHomeView()
         navigationItem.backButtonDisplayMode = .minimal
 
@@ -90,7 +91,16 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
         ])
         hostingViewController.didMove(toParent: self)
     }
-    
+
+    // This is an old logic from the legacy home screen
+    // whose purpose was to fix a bug in [IOS-7974]
+    private func startStreamingInfoServerIfNeeded() {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            let streamingInfoUseCase = StreamingInfoUseCase()
+            streamingInfoUseCase.startServer()
+        }
+    }
+
     @objc func activateSearch() {
         homeDeepLink.homeSearch = true
     }
