@@ -45,7 +45,7 @@ final class HomeScreenFactory: NSObject {
         tracker: some AnalyticsTracking,
         enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]
     ) -> UIViewController {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne) {
+        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne) {
             createRevampedHomeScreen(
                 from: tabBarController
             )

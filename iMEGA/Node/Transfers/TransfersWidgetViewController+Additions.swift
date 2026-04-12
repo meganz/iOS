@@ -37,7 +37,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func configProgressIndicator() {
-        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne) else { return }
+        guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne) else { return }
         
         let progressIndicatorView = ProgressIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
         progressIndicatorView.isUserInteractionEnabled = true

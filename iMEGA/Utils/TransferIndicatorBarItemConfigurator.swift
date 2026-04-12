@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGADomain
 import MEGAL10n
 import Transfer
 import UIKit
@@ -6,7 +7,7 @@ import UIKit
 @objc @MainActor
 final class TransferIndicatorBarItemConfigurator: NSObject {
     static var toolbarFactory: TransferIndicatorToolbarFactory {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .homeRevampPhaseOne)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
             ? .indicator(action: presentTransfers)
             : .hidden
     }
