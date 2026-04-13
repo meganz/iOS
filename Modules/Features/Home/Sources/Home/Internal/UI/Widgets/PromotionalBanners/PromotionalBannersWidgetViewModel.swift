@@ -4,18 +4,28 @@ import SwiftUI
 
 @MainActor
 final class PromotionalBannersWidgetViewModel: ObservableObject {
-    @Published var bannerInputs: [PromotionBannerInput] = []
+    @Published var bannerViewModels: [PromotionalBannerViewModel] = []
 
     private let bannerUseCase: any UserBannerUseCaseProtocol
+    private let cache: PromotionalBannerCache
 
     convenience init() {
-        self.init(bannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo))
+        self.init(
+            bannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo),
+            cache: .shared
+        )
     }
 
     package init(
-        bannerUseCase: some UserBannerUseCaseProtocol
+        bannerUseCase: some UserBannerUseCaseProtocol,
+        cache: PromotionalBannerCache = .shared
     ) {
         self.bannerUseCase = bannerUseCase
+        self.cache = cache
+        // Make use of previously fetched cache and display them to the UI immediately
+        // instead of having to re-fetch them which cause snappy UI glitch each time
+        // the view is re-render
+        self.bannerViewModels = cache.cachedViewModels
     }
 
     func onTask() async {
@@ -25,7 +35,8 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
     func closeBanner(bannerIdentifier: Int) async {
         do {
             try await bannerUseCase.dismissBanner(withBannerId: bannerIdentifier)
-            bannerInputs.removeAll { $0.id == bannerIdentifier }
+            bannerViewModels.removeAll { $0.input.id == bannerIdentifier }
+            cache.removeBanner(withId: bannerIdentifier)
         } catch {
             MEGALogError("[Home Promotional Banners] Could not dismiss banner with id \(bannerIdentifier). Error: \(error.localizedDescription)")
         }
@@ -34,7 +45,9 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
     private func loadBanners() async {
         do {
             let banners = try await bannerUseCase.banners(variant: 1).map(\.promotionalBannerInput)
-            bannerInputs = banners
+            guard banners.map(\.id) != cache.cachedViewModels.map(\.input.id) else { return }
+            cache.update(with: banners.map { PromotionalBannerViewModel(input: $0) })
+            bannerViewModels = cache.cachedViewModels
         } catch {
             MEGALogError("[Home Promotional Banners] Could not load banners. Error: \(error.localizedDescription)")
         }

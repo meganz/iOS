@@ -26,24 +26,22 @@ struct PromotionalBannersWidgetView: View {
             HStack(spacing: TokenSpacing._3) {
                 Spacer()
                     .frame(width: TokenSpacing._3)
-                ForEach(viewModel.bannerInputs) { input in
+                ForEach(viewModel.bannerViewModels) { bannerViewModel in
                     PromotionalBanner(
-                        input: input,
+                        viewModel: bannerViewModel,
                         actionHandler: {
-                            guard let url = input.link else { return }
+                            guard let url = bannerViewModel.input.link else { return }
                             urlSelectionHandler(url)
                         }, closeHandler: {
                             Task {
-                                await viewModel.closeBanner(bannerIdentifier: input.id)
+                                await viewModel.closeBanner(bannerIdentifier: bannerViewModel.input.id)
                             }
                         }
                     )
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.3), value: viewModel.bannerInputs.count)
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: viewModel.bannerInputs.count)
+        .animation(.easeInOut(duration: 0.3), value: viewModel.bannerViewModels.count)
         .task {
             await viewModel.onTask()
         }
@@ -62,7 +60,7 @@ private struct PromotionalBanner: View {
     @ScaledMetric private var bannerHeight = Constants.defaultHeight
     @ScaledMetric private var bannerImageSize = Constants.bannerImageSize
 
-    let input: PromotionBannerInput
+    @ObservedObject var viewModel: PromotionalBannerViewModel
     let actionHandler: @MainActor () -> Void
     let closeHandler: @MainActor () -> Void
 
@@ -81,6 +79,9 @@ private struct PromotionalBanner: View {
                 closeButton
             }
         }
+        .task {
+            await viewModel.loadImages()
+        }
     }
 
     private var bannerSize: CGSize {
@@ -89,26 +90,24 @@ private struct PromotionalBanner: View {
         return .init(width: cappedWidth, height: cappedHeight)
     }
 
+    @ViewBuilder
     private var backgroundImage: some View {
-        AsyncImage(url: input.backgroundURL) { result in
-            Group {
-                if let image = result.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    TokenColors.Background.surfaceInverseAccent.swiftUI
-                }
-
+        Group {
+            if let image = viewModel.backgroundImage {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                TokenColors.Background.surfaceInverseAccent.swiftUI
             }
-            .frame(width: bannerSize.width, height: bannerSize.height)
-            .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
-            .contentShape(Rectangle())
         }
+        .frame(width: bannerSize.width, height: bannerSize.height)
+        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
+        .contentShape(Rectangle())
     }
 
     private var title: some View {
-        Text(input.title)
+        Text(viewModel.input.title)
             .font(.footnote)
             .fontWeight(.semibold)
             .foregroundColor(TokenColors.Text.onColor.swiftUI)
@@ -123,7 +122,7 @@ private struct PromotionalBanner: View {
         Button(action: {
             actionHandler()
         }, label: {
-            Text(input.actionTitle)
+            Text(viewModel.input.actionTitle)
                 .dynamicTypeSize(.xSmall ... .xxLarge)
                 .font(.caption2)
                 .fontWeight(.semibold)
@@ -136,20 +135,19 @@ private struct PromotionalBanner: View {
         })
     }
 
+    @ViewBuilder
     private var bannerImage: some View {
-        AsyncImage(url: input.imageURL) { result in
-            Group {
-                if let image = result.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    Color.clear
-                }
+        Group {
+            if let image = viewModel.bannerImage {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                Color.clear
             }
-            .frame(width: bannerImageSize, height: bannerImageSize)
-            .clipped()
         }
+        .frame(width: bannerImageSize, height: bannerImageSize)
+        .clipped()
     }
 
     private var closeButton: some View {
