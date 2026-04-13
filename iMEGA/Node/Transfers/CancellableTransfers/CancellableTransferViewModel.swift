@@ -253,15 +253,13 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     
     private func startFolderUploads() {
         folderTransfers.forEach { transferViewEntity in
-            guard let uploadLocalURL = transferViewEntity.localFileURL else {
+            guard let uploadLocalURL = transferViewEntity.localFileURL,
+                  let uploadOptions = transferViewEntity.uploadOptions else {
                 return
             }
             uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
-                                         fileName: nil,
-                                         appData: transferViewEntity.appData,
-                                         isSourceTemporary: true,
-                                         startFirst: transferViewEntity.priority,
+                                         uploadOptions: uploadOptions,
                                          start: nil) { transferEntity in
                 transferViewEntity.setStage(transferEntity.stage)
                 transferViewEntity.setState(transferEntity.state)

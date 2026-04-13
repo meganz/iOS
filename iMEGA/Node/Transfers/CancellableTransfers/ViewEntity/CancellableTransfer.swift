@@ -17,21 +17,6 @@ import MEGASwift
     @Atomic var state: TransferStateEntity = .none
     @Atomic var stage: TransferStageEntity = .none
     
-    @objc init(handle: HandleEntity = .invalid, parentHandle: HandleEntity = .invalid, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
-        self.handle = handle
-        self.parentHandle = parentHandle
-        self.messageId = .invalid
-        self.chatId = .invalid
-        self.fileLinkURL = fileLinkURL
-        self.localFileURL = localFileURL
-        self.appData = appData
-        self.priority = priority
-        self.isFile = isFile
-        self.type = type
-        super.init()
-        self.$name.mutate { $0 = name }
-    }
-    
     init(
         handle: HandleEntity = .invalid,
         parentHandle: HandleEntity = .invalid,
@@ -59,7 +44,7 @@ import MEGASwift
         self.$uploadOptions.mutate { $0 = uploadOptions }
     }
     
-    @objc init(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
+    init(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, fileLinkURL: URL? = nil, localFileURL: URL? = nil, name: String?, appData: String? = nil, priority: Bool = false, isFile: Bool = true, type: CancellableTransferType) {
         self.handle = handle
         self.parentHandle = .invalid
         self.messageId = messageId
