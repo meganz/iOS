@@ -878,7 +878,26 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         
         delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
-    
+
+    public override func startUpload(withLocalPath localPath: String, parentHandle: UInt64, cancelToken: MEGACancelToken?, options: MEGAUploadOptions, delegate: any MEGATransferDelegate) {
+        let transfer: MockTransfer
+        let error: MockError
+
+        switch stubbedUploadTransferResult {
+        case .success(let stubbedTransfer):
+            transfer = stubbedTransfer
+            error = MockError(errorType: .apiOk)
+        case .failure(let stubbedError):
+            transfer = MockTransfer(type: .upload, parentHandle: parentHandle)
+            error = stubbedError
+        case nil:
+            transfer = MockTransfer(type: .upload, parentHandle: parentHandle)
+            error = MockError(errorType: .apiOk)
+        }
+
+        delegate.onTransferFinish?(self, transfer: transfer, error: error)
+    }
+
     // MARK: - ADS
     
     public override func fetchAds(_ adFlags: AdsFlag, adUnits: MEGAStringList, publicHandle: MEGAHandle, delegate: any MEGARequestDelegate) {

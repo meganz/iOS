@@ -91,7 +91,13 @@ public struct TransferUseCase<T: TransferRepositoryProtocol, M: MetadataUseCaseP
     
     public func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {
         let coordinate = await metadataUseCase.coordinateInTheFile(at: fileUrl)
-        let transferEntity = try await repo.uploadFile(at: fileUrl, to: parent, startHandler: startHandler, progressHandler: progressHandler)
+        let transferEntity = try await repo.uploadFile(
+            at: fileUrl,
+            to: parent.handle,
+            uploadOptions: UploadOptionsEntity(pitagTrigger: .picker, pitagTarget: .cloudDrive),
+            startHandler: startHandler,
+            progressHandler: progressHandler
+        )
         
         if let latitude = coordinate?.latitude,
            let longitude = coordinate?.longitude,

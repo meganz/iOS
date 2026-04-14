@@ -33,10 +33,11 @@ public final class MockTransferRepository: TransferRepositoryProtocol, @unchecke
     }
     
     public func uploadFile(
-        at fileUrl: URL,
-        to parent: NodeEntity,
-        startHandler: ((TransferEntity) -> Void)? = nil,
-        progressHandler: ((TransferEntity) -> Void)? = nil
+        at fileURL: URL,
+        to parentHandle: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        startHandler: ((TransferEntity) -> Void)?,
+        progressHandler: ((TransferEntity) -> Void)?
     ) async throws -> TransferEntity {
         if let error = uploadError { throw error }
         if let stub = stubbedUploadTransfer {
@@ -44,7 +45,7 @@ public final class MockTransferRepository: TransferRepositoryProtocol, @unchecke
             progressHandler?(stub)
             return stub
         }
-        let transfer = TransferEntity(type: .upload, path: fileUrl.path, parentHandle: parent.handle)
+        let transfer = TransferEntity(type: .upload, path: fileURL.path, parentHandle: parentHandle)
         startHandler?(transfer)
         progressHandler?(transfer)
         return transfer

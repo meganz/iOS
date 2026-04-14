@@ -88,21 +88,18 @@ public struct TransferRepository: TransferRepositoryProtocol {
         return sequence
     }
     
-    public func uploadFile(at fileUrl: URL,
-                           to parent: NodeEntity,
-                           startHandler: ((TransferEntity) -> Void)?,
-                           progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity {
-        guard let parentNode = sdk.node(forHandle: parent.handle) else {
-            throw TransferErrorEntity.couldNotFindNodeByHandle
-        }
+    public func uploadFile(
+        at fileURL: URL,
+        to parentHandle: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        startHandler: ((TransferEntity) -> Void)?,
+        progressHandler: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity {
         return try await withAsyncThrowingValue { completion in
-            sdk.startUpload(withLocalPath: fileUrl.path,
-                            parent: parentNode,
-                            fileName: nil,
-                            appData: nil,
-                            isSourceTemporary: false,
-                            startFirst: true,
+            sdk.startUpload(withLocalPath: fileURL.path,
+                            parentHandle: parentHandle,
                             cancelToken: nil,
+                            options: uploadOptions.toMEGAUploadOptions(),
                             delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
                 switch result {
                 case .success(let transfer):

@@ -96,7 +96,8 @@ struct TransferRepositoryTests {
             
             let transfer = try await sut.uploadFile(
                 at: testFileURL,
-                to: defaultParentNode.toNodeEntity(),
+                to: defaultParentNode.handle,
+                uploadOptions: UploadOptionsEntity(),
                 startHandler: nil,
                 progressHandler: nil
             )
@@ -115,7 +116,8 @@ struct TransferRepositoryTests {
             await #expect(performing: {
                 try await sut.uploadFile(
                     at: testFileURL,
-                    to: defaultParentNode.toNodeEntity(),
+                    to: defaultParentNode.handle,
+                    uploadOptions: UploadOptionsEntity(),
                     startHandler: nil,
                     progressHandler: nil
                 )
@@ -125,20 +127,6 @@ struct TransferRepositoryTests {
                 } else {
                     false
                 }
-            })
-        }
-        
-        @Test("Could not find node by handle")
-        func shouldThrowCouldNotFindNodeByHandleError() async throws {
-            let sut = makeSUT(nodes: [])
-            
-            await #expect(throws: TransferErrorEntity.couldNotFindNodeByHandle, performing: {
-                try await sut.uploadFile(
-                    at: testFileURL,
-                    to: defaultParentNode.toNodeEntity(),
-                    startHandler: nil,
-                    progressHandler: nil
-                )
             })
         }
     }

@@ -42,7 +42,23 @@ public protocol TransferRepositoryProtocol: RepositoryProtocol, Sendable {
         collisionResolution: CollisionResolutionEntity
     ) throws -> AnyAsyncSequence<TransferEventEntity>
     
-    func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)?, progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity
+    /// Uploads a file from a specified URL to a parent folder asynchronously.
+    ///
+    /// - Parameters:
+    ///   - fileURL: The URL of the file to upload.
+    ///   - parentHandle: The handle of the parent folder that will receive the uploaded file.
+    ///   - uploadOptions: Configuration options for the upload, including file name, app data, source handling, and priority settings.
+    ///   - startHandler: An optional closure called when the upload starts, providing the transfer entity.
+    ///   - progressHandler: An optional closure called periodically to report upload progress, providing the updated transfer entity.
+    /// - Returns: The transfer entity representing the completed upload.
+    /// - Throws: A `TransferErrorEntity` if the upload fails.
+    func uploadFile(
+        at fileURL: URL,
+        to parentHandle: HandleEntity,
+        uploadOptions: UploadOptionsEntity,
+        startHandler: ((TransferEntity) -> Void)?,
+        progressHandler: ((TransferEntity) -> Void)?
+    ) async throws -> TransferEntity
     
     /// Cancels all ongoing download transfers.
     /// - Throws: An error if the cancellation of download transfers fails.
