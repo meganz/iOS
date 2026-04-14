@@ -57,7 +57,15 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
-    ) { }
+    ) {
+        guard let result = uploadFileResult else { return }
+        switch result {
+        case .success:
+            completion?(.success(transferEntity ?? TransferEntity()))
+        case .failure(let error):
+            completion?(.failure(error))
+        }
+    }
     
     public func uploadFile(
         _ url: URL,

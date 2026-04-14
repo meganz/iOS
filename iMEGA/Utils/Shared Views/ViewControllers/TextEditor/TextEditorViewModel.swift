@@ -209,7 +209,14 @@ final class TextEditorViewModel: ViewModelType {
         let tempUrl = uploadFileUseCase.tempURL(forFilename: fileName)
         do {
             try content.write(toFile: tempUrl.path, atomically: true, encoding: String.Encoding(rawValue: textFile.encode))
-            uploadFileUseCase.uploadFile(tempUrl, toParent: parentHandle, fileName: nil, appData: nil, isSourceTemporary: false, startFirst: false, start: nil, update: nil) { result in
+            let uploadOptions = UploadOptionsEntity(isSourceTemporary: false, pitagTarget: .cloudDrive)
+            uploadFileUseCase.uploadFile(
+                tempUrl,
+                toParent: parentHandle,
+                uploadOptions: uploadOptions,
+                start: nil,
+                progress: nil
+            ) { result in
                 if self.textEditorMode == .edit {
                     self.invokeCommand?(.stopLoading)
                 }
