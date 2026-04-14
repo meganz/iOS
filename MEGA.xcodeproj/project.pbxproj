@@ -590,7 +590,6 @@
 		41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
 		41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
-		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
 		41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */; };
 		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
@@ -2558,7 +2557,6 @@
 		BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */; };
 		BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */; };
 		BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */; };
-		BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */; };
 		BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */; };
 		BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */; };
 		BFE6907B25350E4900CD21F9 /* AudioExploreViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */; };
@@ -3467,8 +3465,6 @@
 		41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityOptionsTableViewController.m; sourceTree = "<group>"; };
 		41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		41AC66461AB1D493003FE8DA /* AboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTableViewController.h; sourceTree = "<group>"; };
-		41AC66471AB1D493003FE8DA /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		41ADA9F01ADE7AC100641BB4 /* HelpTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
 		41ADA9F11ADE7AC100641BB4 /* HelpTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
 		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
@@ -5463,7 +5459,6 @@
 		BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+FilePaths_Tests.swift"; sourceTree = "<group>"; };
-		BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AboutTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExploreViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -7413,7 +7408,6 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				41AC66441AB1D488003FE8DA /* About */,
 				E87C98321CC411D400E2B9E6 /* Advanced */,
 				5B727381240D14A6005816AB /* Appearance */,
 				83AE36BE2886CFCD002F1755 /* Calls */,
@@ -7635,16 +7629,6 @@
 				9D3563D128B5506A00CB3365 /* SecuritySettingsViewRouter.swift */,
 			);
 			path = Security;
-			sourceTree = "<group>";
-		};
-		41AC66441AB1D488003FE8DA /* About */ = {
-			isa = PBXGroup;
-			children = (
-				BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */,
-				41AC66461AB1D493003FE8DA /* AboutTableViewController.h */,
-				41AC66471AB1D493003FE8DA /* AboutTableViewController.m */,
-			);
-			path = About;
 			sourceTree = "<group>";
 		};
 		41ADA9EE1ADE7AB400641BB4 /* Help */ = {
@@ -14720,8 +14704,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
-				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				C40097A42E2798CC00B3934D /* AccountMenuNotificationsViewModel.swift in Sources */,
 				BF62C7B32E14AEDA0008B62D /* AccountMenuViewRouter+DeviceCenter.swift in Sources */,

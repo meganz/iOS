@@ -149,7 +149,6 @@
 #import "CameraUploadOperation+Utils.h"
 #import "AssetResourceUploadOperation.h"
 #import "AssetUploadStatus.h"
-#import "AboutTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "AwaitingEmailConfirmationView.h"
