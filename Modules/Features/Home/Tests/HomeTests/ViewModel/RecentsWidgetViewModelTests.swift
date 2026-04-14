@@ -45,15 +45,30 @@ struct RecentsWidgetViewModelTests {
         }
 
         await useCase.waitForContinuation()
-        useCase.resume(with: .empty)
 
-        await Task.yield()
-        task.cancel()
-
-        guard case .empty = sut.state else {
-            Issue.record("Expected empty state after onTask finishes")
+        guard case .hidden = sut.state else {
+            Issue.record("Expected hidden state while onTask is still waiting for the first refresh")
+            task.cancel()
+            await task.value
             return
         }
+
+        let stateTransitionTask = Task {
+            await stateBecomesEmpty(for: sut)
+        }
+
+        useCase.resume(with: .empty)
+        let didBecomeEmpty = await stateTransitionTask.value
+
+        guard didBecomeEmpty, case .empty = sut.state else {
+            Issue.record("Expected empty state after onTask finishes")
+            task.cancel()
+            await task.value
+            return
+        }
+
+        task.cancel()
+        await task.value
     }
     
     private func makeSUT(
@@ -64,6 +79,18 @@ struct RecentsWidgetViewModelTests {
         recentsActionsStatesUseCase: recentsActionsStatesUseCase,
         clearRecentActionHistoryUseCase: clearRecentActionHistoryUseCase
        )
+    }
+
+    private func stateBecomesEmpty(for sut: RecentsWidgetViewModel) async -> Bool {
+        let publisher = sut.$state
+
+        for await state in publisher.values {
+            if case .empty = state {
+                return true
+            }
+        }
+
+        return false
     }
 }
 
