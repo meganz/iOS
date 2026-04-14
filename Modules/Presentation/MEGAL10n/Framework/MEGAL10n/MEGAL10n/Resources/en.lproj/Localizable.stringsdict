@@ -3314,5 +3314,37 @@
         <string>%d of [A] completed</string>
       </dict>
     </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@count@</string>
+        <key>count</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d item couldn't be prepared for upload</string>
+            <key>other</key>
+            <string>%d items couldn't be prepared for upload</string>
+        </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@total@</string>
+        <key>total</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d of [A] ready</string>
+            <key>other</key>
+            <string>%d of [A] ready</string>
+        </dict>
+    </dict>
   </dict>
 </plist>

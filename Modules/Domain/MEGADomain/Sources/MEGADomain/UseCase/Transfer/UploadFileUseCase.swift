@@ -10,6 +10,7 @@ public enum FileUploadEvent: Sendable {
 // MARK: - Use case protocol -
 public protocol UploadFileUseCaseProtocol: Sendable {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
+    func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String
     func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
     /// Uploads a file from a specified URL to a parent folder.
     ///
@@ -73,6 +74,10 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
     
     public func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         uploadFileRepository.hasExistFile(name: name, parentHandle: parentHandle)
+    }
+
+    public func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String {
+        uploadFileRepository.resolvedFileName(name, inParent: parentHandle)
     }
     
     public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?) {

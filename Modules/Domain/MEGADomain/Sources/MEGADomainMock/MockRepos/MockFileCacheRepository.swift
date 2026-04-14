@@ -7,13 +7,18 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     private let base64Handle: Base64HandleEntity
     private let name: String
     public var tempFolder: URL
+    public var tempUploadURL: URL
     
-    public init(base64Handle: Base64HandleEntity = "",
-                name: String = "",
-                tempFolder: URL = URL(fileURLWithPath: "temp/") ) {
+    public init(
+        base64Handle: Base64HandleEntity = "",
+        name: String = "",
+        tempFolder: URL = URL(fileURLWithPath: "temp/"),
+        tempUploadURL: URL = URL(fileURLWithPath: "temp/upload")
+    ) {
         self.base64Handle = base64Handle
         self.name = name
         self.tempFolder = tempFolder
+        self.tempUploadURL = tempUploadURL
     }
 
     public func tempFileURL(for node: NodeEntity) -> URL {

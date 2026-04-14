@@ -63,17 +63,21 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     func didTapUploadFromPhotoAlbum() {
         tracker.trackAnalyticsEvent(with: HomeChooseFromPhotosMenuToolbarEvent())
-        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-            guard let self else { return }
-            if granted {
-                let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
-                    guard let self else { return }
-                    self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
+        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosManualUploadPhotos) {
+            router.upload(from: .albumNew)
+        } else {
+            permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+                guard let self else { return }
+                if granted {
+                    let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
+                        guard let self else { return }
+                        self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
+                    }
+                    self.router.upload(from: .album(selectionHandler))
+                } else {
+                    self.error = .photos
+                    self.notifyUpdate?(self.outputs)
                 }
-                self.router.upload(from: .album(selectionHandler))
-            } else {
-                self.error = .photos
-                self.notifyUpdate?(self.outputs)
             }
         }
     }

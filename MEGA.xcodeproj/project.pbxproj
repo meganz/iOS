@@ -1784,6 +1784,7 @@
 		A8399F63296C43F90062B6BC /* MEGAPicker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A8399F59296C43F80062B6BC /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
+		A83E52602F8508F8002A37C3 /* MediaImport in Frameworks */ = {isa = PBXBuildFile; productRef = A83E525F2F8508F8002A37C3 /* MediaImport */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
@@ -4666,6 +4667,7 @@
 		A8399F5E296C43F90062B6BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		A8399F60296C43F90062B6BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAPickerFileProvider-Bridging-Header.h"; sourceTree = "<group>"; };
+		A83E525D2F8508EA002A37C3 /* MediaImport */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MediaImport; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstanceWrapper.swift"; sourceTree = "<group>"; };
@@ -5732,6 +5734,7 @@
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				995403F82E3CD0F500468F84 /* KMTransferUtils in Frameworks */,
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
+				A83E52602F8508F8002A37C3 /* MediaImport in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */,
 				A835E4A02ED0636B004CE294 /* MEGAAppPresentationMock in Frameworks */,
@@ -11082,6 +11085,7 @@
 				BF26E7482F3D84A600AF51E5 /* Favourites */,
 				A589D4F12F04EB7400A9B23C /* FolderLink */,
 				BF7758C92F21D6F40091DE2A /* Home */,
+				A83E525D2F8508EA002A37C3 /* MediaImport */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
@@ -13916,6 +13920,7 @@
 				BF7758D02F21D8490091DE2A /* Home */,
 				BF26E7AE2F3EDB8800AF51E5 /* Favourites */,
 				A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */,
+				A83E525F2F8508F8002A37C3 /* MediaImport */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -19520,6 +19525,10 @@
 		A8399FBA296DD5F10062B6BC /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGADomain;
+		};
+		A83E525F2F8508F8002A37C3 /* MediaImport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MediaImport;
 		};
 		A855D23D2A796634001D2168 /* ChatRepo */ = {
 			isa = XCSwiftPackageProductDependency;

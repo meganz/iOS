@@ -44,6 +44,10 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         $newName.mutate { $0 = name }
         return duplicate
     }
+
+    public func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String {
+        name
+    }
     
     public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?) {
         guard let result = uploadFileResult else { return }

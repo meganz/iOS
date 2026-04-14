@@ -2,6 +2,7 @@ import Foundation
 
 public protocol FileCacheRepositoryProtocol: RepositoryProtocol, Sendable {
     var tempFolder: URL { get }
+    var tempUploadURL: URL { get }
     func tempFileURL(for node: NodeEntity) -> URL
     func existingTempFileURL(for node: NodeEntity) -> URL?
     var cachedOriginalImageDirectoryURL: URL { get }

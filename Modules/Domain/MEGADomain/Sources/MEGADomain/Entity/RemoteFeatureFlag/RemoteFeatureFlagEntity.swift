@@ -13,4 +13,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosNewFolderLink = "infl"
     case iosBackgroundContinuedProcessingTransfer = "ibcpt"
     case iosHomeRevampPhaseOne = "ihr1"
+    case iosManualUploadPhotos = "imup"
 }

@@ -15,6 +15,26 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         let node = sdk.childNode(forParent: parent, name: name, type: .file)
         return (node != nil)
     }
+
+    public func resolvedFileName(
+        _ name: String,
+        inParent parentHandle: HandleEntity
+    ) -> String {
+        guard let parent = sdk.node(forHandle: parentHandle) else { return name }
+
+        let url = URL(filePath: name, directoryHint: .notDirectory)
+        let base = url.deletingPathExtension().lastPathComponent
+        let ext = url.pathExtension
+
+        let candidates = (0...Int.max).lazy.map { i -> String in
+            let stem = i == 0 ? base : "\(base)_\(i)"
+            return ext.isEmpty ? stem : "\(stem).\(ext)"
+        }
+
+        return candidates.first { candidate in
+            sdk.childNode(forParent: parent, name: candidate, type: .file) == nil
+        } ?? name
+    }
     
     public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         guard let parentNode = sdk.node(forHandle: parent) else {
@@ -42,13 +62,8 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         progress: ((TransferEntity) -> Void)?,
         completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?
     ) {
-        guard let parentNode = sdk.node(forHandle: parent) else {
-            completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-            return
-        }
-        
         guard let completion else {
-            sdk.startUpload(withLocalPath: url.path, parent: parentNode, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions())
+            sdk.startUpload(withLocalPath: url.path, parentHandle: parent, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions())
             return
         }
         
@@ -56,7 +71,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         transferDelegate.start = start
         transferDelegate.progress = progress
         
-        sdk.startUpload(withLocalPath: url.path, parent: parentNode, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions(), delegate: transferDelegate)
+        sdk.startUpload(withLocalPath: url.path, parentHandle: parent, cancelToken: self.cancelToken.value, options: uploadOptions.toMEGAUploadOptions(), delegate: transferDelegate)
     }
     public func uploadFile(
         _ url: URL,
@@ -65,12 +80,9 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         start: ((TransferEntity) -> Void)?,
         progress: ((TransferEntity) -> Void)?
     ) async throws -> TransferEntity {
-        guard let parentNode = sdk.node(forHandle: parent) else {
-            throw TransferErrorEntity.couldNotFindNodeByHandle
-        }
         return try await withAsyncThrowingValue { completion in
             sdk.startUpload(withLocalPath: url.path,
-                            parent: parentNode,
+                            parentHandle: parent,
                             cancelToken: self.cancelToken.value,
                             options: uploadOptions.toMEGAUploadOptions(),
                             delegate: TransferDelegate(start: start, progress: progress) { result in

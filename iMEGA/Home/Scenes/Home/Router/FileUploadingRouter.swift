@@ -5,6 +5,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 import MEGAUI
+import PhotosUI
 import VisionKit
 
 @MainActor
@@ -37,6 +38,10 @@ final class FileUploadingRouter {
         switch source {
         case .album(let completion):
             presentPhotoAlbumSelection(completion: completion)
+        case .albumNew:
+            Task { @MainActor in
+                await presentPhotoAlbumSelectionNewFlow()
+            }
         case .textFile:
             CreateTextFileAlertViewRouter(presenter: navigationController).start()
         case .camera:
@@ -58,6 +63,20 @@ final class FileUploadingRouter {
                 self.presentDestinationFolderBrowser { targetNode in
                     completion(assets, targetNode)
                 }
+            }
+        }
+    }
+
+    // MARK: - New Photo Album Selection Flow
+
+    private func presentPhotoAlbumSelectionNewFlow() async {
+        let results = await photoPicker.pickResults()
+        guard !results.isEmpty else { return }
+        presentDestinationFolderBrowser { [weak self] targetNode in
+            guard let presenter = self?.navigationController else { return }
+            let assetUploader = CloudDriveAssetUploader(presenter: presenter)
+            Task { @MainActor in
+                await assetUploader.importFromPhotos(results: results, to: targetNode.toNodeEntity())
             }
         }
     }
@@ -222,9 +241,12 @@ final class FileUploadingRouter {
     // MARK: - Event Source
 
     enum FileUploadSource {
-        // Upload from photo album
+        // Upload from photo album (legacy flow)
         case album(_ completion: ([PHAsset], MEGANode) -> Void)
-        
+
+        // Upload from photo album (new flow)
+        case albumNew
+
         // Upload from new text file
         case textFile
 

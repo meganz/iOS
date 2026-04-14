@@ -18,11 +18,18 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
         fileManager.temporaryDirectory
     }
 
+    public let tempUploadURL: URL
+
     public init(fileManager: FileManager) {
         self.fileManager = fileManager
-        self.appGroup =  AppGroupContainer(fileManager: fileManager)
+        self.appGroup = AppGroupContainer(fileManager: fileManager)
         self.cachedOriginalImageDirectoryURL = appGroup.url(for: .cache)
             .appendingPathComponent(Constants.originalCacheDirectory, isDirectory: true)
+
+        let uploadDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appending(path: Constants.uploadsDirectory)
+        try? fileManager.createDirectory(at: uploadDirectory, withIntermediateDirectories: true)
+        self.tempUploadURL = uploadDirectory
     }
     
     // MARK: - Temp file cache
@@ -65,9 +72,7 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
     
     // MARK: - Uploads
     public func tempUploadURL(for name: String) -> URL {
-        let directory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(Constants.uploadsDirectory)
-        try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
-        return directory.appendingPathComponent(name)
+        tempUploadURL.appendingPathComponent(name)
     }
     
     // MARK: - Offline

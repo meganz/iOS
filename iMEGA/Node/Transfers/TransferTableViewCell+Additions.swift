@@ -7,6 +7,7 @@ extension TransferTableViewCell {
     open override func prepareForReuse() {
         super.prepareForReuse()
         cancelImageRequest()
+        viewModel.cancelThumbnailLoading()
     }
     
     @objc func transferStateOverQuotaTextColor() -> UIColor {
@@ -115,5 +116,9 @@ extension TransferTableViewCell: ViewType {
     
     @objc func configureDownloadTransfer(_ transfer: MEGATransfer) {
         viewModel.dispatch(.configureDownloadTransfer(transfer.toTransferEntity()))
+    }
+
+    @objc func configureUploadTransfer(_ transfer: MEGATransfer) {
+        viewModel.dispatch(.configureUploadTransfer(transfer.toTransferEntity()))
     }
 }

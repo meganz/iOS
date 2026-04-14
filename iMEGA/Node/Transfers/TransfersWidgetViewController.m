@@ -962,6 +962,9 @@ static TransfersWidgetViewController* instance = nil;
     if (error.type == MEGAErrorTypeApiEIncomplete && [self shouldShowTransferCancelledMessageFor:transfer]) {
         [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
     }
+    if (transfer.type == MEGATransferTypeUpload && transfer.path) {
+        [TransferTableViewCellViewModel evictUploadThumbnailForPath:transfer.path];
+    }
     [self.completedTransfers addObject:transfer];
     [self deleteUploadingTransfer:transfer];
 }

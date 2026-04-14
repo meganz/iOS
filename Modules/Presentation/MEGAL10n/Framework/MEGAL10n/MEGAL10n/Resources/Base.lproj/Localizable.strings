@@ -4906,3 +4906,5 @@
 "home.recent.addedToLabel"="Added to %@";
 /* Snack bar message when files in a recent action bucket are no longer available */
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="These files are no longer available";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Preparing items…";

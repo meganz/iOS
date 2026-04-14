@@ -47,10 +47,10 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
             let data = UIImage(cgImage: newImage).jpegData(compressionQuality: Constants.compressionQuality)
             try data?.write(to: destinationURL)
         } catch let error {
-            MEGALogError("[Camera Uploads] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error)")
+            MEGALogError("[File attribute generator] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error)")
             return false
         }
-        MEGALogDebug("[Camera Uploads] create thumbnail correctly at \(destinationURL)")
+        MEGALogDebug("[File attribute generator] create thumbnail correctly at \(destinationURL)")
         return true
     }
     
@@ -64,10 +64,10 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         do {
             try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
         } catch let error {
-            MEGALogError("[Camera Uploads] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
+            MEGALogError("[File attribute generator] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
             return false
         }
-        MEGALogDebug("[Camera Uploads] create preview correctly at \(destinationURL)")
+        MEGALogDebug("[File attribute generator] create preview correctly at \(destinationURL)")
         return true
     }
     
@@ -75,11 +75,23 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         let size = CGSize(width: Constants.thumbnailSize, height: Constants.thumbnailSize)
         
         do {
+            try Task.checkCancellation()
             let representation = try await generateThumbnail(size: size)
+            try Task.checkCancellation()
             return representation.uiImage
+        } catch is CancellationError {
+            MEGALogDebug("[File attribute generator] thumbnail generation cancelled for \(sourceURL.lastPathComponent)")
+            return nil
+        } catch CocoaError.fileNoSuchFile {
+            MEGALogWarning("[File attribute generator] file no longer exists: \(sourceURL.lastPathComponent)")
+            return nil
         } catch let error {
+            guard !Task.isCancelled else {
+                MEGALogDebug("[File attribute generator] thumbnail generation cancelled for \(sourceURL.lastPathComponent)")
+                return nil
+            }
             let retryResult = try? await generateThumbnail(size: size, presentationType: .all).uiImage
-            MEGALogDebug("Create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error). Retried with result: \(retryResult != nil ? "Success" : "Failure")")
+            MEGALogDebug("[File attribute generator] create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error). Retried with result: \(retryResult != nil ? "Success" : "Failure")")
             return retryResult
         }
     }

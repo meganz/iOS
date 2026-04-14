@@ -61,10 +61,14 @@
         }
             
         case MEGATransferTypeUpload: {
-            if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:transfer.fileName]) {
-                [self setImageForTransfer:transfer];
+            if (transfer.appData && [transfer.appData containsString:@"localIdentifier"]) {
+                if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:transfer.fileName]) {
+                    [self setImageForTransfer:transfer];
+                } else {
+                    [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
+                }
             } else {
-                [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
+                [self configureUploadTransfer:transfer];
             }
             break;
         }

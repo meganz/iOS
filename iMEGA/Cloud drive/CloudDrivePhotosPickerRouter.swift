@@ -4,9 +4,12 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAUI
 import Photos
+import PhotosUI
 
+@MainActor
 protocol AssetUploader {
     func upload(assets: [PHAsset], to handle: MEGAHandle)
+    func importFromPhotos(results: [PHPickerResult], to parentNode: NodeEntity) async
 }
 
 @MainActor
@@ -14,7 +17,7 @@ struct CloudDrivePhotosPickerRouter {
     private let parentNode: NodeEntity
     private let presenter: UIViewController
     private let assetUploader: any AssetUploader
-    
+
     private var photoPicker: any MEGAPhotoPickerProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
@@ -41,6 +44,26 @@ struct CloudDrivePhotosPickerRouter {
     }
 
     func start() {
+        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosManualUploadPhotos) {
+            startNewFlow()
+        } else {
+            startLegacyFlow()
+        }
+    }
+
+    // MARK: - New Flow
+
+    private func startNewFlow() {
+        Task { @MainActor in
+            let results = await photoPicker.pickResults()
+            guard !results.isEmpty else { return }
+            await assetUploader.importFromPhotos(results: results, to: parentNode)
+        }
+    }
+
+    // MARK: - Legacy Flow
+
+    private func startLegacyFlow() {
         permissionHandler.photosPermissionWithCompletionHandler { [weak presenter] granted in
             guard let presenter else { return }
 
@@ -50,7 +73,7 @@ struct CloudDrivePhotosPickerRouter {
                     let result = await photoPicker.pickAssets()
                     let assets = result.assets
                     let selectedCount = result.selectedCount
-                    
+
                     if assets.count < selectedCount, PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
                         let alert = UIAlertController(
                             title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.title,

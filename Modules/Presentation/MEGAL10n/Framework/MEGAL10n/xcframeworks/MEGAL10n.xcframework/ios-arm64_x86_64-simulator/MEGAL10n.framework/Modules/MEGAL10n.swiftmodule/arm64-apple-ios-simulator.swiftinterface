@@ -3310,6 +3310,12 @@ public enum Strings {
         public static let original: Swift.String
       }
     }
+    public enum MediaImport {
+      public enum Preparing {
+        public static func progress(_ p1: Swift.Int) -> Swift.String
+        public static let title: Swift.String
+      }
+    }
     public enum Meetings {
       public static let poorConnection: Swift.String
       public enum Action {
@@ -4266,6 +4272,11 @@ public enum Strings {
           public enum Section {
             public static let title: Swift.String
           }
+        }
+      }
+      public enum Upload {
+        public enum Prepare {
+          public static func error(_ p1: Swift.Int) -> Swift.String
         }
       }
     }

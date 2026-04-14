@@ -13,6 +13,20 @@ public protocol UploadFileRepositoryProtocol: Sendable {
         parentHandle: HandleEntity
     ) -> Bool
 
+    /// Returns a unique file name in the given parent folder.
+    ///
+    /// If `name` does not collide with any existing child node, it is returned as-is.
+    /// Otherwise, a `_1`, `_2`, … suffix is appended before the extension until the name is unique.
+    ///
+    /// - Parameters:
+    ///   - name: The proposed file name.
+    ///   - parentHandle: The handle of the parent folder to check against.
+    /// - Returns: A file name guaranteed to be unique within the parent folder.
+    func resolvedFileName(
+        _ name: String,
+        inParent parentHandle: HandleEntity
+    ) -> String
+
     /// Uploads a file from a specified URL to a parent folder.
     ///
     /// - Parameters:
