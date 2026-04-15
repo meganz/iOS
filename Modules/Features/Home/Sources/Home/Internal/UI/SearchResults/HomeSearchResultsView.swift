@@ -11,6 +11,7 @@ struct HomeSearchResultsView: View {
         let resultsProvider: any SearchResultsProviding
         let searchResultsSelectionHandler: any NodeSelectionHandling
         let searchResultNodeActionHandler: any NodesActionHandling
+        let tracker: any AnalyticsTracking
     }
 
     @StateObject private var viewModel: HomeSearchResultsViewModel

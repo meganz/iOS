@@ -1455,9 +1455,8 @@
 		947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947CA1FB2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947CA1FA2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift */; };
-		947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */; };
 		947DC5E32AC1C863002C1D7C /* HomeSearchResultsAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */; };
-		947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E52AC1CB07002C1D7C /* HomeChips+TrackingTests.swift */; };
+		947DC5E62AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947DC5E52AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift */; };
 		9480283A2B6C2741002B4EB4 /* ResourceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948028392B6C2741002B4EB4 /* ResourceInfoView.swift */; };
 		9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9480283B2B6C274A002B4EB4 /* ResourceInfoViewModel.swift */; };
 		9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9480283D2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift */; };
@@ -2680,6 +2679,7 @@
 		C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */; };
 		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
 		C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */; };
+		C48D51B82F8CC6610089B6A3 /* AppDelegate+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D51B72F8CC6560089B6A3 /* AppDelegate+Search.swift */; };
 		C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */; };
 		C48F4A572DB88DAC00FD8E4E /* LegacySlideShowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F4A562DB88DA500FD8E4E /* LegacySlideShowCollectionViewCell.swift */; };
 		C48F4A5B2DB88E0300FD8E4E /* LegacySlideShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48F4A5A2DB88DFE00FD8E4E /* LegacySlideShowViewController.swift */; };
@@ -4341,9 +4341,8 @@
 		947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InviteYourFriendsViewController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
 		947CA1FA2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
-		947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeChips+Tracking.swift"; sourceTree = "<group>"; };
 		947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultsAdditions.swift; sourceTree = "<group>"; };
-		947DC5E52AC1CB07002C1D7C /* HomeChips+TrackingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeChips+TrackingTests.swift"; sourceTree = "<group>"; };
+		947DC5E52AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnalyticsTrackerTests.swift; sourceTree = "<group>"; };
 		948028392B6C2741002B4EB4 /* ResourceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInfoView.swift; sourceTree = "<group>"; };
 		9480283B2B6C274A002B4EB4 /* ResourceInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInfoViewModel.swift; sourceTree = "<group>"; };
 		9480283D2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInfoViewRouter.swift; sourceTree = "<group>"; };
@@ -5572,6 +5571,7 @@
 		C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDisplayModeProviderTests.swift; sourceTree = "<group>"; };
 		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
 		C48CADB82BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListener.swift; sourceTree = "<group>"; };
+		C48D51B72F8CC6560089B6A3 /* AppDelegate+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Search.swift"; sourceTree = "<group>"; };
 		C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveViewController.swift; sourceTree = "<group>"; };
 		C48F4A562DB88DA500FD8E4E /* LegacySlideShowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySlideShowCollectionViewCell.swift; sourceTree = "<group>"; };
 		C48F4A5A2DB88DFE00FD8E4E /* LegacySlideShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacySlideShowViewController.swift; sourceTree = "<group>"; };
@@ -10669,7 +10669,6 @@
 		94712EEE2A9C8E3400B5F2C9 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
-				947DC5E02AC1C826002C1D7C /* HomeChips+Tracking.swift */,
 				947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */,
 				94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */,
 				94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */,
@@ -10681,8 +10680,8 @@
 		94712EF22A9C8F7B00B5F2C9 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				947DC5E52AC1CB07002C1D7C /* HomeChips+TrackingTests.swift */,
 				94712EF32A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift */,
+				947DC5E52AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -11815,6 +11814,7 @@
 				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
 				A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */,
 				B611E174286165ED00F360CF /* AppDelegate+SDK.swift */,
+				C48D51B72F8CC6560089B6A3 /* AppDelegate+Search.swift */,
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */,
@@ -14813,6 +14813,7 @@
 				C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */,
 				A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */,
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
+				C48D51B82F8CC6610089B6A3 /* AppDelegate+Search.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				0EAF3FA12D67CF7B007D4E9C /* AppDelegateRouter.swift in Sources */,
 				255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */,
@@ -15425,7 +15426,6 @@
 				B69AF66528A1E5190022B094 /* HistoryRetentionPickerViewModel.swift in Sources */,
 				A563A5492F6A77F100DD8BFD /* HomeAddMenuActionHandler.swift in Sources */,
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
-				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */,
 				A58358212F61618800B4B519 /* HomeRecentUserNameProvider.swift in Sources */,
@@ -16951,7 +16951,6 @@
 				0E5F5E832C6C5CFF0037A99C /* HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests.swift in Sources */,
 				0E385A7B2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift in Sources */,
 				94BF69102CAFD3C40052F1D5 /* HomeBannerViewModelTests.swift in Sources */,
-				947DC5E62AC1CB07002C1D7C /* HomeChips+TrackingTests.swift in Sources */,
 				6D01A3C62C08443B00089BA8 /* HomeLocalisationTests.swift in Sources */,
 				B5CB50902D2E549000EC933E /* HomeRecentActionViewModelTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
@@ -17161,6 +17160,7 @@
 				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
+				947DC5E62AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift in Sources */,
 				BFFD20E72BC784AD009885F0 /* SearchResultMapperTests.swift in Sources */,
 				53A255292C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,

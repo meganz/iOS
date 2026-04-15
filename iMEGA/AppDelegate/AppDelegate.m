@@ -119,6 +119,7 @@
     [self importKMTransferFile];
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
+    [self injectSearchDependencies];
 
     [self initialiseModules];
     

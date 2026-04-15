@@ -222,16 +222,12 @@ final class HomeScreenFactory: NSObject {
                 // button reference is required to position popover on the iPad correctly
                 router.didTapMoreAction(on: result.id, button: button, isFromSharedItem: false)
             },
-            chipTapped: { chip, selected in
-                tracker.trackChip(tapped: chip, selected: selected)
+            chipTapped: { _, _ in
             }, sortingOrder: {
                 .init(key: .name)
             },
             updateSortOrder: { _ in },
-            chipPickerShowedHandler: {
-                guard let event = $0.analyticsEvent else { return }
-                tracker.trackAnalyticsEvent(with: event)
-            }
+            chipPickerShowedHandler: { _ in }
         )
         
         bridge.didInputTextTrampoline = { [weak searchBridge] text in

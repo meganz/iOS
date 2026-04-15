@@ -516,7 +516,7 @@ public final class SearchResultsViewModel: ObservableObject {
         return .init(
             contextAction: { [weak self] button in
                 // we pass in button to show popover attached to the correct view
-                self?.bridge.context(result, button)
+                self?.bridge.contextMenuTriggered(for: result, sender: button)
             },
             selectionAction: { [weak self] in
                 guard let self else { return }

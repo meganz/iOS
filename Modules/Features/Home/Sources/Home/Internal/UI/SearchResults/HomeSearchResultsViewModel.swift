@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAUIComponent
 import MEGAUIKit
@@ -26,15 +27,13 @@ final class HomeSearchResultsViewModel: ObservableObject {
             selection: { [weak self] in
                 self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings())
             },
-            context: { [weak self] in
-                self?.nodeAction = .init(handle: $0.id, sender: $1)
+            context: { [weak self] result, button in
+                self?.nodeAction = .init(handle: result.id, sender: button)
             },
             chipTapped: { _, _ in },
             sortingOrder: {  .init(key: .name) }, // for home search we only allow .name sorting
             updateSortOrder: { _ in }, // Home search doesn't allow updating sort order
-            chipPickerShowedHandler: { _ in
-                // [IOS-11393]: [Home Search] Handle analytics tracking
-            }
+            chipPickerShowedHandler: { _ in }
         )
 
         let searchResultsViewModel = SearchResultsViewModel(

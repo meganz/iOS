@@ -219,7 +219,8 @@ public struct HomeView: View {
                 searchConfig: SearchConfig.homeSearchConfig,
                 resultsProvider: dependency.searchResultsProvider,
                 searchResultsSelectionHandler: dependency.searchResultsSelectionHandler,
-                searchResultNodeActionHandler: dependency.searchResultNodeActionHandler
+                searchResultNodeActionHandler: dependency.searchResultNodeActionHandler,
+                tracker: dependency.tracker
             ),
             searchText: $searchText
         )

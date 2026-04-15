@@ -909,7 +909,6 @@ struct CloudDriveViewControllerFactory {
     ) -> SearchBridge {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
-        let isCloudDriveRevampEnabled = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode(
@@ -936,15 +935,8 @@ struct CloudDriveViewControllerFactory {
                     displayMode: contextMenuDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
-                if isCloudDriveRevampEnabled {
-                    tracker.trackAnalyticsEvent(with: CloudDriveChildNodeMoreButtonPressedEvent())
-                }
             },
-            chipTapped: { chip, selected in
-                if isCloudDriveRevampEnabled {
-                    tracker.trackChip(tapped: chip, selected: selected)
-                }
-            },
+            chipTapped: { _, _ in },
             sortingOrder: { @MainActor in
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode?.handle).toUIComponentSortOrderEntity()
             },
@@ -961,12 +953,7 @@ struct CloudDriveViewControllerFactory {
                     for: node.handle
                 )
             },
-            chipPickerShowedHandler: {
-                guard let event = $0.analyticsEvent else { return }
-                if isCloudDriveRevampEnabled {
-                    tracker.trackAnalyticsEvent(with: event)
-                }
-            }
+            chipPickerShowedHandler: { _ in }
         )
 
         bridge.didInputTextTrampoline = { [weak searchBridge] text in

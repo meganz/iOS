@@ -6,6 +6,14 @@ extension SearchChipEntity {
     public static let nodeFormatsGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle
     public static let timeFilterGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pillTitle
 
+    // Time filter chip IDs (take advantage of localized content for analytics matching and chips titles)
+    public static let todayChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.today
+    public static let last7DaysChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.last7days
+    public static let last30DaysChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.last30days
+    public static let thisYearChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.thisYear
+    public static let lastYearChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.lastYear
+    public static let olderChipId = Strings.Localizable.Home.Search.Filter.ModificationDate.older
+
     // MARK: - Node format chips
     public static let images = SearchChipEntity(
         type: .nodeFormat(.photo),
@@ -70,7 +78,7 @@ extension SearchChipEntity {
                     endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.today
+            title: todayChipId
         )
     }
 
@@ -85,7 +93,7 @@ extension SearchChipEntity {
                     endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.last7days
+            title: last7DaysChipId
         )
     }
 
@@ -100,7 +108,7 @@ extension SearchChipEntity {
                     endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.last30days
+            title: last30DaysChipId
         )
     }
 
@@ -115,7 +123,7 @@ extension SearchChipEntity {
                     endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.thisYear
+            title: thisYearChipId
         )
     }
 
@@ -127,7 +135,7 @@ extension SearchChipEntity {
                     endDate: date.currentYearStartDate() ?? Date()
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.lastYear
+            title: lastYearChipId
         )
     }
 
@@ -139,7 +147,7 @@ extension SearchChipEntity {
                     endDate: date.previousYearStartDate() ?? Date()
                 )
             ),
-            title: Strings.Localizable.Home.Search.Filter.ModificationDate.older
+            title: olderChipId
         )
     }
 

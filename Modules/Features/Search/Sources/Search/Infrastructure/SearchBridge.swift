@@ -7,11 +7,12 @@ import UIKit
 
 public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
-    let context: (SearchResult, UIButton) -> Void
+
     let sortingOrder: () -> MEGAUIComponent.SortOrder
     let updateSortOrder: (MEGAUIComponent.SortOrder) -> Void
     private let chipTapped: (SearchChipEntity, Bool) -> Void
     private let chipPickerShowedHandler: @Sendable (SearchChipEntity) -> Void
+    private let context: (SearchResult, UIButton) -> Void
 
     public init(
         selection: @escaping (SearchResultSelection) -> Void,
@@ -30,11 +31,18 @@ public class SearchBridge {
     }
     
     func chip(tapped chip: SearchChipEntity, isSelected: Bool) {
+        DIContainer.searchTracker.trackChipTapped(chip, selected: isSelected)
         chipTapped(chip, isSelected)
     }
 
     func chipPickerShowed(from chip: SearchChipEntity) {
+        DIContainer.searchTracker.trackChipPickerShow(chip)
         chipPickerShowedHandler(chip)
+    }
+
+    func contextMenuTriggered(for result: SearchResult, sender: UIButton) {
+        DIContainer.searchTracker.trackResultContextMenuTapped()
+        context(result, sender)
     }
 
     public var queryChanged: (String) -> Void = { _ in }

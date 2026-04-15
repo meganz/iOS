@@ -276,7 +276,7 @@ struct FavouritesViewModelTests {
         let button = UIButton()
         let result = SearchResult.resultWith(id: 99)
 
-        sut.searchResultsContainerViewModel.bridge.context(result, button)
+        sut.searchResultsContainerViewModel.bridge.contextMenuTriggered(for: result, sender: button)
 
         try await waitForCondition { sut.nodeAction != nil }
         #expect(sut.nodeAction?.handle == 99)
