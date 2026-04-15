@@ -5,6 +5,26 @@
     "printedName": "KMTransferUtils",
     "children": [
       {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "TypeDecl",
         "name": "KMQueryConfig",
         "printedName": "KMQueryConfig",
@@ -406,10 +426,24 @@
           },
           {
             "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Hashable",
             "printedName": "Hashable",
             "usr": "s:SH",
             "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           },
           {
             "kind": "Conformance",
@@ -523,6 +557,20 @@
             "printedName": "Escapable",
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       },
@@ -690,6 +738,8 @@
         "usr": "s:15KMTransferUtils14KMTransferringP",
         "mangledName": "$s15KMTransferUtils14KMTransferringP",
         "moduleName": "KMTransferUtils",
+        "genericSig": "<τ_0_0 : Swift.Sendable>",
+        "sugared_genericSig": "<Self : Swift.Sendable>",
         "declAttributes": [
           "AccessControl"
         ],
@@ -707,6 +757,20 @@
             "printedName": "Copyable",
             "usr": "s:s8CopyableP",
             "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       },
@@ -907,6 +971,13 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "KMTransferring",
+            "printedName": "KMTransferring",
+            "usr": "s:15KMTransferUtils14KMTransferringP",
+            "mangledName": "$s15KMTransferUtils14KMTransferringP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Copyable",
             "printedName": "Copyable",
             "usr": "s:s8CopyableP",
@@ -921,31 +992,18 @@
           },
           {
             "kind": "Conformance",
-            "name": "KMTransferring",
-            "printedName": "KMTransferring",
-            "usr": "s:15KMTransferUtils14KMTransferringP",
-            "mangledName": "$s15KMTransferUtils14KMTransferringP"
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils",
-        "declAttributes": [
-          "RawDocComment"
         ]
       }
     ],
@@ -953,37 +1011,37 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5534,
+      "offset": 5554,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5571,
+      "offset": 5591,
       "length": 2,
       "value": "12"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5700,
+      "offset": 5720,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5833,
+      "offset": 5853,
       "length": 2,
       "value": "32"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5870,
+      "offset": 5890,
       "length": 6,
       "value": "10000"
     }

@@ -6,224 +6,6 @@
     "children": [
       {
         "kind": "Import",
-        "name": "CommonCrypto",
-        "printedName": "CommonCrypto",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CryptoKit",
-        "printedName": "CryptoKit",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils"
-      },
-      {
-        "kind": "Import",
-        "name": "Security",
-        "printedName": "Security",
-        "declKind": "Import",
-        "moduleName": "KMTransferUtils"
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "MEGAKMTransferUtils",
-        "printedName": "MEGAKMTransferUtils",
-        "children": [
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(config:fileManager:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "MEGAKMTransferUtils",
-                "printedName": "KMTransferUtils.MEGAKMTransferUtils",
-                "usr": "s:15KMTransferUtils014MEGAKMTransferB0V"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "KMTransferConfig",
-                "printedName": "KMTransferUtils.KMTransferConfig",
-                "usr": "s:15KMTransferUtils0A6ConfigV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "FileManager",
-                "printedName": "Foundation.FileManager",
-                "hasDefaultArg": true,
-                "usr": "c:objc(cs)NSFileManager"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V6config11fileManagerAcA0A6ConfigV_So06NSFileF0Ctcfc",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V6config11fileManagerAcA0A6ConfigV_So06NSFileF0Ctcfc",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "init_kind": "Designated"
-          },
-          {
-            "kind": "Function",
-            "name": "createTransferFile",
-            "printedName": "createTransferFile()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18createTransferFileyyYaKF",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18createTransferFileyyYaKF",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "throwing": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "importTransferFile",
-            "printedName": "importTransferFile()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18importTransferFileyyKF",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18importTransferFileyyKF",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "throwing": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "getDataFromTransferFile",
-            "printedName": "getDataFromTransferFile()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Array",
-                "printedName": "[KMTransferUtils.KMQueryConfig]",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "KMQueryConfig",
-                    "printedName": "KMTransferUtils.KMQueryConfig",
-                    "usr": "s:15KMTransferUtils13KMQueryConfigV"
-                  }
-                ],
-                "usr": "s:Sa"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V23getDataFromTransferFileSayAA13KMQueryConfigVGyKF",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V23getDataFromTransferFileSayAA13KMQueryConfigVGyKF",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "throwing": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "deleteTransferFile",
-            "printedName": "deleteTransferFile()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18deleteTransferFileyyKF",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18deleteTransferFileyyKF",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "throwing": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "recreateTransferFile",
-            "printedName": "recreateTransferFile()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V20recreateTransferFileyyYaKF",
-            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V20recreateTransferFileyyYaKF",
-            "moduleName": "KMTransferUtils",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "throwing": true,
-            "funcSelfKind": "NonMutating"
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:15KMTransferUtils014MEGAKMTransferB0V",
-        "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V",
-        "moduleName": "KMTransferUtils",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "KMTransferring",
-            "printedName": "KMTransferring",
-            "usr": "s:15KMTransferUtils14KMTransferringP",
-            "mangledName": "$s15KMTransferUtils14KMTransferringP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -644,10 +426,24 @@
           },
           {
             "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Hashable",
             "printedName": "Hashable",
             "usr": "s:SH",
             "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           },
           {
             "kind": "Conformance",
@@ -761,6 +557,20 @@
             "printedName": "Escapable",
             "usr": "s:s9EscapableP",
             "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       },
@@ -928,6 +738,8 @@
         "usr": "s:15KMTransferUtils14KMTransferringP",
         "mangledName": "$s15KMTransferUtils14KMTransferringP",
         "moduleName": "KMTransferUtils",
+        "genericSig": "<τ_0_0 : Swift.Sendable>",
+        "sugared_genericSig": "<Self : Swift.Sendable>",
         "declAttributes": [
           "AccessControl"
         ],
@@ -945,6 +757,252 @@
             "printedName": "Copyable",
             "usr": "s:s8CopyableP",
             "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CryptoKit",
+        "printedName": "CryptoKit",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils"
+      },
+      {
+        "kind": "Import",
+        "name": "Security",
+        "printedName": "Security",
+        "declKind": "Import",
+        "moduleName": "KMTransferUtils"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "MEGAKMTransferUtils",
+        "printedName": "MEGAKMTransferUtils",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(config:fileManager:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "MEGAKMTransferUtils",
+                "printedName": "KMTransferUtils.MEGAKMTransferUtils",
+                "usr": "s:15KMTransferUtils014MEGAKMTransferB0V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "KMTransferConfig",
+                "printedName": "KMTransferUtils.KMTransferConfig",
+                "usr": "s:15KMTransferUtils0A6ConfigV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "FileManager",
+                "printedName": "Foundation.FileManager",
+                "hasDefaultArg": true,
+                "usr": "c:objc(cs)NSFileManager"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V6config11fileManagerAcA0A6ConfigV_So06NSFileF0Ctcfc",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V6config11fileManagerAcA0A6ConfigV_So06NSFileF0Ctcfc",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "createTransferFile",
+            "printedName": "createTransferFile()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18createTransferFileyyYaKF",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18createTransferFileyyYaKF",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "importTransferFile",
+            "printedName": "importTransferFile()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18importTransferFileyyKF",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18importTransferFileyyKF",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getDataFromTransferFile",
+            "printedName": "getDataFromTransferFile()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[KMTransferUtils.KMQueryConfig]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMQueryConfig",
+                    "printedName": "KMTransferUtils.KMQueryConfig",
+                    "usr": "s:15KMTransferUtils13KMQueryConfigV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V23getDataFromTransferFileSayAA13KMQueryConfigVGyKF",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V23getDataFromTransferFileSayAA13KMQueryConfigVGyKF",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "deleteTransferFile",
+            "printedName": "deleteTransferFile()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V18deleteTransferFileyyKF",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V18deleteTransferFileyyKF",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "recreateTransferFile",
+            "printedName": "recreateTransferFile()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:15KMTransferUtils014MEGAKMTransferB0V20recreateTransferFileyyYaKF",
+            "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V20recreateTransferFileyyYaKF",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:15KMTransferUtils014MEGAKMTransferB0V",
+        "mangledName": "$s15KMTransferUtils014MEGAKMTransferB0V",
+        "moduleName": "KMTransferUtils",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "KMTransferring",
+            "printedName": "KMTransferring",
+            "usr": "s:15KMTransferUtils14KMTransferringP",
+            "mangledName": "$s15KMTransferUtils14KMTransferringP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
           }
         ]
       }
@@ -953,37 +1011,37 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5534,
+      "offset": 5554,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5571,
+      "offset": 5591,
       "length": 2,
       "value": "12"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5700,
+      "offset": 5720,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5833,
+      "offset": 5853,
       "length": 2,
       "value": "32"
     },
     {
-      "filePath": "\/Users\/banghuazhao\/Documents\/Code\/KMTransferUtils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5870,
+      "offset": 5890,
       "length": 6,
       "value": "10000"
     }

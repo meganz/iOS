@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
-// swift-module-flags: -target x86_64-apple-ios15.6-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name KMTransferUtils
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+// swift-compiler-version: Apple Swift version 6.3 effective-5.10 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)
+// swift-module-flags: -target x86_64-apple-ios15.6-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name KMTransferUtils
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3
 import CommonCrypto
 import CryptoKit
 import Foundation
@@ -10,15 +10,7 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public struct MEGAKMTransferUtils : KMTransferUtils.KMTransferring {
-  public init(config: KMTransferUtils.KMTransferConfig, fileManager: Foundation.FileManager = .default)
-  public func createTransferFile() async throws
-  public func importTransferFile() throws
-  public func getDataFromTransferFile() throws -> [KMTransferUtils.KMQueryConfig]
-  public func deleteTransferFile() throws
-  public func recreateTransferFile() async throws
-}
-public struct KMQueryConfig : Swift.Hashable {
+public struct KMQueryConfig : Swift.Sendable, Swift.Hashable {
   public let service: Swift.String
   public let account: Swift.String
   public let group: Swift.String?
@@ -30,13 +22,21 @@ public struct KMQueryConfig : Swift.Hashable {
     get
   }
 }
-public struct KMTransferConfig {
+public struct KMTransferConfig : Swift.Sendable {
   public init(kmQueryConfigs: [KMTransferUtils.KMQueryConfig], transferFileName: Swift.String? = nil, transferSalt: Swift.String? = nil)
 }
-public protocol KMTransferring {
+public protocol KMTransferring : Swift.Sendable {
   func createTransferFile() async throws
   func importTransferFile() throws
   func getDataFromTransferFile() throws -> [KMTransferUtils.KMQueryConfig]
   func deleteTransferFile() throws
   func recreateTransferFile() async throws
+}
+public struct MEGAKMTransferUtils : KMTransferUtils.KMTransferring {
+  public init(config: KMTransferUtils.KMTransferConfig, fileManager: Foundation.FileManager = .default)
+  public func createTransferFile() async throws
+  public func importTransferFile() throws
+  public func getDataFromTransferFile() throws -> [KMTransferUtils.KMQueryConfig]
+  public func deleteTransferFile() throws
+  public func recreateTransferFile() async throws
 }
