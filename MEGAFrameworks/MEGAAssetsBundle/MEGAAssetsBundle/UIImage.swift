@@ -470,4 +470,5 @@ public struct MEGAUIImageBundle {
     public static var glassAlbum: UIImage { UIImage.glassAlbum }
     public static var rectangleImageStack: UIImage { UIImage.rectangleImageStack }
     public static var messageChatCircle: UIImage { UIImage.messageChatCircle }
+    public static var transfersSettings: UIImage { UIImage.transfersSettings }
 }

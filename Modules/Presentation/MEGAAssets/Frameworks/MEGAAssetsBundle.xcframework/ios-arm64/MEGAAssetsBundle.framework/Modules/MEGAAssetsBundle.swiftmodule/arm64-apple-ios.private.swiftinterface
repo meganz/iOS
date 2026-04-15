@@ -2507,4 +2507,7 @@ public struct MEGAUIImageBundle {
   public static var messageChatCircle: UIKit.UIImage {
     get
   }
+  public static var transfersSettings: UIKit.UIImage {
+    get
+  }
 }

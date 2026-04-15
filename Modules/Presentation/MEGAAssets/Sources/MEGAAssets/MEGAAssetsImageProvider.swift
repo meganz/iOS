@@ -785,5 +785,6 @@ extension MEGAAssets {
         public static var glassAlbum: UIKit.UIImage { MEGAUIImageBundle.glassAlbum }
         public static var rectangleImageStack: UIKit.UIImage { MEGAUIImageBundle.rectangleImageStack }
         public static var messageChatCircle: UIKit.UIImage { MEGAUIImageBundle.messageChatCircle }
+        public static var transfersSettings: UIKit.UIImage { MEGAUIImageBundle.transfersSettings }
     }
 }
