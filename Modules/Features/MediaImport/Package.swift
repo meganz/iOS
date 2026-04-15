@@ -17,6 +17,10 @@ let package = Package(
         .target(
             name: "MediaImport",
             dependencies: ["MEGASwift", "MEGAL10n", "MEGADesignToken"]
+        ),
+        .testTarget(
+            name: "MediaImportTests",
+            dependencies: ["MediaImport"]
         )
     ]
 )
