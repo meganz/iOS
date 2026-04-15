@@ -1,6 +1,6 @@
 import PhotosUI
 
-final class PhotoPickerDelegate: PHPickerViewControllerDelegate {
+final class PhotoPickerDelegate: NSObject, PHPickerViewControllerDelegate {
     private let completion: (([PHAsset], Int) -> Void)?
     private let completionResult: (([PHPickerResult]) -> Void)?
     private var hasFinishedPicking = false
@@ -24,5 +24,14 @@ final class PhotoPickerDelegate: PHPickerViewControllerDelegate {
             completionResult(results)
         }
         picker.dismiss(animated: true)
+    }
+}
+
+extension PhotoPickerDelegate: UIAdaptivePresentationControllerDelegate {
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        guard !hasFinishedPicking else { return }
+        hasFinishedPicking = true
+        completion?([], 0)
+        completionResult?([])
     }
 }

@@ -46,12 +46,12 @@ public final class MEGAPhotoPicker: MEGAPhotoPickerProtocol {
             // loading the items.
             let picker = makePicker(selectionLimit: 400, mode: .current)
             let delegate = PhotoPickerDelegate(completion: nil) { results in
-                Task { @MainActor in
-                    continuation.resume(returning: results)
-                }
+                nonisolated(unsafe) let safeResults = results
+                continuation.resume(returning: safeResults)
             }
             self.photoPickerDelegate = delegate
             picker.delegate = delegate
+            picker.presentationController?.delegate = delegate
             
             presenter?.present(picker, animated: true)
         }
