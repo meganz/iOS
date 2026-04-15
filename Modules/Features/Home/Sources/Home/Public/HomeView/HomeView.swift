@@ -106,7 +106,6 @@ public struct HomeView: View {
             .noNetworkConnection {
                 noInternetView
             }
-            .modifier(LandscapeNoInternetViewModifier(verticalSizeClass: verticalSizeClass))
             .background(TokenColors.Background.page.swiftUI)
             .searchableTransitionWorkaround()
             .snackBar($navigator.snackBar)
@@ -237,19 +236,6 @@ public struct HomeView: View {
                 .frame(minHeight: proxy.size.height + (shouldAddLiquidGlassPadding ? proxy.safeAreaInsets.bottom : 0))
             }
             .scrollDisabled(!isIphoneInLandscape)
-        }
-    }
-}
-
-// Applies noInternetViewModifier only when iPhone is in landscape mode (verticalSizeClass == .compact)
-private struct LandscapeNoInternetViewModifier: ViewModifier {
-    let verticalSizeClass: UserInterfaceSizeClass?
-
-    func body(content: Content) -> some View {
-        if verticalSizeClass == .compact {
-            content
-        } else {
-            content.noInternetViewModifier(layout: .onTop)
         }
     }
 }
