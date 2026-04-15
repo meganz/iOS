@@ -28,7 +28,7 @@
                                                  8,
                                                  (size_t)newRect.size.width * 4,
                                                  colorSpace,
-                                                 kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+                                                 kCGBitmapByteOrderDefault | (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
     CGColorSpaceRelease(colorSpace);
     if (!context) return nil;
     
@@ -67,7 +67,7 @@
         return nil;
     }
     
-    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast;
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | (CGBitmapInfo)kCGImageAlphaPremultipliedLast;
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
     
     CGImageRef iref = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
