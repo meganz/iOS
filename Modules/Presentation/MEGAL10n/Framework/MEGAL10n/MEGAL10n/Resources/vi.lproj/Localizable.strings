@@ -4879,13 +4879,13 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="OK, hiểu rồi";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="Bạn đang ngoại tuyến";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="Nếu bạn làm cho các tệp có sẵn ngoại tuyến, bạn vẫn có thể truy cập chúng khi không có kết nối.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="Các mục bạn đã lưu để dùng ngoại tuyến vẫn có sẵn.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="Xem tệp ngoại tuyến";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Tệp phụ đề";
 /* The off option in subtitle menu */
@@ -4896,3 +4896,21 @@
 "videoPlayer.subtitles.select.title"="Chọn một tệp tin phụ đề";
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Không tìm được kết quả nào";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Đang chuẩn bị các mục…";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Thêm phụ đề từ Drive đám mây";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Thêm phụ đề";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Tải lên phụ đề ở định dạng SRT lên Drive đám mây của bạn";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Không thể thêm phụ đề";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="Có sự cố với tệp phụ đề.\nChọn một tệp phụ đề khác hoặc thử lại.";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="Chúng tôi không thể tải hoạt động gần đây của bạn.";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Đã thêm vào %@";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Các tệp này hiện không còn có sẵn.";

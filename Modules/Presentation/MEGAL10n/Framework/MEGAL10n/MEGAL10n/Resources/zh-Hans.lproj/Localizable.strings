@@ -4908,3 +4908,9 @@
 "videoPlayer.subtitles.select.search.noResults"="无搜索结果";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
 "home.recent.addedToLabel"="已添加到%s";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="这些文件不再可用";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="我们无法加载您最近的活动";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="正在准备项目…";

@@ -15,9 +15,9 @@
         <key>one</key>
         <string>[A] e %d persona hanno alzato la propria mano</string>
         <key>many</key>
-        <string>[A] e %d di altre persone hanno alzato la propria mano</string>
+        <string>[A] e %d di persone hanno alzato la propria mano</string>
         <key>other</key>
-        <string>[A] e altre %d persone hanno alzato la propria mano</string>
+        <string>[A] e %d persone hanno alzato la propria mano</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -35,7 +35,7 @@
         <key>many</key>
         <string>Tu e %d di persone avete alzato la vostra mano</string>
         <key>other</key>
-        <string>Tu e altre %d persone avete alzato la vostra mano</string>
+        <string>Tu e %d persone avete alzato la vostra mano</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -3325,11 +3325,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Le notifiche saranno disattivate fino alle [Time]</string>
+        <string>Le notifiche saranno disattivate fino alle ore [Time]</string>
         <key>many</key>
-        <string>Le notifiche saranno disattivate fino alle [Time]</string>
+        <string>Le notifiche saranno disattivate fino alle ore [Time]</string>
         <key>other</key>
-        <string>Le notifiche saranno disattivate fino alle [Time]</string>
+        <string>Le notifiche saranno disattivate fino alle ore [Time]</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -3708,6 +3708,60 @@
         <string>%d di [A] completati</string>
         <key>other</key>
         <string>%d di [A] completati</string>
+      </dict>
+    </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Aggiunto a [A]</string>
+        <key>many</key>
+        <string>Aggiunti a [A]</string>
+        <key>other</key>
+        <string>Aggiunti a [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Impossibile preparare %d elemento per il caricamento</string>
+        <key>many</key>
+        <string>Impossibile preparare %d elementi per il caricamento</string>
+        <key>other</key>
+        <string>Impossibile preparare %d elementi per il caricamento</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d di [A] pronto</string>
+        <key>many</key>
+        <string>%d di [A] pronti</string>
+        <key>other</key>
+        <string>%d di [A] pronti</string>
       </dict>
     </dict>
   </dict>

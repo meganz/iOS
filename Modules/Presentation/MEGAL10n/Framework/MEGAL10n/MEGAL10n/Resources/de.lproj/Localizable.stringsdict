@@ -3298,5 +3298,33 @@
         <string>%d von [A] abgeschlossen</string>
       </dict>
     </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Hinzugefügt zu [A]</string>
+        <key>other</key>
+        <string>Hinzugefügt zu [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -4906,3 +4906,11 @@
 "videoPlayer.subtitles.select.title"="Selecteer een ondertitel bestand";
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Geen zoek resultaten";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="We konden uw recente activiteit niet laden";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Toegevoegd aan %@";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Deze bestanden zijn niet langer beschikbaar";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Items aan het voorbereiden…";

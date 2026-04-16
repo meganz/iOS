@@ -589,11 +589,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] de %d fichier</string>
+        <string>[A] sur %d fichier</string>
         <key>many</key>
-        <string>[A] de %d fichiers</string>
+        <string>[A] sur %d fichiers</string>
         <key>other</key>
-        <string>[A] de %d fichiers</string>
+        <string>[A] sur %d fichiers</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -3708,6 +3708,60 @@
         <string>%d sur [A] terminés</string>
         <key>other</key>
         <string>%d sur [A] terminés</string>
+      </dict>
+    </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ajouté(e) à [A]</string>
+        <key>many</key>
+        <string>Ajouté(e)s à [A]</string>
+        <key>other</key>
+        <string>Ajouté(e)s à [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d élément n'a pas pu être préparé pour le téléversement</string>
+        <key>many</key>
+        <string>%d éléments n'ont pas pu être préparés pour le téléversement</string>
+        <key>other</key>
+        <string>%d éléments n'ont pas pu être préparés pour le téléversement</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d sur [A] prêt</string>
+        <key>many</key>
+        <string>%d sur [A] prêts</string>
+        <key>other</key>
+        <string>%d sur [A] prêts</string>
       </dict>
     </dict>
   </dict>

@@ -4879,13 +4879,13 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="OK, rozumiem";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="You’re offline";
+"home.noInternet.title"="Jesteś offline";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="If you make files available offline, you’ll still be able to access them without a connection.";
+"home.noInternet.subtitle.noOfflineFiles"="Jeśli udostępnisz pliki do trybu offline, nadal będziesz mieć dostęp do nich bez połączenia.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Items you’ve saved for offline use are still available.";
+"home.noInternet.subtitle.hasOfflineFiles"="Elementy zapisane offline są nadal dostępne.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="View Offline files";
+"home.noInternet.viewOfflineFiles"="Pokaż pliki offline";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Napisy";
 /* The off option in subtitle menu */
@@ -4896,3 +4896,21 @@
 "videoPlayer.subtitles.select.title"="Wybierz plik napisów";
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Brak wyników wyszukiwania";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Przygotowywanie elementów…";
+/* The add subtitle from Cloud drive option in subtitle menu */
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Dodaj napisy z dysku w chmurze";
+/* The add subtitle button in subtitle selection page */
+"videoPlayer.subtitles.select.addSubtitle"="Dodaj napis";
+/* The empty state content in subtitle selection page */
+"videoPlayer.subtitles.select.empty.content"="Prześlij napisy w formacie SRT na swój dysk w chmurze";
+/* The error state title in subtitle selection page */
+"videoPlayer.subtitles.select.error.title"="Nie można dodać napisu";
+/* The error state content in subtitle selection page */
+"videoPlayer.subtitles.select.error.content"="Wystąpił problem z plikiem z napisami.\nWybierz inny plik z napisami lub spróbuj ponownie.";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="Nie udało nam się wczytać Twojej ostatniej aktywności";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Dodano do %@";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Te pliki nie są już dostępne";

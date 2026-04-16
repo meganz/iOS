@@ -111,7 +111,7 @@
 /*  */
 "weak"="Debole";
 /*  */
-"passwordVeryWeakOrWeak"="La tua password è facilmente intuibile. Rendi la tua password più lunga. Combina lettere maiuscole e minuscole. Aggiungi caratteri speciali. Non utilizzare nomi o parole del dizionario";
+"passwordVeryWeakOrWeak"="La tua password è facilmente intuibile. Rendi la tua password più lunga. Combina lettere maiuscole e minuscole. Aggiungi caratteri speciali. Non utilizzare nomi o parole del dizionario.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="Media";
 /*  */
@@ -509,7 +509,7 @@
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Preferiti";
 /* Gif album title */
-"cameraUploads.albums.gif.title"="GIFs";
+"cameraUploads.albums.gif.title"="GIF";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
 /* My album title */
@@ -1065,7 +1065,7 @@
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione aggiuntivo per l'installazione della nostra app per mobile";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Quando installi l'app per mobile di MEGA ottieni %@ di spazio di archiviazione gratuito, %2$@. L'app per mobile di MEGA è disponibile per iOS e per Android.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Quando installi l'app per mobile di MEGA ottieni %@ di spazio di archiviazione gratuito, %2$@. L'app per mobile di MEGA è disponibile per iOS e per Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applicato. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
@@ -1605,7 +1605,7 @@
 /* Text that describes why the user should test his/her password */
 "remindPasswordText"="A causa della tecnologia di criptazione utilizzata da MEGA non è possibile resettare la password senza una perdita di dati. Per favore, fai in modo di ricordare la tua password.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Prima di effettuare il logout TI raccomandiamo di esportare la tua Chiave di recupero in un posto sicuro. Ricorda che non potrai resettare la tua password se la dimentichi.";
+"remindPasswordLogoutText"="Prima di effettuare il logout ti raccomandiamo di esportare la tua Chiave di recupero in un posto sicuro. Ricorda che non potrai resettare la tua password se la dimentichi.";
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Non mostrare più";
 /* Label for test password button and titles */
@@ -2009,7 +2009,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sei sicuro di voler cambiare con un server di test? Il tuo account potrebbe avere dei problemi incurabili.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Garantisci a MEGA l'accesso alla tua Rubrica";
+"Enable Access to Your Address Book"="Garantisci l'accesso alla tua Rubrica";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Apri le Impostazioni";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2327,7 +2327,7 @@
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Nome utente:";
 /* Text used for a title or header listing the details of something. */
-"DETAILS"="DETTAGLI";
+"DETAILS"="Dettagli";
 /* Text used as title or header for reference an url, for instance, a node link. */
 "LINK"="Link";
 /* Text referencing the date of creation of a link */
@@ -3305,7 +3305,7 @@
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Aggiornamento di sicurezza dell'account";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="Stiamo aggiornando la sicurezza del tuo account. Dovresti vedere questo messaggio solo una volta. Se lo hai già visto prima d'ora, assicurati che lo hai visto per questo account e non per un altro account MEGA che possiedi.\n\nSe è così ed è la seconda volta che vedi questo messaggio per questo account, smetti di utilizzare questo account. ";
+"account.upgradeSecurity.message.upgrade"="Stiamo aggiornando la sicurezza del tuo account. Dovresti vedere questo messaggio solo una volta. Se lo hai già visto prima d'ora, assicurati che lo hai visto per questo account e non per un altro account MEGA che possiedi.\n\nSe è così ed è la seconda volta che vedi questo messaggio per questo account, smetti di utilizzare questo account.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.button.title"="OK, capito";
 /* Label to introduce meeting info description field */
@@ -3601,7 +3601,7 @@
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
 "meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Seleziona un intervallo mensile";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Il giorno";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Il giorno…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
 "meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Ogni";
 /* Create Schedule Meeting: Month custom option - first week option text */
@@ -4067,7 +4067,7 @@
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Link del meeting: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] adesso fa parte del meeting";
+"chat.message.joinedTheMeeting"="[A] adesso fa parte del meeting.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
 "chat.message.leftTheMeeting"="[A] ha lasciato il meeting.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
@@ -4185,13 +4185,13 @@
 /* Call and meeting duration for free users */
 "callAndMeeting.duration.for.free.users"="Fino a 1 ora";
 /* Call and meeting duration unlimited for pro users */
-"callAndMeeting.duration.unlimited.for.pro.users"="ILLIMITATA";
+"callAndMeeting.duration.unlimited.for.pro.users"="Illimitata";
 /* Call and meeting participants title */
 "callAndMeeting.participants.title"="Partecipanti alle chiamate e ai meeting";
 /* Call and meeting participants for free users */
 "callAndMeeting.participants.for.free.users"="Fino a 100";
 /* Call and meeting participants unlimited for pro users */
-"callAndMeeting.participants.unlimited.for.pro.users"="ILLIMITATA";
+"callAndMeeting.participants.unlimited.for.pro.users"="Illimitata";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="Perderai queste caratteristiche";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4209,31 +4209,31 @@
 /* Cancellation Section Google Play Web Browser title: In a web browser */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="In un web browser";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visitare play.google.com";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.one"="1. Visita play.google.com";
 /* Cancellation step Google Play Web Browser: Second step using the web browser - 2. Sign in with your Google Play account */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Accedere con il tuo account Google Play.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.two"="2. Accedi con il tuo account Google Play.";
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Cliccare sul tuo avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Clicca sul tuo avatar.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Cliccare su <b>Pagamenti e abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. Clicca su <b>Pagamenti e abbonamenti.</b>";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Cliccare su <b>Abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. Clicca su <b>Abbonamenti.</b>";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sotto il tuo abbonamento MEGA, cliccare su <b>Annulla abbonamento.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. Sotto il tuo abbonamento MEGA, clicca su <b>Annulla abbonamento.</b>";
 /* Cancellation Section Google Play Android Device title: On an Android device */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Su un dispositivo Android";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Aprire l'app Play Store.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.one"="1. Apri l'app Play Store.";
 /* Cancellation step Google Play Android Device: Second step using an android device - 2. Sign in with your Google Play account (if required) */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Accedere con il tuo account Google Play (se richiesto).";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.two"="2. Accedi con il tuo account Google Play (se richiesto).";
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Toccare il tuo avatar.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Tocca il tuo avatar.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Toccare <b>Pagamenti e abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Tocca <b>Pagamenti e abbonamenti.</b>";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Toccare <b>Abbonamenti</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Tocca <b>Abbonamenti</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sotto il tuo abbonamento MEGA, toccare <b>Annulla abbonamento</b>.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Sotto il tuo abbonamento MEGA, tocca <b>Annulla abbonamento.</b>";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Altro";
 /* Context menu item to switch layout to main speaker (Call UI) */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Sicurezza addizionale nella condivisione";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Imposta password e date di scadenza per i link di file e cartelle.";
+"ads.adFree.content.additionalSecurity.message"="Rendi la tua vita online più sicura, più veloce, e più facile con il nostro gestore di password e la nostra VPN ad alta velocità";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Vedi i piani Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4625,7 +4625,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Salta per ora";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Gli abbonamenti vengono rinnovati automaticamente per periodi di abbonamento successivi della stessa durata e allo stesso prezzo del periodo iniziale scelto.\n\nPuoi annullare il tuo abbonamento Pro in qualsiasi momento, ma non nelle 24 ore precedenti la scadenza del prossimo pagamento dell'abbonamento. [L]Scopri come gestire il tuo abbonamento nelle tue impostazioni.[/L]";
+"subscriptionPurchase.autoRenewDescription"="Gli abbonamenti vengono rinnovati automaticamente per periodi di abbonamento successivi della stessa durata e allo stesso prezzo del periodo iniziale scelto.\n\nPuoi annullare il tuo abbonamento Pro in qualsiasi momento, ma non nelle 24 ore precedenti la scadenza del prossimo pagamento dell'abbonamento. [L]Scopri come gestire il tuo abbonamento nelle tue impostazioni[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Inizia con il nostro piano gratuito";
 /* Description shown for the free plan card */
@@ -4908,3 +4908,9 @@
 "videoPlayer.subtitles.select.error.content"="C'è stato un problema con il file dei sottotitoli.\nSeleziona un file di sottotitoli diverso o riprova.";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
 "home.recent.addedToLabel"="Aggiunti a %@";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="Non siamo riusciti a caricare la tua attività recente";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Questi file non sono più disponibili";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Preparazione degli elementi…";

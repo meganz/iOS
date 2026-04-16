@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
+        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
-        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
+        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3165,9 +3165,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
+        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
-        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
+        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3181,9 +3181,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
+        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
         <key>other</key>
-        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
+        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hâlâ dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3296,6 +3296,54 @@
         <string>%d / [A] tamamlandı</string>
         <key>other</key>
         <string>%d / [A] tamamlandı</string>
+      </dict>
+    </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] konumuna eklendi</string>
+        <key>other</key>
+        <string>[A] konumuna eklendi</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d öğe yükleme için hazırlanamadı</string>
+        <key>other</key>
+        <string>%d öğe yükleme için hazırlanamadı</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] içinden %d hazır</string>
+        <key>other</key>
+        <string>[A] içinden %d hazır</string>
       </dict>
     </dict>
   </dict>

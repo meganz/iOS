@@ -251,7 +251,7 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="包含子資料夾";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="沒有任何可離線使用的檔案";
+"offlineEmptyState_title"="未儲存可供離線存取的檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="沒有聯絡人";
 /* Title shown when there's no incoming Shared Items */
@@ -385,11 +385,11 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="已複製至剪貼簿";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="著作權警告";
+"copyrightWarning"="版權警告";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="致所有使用者之著作權警告";
+"copyrightWarningToAll"="致所有使用者之版權警告";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA尊重他人之著作權，且要求MEGA的雲端服務使用者遵守著作權法。";
+"copyrightMessagePart1"="MEGA尊重他人之版權，且要求MEGA的雲端服務使用者遵守版權法。";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="嚴禁使用MEGA雲端服務侵犯智慧財產權。您不得以上傳、下載、儲存、共享、展示、串流、散佈、寄送電子郵件、連結、傳輸或以任何其他方式提供會侵犯任何個人或單位之智慧財產權或其他相關所有權的檔案、資料或內容。";
 /* button caption text that the user clicks when he agrees */
@@ -795,13 +795,13 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="還原金鑰已以 MEGA-還原金鑰.txt 匯出至離線存取區。注意：您登出後它將會被刪除，請將其存放於安全之處。";
+"masterKeyExported_alertMessage"="還原金鑰已以 MEGA-RECOVERYKEY.txt 匯到離線存取區。注意：您登出後它會被刪除，請將其存放於安全之處。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="在您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="清除可離線使用的檔案";
+"clearOfflineFiles"="清除離線存取的檔案";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
-"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有可離線使用的檔案？";
+"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有離線存取的檔案？";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除快取";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -837,7 +837,7 @@
 /* Option to open settings related to the Rubbish Bin */
 "settings.fileManagement.rubbishBinSettings"="垃圾筒設定";
 /* Option for managing file versioning settings */
-"settings.fileManagement.fileVersioning"="檔案版本控制";
+"settings.fileManagement.fileVersioning"="版本控制";
 /* Section header for settings related to device storage */
 "settings.fileManagement.header.onYourDevice"="在您的裝置上";
 /* Option to clear cached files stored on the device */
@@ -865,9 +865,9 @@
 /* File versioning snackbar message after deleting older versions of files */
 "settings.fileManagement.fileVersioning.deleteOlderVersions.snackBar"="已刪除檔案版本";
 /* File versioning alert title for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="停用檔案版本控制？";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.title"="停用版本控制？";
 /* File versioning alert message for disabling file versioning */
-"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="當檔案版本控制功能停用時，更新檔案將完全取代原始檔案。";
+"settings.fileManagement.fileVersioning.disableFileVersioning.alert.message"="當版本控制功能停用時，更新檔案將完全取代原始檔案。";
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="停用";
 /* File versioning footer message */
@@ -945,13 +945,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="閒置帳戶";
+"parkAccount"="封存帳戶";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="我已瞭解我正在重新註冊一個全新且空白的帳戶。除非我能想起原本的密碼，或者找到之前匯出的還原金鑰，否則我將失去我現在帳戶中的所有資料。";
 /* Caption of the button to proceed */
 "startNewAccount"="開始建立新帳號";
 /*  */
-"yourAccounHasBeenParked"="您的舊帳戶已閒置。您現在可以登入您的新帳戶。";
+"yourAccounHasBeenParked"="您的舊帳戶已封存。您現在可以登入您的新帳戶。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
@@ -1225,11 +1225,11 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉除錯模式";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線使用部分刪除。";
+"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線存取區刪除。";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="您確定要從離線使用裡刪除這個項目？";
+"removeItemFromOffline"="您確定要從離線存取裡刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="您確定要從離線使用裡刪除這些項目？";
+"removeItemsFromOffline"="您確定要從離線存取裡刪除這些項目？";
 /* Giphy section header */
 "Send GIF"="發送GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1659,7 +1659,7 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="不支援的檔案";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="您可以將其儲存為可離線使用並在相容的應用程式中開啟。";
+"message_fileNotSupported"="您可以將其儲存為離線存取並在相容的應用程式中開啟。";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="轉寄";
 /* Success message shown after forwarding a message to other chat(s) */
@@ -1745,11 +1745,11 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="檔案管理";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="檔案版本控制";
+"File versioning"="版本控制";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="為您整個帳戶啟用或停用檔案版本控制。\n停用檔案版本控制並不會讓您的聯絡人在共享資料夾中無法建立新版本的檔案。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="為您整個帳戶啟用或停用版本控制。\n停用版本控制並不會讓您的聯絡人在共享資料夾中無法建立新版本的檔案。";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="檔案版本控制功能被停用後，當檔案更新時，目前檔案版本將被新版本取代（系統不會再記錄您修改檔案的歷程）。您確定要停用檔案版本控制功能嗎？";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="版本控制功能被停用後，當檔案更新時，目前檔案版本將被新版本取代（系統不會再記錄您修改檔案的歷程）。您確定要停用版本控制功能嗎？";
 /* Settings preference title to show file versions info of the account */
 "File Versions"="檔案版本";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
@@ -2043,7 +2043,7 @@
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="此資料夾已認定需被移除。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="爭議撤除";
+"Dispute Takedown"="侵權移除申訴";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="用戶管理只能在電腦版瀏覽器進行。";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -2261,7 +2261,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="當您登出時，正在進行中的傳輸將取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="當您登出時，可離線使用的檔案將從您的裝置中被刪除。";
+"When you logout, files from your Offline section will be deleted from your device."="當您登出時，可離線使用的檔案將從您的裝置中刪除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您裝置上可離線存取的檔案將會被刪除，而且正在進行中的傳輸將被取消。";
 /* Default title of an empty chat. */
@@ -2525,13 +2525,13 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="快速存取";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線使用中的檔案";
+"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線存取中的檔案";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="從您的收藏中快速存取檔案";
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="快速存取近期使用的檔案";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="從可離線使用部份快速存取檔案";
+"Quickly access files on Offline section"="從離線存取區中快速存取檔案";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間好讓MEGA正確的運行。";
 /* Dialog description for the no enough device storage screen */
@@ -2557,7 +2557,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="更改設定";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="登出會刪除您可離線使用的內容。";
+"offline.logOut.warning.message"="登出將會刪除您離線存取的內容。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="共享擁有者超出其空間配額。";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -3097,7 +3097,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="設為可離線使用";
+"general.downloadToOffline"="設為離線存取";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
 "general.fileIsBeingDownloaded"="檔案已在下載中";
 /* Button and title text that ends the meeting for all */
@@ -3183,7 +3183,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="安排會議";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交反對通知的更多資訊。";
+"account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交恢復存取申請的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="由於違反MEGA的服務條款，您的帳戶已被終止。\n\n您將無法再存取您儲存的資料，也無法獲得註冊新MEGA帳戶的授權。";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -3701,7 +3701,7 @@
 /* Create meeting tip view title */
 "meetings.scheduleMeeting.createMeetingTip.title"="安排會議";
 /* Create meeting tip view message */
-"meetings.scheduleMeeting.createMeetingTip.message"="您現在可以安排一次性和週期性會議。";
+"meetings.scheduleMeeting.createMeetingTip.message"="您現在可以安排單次和週期性會議。";
 /* Scheduled meeting tip view dismiss action button title */
 "meetings.scheduleMeeting.tipView.gotIt"="知道了";
 /* Start meeting tip view title */
@@ -4165,7 +4165,7 @@
 /* The alert title shown when asking user if they want to make media node offline. */
 "saveToPhotos.fallbackAlert.title"="檔案無法儲存";
 /* The alert message shown when asking user if they want to make media node offline. */
-"saveToPhotos.fallbackAlert.message"="iOS不支援此檔案類型。你想讓它可離線使用嗎？";
+"saveToPhotos.fallbackAlert.message"="iOS不支援此檔案類型。你將它設定為離線存取嗎？";
 /* Password protected links title */
 "password.protected.links.title"="受密碼保護的連結";
 /* Links with expiry dates title */
@@ -4759,7 +4759,7 @@
 /* Subscription plan first year offer text shown in Upgrade plan screen */
 "subscriptionPurchase.plan.firstYearOffer"="%@首年";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="年度方案節省至少%@";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="年繳方案至少節省%@";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="進行";
 /* Camera Uploads Progress In Progress section title */
@@ -4901,10 +4901,16 @@
 /* The title of the No Internet state in Home screen */
 "home.noInternet.title"="您已離線";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="如果您將檔案設為離線使用，即使沒有網路連線，您仍可隨時存取這些檔案。";
+"home.noInternet.subtitle.noOfflineFiles"="如果您將檔案設為離線存取，即使沒有網路連線，您仍可隨時使用這些檔案。";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="已設為離線使用的檔案仍可正常存取。";
+"home.noInternet.subtitle.hasOfflineFiles"="已設為離線存取的檔案仍可使用。";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
 "home.noInternet.viewOfflineFiles"="查看離線檔案";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
 "home.recent.addedToLabel"="已新增到%@";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="無法載入您的近期活動";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="這些檔案已失效";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="正在準備項目…";

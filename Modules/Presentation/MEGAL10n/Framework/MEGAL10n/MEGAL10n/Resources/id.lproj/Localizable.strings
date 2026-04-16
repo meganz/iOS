@@ -4906,3 +4906,11 @@
 "videoPlayer.subtitles.select.title"="Pilih file terjemahan";
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Tidak ada hasil pencarian";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="Kami tidak bisa memuat aktivitas terbaru Anda";
+/* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
+"home.recent.addedToLabel"="Ditambahkan ke %@";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="File-file ini tidak lagi tersedia";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Menyiapkan barang-barang…";

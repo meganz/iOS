@@ -3710,5 +3710,59 @@
         <string>%d de [A] completados</string>
       </dict>
     </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Añadido a [A]</string>
+        <key>many</key>
+        <string>Añadidos a [A]</string>
+        <key>other</key>
+        <string>Añadidos a [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>No se ha podido preparar %d elemento para la subida</string>
+        <key>many</key>
+        <string>No se han podido preparar %d de elementos para la subida</string>
+        <key>other</key>
+        <string>No se han podido preparar %d elementos para la subida</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d de [A] listo</string>
+        <key>many</key>
+        <string>%d de [A] listos</string>
+        <key>other</key>
+        <string>%d de [A] listos</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

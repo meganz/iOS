@@ -4907,4 +4907,10 @@
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="ไม่พบผลลัพธ์การค้นหา";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
-"home.recent.addedToLabel"="เพิ่มใน %@ เรียบร้อยแล้ว";
+"home.recent.addedToLabel"="เพิ่มลงใน %@";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="เราไม่สามารถโหลดกิจกรรมล่าสุดของคุณได้";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="ไฟล์เหล่านี้ไม่สามารถใช้งานได้อีกต่อไป";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="กำลังเตรียมรายการ…";

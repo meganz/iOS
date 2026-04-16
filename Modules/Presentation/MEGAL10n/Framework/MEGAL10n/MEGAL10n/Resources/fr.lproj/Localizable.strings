@@ -41,7 +41,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Lien invalide";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos [A]Conditions générales d’utilisation[/A].";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos [A]Conditions d'utilisation[/A].";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Saisir la clé de déchiffrement";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Vérifiez votre boîte de réception des courriels et suivez le lien pour confirmer votre compte.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Votre compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, dont, mais sans toutefois s’y limiter, la clause 15. ";
+"accountBlocked"="Votre compte a été résilié à la suite d’un non-respect des Conditions d'utilisation de MEGA, dont, mais sans toutefois s’y limiter, la clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -159,7 +159,7 @@
 /*  */
 "fileLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Le fichier a été supprimé pour non-respect des Conditions générales d’utilisation";
+"fileLinkUnavailableText2"="Le fichier a été supprimé pour non-respect des Conditions d'utilisation";
 /*  */
 "fileLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas";
 /*  */
@@ -171,7 +171,7 @@
 /* file link invalid */
 "cloudDrive.fileLink.unavailableReason3"="URL invalide, le lien auquel vous essayez d'accéder n'existe pas";
 /* file link has been removed */
-"cloudDrive.fileLink.unavailableReason4"="Le lien vers le fichier a été supprimé car il enfreignait nos conditions générales d'utilisation.";
+"cloudDrive.fileLink.unavailableReason4"="Le lien vers le fichier a été supprimé car il enfreignait nos Conditions d'utilisation.";
 /* file link has expired */
 "cloudDrive.fileLink.hasExpired"="Le lien a expiré";
 /* Message shown when a download starts */
@@ -199,7 +199,7 @@
 /*  */
 "folderLinkUnavailableText1"="Les raisons suivantes pourraient en être la cause :";
 /*  */
-"folderLinkUnavailableText2"="Le lien de dossier a été supprimé pour non-respect des Conditions générales d’utilisation.";
+"folderLinkUnavailableText2"="Le lien de dossier a été supprimé pour non-respect des Conditions d'utilisation.";
 /*  */
 "folderLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas";
 /*  */
@@ -211,7 +211,7 @@
 /* folder link invalid */
 "cloudDrive.folderLink.unavailableReason3"="URL invalide, le lien auquel vous essayez d'accéder n'existe pas";
 /* folder link has been removed */
-"cloudDrive.folderLink.unavailableReason4"="Le lien de dossier a été supprimé pour non-respect des Conditions générales d’utilisation";
+"cloudDrive.folderLink.unavailableReason4"="Le lien de dossier a été supprimé pour non-respect des Conditions d'utilisation";
 /* folder link has expired */
 "cloudDrive.folderLink.hasExpired"="Le lien a expiré";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -701,7 +701,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
 "general.cookieAndAdSettings"="Paramètres relatifs aux cookies et aux annonces";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Conditions générales d’utilisation";
+"termsOfServicesLabel"="Conditions d'utilisation";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Règlement sur la protection des données";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -1497,11 +1497,11 @@
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Clé d’application invalide";
 /* Error shown when terms of service are breached during download. */
-"Terms of Service breached"="Non-respect des Conditions générales d’utilisation";
+"Terms of Service breached"="Non-respect des Conditions d'utilisation";
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Le transfert a échoué en raison d’une structure de dossier récursive";
 /* Error shown when downloading a file that has violated Terms of Service. */
-"transfer.error.termsOfServiceViolation"="Non-respect des Conditions générales d’utilisation";
+"transfer.error.termsOfServiceViolation"="Non-respect des Conditions d'utilisation";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Échec de vérification SSL";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -2389,7 +2389,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Réinitialiser le mot de passe";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ce lien n’est pas accessible, car le compte de l’utilisateur a été fermé en raison d’une violation flagrante des [A]Conditions générales d’utilisation[/A] de MEGA.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ce lien n’est pas accessible, car le compte de l’utilisateur a été fermé en raison d’une violation flagrante des [A]Conditions d'utilisation[/A] de MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Ce dossier ou fichier a été signalé comme source de contenu répréhensible telle que le contenu sur l’exploitation d’enfants, l’extrémisme violent ou la bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
 /* Text used to show the user that some resource is not available */
@@ -3185,7 +3185,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Votre compte MEGA a été désactivé en raison d’allégations répétées de violation des droits d’auteur. Cela signifie que vous ne pouvez ni accéder à votre compte ni à ses données.\n\nPour de plus amples renseignements sur la manière de déposer un contre-avis, vérifiez votre boîte de réception des courriels.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Votre compte a été résilié en raison du non-respect des Conditions générales d’utilisation de MEGA.\n\nVous ne pourrez pas accéder à vos données stockées de nouveau ni être autorisé à créer un nouveau compte MEGA.";
+"account.suspension.message.nonCopyright"="Votre compte a été résilié en raison du non-respect des Conditions d'utilisation de MEGA.\n\nVous ne pourrez pas accéder à vos données stockées de nouveau ni être autorisé à créer un nouveau compte MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Ouvrez l’appli MEGA et connectez-vous afin de poursuivre.";
 /* Account Storage title label of used storage size */
@@ -4907,4 +4907,10 @@
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Aucun résultat de recherche";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
-"home.recent.addedToLabel"="Ajouté(s) à %@";
+"home.recent.addedToLabel"="Ajouté à %@";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="Nous n'avons pas pu charger votre activité récente";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Ces fichiers ne sont plus disponibles";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="Préparation des éléments…";

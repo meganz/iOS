@@ -3441,9 +3441,9 @@
 /* Device Center title */
 "device.center.title"="장치 센터";
 /* Device Center list current device title */
-"device.center.current.device.title"="이 장치";
+"device.center.current.device.title"="이 기기";
 /* Device Center list other devices title */
-"device.center.other.devices.title"="다른 장치";
+"device.center.other.devices.title"="다른 기기";
 /* Device Center backup up to date status */
 "device.center.backup.upToDate.status.message"="최신";
 /* Device Center backup scanning status */
@@ -3973,7 +3973,7 @@
 /* Videos: video tab title all videos */
 "videos.tab.title.all"="모든 동영상";
 /* Videos: video tab title playlists */
-"videos.tab.title.playlist"="재생 목록";
+"videos.tab.title.playlist"="재생목록";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="영상이 없습니다";
 /* Videos: videos filter title for location */
@@ -4003,15 +4003,15 @@
 /* Videos: video playlist content empty state */
 "videos.tab.playlist.content.emptyState"="재생목록 없음";
 /* Videos: video playlist add new playlist button text description */
-"videos.tab.playlist.content.newPlaylist"="새 재생 목록";
+"videos.tab.playlist.content.newPlaylist"="새 재생목록";
 /* Videos: video playlist playlist cell title */
 "videos.tab.playlist.content.playlistCell.title.favorites"="즐겨찾기";
 /* Videos: video playlist playlist cell subtitle */
-"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="빈 재생 목록";
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="빈 재생목록";
 /* Videos: video playlist add new playlist alert title */
 "videos.tab.playlist.content.alert.title"="재생목록 이름을 입력하세요";
 /* Videos: video playlist add new playlist alert text field placeholder */
-"videos.tab.playlist.content.alert.placeholder"="새 재생 목록";
+"videos.tab.playlist.content.alert.placeholder"="새 재생목록";
 /* Videos: video playlist add new playlist alert text field placeholder */
 "videos.tab.playlist.content.alert.button.create"="생성";
 /* Used in create video playlist popup video playlist name validation */
@@ -4523,7 +4523,7 @@
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="알 수 없는 아티스트";
 /* Add to playlist empty message */
-"photos.addToPlaylist.empty.message"="재생 목록 없음";
+"photos.addToPlaylist.empty.message"="재생목록 없음";
 /* Add to playlist empty create button title */
 "photos.addToPlaylist.empty.create.button.title"="재생목록 생성";
 /* Title in chat settings */
@@ -4908,3 +4908,9 @@
 "videoPlayer.subtitles.select.title"="자막 파일 선택";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
 "home.recent.addedToLabel"="%@에 추가됨";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="최근 활동을 불러올 수 없습니다";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="이 파일들은 더 이상 이용할 수 없습니다";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="항목 준비 중…";

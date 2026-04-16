@@ -4907,4 +4907,10 @@
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
 "home.noInternet.viewOfflineFiles"="オフラインファイルを表示";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
-"home.recent.addedToLabel"="%@に追加しました";
+"home.recent.addedToLabel"="%@に追加されました";
+/* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
+"home.recent.widget.error.message"="最近のアクティビティを読み込めませんでした";
+/* Snack bar message when files in a recent action bucket are no longer available */
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="これらのファイルは利用できなくなりました";
+/* Title shown on the preparing overlay while files are being loaded from Photos */
+"mediaImport.preparing.title"="項目を準備中…";

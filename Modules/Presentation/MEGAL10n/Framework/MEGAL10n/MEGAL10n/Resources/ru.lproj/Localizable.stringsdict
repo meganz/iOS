@@ -3710,5 +3710,59 @@
         <string>%d из [A] завершено</string>
       </dict>
     </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Добавлено в [A]</string>
+        <key>few</key>
+        <string>Добавлено в [A]</string>
+        <key>many</key>
+        <string>Добавлено в [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Не удалось подготовить %d элемент к загрузке</string>
+        <key>few</key>
+        <string>Не удалось подготовить %d элемента к загрузке</string>
+        <key>many</key>
+        <string>Не удалось подготовить %d элементов к загрузке</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d из [A] готов</string>
+        <key>few</key>
+        <string>%d из [A] готовы</string>
+        <key>many</key>
+        <string>%d из [A] готовы</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

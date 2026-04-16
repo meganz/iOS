@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>%#@ignore@</string>
+        <string>فقط [A] رفع يديه</string>
         <key>one</key>
         <string>[A] و%d آخر رفعوا أيديهم</string>
         <key>two</key>
@@ -4944,6 +4944,78 @@
         <string>تم إكمال %d من [A]</string>
         <key>other</key>
         <string>تم إكمال %d من [A]</string>
+      </dict>
+    </dict>
+    <key>recents.bucketDetails.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>one</key>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>two</key>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>few</key>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>many</key>
+        <string>تمت الإضافة إلى [A]</string>
+        <key>other</key>
+        <string>تمت الإضافة إلى [A]</string>
+      </dict>
+    </dict>
+    <key>photos.upload.prepare.error</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>لم يتمكن أي عنصر من التحضير للتحميل</string>
+        <key>one</key>
+        <string>لم يتمكن عنصر واحد من التحضير للتحميل</string>
+        <key>two</key>
+        <string>لم يتمكن عنصران من التحضير للتحميل</string>
+        <key>few</key>
+        <string>لم يتمكن %d عناصر من التحضير للتحميل</string>
+        <key>many</key>
+        <string>لم يتمكن %d عنصرًا من التحضير للتحميل</string>
+        <key>other</key>
+        <string>لم يتمكن %d عنصر من التحضير للتحميل</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>0 من [A] جاهزة</string>
+        <key>one</key>
+        <string>%d من [A] جاهز</string>
+        <key>two</key>
+        <string>%d من [A] جاهزان</string>
+        <key>few</key>
+        <string>%d من [A] جاهزة</string>
+        <key>many</key>
+        <string>%d من [A] جاهزًا</string>
+        <key>other</key>
+        <string>%d من [A] جاهز</string>
       </dict>
     </dict>
   </dict>
