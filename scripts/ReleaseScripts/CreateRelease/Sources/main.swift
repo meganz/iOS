@@ -5,7 +5,9 @@ setVerbose()
 
 do {
     log("Started execution")
-    let version = if let version = try? VersionFetcher().fetchVersion() {
+    let version = if let cliVersion = parseVersionArg() {
+        cliVersion
+    } else if let version = try? VersionFetcher().fetchVersion() {
         version
     } else {
         try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
@@ -26,6 +28,15 @@ do {
     exit(ProcessResult.success)
 } catch {
     exitWithError(error)
+}
+
+private func parseVersionArg() -> String? {
+    let args = CommandLine.arguments
+    guard let index = args.firstIndex(of: "--version"),
+          index + 1 < args.count else { return nil }
+    let version = args[index + 1]
+    guard (try? matchesMajorMinorRelease(version)) == true else { return nil }
+    return version
 }
 
 private func log(_ message: String) {
