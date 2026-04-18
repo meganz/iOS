@@ -293,6 +293,7 @@ platform :ios do
     scan(
       workspace: WORKSPACE,
       scheme: SCHEME,
+      device: "iPhone 17 Pro",
       cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
       disable_package_automatic_updates: true,
       derived_data_path: "derivedData",
@@ -311,6 +312,7 @@ platform :ios do
     scan(
       workspace: WORKSPACE,
       scheme: "MEGAModulesTests",
+      device: "iPhone 17 Pro",
       cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
       disable_package_automatic_updates: true,
       derived_data_path: "derivedData",
