@@ -62,10 +62,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
     private lazy var emptyAlbumHostingController: UIHostingController<RevampedContentUnavailableView> = {
+        let addItemsAction: (() -> Void)? = viewModel.isFavouriteAlbum ? nil : { [weak viewModel] in
+            viewModel?.dispatch(.addToAlbumTap)
+        }
         let view = RevampedContentUnavailableView(
-            viewModel: .emptyAlbum { [weak viewModel] in
-                viewModel?.dispatch(.addToAlbumTap)
-            }
+            viewModel: .emptyAlbum(addItemsAction: addItemsAction)
         )
         
         let controller = UIHostingController(rootView: view)
@@ -511,19 +512,19 @@ final class AlbumContentViewController: UIViewController, ViewType {
 }
 
 private extension ContentUnavailableViewModel {
-    static func emptyAlbum(addItemsAction: @escaping () -> Void) -> Self {
+    static func emptyAlbum(addItemsAction: (() -> Void)?) -> Self {
         .init(
             image: MEGAAssets.Image.glassAlbum,
             title: Strings.Localizable.CameraUploads.Albums.Empty.title,
             font: .callout,
             titleTextColor: TokenColors.Text.secondary.swiftUI,
-            actions: [
-                ContentUnavailableViewModel.ButtonAction(
+            actions: addItemsAction.map { action in
+                [ContentUnavailableViewModel.ButtonAction(
                     title: Strings.Localizable.General.addItems,
                     image: MEGAAssets.Image.plus,
-                    handler: addItemsAction
-                )
-            ]
+                    handler: action
+                )]
+            } ?? []
         )
     }
 }
