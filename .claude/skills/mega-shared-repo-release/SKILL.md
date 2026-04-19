@@ -68,6 +68,8 @@ After the script completes, **prompt the RC to review the downloaded translation
 
 ## Tuesday — Create Release Branch and RC Tag
 
+> **Before starting:** Confirm the `Prepare release [major].[minor]` MR has been **reviewed, pipeline passed, and merged into `main`** before proceeding. Do NOT create the release branch until the Prepare MR is merged.
+
 ### 1. Create Release Branch
 Manually create from `main`:
 ```
