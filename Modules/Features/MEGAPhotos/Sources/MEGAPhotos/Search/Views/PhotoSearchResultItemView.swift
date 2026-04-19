@@ -18,11 +18,39 @@ struct PhotoSearchResultItemView: View {
                 .task {
                     await viewModel.loadThumbnail()
                 }
-            
-            Text(viewModel.title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .lineLimit(1)
+
+            HStack(spacing: 4) {
+                if let labelImage = viewModel.labelImage {
+                    Image(uiImage: labelImage)
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 9, height: 9)
+                }
+
+                Text(viewModel.title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .lineLimit(1)
+
+                if viewModel.shouldShowFavourite {
+                    Image(uiImage: MEGAAssets.UIImage.heart)
+                        .resizable()
+                        .renderingMode(.template)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 12, height: 12)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                }
+
+                if viewModel.shouldShowLink {
+                    Image(uiImage: MEGAAssets.UIImage.link01)
+                        .resizable()
+                        .renderingMode(.template)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16)
+                        .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                }
+            }
 
             Spacer()
 

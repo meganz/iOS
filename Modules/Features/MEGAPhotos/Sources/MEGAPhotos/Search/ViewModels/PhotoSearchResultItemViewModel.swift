@@ -29,6 +29,19 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
             image: MEGAAssets.Image.image(forFileName: photo.name),
             type: .placeholder)
     }
+
+    var labelImage: UIImage? {
+        guard photo.label != .unknown else { return nil }
+        return MEGAAssets.UIImage.image(named: "\(photo.label.labelString)Small")
+    }
+
+    var shouldShowFavourite: Bool {
+        photo.isFavourite
+    }
+
+    var shouldShowLink: Bool {
+        photo.isExported
+    }
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let photoSearchResultRouter: any PhotoSearchResultRouterProtocol
@@ -62,6 +75,9 @@ extension PhotoSearchResultItemViewModel: Equatable {
         lhs.photo.handle == rhs.photo.handle &&
         lhs.photo.name == rhs.photo.name &&
         lhs.photo.isMarkedSensitive == rhs.photo.isMarkedSensitive &&
+        lhs.photo.isFavourite == rhs.photo.isFavourite &&
+        lhs.photo.isExported == rhs.photo.isExported &&
+        lhs.photo.label == rhs.photo.label &&
         lhs.searchText == rhs.searchText
     }
 }

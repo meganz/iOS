@@ -57,6 +57,42 @@ struct PhotoSearchResultItemViewModelTests {
         }
     }
     
+    @Suite("Node attributes")
+    struct NodeAttributes {
+        @Test("Label image should be nil when label is unknown")
+        @MainActor
+        func labelImageUnknown() {
+            let sut = makeSUT(photo: .init(handle: 1, label: .unknown))
+            #expect(sut.labelImage == nil)
+        }
+
+        @Test("Label image should return image when label is set",
+              arguments: [NodeLabelTypeEntity.red, .orange, .yellow, .green, .blue, .purple, .grey])
+        @MainActor
+        func labelImageSet(label: NodeLabelTypeEntity) {
+            let sut = makeSUT(photo: .init(handle: 1, label: label))
+            #expect(sut.labelImage != nil)
+        }
+
+        @Test("shouldShowFavourite should reflect photo isFavourite")
+        @MainActor
+        func shouldShowFavourite() {
+            let favouriteSUT = makeSUT(photo: .init(handle: 1, isFavourite: true))
+            let nonFavouriteSUT = makeSUT(photo: .init(handle: 2, isFavourite: false))
+            #expect(favouriteSUT.shouldShowFavourite == true)
+            #expect(nonFavouriteSUT.shouldShowFavourite == false)
+        }
+
+        @Test("shouldShowLink should reflect photo isExported")
+        @MainActor
+        func shouldShowLink() {
+            let exportedSUT = makeSUT(photo: .init(handle: 1, isExported: true))
+            let nonExportedSUT = makeSUT(photo: .init(handle: 2, isExported: false))
+            #expect(exportedSUT.shouldShowLink == true)
+            #expect(nonExportedSUT.shouldShowLink == false)
+        }
+    }
+
     @Suite("calls moreButtonPressed")
     struct MoreButtonPressed {
         @Test("When more button pressed it should call router to handle")
