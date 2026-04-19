@@ -292,6 +292,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 
 - (BOOL)updateUploadRecord:(MOAssetUploadRecord *)record withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
+    __block BOOL shouldPostStatsNotification = NO;
     @try {
         [self.backgroundContext performBlockAndWait:^{
             record.status = @(status);
@@ -307,6 +308,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
                 record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
                 
                 MEGALogInfo(@"[Camera Upload] %@ upload failed with error per launch count: %@, error per login count: %@", record, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
+                
+                shouldPostStatsNotification = (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount);
             } else if (status == CameraAssetUploadStatusDone) {
                 MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
                 if (errorPerLaunch) {
@@ -319,26 +322,29 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
                 }
             }
             
-            [self.backgroundContext save:&coreDataError];
-            
-            if (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+            if (![self.backgroundContext save:&coreDataError]) {
+                MEGALogError(@"[Camera Upload] failed to save context when updating record status: %@", coreDataError);
+                [self.backgroundContext rollback];
             }
         }];
         
     } @catch (NSException *exception) {
+        MEGALogError(@"[Camera Upload] exception during updateUploadRecord: %@ reason: %@", exception.name, exception.reason);
         if ([CoreDataErrorHandler hasSQLiteFullErrorInException:exception]) {
             [NSNotificationCenter.defaultCenter postNotificationName:MEGASQLiteDiskFullNotification object:nil];
-        } else {
-            coreDataError = [NSError mnz_cameraUploadCoreDataException:exception];
         }
-    } @finally {
-        if (error != NULL) {
-            *error = coreDataError;
-        }
-        
-        return coreDataError == nil;
+        coreDataError = [NSError mnz_cameraUploadCoreDataException:exception];
     }
+    
+    if (shouldPostStatsNotification) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+    }
+
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+
+    return coreDataError == nil;
 }
 
 #pragma mark - delete records
