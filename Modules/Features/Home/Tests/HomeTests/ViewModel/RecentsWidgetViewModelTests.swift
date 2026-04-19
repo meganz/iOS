@@ -1,5 +1,7 @@
+import Foundation
 import MEGASwift
 import Testing
+import os
 @testable import Home
 
 @Suite("RecentsWidgetViewModelTests")
@@ -53,14 +55,21 @@ struct RecentsWidgetViewModelTests {
             return
         }
 
-        let stateTransitionTask = Task {
-            await stateBecomesEmpty(for: sut)
+        var sawInitialHidden = false
+        var observedEmpty = false
+        for await state in sut.$state.values {
+            if !sawInitialHidden {
+                sawInitialHidden = true
+                useCase.resume(with: .empty)
+                continue
+            }
+            if case .empty = state {
+                observedEmpty = true
+            }
+            break
         }
 
-        useCase.resume(with: .empty)
-        let didBecomeEmpty = await stateTransitionTask.value
-
-        guard didBecomeEmpty, case .empty = sut.state else {
+        guard observedEmpty else {
             Issue.record("Expected empty state after onTask finishes")
             task.cancel()
             await task.value
@@ -70,7 +79,7 @@ struct RecentsWidgetViewModelTests {
         task.cancel()
         await task.value
     }
-    
+
     private func makeSUT(
         recentsActionsStatesUseCase: MockRecentsActionsStatesUseCase = MockRecentsActionsStatesUseCase(),
         clearRecentActionHistoryUseCase: MockClearRecentActionHistoryUseCase = MockClearRecentActionHistoryUseCase()
@@ -80,56 +89,72 @@ struct RecentsWidgetViewModelTests {
         clearRecentActionHistoryUseCase: clearRecentActionHistoryUseCase
        )
     }
-
-    private func stateBecomesEmpty(for sut: RecentsWidgetViewModel) async -> Bool {
-        let publisher = sut.$state
-
-        for await state in publisher.values {
-            if case .empty = state {
-                return true
-            }
-        }
-
-        return false
-    }
 }
 
 private final class MockRecentsActionsStatesUseCase: RecentsActionsStatesUseCaseProtocol, @unchecked Sendable {
-    private var continuation: CheckedContinuation<RecentWidgetUseCaseState, Never>?
-    private var bufferedState: RecentWidgetUseCaseState?
-    private var continuationWaiters: [CheckedContinuation<Void, Never>] = []
+    private struct State {
+        var continuation: CheckedContinuation<RecentWidgetUseCaseState, Never>?
+        var bufferedState: RecentWidgetUseCaseState?
+        var continuationWaiters: [CheckedContinuation<Void, Never>] = []
+    }
+
+    private let state = OSAllocatedUnfairLock(initialState: State())
 
     var states: AnyAsyncSequence<RecentWidgetUseCaseState> {
         AsyncStream<RecentWidgetUseCaseState> { _ in }.eraseToAnyAsyncSequence()
     }
 
     func getLatestBucketState() async -> RecentWidgetUseCaseState {
-        if let bufferedState {
-            self.bufferedState = nil
-            return bufferedState
+        enum Outcome {
+            case ready(RecentWidgetUseCaseState)
+            case wait(waitersToResume: [CheckedContinuation<Void, Never>])
         }
-        
+
         return await withCheckedContinuation { continuation in
-            self.continuation = continuation
-            let waiters = self.continuationWaiters
-            self.continuationWaiters = []
-            waiters.forEach { $0.resume() }
+            let outcome: Outcome = state.withLock { state in
+                if let buffered = state.bufferedState {
+                    state.bufferedState = nil
+                    return .ready(buffered)
+                }
+                state.continuation = continuation
+                let waiters = state.continuationWaiters
+                state.continuationWaiters = []
+                return .wait(waitersToResume: waiters)
+            }
+
+            switch outcome {
+            case .ready(let value):
+                continuation.resume(returning: value)
+            case .wait(let waiters):
+                waiters.forEach { $0.resume() }
+            }
         }
     }
 
     func waitForContinuation() async {
-        if continuation != nil { return }
         await withCheckedContinuation { waiter in
-            continuationWaiters.append(waiter)
+            let alreadySet: Bool = state.withLock { state in
+                if state.continuation != nil {
+                    return true
+                }
+                state.continuationWaiters.append(waiter)
+                return false
+            }
+            if alreadySet {
+                waiter.resume()
+            }
         }
     }
 
-    func resume(with state: RecentWidgetUseCaseState) {
-        if let continuation {
-            self.continuation = nil
-            continuation.resume(returning: state)
-        } else {
-            bufferedState = state
+    func resume(with newState: RecentWidgetUseCaseState) {
+        let pending: CheckedContinuation<RecentWidgetUseCaseState, Never>? = state.withLock { state in
+            if let continuation = state.continuation {
+                state.continuation = nil
+                return continuation
+            }
+            state.bufferedState = newState
+            return nil
         }
+        pending?.resume(returning: newState)
     }
 }
