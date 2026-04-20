@@ -26,6 +26,10 @@ extension AlbumContentViewController {
     }
     
     func configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool) {
+        defer {
+            TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
+        }
+        
         if isEditing {
             let cancelBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel,
