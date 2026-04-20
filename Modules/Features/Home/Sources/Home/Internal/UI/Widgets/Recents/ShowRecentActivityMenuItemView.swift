@@ -11,7 +11,7 @@ struct ShowRecentActivityMenuItemView: View {
             action()
         } label: {
             Label {
-                Text(Strings.Localizable.Recents.EmptyState.ActivityHidden.button)
+                Text(Strings.Localizable.Home.Recent.Menu.Action.showRecentActivity)
             } icon: {
                 MEGAAssets.Image.eye
                     .renderingMode(.template)

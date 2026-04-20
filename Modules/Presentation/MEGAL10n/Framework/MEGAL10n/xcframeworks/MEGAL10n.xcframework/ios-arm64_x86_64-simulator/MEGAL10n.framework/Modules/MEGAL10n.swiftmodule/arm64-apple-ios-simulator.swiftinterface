@@ -3021,6 +3021,7 @@ public enum Strings {
         public enum Menu {
           public enum Action {
             public static let clearRecentActivity: Swift.String
+            public static let showRecentActivity: Swift.String
           }
         }
         public enum MixedFileBucket {
