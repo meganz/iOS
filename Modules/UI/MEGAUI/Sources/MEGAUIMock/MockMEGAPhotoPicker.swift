@@ -14,12 +14,12 @@ public final class MockMEGAPhotoPicker: MEGAPhotoPickerProtocol {
         self.results = results
     }
     
-    public func pickAssets() async -> (assets: [PHAsset], selectedCount: Int) {
-        (assets, assets.count)
+    public func pickAssets(completion: @escaping ([PHAsset], Int) -> Void) {
+        completion(assets, assets.count)
     }
-    
-    public func pickResults() async -> [PHPickerResult] {
-        results
+
+    public func pickResults(completion: @escaping ([PHPickerResult]) -> Void) {
+        completion(results)
     }
 }
 

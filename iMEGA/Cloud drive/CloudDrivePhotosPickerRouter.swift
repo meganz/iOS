@@ -54,10 +54,11 @@ struct CloudDrivePhotosPickerRouter {
     // MARK: - New Flow
 
     private func startNewFlow() {
-        Task { @MainActor in
-            let results = await photoPicker.pickResults()
+        photoPicker.pickResults { [assetUploader, parentNode] results in
             guard !results.isEmpty else { return }
-            await assetUploader.importFromPhotos(results: results, to: parentNode)
+            Task {
+                await assetUploader.importFromPhotos(results: results, to: parentNode)
+            }
         }
     }
 
@@ -68,11 +69,8 @@ struct CloudDrivePhotosPickerRouter {
             guard let presenter else { return }
 
             if granted {
-                Task { @MainActor [weak presenter] in
+                photoPicker.pickAssets { [weak presenter, assetUploader, parentNode] assets, selectedCount in
                     guard let presenter else { return }
-                    let result = await photoPicker.pickAssets()
-                    let assets = result.assets
-                    let selectedCount = result.selectedCount
 
                     if assets.count < selectedCount, PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
                         let alert = UIAlertController(

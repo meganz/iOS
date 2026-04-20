@@ -39,9 +39,7 @@ final class FileUploadingRouter {
         case .album(let completion):
             presentPhotoAlbumSelection(completion: completion)
         case .albumNew:
-            Task { @MainActor in
-                await presentPhotoAlbumSelectionNewFlow()
-            }
+            presentPhotoAlbumSelectionNewFlow()
         case .textFile:
             CreateTextFileAlertViewRouter(presenter: navigationController).start()
         case .camera:
@@ -56,27 +54,25 @@ final class FileUploadingRouter {
     // MARK: - Display PhotoAlbum Selection View Controller
 
     private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
-        Task { @MainActor in
-            let result = await photoPicker.pickAssets()
-            let assets = result.assets
-            if assets.count > 0 {
-                self.presentDestinationFolderBrowser { targetNode in
-                    completion(assets, targetNode)
-                }
+        photoPicker.pickAssets { [weak self] assets, _ in
+            guard !assets.isEmpty else { return }
+            self?.presentDestinationFolderBrowser { targetNode in
+                completion(assets, targetNode)
             }
         }
     }
 
     // MARK: - New Photo Album Selection Flow
 
-    private func presentPhotoAlbumSelectionNewFlow() async {
-        let results = await photoPicker.pickResults()
-        guard !results.isEmpty else { return }
-        presentDestinationFolderBrowser { [weak self] targetNode in
-            guard let presenter = self?.navigationController else { return }
-            let assetUploader = CloudDriveAssetUploader(presenter: presenter)
-            Task { @MainActor in
-                await assetUploader.importFromPhotos(results: results, to: targetNode.toNodeEntity())
+    private func presentPhotoAlbumSelectionNewFlow() {
+        photoPicker.pickResults { [weak self] results in
+            guard !results.isEmpty else { return }
+            self?.presentDestinationFolderBrowser { [weak self] targetNode in
+                guard let presenter = self?.navigationController else { return }
+                let assetUploader = CloudDriveAssetUploader(presenter: presenter)
+                Task {
+                    await assetUploader.importFromPhotos(results: results, to: targetNode.toNodeEntity())
+                }
             }
         }
     }

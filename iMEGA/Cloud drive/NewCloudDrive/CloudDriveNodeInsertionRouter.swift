@@ -17,10 +17,12 @@ protocol NodeInsertionRouting {
 struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     private unowned let navigationController: UINavigationController
     private let openNodeHandler: (NodeEntity) -> Void
+    private let photoPicker: any MEGAPhotoPickerProtocol
 
     init(navigationController: UINavigationController, openNodeHandler: @escaping (NodeEntity) -> Void) {
         self.navigationController = navigationController
         self.openNodeHandler = openNodeHandler
+        self.photoPicker = MEGAPhotoPicker(presenter: navigationController)
     }
 
     func createTextFileAlert(for nodeEntity: NodeEntity) {
@@ -60,7 +62,7 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
             parentNode: nodeEntity,
             presenter: navigationController,
             assetUploader: CloudDriveAssetUploader(presenter: navigationController),
-            photoPicker: MEGAPhotoPicker(presenter: navigationController),
+            photoPicker: photoPicker,
             remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo)
         ).start()
     }

@@ -166,7 +166,7 @@ class ChatViewController: MessagesViewController {
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
     private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
     
-    private var photoPicker: any MEGAPhotoPickerProtocol
+    var photoPicker: any MEGAPhotoPickerProtocol
     
     // MARK: - Overriden methods
     
