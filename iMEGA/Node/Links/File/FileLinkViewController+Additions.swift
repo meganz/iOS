@@ -76,6 +76,7 @@ extension FileLinkViewController {
               let parent = stackView.superview else { return }
 
         let landscapeConstraints = [
+            stackView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 8),
             stackView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 16),
             parent.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16)
         ]
