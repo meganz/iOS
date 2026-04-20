@@ -21,6 +21,85 @@ Prerequisite: `iosTransifex/weblate/translate.json` must exist with valid `SOURC
 
 ---
 
+## Use Case 0: Add a New String (Interactive)
+
+Use this when a developer wants to add a brand-new localisation string — from scratch — including writing it to the source files, rebuilding the framework, and committing.
+
+### Step 1 — Collect inputs (single prompt)
+
+Ask for all of the following in one message:
+
+- **Key** — dot-notation key, e.g. `home.recent.menu.action.showRecentActivity`
+- **Value** — the English string, e.g. `Show recent activity`
+- **Comment** — translator context, e.g. `The title for menu action button that will show the recent activity`
+
+### Step 2 — Run checks silently (no prompt unless an issue is found)
+
+Run all checks immediately after receiving the inputs. Do NOT pause between them.
+
+File to search: `Modules/Presentation/MEGAL10n/Framework/MEGAL10n/MEGAL10n/Resources/Base.lproj/Localizable.strings`
+
+**Duplicate key check** — Grep for an exact match of the key (e.g. `"home.recent.menu.action.showRecentActivity"`).
+
+**Duplicate value check** — Grep (case-insensitive) for the value.
+
+**Grammar / style check** — review the value for:
+- Spelling errors or typos
+- Capitalisation (sentence case is the norm — check surrounding entries)
+- Punctuation consistency (ellipses `…` vs `...`, trailing full stops)
+- Trailing spaces
+
+**Only pause if there is a real issue:**
+- Duplicate key found → tell the user the key already exists and stop. They must choose a different key.
+- Duplicate value found → show existing key(s), ask: *"This value already exists under `<key>`. Use the existing key or proceed with adding `<new-key>`?"*
+- Grammar/style issue found → show the issue, ask the user to confirm or correct the value
+
+If no issues are found, proceed directly to Step 3 without asking anything.
+
+### Step 3 — Write the string to both source files
+
+Append the new entry at the **end** of both files. The files currently end without a trailing newline, so add `\n` before the new entry.
+
+Format:
+```
+/* <comment> */
+"<key>"="<value>";
+```
+
+Files to edit (both identically):
+- `Modules/Presentation/MEGAL10n/Framework/MEGAL10n/MEGAL10n/Resources/Base.lproj/Localizable.strings`
+- `Modules/Presentation/MEGAL10n/Framework/MEGAL10n/MEGAL10n/Resources/en.lproj/Localizable.strings`
+
+### Step 4 — Regenerate MEGAL10n xcframework
+
+Run from project root:
+```bash
+./scripts/generate-megal10n-xcframework.sh
+```
+
+If the output is `"No changes, skip building xcframework"`, the file edits were not detected — flag this to the user and stop.
+
+### Step 5 — Commit
+
+Extract the ticket number from the current branch name if it matches the pattern `<user>/<TICKET>-...` (e.g. `bl/IOS-11649-...` → `IOS-11649`). Otherwise ask the user for the ticket number.
+
+```bash
+git add Modules/Presentation/MEGAL10n/
+git commit -m "<TICKET>: Add localisation string \"<key>\""
+```
+
+### Step 6 — Summary
+
+Print a summary of what was done:
+- Key added
+- Value
+- Comment
+- Files modified
+- Whether xcframework was rebuilt
+- Commit hash
+
+---
+
 ## Use Case 1: Daily — Adding New Strings
 
 Use this when a developer has added new string keys to the source files and needs to push them to Weblate so translators can start working.
@@ -138,6 +217,7 @@ The `-pm` (`--pushmain`) flag uploads directly to the main Weblate component ins
 
 | Intent | Command |
 |---|---|
+| Add a new string interactively | say "add new string" |
 | Upload new strings | `./iosTransifex/weblate/lang.sh -a ios -u` |
 | Upload new plurals | `./iosTransifex/weblate/lang.sh -a ios -u -c plurals` |
 | Upload InfoPlist strings | `./iosTransifex/weblate/lang.sh -a ios -u -c infoplist` |
