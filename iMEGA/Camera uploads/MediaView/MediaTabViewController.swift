@@ -223,6 +223,23 @@ final class MediaTabViewController: UIViewController {
     }
 
     private func updateSearchMode(isSearching: Bool) {
+        // Mutating navigationItem.searchController mid-transition leaves
+        // UIViewKeyframeAnimationState holding a dangling reference to the
+        // UIHostingController's _SwiftUILayerDelegate (iOS 26 _UITabElement
+        // alongside keyframe path). Defer the change until the transition ends.
+        let coordinator = transitionCoordinator
+            ?? presentedViewController?.transitionCoordinator
+
+        if let coordinator {
+            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+                self?.applySearchMode(isSearching: isSearching)
+            }
+        } else {
+            applySearchMode(isSearching: isSearching)
+        }
+    }
+
+    private func applySearchMode(isSearching: Bool) {
         if isSearching {
             isExitingSearch = false
             navigationItem.searchController = searchController
