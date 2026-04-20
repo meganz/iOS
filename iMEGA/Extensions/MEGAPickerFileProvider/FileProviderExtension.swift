@@ -158,9 +158,8 @@ final class FileProviderExtension: NSFileProviderExtension {
                 MEGALogError("Error signaling item: \(error)")
             }
             if let longitude = node.longitude,
-               let latitude = node.latitude,
-               let megaNode = MEGASdk.shared.node(forHandle: transferEntity.nodeHandle) {
-                MEGASdk.shared.setUnshareableNodeCoordinates(megaNode, latitude: latitude, longitude: longitude)
+               let latitude = node.latitude {
+                MEGASdk.shared.setUnshareableCoordinatesForNodeHandle(transferEntity.nodeHandle, latitude: latitude, longitude: longitude)
             }
         }
     }

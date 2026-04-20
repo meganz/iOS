@@ -15,11 +15,7 @@ public struct NodeCoordinatesRepository: NodeCoordinatesRepositoryProtocol {
     
     public func setUnshareableNodeCoordinates(_ node: NodeEntity, latitude: Double, longitude: Double) async throws {
         return try await withAsyncThrowingValue { completion in
-            guard let megaNode = sdk.node(forHandle: node.handle) else {
-                completion(.failure(GenericErrorEntity()))
-                return
-            }
-            sdk.setUnshareableNodeCoordinates(megaNode, latitude: latitude, longitude: longitude, delegate: RequestDelegate { result in
+            sdk.setUnshareableCoordinatesForNodeHandle(node.handle, latitude: latitude, longitude: longitude, delegate: RequestDelegate { result in
                 switch result {
                 case .success:
                     completion(.success(()))
