@@ -10,9 +10,11 @@ import MEGADesignToken
 import MEGADomain
 import MEGAInfrastructure
 import MEGAL10n
+import MEGAPermissions
 import MEGAPreference
 import MEGARepo
 import MEGASwiftUI
+import MEGAUI
 import Search
 import SwiftUI
 import Transfer
@@ -22,7 +24,6 @@ extension HomeScreenFactory {
     func createRevampedHomeScreen(
         from tabBarController: MainTabBarController,
     ) -> UIViewController {
-
         let navigationController = MEGANavigationController()
         navigationController.tabBarItem = UITabBarItem(title: nil, image: MEGAAssets.UIImage.home, selectedImage: nil)
 
@@ -130,23 +131,31 @@ extension HomeScreenFactory {
         return navigationController
     }
 
-    private func makeHomeAddMenuActionHandler(newChatRouter: NewChatRouter, navigationController: UINavigationController) -> HomeAddMenuActionHandler {
-        let tracker = DIContainer.tracker
-        let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
-            tracker: tracker,
-            nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(navigationController: navigationController),
-            nodeSource: .node { MEGASdk.sharedSdk.rootNode?.toNodeEntity() }
-        )
-
+    private func makeHomeAddMenuActionHandler(
+        newChatRouter: NewChatRouter,
+        navigationController: UINavigationController
+    ) -> HomeAddMenuActionHandler {
+        let permissionHandler = DevicePermissionsHandler.makeHandler()
+        let permissionRouter = PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
         return HomeAddMenuActionHandler(
-            uploadAddMenuDelegateHandler: uploadAddMenuDelegateHandler,
+            fileUploadingRouter: makeFileUploadingRouter(navigationController: navigationController),
+            tracker: DIContainer.tracker,
             newChatRouter: newChatRouter,
-            navigationController: navigationController
+            navigationController: navigationController,
+            uploadPhotoAssetsUseCase: UploadPhotoAssetsUseCase(
+                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: megaStore)
+            ),
+            permissionHandler: permissionHandler,
+            permissionRouter: permissionRouter
         )
     }
 
-    private func makeCloudDriveNodeInsertionRouter(navigationController: UINavigationController) -> CloudDriveNodeInsertionRouter {
-        CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { _ in })
+    private func makeFileUploadingRouter(navigationController: UINavigationController) -> FileUploadingRouter {
+        FileUploadingRouter(
+            navigationController: navigationController,
+            baseViewController: UIViewController(),
+            photoPicker: MEGAPhotoPicker(presenter: navigationController)
+        )
     }
     
     private func makeSearchResultMapper(

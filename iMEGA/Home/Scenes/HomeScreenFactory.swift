@@ -26,7 +26,7 @@ final class HomeScreenFactory: NSObject {
         MEGASdk.sharedSdk
     }
     
-    private var megaStore: MEGAStore {
+    var megaStore: MEGAStore {
         MEGAStore.shareInstance()
     }
     
