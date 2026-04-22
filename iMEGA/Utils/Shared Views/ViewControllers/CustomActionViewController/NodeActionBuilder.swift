@@ -38,6 +38,7 @@ final class NodeActionBuilder {
     private var viewInFolder: Bool = false
     private var isAudioFileLink: Bool = false
     private var isSelectionEnabled: Bool = false
+    private var isFolderEmpty = false
     private var isNodeKeyDecrypted = true
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
@@ -209,7 +210,12 @@ final class NodeActionBuilder {
         self.isSelectionEnabled = isSelectionEnabled
         return self
     }
-    
+
+    func setIsFolderEmpty(_ isFolderEmpty: Bool) -> NodeActionBuilder {
+        self.isFolderEmpty = isFolderEmpty
+        return self
+    }
+
     func setIsNodeKeyDecrypted(_ isNodeKeyDecrypted: Bool) -> NodeActionBuilder {
         self.isNodeKeyDecrypted = isNodeKeyDecrypted
         return self
@@ -621,7 +627,7 @@ final class NodeActionBuilder {
         
         if displayMode != .nodeInfo {
             if !isS4ContainerNode {
-                nodeActions.append(contentsOf: isSelectionEnabled ? [.infoAction(), .selectAction()] : [.infoAction()])
+                nodeActions.append(contentsOf: isSelectionEnabled && !isFolderEmpty ? [.infoAction(), .selectAction()] : [.infoAction()])
             }
 
             if versionCount > 0 {

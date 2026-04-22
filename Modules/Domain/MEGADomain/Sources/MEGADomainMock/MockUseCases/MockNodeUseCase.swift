@@ -18,6 +18,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     private let nodeForFileLink: NodeEntity?
     private let nodeInRubbishBin: NodeEntity?
     private let isS4ContainerNode: Bool
+    private let filesAndFolders: (Int, Int)
 
     public init(
         isDownloaded: Bool = false,
@@ -28,7 +29,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         nodeForFileLink: NodeEntity? = nil,
         nodeInRubbishBin: NodeEntity? = nil,
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
-        isS4ContainerNode: Bool = false
+        isS4ContainerNode: Bool = false,
+        filesAndFolders: (Int, Int) = (0, 0)
     ) {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
@@ -39,6 +41,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         self.nodeInRubbishBin = nodeInRubbishBin
         self.nodeUpdates = nodeUpdates
         self.isS4ContainerNode = isS4ContainerNode
+        self.filesAndFolders = filesAndFolders
     }
     
     public func rootNode() -> NodeEntity? {
@@ -58,7 +61,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
-        (0, 0)
+        filesAndFolders
     }
     
     public func sizeFor(node: NodeEntity) -> UInt64? {

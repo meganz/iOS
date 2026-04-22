@@ -628,6 +628,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setViewInFolder(viewInFolder)
                 .setIsAudioFileLink(isAudioFileLink)
                 .setIsSelectionEnabled(isSelectionEnabled)
+                .setIsFolderEmpty(node.isFolder() && viewModel.isEmptyFolder(nodeHandle: node.handle))
                 .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
                 .build()
             

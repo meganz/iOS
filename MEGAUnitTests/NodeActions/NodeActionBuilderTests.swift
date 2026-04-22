@@ -51,10 +51,35 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .setIsFile(false)
             .build()
-        
+
         #expect(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]) == true)
     }
-    
+
+    @Test
+    func testCloudDriveNodeFolder_selectionEnabled_shouldShowSelectAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(false)
+            .setIsSelectionEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .select, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]) == true)
+    }
+
+    @Test
+    func testCloudDriveNodeFolder_selectionEnabled_emptyFolder_shouldNotShowSelectAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(false)
+            .setIsSelectionEnabled(true)
+            .setIsFolderEmpty(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToRubbishBin]) == true)
+    }
+
     @Test
     func testCloudDriveNodeFolderExported() {
         actions = NodeActionBuilder()

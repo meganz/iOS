@@ -122,6 +122,11 @@ struct NodeActionViewModel {
     func filesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         nodeUseCase.getFilesAndFolders(nodeHandle: nodeHandle)
     }
+
+    func isEmptyFolder(nodeHandle: HandleEntity) -> Bool {
+        let (files, folders) = filesAndFolders(nodeHandle: nodeHandle)
+        return files == 0 && folders == 0
+    }
     
     func isRestorable(node: NodeEntity, isBackupNode: Bool) -> Bool {
         nodeUseCase.isRestorable(node: node) && !isBackupNode

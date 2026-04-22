@@ -253,6 +253,21 @@ struct NodeActionViewModelTests {
         }
     }
 
+    @Suite("Calls isEmptyFolder")
+    struct IsEmptyFolder {
+        @Test("When folder has no children should return true")
+        func emptyFolder() {
+            let sut = makeSUT(nodeUseCase: MockNodeUseCase(filesAndFolders: (0, 0)))
+            #expect(sut.isEmptyFolder(nodeHandle: 1))
+        }
+
+        @Test("When folder has children should return false")
+        func nonEmptyFolder() {
+            let sut = makeSUT(nodeUseCase: MockNodeUseCase(filesAndFolders: (2, 1)))
+            #expect(!sut.isEmptyFolder(nodeHandle: 1))
+        }
+    }
+
     @Suite("Calls isModificationTimeUndefined")
     struct IsModificationTimeUndefined {
         @Test(
