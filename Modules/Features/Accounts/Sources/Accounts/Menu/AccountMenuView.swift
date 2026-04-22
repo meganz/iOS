@@ -67,10 +67,11 @@ public struct AccountMenuView: View {
     private var accountSection: some View {
         if let items = viewModel.sections[.account] {
             ForEach(items.compactMap { $0 }) { option in
-                Button {
-                    guard case .disclosure(let action) = option.rowType else { return }
-                    action()
-                } label: {
+                if case .disclosure(let action) = option.rowType {
+                    Button(action: action) {
+                        MenuRowView(option: option)
+                    }
+                } else {
                     MenuRowView(option: option)
                 }
             }
