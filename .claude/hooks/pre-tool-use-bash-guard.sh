@@ -151,8 +151,11 @@ check_blacklist() {
             fi
             ;;
         git)
-            if echo "$cmd" | grep -qE '\bgit\s+(push|reset|clean)\b'; then
-                deny "Layer 2: Destructive git command — push/reset/clean"
+            if echo "$cmd" | grep -qE '\bgit\s+(reset|clean)\b'; then
+                deny "Layer 2: Destructive git command — reset/clean"
+            fi
+            if echo "$cmd" | grep -qE '\bgit\s+push\b.*(-f\b|--force\b|--force-with-lease\b)'; then
+                deny "Layer 2: Force push — destructive"
             fi
             if echo "$cmd" | grep -qE '\bgit\s+checkout\s+--\s*\.'; then
                 deny "Layer 2: git checkout -- . discards all changes"
