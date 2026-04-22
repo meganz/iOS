@@ -33,6 +33,8 @@ Ask for all of the following in one message:
 - **Value** — the English string, e.g. `Show recent activity`
 - **Comment** — translator context, e.g. `The title for menu action button that will show the recent activity`
 
+**Key format check** — The input key should be in camelCase format. If the key violates camelCase format, ask user to input again.
+
 ### Step 2 — Run checks silently (no prompt unless an issue is found)
 
 Run all checks immediately after receiving the inputs. Do NOT pause between them.
@@ -58,7 +60,7 @@ If no issues are found, proceed directly to Step 3 without asking anything.
 
 ### Step 3 — Write the string to both source files
 
-Append the new entry at the **end** of both files. The files currently end without a trailing newline, so add `\n` before the new entry.
+Append the new entry at the **end** of both files.
 
 Format:
 ```
@@ -69,6 +71,16 @@ Format:
 Files to edit (both identically):
 - `Modules/Presentation/MEGAL10n/Framework/MEGAL10n/MEGAL10n/Resources/Base.lproj/Localizable.strings`
 - `Modules/Presentation/MEGAL10n/Framework/MEGAL10n/MEGAL10n/Resources/en.lproj/Localizable.strings`
+
+After new entries are added, remove all empty lines in both files using:
+```bash
+sed -i '' '/^[[:space:]]*$/d' <file>
+```
+
+Prompt user with 3 options "Generate framework" and "Add another string", "Done" as numbered list. After listing the item, wait for user to select a number to proceed.
+ - If user chooses "1" proceed to Step 4 
+ - If user chooses "2" proceed to Step 1 
+ - If user chooses "3" process to Step 6
 
 ### Step 4 — Regenerate MEGAL10n xcframework
 

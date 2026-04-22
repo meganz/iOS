@@ -4914,3 +4914,7 @@
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="이 파일들은 더 이상 이용할 수 없습니다";
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="항목 준비 중…";
+/* The title of Open Link action */
+"openLink.title"="Open link";
+/* The message to show when user tries to open an invalid link */
+"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";

@@ -4914,3 +4914,9 @@
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Estes arquivos já não estão disponíveis";
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="Preparando itens…";
+/* The title for menu action button that will show the recent activity */
+"home.recent.menu.action.showRecentActivity"="Mostrar atividade recente";
+/* The title of Open Link action */
+"openLink.title"="Open link";
+/* The message to show when user tries to open an invalid link */
+"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";

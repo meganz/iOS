@@ -471,4 +471,5 @@ public struct MEGAUIImageBundle {
     public static var rectangleImageStack: UIImage { UIImage.rectangleImageStack }
     public static var messageChatCircle: UIImage { UIImage.messageChatCircle }
     public static var transfersSettings: UIImage { UIImage.transfersSettings }
+    public static var link02MediumThinOutline: UIImage { UIImage.link02MediumThinOutline }
 }

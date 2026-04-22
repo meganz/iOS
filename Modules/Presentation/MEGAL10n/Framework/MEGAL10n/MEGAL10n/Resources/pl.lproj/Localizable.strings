@@ -4914,3 +4914,7 @@
 "home.recent.addedToLabel"="Dodano do %@";
 /* Snack bar message when files in a recent action bucket are no longer available */
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Te pliki nie są już dostępne";
+/* The title of Open Link action */
+"openLink.title"="Open link";
+/* The message to show when user tries to open an invalid link */
+"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";

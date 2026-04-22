@@ -317,6 +317,7 @@ extension MEGAAssets {
         public static var messageChatCircle: SwiftUI.Image { MEGAImageBundle.messageChatCircle }
         public static var x: SwiftUI.Image { MEGAImageBundle.x }
         public static var glassHearts: SwiftUI.Image { MEGAImageBundle.glassHearts }
+        public static var link02MediumThinOutline: SwiftUI.Image { MEGAImageBundle.link02MediumThinOutline }
     }
 }
 
@@ -786,5 +787,6 @@ extension MEGAAssets {
         public static var rectangleImageStack: UIKit.UIImage { MEGAUIImageBundle.rectangleImageStack }
         public static var messageChatCircle: UIKit.UIImage { MEGAUIImageBundle.messageChatCircle }
         public static var transfersSettings: UIKit.UIImage { MEGAUIImageBundle.transfersSettings }
+        public static var link02MediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.link02MediumThinOutline }
     }
 }

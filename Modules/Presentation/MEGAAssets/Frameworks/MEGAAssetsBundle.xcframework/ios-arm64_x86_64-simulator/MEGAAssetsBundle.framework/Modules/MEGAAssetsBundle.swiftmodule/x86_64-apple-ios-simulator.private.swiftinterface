@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2.4 effective-5.10 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
-// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.4
+// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -911,6 +911,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var glassHearts: SwiftUICore.Image {
+    get
+  }
+  public static var link02MediumThinOutline: SwiftUICore.Image {
     get
   }
 }
@@ -2508,6 +2511,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var transfersSettings: UIKit.UIImage {
+    get
+  }
+  public static var link02MediumThinOutline: UIKit.UIImage {
     get
   }
 }

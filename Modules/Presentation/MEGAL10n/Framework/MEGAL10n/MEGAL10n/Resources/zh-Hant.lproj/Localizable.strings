@@ -41,7 +41,7 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此建立此連結的帳戶已被停用。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此建立此連結的帳戶已被終止。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -91,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="檢查您的電子郵件收件匣，並點選連結以確認您的帳戶。";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="您的帳戶因違反MEGA服務條款，包括但不限於第15條而被停用。";
+"accountBlocked"="您的帳戶因違反MEGA服務條款，包括但不限於第15條而被終止。";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="請輸入有效的電子郵件地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -3183,7 +3183,7 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="安排會議";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交恢復存取申請的更多資訊。";
+"account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被停權。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交恢復存取申請的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
 "account.suspension.message.nonCopyright"="由於違反MEGA的服務條款，您的帳戶已被終止。\n\n您將無法再存取您儲存的資料，也無法獲得註冊新MEGA帳戶的授權。";
 /* Text shown in extensions to notify users that they have to open the application first */
@@ -4914,3 +4914,7 @@
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="這些檔案已失效";
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="正在準備項目…";
+/* The title of Open Link action */
+"openLink.title"="Open link";
+/* The message to show when user tries to open an invalid link */
+"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";

@@ -280,8 +280,6 @@ public struct MEGAImageBundle {
     public static var glassFile: Image { Image(.glassFile) }
     public static var glassAudio: Image { Image(.glassAudio) }
     public static var glassObjects: Image { Image(.glassObjects) }
-    // For some reasons the asset name "glassImage" will yield a
-    // compiler error, we need to use "glassImage00" instead
     public static var glassImage: Image { Image(.glassImage00) }
     public static var glassVideo: Image { Image(.glassVideo) }
     public static var glassNoCloud: Image { Image(.glassNoCloud) }
@@ -301,4 +299,5 @@ public struct MEGAImageBundle {
     public static var rectangleImageStack: Image { Image(.rectangleImageStack) }
     public static var messageChatCircle: Image { Image(.messageChatCircle) }
     public static var glassHearts: Image { Image(.glassHearts) }
+    public static var link02MediumThinOutline: Image { Image(.link02MediumThinOutline) }
 }
