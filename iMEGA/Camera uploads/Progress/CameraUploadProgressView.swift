@@ -105,6 +105,15 @@ struct CameraUploadProgressView: View {
                 buttonText: bannerViewModel.buttonViewModel?.text,
                 state: bannerViewModel.state,
                 buttonAction: bannerViewModel.buttonViewModel?.action)
+                .padding(.top, bannerTopPadding)
+        }
+    }
+
+    private var bannerTopPadding: CGFloat {
+        if #available(iOS 26.0, *) {
+            TokenSpacing._4
+        } else {
+            0
         }
     }
     
