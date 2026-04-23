@@ -75,7 +75,9 @@ import MEGASwift
     
     func setDurationForVideo(path: String) {
         loadVideoDurationTask = Task { [weak self] in
-            let asset = AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
+            let asset = await Task.detached(priority: .userInitiated) {
+                AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
+            }.value
             do {
                 let duration = try await asset.load(.duration)
                 guard !Task.isCancelled else { return }
