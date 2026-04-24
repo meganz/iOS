@@ -59,7 +59,18 @@ public struct NodeUploadActionSheetView: View {
     }
 
     private var allActionsHeight: CGFloat {
-        CGFloat(viewModel.uploadActions.count) * UploadActionItemView.Constants.itemHeight
+        let itemsHeight = CGFloat(viewModel.uploadActions.count) * UploadActionItemView.Constants.itemHeight
+        guard UIDevice.current.userInterfaceIdiom == .pad else {
+            return itemsHeight
+        }
+        return itemsHeight + Constants.contentTopInset + Constants.dragIndicatorChrome
+    }
+
+    private enum Constants {
+        // Mirrors .padding(.top, TokenSpacing._6) applied to the LazyVStack.
+        static let contentTopInset: CGFloat = TokenSpacing._6
+        // Visible chrome for .presentationDragIndicator(.visible) — rendered by UIKit
+        static let dragIndicatorChrome: CGFloat = TokenSpacing._6
     }
 }
 
