@@ -16,6 +16,13 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
         toolbarFactory.injectIfNeeded(into: viewController)
     }
 
+    /// True if the indicator is currently expected to appear in a navigation bar.
+    /// Mirrors the condition used by `BarItemObserver` so callers that want to adapt
+    /// layout (e.g. title width) stay in sync with actual bar item insertion.
+    static var isIndicatorDisplayed: Bool {
+        toolbarFactory.isEnabled && SharedTransferIndicator.isCurrentlyVisible
+    }
+
     /// Presents the transfers screen modally. Also used by SwiftUI screens
     /// that add the indicator to their own toolbar.
     @objc static func presentTransfers() {

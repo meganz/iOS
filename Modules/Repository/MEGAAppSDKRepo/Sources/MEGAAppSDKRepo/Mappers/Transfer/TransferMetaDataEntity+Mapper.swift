@@ -7,6 +7,7 @@ extension TransferMetaDataEntity: @retroactive RawRepresentable {
         switch rawValue {
         case ">exportFile": self = .exportFile
         case ">SaveInPhotosApp": self = .saveInPhotos
+        case ">makeAvailableOffline": self = .makeAvailableOffline
         default:
             return nil
         }
@@ -16,6 +17,7 @@ extension TransferMetaDataEntity: @retroactive RawRepresentable {
         switch self {
         case .exportFile: return ">exportFile"
         case .saveInPhotos: return ">SaveInPhotosApp"
+        case .makeAvailableOffline: return ">makeAvailableOffline"
         }
     }
 }

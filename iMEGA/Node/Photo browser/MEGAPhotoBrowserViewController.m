@@ -175,6 +175,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewWillAppear:animated];
     
     [self onViewWillAppear];
+    [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     if (self.displayMode != DisplayModeTransfers) {
         [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
         [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];

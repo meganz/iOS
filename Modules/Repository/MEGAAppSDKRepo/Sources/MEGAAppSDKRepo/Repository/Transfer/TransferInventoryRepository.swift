@@ -46,6 +46,10 @@ public struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
         transfer.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false
     }
     
+    public func isMakeAvailableOfflineTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(TransferMetaDataEntity.makeAvailableOffline.rawValue) ?? false
+    }
+
     public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
         sdk.areThereAnyTransferWithAppData(matching: filter)
     }

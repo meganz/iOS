@@ -31,6 +31,10 @@ public struct MockTransferInventoryRepository: TransferInventoryRepositoryProtoc
         transfer.appData?.contains(">SaveInPhotosApp") ?? false
     }
     
+    public func isMakeAvailableOfflineTransfer(_ transfer: TransferEntity) -> Bool {
+        transfer.appData?.contains(">makeAvailableOffline") ?? false
+    }
+
     public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
         let allTransfers = transfers()
         return allTransfers.compactMap(\.appData).contains(where: filter)

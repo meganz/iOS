@@ -71,6 +71,7 @@ public struct TransferCounterUseCase<T: NodeTransferRepositoryProtocol, U: Trans
         }
         return transfer.type == .upload
             || isOfflineTransfer(transfer)
+            || isMakeAvailableOfflineTransfer(transfer)
             || isExportFileTransfer(transfer)
             || isSaveToPhotosAppTransfer(transfer)
     }
@@ -78,6 +79,10 @@ public struct TransferCounterUseCase<T: NodeTransferRepositoryProtocol, U: Trans
     private func isOfflineTransfer(_ transfer: TransferEntity) -> Bool {
         guard let path = transfer.path else { return false }
         return path.hasPrefix(fileSystemRepository.documentsDirectory().path)
+    }
+    
+    private func isMakeAvailableOfflineTransfer(_ transfer: TransferEntity) -> Bool {
+        transferInventoryRepository.isMakeAvailableOfflineTransfer(transfer)
     }
     
     private func isExportFileTransfer(_ transfer: TransferEntity) -> Bool {

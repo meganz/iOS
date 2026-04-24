@@ -14,6 +14,7 @@ import MEGASwift
 import MEGASwiftUI
 import MEGAVideoPlayer
 import SwiftUI
+import Transfer
 import UIKit
 
 extension MEGAPhotoBrowserViewController {
@@ -284,7 +285,16 @@ extension MEGAPhotoBrowserViewController {
     }
     
     private func transferViewEntities(fromNodes nodes: [MEGANode]) -> [CancellableTransfer] {
-        nodes.map { CancellableTransfer(handle: $0.handle, name: $0.name, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        nodes.map {
+            CancellableTransfer(
+                handle: $0.handle,
+                name: $0.name,
+                appData: TransferMetaDataEntity.makeAvailableOffline.rawValue,
+                priority: false,
+                isFile: $0.isFile(),
+                type: .download
+            )
+        }
     }
     
     @objc func activateSlideShowButton(barButtonItem: UIBarButtonItem?) {
@@ -562,15 +572,91 @@ extension MEGAPhotoBrowserViewController {
             return
         }
 
+        let titleViewContent: UIView
         if isLiquidGlassSupported {
-            navigationItem.titleView = rootView.toWrappedUIView(shouldEnableGlassEffect: true, padding: .init(top: 8, leading: 16, bottom: 8, trailing: 16))
+            titleViewContent = rootView.toWrappedUIView(shouldEnableGlassEffect: true, padding: .init(top: TokenSpacing._3, leading: TokenSpacing._5, bottom: TokenSpacing._3, trailing: TokenSpacing._5))
         } else {
             let hostController = UIHostingController(rootView: rootView)
-            let titleView = hostController.view
-            titleView?.backgroundColor = .clear
-            navigationItem.titleView = titleView
-            navigationItem.titleView?.sizeToFit()
+            guard let titleView = hostController.view else { return }
+            titleView.backgroundColor = .clear
+            titleViewContent = titleView
         }
+
+        navigationItem.titleView = PhotoBrowserNavigationTitleContainerView(
+            contentView: titleViewContent,
+            maxWidthWhenIndicatorVisible: { [weak self] in self?.titleMaximumWidthForTransferIndicator() ?? 0 }
+        )
+    }
+
+    fileprivate func titleMaximumWidthForTransferIndicator() -> CGFloat {
+        let navBarWidth = navigationController?.navigationBar.bounds.width
+            ?? (view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width)
+        return navBarWidth * NavigationTitleMetrics.maxWidthRatioWhenIndicatorVisible
+    }
+}
+
+private enum NavigationTitleMetrics {
+    /// Maximum fraction of the navigation bar width the title may occupy while the
+    /// transfer indicator is visible. The remainder is reserved for the back button,
+    /// the indicator, and any other right bar items.
+    static let maxWidthRatioWhenIndicatorVisible: CGFloat = 0.55
+}
+
+private final class PhotoBrowserNavigationTitleContainerView: UIView {
+    private let contentView: UIView
+    private let maxWidthWhenIndicatorVisible: () -> CGFloat
+    private var monitorTask: Task<Void, Never>?
+    private var currentMaxWidth: CGFloat?
+
+    init(contentView: UIView, maxWidthWhenIndicatorVisible: @escaping @MainActor () -> CGFloat) {
+        self.contentView = contentView
+        self.maxWidthWhenIndicatorVisible = maxWidthWhenIndicatorVisible
+        super.init(frame: .zero)
+        backgroundColor = .clear
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(contentView)
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+
+        applyCurrentVisibility()
+        startMonitoring()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        monitorTask?.cancel()
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let measured = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        let width = currentMaxWidth.map { min(measured.width, $0) } ?? measured.width
+        return CGSize(width: width, height: measured.height)
+    }
+
+    private func startMonitoring() {
+        guard let publisher = SharedTransferIndicator.isVisiblePublisher else { return }
+        monitorTask = Task { [weak self] in
+            for await _ in publisher.values {
+                guard !Task.isCancelled else { return }
+                self?.applyCurrentVisibility()
+            }
+        }
+    }
+
+    private func applyCurrentVisibility() {
+        let newMaxWidth: CGFloat? = TransferIndicatorBarItemConfigurator.isIndicatorDisplayed ? maxWidthWhenIndicatorVisible() : nil
+        guard currentMaxWidth != newMaxWidth else { return }
+        currentMaxWidth = newMaxWidth
+        invalidateIntrinsicContentSize()
     }
 }
 
