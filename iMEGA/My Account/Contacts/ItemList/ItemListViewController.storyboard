@@ -56,7 +56,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="y0O-hB-Zi9">
                                                     <rect key="frame" x="16.5" y="80" width="47" height="12"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEh-uf-OXR">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEh-uf-OXR">
                                                             <rect key="frame" x="0.0" y="0.0" width="31" height="12"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
@@ -80,6 +80,8 @@
                                             <constraint firstItem="ESB-0J-kq9" firstAttribute="trailing" secondItem="6kX-2n-KJc" secondAttribute="trailing" constant="2" id="jeK-t6-hga"/>
                                             <constraint firstItem="ESB-0J-kq9" firstAttribute="bottom" secondItem="6kX-2n-KJc" secondAttribute="bottom" constant="2" id="oUu-hF-MxE"/>
                                             <constraint firstItem="y0O-hB-Zi9" firstAttribute="centerX" secondItem="rYt-IJ-bA7" secondAttribute="centerX" id="uOw-SX-Dg6"/>
+                                            <constraint firstItem="y0O-hB-Zi9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rYt-IJ-bA7" secondAttribute="leading" constant="4" id="cu1-ld-lea"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="y0O-hB-Zi9" secondAttribute="trailing" constant="4" id="cu1-ld-trl"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="avatarView" destination="6kX-2n-KJc" id="GDN-yu-vXN"/>
