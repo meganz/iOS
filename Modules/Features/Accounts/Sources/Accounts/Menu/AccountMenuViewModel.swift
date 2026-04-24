@@ -87,6 +87,7 @@ public final class AccountMenuViewModel: ObservableObject {
     @Published var appNotificationsCount = 0
     @Published var isAtTop = true
     @Published var isAccountUpdating: Bool = false
+    @Published private(set) var isConnected: Bool = true
 
     private let router: any AccountMenuViewRouting
     private let tracker: any AnalyticsTracking
@@ -106,6 +107,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private var onUserAlertsUpdatesTask: Task<Void, any Error>?
     private var monitorSubmitReceiptAfterPurchaseTask: Task<Void, Never>?
     private var monitorSubmitReceiptResultTask: Task<Void, Never>?
+    private var monitorConnectionTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -260,6 +262,7 @@ public final class AccountMenuViewModel: ObservableObject {
         listenToSubmitReceiptAfterPurchase()
         listenToSubmitReceiptResult()
         listenToPrivacySuiteExpanded()
+        monitorConnectionState()
     }
 
     deinit {
@@ -269,6 +272,7 @@ public final class AccountMenuViewModel: ObservableObject {
         onContactRequestsUpdatesTask?.cancel()
         monitorSubmitReceiptAfterPurchaseTask?.cancel()
         monitorSubmitReceiptResultTask?.cancel()
+        monitorConnectionTask?.cancel()
         Task { [purchaseUseCase] in
             await purchaseUseCase.deRegisterRestoreDelegate()
         }
@@ -540,6 +544,16 @@ public final class AccountMenuViewModel: ObservableObject {
             subtitleState: .value(rubbishBinUsage),
             rowType: .disclosure { [weak self] in self?.showRubbishBin() }
         )
+    }
+
+    private func monitorConnectionState() {
+        isConnected = networkMonitorUseCase.isConnected()
+        monitorConnectionTask = Task { [weak self, networkMonitorUseCase] in
+            for await connected in networkMonitorUseCase.connectionSequence {
+                guard let self else { return }
+                self.isConnected = connected
+            }
+        }
     }
 
     private func monitorAccountRefresh() {

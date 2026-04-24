@@ -108,6 +108,8 @@ public struct AccountMenuView: View {
                 .padding(.horizontal)
                 .padding(.vertical, TokenSpacing._6)
         }
+        .disabled(!viewModel.isConnected)
+        .opacity(viewModel.isConnected ? 1.0 : 0.5)
     }
 }
 

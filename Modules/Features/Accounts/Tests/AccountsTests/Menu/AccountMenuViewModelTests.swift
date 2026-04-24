@@ -586,6 +586,32 @@ struct AccountMenuViewModelTests {
         #expect(router.openLink_lastApp == .transferIt)
     }
 
+    @Test("isConnected should reflect initial network state")
+    func testIsConnected_initialState() {
+        let sut = makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false))
+        #expect(sut.isConnected == false)
+    }
+
+    @Test("isConnected should update when connectivity changes")
+    func testIsConnected_updatesOnConnectionChange() async throws {
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        let sut = makeSUT(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(
+                connected: true,
+                connectionSequence: stream.eraseToAnyAsyncSequence()
+            )
+        )
+        #expect(sut.isConnected == true)
+
+        continuation.yield(false)
+        try await waitUntil(await MainActor.run { sut.isConnected != false })
+        #expect(sut.isConnected == false)
+
+        continuation.yield(true)
+        try await waitUntil(await MainActor.run { sut.isConnected != true })
+        #expect(sut.isConnected == true)
+    }
+
     @Test(arguments: [
         true,
         false
