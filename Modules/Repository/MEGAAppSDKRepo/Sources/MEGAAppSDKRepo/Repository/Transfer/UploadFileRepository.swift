@@ -36,24 +36,6 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         } ?? name
     }
     
-    public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
-        guard let parentNode = sdk.node(forHandle: parent) else {
-            completion?(.failure(TransferErrorEntity.couldNotFindNodeByHandle))
-            return
-        }
-
-        guard let completion else {
-            sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken.value)
-            return
-        }
-
-        let transferDelegate = TransferDelegate(completion: completion)
-        transferDelegate.start = start
-        transferDelegate.progress = update
-
-        sdk.startUpload(withLocalPath: url.path, parent: parentNode, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, cancelToken: self.cancelToken.value, delegate: transferDelegate)
-    }
-    
     public func uploadFile(
         _ url: URL,
         toParent parent: HandleEntity,

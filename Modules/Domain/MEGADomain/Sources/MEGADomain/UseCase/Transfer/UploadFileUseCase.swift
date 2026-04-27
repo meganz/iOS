@@ -11,7 +11,6 @@ public enum FileUploadEvent: Sendable {
 public protocol UploadFileUseCaseProtocol: Sendable {
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool
     func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String
-    func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?)
     /// Uploads a file from a specified URL to a parent folder.
     ///
     /// - Parameters:
@@ -78,27 +77,6 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
 
     public func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String {
         uploadFileRepository.resolvedFileName(name, inParent: parentHandle)
-    }
-    
-    public func uploadFile(_ url: URL, toParent parent: HandleEntity, fileName: String?, appData: String?, isSourceTemporary: Bool, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<Void, TransferErrorEntity>) -> Void)?) {
-        
-        let name = fileName ?? url.lastPathComponent
-        let uploadUrl = fileCacheRepository.tempUploadURL(for: name)
-        
-        guard fileSystemRepository.moveFile(at: url, to: uploadUrl) else {
-            completion?(.failure(.moveFileToUploadsFolderFailed))
-            return
-        }
-        
-        uploadFileRepository.uploadFile(uploadUrl, toParent: parent, fileName: fileName, appData: appData, isSourceTemporary: isSourceTemporary, startFirst: startFirst, start: start, update: update) { result in
-            switch result {
-            case .success:
-                completion?(.success)
-            case .failure(let error):
-                completion?(.failure(error))
-            }
-            try? fileSystemRepository.removeItem(at: uploadUrl)
-        }
     }
     
     public func uploadFile(

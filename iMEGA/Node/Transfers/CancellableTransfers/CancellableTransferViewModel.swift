@@ -200,66 +200,38 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             guard let uploadLocalURL = transferViewEntity.localFileURL else {
                 return
             }
-            
-            let start: (TransferEntity) -> Void = { [weak self] transferEntity in
-                transferViewEntity.setState(transferEntity.state)
-                self?.continueFolderTransfersIfNeeded()
-            }
-            
-            let completion: (Result<Void, TransferErrorEntity>) -> Void = { [weak self] result in
-                switch result {
-                case .success:
-                    transferViewEntity.setState(.complete)
-                case .failure(let error):
-                    transferViewEntity.setState(.failed)
-                    self?.transferErrors.append(error)
-                }
-                self?.continueFolderTransfersIfNeeded()
-            }
-            
-            if let uploadOptions = transferViewEntity.uploadOptions {
-                uploadFileUseCase.uploadFile(
-                    uploadLocalURL,
-                    toParent: transferViewEntity.parentHandle,
-                    uploadOptions: uploadOptions,
-                    start: start,
-                    progress: { _ in },
-                    completion: { [weak self] result in
-                        switch result {
-                        case .success:
-                            transferViewEntity.setState(.complete)
-                        case .failure(let error):
-                            transferViewEntity.setState(.failed)
-                            self?.transferErrors.append(error)
-                        }
-                        self?.continueFolderTransfersIfNeeded()
+
+            uploadFileUseCase.uploadFile(
+                uploadLocalURL,
+                toParent: transferViewEntity.parentHandle,
+                uploadOptions: transferViewEntity.uploadOptions ?? UploadOptionsEntity(),
+                start: { [weak self] transferEntity in
+                    transferViewEntity.setState(transferEntity.state)
+                    self?.continueFolderTransfersIfNeeded()
+                },
+                progress: { _ in },
+                completion: { [weak self] result in
+                    switch result {
+                    case .success:
+                        transferViewEntity.setState(.complete)
+                    case .failure(let error):
+                        transferViewEntity.setState(.failed)
+                        self?.transferErrors.append(error)
                     }
-                )
-            } else {
-                uploadFileUseCase.uploadFile(
-                    uploadLocalURL,
-                    toParent: transferViewEntity.parentHandle,
-                    fileName: transferViewEntity.name,
-                    appData: transferViewEntity.appData,
-                    isSourceTemporary: true,
-                    startFirst: transferViewEntity.priority,
-                    start: start,
-                    update: { _ in },
-                    completion: completion
-                )
-            }
+                    self?.continueFolderTransfersIfNeeded()
+                }
+            )
         }
     }
     
     private func startFolderUploads() {
         folderTransfers.forEach { transferViewEntity in
-            guard let uploadLocalURL = transferViewEntity.localFileURL,
-                  let uploadOptions = transferViewEntity.uploadOptions else {
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
                 return
             }
             uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
-                                         uploadOptions: uploadOptions,
+                                         uploadOptions: transferViewEntity.uploadOptions ?? UploadOptionsEntity(),
                                          start: nil) { transferEntity in
                 transferViewEntity.setStage(transferEntity.stage)
                 transferViewEntity.setState(transferEntity.state)

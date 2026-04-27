@@ -140,15 +140,14 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
         onCompletion: @escaping () -> Void
     ) {
         transfers.forEach { transferViewEntity in
-            guard let uploadLocalURL = transferViewEntity.localFileURL,
-                  let uploadOptions = transferViewEntity.uploadOptions else {
+            guard let uploadLocalURL = transferViewEntity.localFileURL else {
                 return
             }
             
             uploadFileUseCase.uploadFile(
                 uploadLocalURL,
                 toParent: transferViewEntity.parentHandle,
-                uploadOptions: uploadOptions,
+                uploadOptions: transferViewEntity.uploadOptions ?? UploadOptionsEntity(),
                 start: isFolder ? nil : { [weak transferViewEntity] transferEntity in
                     transferViewEntity?.setState(transferEntity.state)
                 },
