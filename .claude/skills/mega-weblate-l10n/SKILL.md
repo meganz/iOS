@@ -1,8 +1,8 @@
 ---
 name: mega-weblate-l10n
-description: MEGA iOS Weblate localization workflows. Use when the user mentions "weblate", "l10n", "localization", "upload strings", "upload plurals", "download translations", "sync strings", "changelog translation", or asks to run "lang.sh". Also use when the user says things like "push new strings to Weblate", "pull translations for release", or "upload changelogs to App Store".
+description: MEGA iOS Weblate localization workflows. Use when the user mentions "weblate", "l10n", "localization", "upload strings", "upload plurals", "download translations", "sync strings", "changelog translation", "add new string", or asks to run "lang.sh". Also use when the user says things like "push new strings to Weblate", "pull translations for release", or "upload changelogs to App Store".
 allowed-tools: Bash
-argument-hint: "[upload-strings | upload-plurals | download | changelogs]"
+argument-hint: "[upload strings | upload plurals | download | changelogs | add new string, <key>, <value>, <comment>]"
 ---
 
 # MEGA iOS Weblate Localization

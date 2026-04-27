@@ -4189,6 +4189,7 @@ public enum Strings {
       }
     }
     public enum OpenLink {
+      public static let inputMessage: Swift.String
       public static let invalidLinkMessage: Swift.String
       public static let title: Swift.String
     }
