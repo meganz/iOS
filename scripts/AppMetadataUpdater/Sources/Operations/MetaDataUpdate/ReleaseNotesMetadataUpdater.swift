@@ -6,7 +6,8 @@ struct ReleaseNotesMetadataUpdater: MetadataUpdating {
     let baseURL: String
     let project: Project
 
-    func convert(_ data: Data) throws -> String {
-        try ReleaseNotesConverter(data: data, version: version).toString()
+    func convert(_ data: Data) throws -> [MetadataOutput] {
+        let content = try ReleaseNotesConverter(data: data, version: version).toString()
+        return [MetadataOutput(filename: project.filename, content: content, maxAllowedLength: project.maxAllowedLength)]
     }
 }

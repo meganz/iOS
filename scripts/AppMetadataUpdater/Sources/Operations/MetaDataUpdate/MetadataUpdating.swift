@@ -1,10 +1,20 @@
 import Foundation
 
-protocol MetadataUpdating: Sendable {
+struct MetadataOutput: Sendable {
+    let filename: String
+    let content: String
+    let maxAllowedLength: Int?
+}
+
+protocol MetadataUpdater: Sendable {
+    func updateMetadata() async throws
+}
+
+protocol MetadataUpdating: MetadataUpdater {
     var authorization: String { get }
     var baseURL: String { get }
     var project: Project { get }
-    func convert(_ data: Data) throws -> String
+    func convert(_ data: Data) throws -> [MetadataOutput]
 }
 
 extension MetadataUpdating {
@@ -16,7 +26,6 @@ extension MetadataUpdating {
                 }
             }
 
-            // Complete when the first task throws an error or wait until all tasks have finished successfully
             while let _ = try await group.next() {}
         }
     }
@@ -28,27 +37,30 @@ extension MetadataUpdating {
             languageCode: languageInfo.code,
             project: project
         )
-        
+
         let fetcher = Fetcher(api: api)
         let data = try await fetcher.fetch()
 
-        // Now that data is fetched from the server, check if the task has been canceled before proceeding.
         try Task.checkCancellation()
+
         do {
-            let string = try convert(data)
+            let outputs = try convert(data)
 
-            if string.count > project.maxAllowedLength ?? -1, let errorString = project.maxAllowedOverflowError {
-                throw errorString
+            for output in outputs {
+                if let max = output.maxAllowedLength, output.content.count > max {
+                    print("Warning: \(output.filename) for \(languageInfo.name) exceeds \(max) chars (\(output.content.count))")
+                    continue
+                }
+
+                let writer = Writer(
+                    folders: languageInfo.fastlaneMetadataFolders,
+                    languageName: languageInfo.name,
+                    string: output.content,
+                    fileName: output.filename
+                )
+
+                try writer.write()
             }
-
-            let writer = Writer(
-                folders: languageInfo.fastlaneMetadataFolders,
-                languageName: languageInfo.name,
-                string: string,
-                fileName: project.filename
-            )
-
-            try writer.write()
         } catch {
             print("""
                 \n------------------\(languageInfo.name) Start -----------------

@@ -5,13 +5,8 @@ struct DescriptionMetadataUpdater: MetadataUpdating {
     let baseURL: String
     let project: Project
 
-    func convert(_ data: Data) throws -> String {
-        try DescriptionConverter(data: data).toString()
-    }
-
-    func verify(_ string: String) throws {
-        guard string.count <= 4000 else {
-            throw "The app description is too long. Should be lesser than 4000 characters"
-        }
+    func convert(_ data: Data) throws -> [MetadataOutput] {
+        let content = try DescriptionConverter(data: data).toString()
+        return [MetadataOutput(filename: project.filename, content: content, maxAllowedLength: project.maxAllowedLength)]
     }
 }

@@ -1,6 +1,11 @@
 import Foundation
 
-struct Description: Decodable {
+struct StoreMetadata: Decodable {
+    let title: String?
+    let subtitle: String?
+    let keywords: String?
+    let promotionalText: String?
+
     let paragraph1: String?
     let paragraph2: String?
     let paragraph3: String?
@@ -41,6 +46,10 @@ struct Description: Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
+        case title
+        case subtitle
+        case keywords
+        case promotionalText = "promotional_text"
         case paragraph1 = "string1"
         case paragraph2 = "string2"
         case paragraph3 = "string3"
