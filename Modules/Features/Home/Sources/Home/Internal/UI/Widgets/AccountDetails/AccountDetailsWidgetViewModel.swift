@@ -71,10 +71,10 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
         }
     }
 
-    @Published var title: String = ""
-    @Published var plan: String = ""
-    @Published var profilePicture: Image = Image(systemName: "person.crop.circle.fill")
-    @Published var storageDetail: AccountStorageDetails = .limited(0, storageMax: 0, storageStatus: .noStorageProblems)
+    @Published var title: String?
+    @Published var plan: String?
+    @Published var profilePicture: Image?
+    @Published var storageDetail: AccountStorageDetails?
 
     private var dependency: Dependency
 
@@ -108,7 +108,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     var storageUsage: String {
-        storageText(for: self.storageDetail)
+        storageText(for: storageDetail)
     }
 
     var storageUsedFraction: Double {
@@ -126,11 +126,14 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private var storageStatus: StorageStatusEntity {
+        guard let storageDetail else {
+            return .noStorageProblems
+        }
         switch storageDetail {
         case .limited(_, _, let storageStatus):
-            storageStatus
+            return storageStatus
         case .unlimited:
-                .noStorageProblems
+            return .noStorageProblems
         }
     }
 

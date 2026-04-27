@@ -49,15 +49,24 @@ struct AccountDetailsWidgetView: View {
         }
     }
 
+    @ViewBuilder
     private var avatar: some View {
-        viewModel.profilePicture
-            .resizable()
-            .scaledToFill()
-            .frame(width: Constants.avatarSize, height: Constants.avatarSize)
-            .clipShape(Circle())
-            .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-            .padding(.leading, TokenSpacing._4)
-            .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+        Group {
+            if let image = viewModel.profilePicture {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .clipShape(Circle())
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+            } else {
+                Circle()
+                    .redacted(reason: .placeholder)
+                    .shimmering()
+            }
+        }
+        .frame(width: Constants.avatarSize, height: Constants.avatarSize)
+        .padding(.leading, TokenSpacing._4)
+        .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
     }
 
     private var accountDetails: some View {
@@ -71,24 +80,49 @@ struct AccountDetailsWidgetView: View {
         }
     }
 
+    @ViewBuilder
     private var userName: some View {
-        Text(viewModel.title)
-            .font(.callout)
-            .fontWeight(.semibold)
-            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        if let title = viewModel.title {
+            Text(title)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        } else {
+            RoundedRectangle(cornerRadius: TokenRadius.small)
+                .frame(width: 120, height: 14)
+                .redacted(reason: .placeholder)
+                .shimmering()
+        }
     }
 
     private var plan: some View {
-        Text(viewModel.plan)
-            .font(.subheadline)
-            .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
+        Group {
+            if let plan = viewModel.plan {
+                Text(plan)
+                    .font(.subheadline)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            } else {
+                RoundedRectangle(cornerRadius: TokenRadius.small)
+                    .frame(width: 80, height: 12)
+                    .redacted(reason: .placeholder)
+                    .shimmering()
+            }
+        }
+        .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
     }
 
+    @ViewBuilder
     private var storageUsage: some View {
-        Text(viewModel.storageUsage)
-            .font(.caption)
-            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        if viewModel.storageDetail != nil {
+            Text(viewModel.storageUsage)
+                .font(.caption)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        } else {
+            RoundedRectangle(cornerRadius: TokenRadius.small)
+                .frame(width: 160, height: 10)
+                .redacted(reason: .placeholder)
+                .shimmering()
+        }
     }
 
     private var progressBar: some View {
