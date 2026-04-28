@@ -137,6 +137,7 @@
 #if !defined(DEBUG)
     [self startAPMIfNeeded];
 #endif
+    [self enablePlatformDiskSpaceQueryIfNeeded];
     return YES;
 }
 

@@ -810,3 +810,17 @@ extension AppDelegate {
         }
     }
 }
+
+extension AppDelegate {
+    @objc func enablePlatformDiskSpaceQueryIfNeeded() {
+        Task {
+            let isPlatformDiskSpaceQueryEnabled = await AsyncUtils.timeout(30, default: false) {
+                await DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabledAfterReady(for: .iosPlatformDiskSpaceQuery)
+            }
+            
+            if isPlatformDiskSpaceQueryEnabled {
+                MEGASdk.shared.setUsePlatformAvailableDiskSpaceQuery(true)
+            }
+        }
+    }
+}
