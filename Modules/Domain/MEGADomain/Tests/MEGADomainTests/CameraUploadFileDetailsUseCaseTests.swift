@@ -20,6 +20,13 @@ struct CameraUploadFileDetailsUseCaseTests {
     struct UploadFileName {
         let localIdentifier = "localIdentifier"
         let creationDate = Date(timeIntervalSince1970: 1762221484)
+
+        private var expectedDatePrefix: String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            return formatter.string(from: creationDate)
+        }
         
         @Test("uploadFileName generates correct filename with date format")
         func uploadFileNameGeneratesCorrectFilenameWithDateFormat() throws {
@@ -31,7 +38,7 @@ struct CameraUploadFileDetailsUseCaseTests {
             
             let fileName = try sut.uploadFileName(for: asset)
             
-            #expect(fileName == "2025-11-04 14.58.04.mp4")
+            #expect(fileName == "\(expectedDatePrefix).mp4")
         }
         
         @Test("uploadFileName returns empty extension for unknown media type")
@@ -61,7 +68,7 @@ struct CameraUploadFileDetailsUseCaseTests {
             
             let fileName = try sut.uploadFileName(for: asset)
             
-            #expect(fileName == "2025-11-04 14.58.04.live.mp4")
+            #expect(fileName == "\(expectedDatePrefix).live.mp4")
         }
         
         @Test("imageExtension returns burst prefix for burst photos")
@@ -79,7 +86,7 @@ struct CameraUploadFileDetailsUseCaseTests {
             
             let fileName = try sut.uploadFileName(for: asset)
             
-            #expect(fileName == "2025-11-04 14.58.04.burst.jpg")
+            #expect(fileName == "\(expectedDatePrefix).burst.jpg")
         }
         
         @Test("imageExtension returns jpg for jpeg format")
@@ -119,7 +126,7 @@ struct CameraUploadFileDetailsUseCaseTests {
             
             let fileName = try sut.uploadFileName(for: asset)
             
-            #expect(fileName == "2025-11-04 14.58.04.jpg")
+            #expect(fileName == "\(expectedDatePrefix).jpg")
         }
         
         @Test("imageExtension keeps HEIC when preference is disabled")
@@ -143,7 +150,7 @@ struct CameraUploadFileDetailsUseCaseTests {
             
             let fileName = try sut.uploadFileName(for: asset)
             
-            #expect(fileName == "2025-11-04 14.58.04.heic")
+            #expect(fileName == "\(expectedDatePrefix).heic")
         }
         
         @Test("imageExtension handles all supported formats",

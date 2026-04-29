@@ -5,22 +5,24 @@ struct AdsWebViewCoordinatorViewModel {
     func shouldHandleAdsTap(
         currentDomain: String,
         targetDomain: String,
-        navigationAction: WKNavigationAction
+        navigationType: WKNavigationType,
+        sourceIsMainFrame: Bool,
+        targetIsMainFrame: Bool?
     ) -> Bool {
-        
-        guard navigationAction.navigationType != .linkActivated else {
+
+        guard navigationType != .linkActivated else {
             return true
         }
-        
+
         guard currentDomain != targetDomain else {
             return false
         }
-        
-        guard let targetFrame = navigationAction.targetFrame else {
+
+        guard let targetIsMainFrame else {
             return true
         }
-        
-        return !navigationAction.sourceFrame.isMainFrame && targetFrame.isMainFrame
+
+        return !sourceIsMainFrame && targetIsMainFrame
     }
 
     func urlHost(url: URL?) -> String? {

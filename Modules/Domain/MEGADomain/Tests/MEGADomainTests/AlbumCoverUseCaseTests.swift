@@ -4,7 +4,7 @@ import XCTest
 
 final class AlbumCoverUseCaseTests: XCTestCase {
     
-    func testAlbumCover_coverAlbumInRubbish_shouldUseLatestModifiedPhoto() async throws {
+    func testAlbumCover_coverAlbumInRubbish_shouldUseLatestModifiedPhoto() throws {
         let cover = NodeEntity(name: "test.jpg", handle: 1)
         let album = AlbumEntity(id: 4, coverNode: cover, type: .user)
         let expectedCover = NodeEntity(handle: 23, modificationTime: try "2024-08-06T10:01:04Z".date)
@@ -13,24 +13,24 @@ final class AlbumCoverUseCaseTests: XCTestCase {
         let nodeRepository = MockNodeRepository(isInRubbishBinNodes: [expectedCover])
         let sut = makeSUT(nodeRepository: nodeRepository)
         
-        let albumCover = await sut.albumCover(for: album, photos: photos)
-        
+        let albumCover = sut.albumCover(for: album, photos: photos)
+
         XCTAssertEqual(albumCover, expectedCover)
     }
-    
-    func testAlbumCover_coverAlbumNotInAlbumPhotos_shouldUseLatestModifiedPhoto() async throws {
+
+    func testAlbumCover_coverAlbumNotInAlbumPhotos_shouldUseLatestModifiedPhoto() throws {
         let cover = NodeEntity(name: "test.jpg", handle: 1)
         let album = AlbumEntity(id: 4, coverNode: cover, type: .user)
         let expectedCover = NodeEntity(handle: 23, modificationTime: try "2024-08-06T10:01:04Z".date)
         let photos = try makeAlbumPhotos() + [AlbumPhotoEntity(photo: expectedCover)]
         let sut = makeSUT()
         
-        let albumCover = await sut.albumCover(for: album, photos: photos)
+        let albumCover = sut.albumCover(for: album, photos: photos)
         
         XCTAssertEqual(albumCover, expectedCover)
     }
     
-    func testAlbumCover_albumCoverNotInRubbishAndInAlbumPhotos_shouldReturnAlbumCover() async {
+    func testAlbumCover_albumCoverNotInRubbishAndInAlbumPhotos_shouldReturnAlbumCover() {
         let expectedCover = NodeEntity(name: "test.jpg", handle: 1)
         let album = AlbumEntity(id: 4, coverNode: expectedCover, type: .user)
         let albumPhoto = AlbumPhotoEntity(photo: expectedCover)
@@ -38,17 +38,17 @@ final class AlbumCoverUseCaseTests: XCTestCase {
         let nodeRepository = MockNodeRepository(isInRubbishBinNodes: [expectedCover])
         let sut = makeSUT(nodeRepository: nodeRepository)
         
-        let albumCover = await sut.albumCover(
+        let albumCover = sut.albumCover(
             for: album, photos: [albumPhoto])
         
         XCTAssertEqual(albumCover, expectedCover)
     }
     
-    func testAlbumCover_coverNotSetAndNoAlbumPhotos_shouldReturnNil() async {
+    func testAlbumCover_coverNotSetAndNoAlbumPhotos_shouldReturnNil() {
         let album = AlbumEntity(id: 4, coverNode: nil, type: .user)
         let sut = makeSUT()
         
-        let albumCover = await sut.albumCover(
+        let albumCover = sut.albumCover(
             for: album, photos: [])
         
         XCTAssertNil(albumCover)

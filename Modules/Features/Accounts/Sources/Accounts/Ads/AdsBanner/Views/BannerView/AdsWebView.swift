@@ -62,7 +62,9 @@ struct AdsWebView: UIViewRepresentable {
                   let targetDomain = viewModel.urlHost(url: url),
                   viewModel.shouldHandleAdsTap(currentDomain: currentDomain,
                                                targetDomain: targetDomain,
-                                               navigationAction: navigationAction) else {
+                                               navigationType: navigationAction.navigationType,
+                                               sourceIsMainFrame: navigationAction.sourceFrame.isMainFrame,
+                                               targetIsMainFrame: navigationAction.targetFrame?.isMainFrame) else {
                 return nil
             }
             
@@ -86,7 +88,9 @@ struct AdsWebView: UIViewRepresentable {
             guard viewModel.shouldHandleAdsTap(
                 currentDomain: currentDomain,
                 targetDomain: targetDomain,
-                navigationAction: navigationAction) else {
+                navigationType: navigationAction.navigationType,
+                sourceIsMainFrame: navigationAction.sourceFrame.isMainFrame,
+                targetIsMainFrame: navigationAction.targetFrame?.isMainFrame) else {
                 return .allow
             }
             
