@@ -2,6 +2,10 @@ import Combine
 import MEGASwiftUI
 import SwiftUI
 
+// MARK: - UIHostingController type-erasure for generic detection
+private protocol AnyUIHostingController {}
+extension UIHostingController: AnyUIHostingController {}
+
 @MainActor
 protocol SnackBarLayoutCustomizable {
     /// Specify the bottom inset of the snack bar to its super view. If not implemented, default to the bottomAnchor view controller's view safeAreaLayoutGuide.
@@ -39,9 +43,24 @@ extension UIViewController {
 
 // MARK: - Privates
 extension UIViewController {
-    
+
+    /// The VC whose view will host the snack bar container.
+    /// When `self` is a `UIHostingController`, walks up the parent chain to find a
+    /// non-hosting ancestor — avoids nesting `_UIHostingView` inside another `_UIHostingView`.
+    private var snackBarHostViewController: UIViewController {
+        guard self is any AnyUIHostingController else { return self }
+        var candidate = parent
+        while let current = candidate {
+            if !(current is any AnyUIHostingController) {
+                return current
+            }
+            candidate = current.parent
+        }
+        return self
+    }
+
     private var currentSnackBarHosting: SnackBarHostingController? {
-        children
+        snackBarHostViewController.children
             .lazy
             .compactMap {
                 guard
@@ -66,7 +85,7 @@ extension UIViewController {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             constraint.constant = -bottomInset
-            self?.view.layoutIfNeeded()
+            self?.snackBarHostViewController.view.layoutIfNeeded()
         }
     }
     
@@ -92,22 +111,23 @@ extension UIViewController {
     }
      
     private func addSnackBarContainer(_ controller: SnackBarHostingController) {
-        view.addSubview(controller.view)
-        addChild(controller)
-        controller.didMove(toParent: self)
+        let host = snackBarHostViewController
+        host.view.addSubview(controller.view)
+        host.addChild(controller)
+        controller.didMove(toParent: host)
 
         layout(controller: controller)
     }
-    
+
     private func layout(controller: SnackBarHostingController) {
-        
+
         let bottomInset: CGFloat = if let snackBarLayoutCustomizable = self as? (any SnackBarLayoutCustomizable) {
             snackBarLayoutCustomizable.additionalSnackBarBottomInset
         } else {
             0
         }
-         
-        controller.layoutConstraints(bottomInset: bottomInset, constrained: view)
+
+        controller.layoutConstraints(bottomInset: bottomInset, constrained: snackBarHostViewController.view)
     }
     
     private func animateShowingSnackBarView(_ snackBarView: UIView) {
