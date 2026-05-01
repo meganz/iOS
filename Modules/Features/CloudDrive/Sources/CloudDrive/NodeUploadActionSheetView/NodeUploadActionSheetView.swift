@@ -5,14 +5,14 @@ import SwiftUI
 
 @MainActor
 public protocol NodeUploadActionSheetViewModelProtocol {
-    var uploadActions: [NodeUploadAction] { get }
+    var uploadActions: [FloatingAddAction] { get }
 
     // Due to the mixing of SwiftUI and UIKit in CD view architecture,
     // Once an action is selected from NodeUploadActionSheetView, we'll need to wait until the
     // sheet is completely dismissed in order to present the upload view/VCs on the hosting view controller
     // Therefore we need `saveSelectedAction` to save the selected action first, then use `performSelectedActionAfterDismissal`
     // to actually invoke the action.
-    func saveSelectedAction(_ action: NodeUploadAction)
+    func saveSelectedAction(_ action: FloatingAddAction)
     func performSelectedActionAfterDismissal()
 }
 

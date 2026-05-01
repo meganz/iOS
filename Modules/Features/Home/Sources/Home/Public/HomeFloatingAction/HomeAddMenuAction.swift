@@ -4,7 +4,7 @@ import SwiftUI
 
 public enum HomeAddMenuAction: Sendable, Identifiable, CaseIterable {
     public var id: Self { self }
-    case chooseFromPhotos, capture, importFromFiles, scanDocument, newTextFile, newChat
+    case chooseFromPhotos, capture, importFromFiles, scanDocument, newTextFile, openLink, newChat
 
     var image: Image {
         switch self {
@@ -18,6 +18,8 @@ public enum HomeAddMenuAction: Sendable, Identifiable, CaseIterable {
             MEGAAssets.Image.fileScan
         case .newTextFile:
             MEGAAssets.Image.filePlus02
+        case .openLink:
+            MEGAAssets.Image.link02MediumThinOutline
         case .newChat:
             MEGAAssets.Image.messageChatCircle
         }
@@ -35,6 +37,8 @@ public enum HomeAddMenuAction: Sendable, Identifiable, CaseIterable {
             Strings.Localizable.scanDocument
         case .newTextFile:
             Strings.Localizable.newTextFile
+        case .openLink:
+            Strings.Localizable.OpenLink.title
         case .newChat:
             Strings.Localizable.Chat.NewChat.title
         }

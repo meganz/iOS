@@ -8,20 +8,20 @@ import MEGASwift
 public final class FloatingAddButtonViewModel: ObservableObject {
     private let floatingButtonVisibilityDataSource: any FloatingAddButtonVisibilityDataSourceProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    public let uploadActions: [NodeUploadAction]
+    public let uploadActions: [FloatingAddAction]
 
     @Published public private(set) var showsFloatingAddButton = false
     @Published public var showActions = false
 
     private var observingTask: Task<Void, Never>?
 
-    var selectedAction: NodeUploadAction?
+    var selectedAction: FloatingAddAction?
 
     let analyticsTracker: any AnalyticsTracking
 
     public init(
         floatingButtonVisibilityDataSource: some FloatingAddButtonVisibilityDataSourceProtocol,
-        uploadActions: [NodeUploadAction],
+        uploadActions: [FloatingAddAction],
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         analyticsTracker: some AnalyticsTracking
     ) {
@@ -60,7 +60,7 @@ public final class FloatingAddButtonViewModel: ObservableObject {
 }
 
 extension FloatingAddButtonViewModel: NodeUploadActionSheetViewModelProtocol {
-    public func saveSelectedAction(_ action: NodeUploadAction) {
+    public func saveSelectedAction(_ action: FloatingAddAction) {
         selectedAction = action
     }
 

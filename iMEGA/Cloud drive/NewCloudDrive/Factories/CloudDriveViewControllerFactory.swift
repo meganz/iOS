@@ -1242,13 +1242,15 @@ struct CloudDriveViewControllerFactory {
         searchResultsViewModel: SearchResultsViewModel
     ) -> FloatingAddButtonViewModel {
 
-        let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
+        let floatingActionsHandler = FloatingActionsHandler(
             tracker: tracker,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )
 
-        let actionProvider = NodeUploadAddActionsProvider(actionHandler: uploadAddMenuDelegateHandler)
+        floatingActionsHandler.openLinkRouter = OpenLinkRouter(presenter: navigationController)
+
+        let actionProvider = FloatingActionsProvider(actionHandler: floatingActionsHandler)
 
         let viewStateProvider = SearchResultsViewStateProvider(viewModel: searchResultsViewModel)
 

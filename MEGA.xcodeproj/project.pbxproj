@@ -2626,6 +2626,7 @@
 		C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */; };
 		C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */; };
 		C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */; };
+		C45B8C392FA09C1700B20CF2 /* FloatingActionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B8C382FA09C1400B20CF2 /* FloatingActionsHandler.swift */; };
 		C45B971B26A7221D00875003 /* MEGAVerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */; };
 		C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */; };
 		C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */; };
@@ -2697,6 +2698,7 @@
 		C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */; };
 		C4A016BD2B674DE100492185 /* MockRandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */; };
 		C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
+		C4AA89702F985FC8002A17D0 /* OpenLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA896E2F985FC5002A17D0 /* OpenLinkRouter.swift */; };
 		C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */; };
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
@@ -5519,6 +5521,7 @@
 		C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCaseTests.swift; sourceTree = "<group>"; };
 		C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCaseTests.swift; sourceTree = "<group>"; };
+		C45B8C382FA09C1400B20CF2 /* FloatingActionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionsHandler.swift; sourceTree = "<group>"; };
 		C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAVerticalButton.swift; sourceTree = "<group>"; };
 		C45C2FA725C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C45D79082593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -5586,6 +5589,7 @@
 		C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementViewModelTests.swift; sourceTree = "<group>"; };
 		C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRandomNumberGenerator.swift; sourceTree = "<group>"; };
 		C4A5F0E7266E31DD001D783B /* MEGALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGALabel.swift; sourceTree = "<group>"; };
+		C4AA896E2F985FC5002A17D0 /* OpenLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLinkRouter.swift; sourceTree = "<group>"; };
 		C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarComponentsSizeCalculator.swift; sourceTree = "<group>"; };
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -10446,6 +10450,7 @@
 		941A01902CB439520057C99D /* MEGALinks */ = {
 			isa = PBXGroup;
 			children = (
+				C4AA896D2F985FBE002A17D0 /* OpenLink */,
 				837B179F288184F900A4D01B /* MEGALinkManager+Additions.swift */,
 				5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */,
 				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
@@ -10827,6 +10832,7 @@
 				BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */,
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
 				94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */,
+				C45B8C382FA09C1400B20CF2 /* FloatingActionsHandler.swift */,
 				94B09E4F2B84CC86007D6B84 /* MediaContentDelegateHandler.swift */,
 				C48DD7042BE5E3530017B107 /* NewCloudDriveViewController.swift */,
 				94B09E532B84CC86007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift */,
@@ -13486,6 +13492,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		C4AA896D2F985FBE002A17D0 /* OpenLink */ = {
+			isa = PBXGroup;
+			children = (
+				C4AA896E2F985FC5002A17D0 /* OpenLinkRouter.swift */,
+			);
+			path = OpenLink;
+			sourceTree = "<group>";
+		};
 		C4AF4A8B2582833200594716 /* MiniPlayerScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -15315,6 +15329,7 @@
 				320262F9298CB0B40049688C /* FilterType+Mapper.swift in Sources */,
 				3258B90F298B787C0055E65C /* FilterType.swift in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
+				C45B8C392FA09C1700B20CF2 /* FloatingActionsHandler.swift in Sources */,
 				C4B0F7A62E8E3BFD007C4E0B /* FloatingAddButtonVisibilityDataSource.swift in Sources */,
 				B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */,
 				BF6507502ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift in Sources */,
@@ -15877,6 +15892,7 @@
 				C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */,
 				0E69C0FA2DC8441100E473B7 /* OnboardingRoutingViewModel.swift in Sources */,
 				0E17E6E82DC1DE0A0090CC9F /* OnboardingUSPViewController.swift in Sources */,
+				C4AA89702F985FC8002A17D0 /* OpenLinkRouter.swift in Sources */,
 				0E149CEF2E7CB65B00D03C45 /* OptionalString+CameraUploadTaskIdentifier.swift in Sources */,
 				0EAF3FB32D680100007D4E9C /* OverDiskQuotaChecker.swift in Sources */,
 				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,

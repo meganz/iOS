@@ -85,8 +85,10 @@ extension HomeScreenFactory {
             sdk: MEGASdk.sharedSdk
         )
 
+        let homeAddMenuActionHandler = makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController)
+
         let dependency = HomeView.Dependency(
-            homeAddMenuActionHandler: makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController),
+            homeAddMenuActionHandler: homeAddMenuActionHandler,
             router: router,
             transferIndicatorToolbarFactory: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
                 ? .indicator {
@@ -125,7 +127,8 @@ extension HomeScreenFactory {
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
-        
+        homeAddMenuActionHandler.openLinkRouter = OpenLinkRouter(presenter: hostingController)
+
         navigationController.viewControllers = [hostingController]
 
         return navigationController

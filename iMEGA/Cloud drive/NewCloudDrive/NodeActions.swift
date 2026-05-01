@@ -82,7 +82,8 @@ extension NodeActions {
         navigationController: UINavigationController
     ) -> NodeActions {
         .init(
-            nodeDownloader: { nodes in
+            nodeDownloader: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
                 let transfers = nodes.map {
                     CancellableTransfer(
@@ -94,19 +95,21 @@ extension NodeActions {
                         type: .download
                     )
                 }
-                
+
                 CancellableTransferRouter(
                     presenter: navigationController,
                     transfers: transfers,
                     transferType: .download
                 ).start()
             },
-            editTextFile: { node in
+            editTextFile: { [weak navigationController] node in
+                guard let navigationController else { return }
                 if let megaNode = sdk.node(forHandle: node.handle) {
                     megaNode.mnz_editTextFile(in: navigationController)
                 }
             },
-            shareOrManageLink: { nodes in
+            shareOrManageLink: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 guard nodes.isNotEmpty else {
                     assertionFailure("Cannot pass empty array of nodes to GetLinkRouter")
                     MEGALogError("Passed empty array of nodes to GetLinkRouter")
@@ -118,14 +121,16 @@ extension NodeActions {
                     nodes: nodes.compactMap { sdk.node(forHandle: $0.handle) }
                 ).start()
             },
-            showNodeInfo: { node in
+            showNodeInfo: { [weak navigationController] node in
                 trackAnalyticsEvent(CloudDriveInfoMenuItemEvent())
                 Task { @MainActor in
+                    guard let navigationController else { return }
                     let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
                     nodeInfoRouter.showInformation(for: node)
                 }
             },
-            assignLabel: { node in
+            assignLabel: { [weak navigationController] node in
+                guard let navigationController else { return }
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }
                 trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
                 megaNode.mnz_labelActionSheet(in: navigationController)
@@ -135,15 +140,16 @@ extension NodeActions {
                 trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
                 sdk.setNodeFavourite(megaNode, favourite: !megaNode.isFavourite)
             },
-            sendToChat: { nodes in
+            sendToChat: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 guard let localNavController =
                         UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController, let sendToViewController = localNavController.viewControllers.first as? SendToViewController else {
                     return
                 }
-                
+
                 sendToViewController.nodes = megaNodes(from: nodes, using: sdk)
                 sendToViewController.sendMode = .cloud
-                
+
                 navigationController.present(localNavController, animated: true)
             },
             saveToPhotos: { nodes in
@@ -152,8 +158,9 @@ extension NodeActions {
                         .saveToPhotos(nodes: nodes)
                 }
             },
-            exportFiles: { nodes, sender in
+            exportFiles: { [weak navigationController] nodes, sender in
                 Task { @MainActor in
+                    guard let navigationController else { return }
                     let router = ExportFileRouter(
                         presenter: navigationController,
                         sender: sender
@@ -161,7 +168,8 @@ extension NodeActions {
                     router.export(nodes: nodes)
                 }
             },
-            browserAction: { action, nodes in
+            browserAction: { [weak navigationController] action, nodes in
+                guard let navigationController else { return }
                 guard let localNC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
                       let browserVC = localNC.viewControllers.first as? BrowserViewController else {
                     return
@@ -180,7 +188,8 @@ extension NodeActions {
                 }
                 navigationController.present(localNC, animated: true)
             },
-            removeLink: { nodes in
+            removeLink: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 let router = ActionWarningViewRouter(
                     presenter: navigationController,
                     nodes: nodes,
@@ -196,12 +205,12 @@ extension NodeActions {
                     })
                 router.start()
             },
-            removeSharing: { node in
+            removeSharing: { [weak navigationController] node in
                 guard
                     let megaNode = sdk.node(forHandle: node.handle)
                 else { return }
-                
-                megaNode.mnz_removeSharing { [weak navigationController] completed in
+
+                megaNode.mnz_removeSharing { completed in
                     if completed {
                         Task { @MainActor in
                             navigationController?.popViewController(animated: true)
@@ -209,7 +218,8 @@ extension NodeActions {
                     }
                 }
             },
-            rename: { node, triggerNameChanged in
+            rename: { [weak navigationController] node, triggerNameChanged in
+                guard let navigationController else { return }
                 guard
                     let megaNode = sdk.node(forHandle: node.handle)
                 else { return }
@@ -228,7 +238,7 @@ extension NodeActions {
                         shareRepository: ShareRepository.newRepo,
                         filesSearchRepository: FilesSearchRepository.newRepo,
                         nodeRepository: NodeRepository.newRepo)
-                    
+
                     do {
                         _ = try await shareUseCase.createShareKeys(forNodes: nodes)
                         sharedItemsRouter.showShareFoldersContactView(withNodes: nodes)
@@ -237,29 +247,32 @@ extension NodeActions {
                     }
                 }
             },
-            leaveSharing: { node in
+            leaveSharing: { [weak navigationController] node in
+                guard let navigationController else { return }
                 guard
                     let megaNode = sdk.node(forHandle: node.handle)
                 else { return }
-                megaNode.mnz_leaveSharing(in: navigationController) { [weak navigationController] actionCompleted in
-                    if actionCompleted {
+                megaNode.mnz_leaveSharing(in: navigationController) { [weak navigationController] isActionCompleted in
+                    if isActionCompleted {
                         Task { @MainActor in
                             navigationController?.popViewController(animated: true)
                         }
                     }
                 }
             },
-            manageShare: { nodes in
+            manageShare: { [weak navigationController] nodes in
                 trackAnalyticsEvent(CloudDriveShareFolderMenuItemEvent())
                 Task { @MainActor in
+                    guard let navigationController else { return }
                     // check multi node
                     guard let node = nodes.first else { return }
                     let nodeShareRouter = NodeShareRouter(viewController: navigationController)
                     nodeShareRouter.pushManageSharing(for: node, on: navigationController)
                 }
             },
-            
-            showNodeVersions: { node in
+
+            showNodeVersions: { [weak navigationController] node in
+                guard let navigationController else { return }
                 guard
                     let megaNode = sdk.node(forHandle: node.handle)
                 else { return }
@@ -268,7 +281,8 @@ extension NodeActions {
             disputeTakedown: { _ in
                 NSURL(string: Constants.Link.dispute)?.mnz_presentSafariViewController()
             },
-            moveToRubbishBin: { nodes in
+            moveToRubbishBin: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
                 moveNodesToRubbishBin(nodes, presenter: navigationController)
             },
@@ -278,33 +292,38 @@ extension NodeActions {
                     megaNode.mnz_restore()
                 }
             },
-            removeFromRubbishBin: { nodes in
+            removeFromRubbishBin: { [weak navigationController] nodes in
+                guard let navigationController else { return }
                 confirmDeleteActionFiles(
                     selectedNodes: nodes,
                     sdk: sdk,
                     parent: navigationController
                 )
             },
-            hide: { nodes in
+            hide: { [weak navigationController] nodes in
                 trackAnalyticsEvent(CloudDriveHideNodeMenuItemEvent())
                 Task { @MainActor in
+                    guard let navigationController else { return }
                     HideFilesAndFoldersRouter(presenter: navigationController).hideNodes(nodes)
                 }
             },
-            unhide: { nodes in
+            unhide: { [weak navigationController] nodes in
                 Task { @MainActor in
+                    guard let navigationController else { return }
                     HideFilesAndFoldersRouter(presenter: navigationController)
                         .unhideNodes(nodes)
                 }
-                
+
             },
-            addToAlbum: {
+            addToAlbum: { [weak navigationController] in
+                guard let navigationController else { return }
                 AddToCollectionRouter(
                     presenter: navigationController,
                     mode: .album,
                     selectedPhotos: $0).start()
             },
-            addTo: {
+            addTo: { [weak navigationController] in
+                guard let navigationController else { return }
                 AddToCollectionRouter(
                     presenter: navigationController,
                     mode: .collection,

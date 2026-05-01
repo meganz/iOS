@@ -2,60 +2,64 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
-@MainActor
-public protocol NodeUploadAddActionsHandlerProtocol: AnyObject, Sendable {
-    func uploadAddMenu(didSelect action: UploadAddActionEntity)
+public enum FloatingActionEntity: Sendable, CaseIterable {
+    case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile, openLink
 }
 
-public struct NodeUploadAddActionsProvider: Sendable {
-    private let actionHandler: any NodeUploadAddActionsHandlerProtocol
-    public var actions: [NodeUploadAction] {
-        let chooseFromPhotosAction = NodeUploadAction(
-            actionEntity: .chooseFromPhotos,
+@MainActor
+public protocol FloatingActionsHandlerProtocol: AnyObject, Sendable {
+    func handle(action: FloatingActionEntity)
+}
+
+public struct FloatingActionsProvider: Sendable {
+    private let actionHandler: any FloatingActionsHandlerProtocol
+    public var actions: [FloatingAddAction] {
+        let chooseFromPhotosAction = FloatingAddAction(
             image: MEGAAssets.Image.photosApp,
             title: Strings.Localizable.choosePhotoVideo) {
-                actionHandler.uploadAddMenu(didSelect: .chooseFromPhotos)
+                actionHandler.handle(action: .chooseFromPhotos)
             }
 
-        let captureAction = NodeUploadAction(
-            actionEntity: .capture,
+        let captureAction = FloatingAddAction(
             image: MEGAAssets.Image.camera,
             title: Strings.Localizable.capturePhotoVideo) {
-                actionHandler.uploadAddMenu(didSelect: .capture)
+                actionHandler.handle(action: .capture)
             }
 
-        let importFromAction = NodeUploadAction(
-            actionEntity: .importFrom,
+        let importFromAction = FloatingAddAction(
             image: MEGAAssets.Image.folderArrow,
             title: Strings.Localizable.CloudDrive.Upload.importFromFiles) {
-                actionHandler.uploadAddMenu(didSelect: .importFrom)
+                actionHandler.handle(action: .importFrom)
             }
 
-        let scanDocumentAction = NodeUploadAction(
-            actionEntity: .scanDocument,
+        let scanDocumentAction = FloatingAddAction(
             image: MEGAAssets.Image.fileScan,
             title: Strings.Localizable.scanDocument) {
-                actionHandler.uploadAddMenu(didSelect: .scanDocument)
+                actionHandler.handle(action: .scanDocument)
             }
 
-        let newFolderAction = NodeUploadAction(
-            actionEntity: .newFolder,
+        let newFolderAction = FloatingAddAction(
             image: MEGAAssets.Image.folderPlus01,
             title: Strings.Localizable.newFolder) {
-                actionHandler.uploadAddMenu(didSelect: .newFolder)
+                actionHandler.handle(action: .newFolder)
             }
 
-        let newTextFileAction = NodeUploadAction(
-            actionEntity: .newTextFile,
+        let newTextFileAction = FloatingAddAction(
             image: MEGAAssets.Image.filePlus02,
             title: Strings.Localizable.newTextFile) {
-                actionHandler.uploadAddMenu(didSelect: .newTextFile)
+                actionHandler.handle(action: .newTextFile)
             }
 
-        return [chooseFromPhotosAction, captureAction, importFromAction, scanDocumentAction, newFolderAction, newTextFileAction]
+        let openLinkAction = FloatingAddAction(
+            image: MEGAAssets.Image.link02MediumThinOutline,
+            title: Strings.Localizable.OpenLink.title) {
+                actionHandler.handle(action: .openLink)
+            }
+
+        return [chooseFromPhotosAction, captureAction, importFromAction, scanDocumentAction, newFolderAction, newTextFileAction, openLinkAction]
     }
 
-    public init(actionHandler: some NodeUploadAddActionsHandlerProtocol) {
+    public init(actionHandler: some FloatingActionsHandlerProtocol) {
         self.actionHandler = actionHandler
     }
 }

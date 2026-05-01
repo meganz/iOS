@@ -63,10 +63,10 @@ struct FloatingAddButtonViewModelTests {
         func actionInvocations() {
             var calledActionIndex = -1
 
-            let action0 = NodeUploadAction(actionEntity: .chooseFromPhotos, image: .init(systemName: "star"), title: "title1") {
+            let action0 = FloatingAddAction(image: .init(systemName: "star"), title: "title1") {
                 calledActionIndex = 0
             }
-            let action1 = NodeUploadAction(actionEntity: .capture, image: .init(systemName: "star"), title: "title2") {
+            let action1 = FloatingAddAction(image: .init(systemName: "star"), title: "title2") {
                 calledActionIndex = 1
             }
             let sut =  makeSut(
@@ -106,7 +106,7 @@ struct FloatingAddButtonViewModelTests {
 
     private static func makeSut(
         floatingButtonVisibilityDataSource: MockFloatingAddButtonVisibilityDataSource = .init(),
-        uploadActions: [NodeUploadAction] = [],
+        uploadActions: [FloatingAddAction] = [],
         featureEnabled: Bool = true,
         analyticsTracker: some MockTracker = .init()
     ) -> FloatingAddButtonViewModel {

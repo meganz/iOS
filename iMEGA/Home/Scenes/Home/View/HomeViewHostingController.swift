@@ -7,11 +7,11 @@ import SwiftUI
 final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, SearchActivatable {
     private var isTabBarHidden: Binding<Bool> {
         Binding(
-            get: {
-                self.tabBarController?.tabBar.isHidden ?? false
+            get: { [weak self] in
+                self?.tabBarController?.tabBar.isHidden ?? false
             },
-            set: {
-                self.tabBarController?.tabBar.isHidden = $0
+            set: { [weak self] in
+                self?.tabBarController?.tabBar.isHidden = $0
             }
         )
     }

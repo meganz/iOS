@@ -18,6 +18,8 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
 
     private let permissionRouter: PermissionAlertRouter
 
+    var openLinkRouter: OpenLinkRouter?
+
     init(
         fileUploadingRouter: FileUploadingRouter,
         tracker: any AnalyticsTracking,
@@ -52,6 +54,8 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
         case .newTextFile:
             trackNewTextFileEvent()
             fileUploadingRouter.upload(from: .textFile)
+        case .openLink:
+            openLinkRouter?.start()
         case .newChat:
             newChatRouter.presentNewChat(from: navigationController)
         }

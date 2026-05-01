@@ -3,11 +3,13 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 
-/// This is the handler for handling plus (+) button in cloud  drive to implement way of adding items to Cloud Drive
-final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
+/// This is the handler for handling actions in the  FAB (+) button in CloudDrive
+final class FloatingActionsHandler: FloatingActionsHandlerProtocol {
     private let tracker: any AnalyticsTracking
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeSource: NodeSource
+
+    var openLinkRouter: OpenLinkRouter?
 
     init(
         tracker: some AnalyticsTracking,
@@ -19,7 +21,7 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         self.nodeSource = nodeSource
     }
 
-    func uploadAddMenu(didSelect action: UploadAddActionEntity) {
+    func handle(action: FloatingActionEntity) {
         guard
             case let .node(nodeProvider) = nodeSource,
             let node = nodeProvider()
@@ -44,11 +46,9 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         case .newTextFile:
             trackNewTextFileEvent()
             nodeInsertionRouter.createTextFileAlert(for: node)
-        case .importFolderLink:
-            break
+        case .openLink:
+            openLinkRouter?.start()
         }
-
-        trackOpenAddMenuEvent()
     }
 
     private func trackChooseFromPhotosEvent() {
@@ -65,9 +65,5 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
 
     private func trackNewTextFileEvent() {
         tracker.trackAnalyticsEvent(with: CloudDriveNewTextFileMenuToolbarEvent())
-    }
-
-    private func trackOpenAddMenuEvent() {
-        tracker.trackAnalyticsEvent(with: CloudDriveAddMenuEvent())
     }
 }
