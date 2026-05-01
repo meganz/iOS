@@ -4915,8 +4915,10 @@
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="正在準備項目…";
 /* The title of Open Link action */
-"openLink.title"="Open link";
+"openLink.title"="打開連結";
 /* The message to show when user tries to open an invalid link */
-"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";
+"openLink.invalidLinkMessage"="這不是有效的MEGA連結";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="貼上MEGA連結開啟";
+/* The title for menu action button that will show the recent activity */
+"home.recent.menu.action.showRecentActivity"="顯示近期活動";

@@ -2477,7 +2477,7 @@
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="메시지 발송 취소";
 /* Cookie dialog title */
-"dialog.cookies.title.yourPrivacy"="당신의 사생활";
+"dialog.cookies.title.yourPrivacy"="당신의 프라이버시";
 /* Cookie dialog text. */
 "dialog.cookies.description"="우리는 당신이 MEGA에 요청한 서비스를 제공하거나, 분석과 성능 데이터의 수집을 목적으로 쿠키 그리고 이와 유사한 기술을 사용합니다. 우리는 제3자와 어떠한 개인 정보를 공유하거나 광고 추적을 할 목적으로 쿠키를 사용하지 않습니다.";
 /* Cookie dialog title to manage cookies */
@@ -4921,4 +4921,4 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="최근 활동 보기";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="열려는 MEGA 링크를 붙여넣으세요";

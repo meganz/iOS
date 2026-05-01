@@ -4921,4 +4921,4 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Afficher l'activité récente";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="Collez n'importe quel lien MEGA pour l'ouvrir";

@@ -2781,7 +2781,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName] wartet darauf, an „[MeetingName]“ teilzunehmen</string>
+        <string>[UserName] wartet darauf, „[MeetingName]“ beizutreten</string>
         <key>other</key>
         <string>%d Teilnehmer warten darauf, „[MeetingName]“ beizutreten</string>
       </dict>
@@ -3324,6 +3324,26 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>%d Element konnte nicht für den Upload vorbereitet werden</string>
+        <key>other</key>
+        <string>%d Elemente konnten nicht für den Upload vorbereitet werden</string>
+      </dict>
+    </dict>
+    <key>mediaImport.preparing.progress</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d von [A] fertig</string>
+        <key>other</key>
+        <string>%d von [A] fertig</string>
       </dict>
     </dict>
   </dict>

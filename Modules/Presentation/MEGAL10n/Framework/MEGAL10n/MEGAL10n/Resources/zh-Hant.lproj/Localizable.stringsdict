@@ -2911,7 +2911,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 個項目無法準備上傳</string>
+        <string>無法準備上傳%d個項目</string>
       </dict>
     </dict>
     <key>mediaImport.preparing.progress</key>
@@ -2925,7 +2925,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] 中已有 %d 項準備完成</string>
+        <string>%d/[A]已就緒</string>
       </dict>
     </dict>
   </dict>

@@ -4921,4 +4921,4 @@
 /* The message to show when user tries to open an invalid link */
 "openLink.invalidLinkMessage"="これは有効なMEGAリンクではありません";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="MEGAリンクを貼り付けて開いてください";

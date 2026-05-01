@@ -4907,16 +4907,18 @@
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="ไม่พบผลลัพธ์การค้นหา";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
-"home.recent.addedToLabel"="เพิ่มลงใน %@";
+"home.recent.addedToLabel"="เพิ่มไปยัง %@ แล้ว";
 /* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
-"home.recent.widget.error.message"="เราไม่สามารถโหลดกิจกรรมล่าสุดของคุณได้";
+"home.recent.widget.error.message"="ไม่สามารถโหลดกิจกรรมล่าสุดได้";
 /* Snack bar message when files in a recent action bucket are no longer available */
-"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="ไฟล์เหล่านี้ไม่สามารถใช้งานได้อีกต่อไป";
+"home.recent.mixedFileBucket.snackbar.filesNotAvailable"="ไฟล์เหล่านี้ไม่พร้อมใช้งานแล้ว";
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="กำลังเตรียมรายการ…";
 /* The title of Open Link action */
-"openLink.title"="Open link";
+"openLink.title"="เปิดลิงก์";
 /* The message to show when user tries to open an invalid link */
-"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";
+"openLink.invalidLinkMessage"="ลิงก์ MEGA นี้ไม่ถูกต้อง";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="วางลิงก์ MEGA ใดก็ได้เพื่อเปิดไฟล์";
+/* The title for menu action button that will show the recent activity */
+"home.recent.menu.action.showRecentActivity"="แสดงกิจกรรมล่าสุด";

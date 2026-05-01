@@ -2995,7 +2995,7 @@
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Przesyłanie pliku dziennika";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Dziękuję za zgłoszenie";
+"help.reportIssue.success.title"="Dziękujemy za zgłoszenie";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Przyjrzymy się temu problemowi i skontaktuje się z Tobą członek naszego zespołu";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="W trakcie";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ z %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Oferta na Cyber Monday: %@ zniżki";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4881,15 +4881,15 @@
 /* The title of the No Internet state in Home screen */
 "home.noInternet.title"="Jesteś offline";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="Jeśli udostępnisz pliki do trybu offline, nadal będziesz mieć dostęp do nich bez połączenia.";
+"home.noInternet.subtitle.noOfflineFiles"="Jeśli udostępnisz pliki w trybie offline, nadal będziesz mógł uzyskać do nich dostęp bez połączenia.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Elementy zapisane offline są nadal dostępne.";
+"home.noInternet.subtitle.hasOfflineFiles"="Elementy, które zapisałeś do użytku offline, są nadal dostępne.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="Pokaż pliki offline";
+"home.noInternet.viewOfflineFiles"="Wyświetl pliki offline";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Napisy";
 /* The off option in subtitle menu */
-"videoPlayer.subtitles.menu.off"="Wył";
+"videoPlayer.subtitles.menu.off"="Wyłącz";
 /* The empty state title in subtitle selection page */
 "videoPlayer.subtitles.select.empty.title"="Nie znaleziono napisów";
 /* The title in subtitle selection page */
@@ -4915,8 +4915,10 @@
 /* Snack bar message when files in a recent action bucket are no longer available */
 "home.recent.mixedFileBucket.snackbar.filesNotAvailable"="Te pliki nie są już dostępne";
 /* The title of Open Link action */
-"openLink.title"="Open link";
+"openLink.title"="Otwórz link";
 /* The message to show when user tries to open an invalid link */
-"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";
+"openLink.invalidLinkMessage"="To nie jest prawidłowy link MEGA";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="Wklej dowolny link MEGA, aby go otworzyć";
+/* The title for menu action button that will show the recent activity */
+"home.recent.menu.action.showRecentActivity"="Pokaż ostatnią aktywność";

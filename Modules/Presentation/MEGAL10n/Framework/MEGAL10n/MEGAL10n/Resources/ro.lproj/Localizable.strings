@@ -4915,8 +4915,10 @@
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="Se pregătesc elementele…";
 /* The title of Open Link action */
-"openLink.title"="Open link";
+"openLink.title"="Deschide un link";
 /* The message to show when user tries to open an invalid link */
-"openLink.invalidLinkMessage"="This isn’t a valid MEGA link";
+"openLink.invalidLinkMessage"="Acesta nu este un link MEGA valid";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="Lipește orice link MEGA pentru a-l deschide";
+/* The title for menu action button that will show the recent activity */
+"home.recent.menu.action.showRecentActivity"="Afișează activitatea recentă";

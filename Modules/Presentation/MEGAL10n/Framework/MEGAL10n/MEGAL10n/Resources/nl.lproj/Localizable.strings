@@ -4921,4 +4921,4 @@
 /* The message to show when user tries to open an invalid link */
 "openLink.invalidLinkMessage"="Dit is geen geldige MEGA-link";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="Plak hier een MEGA-link om deze te openen";

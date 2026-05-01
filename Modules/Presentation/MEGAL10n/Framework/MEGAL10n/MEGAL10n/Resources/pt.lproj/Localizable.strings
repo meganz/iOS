@@ -421,7 +421,7 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir em…";
 /*  */
-"uploadToMega"="Fazer upload ao MEGA";
+"uploadToMega"="Fazer upload no MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Pressione o arquivo para renomeá-lo";
 /* Title for a button to send a file to a chat */
@@ -4921,4 +4921,4 @@
 /* The message to show when user tries to open an invalid link */
 "openLink.invalidLinkMessage"="Este não é um link válido do MEGA";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Paste any MEGA link to open it";
+"openLink.inputMessage"="Cole qualquer link do MEGA para abri-lo";
