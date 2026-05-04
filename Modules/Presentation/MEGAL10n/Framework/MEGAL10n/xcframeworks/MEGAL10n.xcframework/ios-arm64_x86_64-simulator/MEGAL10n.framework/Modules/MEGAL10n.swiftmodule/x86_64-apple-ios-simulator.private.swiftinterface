@@ -4575,6 +4575,23 @@ public enum Strings {
           }
         }
       }
+      public enum Transfers {
+        public enum Connections {
+          public static let description: Swift.String
+          public static let title: Swift.String
+          public enum Download {
+            public static let title: Swift.String
+          }
+          public enum Option {
+            public static let bestForSlowNetworks: Swift.String
+            public static let `default`: Swift.String
+            public static let higherUsage: Swift.String
+          }
+          public enum Upload {
+            public static let title: Swift.String
+          }
+        }
+      }
       public enum UserInterface {
         public static let hideRecentActivity: Swift.String
         public static let mediaDiscovery: Swift.String

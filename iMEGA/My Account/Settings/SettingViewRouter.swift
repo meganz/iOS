@@ -3,6 +3,7 @@ import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import Settings
@@ -60,16 +61,7 @@ extension SettingViewRouter {
     @SettingBuilder
     private func makeSections() -> [SettingSectionViewModel] {
         
-        SettingSectionViewModel {
-            createCameraUploadCellViewModel()
-            SettingCellViewModel(image: MEGAAssets.UIImage.chatSettings,
-                                 title: Strings.Localizable.chat,
-                                 router: ChatSettingsViewRouter(presenter: presenter))
-            
-            SettingCellViewModel(image: MEGAAssets.UIImage.callsSettings,
-                                 title: Strings.Localizable.Settings.Section.Calls.title,
-                                 router: CallsSettingsViewRouter(presenter: presenter))
-        }
+        SettingSectionViewModel(cellViewModels: makeFeatureCells())
         
         SettingSectionViewModel {
             SettingCellViewModel(image: MEGAAssets.UIImage.securitySettings,
@@ -144,6 +136,30 @@ extension SettingViewRouter {
             return Strings.Localizable.General.cookieSettings
         }
         return Strings.Localizable.General.cookieAndAdSettings
+    }
+}
+
+private extension SettingViewRouter {
+    func makeFeatureCells() -> [SettingCellViewModel] {
+        var cells = [
+            createCameraUploadCellViewModel(),
+            SettingCellViewModel(image: MEGAAssets.UIImage.chatSettings,
+                                 title: Strings.Localizable.chat,
+                                 router: ChatSettingsViewRouter(presenter: presenter)),
+            SettingCellViewModel(image: MEGAAssets.UIImage.callsSettings,
+                                 title: Strings.Localizable.Settings.Section.Calls.title,
+                                 router: CallsSettingsViewRouter(presenter: presenter))
+        ]
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .transfersSettings) {
+            cells.append(
+                SettingCellViewModel(image: MEGAAssets.UIImage.transfersSettings.withTintColorAsOriginal(TokenColors.Icon.primary),
+                                     title: Strings.Localizable.transfers,
+                                     router: TransfersSettingsRouter(navigationController: presenter))
+            )
+        }
+
+        return cells
     }
 }
 

@@ -14,6 +14,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case videoPlayerRevamp = "Video Player Revamp"
     case mediaRevamp = "Media Revamp"
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
+    case transfersSettings = "Transfers Settings"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

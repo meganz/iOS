@@ -24,12 +24,14 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Repository/ChatRepo"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/LogRepo"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
         .package(path: "../../Presentation/MEGAAssets"),
-        .package(path: "../../MEGASharedRepo/MEGAPreference")
+        .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -39,11 +41,14 @@ let package = Package(
                 "MEGAAppPresentation",
                 "MEGAL10n",
                 "ChatRepo",
+                "MEGAAppSDKRepo",
                 "LogRepo",
                 "MEGASwiftUI",
                 "MEGAUIComponent",
                 "MEGAConnectivity",
-                "MEGAAssets"
+                "MEGAAssets",
+                "MEGAPreference",
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings
         ),

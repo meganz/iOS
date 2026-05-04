@@ -4920,3 +4920,17 @@
 "transfer.liveActivity.downloadingFiles"="Downloading files";
 /* Status text shown in the transfer Live Activity when files are being uploaded */
 "transfer.liveActivity.uploadingFiles"="Uploading files";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Transfer connections";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Sets the maximum number of parallel connections used for active transfers. Higher values may speed up large file transfers but increase battery and memory usage. Small files are not affected.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Download connections";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Upload connections";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Default";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Best for slow networks";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Higher battery and data usage";
