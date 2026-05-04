@@ -4916,3 +4916,7 @@
 "openLink.invalidLinkMessage"="This isn’t a valid MEGA link";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Paste any MEGA link to open it";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Downloading files";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Uploading files";
