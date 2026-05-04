@@ -16,14 +16,13 @@ final class PhotoPickerDelegate: NSObject, PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard !hasFinishedPicking else { return }
         hasFinishedPicking = true
-        if let completion {
-            let assets = results.toPHAssets()
-            completion(assets, results.count)
+        picker.dismiss(animated: true) { [self] in
+            if let completion {
+                let assets = results.toPHAssets()
+                completion(assets, results.count)
+            }
+            completionResult?(results)
         }
-        if let completionResult {
-            completionResult(results)
-        }
-        picker.dismiss(animated: true)
     }
 }
 
