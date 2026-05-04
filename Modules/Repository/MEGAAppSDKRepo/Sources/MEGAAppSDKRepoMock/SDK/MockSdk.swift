@@ -1130,6 +1130,18 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override var downloadTransfers: MEGATransferList {
         transferList
     }
+
+    public override func getMaxDownloadConnections(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+
+    public override func getMaxUploadConnections(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+
+    public override func setMaxConnectionsForDirection(_ direction: MEGATransferType, connections: Int, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
 }
 
 extension MockSdk {
