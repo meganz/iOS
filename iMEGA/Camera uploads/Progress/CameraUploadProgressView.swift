@@ -6,6 +6,7 @@ import SwiftUI
 
 struct CameraUploadProgressView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ObservedObject var viewModel: CameraUploadProgressViewModel
     
     var body: some View {
@@ -110,11 +111,8 @@ struct CameraUploadProgressView: View {
     }
 
     private var bannerTopPadding: CGFloat {
-        if #available(iOS 26.0, *) {
-            TokenSpacing._4
-        } else {
-            0
-        }
+        guard #available(iOS 26.0, *) else { return 0 }
+        return verticalSizeClass == .compact ? TokenSpacing._7 : TokenSpacing._4
     }
     
     private func uploadStatusView(isLoading: Bool) -> some View {
