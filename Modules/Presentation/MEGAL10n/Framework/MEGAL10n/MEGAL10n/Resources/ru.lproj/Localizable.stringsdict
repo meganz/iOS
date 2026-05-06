@@ -3731,8 +3731,8 @@
     <key>photos.upload.prepare.error</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatSpecTypeKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
@@ -3749,8 +3749,8 @@
     <key>mediaImport.preparing.progress</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatSpecTypeKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
