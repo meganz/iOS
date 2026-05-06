@@ -67,13 +67,13 @@ struct CameraUploadProgressView: View {
     private var completedView: some View {
         ZStack(alignment: .top) {
             VStack {
-                VStack(alignment: .center, spacing: TokenSpacing._7) {
+                VStack(alignment: .center, spacing: completedContentSpacing) {
                     MEGAAssets.Image.glassCheckCircle
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 120, height: 120)
                     
-                    VStack(alignment: .center, spacing: TokenSpacing._5) {
+                    VStack(alignment: .center, spacing: completedTextSpacing) {
                         Text(Strings.Localizable.CameraUploads.Progress.UploadsComplete.title)
                             .font(.title3)
                             .fontWeight(.bold)
@@ -88,6 +88,7 @@ struct CameraUploadProgressView: View {
                 .frame(maxWidth: 370)
                 .padding(TokenSpacing._5)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .offset(y: completedContentYOffset)
             }
             
             bannerView
@@ -113,6 +114,18 @@ struct CameraUploadProgressView: View {
     private var bannerTopPadding: CGFloat {
         guard #available(iOS 26.0, *) else { return 0 }
         return verticalSizeClass == .compact ? TokenSpacing._7 : TokenSpacing._4
+    }
+
+    private var completedContentSpacing: CGFloat {
+        verticalSizeClass == .compact ? TokenSpacing._2 : TokenSpacing._7
+    }
+    
+    private var completedTextSpacing: CGFloat {
+        verticalSizeClass == .compact ? TokenSpacing._3 : TokenSpacing._5
+    }
+
+    private var completedContentYOffset: CGFloat {
+        verticalSizeClass == .compact ? TokenSpacing._11 : 0
     }
     
     private func uploadStatusView(isLoading: Bool) -> some View {
