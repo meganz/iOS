@@ -49,14 +49,21 @@ static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 
 #pragma mark - initilization
 
+static BOOL gIsSharedInitialized = NO;
+
 + (instancetype)shared {
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
+        gIsSharedInitialized = YES;
     });
     
     return sharedInstance;
+}
+
++ (BOOL)isSharedInitialized {
+    return gIsSharedInitialized;
 }
 
 - (instancetype)init {

@@ -45,6 +45,14 @@ extension CameraUploadManager {
         concurrentCountCalculator.videoQueuePausedReason()
     }
     
+    /// Safe entry point for callers that may run before the singleton has been touched
+    /// (e.g. AppDelegate.applicationWillTerminate). Lazy-initialising the singleton at
+    /// termination time would schedule a BGTaskScheduler submit and crash, so we gate on the init flag.
+    @objc class func appWillTerminate() {
+        guard CameraUploadManager.isSharedInitialized else { return }
+        CameraUploadManager.shared().appWillTerminate()
+    }
+
     @objc func appWillTerminate() {
         guard !isAppWillTerminateHandled else {
             return
