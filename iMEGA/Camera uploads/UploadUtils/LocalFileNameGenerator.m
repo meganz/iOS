@@ -21,9 +21,20 @@
     return self;
 }
 
+- (BOOL)isContextInvalidated:(MOAssetUploadRecord *)record {
+    return record.isDeleted
+        || record.managedObjectContext == nil
+        || self.backgroundContext.persistentStoreCoordinator.persistentStores.count == 0;
+}
+
 - (NSString *)generateUniqueLocalFileNameForUploadRecord:(MOAssetUploadRecord *)record withOriginalFileName:(NSString *)originalFileName {
     __block NSString *localUniqueFileName;
     [self.backgroundContext performBlockAndWait:^{
+        if ([self isContextInvalidated:record]) {
+            MEGALogWarning(@"[Camera Upload] upload record or store was invalidated before file name generation");
+            return;
+        }
+
         if (record.fileNameRecord) {
             localUniqueFileName = record.fileNameRecord.localUniqueFileName;
         } else {
@@ -126,6 +137,11 @@
     
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
+        if ([self isContextInvalidated:record]) {
+            MEGALogWarning(@"[Camera Upload] upload record or store was invalidated before saving file name");
+            return;
+        }
+
         if (record.fileNameRecord == nil) {
             record.fileNameRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadFileNameRecord" inManagedObjectContext:self.backgroundContext];
         }
