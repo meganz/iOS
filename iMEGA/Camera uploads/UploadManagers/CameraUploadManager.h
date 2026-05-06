@@ -20,6 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)shared;
 
+/**
+ Whether the shared instance has already been initialized via +shared.
+ Late-lifecycle cleanup paths (e.g. applicationWillTerminate) should gate on this before touching
+ +shared, otherwise lazy initialization would trigger BGTaskScheduler submit and crash.
+ */
+@property (class, readonly) BOOL isSharedInitialized;
+
 #pragma mark - setup camera upload
 
 - (void)setupCameraUploadWhenApplicationLaunches;

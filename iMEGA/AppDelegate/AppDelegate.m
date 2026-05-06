@@ -402,7 +402,7 @@
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
 
-    [CameraUploadManager.shared appWillTerminate];
+    [CameraUploadManager appWillTerminate];
     [self notifyPlaybackStoppedForCurrentItem];
     [MEGASdkCleanUp localLogoutAndCleanUp];
 }
