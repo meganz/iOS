@@ -916,16 +916,25 @@ public struct MEGAImageBundle {
   public static var link02MediumThinOutline: SwiftUICore.Image {
     get
   }
-  public static var liveActivityPause: SwiftUICore.Image {
+  public static var pauseSmallRegularSolid: SwiftUICore.Image {
     get
   }
-  public static var liveActivityDownArrow: SwiftUICore.Image {
+  public static var arrowDownSmallReguarOutline: SwiftUICore.Image {
     get
   }
-  public static var liveActivityUpArrow: SwiftUICore.Image {
+  public static var arrowUpSmallReguarOutline: SwiftUICore.Image {
     get
   }
-  public static var liveActivityDownUpArrow: SwiftUICore.Image {
+  public static var arrowUpDownSmallRegularOutline: SwiftUICore.Image {
+    get
+  }
+  public static var alertTriangleSmallRegularSolid: SwiftUICore.Image {
+    get
+  }
+  public static var alertCircleSmallRegularSolid: SwiftUICore.Image {
+    get
+  }
+  public static var checkSmallRegularOutline: SwiftUICore.Image {
     get
   }
 }

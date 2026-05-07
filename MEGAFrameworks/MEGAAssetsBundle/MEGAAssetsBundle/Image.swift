@@ -300,8 +300,11 @@ public struct MEGAImageBundle {
     public static var messageChatCircle: Image { Image(.messageChatCircle) }
     public static var glassHearts: Image { Image(.glassHearts) }
     public static var link02MediumThinOutline: Image { Image(.link02MediumThinOutline) }
-    public static var liveActivityPause: Image { Image(.liveActivityPause) }
-    public static var liveActivityDownArrow: Image { Image(.liveActivityDownArrow) }
-    public static var liveActivityUpArrow: Image { Image(.liveActivityUpArrow) }
-    public static var liveActivityDownUpArrow: Image { Image(.liveActivityDownUpArrow) }
+    public static var pauseSmallRegularSolid: Image { Image(.pauseSmallRegularSolid) }
+    public static var arrowDownSmallReguarOutline: Image { Image(.arrowDownSmallReguarOutline) }
+    public static var arrowUpSmallReguarOutline: Image { Image(.arrowUpSmallReguarOutline) }
+    public static var arrowUpDownSmallRegularOutline: Image { Image(.arrowUpDownSmallRegularOutline) }
+    public static var alertTriangleSmallRegularSolid: Image { Image(.alertTriangleSmallRegularSolid) }
+    public static var alertCircleSmallRegularSolid: Image { Image(.alertCircleSmallRegularSolid) }
+    public static var checkSmallRegularOutline: Image { Image(.checkSmallRegularOutline) }
 }

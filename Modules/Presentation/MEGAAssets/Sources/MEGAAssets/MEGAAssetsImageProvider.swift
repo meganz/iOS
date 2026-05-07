@@ -318,10 +318,13 @@ extension MEGAAssets {
         public static var x: SwiftUI.Image { MEGAImageBundle.x }
         public static var glassHearts: SwiftUI.Image { MEGAImageBundle.glassHearts }
         public static var link02MediumThinOutline: SwiftUI.Image { MEGAImageBundle.link02MediumThinOutline }
-        public static var liveActivityPause: SwiftUI.Image { MEGAImageBundle.liveActivityPause }
-        public static var liveActivityDownArrow: SwiftUI.Image { MEGAImageBundle.liveActivityDownArrow }
-        public static var liveActivityUpArrow: SwiftUI.Image { MEGAImageBundle.liveActivityUpArrow }
-        public static var liveActivityDownUpArrow: SwiftUI.Image { MEGAImageBundle.liveActivityDownUpArrow }
+        public static var pauseSmallRegularSolid: SwiftUI.Image { MEGAImageBundle.pauseSmallRegularSolid }
+        public static var arrowDownSmallReguarOutline: SwiftUI.Image { MEGAImageBundle.arrowDownSmallReguarOutline }
+        public static var arrowUpSmallReguarOutline: SwiftUI.Image { MEGAImageBundle.arrowUpSmallReguarOutline }
+        public static var arrowUpDownSmallRegularOutline: SwiftUI.Image { MEGAImageBundle.arrowUpDownSmallRegularOutline }
+        public static var alertTriangleSmallRegularSolid: SwiftUI.Image { MEGAImageBundle.alertTriangleSmallRegularSolid }
+        public static var alertCircleSmallRegularSolid: SwiftUI.Image { MEGAImageBundle.alertCircleSmallRegularSolid }
+        public static var checkSmallRegularOutline: SwiftUI.Image { MEGAImageBundle.checkSmallRegularOutline }
     }
 }
 
