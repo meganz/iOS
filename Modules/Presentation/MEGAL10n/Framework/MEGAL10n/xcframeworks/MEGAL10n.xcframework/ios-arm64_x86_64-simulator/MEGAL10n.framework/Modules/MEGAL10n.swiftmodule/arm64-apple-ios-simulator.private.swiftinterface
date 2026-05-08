@@ -4830,6 +4830,7 @@ public enum Strings {
       }
       public enum LiveActivity {
         public static let downloadingFiles: Swift.String
+        public static let requiresAttention: Swift.String
         public static let uploadingFiles: Swift.String
       }
       public enum Sharing {

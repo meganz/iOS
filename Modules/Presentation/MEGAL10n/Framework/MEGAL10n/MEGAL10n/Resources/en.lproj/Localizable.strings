@@ -4936,3 +4936,5 @@
 "settings.transfers.connections.option.higherUsage"="Higher battery and data usage";
 /* Custom offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Transfer requires attention";
