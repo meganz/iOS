@@ -4922,3 +4922,23 @@
 "openLink.invalidLinkMessage"="Este não é um link válido do MEGA";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Cole qualquer link do MEGA para abri-lo";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Fazendo download";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Fazendo upload";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Conexões de transferência";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Define o número máximo de conexões paralelas usadas para transferências ativas. Valores maiores podem acelerar as transferências de arquivos grandes, mas aumentam o consumo de bateria e de memória. Arquivos pequenos não serão afetados.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Conexões de download";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Conexões de upload";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Predeterminado";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="melhor opção para redes lentas";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="maior consumo de bateria e de dados";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

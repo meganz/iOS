@@ -4922,3 +4922,5 @@
 "home.recent.menu.action.showRecentActivity"="Kürzliche Aktivitäten anzeigen";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Fügen Sie einen MEGA-Link ein, um ihn zu öffnen";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

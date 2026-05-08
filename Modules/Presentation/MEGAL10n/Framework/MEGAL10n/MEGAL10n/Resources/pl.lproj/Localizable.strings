@@ -4922,3 +4922,23 @@
 "openLink.inputMessage"="Wklej dowolny link MEGA, aby go otworzyć";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Pokaż ostatnią aktywność";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Wyższe zużycie baterii i danych";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Pobieranie plików";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Przesyłanie plików";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Połączenia transferowe";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Ustawia maksymalną liczbę jednoczesnych połączeń używanych do aktywnych transferów. Wyższe wartości mogą przyspieszyć transfer dużych plików, ale zwiększają zużycie baterii i pamięci. Małe pliki nie są dotknięte tym ustawieniem.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Pobieranie połączeń";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Prześlij połączenia";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Domyślne";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Najlepsze dla sieci o niskiej przepustowości";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

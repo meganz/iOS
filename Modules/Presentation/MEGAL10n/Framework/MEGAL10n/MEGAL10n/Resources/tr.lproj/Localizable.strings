@@ -4922,3 +4922,23 @@
 "home.recent.menu.action.showRecentActivity"="Son etkinlikleri göster";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Açmak için herhangi bir MEGA bağlantısını yapıştırın";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Dosyalar indiriliyor";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Dosyalar yükleniyor";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Aktarım bağlantıları";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Etkin aktarımlar için kullanılan maksimum paralel bağlantı sayısını ayarlar. Daha yüksek değerler büyük dosya aktarımlarını hızlandırabilir ancak şarj ve bellek kullanımını artırır. Küçük dosyalar bundan etkilenmez.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="İndirme bağlantıları";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Yükleme bağlantıları";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Varsayılan";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Yavaş ağlar için en iyisi";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Daha yüksek şarj ve veri kullanımı";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

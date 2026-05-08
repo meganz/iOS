@@ -4922,3 +4922,5 @@
 "openLink.inputMessage"="Lipește orice link MEGA pentru a-l deschide";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Afișează activitatea recentă";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

@@ -2327,7 +2327,7 @@
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Gebruikersnaam:";
 /* Text used for a title or header listing the details of something. */
-"DETAILS"="DETAILS";
+"DETAILS"="Details";
 /* Text used as title or header for reference an url, for instance, a node link. */
 "LINK"="Link";
 /* Text referencing the date of creation of a link */
@@ -2955,7 +2955,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Geen apparaten in back-ups";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Dit is waar uw back-upbestanden en mappen worden opgeslagen. Uw back-upitems zijn “alleen-lezen” om te voorkomen dat ze per ongeluk worden gewijzigd in uw clouddrive.\nU kunt een back-up maken van items op uw computer naar MEGA met behulp van onze desktop-applicatie.";
+"backups.empty.state.description"="Dit is waar uw back-upbestanden en mappen worden opgeslagen. Uw back-upitems zijn “alleen-lezen” om te voorkomen dat ze per ongeluk worden gewijzigd in uw clouddrive. \nU kunt een back-up maken van items op uw computer naar MEGA met behulp van onze desktop-applicatie.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Overdrachten annuleren?";
 /* Message for action of cancelling a transfer */
@@ -4185,13 +4185,13 @@
 /* Call and meeting duration for free users */
 "callAndMeeting.duration.for.free.users"="Tot 1 uur";
 /* Call and meeting duration unlimited for pro users */
-"callAndMeeting.duration.unlimited.for.pro.users"="ONBEPERKT";
+"callAndMeeting.duration.unlimited.for.pro.users"="Onbeperkt";
 /* Call and meeting participants title */
 "callAndMeeting.participants.title"="Deelnemers aan de oproep en vergadering";
 /* Call and meeting participants for free users */
 "callAndMeeting.participants.for.free.users"="Tot 100";
 /* Call and meeting participants unlimited for pro users */
-"callAndMeeting.participants.unlimited.for.pro.users"="ONBEPERKT";
+"callAndMeeting.participants.unlimited.for.pro.users"="Onbeperkt";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="U zult deze functies missen";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4922,3 +4922,23 @@
 "openLink.invalidLinkMessage"="Dit is geen geldige MEGA-link";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Plak hier een MEGA-link om deze te openen";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Bestanden downloaden";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Bestanden uploaden";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Overdrachtsverbindingen";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Hiermee wordt het maximale aantal parallelle verbindingen ingesteld dat wordt gebruikt voor actieve overdrachten. Hogere waarden kunnen de overdracht van grote bestanden versnellen, maar verhogen het batterij- en geheugenverbruik. Kleine bestanden worden hierdoor niet beïnvloed.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Download verbindingen";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Upload verbindingen";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Standaard";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Beste voor langzame netwerken";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Hoger batterij- en dataverbruik";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

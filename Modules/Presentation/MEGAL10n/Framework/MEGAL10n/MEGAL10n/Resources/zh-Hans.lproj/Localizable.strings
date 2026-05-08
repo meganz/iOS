@@ -4922,3 +4922,23 @@
 "openLink.inputMessage"="粘贴任意 MEGA 链接以打开它";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="显示最近的活动";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="正在下载文件";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="正在上传文件";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="传输连接数";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="设置用于活动传输的并行连接的最大数量。较高的数值可能会加速大文件传输，但会增加电量和内存的使用。小文件不受影响。";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="下载连接数";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="上传连接数";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="默认";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="慢速网络最佳选择";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="更高的电量和数据使用量";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

@@ -2997,7 +2997,7 @@
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="신고해주셔서 고맙습니다";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="이 문제를 확인해보고 우리 팀원이 연락을 드리겠습니다";
+"help.reportIssue.success.message"="이 문제를 확인한 후 연락을 드리겠습니다";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="보고를 접수할 수 없습니다. 다시 시도하세요.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
@@ -4922,3 +4922,5 @@
 "home.recent.menu.action.showRecentActivity"="최근 활동 보기";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="열려는 MEGA 링크를 붙여넣으세요";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

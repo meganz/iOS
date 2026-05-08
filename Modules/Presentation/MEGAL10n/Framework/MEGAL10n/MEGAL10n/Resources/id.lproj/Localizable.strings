@@ -4922,3 +4922,5 @@
 "openLink.inputMessage"="Tempelkan tautan MEGA apa pun untuk membukanya";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Tampilkan aktivitas terbaru";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

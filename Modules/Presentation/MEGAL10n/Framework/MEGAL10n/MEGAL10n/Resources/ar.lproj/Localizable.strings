@@ -4922,3 +4922,9 @@
 "openLink.inputMessage"="الصق أي رابط ميغا MEGA لفتحه";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="عرض الأنشطة الأخيرة";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="جارٍ تنزيل الملفات";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="جار ترفيع الملفات";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

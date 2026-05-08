@@ -4922,3 +4922,23 @@
 "openLink.invalidLinkMessage"="これは有効なMEGAリンクではありません";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="MEGAリンクを貼り付けて開いてください";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="ファイルをダウンロード中";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="ファイルをアップロード中";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="転送接続数";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="アクティブな転送で使用する並列接続数の上限を設定します。値を大きくすると大きなファイルの転送速度が向上する可能性がありますが、バッテリーとメモリの消費量が増加します。小さなファイルには影響しません。";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="ダウンロード接続数";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="アップロード接続数";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="デフォルト";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="低速ネットワーク向け";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="バッテリーとデータ使用量が多め";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

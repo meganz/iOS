@@ -4951,6 +4951,7 @@ public enum Strings {
             public static func cyberMondayDeal(_ p1: Any) -> Swift.String
             public static func generalDeal(_ p1: Any) -> Swift.String
             public static func specialOffer(_ p1: Any) -> Swift.String
+            public static func specialOfferLabel(_ p1: Any, _ p2: Any) -> Swift.String
           }
         }
         public enum Yearly {

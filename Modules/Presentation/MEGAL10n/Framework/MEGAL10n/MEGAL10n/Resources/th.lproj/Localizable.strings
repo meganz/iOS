@@ -4922,3 +4922,5 @@
 "openLink.inputMessage"="วางลิงก์ MEGA ใดก็ได้เพื่อเปิดไฟล์";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="แสดงกิจกรรมล่าสุด";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";

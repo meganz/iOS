@@ -4934,3 +4934,5 @@
 "settings.transfers.connections.option.bestForSlowNetworks"="Best for slow networks";
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="Higher battery and data usage";
+/* Custom offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
