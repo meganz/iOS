@@ -53,20 +53,48 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func setProgressViewInKeyWindow() {
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
+        guard let window = currentKeyWindow else { return }
         showProgress(view: window, bottomAnchor: Constants.defaultBottomAnchor)
     }
 
     @objc
     func bringProgressToFrontKeyWindowIfNeeded() {
         guard let progressIndicatorView = TransfersWidgetViewController.sharedTransfer().progressView,
-              let window = UIApplication.shared.keyWindow,
-              progressIndicatorView.isDescendant(of: window) else {
-                  return
-              }
+              let window = currentKeyWindow else {
+            MEGALogWarning("[Transfer Widget] Failed to get progress indicator view or key window")
+            return
+        }
+
+        // Fallback: if the widget is not attached (e.g. first mount happened before the
+        // scene became active, or its previous host window has been dismissed), re-mount
+        // it on the current key window before bringing it to front.
+        if !progressIndicatorView.isDescendant(of: window) {
+            showProgress(view: window, bottomAnchor: Constants.defaultBottomAnchor)
+            return
+        }
+
         window.bringSubviewToFront(progressIndicatorView)
+    }
+
+    /// Resolves the window the transfer widget should attach to.
+    ///
+    /// Prefers the scene-based lookup over the deprecated `UIApplication.keyWindow`,
+    /// which returns nil while the foreground scene is still `.foregroundInactive`
+    /// (the state during MainTabBar's `viewDidLoad` on first launch).
+    private var currentKeyWindow: UIWindow? {
+        let foregroundScenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }
+
+        if let keyNormalWindow = foregroundScenes
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow && $0.windowLevel == .normal }) {
+            return keyNormalWindow
+        }
+
+        return foregroundScenes
+            .flatMap { $0.windows }
+            .first(where: { $0.windowLevel == .normal })
     }
         
     @objc
