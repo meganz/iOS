@@ -21,9 +21,20 @@ public final class MockNodeTagsUseCase: NodeTagsUseCaseProtocol {
         searchTexts.append(searchText)
         if let _searchTags {
             return _searchTags
-        } else {
-            return await withCheckedContinuation { continuation in
-                self.continuation = continuation
+        }
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                if Task.isCancelled {
+                    continuation.resume(returning: nil)
+                } else {
+                    self.continuation = continuation
+                }
+            }
+        } onCancel: { [weak self] in
+            Task { @MainActor [weak self] in
+                let pending = self?.continuation
+                self?.continuation = nil
+                pending?.resume(returning: nil)
             }
         }
     }

@@ -72,17 +72,19 @@ struct NodeTagsSearcherTests {
             #expect(result == nil)
         }
 
-        let task2 = Task {
-            _ = await sut.searchTags(for: "te")
+        // Wait until task1's inner task has parked on the mock's continuation.
+        while useCase.continuation == nil {
+            await Task.yield()
         }
 
-        let task3 = Task(priority: .background) {
-            while useCase.continuation == nil {
-                try? await Task.sleep(nanoseconds: 50_000_000)
-            }
-            useCase.continuation?.resume(with: .success(["tag1", "tag2"]))
-        }
-        _ = await [task1.value, task3.value]
-        task2.cancel()
+        // Make the next call return synchronously so it doesn't leak its own
+        // continuation, then issue it. The searcher cancels task1's in-flight
+        // inner task; the mock's cancellation handler then resumes the parked
+        // continuation with nil, so task1's inner task wakes, hits
+        // `try Task.checkCancellation()`, throws, and the searcher returns nil.
+        useCase._searchTags = []
+        _ = await sut.searchTags(for: nil)
+
+        await task1.value
     }
 }
