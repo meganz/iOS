@@ -281,7 +281,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeDefault:
             [MEGALinkManager openDefaultLink: url];
             break;
-            
+
+        case URLTypeUnrecognized:
+            [MEGALinkManager resetLinkAndURLType];
+            break;
+
         case URLTypeOpenInLink:
             [MEGALinkManager openIn];
             [MEGALinkManager resetLinkAndURLType];

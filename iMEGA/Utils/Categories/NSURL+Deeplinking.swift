@@ -130,7 +130,7 @@ extension NSURL {
             return match.value
         }
 
-        return fragment.isEmpty ? .default : .handleLink
+        return fragment.isEmpty ? .unrecognized : .handleLink
     }
     
     private func parseMEGASchemeURL() -> URLType {
@@ -179,10 +179,10 @@ extension NSURL {
             if fragment != nil {
                 return parseFragmentType()
             }
-            return .default
+            return .unrecognized
         }
     }
-    
+
     private func parseUniversalLinkURL() -> URLType {
         guard let path, host?.lowercased().contains("mega") == true else {
             return .default
@@ -221,11 +221,11 @@ extension NSURL {
         if let match = prefixes.first(where: { path.hasPrefix($0.key.rawValue) }) {
             return match.urlType
         }
-        
+
         if fragment != nil {
             return parseFragmentType()
         }
-        
-        return .default
+
+        return .unrecognized
     }
 }

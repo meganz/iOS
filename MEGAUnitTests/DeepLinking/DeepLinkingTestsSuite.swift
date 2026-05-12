@@ -350,6 +350,29 @@ struct DeepLinkingTestSuite {
         }
     }
 
+    // MARK: - Unrecognized Link Tests
+    @Suite("Unrecognized Link Tests - Verifies that unhandled MEGA-domain URLs return .unrecognized so the app does not reopen them in an in-app browser (IOS-11782).")
+    struct UnrecognizedLinkTests {
+        // mega.io/login itself is a 301 to mega.nz/login; the URL the app actually
+        // receives via universal link is https://mega.nz/login. mega.io variants are
+        // kept for documentation since the user-facing entry point is mega.io.
+        @Test("Unrecognized MEGA URL should return .unrecognized", arguments: [
+            "https://mega.nz/login",
+            "https://mega.nz/login?a=sdf&b=123",
+            "https://www.mega.nz/login",
+            "https://mega.app/login",
+            "https://mega.io/login",
+            "https://mega.io/",
+            "https://mega.io/something-unknown",
+            "https://mega.nz/some-unknown-path",
+            "https://mega.app/some-unknown-path",
+            "https://www.mega.nz/another-path-that-is-not-mapped"
+        ])
+        func unrecognizedMegaURLShouldReturnUnrecognizedType(url: String) {
+            assertDeepLinkType(urlString: url, expectedType: .unrecognized)
+        }
+    }
+
     // MARK: - App Settings Link Tests
     @Suite("App Settings Link Tests - Verifies correct type is returned for app settings URLs.")
     struct AppSettingsLinkTests {
