@@ -4516,6 +4516,10 @@
 "cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="The maximum number of tags is 10";
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="Unknown Artist";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Podcast mode";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Music mode";
 /* Add to playlist empty message */
 "photos.addToPlaylist.empty.message"="No playlists";
 /* Add to playlist empty create button title */
