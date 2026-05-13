@@ -144,6 +144,7 @@ struct AccountDetailsWidgetView: View {
         if viewModel.shouldShowUpgrade {
             Button {
                 accessoryButtonAction()
+                viewModel.trackAccessoryTapped()
             } label: {
                 MEGAAssets.Image.chevronRight
                     .renderingMode(.template)
@@ -153,7 +154,6 @@ struct AccountDetailsWidgetView: View {
             .alignmentGuide(.plan) { $0[VerticalAlignment.center] }
             .padding(.trailing, TokenSpacing._5)
         }
-
     }
 }
 

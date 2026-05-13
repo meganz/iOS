@@ -3,6 +3,9 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ShortcutsWidgetView: View {
+
+    private let viewModel = ShortcutsWidgetViewModel()
+
     let shortcutTapAction: (ShortcutType) -> Void
 
     var body: some View {
@@ -10,6 +13,7 @@ struct ShortcutsWidgetView: View {
             HStack(spacing: TokenSpacing._3) {
                 ForEach(ShortcutType.allCases) { chip in
                     Button {
+                        viewModel.trackShortcutTapped(chip)
                         shortcutTapAction(chip)
                     } label: {
                         PillView(viewModel: chip.pillViewModel)

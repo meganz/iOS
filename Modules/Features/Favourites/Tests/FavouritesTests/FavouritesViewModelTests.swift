@@ -1,5 +1,6 @@
 import Favourites
 import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 @testable import MEGAUIComponent
@@ -405,7 +406,8 @@ struct FavouritesViewModelTests {
         FavouritesViewModel(
             dependency: .init(
                 resultsProvider: MockSearchResultsProviding(),
-                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                tracker: MockTracker()
             )
         )
     }

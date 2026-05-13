@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -27,21 +29,25 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
         let planUseCase: any AccountDetailsPlanUseCaseProtocol
         let storageUseCase: any AccountDetailsStorageUseCaseProtocol
         let avatarUseCase: any AccountDetailsAvatarUseCaseProtocol
+        let tracker: any AnalyticsTracking
 
         package init(
             userNameUseCase: some AccountDetailsUserNameUseCaseProtocol,
             planUseCase: some AccountDetailsPlanUseCaseProtocol,
             storageUseCase: some AccountDetailsStorageUseCaseProtocol,
             avatarUseCase: some AccountDetailsAvatarUseCaseProtocol,
+            tracker: some AnalyticsTracking
         ) {
             self.userNameUseCase = userNameUseCase
             self.planUseCase = planUseCase
             self.storageUseCase = storageUseCase
             self.avatarUseCase = avatarUseCase
+            self.tracker = tracker
         }
 
         init(
             currentUserSource: CurrentUserSource = .shared,
+            tracker: some AnalyticsTracking = DIContainer.tracker,
             userNameProvider: some UserNameProviderProtocol,
             avatarFetcher: @escaping @Sendable () async -> Image?
         ) {
@@ -58,6 +64,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
             )
             
             self.userNameUseCase = userNameUseCase
+            self.tracker = tracker
             planUseCase = AccountDetailsPlanUseCase(accountUseCase: accountUseCase)
             storageUseCase = AccountDetailsStorageUseCase(
                 accountUseCase: accountUseCase,
@@ -163,6 +170,10 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
             // Fraction is capped at 1.0 because went from Pro -> Free, storageUsed will exceed storageMax
             return min(Double(storageUsed) / Double(storageMax), 1.0)
         }
+    }
+
+    func trackAccessoryTapped() {
+        dependency.tracker.trackAnalyticsEvent(with: UpgradeAccountHomeWidgetButtonPressedEvent())
     }
 
     private func monitorUserName() async {

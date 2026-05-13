@@ -46,7 +46,8 @@ let package = Package(
                 "MEGAPreference",
                 "MEGAConnectivity",
                 "ContentLibraries",
-                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")]
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
+            ]
         ),
         .testTarget(
             name: "HomeTests",

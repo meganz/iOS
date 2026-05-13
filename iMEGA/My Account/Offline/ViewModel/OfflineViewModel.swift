@@ -79,6 +79,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
     func dispatch(_ action: OfflineViewAction) {
         switch action {
         case .onViewAppear:
+            trackOnAppearEvent()
             startMonitoringNodeDownloadCompletionUpdates()
         case .onViewWillDisappear:
             stopMonitoringNodeDownloadCompletionUpdates()
@@ -184,5 +185,9 @@ final class OfflineViewModel: NSObject, ViewModelType {
         default:
             break
         }
+    }
+
+    private func trackOnAppearEvent() {
+        tracker.trackAnalyticsEvent(with: OfflineScreenEvent())
     }
 }

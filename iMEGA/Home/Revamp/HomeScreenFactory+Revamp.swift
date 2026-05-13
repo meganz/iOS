@@ -92,6 +92,8 @@ extension HomeScreenFactory {
             router: router,
             transferIndicatorToolbarFactory: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
                 ? .indicator {
+                    let tracker = DIContainer.tracker
+                    tracker.trackAnalyticsEvent(with: TransfersToolbarWidgetPressedEvent())
                     router.route(to: .transfers)
                 }
                 : .hidden,

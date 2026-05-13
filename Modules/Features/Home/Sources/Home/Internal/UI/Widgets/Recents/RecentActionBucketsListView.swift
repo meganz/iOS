@@ -85,7 +85,7 @@ struct RecentActionBucketsListView: View {
         }
         .miniPlayerAware()
         .task {
-            await viewModel.loadRecentActionBuckets()
+            await viewModel.onLoad()
             await viewModel.observeRecentBucketUpdates()
         }
     }

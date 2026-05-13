@@ -48,7 +48,8 @@ let package = Package(
                 "Favourites",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 .product(name: "SearchMock", package: "Search"),
-                .product(name: "MEGAUIComponent", package: "MEGAUIComponent")
+                .product(name: "MEGAUIComponent", package: "MEGAUIComponent"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ]
         )
     ]

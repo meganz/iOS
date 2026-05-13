@@ -1,4 +1,3 @@
-import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -36,18 +35,33 @@ final class HomeViewModel: ObservableObject {
         self.isSearching = homeDeepLink.homeSearch
         self.tracker = tracker
         isNetworkConnected = networkMonitoringUseCase.isConnected()
-        
-        homeDeepLink
-            .$homeSearch
-            .dropFirst()
-            .assign(to: &$isSearching)
     }
 
+    func togglePresentSheet() {
+        tracker.trackAnalyticsEvent(with: HomeFabOptionsButtonPressedEvent())
+        presentsSheet.toggle()
+    }
 
-    func onTask() async {
+    func trackHomeScreenAppear() {
         tracker.trackAnalyticsEvent(with: HomeScreenEvent())
+    }
+
+    func monitorNetworkConnection() async {
         for await connected in networkMonitoringUseCase.connectionSequence {
             isNetworkConnected = connected
+        }
+    }
+
+    func observeDeepLinkSearch() async {
+        for await homeSearch in homeDeepLink.$homeSearch.values.dropFirst() {
+            isSearching = homeSearch
+        }
+    }
+
+    func monitorSearchBarPressed() async {
+        for await isSearching in $isSearching.values.dropFirst() {
+            guard isSearching else { continue }
+            tracker.trackAnalyticsEvent(with: HomeSearchBarPressedEvent())
         }
     }
 }

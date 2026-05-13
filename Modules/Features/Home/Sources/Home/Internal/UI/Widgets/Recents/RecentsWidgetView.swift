@@ -192,44 +192,6 @@ struct RecentsWidgetView: View {
     }
 }
 
-private struct EmptyRecentsContentView: View {
-    let uploadAction: @MainActor () -> Void
-
-    var body: some View {
-        HStack(spacing: TokenSpacing._4) {
-            VStack(alignment: .leading, spacing: TokenSpacing._1) {
-                Text(Strings.Localizable.Recents.EmptyState.Empty.message)
-                    .font(.footnote)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                uploadButton
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, TokenSpacing._3)
-
-            MEGAAssets.Image.recentsClock
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-        }
-        .padding(.horizontal, TokenSpacing._5)
-    }
-
-    private var uploadButton: some View {
-        Button {
-            uploadAction()
-        } label: {
-            Text(Strings.Localizable.upload)
-                .font(.callout)
-                .fontWeight(.semibold)
-                .underline()
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                .frame(height: 32, alignment: .center)
-        }
-    }
-}
-
 private struct HiddenRecentsContentView: View {
     let showActivityAction: @MainActor () -> Void
 

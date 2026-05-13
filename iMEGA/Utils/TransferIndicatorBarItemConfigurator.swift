@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
@@ -6,11 +7,14 @@ import UIKit
 
 @objc @MainActor
 final class TransferIndicatorBarItemConfigurator: NSObject {
+
     static var toolbarFactory: TransferIndicatorToolbarFactory {
         DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
             ? .indicator(action: presentTransfers)
             : .hidden
     }
+
+    static var tracker: some AnalyticsTracking = DIContainer.tracker
 
     @objc static func injectIfNeeded(into viewController: UIViewController) {
         toolbarFactory.injectIfNeeded(into: viewController)
@@ -26,6 +30,7 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
     /// Presents the transfers screen modally. Also used by SwiftUI screens
     /// that add the indicator to their own toolbar.
     @objc static func presentTransfers() {
+        tracker.trackAnalyticsEvent(with: TransfersToolbarWidgetPressedEvent())
         let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
 
         guard transferWidgetVC.presentingViewController == nil,

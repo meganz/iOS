@@ -29,11 +29,16 @@ struct RecentWidgetBucketListView: View {
     private let dependency: Dependency
     private let sections: [RecentActionBucketSection]
     private let recentActionBucketSectionMapper = RecentActionBucketSectionMapper()
+    private let viewModel: RecentWidgetBucketListViewModel
     
     @EnvironmentObject var navigator: HomeNavigation
     
-    init(dependency: Dependency) {
+    init(
+        dependency: Dependency,
+        viewModel: RecentWidgetBucketListViewModel = RecentWidgetBucketListViewModel()
+    ) {
         self.dependency = dependency
+        self.viewModel = viewModel
         self.sections = recentActionBucketSectionMapper.map(
             bucketGroups: dependency.bucketGroups
         )
@@ -84,6 +89,7 @@ struct RecentWidgetBucketListView: View {
     
     private var viewAllBucketsButton: some View {
         Button {
+            viewModel.trackViewAllTapped()
             navigator.append(Route.viewAllBuckets)
         } label: {
             Text(Strings.Localizable.Home.Recent.Widget.viewAll)

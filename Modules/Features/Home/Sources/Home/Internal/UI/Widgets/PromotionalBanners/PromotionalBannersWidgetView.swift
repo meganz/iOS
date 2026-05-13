@@ -31,10 +31,13 @@ struct PromotionalBannersWidgetView: View {
                         viewModel: bannerViewModel,
                         actionHandler: {
                             guard let url = bannerViewModel.input.link else { return }
+                            viewModel.trackBannerTapped(url: url)
                             urlSelectionHandler(url)
                         }, closeHandler: {
                             Task {
                                 await viewModel.closeBanner(bannerIdentifier: bannerViewModel.input.id)
+                                guard let url = bannerViewModel.input.link else { return }
+                                viewModel.trackBannerClosed(url: url)
                             }
                         }
                     )

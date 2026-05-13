@@ -66,7 +66,9 @@ public struct HomeView: View {
         .tint(TokenColors.Icon.primary.swiftUI)
         .environmentObject(navigator)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
-        .task { await viewModel.onTask() }
+        .task { await viewModel.monitorNetworkConnection() }
+        .task { await viewModel.monitorSearchBarPressed() }
+        .task { await viewModel.observeDeepLinkSearch() }
         .onReceive(quickAccessRoutePublisher.compactMap { $0 }) {
             switch $0 {
             case .recents:
@@ -90,7 +92,7 @@ public struct HomeView: View {
                 viewModel.hidesFloatingActionsButton = $0
             }
             .floatingButton(isHidden: viewModel.hidesFloatingActionsButton) {
-                viewModel.presentsSheet.toggle()
+                viewModel.togglePresentSheet()
             }
             .sheet(isPresented: $viewModel.presentsSheet) {
                 HomeMenuActionsSheetView(
@@ -119,12 +121,14 @@ public struct HomeView: View {
                     } label: {
                         Image(uiImage: MEGAAssets.UIImage.search)
                     }
-
                 }
             }
             .miniPlayerAware()
             .navigationDestination(for: NavigationRoute.self) { route in
                 navigationDestinationBuilder(with: route)
+            }
+            .onAppear {
+                viewModel.trackHomeScreenAppear()
             }
     }
 

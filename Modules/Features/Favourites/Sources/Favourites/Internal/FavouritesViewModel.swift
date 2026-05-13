@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
@@ -13,13 +14,26 @@ package final class FavouritesViewModel: ObservableObject {
     package struct Dependency {
         let resultsProvider: any SearchResultsProviding
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let tracker: any AnalyticsTracking
+
+        init(
+            resultsProvider: some SearchResultsProviding,
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+        ) {
+            self.init(
+                resultsProvider: resultsProvider,
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                tracker: DIContainer.tracker)
+        }
 
         package init(
             resultsProvider: any SearchResultsProviding,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            tracker: some AnalyticsTracking
         ) {
             self.resultsProvider = resultsProvider
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+            self.tracker = tracker
         }
     }
 
@@ -115,6 +129,10 @@ package final class FavouritesViewModel: ObservableObject {
         listenToSearchUpdates()
         listenToSearchActiveChanges()
         listenToNodesActionChanges()
+    }
+
+    func onTask() {
+        dependency.tracker.trackAnalyticsEvent(with: FavouritesScreenEvent())
     }
 
     package func selectNode(handle: HandleEntity) {

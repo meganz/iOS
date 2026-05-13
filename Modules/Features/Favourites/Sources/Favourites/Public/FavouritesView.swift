@@ -131,6 +131,9 @@ public struct FavouritesView: View {
         }
         .miniPlayerAware()
         .environment(\.editMode, $viewModel.editMode)
+        .task {
+            viewModel.onTask()
+        }
         .onChange(of: viewModel.editMode) { editMode in
             tabBarHidden = editMode.isEditing
             miniPlayerVisibility.isHidden = editMode.isEditing

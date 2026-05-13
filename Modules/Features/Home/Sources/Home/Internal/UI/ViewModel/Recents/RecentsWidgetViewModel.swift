@@ -1,4 +1,6 @@
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -14,20 +16,23 @@ final class RecentsWidgetViewModel: ObservableObject {
 
     private let recentsActionsStatesUseCase: any RecentsActionsStatesUseCaseProtocol
     private let clearRecentActionHistoryUseCase: any ClearRecentActionHistoryUseCaseProtocol
-    
+    private let tracker: any AnalyticsTracking
+
     convenience init() {
         self.init(
             recentsActionsStatesUseCase: RecentsActionsStatesUseCase(),
             clearRecentActionHistoryUseCase: ClearRecentActionHistoryUseCase()
         )
     }
-    
+
     package init(
         recentsActionsStatesUseCase: some RecentsActionsStatesUseCaseProtocol,
-        clearRecentActionHistoryUseCase: some ClearRecentActionHistoryUseCaseProtocol
+        clearRecentActionHistoryUseCase: some ClearRecentActionHistoryUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.recentsActionsStatesUseCase = recentsActionsStatesUseCase
         self.clearRecentActionHistoryUseCase = clearRecentActionHistoryUseCase
+        self.tracker = tracker
     }
 
     func onTask() async {
@@ -37,6 +42,7 @@ final class RecentsWidgetViewModel: ObservableObject {
 
     func didTapShowActivityButton() async {
         showRecentsPreference = true
+        tracker.trackAnalyticsEvent(with: ShowRecentActivityMenuItemEvent())
         await refreshState()
     }
 
@@ -47,10 +53,12 @@ final class RecentsWidgetViewModel: ObservableObject {
 
     func hideRecentActivity() async {
         showRecentsPreference = false
+        tracker.trackAnalyticsEvent(with: HideRecentActivityMenuItemEvent())
         await refreshState()
     }
     
     func clearRecentActivity() async -> String? {
+        tracker.trackAnalyticsEvent(with: ClearRecentActivityMenuItemEvent())
         do {
             try await clearRecentActionHistoryUseCase.clearRecentActionHistory()
             await refreshState()

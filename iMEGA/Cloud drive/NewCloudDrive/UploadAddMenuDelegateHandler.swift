@@ -32,6 +32,7 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
                 await nodeInsertionRouter.choosePhotoVideo(for: node)
             }
         case .capture:
+            trackCaptureEvent()
             nodeInsertionRouter.capturePhotoVideo(for: node)
         case .importFrom:
             trackImportFromFilesEvent()
@@ -49,6 +50,10 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
         }
 
         trackOpenAddMenuEvent()
+    }
+
+    private func trackCaptureEvent() {
+        tracker.trackAnalyticsEvent(with: CloudDriveCaptureMenuToolbarEvent())
     }
 
     private func trackChooseFromPhotosEvent() {

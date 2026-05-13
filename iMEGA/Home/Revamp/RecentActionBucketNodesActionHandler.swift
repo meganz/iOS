@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -6,18 +7,22 @@ struct RecentActionBucketNodesActionHandler: NodesActionHandling {
     private let nodeRouter: any NodeRouting
     private let nodesActionHandler: NodeActionsDelegateHandler
     private let nodeRepository: any NodeRepositoryProtocol
+    private let tracker: any AnalyticsTracking
     
     init(
         nodeRouter: some NodeRouting,
         nodesActionHandler: NodeActionsDelegateHandler,
-        nodeRepository: some NodeRepositoryProtocol = NodeRepository.newRepo
+        nodeRepository: some NodeRepositoryProtocol = NodeRepository.newRepo,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.nodeRouter = nodeRouter
         self.nodesActionHandler = nodesActionHandler
         self.nodeRepository = nodeRepository
+        self.tracker = tracker
     }
     
     func handle(action: MEGAAppPresentation.NodeAction) {
+        tracker.trackAnalyticsEvent(with: RecentsChildNodeMoreButtonPressedEvent())
         nodeRouter.didTapMoreAction(on: action.handle, button: action.sender, displayMode: .recents, isFromSharedItem: false)
     }
     

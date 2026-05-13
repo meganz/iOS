@@ -1,5 +1,7 @@
 @preconcurrency import Combine
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -26,6 +28,7 @@ final class RecentActionBucketsListViewModel: ObservableObject {
     private let clearRecentActionHistoryUseCase: any ClearRecentActionHistoryUseCaseProtocol
     private let recentActionBucketSectionMapper = RecentActionBucketSectionMapper()
     private let recentActionBucketsListUpdatesUseCase: any RecentActionBucketsListUpdatesUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     init(
         recentActionBucketsListUseCase: some RecentActionBucketsListUseCaseProtocol = RecentActionBucketsListUseCase(),
@@ -38,24 +41,18 @@ final class RecentActionBucketsListViewModel: ObservableObject {
                 requestStatesRepository: RequestStatesRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
             )
-        )
+        ),
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.recentActionBucketsListUseCase = recentActionBucketsListUseCase
         self.clearRecentActionHistoryUseCase = clearRecentActionHistoryUseCase
         self.recentActionBucketsListUpdatesUseCase = recentActionBucketsListUpdatesUseCase
+        self.tracker = tracker
     }
-    
-    func loadRecentActionBuckets() async {
-        do throws(RecentActionBucketsListErrorEntity) {
-            let bucketGroups = try await recentActionBucketsListUseCase.recentActionsBuckets()
-            viewState = .results(recentActionBucketSectionMapper.map(bucketGroups: bucketGroups))
-        } catch {
-            switch error {
-            case .cancellation:
-                // to be confirmed.
-                viewState = .results([])
-            }
-        }
+
+    func onLoad() async {
+        tracker.trackAnalyticsEvent(with: RecentsScreenEvent())
+        await loadRecentActionBuckets()
     }
 
     func observeRecentBucketUpdates() async {
@@ -67,6 +64,7 @@ final class RecentActionBucketsListViewModel: ObservableObject {
     func hideRecentActivity() {
         showRecentActivityEnabled = false
         recentActivityHiddenSnackBarMessage = Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message
+        tracker.trackAnalyticsEvent(with: HideRecentActivityMenuItemEvent())
     }
     
     func confirmClearRecentActivity() {
@@ -74,9 +72,23 @@ final class RecentActionBucketsListViewModel: ObservableObject {
     }
     
     func clearRecentActivity() async {
+        tracker.trackAnalyticsEvent(with: ClearRecentActivityMenuItemEvent())
         do {
             try await clearRecentActionHistoryUseCase.clearRecentActionHistory()
             recentActivityClearedSnackBarMessage = Strings.Localizable.Home.Recent.ClearRecentActivity.Snackbar.message
         } catch {}
+    }
+
+    private func loadRecentActionBuckets() async {
+        do throws(RecentActionBucketsListErrorEntity) {
+            let bucketGroups = try await recentActionBucketsListUseCase.recentActionsBuckets()
+            viewState = .results(recentActionBucketSectionMapper.map(bucketGroups: bucketGroups))
+        } catch {
+            switch error {
+            case .cancellation:
+                // to be confirmed.
+                viewState = .results([])
+            }
+        }
     }
 }
