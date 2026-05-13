@@ -61,6 +61,17 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var dragSelectionMode: DragSelectionMode?
     private var initialSelectionHandles: Set<HandleEntity> = []
 
+    private var autoScrollDisplayLink: CADisplayLink?
+    private var autoScrollVelocity: CGFloat = 0
+
+    // Top zone is 80pt because the pinned global zoom header (44pt) overlaps the upper part,
+    // leaving ~36pt of effective cell-area trigger. Bottom has no equivalent overlay and instead
+    // sits above an empty inset region (contentInset.bottom + toolbar safeArea), so a narrower
+    // 40pt zone keeps the perceived trigger comparable to the top.
+    private static let autoScrollTopEdgeZone: CGFloat = 80
+    private static let autoScrollBottomEdgeZone: CGFloat = 40
+    private static let autoScrollMaxVelocity: CGFloat = 1200 // pt/s, frame-rate independent
+
     private enum DragSelectionMode {
         case select
         case deselect
@@ -299,6 +310,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             }
             
         case .changed:
+            updateAutoScrollIfNeeded(at: location)
             guard let indexPath = collectionView?.indexPathForItem(at: location) else {
                 break
             }
@@ -308,6 +320,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             }
             
         case .ended, .cancelled, .failed:
+            stopAutoScroll()
             dragInitialIndexPath = nil
             dragLastIndexPath = nil
             dragSelectionMode = nil
@@ -353,6 +366,107 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         case .deselect:
             viewModel.libraryViewModel.selection.deselectPhoto(photo)
         }
+    }
+
+    private func updateAutoScrollIfNeeded(at location: CGPoint) {
+        guard let collectionView else {
+            stopAutoScroll()
+            return
+        }
+
+        let insets = collectionView.adjustedContentInset
+        let visibleTop = collectionView.bounds.minY + insets.top
+        let visibleBottom = collectionView.bounds.maxY - insets.bottom
+        let topZone = Self.autoScrollTopEdgeZone
+        let bottomZone = Self.autoScrollBottomEdgeZone
+        let maxVelocity = Self.autoScrollMaxVelocity
+
+        let velocity: CGFloat
+        if location.y < visibleTop + topZone {
+            let distance = max(0, min(topZone, visibleTop + topZone - location.y))
+            let ratio = distance / topZone
+            velocity = -pow(ratio, 2) * maxVelocity
+        } else if location.y > visibleBottom - bottomZone {
+            let distance = max(0, min(bottomZone, location.y - (visibleBottom - bottomZone)))
+            let ratio = distance / bottomZone
+            velocity = pow(ratio, 2) * maxVelocity
+        } else {
+            velocity = 0
+        }
+
+        if velocity == 0 {
+            stopAutoScroll()
+        } else {
+            autoScrollVelocity = velocity
+            startAutoScrollIfNeeded()
+        }
+    }
+
+    private func startAutoScrollIfNeeded() {
+        guard autoScrollDisplayLink == nil else { return }
+        let proxy = DisplayLinkProxy(self)
+        let link = CADisplayLink(target: proxy, selector: #selector(DisplayLinkProxy.tick(_:)))
+        link.add(to: .main, forMode: .common)
+        autoScrollDisplayLink = link
+    }
+
+    func stopAutoScroll() {
+        autoScrollDisplayLink?.invalidate()
+        autoScrollDisplayLink = nil
+        autoScrollVelocity = 0
+    }
+
+    fileprivate func autoScrollTick(_ link: CADisplayLink) {
+        guard let collectionView,
+              let gesture = dragSelectionPanGesture,
+              autoScrollVelocity != 0 else {
+            stopAutoScroll()
+            return
+        }
+
+        let frameDuration = CGFloat(max(0, link.targetTimestamp - link.timestamp))
+        let delta = autoScrollVelocity * frameDuration
+        guard delta != 0 else { return }
+
+        let insets = collectionView.adjustedContentInset
+        let minOffsetY = -insets.top
+        let maxOffsetY = max(
+            minOffsetY,
+            collectionView.contentSize.height - collectionView.bounds.height + insets.bottom
+        )
+
+        var offset = collectionView.contentOffset
+        let newY = min(max(offset.y + delta, minOffsetY), maxOffsetY)
+        guard newY != offset.y else {
+            stopAutoScroll()
+            return
+        }
+        offset.y = newY
+        collectionView.setContentOffset(offset, animated: false)
+
+        let location = gesture.location(in: collectionView)
+        if let indexPath = collectionView.indexPathForItem(at: location),
+           indexPath != dragLastIndexPath {
+            updateSelection(at: indexPath)
+            dragLastIndexPath = indexPath
+        }
+    }
+}
+
+@MainActor
+private final class DisplayLinkProxy: NSObject {
+    weak var target: PhotoLibraryCollectionViewCoordinator?
+
+    init(_ target: PhotoLibraryCollectionViewCoordinator) {
+        self.target = target
+    }
+
+    @objc func tick(_ link: CADisplayLink) {
+        guard let target else {
+            link.invalidate()
+            return
+        }
+        target.autoScrollTick(link)
     }
 }
 

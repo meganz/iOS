@@ -24,6 +24,10 @@ struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
         // For example, we do not need to reload data when zoom level changes.
         // So, we manage view updates and collection view reload in our coordinator.
     }
+
+    static func dismantleUIView(_ uiView: UICollectionView, coordinator: PhotoLibraryCollectionViewCoordinator) {
+        coordinator.stopAutoScroll()
+    }
 }
 
 extension PhotoLibraryCollectionViewRepresenter {
