@@ -4941,4 +4941,22 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="バッテリーとデータ使用量が多め";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@：%2$@OFF";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="転送には注意が必要です";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@追加ストレージ、%2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@のボーナスストレージが適用されました（無期限で有効）";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="MEGAデスクトップアプリをインストールすると、%1$@の無料ボーナスストレージを獲得できます（%2$@）。\nデスクトップアプリはWindows、macOS、Linuxでご利用いただけます。";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="MEGAモバイルアプリのいずれかをインストールすると、%1$@の無料追加ストレージスペース、%2$@が手に入ります。\nモバイルアプリはiOSとAndroidでご利用可能です。";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="MEGA VPNアプリのいずれかをインストールして無料トライアルを開始すると、%1$@の無料追加ストレージスペース（%2$@）が手に入ります。";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="MEGA Passアプリのいずれかをインストールして無料トライアルを開始すると、%1$@の無料追加ストレージスペース（%2$@）が手に入ります。";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="ポッドキャストモード";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="音楽モード";

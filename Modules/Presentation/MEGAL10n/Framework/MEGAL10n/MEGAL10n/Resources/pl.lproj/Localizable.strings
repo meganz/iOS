@@ -4931,7 +4931,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Połączenia transferowe";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="Ustawia maksymalną liczbę jednoczesnych połączeń używanych do aktywnych transferów. Wyższe wartości mogą przyspieszyć transfer dużych plików, ale zwiększają zużycie baterii i pamięci. Małe pliki nie są dotknięte tym ustawieniem.";
+"settings.transfers.connections.description"="Ustawia maksymalną liczbę połączeń równoległych używanych do aktywnych transferów. Wyższe wartości mogą przyspieszyć transfer dużych plików, ale mogą zwiększyć zużycie baterii i pamięci.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="Pobieranie połączeń";
 /* Title for the upload connections row in transfers settings */
@@ -4941,4 +4941,18 @@
 /* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
 "settings.transfers.connections.option.bestForSlowNetworks"="Najlepsze dla sieci o niskiej przepustowości";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ zniżki";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Transfer wymaga uwagi";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ dodatkowa przestrzeń dyskowa, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ bonus przechowywania został zastosowany, ważny na zawsze";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Zainstaluj aplikację MEGA Desktop i zyskaj %1$@ darmowego dodatkowego miejsca na przechowywanie, %2$@.\nAplikacja desktopowa jest dostępna dla Windows, macOS i Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Zainstaluj jedną z aplikacji mobilnych MEGA i zdobądź %1$@ darmowej dodatkowej przestrzeni dyskowej, %2$@.\nAplikacje mobilne są dostępne na iOS i Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Zainstaluj jedną z aplikacji MEGA VPN i rozpocznij darmowy okres próbny, a otrzymasz %1$@ darmowego dodatkowego miejsca na przechowywanie, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Zainstaluj jedną z aplikacji MEGA Pass i skorzystaj z darmowego okresu próbnego, a otrzymasz %1$@ darmową dodatkową przestrzeń dyskową, %2$@";

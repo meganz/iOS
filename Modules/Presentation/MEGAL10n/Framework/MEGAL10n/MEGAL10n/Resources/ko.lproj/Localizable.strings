@@ -4923,4 +4923,22 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="열려는 MEGA 링크를 붙여넣으세요";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ 할인";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="파일 다운로드 중";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="파일 업로드 중";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="전송 연결수";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="활성 전송에 이용될 최대 병렬 연결 수를 설정합니다. 높은 값은 속도를 향상시키지만 배터리와 메모리 이용량을 늘립니다. 작은 파일은 영향을 받지 않습니다.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="다운로드 연결수";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="업로드 연결수";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="기본값";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="느린 네트워크에 최적";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="더 높은 배터리와 데이터 이용량";

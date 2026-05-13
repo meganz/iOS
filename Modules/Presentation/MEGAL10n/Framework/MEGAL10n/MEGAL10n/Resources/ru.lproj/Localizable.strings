@@ -4917,10 +4917,30 @@
 /* The title of Open Link action */
 "openLink.title"="Открыть ссылку";
 /* The message to show when user tries to open an invalid link */
-"openLink.invalidLinkMessage"="Это невалидная ссылка MEGA";
+"openLink.invalidLinkMessage"="Это не действительная ссылка MEGA";
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Вставьте любую ссылку MEGA, чтобы открыть её";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Показать недавнюю активность";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1: скидка %2";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Скачивание файлов";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Загрузка файлов";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Соединения передачи";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Устанавливает максимальное число параллельных соединений, используемых для активных передач. Более высокие значения могут ускорить передачу больших файлов, но увеличивают расход батареи и потребление памяти.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Соединения для скачивания";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Соединения для загрузки";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="По умолчанию";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Лучшее для медленных сетей";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Повышенный расход батареи и данных";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Передача требует внимания";

@@ -475,7 +475,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -755,7 +755,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>giờ</string>
+        <string>tiếng</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -937,7 +937,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Loại bỏ đường liên kết</string>
+        <string>Loại bỏ đường liên kết</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
@@ -1539,7 +1539,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thứ Năm lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
+        <string>Thứ Năm của tuần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -2729,7 +2729,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đã thêm %d tệp tin</string>
+        <string>Đã thêm %d tệp</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>

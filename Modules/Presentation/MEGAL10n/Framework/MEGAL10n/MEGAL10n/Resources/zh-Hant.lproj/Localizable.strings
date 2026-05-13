@@ -4923,4 +4923,40 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="顯示近期活動";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@：現省%2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Podcast模式";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="音樂模式";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="正在下載檔案";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="正在上傳檔案";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="傳輸連線數";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="設定進行中傳輸的最大平行連線數。調高數值可能會加快大檔案的傳輸速度，但會增加耗電量與記憶體使用量。";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="下載連線數";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="上傳連線數";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="預設";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="最適合低速網路";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="會增加耗電量與數據使用量";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="請檢查傳輸狀態";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="額外%1$@儲存空間，有效期%2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="成功領取%@儲存空間，永久有效";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="安裝MEGA桌面應用程式即可獲得額外%1$@的免費儲存空間，有效期為%2$@。\n桌面應用程式支援Windows、macOS及Linux。";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="安裝MEGA行動應用程式，即可獲得額外%1$@的免費儲存空間，有效期為%2$@。\n行動應用程式支援iOS與Android。";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="安裝MEGA VPN應用程式並開始免費試用，即可獲得額外%1$@的免費儲存空間，有效期為%2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="安裝MEGA Pass應用程式並開始免費試用，即可獲得額外%1$@的免費儲存空間，有效期為%2$@";

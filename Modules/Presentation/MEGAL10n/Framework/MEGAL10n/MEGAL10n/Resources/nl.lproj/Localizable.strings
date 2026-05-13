@@ -4929,7 +4929,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Overdrachtsverbindingen";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="Hiermee wordt het maximale aantal parallelle verbindingen ingesteld dat wordt gebruikt voor actieve overdrachten. Hogere waarden kunnen de overdracht van grote bestanden versnellen, maar verhogen het batterij- en geheugenverbruik. Kleine bestanden worden hierdoor niet beïnvloed.";
+"settings.transfers.connections.description"="Hiermee wordt het maximale aantal parallelle verbindingen ingesteld dat wordt gebruikt voor actieve overdrachten. Hogere waarden kunnen de overdracht van grote bestanden versnellen, maar verhogen het batterij- en geheugenverbruik.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="Download verbindingen";
 /* Title for the upload connections row in transfers settings */
@@ -4941,4 +4941,6 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="Hoger batterij- en dataverbruik";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ korting";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Overdracht vereist aandacht";

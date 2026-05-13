@@ -4923,4 +4923,24 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Afișează activitatea recentă";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ oprit";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Descărcarea fișierelor";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Încărcarea fișierelor";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Conexiuni de transfer";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Setează numărul maxim de conexiuni paralele utilizate pentru transferuri active. Valorile mai mari pot accelera transferurile de fișiere mari, dar cresc consumul de baterie și memoria.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Conexiuni de descărcare";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Conexiuni de încărcare";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Implicit";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Cel mai bun pentru rețele lente";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Consum mai mare de baterie și trafic de date";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Transferul necesită atenție";

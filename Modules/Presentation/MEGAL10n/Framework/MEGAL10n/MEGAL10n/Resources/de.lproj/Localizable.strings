@@ -4923,4 +4923,24 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Fügen Sie einen MEGA-Link ein, um ihn zu öffnen";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ gespart";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Dateien werden heruntergeladen";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Dateien werden hochgeladen";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Transferverbindungen";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Legt die maximale Anzahl der Verbindungen fest, die für aktive Transfers parallel verwendet werden. Höhere Werte können Dateiübertragungen beschleunigen, erhöhen jedoch auch den Akku- und Speicherverbrauch.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Downloadverbindungen";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Uploadverbindungen";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Standard";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Optimal für langsame Netzwerke";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Höherer Akku- und Datenverbrauch";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Transfers benötigen Ihre Aufmerksamkeit";

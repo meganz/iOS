@@ -4821,7 +4821,7 @@
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Solo tú puedes revelar los archivos ocultos, ya sea de forma individual o mostrando temporalmente los elementos ocultos de [A]Ajustes[/A].";
 /* The title displayed in the empty view when Cloud Drive root is empty */
-"cloudDrive.emptyStateTitle.root"="Aún no hay nada en tu espacio privado";
+"cloudDrive.emptyStateTitle.root"="Aún no hay nada en tu bóveda privada";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
 "cloudDrive.emptyStateTitle.nonRoot"="Esta carpeta está vacía";
 /* The subtitle title displayed in the empty view in Cloud Drive */

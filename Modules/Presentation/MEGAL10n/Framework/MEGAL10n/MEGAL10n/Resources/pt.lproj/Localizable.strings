@@ -779,7 +779,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA - versão do SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGA chat - versão do SDK";
+"megachatSdkVersion"="MEGA Chat - versão do SDK";
 /* Link to the public code of the app */
 "View Source Code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
@@ -2699,7 +2699,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Você é o novo anfitrião";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="Estamos atualizando o MEGA chat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem os seus aplicativos do MEGA à versão mais recente.";
+"meetings.incompatibility.warningMessage"="Estamos atualizando o MEGA Chat. As suas chamadas podem não ser estabelecidas devido a uma incompatibilidade com a versão do aplicativo, a menos que todos os participantes atualizem para a versão mais recente do aplicativo do MEGA.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Viva-voz";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -4929,7 +4929,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Conexões de transferência";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="Define o número máximo de conexões paralelas usadas para transferências ativas. Valores maiores podem acelerar as transferências de arquivos grandes, mas aumentam o consumo de bateria e de memória. Arquivos pequenos não serão afetados.";
+"settings.transfers.connections.description"="Define o número máximo de conexões paralelas usadas para transferências ativas. Valores maiores podem acelerar as transferências de arquivos grandes, mas aumentam o consumo de bateria e de memória.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="Conexões de download";
 /* Title for the upload connections row in transfers settings */
@@ -4941,4 +4941,6 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="maior consumo de bateria e de dados";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ de desconto";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="A transferência requer atenção";

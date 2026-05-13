@@ -4929,7 +4929,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Aktarım bağlantıları";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="Etkin aktarımlar için kullanılan maksimum paralel bağlantı sayısını ayarlar. Daha yüksek değerler büyük dosya aktarımlarını hızlandırabilir ancak şarj ve bellek kullanımını artırır. Küçük dosyalar bundan etkilenmez.";
+"settings.transfers.connections.description"="Etkin aktarımlar için kullanılan maksimum paralel bağlantı sayısını ayarlar. Daha yüksek değerler büyük dosya aktarımlarını hızlandırabilir ancak şarj ve bellek kullanımını artırır.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="İndirme bağlantıları";
 /* Title for the upload connections row in transfers settings */
@@ -4941,4 +4941,6 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="Daha yüksek şarj ve veri kullanımı";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ indirim";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Aktarım müdahale gerektiriyor";
