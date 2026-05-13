@@ -4923,7 +4923,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Transfer connections";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="Sets the maximum number of parallel connections used for active transfers. Higher values may speed up large file transfers but increase battery and memory usage. Small files are not affected.";
+"settings.transfers.connections.description"="Sets the maximum number of parallel connections used for active transfers. Higher values may speed up large file transfers but increase battery and memory usage.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="Download connections";
 /* Title for the upload connections row in transfers settings */
@@ -4938,3 +4938,15 @@
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Transfer requires attention";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ extra storage, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ storage bonus applied, valid permanently";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Install the MEGA desktop app and get %1$@ of free additional storage space, %2$@.\nThe desktop app is available for Windows, macOS and Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Install one of the MEGA mobile apps and get %1$@ of free additional storage space, %2$@.\nThe mobile apps are available for iOS and Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Install one of the MEGA VPN apps and start a free trial, and get %1$@ of free additional storage space, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Install one of the MEGA Pass apps and start a free trial, and get %1$@ of free additional storage space, %2$@";

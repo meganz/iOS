@@ -1541,6 +1541,47 @@ public enum Strings {
         }
       }
     }
+    public enum AchievementDetails {
+      public enum BonusExpiration {
+        public static func days(_ p1: Swift.Int) -> Swift.String
+      }
+      public enum Complete {
+        public static func permanent(_ p1: Any) -> Swift.String
+      }
+      public enum DesktopApp {
+        public enum Incomplete {
+          public enum Explanation {
+            public static func label(_ p1: Any, _ p2: Any) -> Swift.String
+          }
+        }
+      }
+      public enum MobileApp {
+        public enum Incomplete {
+          public enum Explanation {
+            public static func label(_ p1: Any, _ p2: Any) -> Swift.String
+          }
+        }
+      }
+      public enum PassFreeTrial {
+        public enum Incomplete {
+          public enum Explanation {
+            public static func label(_ p1: Any, _ p2: Any) -> Swift.String
+          }
+        }
+      }
+      public enum VpnFreeTrial {
+        public enum Incomplete {
+          public enum Explanation {
+            public static func label(_ p1: Any, _ p2: Any) -> Swift.String
+          }
+        }
+      }
+    }
+    public enum Achievements {
+      public enum Incomplete {
+        public static func subtitle(_ p1: Any, _ p2: Any) -> Swift.String
+      }
+    }
     public enum Ads {
       public enum AdFree {
         public enum Button {

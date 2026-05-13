@@ -2729,6 +2729,7 @@
 		C4E0B1712DC087A800B45998 /* PermissionOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */; };
 		C4E1F0E22EE0282F0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E1F0E12EE0282D0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift */; };
 		C4E2A83C2E0104C600893A1A /* Tab+ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */; };
+		C4E5F8F32F2730D80051FA8A /* MEGAAchievementsDetails+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E5F8F22F2730CE0051FA8A /* MEGAAchievementsDetails+Additions.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
@@ -5618,6 +5619,7 @@
 		C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingRouter.swift; sourceTree = "<group>"; };
 		C4E1F0E12EE0282D0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContentUnavailableViewModelProviderTests.swift; sourceTree = "<group>"; };
 		C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewControllers.swift"; sourceTree = "<group>"; };
+		C4E5F8F22F2730CE0051FA8A /* MEGAAchievementsDetails+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAchievementsDetails+Additions.swift"; sourceTree = "<group>"; };
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
@@ -8053,6 +8055,7 @@
 				5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */,
 				5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */,
 				947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */,
+				C4E5F8F22F2730CE0051FA8A /* MEGAAchievementsDetails+Additions.swift */,
 				B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */,
 				5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */,
 				5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */,
@@ -15588,6 +15591,7 @@
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
+				C4E5F8F32F2730D80051FA8A /* MEGAAchievementsDetails+Additions.swift in Sources */,
 				A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,

@@ -75,6 +75,7 @@ extension AchievementsDetailsViewController {
         scrollView.backgroundColor = TokenColors.Background.surface1
         view.backgroundColor = defaultBackgroundColor
         subtitleLabel?.textColor = TokenColors.Text.primary
+        subtitleView?.layer.cornerRadius = TokenRadius.small
         howItWorksTopSeparatorView.backgroundColor = TokenColors.Border.strong
         howItWorksView.backgroundColor = TokenColors.Background.surface1
         howItWorksLabel?.textColor = TokenColors.Text.primary
@@ -121,26 +122,26 @@ extension AchievementsDetailsViewController {
         let validityString = validityString(achievementsDetails: achievementsDetails)
         let validitySubstring = validitySubstring(achievementsDetails: achievementsDetails)
 
-        self.subtitleLabel?.text = Strings.Localizable.Account.Achievement.Incomplete.subtitle(storageString, validityString)
+        self.subtitleLabel?.text = Strings.Localizable.Achievements.Incomplete.subtitle(storageString, validitySubstring)
         self.howItWorksLabel?.text = Strings.Localizable.howItWorks
 
         var howItWorksExplanation = ""
 
         switch achievementClass {
         case .desktopInstall:
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.DesktopApp.Incomplete.Explaination.label(storageString, validitySubstring)
+            howItWorksExplanation = Strings.Localizable.AchievementDetails.DesktopApp.Incomplete.Explanation.label(storageString, validitySubstring)
         case .mobileInstall:
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.MobileApp.Incomplete.Explaination.label(storageString, validitySubstring)
+            howItWorksExplanation = Strings.Localizable.AchievementDetails.MobileApp.Incomplete.Explanation.label(storageString, validitySubstring)
         case .addPhone:
             updateAddPhoneNumberStatus(isHidden: false)
             howItWorksExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Incomplete.Explaination.label(storageString, validitySubstring)
         case .vpnFreeTrial:
             subtitleLabel?.text = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Incomplete.label(storageString, validityString)
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.VpnFreeTrial.Incomplete.Explanation.label
+            howItWorksExplanation = Strings.Localizable.AchievementDetails.VpnFreeTrial.Incomplete.Explanation.label(storageString, validitySubstring)
             addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, action: MEGALinkManager.openVPNApp)
         case .passFreeTrial:
             subtitleLabel?.text = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Incomplete.label(storageString, validityString)
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.PassFreeTrial.Incomplete.Explanation.label
+            howItWorksExplanation = Strings.Localizable.AchievementDetails.PassFreeTrial.Incomplete.Explanation.label(storageString, validitySubstring)
             addInstallButton(title: Strings.Localizable.Account.Achievement.PassFreeTrial.buttonText, action: MEGALinkManager.openPWMApp)
         default:
             break
@@ -148,31 +149,19 @@ extension AchievementsDetailsViewController {
 
         howItWorksExplanationLabel?.text = howItWorksExplanation
     }
-
-    @objc func setupBonusExpireInLabelTextSwift(completedAchievementIndex: UInt) {
+    private func setupBonusExpireInLabelTextSwift(completedAchievementIndex: UInt) {
         guard let achievementsDetails = achievementsDetails,
               let awardExpirationDate = achievementsDetails.awardExpiration(at: completedAchievementIndex)
         else { return }
 
         var bonusExpiresIn = ""
+        let isRewardPermanent = achievementsDetails.isAwardPermanentAt(index: completedAchievementIndex)
 
-        let storageString = storageString(achievementsDetails: achievementsDetails)
-        let validityString = validityString(achievementsDetails: achievementsDetails)
-
-        switch achievementClass {
-        case .vpnFreeTrial:
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.FreeTrial.Detail.Complete.label(storageString, validityString)
-            subtitleLabel?.textColor = TokenColors.Text.secondary
-            subtitleView?.backgroundColor = TokenColors.Background.surface1
-            subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
-            addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, state: .disabled)
-        case .passFreeTrial:
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.FreeTrial.Detail.Complete.label(storageString, validityString)
-            subtitleLabel?.textColor = TokenColors.Text.secondary
-            subtitleView?.backgroundColor = TokenColors.Background.surface1
-            subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
-            addInstallButton(title: Strings.Localizable.Account.Achievement.PassFreeTrial.buttonText, state: .disabled)
-        default:
+        if isRewardPermanent {
+            let storageString = storageString(achievementsDetails: achievementsDetails)
+            bonusExpiresIn = Strings.Localizable.AchievementDetails.Complete.permanent(storageString)
+            subtitleView?.layer.borderColor = TokenColors.Border.subtle.cgColor
+        } else {
             let daysUntilExpiration = Date().dayDistance(toFutureDate: awardExpirationDate, on: .autoupdatingCurrent) ?? 0
 
             if daysUntilExpiration == 0 {
@@ -180,11 +169,12 @@ extension AchievementsDetailsViewController {
                 subtitleLabel?.textColor = TokenColors.Text.warning
                 subtitleView?.layer.borderColor = TokenColors.Support.warning.cgColor
             } else {
-                bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
+                bonusExpiresIn = Strings.Localizable.AchievementDetails.BonusExpiration.days(daysUntilExpiration)
                 subtitleView?.layer.borderColor = TokenColors.Border.subtle.cgColor
             }
         }
-
+        subtitleView?.layer.borderWidth = 1
+        subtitleView?.backgroundColor = TokenColors.Background.surface1
         subtitleLabel?.text = bonusExpiresIn
     }
 
@@ -197,8 +187,8 @@ extension AchievementsDetailsViewController {
         let classId = Int(self.achievementClass.rawValue)
         let rewardDuration = achievementsDetails.classExpire(forClassId: classId)
         return rewardDuration > 0
-            ? Strings.Localizable.Account.Achievement.Validity.days(rewardDuration)
-            : Strings.Localizable.Account.Achievement.Validity.permanent
+        ? Strings.Localizable.Account.Achievement.Validity.days(rewardDuration)
+        : Strings.Localizable.Account.Achievement.Validity.permanent
     }
 
     private func validitySubstring(achievementsDetails: MEGAAchievementsDetails) -> String {

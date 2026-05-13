@@ -3346,5 +3346,21 @@
         <string>%d of [A] ready</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bonus expires in %d day.</string>
+        <key>other</key>
+        <string>Bonus expires in %d days.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

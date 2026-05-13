@@ -30,7 +30,7 @@
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
 
 /// Dictionary of all awarded achievements
-@property (nonatomic) NSMutableDictionary *achievementsIndexesMutableDictionary;
+@property (nonatomic) NSMutableDictionary *awardsIndexesMutableDictionary;
 
 // List of all achievements to display (either awarded or not-awarded)
 @property (nonatomic) NSMutableArray<NSNumber *> *displayOrderMutableArray;
@@ -154,7 +154,7 @@
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath achievementClass:(MEGAAchievement)achievementClass {
     AchievementsDetailsViewController *achievementsDetailsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsDetailsViewControllerID"];
     achievementsDetailsVC.achievementsDetails = self.achievementsDetails;
-    NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
+    NSNumber *index = [self.awardsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
     achievementsDetailsVC.completedAchievementIndex = index;
     achievementsDetailsVC.achievementClass = achievementClass;
     achievementsDetailsVC.onAchievementDetailsUpdated = ^(MEGAAchievementsDetails* achievementDetails){
@@ -181,7 +181,7 @@
     self.achievementsDetails = achievementDetails;
     bool hasReferralBonuses = NO;
     bool hasWelcomeBonuses = NO;
-    self.achievementsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
+    self.awardsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
     NSUInteger awardsCount = self.achievementsDetails.awardsCount;
     for (NSUInteger i = 0; i < awardsCount; i++) {
         MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:i];
@@ -192,7 +192,7 @@
                 hasWelcomeBonuses = YES;
             }
             if (achievementClass != MEGAAchievementAddPhone) {
-                [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
+                [self.awardsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
             }
         }
     }
@@ -221,7 +221,7 @@
     NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
     NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:MEGAAchievementInvite];
     NSString *validityString = rewardDuration > 0
-        ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.days", @""), rewardDuration]
+        ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.substring.days", @""), rewardDuration]
         : LocalizedString(@"account.achievement.validity.permanent", @"");
     self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString, validityString];
 
@@ -283,7 +283,8 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
         
-        NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
+        NSNumber *index = [self.awardsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
+
         if (index != nil) {
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
             [self configureAwardedAchievementSubtitleForCell:cell withIndex:index.unsignedIntegerValue forAchievementClass:achievementClass];
@@ -291,8 +292,8 @@
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:achievementClass];
             NSString *validityString = rewardDuration > 0
-                ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.days", @""), rewardDuration]
-                : LocalizedString(@"account.achievement.validity.permanent", @"");
+                ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.substring.days", @""), rewardDuration]
+                : LocalizedString(@"account.achievement.validity.substring.permanent", @"");
 
             cell.storageQuotaRewardLabel.text = storageString;
             
@@ -357,7 +358,7 @@
 
 - (NSString *)subtitleTextForIncompleteAchievementWithStorageString:(NSString *)storageString andValidityString:(NSString *)validityString forAchievementClass:(MEGAAchievement)achievementClass {
     NSString *key;
-    key = @"account.achievement.incomplete.subtitle";
+    key = @"achievements.incomplete.subtitle";
     return [NSString stringWithFormat:LocalizedString(key, @""), storageString, validityString];
 }
 
