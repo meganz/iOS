@@ -937,6 +937,9 @@ public struct MEGAImageBundle {
   public static var checkSmallRegularOutline: SwiftUICore.Image {
     get
   }
+  public static var slidersVertical: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2535,6 +2538,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var link02MediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var slidersVertical: UIKit.UIImage {
     get
   }
 }

@@ -795,5 +795,6 @@ extension MEGAAssets {
         public static var messageChatCircle: UIKit.UIImage { MEGAUIImageBundle.messageChatCircle }
         public static var transfersSettings: UIKit.UIImage { MEGAUIImageBundle.transfersSettings }
         public static var link02MediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.link02MediumThinOutline }
+        public static var slidersVertical: UIKit.UIImage { MEGAUIImageBundle.slidersVertical }
     }
 }
