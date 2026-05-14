@@ -44,6 +44,7 @@ public struct AccountMenuView: View {
                 logoutButton
             }
         }
+        .scrollIndicators(.hidden)
         .coordinateSpace(name: AccountMenuViewModel.Constants.coordinateSpaceName)
     }
 
