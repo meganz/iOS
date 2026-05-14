@@ -78,11 +78,12 @@ extension BrowserViewController {
     private
     func navigationBarTitleConfig() -> (copy: String, renderInTitleView: Bool) {
         if isParentBrowser {
-            if browserAction == .documentProvider {
+            switch browserAction {
+            case .documentProvider:
                 return (Strings.Localizable.cloudDrive, false)
-            } else if browserAction == .newHomeUpload {
+            case .newHomeUpload, .copy, .move, .import, .importFromFolderLink, .openIn, .saveToCloudDrive:
                 return (Strings.Localizable.selectDestination, false)
-            } else {
+            default:
                 // not sure what to do with this, it's not localized
                 return (Strings.localized("MEGA", comment: ""), false)
             }

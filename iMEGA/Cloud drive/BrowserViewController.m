@@ -338,7 +338,8 @@
         self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
     } else if (self.browserAction == BrowserActionSendFromCloudDrive) {
         self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
-    } else if (self.browserAction != BrowserActionDocumentProvider
+    } else if (!self.isParentBrowser
+               && self.browserAction != BrowserActionDocumentProvider
                && self.browserAction != BrowserActionShareExtension
                && self.browserAction != BrowserActionSelectFolder
                && self.browserAction != BrowserActionSelectVideo
