@@ -86,8 +86,10 @@ final class TransfersSettingsViewModel: ObservableObject {
 
     func subtitle(for type: ConnectionType) -> String {
         let value = value(for: type)
-        let defaultSuffix = Strings.Localizable.Settings.Transfers.Connections.Option.default
-        return value == type.defaultValue ? "\(value) (\(defaultSuffix))" : "\(value)"
+        if let suffix = optionSuffix(for: value, type: type) {
+            return "\(value) (\(suffix))"
+        }
+        return "\(value)"
     }
 
     func value(for type: ConnectionType) -> Int {
