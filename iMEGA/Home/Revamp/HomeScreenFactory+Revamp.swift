@@ -125,7 +125,8 @@ extension HomeScreenFactory {
             ),
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
-            tracker: DIContainer.tracker
+            tracker: DIContainer.tracker,
+            featureFlagProvider: DIContainer.featureFlagProvider
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)

@@ -1,5 +1,6 @@
 import Combine
 import Favourites
+import MEGAAppPresentation
 import MEGAAssets
 import MEGAConnectivity
 import MEGADesignToken
@@ -115,38 +116,49 @@ public struct HomeView: View {
             .navigationTitle(Strings.Localizable.home)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 2)
-                
-                if #available(iOS 26.0, *) {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            viewModel.isSearching = true
-                        } label: {
-                            Image(uiImage: MEGAAssets.UIImage.search)
+                if dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) {
+                    dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 2)
+
+                    if #available(iOS 26.0, *) {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                viewModel.isSearching = true
+                            } label: {
+                                Image(uiImage: MEGAAssets.UIImage.search)
+                            }
                         }
-                    }
-                    
-                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            navigator.append(NavigationRoute.widgetsCustomization)
-                        } label: {
-                            Image(uiImage: MEGAAssets.UIImage.slidersVertical)
+
+                        ToolbarSpacer(.fixed, placement: .topBarTrailing)
+
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                navigator.append(NavigationRoute.widgetsCustomization)
+                            } label: {
+                                Image(uiImage: MEGAAssets.UIImage.slidersVertical)
+                            }
+                        }
+                    } else {
+                        ToolbarItemGroup(placement: .topBarTrailing) {
+                            Button {
+                                viewModel.isSearching = true
+                            } label: {
+                                Image(uiImage: MEGAAssets.UIImage.search)
+                            }
+
+                            Button {
+                                navigator.append(NavigationRoute.widgetsCustomization)
+                            } label: {
+                                Image(uiImage: MEGAAssets.UIImage.slidersVertical)
+                            }
                         }
                     }
                 } else {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
+                    dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             viewModel.isSearching = true
                         } label: {
                             Image(uiImage: MEGAAssets.UIImage.search)
-                        }
-                        
-                        Button {
-                            navigator.append(NavigationRoute.widgetsCustomization)
-                        } label: {
-                            Image(uiImage: MEGAAssets.UIImage.slidersVertical)
                         }
                     }
                 }
@@ -244,11 +256,6 @@ public struct HomeView: View {
                 }
             }
         }
-    }
-
-    @ViewBuilder
-    private var topBarTrailingItems: some View {
-        
     }
     
     private var searchContent: some View {
