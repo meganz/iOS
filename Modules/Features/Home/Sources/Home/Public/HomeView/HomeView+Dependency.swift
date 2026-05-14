@@ -49,6 +49,7 @@ extension HomeView {
         let recentActionBucketMoreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
         let tracker: any AnalyticsTracking
+        let featureFlagProvider: any FeatureFlagProviderProtocol
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -75,7 +76,8 @@ extension HomeView {
             recentActionBucketNodesActionHandler: some NodesActionHandling,
             recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting,
             photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting,
-            tracker: some AnalyticsTracking
+            tracker: some AnalyticsTracking,
+            featureFlagProvider: some FeatureFlagProviderProtocol
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -102,6 +104,7 @@ extension HomeView {
             self.recentActionBucketMoreActionsPresenter = recentActionBucketMoreActionsPresenter
             self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
             self.tracker = tracker
+            self.featureFlagProvider = featureFlagProvider
         }
     }
 }
