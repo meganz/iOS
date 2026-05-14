@@ -245,6 +245,7 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		140ADEC42F3DA18C00392C1F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
+		14C131092FAF21640021D501 /* MEGAAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 14C131082FAF21640021D501 /* MEGAAudioPlayer */; };
 		14D55C182ECF113D00825803 /* MEGAPreferenceMocks in Frameworks */ = {isa = PBXBuildFile; productRef = 14D55C172ECF113D00825803 /* MEGAPreferenceMocks */; };
 		14DE60422F2A46E800C7F913 /* PSASwiftUIBackedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */; };
 		14DE60472F2A4B4100C7F913 /* PSAContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60462F2A4B3800C7F913 /* PSAContentView.swift */; };
@@ -3118,6 +3119,7 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMetricsTracker.swift; sourceTree = "<group>"; };
+		14C12FCD2FA343D30021D501 /* MEGAAudioPlayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAudioPlayer; sourceTree = "<group>"; };
 		14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSASwiftUIBackedView.swift; sourceTree = "<group>"; };
 		14DE60462F2A4B3800C7F913 /* PSAContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAContentView.swift; sourceTree = "<group>"; };
 		14DE60582F2B486800C7F913 /* PSAViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewType.swift; sourceTree = "<group>"; };
@@ -5741,6 +5743,7 @@
 				A835E4A02ED0636B004CE294 /* MEGAAppPresentationMock in Frameworks */,
 				BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */,
 				A835E4A12ED0636B004CE294 /* MEGAAppSDKRepoMock in Frameworks */,
+				14C131092FAF21640021D501 /* MEGAAudioPlayer in Frameworks */,
 				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
 				0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */,
 				A5E136892EB4FFB3004BDD4F /* MEGAChatSdk in Frameworks */,
@@ -11078,6 +11081,7 @@
 				A589D4F12F04EB7400A9B23C /* FolderLink */,
 				BF7758C92F21D6F40091DE2A /* Home */,
 				A83E525D2F8508EA002A37C3 /* MediaImport */,
+				14C12FCD2FA343D30021D501 /* MEGAAudioPlayer */,
 				A52F1E362EBCE55800D3A2E9 /* MEGAPhotos */,
 				A52F1E372EBCE55800D3A2E9 /* MEGAVideoPlayer */,
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
@@ -13922,6 +13926,7 @@
 				BF26E7AE2F3EDB8800AF51E5 /* Favourites */,
 				A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */,
 				A83E525F2F8508F8002A37C3 /* MediaImport */,
+				14C131082FAF21640021D501 /* MEGAAudioPlayer */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -19304,6 +19309,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		14C131082FAF21640021D501 /* MEGAAudioPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAudioPlayer;
 		};
 		14D55C172ECF113D00825803 /* MEGAPreferenceMocks */ = {
 			isa = XCSwiftPackageProductDependency;

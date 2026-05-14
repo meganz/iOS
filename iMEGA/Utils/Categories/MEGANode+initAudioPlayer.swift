@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAudioPlayer
 
 extension MEGANode {
     @MainActor
@@ -46,7 +47,19 @@ extension MEGANode {
             MEGALogError("[AudioPlayer] Unable to present player, presenter is nil")
             return
         }
-        
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+            if let source = makeRevampedPlaybackSource(node: node,
+                                                       fileLink: fileLink,
+                                                       isFolderLink: isFolderLink,
+                                                       chatId: chatId,
+                                                       messageId: messageId,
+                                                       allNodes: allNodes) {
+                MEGAAudioPlayerViewRouter(presenter: presenter).start(source: source)
+            }
+            return
+        }
+
         let presenterSupportsMiniPlayer = (presenter as? (any AudioPlayerPresenterProtocol)) != nil
         let canShowMiniPlayer = presenterSupportsMiniPlayer && AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive()
         
@@ -73,6 +86,34 @@ extension MEGANode {
         }
     }
     
+    @MainActor
+    private func makeRevampedPlaybackSource(node: MEGANode?,
+                                            fileLink: String?,
+                                            isFolderLink: Bool,
+                                            chatId: NSNumber?,
+                                            messageId: NSNumber?,
+                                            allNodes: [MEGANode]?) -> PlaybackSource? {
+        if isFolderLink, let node {
+            let queue = (allNodes ?? []).map { $0.toNodeEntity() }
+            return .folderLink(node: node.toNodeEntity(), queue: queue)
+        }
+        if let fileLink, let url = URL(string: fileLink) {
+            return .fileLink(url: url)
+        }
+        if let node,
+           let chatHandle = chatId?.uint64Value, chatHandle != .invalid,
+           let messageHandle = messageId?.uint64Value, messageHandle != .invalid {
+            return .chatMessage(node: node.toNodeEntity(),
+                                chatId: chatHandle,
+                                messageId: messageHandle)
+        }
+        if let node {
+            let queue = (allNodes ?? []).map { $0.toNodeEntity() }
+            return .cloudNode(node: node.toNodeEntity(), queue: queue)
+        }
+        return nil
+    }
+
     @MainActor
     @objc func isAudioPlayerAliveAndPlayingCurrentNode() -> Bool {
         let manager = AudioPlayerManager.shared

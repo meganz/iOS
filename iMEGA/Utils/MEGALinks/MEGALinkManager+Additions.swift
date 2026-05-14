@@ -2,6 +2,7 @@ import Accounts
 import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAudioPlayer
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -201,6 +202,24 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
     
     @MainActor
     @objc class func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, isFromSharedItem: Bool, presenter: UIViewController) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+            let source: PlaybackSource?
+            if isFolderLink, let node {
+                source = .folderLink(node: node.toNodeEntity())
+            } else if let fileLink, let url = URL(string: fileLink) {
+                source = .fileLink(url: url)
+            } else if let filePaths, !filePaths.isEmpty {
+                source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
+            } else if let node {
+                source = .cloudNode(node: node.toNodeEntity())
+            } else {
+                source = nil
+            }
+            if let source {
+                MEGAAudioPlayerViewRouter(presenter: presenter).start(source: source)
+            }
+            return
+        }
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
             fileLink: fileLink,

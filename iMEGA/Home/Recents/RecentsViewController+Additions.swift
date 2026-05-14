@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAudioPlayer
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
@@ -48,6 +49,11 @@ extension RecentsViewController {
     }
     
     @objc func presentAudioPlayer(node: MEGANode) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+            MEGAAudioPlayerViewRouter(presenter: self)
+                .start(source: .cloudNode(node: node.toNodeEntity()))
+            return
+        }
         if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
             initMiniPlayer(node: node)
         } else {

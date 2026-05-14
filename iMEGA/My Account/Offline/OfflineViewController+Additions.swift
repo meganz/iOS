@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGAAudioPlayer
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -75,6 +76,20 @@ extension OfflineViewController {
     }
     
     @objc func presentAudioPlayer(fileLink: String?, filePaths: [String]?) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+            let source: PlaybackSource?
+            if let fileLink, let url = URL(string: fileLink) {
+                source = .fileLink(url: url)
+            } else if let filePaths, !filePaths.isEmpty {
+                source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
+            } else {
+                source = nil
+            }
+            if let source {
+                MEGAAudioPlayerViewRouter(presenter: self).start(source: source)
+            }
+            return
+        }
         if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
             initMiniPlayer(fileLink: fileLink, filePaths: filePaths)
         } else {

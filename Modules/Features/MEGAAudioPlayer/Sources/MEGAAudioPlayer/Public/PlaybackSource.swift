@@ -1,0 +1,15 @@
+import Foundation
+import MEGADomain
+
+/// Where the audio player should pick up content from. Each case carries
+/// exactly the data its scenario needs — replaces the legacy
+/// `AudioPlayerConfigEntity` parameter bag where mutually exclusive scenarios
+/// were encoded as multiple optionals.
+public enum PlaybackSource: Sendable {
+    case cloudNode(node: NodeEntity, queue: [NodeEntity] = [])
+    case chatMessage(node: NodeEntity, chatId: HandleEntity, messageId: HandleEntity)
+    case fileLink(url: URL)
+    case folderLink(node: NodeEntity, queue: [NodeEntity] = [])
+    case offlineFiles(paths: [URL], startIndex: Int = 0)
+    case searchResult(node: NodeEntity)
+}
