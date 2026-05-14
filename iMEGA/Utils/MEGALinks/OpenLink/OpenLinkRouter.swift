@@ -1,9 +1,11 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAL10n
 
 final class OpenLinkRouter: Routing {
     private weak var presenter: UIViewController?
     private let linkManager: any MEGALinkManagerProtocol.Type
+    private let tracker: any AnalyticsTracking
 
     private static let supportedLinkTypes: Set<URLType> = [
         .fileLink,
@@ -15,10 +17,12 @@ final class OpenLinkRouter: Routing {
 
     init(
         presenter: UIViewController,
-        linkManager: any MEGALinkManagerProtocol.Type = MEGALinkManager.self
+        linkManager: any MEGALinkManagerProtocol.Type = MEGALinkManager.self,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.presenter = presenter
         self.linkManager = linkManager
+        self.tracker = tracker
     }
 
     func start() {
@@ -35,6 +39,7 @@ final class OpenLinkRouter: Routing {
         let openAction = UIAlertAction(title: Strings.Localizable.openButton, style: .default) { [weak self, weak alertController] _ in
             guard let self else { return }
             let linkText = alertController?.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            tracker.trackAnalyticsEvent(with: OpenLinkUrlSubmittedEvent())
             self.processLink(linkText)
         }
         openAction.isEnabled = false
@@ -57,9 +62,11 @@ final class OpenLinkRouter: Routing {
         guard let url = URL(string: linkText),
               Self.supportedLinkTypes.contains((url as NSURL).mnz_type()) else {
             presenter?.showSnackBar(message: Strings.Localizable.OpenLink.invalidLinkMessage)
+            tracker.trackAnalyticsEvent(with: OpenLinkUrlFailureEvent())
             return
         }
 
+        tracker.trackAnalyticsEvent(with: OpenLinkUrlSuccessEvent())
         linkManager.adapterLinkURL = url
         linkManager.processLinkURL(url)
     }

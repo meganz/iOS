@@ -55,6 +55,7 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
             trackNewTextFileEvent()
             fileUploadingRouter.upload(from: .textFile)
         case .openLink:
+            trackOpenLinkEvent()
             openLinkRouter?.start()
         case .newChat:
             newChatRouter.presentNewChat(from: navigationController)
@@ -100,6 +101,10 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
                 permissionRouter.alertVideoPermission()
             }
         }
+    }
+
+    private func trackOpenLinkEvent() {
+        tracker.trackAnalyticsEvent(with: OpenLinkMenuItemEvent())
     }
 
     private func uploadFiles(fromPhotoAssets assets: [PHAsset], to parentNode: MEGANode) {
