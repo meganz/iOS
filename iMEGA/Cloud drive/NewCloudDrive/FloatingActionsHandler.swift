@@ -47,8 +47,13 @@ final class FloatingActionsHandler: FloatingActionsHandlerProtocol {
             trackNewTextFileEvent()
             nodeInsertionRouter.createTextFileAlert(for: node)
         case .openLink:
+            trackOpenLinkEvent()
             openLinkRouter?.start()
         }
+    }
+
+    private func trackOpenLinkEvent() {
+        tracker.trackAnalyticsEvent(with: OpenLinkMenuItemEvent())
     }
 
     private func trackChooseFromPhotosEvent() {
