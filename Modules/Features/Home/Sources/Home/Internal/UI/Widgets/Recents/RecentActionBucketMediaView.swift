@@ -49,11 +49,15 @@ struct RecentActionBucketMediaView: View {
                     titleView
                 }
 
+                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+
+                if #available(iOS 26.0, *) {
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     trailingBarButton
                 }
-
-                dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
 
                 if viewModel.editMode.isEditing {
                     ToolbarItemGroup(placement: .bottomBar) {
