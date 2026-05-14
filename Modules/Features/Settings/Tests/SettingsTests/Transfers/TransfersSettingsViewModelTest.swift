@@ -122,6 +122,12 @@ import Testing
         private static var defaultSuffix: String {
             Strings.Localizable.Settings.Transfers.Connections.Option.default
         }
+        private static var slowNetworksSuffix: String {
+            Strings.Localizable.Settings.Transfers.Connections.Option.bestForSlowNetworks
+        }
+        private static var higherUsageSuffix: String {
+            Strings.Localizable.Settings.Transfers.Connections.Option.higherUsage
+        }
 
         @Test("Shows default suffix for default download value")
         func downloadDefault() {
@@ -133,6 +139,20 @@ import Testing
         func uploadDefault() {
             let (sut, _, _) = makeSUT()
             #expect(sut.subtitle(for: .upload) == "3 (\(Self.defaultSuffix))")
+        }
+
+        @Test("Shows slow networks suffix for value 1")
+        func slowNetworks() async {
+            let (sut, _, _) = makeSUT()
+            await sut.select(1, for: .download)
+            #expect(sut.subtitle(for: .download) == "1 (\(Self.slowNetworksSuffix))")
+        }
+
+        @Test("Shows higher usage suffix for value 8")
+        func higherUsage() async {
+            let (sut, _, _) = makeSUT()
+            await sut.select(8, for: .download)
+            #expect(sut.subtitle(for: .download) == "8 (\(Self.higherUsageSuffix))")
         }
 
         @Test("Shows plain number for non-default value")
