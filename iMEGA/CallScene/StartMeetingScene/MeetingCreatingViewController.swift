@@ -272,7 +272,14 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             firstNameTextfield.isHidden = false
             lastNameTextfield.isHidden = false
             
-            guard let avatarImage = UIImage(forName: AvatarProperties.initials, size: AvatarProperties.size, backgroundColor: AvatarProperties.backgroundColor, backgroundGradientColor: AvatarProperties.backgroundGradientColor, textColor: AvatarProperties.textColor, font: AvatarProperties.font) else { return }
+            let avatarImage = UIImage.avatarImage(
+                forName: AvatarProperties.initials,
+                size: AvatarProperties.size,
+                backgroundColor: AvatarProperties.backgroundColor,
+                backgroundGradientColor: AvatarProperties.backgroundGradientColor,
+                textColor: AvatarProperties.textColor,
+                font: AvatarProperties.font
+            )
             localUserView.updateAvatar(image: avatarImage)
         case .join:
             meetingNameInputTextfield.isHidden = true

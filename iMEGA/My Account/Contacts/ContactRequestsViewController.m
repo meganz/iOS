@@ -1,7 +1,6 @@
 #import "ContactRequestsViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"
-#import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
 #import "ContactRequestsTableViewCell.h"

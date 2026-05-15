@@ -10,7 +10,6 @@
 #endif
 
 #import "UIApplication+MNZCategory.h"
-#import "UIImage+GKContact.h"
 
 @interface CustomModalAlertViewController ()
 

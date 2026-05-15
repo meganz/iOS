@@ -2276,8 +2276,6 @@
 		BF1589242436A27A007AF9EC /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1589232436A27A007AF9EC /* MessageInputBar.swift */; };
 		BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1589252436A296007AF9EC /* MessageInputBar.xib */; };
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
-		BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3327FA737200C1A2E5 /* GKContactImage */; };
-		BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3D27FA757800C1A2E5 /* GKContactImage */; };
 		BF20BB552E49814C0013CAE6 /* UnavailableLinkView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */; };
 		BF20BB592E49827A0013CAE6 /* NSURL+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB582E4982700013CAE6 /* NSURL+Additions.swift */; };
 		BF20BB652E4985420013CAE6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB642E49853B0013CAE6 /* Constants.swift */; };
@@ -5729,7 +5727,6 @@
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
 				A5472CC72F04EF0900A49688 /* FolderLink in Frameworks */,
-				BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */,
 				94F92EAE2CAAA25F00966A0F /* GoogleMobileAds in Frameworks */,
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				BF7758D12F21D8490091DE2A /* Home in Frameworks */,
@@ -5834,7 +5831,6 @@
 				B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				A855D23E2A796634001D2168 /* ChatRepo in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
-				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */,
 				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
 				BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */,
@@ -13864,7 +13860,6 @@
 				A8F5158427F6FF4F00AEE4D6 /* FlexLayout */,
 				A8F5158627F6FF4F00AEE4D6 /* FlexLayoutYoga */,
 				A8F5158827F6FF4F00AEE4D6 /* FlexLayoutYogaKit */,
-				BF1CEA3327FA737200C1A2E5 /* GKContactImage */,
 				A8B51ADB27F3534F0030F1EA /* Haptica */,
 				A8F5155727F6F24F00AEE4D6 /* ISEmojiView */,
 				BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */,
@@ -14030,7 +14025,6 @@
 			name = MEGAShare;
 			packageProductDependencies = (
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
-				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
 				B610447128979E9B00AAECF4 /* MEGADomain */,
 				B6A01BAF289A623C00B503FD /* MEGAFoundation */,
 				A891E8A629C1E0A70020072A /* MEGASdk */,
@@ -14286,7 +14280,6 @@
 				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */,
 				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
-				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
 				A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */,
 				A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */,
 				BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */,
@@ -19269,14 +19262,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/meganz/GKContactImage.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
-			};
-		};
 		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/PieChart.git";
@@ -19769,16 +19754,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */;
 			productName = KeyboardLayoutGuide;
-		};
-		BF1CEA3327FA737200C1A2E5 /* GKContactImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
-			productName = GKContactImage;
-		};
-		BF1CEA3D27FA757800C1A2E5 /* GKContactImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */;
-			productName = GKContactImage;
 		};
 		BF26E7AE2F3EDB8800AF51E5 /* Favourites */ = {
 			isa = XCSwiftPackageProductDependency;

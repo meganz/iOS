@@ -4,7 +4,6 @@
 
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
-#import "UIImage+GKContact.h"
 
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"

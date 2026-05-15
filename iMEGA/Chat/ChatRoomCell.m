@@ -1,6 +1,5 @@
 #import "ChatRoomCell.h"
 
-#import "UIImage+GKContact.h"
 
 #import "MEGAChatListItem.h"
 #import "MEGAStore.h"

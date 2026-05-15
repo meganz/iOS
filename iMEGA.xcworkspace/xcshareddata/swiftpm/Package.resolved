@@ -1,5 +1,5 @@
 {
-  "originHash" : "c6547b99ccba194494da86ac9d56dc70c874a8e7abe897373f294049e48aca9b",
+  "originHash" : "cf0d83459a3568cff0b33488366066141f2d00836132abdd040d6a1d9b2f718b",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -71,15 +71,6 @@
       "state" : {
         "revision" : "f3187749d2d31a01aa18f8b107e603e210f9bce9",
         "version" : "1.3.33"
-      }
-    },
-    {
-      "identity" : "gkcontactimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/meganz/GKContactImage.git",
-      "state" : {
-        "revision" : "e3dcb67e3cbf620866122b10ef0c1b2f572cd8c3",
-        "version" : "0.1.2"
       }
     },
     {

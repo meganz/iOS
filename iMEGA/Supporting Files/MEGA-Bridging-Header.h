@@ -5,7 +5,6 @@
 
 #import "LTHPasscodeViewController.h"
 #import "MEGAPushNotificationSettings.h"
-#import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"

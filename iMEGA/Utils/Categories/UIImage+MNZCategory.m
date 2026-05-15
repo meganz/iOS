@@ -10,7 +10,6 @@
 #import "Helper.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
-@import GKContactImage;
 @import MEGAUIKit;
 
 @implementation UIImage (MNZCategory)

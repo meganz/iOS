@@ -1,7 +1,6 @@
 #import "ContactsViewController.h"
 
 #import "SVProgressHUD.h"
-#import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"

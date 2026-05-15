@@ -1,6 +1,5 @@
 #import "SendToViewController.h"
 
-#import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
 #import "UIImageView+MNZCategory.h"

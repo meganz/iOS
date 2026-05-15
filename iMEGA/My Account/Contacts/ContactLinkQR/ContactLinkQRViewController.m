@@ -12,7 +12,6 @@
 #import "QRSettingsTableViewController.h"
 
 #import "NSString+MNZCategory.h"
-#import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 

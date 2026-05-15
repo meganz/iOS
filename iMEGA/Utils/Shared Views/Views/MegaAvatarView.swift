@@ -1,8 +1,8 @@
 import ChatRepo
-import GKContactImage
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAUIKit
 import UIKit
 
 @objc enum MegaAvatarViewMode: Int {
@@ -61,12 +61,12 @@ class MegaAvatarView: UIView {
     @objc func setup(for chatRoom: MEGAChatRoom) {
         if chatRoom.peerCount == 0 {
             let font = UIFont.systemFont(ofSize: avatarImageView.frame.size.width / CGFloat(2.0))
-            avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
-                                                 size: avatarImageView.frame.size,
-                                                 backgroundColor: TokenColors.Icon.secondary,
-                                                 backgroundGradientColor: MEGAAssets.UIColor.grayDBDBDB,
-                                                 textColor: MEGAAssets.UIColor.whiteFFFFFF,
-                                                 font: font)
+            avatarImageView.image = UIImage.avatarImage(forName: chatRoom.title?.uppercased() ?? "",
+                                                        size: avatarImageView.frame.size,
+                                                        backgroundColor: TokenColors.Icon.secondary,
+                                                        backgroundGradientColor: MEGAAssets.UIColor.grayDBDBDB,
+                                                        textColor: MEGAAssets.UIColor.whiteFFFFFF,
+                                                        font: font)
             configure(mode: .single)
         } else {
             let firstPeerHandle = chatRoom.peerHandle(at: 0)

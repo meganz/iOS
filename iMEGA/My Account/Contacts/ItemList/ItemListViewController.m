@@ -1,7 +1,6 @@
 #import "ItemListViewController.h"
 #import "ItemCollectionViewCell.h"
 #import "UIImageView+MNZCategory.h"
-#import "UIImage+GKContact.h"
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"

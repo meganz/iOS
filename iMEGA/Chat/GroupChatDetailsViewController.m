@@ -1,6 +1,5 @@
 #import "GroupChatDetailsViewController.h"
 
-#import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"

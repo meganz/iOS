@@ -39,18 +39,6 @@ https://github.com/AlexDenisov/FrameAccessor/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
-#### GKContactImage
-https://github.com/gekitz/GKContactImage
-
-Copyright (c) 2014 Georg Kitz
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/gekitz/GKContactImage/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### JSQMessagesViewController
 https://github.com/jessesquires/JSQMessagesViewController
 
