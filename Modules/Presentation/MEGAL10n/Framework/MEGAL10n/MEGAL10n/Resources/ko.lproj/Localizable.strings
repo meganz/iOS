@@ -4942,3 +4942,21 @@
 "settings.transfers.connections.option.bestForSlowNetworks"="느린 네트워크에 최적";
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="더 높은 배터리와 데이터 이용량";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="추가 저장소 %1$@, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ 저장소 보너스 적용됨, 영구적으로 유효";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="MEGA 데스크톱 앱을 설치하고 %1$@의 무료 추가 저장 공간을 받으세요, %2$@.\n데스크톱 앱은 Windows, macOS, 그리고 Linux에서 이용 가능합니다.";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="전송에는 주의가 필요합니다.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA 모바일 앱 중 하나를 설치하고 무료 추가 저장 공간 %1$@를 얻으세요, %2$@.\n모바일 앱은 iOS 및 안드로이드에서 이용 가능합니다.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN 앱 중 하나를 설치하고 무료 체험을 시작하면, 무료 추가 저장 공간 %1$@를 얻고, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="MEGA Pass 앱 중 하나를 설치하고 무료 체험을 시작하면, 무료 추가 저장 공간 %1$@를 얻고, %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="팟캐스트 모드";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="음악 모드";

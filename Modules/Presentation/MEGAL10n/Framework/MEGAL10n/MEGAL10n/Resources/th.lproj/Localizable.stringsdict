@@ -2928,5 +2928,19 @@
         <string>พร้อมแล้ว %d จาก [A]</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>โบนัสจะหมดอายุในอีก %d วัน</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

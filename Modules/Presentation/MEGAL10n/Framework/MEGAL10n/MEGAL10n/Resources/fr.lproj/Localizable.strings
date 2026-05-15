@@ -4923,4 +4923,40 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Collez n'importe quel lien MEGA pour l'ouvrir";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ désactivé";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Connexions par transfert";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Connexions par téléchargement";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Connexions par téléversement";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Par défaut";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ d'espace de stockage supplémentaire, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ de stockage bonus appliqué, valable à vie";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Installez l’application MEGA pour ordinateur et obtenez %1$@ d’espace de stockage supplémentaire gratuit, %2$@.\nL’appli pour ordinateur est disponible pour Windows, macOS et Linux.";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Téléchargement des fichiers";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Téléversement des fichiers";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Définit le nombre maximal de connexions parallèles utilisées pour les transferts actifs. Des valeurs plus élevées peuvent accélérer les transferts de gros fichiers, mais augmentent la consommation de batterie et de mémoire.";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Idéal pour les réseaux lents.";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Consommation accrue de la batterie et des données.";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Le transfert nécessite une attention.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installez l'une des applications mobiles MEGA et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@.\nLes applications mobiles sont disponibles pour iOS et Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installez l'une des applications MEGA VPN et commencez un essai gratuit, et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installez l'une des applications MEGA Pass et commencez un essai gratuit, et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Mode podcast";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Mode musique";

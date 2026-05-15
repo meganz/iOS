@@ -173,7 +173,7 @@
 /* file link has been removed */
 "cloudDrive.fileLink.unavailableReason4"="Đường liên kết tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /* file link has expired */
-"cloudDrive.fileLink.hasExpired"="Đường liên kết đã hết hạn.";
+"cloudDrive.fileLink.hasExpired"="Đường liên kết đã hết hạn";
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
@@ -193,7 +193,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
+"folderTooBigMessage"="Thư mục bạn đang cố tải về có cỡ lớn hơn dung lượng còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Không tạo được thư mục “%@”";
 /*  */
@@ -213,13 +213,13 @@
 /* folder link has been removed */
 "cloudDrive.folderLink.unavailableReason4"="Đường liên kết thư mục đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /* folder link has expired */
-"cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn.";
+"cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Thư mục rỗng";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Không có tệp tin nào trong Ổ Mây";
+"cloudDriveEmptyState_title"="Không có tệp tin nào trong Ổ Mây";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Thêm tệp tin";
 /* Title shown when you make a search and there is 'No Results' */
@@ -265,7 +265,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Mời vào MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Tên liên lạc [X] không có trên MEGA. Để có thể gọi điện và chát thông qua MEGA, bạn cần phải mời người này đăng ký tài khoản";
+"dialog.callAttempt.contactNotInMEGA"="Tên liên lạc [X] không có trên MEGA. Để có thể gọi điện và chat thông qua MEGA, bạn cần phải mời người này đăng ký tài khoản";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Lời mời đã gửi đi";
 /* Button title to allow the user postpone an action */
@@ -339,7 +339,7 @@
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Tệp văn bản mới";
 /* Hint text shown on the new text file alert. */
-"file_name"="Tên Tệp Tin";
+"file_name"="Tên tệp tin";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư mục mới";
 /* Menu option from the `Add` section that displays all media files under current folder */
@@ -545,7 +545,7 @@
 /* Alert message presented when generating shared links for an album that contains sensitive content */
 "cameraUploads.albums.albumLink.sensitive.alert.message.single"="Có các mục ẩn trong album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Alert message presented when generating shared links for an album that contains sensitive content */
-"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+"cameraUploads.albums.albumLink.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều album này. Việc thực hiện chia sẻ album sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Filter headline in the Filter UI on Camera Upload Timeline Screen */
 "filter"="Lọc";
 /* Choose type headline within filter UI */
@@ -1255,11 +1255,11 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Tôi";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chát bởi [B].";
+"wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chat bởi [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] đã rời khỏi nhóm chát";
+"leftTheGroupChat"="[A] đã rời khỏi nhóm chat";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chát từ lời mời của [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chat từ lời mời của [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] đã xóa lịch sử cuộc trò chuyện.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1307,13 +1307,13 @@
 /* Button title */
 "verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Xóa lịch sử nội dung chát";
+"clearChatHistory"="Xóa lịch sử chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
-"Chat History has Been Cleared"="Lịch sử tin nhắn chát đã được dọn sạch";
+"Chat History has Been Cleared"="Lịch sử chat đã được dọn sạch";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="Có lỗi phát sinh. Lịch sử cuộc chát chưa xóa sạch được";
+"An error has occurred. The chat history has not been successfully cleared"="Có lỗi phát sinh. Lịch sử cuộc chat chưa xóa sạch được";
 /* 'Next' button in a dialog */
 "continue"="Tiếp tục";
 /* Title of the incoming shared folders of a user. */
@@ -1367,7 +1367,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Bảo Vệ Xác Thực.[/S] Hệ thống đảm bảo rằng các dữ liệu nhận được từ người gửi sẽ hiển thị rõ ràng, và nội dung giữ nguyên vẹn và không bị chế tác trong quá trình truyền tải.";
 /* Alert message shown when a chat does not exist */
-"chatNotFound"="Không tìm thấy cuộc chát";
+"chatNotFound"="Không tìm thấy cuộc chat";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ đang viết tin nhắn…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1531,7 +1531,7 @@
 /* notification subtitle of incoming calls */
 "Incoming call"="Cuộc gọi đến";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Chất lượng hình ảnh của video khi đăng tải lên chát";
+"qualityOfVideosUploadedToAChat"="Chất lượng hình ảnh của video khi đăng tải lên chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Chất lượng video";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -1679,7 +1679,7 @@
 /* Title of flag of archived chats. */
 "archived"="Đã bảo lưu";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Không có cuộc chát hoặc cuộc họp nào được bảo lưu";
+"noArchivedChats"="Không có cuộc chat hoặc cuộc họp nào được bảo lưu";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Xác thực 2 yếu tố";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1805,13 +1805,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Bật Luân phiên chìa khóa mã";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Lấy liên kết vào cuộc chát";
+"Get Chat Link"="Lấy liên kết cuộc chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chát và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết phòng chat và những người mới tham gia sẽ không đọc được các tin nhắn cũ.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
 "Key rotation is disabled for conversations with more than 100 participants."="Luân phiên chìa khóa mã bị tắt đối với các cuộc trò chuyện có hơn 100 thành viên.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
+"To create a chat link you must name the group."="Để tạo ra liên kết tới chat, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Đường liên kết chat";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1823,11 +1823,11 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên chìa khóa mã.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết vào cuộc chát";
+"%@ created a public link for the chat."="%@ đã tạo liên kết vào chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ vừa xóa đường liên kết vào cuộc chát";
+"%@ removed a public link for the chat."="%@ đã xóa đường liên kết vào cuộc chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ đã tham gia vào nhóm chát.";
+"%@ joined the group chat."="%@ đã tham gia vào nhóm chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Không thể tham gia cuộc gọi này vì đã quá mức số lượng thành viên đang có trong cuộc gọi.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1985,19 +1985,19 @@
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Đường liên kết chat không khả dụng";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Đường liên kết tới chát này không còn tồn tại";
+"This chat link is no longer available"="Đường liên kết tới chat này không còn tồn tại";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="Mọi người có thể tham gia vào nhóm của bạn với đường liên kết này.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Chạm vào để xem thêm";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="Không có liên kết chát nào cả.";
+"No chat link available."="Không có liên kết chat nào cả.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Xin cho phép quyền truy cập";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Xin đi vào mục Quyền Riêng Tư trong Cài Đặt của iOS. Bật chức năng Dịch Vụ Định Vị và chỉnh MEGA từ “Khi dùng Ứng dụng” sang “Luôn luôn”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA truy cập vị trí của bạn khi bạn chia sẻ với các tên liên lạc của mình trong cuộc chát.";
+"NSLocationWhenInUseUsageDescription"="MEGA truy cập vị trí của bạn khi bạn chia sẻ với các tên liên lạc của mình trong cuộc chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Dùng dữ liệu mạng di dộng đã tắt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2011,7 +2011,7 @@
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Cấp quyền cho phép truy cập vào danh bạ của bạn";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Đi tới Cài Đặt của iOS";
+"Open Settings"="Đi tới cài đặt của iOS";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Mời thêm tên liên lạc và để bắt đầu trò chuyện thông qua MEGA và được bảo mật mạnh mẽ.";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2051,7 +2051,7 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Tài khoản đã bị vô hiệu hóa";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Tài khoản Doanh Nghiệp của bạn đã bị vô hiệu hóa do việc thanh toán đã không thành công. Bạn sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký của bạn, hãy đăng nhập vào MEGA bằng trình duyệt web.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Tài khoản Doanh Nghiệp của quý khách đã bị vô hiệu hóa do việc thanh toán đã không thành công. Quý khách sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký, xin hãy đăng nhập vào MEGA bằng trình duyệt web.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Tài khoản của bạn hiện đang bị [B]đình chỉ[/B]. Bạn chỉ có khả năng xem duyệt dữ liệu của mình.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2081,7 +2081,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 giờ";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Im lặng tất cả các âm báo chát trong";
+"Mute chat Notifications for"="Im lặng tất cả các âm báo chat trong";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
@@ -2095,7 +2095,7 @@
 /* Title shown when the user reconnect in a call. */
 "You are back!"="Cuộc gọi đã được kết nối trở lại.";
 /* Subtitle of chat screen when the chat is inactive */
-"Inactive chat"="Cuộc chát không hoạt động đã lâu";
+"Inactive chat"="Chat không hoạt động đã lâu";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Đặt Tên";
 /* Contact details screen: Edit the alias(nickname) for a user */
@@ -2229,9 +2229,9 @@
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ẩn hoạt động gần đây";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Ẩn đi lịch sử động gần đây trong phần Trang Chủ.";
+"settings.userInterface.hideRecentActivity.footer"="Ẩn đi lịch sử động gần đây trong phần Trang Đầu.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Gốc";
+"Default"="Mặc định";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Đêm";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
@@ -2255,7 +2255,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Tùy chỉnh chế độ xem";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Quyết định cách sắp xếp dữ liệu và tệp tin sẽ được áp dụng cho tất cả thư mục cho đồng bộ, hoặc tự chỉnh riêng lẻ cho từng thư mục có trong Ổ Mây.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Quyết định cách sắp xếp dữ liệu và tệp tin sẽ được áp dụng cho tất cả thư mục cho đồng bộ, hoặc tự chỉnh riêng lẻ cho từng thư mục có trong Ổ Mây.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Chọn kiểu xem (Danh Sách hoặc Ảnh Nhỏ) khác nhau cho từng thư mục, hoặc giống nhau hếy cho tất cả thư mục.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -2265,7 +2265,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Khi đăng xuất, các tệp tin trong phần Ngoại Tuyến sẽ bị xóa khỏi máy và các phiên truyền tải chưa xong sẽ bị hủy.";
 /* Default title of an empty chat. */
-"Chat created on %s1"="Cuộc chát được tạo vào ngày %s1";
+"Chat created on %s1"="Chat đã tạo lúc %s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="Không có tệp tin chia sẻ";
 /* Error message shown when opening a folder link which doesn’t exist */
@@ -2461,7 +2461,7 @@
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Ưa Thích";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Trang Chủ";
+"Home"="Trang Đầu";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Tài Liệu";
 /* Message shown when a link is shared with separated key */
@@ -2553,7 +2553,7 @@
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Thay đổi phần khởi chạy";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang chủ.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang Đầu.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Thay đổi thiết đặt";
 /* Offline log out warning message */
@@ -2575,7 +2575,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Xin nâng cấp";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Ổ Mây của bạn sắp đầy. Nâng cấp ngay và nhận thêm lên đến %@ TB không gian lưu trữ đám mây.";
+"dialog.storage.almostFull.detail"="Ổ Mây của bạn sắp đầy. Nâng cấp ngay và nhận thêm lên đến %@ TB không gian lưu trữ đám mây.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Không gian lưu trữ của Ổ Mây đã bị đầy. Xin nâng cấp lên một hạng Pro để mở rộng lưu trữ và tận hưởng thêm nhiều tính năng cao cấp. Tài khoản sẽ bị khóa sau một khoảng thời vượt quá không gian lưu trữ và không nâng cấp quá lâu. Xin kiểm tra hộp thư email và xem thư chúng tôi đã gửi để biết thêm chi tiết.";
 /* Over Disk Quota paywall not final title. */
@@ -2989,13 +2989,13 @@
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="Phản hồi của bạn sẽ giúp chúng tôi cải thiện MEGA. Xin vui lòng mô tả rõ ràng vấn đề bạn gặp phải. Bạn cung cấp càng nhiều chi tiết thì chúng tôi sẽ càng dễ dàng giải quyết được vấn đề.";
 /* Label to indicate that users' input has not reached the required minimum characters */
-"help.reportIssue.minCharacterNotReach.error"="Mô tả phải có ít nhất 30 ký tự";
+"help.reportIssue.minCharacterNotReach.error"="Mô tả phải có ít nhất 30 ký tự";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
 "help.reportIssue.sendLogFile"="Gửi tệp nhật ký";
 /* Title to indicate that the bug report is being uploaded to our support team. */
 "help.reportIssue.uploadingLogFile"="Đang tải lên tệp nhật ký";
 /* Confirmation title shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.title"="Cảm ơn bạn đã gửi báo cáo";
+"help.reportIssue.success.title"="Cảm ơn bạn đã gửi báo cáo";
 /* Confirmation message shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.message"="Chúng tôi sẽ xem xét vấn đề và một người từ bộ phận trợ giúp sẽ liên lạc với bạn";
 /* Error message shown when some error occurs during uploading a bug report. */
@@ -3009,7 +3009,7 @@
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Vấn đề lỗi này sẽ không được gửi đi nếu bạn hủy bỏ.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describeIssue.placeholder"="Mô tả vấn đề với tối thiểu 30 ký tự";
+"help.reportIssue.describeIssue.placeholder"="Xin mô tả vấn đề với ít nhất 30 ký tự";
 /* Label shown when users lost the internet connection */
 "general.NoIntenerConnection"="Không thể kết nối tới internet. Kiểm tra đường truyền kết nối mạng và thử lại.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
@@ -3127,7 +3127,7 @@
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="Bắt đầu trò chuyện ngay";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="Chát an toàn và riêng tư, với bất kỳ ai và bất kỳ thiết bị, và an tâm sẽ không có ai có thể đọc tin nhắn của bạn, ngay cả MEGA.";
+"chat.chats.emptyState.description"="Chat an toàn và riêng tư, với bất kỳ ai và bất kỳ thiết bị, và an tâm sẽ không có ai có thể đọc tin nhắn của bạn, ngay cả MEGA.";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="Cuộc chat mới";
 /* Title for chats section */
@@ -3157,7 +3157,7 @@
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.title"="Đã thêm tất cả các tên liên lạc";
 /* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
-"meetings.addContacts.allContactsAdded.description"="Bạn đã thêm tất cả các tên liên lạc đã có vào trong cuộc chát này rồi.\nNếu bạn muốn thêm thành viên nữa, trước hết hãy mời thêm người vào sổ liên lạc của bạn.";
+"meetings.addContacts.allContactsAdded.description"="Bạn đã thêm tất cả các tên liên lạc đã có vào trong cuộc chat này rồi.\nNếu bạn muốn thêm thành viên nữa, trước hết hãy mời thêm người vào sổ liên lạc của bạn.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Mời";
 /* Menu option from the `Add` section that allows the user to share files from Files app */
@@ -3167,7 +3167,7 @@
 /* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.title"="Không có tên liên lạc nào";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
-"meetings.addContacts.zeroContactsAvailable.description"="Bạn không có tên nào trong sổ liên lạc để thêm vào cuộc chát này. Nếu bạn muốn thêm thành viên, trước hết hãy thêm tên của họ vào sổ liên lạc.";
+"meetings.addContacts.zeroContactsAvailable.description"="Bạn không có tên nào trong sổ liên lạc để thêm vào cuộc chat này. Nếu bạn muốn thêm thành viên, trước hết hãy thêm tên của họ vào sổ liên lạc.";
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Gửi lời mời";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
@@ -3195,7 +3195,7 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Tài khoản đã bị vô hiệu hóa";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Tài khoản Pro Flexi của bạn đã bị vô hiệu hóa do việc thanh toán đã không thành công hoặc bạn đã hủy gói đăng ký dịch vụ. Bạn sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký của bạn, hãy đăng nhập vào MEGA bằng trình duyệt web.";
+"account.expired.proFlexi.message"="Tài khoản Pro Flexi này đã bị vô hiệu hóa do việc thanh toán đã không thành công hoặc gói đăng ký dịch vụ đã bị hủy. Bạn sẽ không thể truy cập vào dữ liệu đã được lưu trữ trong tài khoản của mình. Để thanh toán và kích hoạt lại gói đăng ký, xin hãy đăng nhập vào MEGA bằng trình duyệt web.";
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="Đường liên kết họp mặt";
 /* Label to inform user about privacy of sharing a chat link */
@@ -3217,7 +3217,7 @@
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Chúng tôi bảo vệ dữ liệu của bạn bằng mô hình mã hóa vô kiến thức nên tất cả thông tin bạn lưu trữ, chia sẻ và nhận được trên MEGA đều bảo vệ an toàn. Để đảm bảo tính bảo mật cao hơn, chúng tôi có yêu cầu bạn xác thực các tên liên lạc mà bạn có chia sẻ thông tin hoặc nhận dữ liệu từ họ.";
+"verifyCredentials.headerMessage"="Chúng tôi bảo vệ dữ liệu của bạn bằng mô hình mã hóa vô kiến thức, giúp tất cả thông tin bạn lưu trữ, chia sẻ và nhận trên MEGA đều được an toàn. Để đảm bảo tính bảo mật cao hơn, chúng tôi yêu cầu bạn xác minh các liên hệ mà bạn chia sẻ thông tin hoặc nhận dữ liệu từ người đó.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[thư mục chưa giải mã]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3383,7 +3383,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập được tới 30 ký tự";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3 000 ký tự";
+"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3.000 ký tự";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Hủy";
 /* Schedule meeting create button */
@@ -3623,7 +3623,7 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Mua từ trang web MEGA (giảm %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Mua từ trang web (giảm %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua từ trang web MEGA (giảm tới %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -3757,9 +3757,9 @@
 /* Title of the dialog for sharing a folder containing sensitive items */
 "shareFolder.sensitive.alert.title"="Các mục ẩn";
 /* Message of the dialog for sharing a folder containing sensitive items */
-"shareFolder.sensitive.alert.message.single"="Có các mục ẩn trong thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+"shareFolder.sensitive.alert.message.single"="Có các mục ẩn trong thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Message of the dialog for sharing folders containing sensitive items */
-"shareFolder.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+"shareFolder.sensitive.alert.message.multi"="Có các mục ẩn nằm trong một hoặc nhiều thư mục này. Việc thực hiện chia sẻ thư mục sẽ làm các mục ẩn hiển thị cho những người bạn chia sẻ. Các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Đổi tên album";
 /* Rename public album alert message */
@@ -4333,7 +4333,7 @@
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.single"="Mục này được đặt ẩn đi. Khi bạn chia sẻ mục này, bất kỳ ai có đường liên kết sẽ có thể xem thấy nó nhưng vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
-"getNodeLink.sensitive.alert.message.multi"="Một hay nhiều mục này được đặt ẩn đi. Khi bạn chia sẻ các mục này, bất kỳ ai có đường liên kết sẽ có thể xem thấy hết nhưng các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
+"getNodeLink.sensitive.alert.message.multi"="Một hay nhiều mục này được đặt ẩn đi. Khi bạn chia sẻ các mục này, bất kỳ ai có đường liên kết sẽ có thể xem thấy hết nhưng các mục vẫn sẽ được ẩn đi trong Ổ Mây của bạn.";
 /* Title of the Show last seen option in the chat settings */
 "settings.calls.status.showLastSeen.title"="Hiện lần thấy cuối";
 /* Snack bar message shown when local user raises hand in the call */
@@ -4487,9 +4487,9 @@
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.title"="Không thể quản lý thẻ";
 /* Description displayed in the popup when the user's Pro Flexi account has expired, explaining that they need to reactivate their subscription to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Gói Pro Flexi của quý khách đã hết hạn. Xin kích hoạt lại gói đăng ký để có thể thêm thẻ. Quý khách cũng có thể quản lý việc này trên trang web MEGA.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.proFlexi"="Gói Pro Flexi của quý khách đã hết hạn. Xin kích hoạt lại gói đăng ký để có thể gắn thêm thẻ. Quý khách cũng có thể quản lý việc này trên trang web MEGA.";
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Tài khoản Doanh Nghiệp MEGA của quý khách đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin kích hoạt lại gói đăng ký trên trang web MEGA bằng máy tính.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Tài khoản Doanh Nghiệp MEGA của quý khách đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin kích hoạt lại gói đăng ký trên trang web MEGA trên máy tính.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Tài khoản Doanh Nghiệp MEGA của bạn đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin liên hệ với quản trị viên tài khoản Doanh Nghiệp của bạn.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
@@ -4509,9 +4509,9 @@
 /* Ad-free experience screen content message about pro plan featuring the Transfer Sharing */
 "ads.adFree.content.transferSharing.message"="Những người bạn chia sẻ dữ liệu có thể sử dụng băng thông truyền tải của bạn để tải xuống các mục bạn đã chia sẻ.";
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
+"ads.adFree.content.additionalSecurity.title"="MEGA Pass và MEGA VPN";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục.";
+"ads.adFree.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Xem các gói Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4665,7 +4665,7 @@
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Bạn nhận được:";
 /* Title for the Home tab bar item */
-"tabbarTitle.home"="Trang Chủ";
+"tabbarTitle.home"="Trang Đầu";
 /* Title for the Drive tab bar item */
 "tabbarTitle.drive"="Đĩa";
 /* Title for the Photo tab bar item */
@@ -4765,7 +4765,7 @@
 /* Camera Uploads Progress In Progress section title */
 "cameraUploads.progress.section.inProgress.title"="Đang truyền";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat"="%@ trong tổng %@ %@/giây";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ / %@ %@/giây";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Khuyến mại ngày Thứ Hai Điện Tử: giảm giá %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
@@ -4857,19 +4857,19 @@
 /* Title shown in a notification when files are being downloaded. This appears as the main heading of the notification. */
 "notification.transfer.download.title"="Đang truyền tải các tệp tin";
 /* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
-"account.upgrade.yearly.availability.snackbar.message"="%@ có sẵn với thanh toán hàng năm";
+"account.upgrade.yearly.availability.snackbar.message"="Gói %@ có mua với thanh toán hàng năm";
 /* Snackbar shown when user switches to yearly tab and the selected plan (e.g. Pro Lite) is only available with monthly billing. %@ is the plan name. */
-"account.upgrade.monthly.availability.snackbar.message"="%@ có sẵn với thanh toán hàng tháng";
+"account.upgrade.monthly.availability.snackbar.message"="Gói %@ có mua với thanh toán hàng tháng";
 /* Message shown in the Home Recents widget when there is no recent file or folder activity yet */
 "recents.emptyState.empty.message"="Tất cả hoạt động về tệp và thư mục gần đây của bạn sẽ hiển thị ở đây";
 /* Snackbar message shown after the user hides recent activity */
 "home.recent.hideRecentActivity.snackbar.message"="Hoạt động gần đây của bạn đã bị ẩn";
 /* Alert message shown when confirming the action to clear all recent activity */
-"home.recent.clearRecentActivity.alert.message"="Bạn có chắc chắn muốn xóa toàn bộ hoạt động gần đây không? Thao tác này sẽ không thể hoàn tác.";
+"home.recent.clearRecentActivity.alert.message"="Bạn có chắc chắn muốn xóa toàn bộ hoạt động gần đây không? Thao tác này sẽ không hoàn tác được.";
 /* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.addedByLabel"="Đã thêm bởi %@";
 /* Snackbar message shown after the user clears all recent activity */
-"home.recent.clearRecentActivity.snackbar.message"="Hoạt động gần đây của bạn đã được xóa";
+"home.recent.clearRecentActivity.snackbar.message"="Hoạt động gần đây đã được dọn sạch";
 /* The title for menu action button that will clear the recent activity */
 "home.recent.menu.action.clearRecentActivity"="Xóa hoạt động gần đây";
 /* The title for View all button in Home Recent Widget */
@@ -4879,13 +4879,13 @@
 /* The error state button in subtitle selection page */
 "videoPlayer.subtitles.select.error.ok"="OK, hiểu rồi";
 /* The title of the No Internet state in Home screen */
-"home.noInternet.title"="Bạn đang ngoại tuyến";
+"home.noInternet.title"="Bạn đang ngoại tuyến";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
-"home.noInternet.subtitle.noOfflineFiles"="Nếu bạn làm cho các tệp có sẵn ngoại tuyến, bạn vẫn có thể truy cập chúng khi không có kết nối.";
+"home.noInternet.subtitle.noOfflineFiles"="Nếu bạn lưu các tệp về ngoại tuyến, bạn sẽ có thể truy cập lại khi không có kết nối mạng.";
 /* The subtitle of the No Internet state in Home screen when there are offline files */
-"home.noInternet.subtitle.hasOfflineFiles"="Các mục bạn đã lưu để dùng ngoại tuyến vẫn có sẵn.";
+"home.noInternet.subtitle.hasOfflineFiles"="Các mục bạn đã lưu về ngoại tuyến vẫn có thể dùng được.";
 /* The title of the CTA button in Home screen's No Internet state when offline files are available */
-"home.noInternet.viewOfflineFiles"="Xem tệp ngoại tuyến";
+"home.noInternet.viewOfflineFiles"="Xem các tệp lưu Ngoại Tuyến";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Tệp phụ đề";
 /* The off option in subtitle menu */
@@ -4899,15 +4899,15 @@
 /* Title shown on the preparing overlay while files are being loaded from Photos */
 "mediaImport.preparing.title"="Đang chuẩn bị các mục…";
 /* The add subtitle from Cloud drive option in subtitle menu */
-"videoPlayer.subtitles.menu.addFromCloudDrive"="Lấy tệp phụ đề từ Ổ Mây";
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Lấy tệp phụ đề từ Ổ Mây";
 /* The add subtitle button in subtitle selection page */
-"videoPlayer.subtitles.select.addSubtitle"="Thêm phụ đề";
+"videoPlayer.subtitles.select.addSubtitle"="Thêm phụ đề";
 /* The empty state content in subtitle selection page */
-"videoPlayer.subtitles.select.empty.content"="Tải lên phụ đề ở định dạng SRT lên Drive đám mây của bạn";
+"videoPlayer.subtitles.select.empty.content"="Tải lên phụ đề định dạng SRT lên Ổ Mây của bạn";
 /* The error state title in subtitle selection page */
-"videoPlayer.subtitles.select.error.title"="Không thể thêm phụ đề";
+"videoPlayer.subtitles.select.error.title"="Không thể thêm phụ đề";
 /* The error state content in subtitle selection page */
-"videoPlayer.subtitles.select.error.content"="Có sự cố với tệp phụ đề.\nChọn một tệp phụ đề khác hoặc thử lại.";
+"videoPlayer.subtitles.select.error.content"="Có sự cố với tệp phụ đề.\nChọn một tệp phụ đề khác hoặc thử lại.";
 /* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
 "home.recent.widget.error.message"="Chúng tôi không thể tải hoạt động gần đây của bạn";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
@@ -4944,3 +4944,19 @@
 "settings.transfers.connections.option.higherUsage"="Tốn pin và dữ liệu nhiều hơn";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Phiên truyền tải cần sự chú ý";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Chế độ podcast";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Chế độ nghe nhạc";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ thêm cho lưu trữ, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ đã thưởng thêm vào lưu trữ, có giá trị vĩnh viễn";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Cài ứng dụng MEGA cho máy tính để nhận thêm %1$@ không gian lưu trữ miễn phí, %2$@.\nỨng dụng cho máy tính hiện có sẵn trên Windows, macOS và Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Cài ứng dụng MEGA cho di động để nhận thêm %1$@ không gian lưu trữ miễn phí, %2$@.\nỨng dụng cho di động hiện có sẵn cho iOS và Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Cài một trong các ứng dụng MEGA VPN và bắt đầu hạn dùng thử miễn phí để nhận thêm %1$@ không gian lưu trữ tặng thêm, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Cài một trong các ứng dụng MEGA Pass và bắt đầu hạn dùng thử miễn phí để nhận thêm %1$@ không gian lưu trữ tặng thêm, %2$@";

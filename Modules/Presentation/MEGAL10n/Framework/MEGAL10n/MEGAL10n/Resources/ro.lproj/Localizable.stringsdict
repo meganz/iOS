@@ -3764,5 +3764,23 @@
         <string>%d din [A] pregătite</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bonusul expiră în %d zi.</string>
+        <key>few</key>
+        <string>Bonusul expiră în %d zile.</string>
+        <key>other</key>
+        <string>Bonusul expiră în %d de zile.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

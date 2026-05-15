@@ -4956,3 +4956,7 @@
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Zainstaluj jedną z aplikacji MEGA VPN i rozpocznij darmowy okres próbny, a otrzymasz %1$@ darmowego dodatkowego miejsca na przechowywanie, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Zainstaluj jedną z aplikacji MEGA Pass i skorzystaj z darmowego okresu próbnego, a otrzymasz %1$@ darmową dodatkową przestrzeń dyskową, %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Tryb muzyczny";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Tryb podcastu";

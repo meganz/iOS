@@ -495,9 +495,9 @@
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="相機上傳完成";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="正在上傳中，尚有1個檔案待處理";
+"cameraUploadsPendingFile"="上傳進行中，尚有1個檔案待處理";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="正在上傳中，尚有%lu個檔案待處理";
+"cameraUploadsPendingFiles"="上傳進行中，尚有%lu個檔案待處理";
 /* Timeline title within CU tab */
 "cameraUploads.timeline.title"="時間軸";
 /* Timeline empty with all media filter enable */
@@ -1945,13 +1945,13 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="點擊並按住%@以進行錄製，放開即送出";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="正在通話時無法錄製語音留言。";
+"It is not possible to record voice messages while there is a call in progress"="通話進行中無法錄製語音留言。";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
 "Recording..."="錄音中⋯";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在進行中的通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="正在通話時無法播放影音檔案。";
+"It is not possible to play content while there is a call in progress"="通話進行中無法播放影音檔案。";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="通話開始";
 /* Title for feature Password Reminder */
@@ -3533,13 +3533,13 @@
 /* Device Center backup error: Sync or backup issue, setup again */
 "device.center.backup.error.syncOrBackupSetupAgain"="同步或備份此資料夾時出現問題。停止同步或備份，然後嘗試在桌面應用程式中重新設定，或聯繫客服。";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="無法讀取同步位置。檢查該位置是否可用，而且是否已授予該資料夾位置的權限。";
+"device.center.backup.error.cantReadSyncLocation"="無法讀取同步位置。請檢查該位置是否可用，而且是否已獲得該資料夾位置的存取權限。";
 /* Device Center backup error: Insufficient space for download */
 "device.center.backup.error.insufficientDownloadSpace"="空間不足，無法下載。";
 /* Device Center backup error: Unable to add filesystem watch */
 "device.center.backup.error.addFilesystemWatch"="無法新增檔案系統偵聽。確保有足夠的可用空間和記憶體，並且您已授予資料夾位置的權限。";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="無法與資料夾位置通訊。檢查該位置是否可用，而且是否已授予該資料夾位置的權限。";
+"device.center.backup.error.communicateWithFolderLocation"="無法連線至資料夾位置。請檢查該位置是否可供存取，並確認已獲得該資料夾位置的權限。";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="在雲端硬碟中顯示";
 /* Show in Backups section action title */
@@ -4805,7 +4805,7 @@
 /* Camera Uploads Progress Uploads Complete Subtitle */
 "cameraUploads.progress.uploadsComplete.subtitle"="您拍攝的新照片和影片將顯示在此";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="傳輸進度將顯示在此";
+"cameraUploads.progress.row.emptyInProgress.title"="正在進行中的傳輸將顯示在此";
 /* Camera Uploads Empty In Queue Row title */
 "cameraUploads.progress.row.emptyInQueue.title"="排入佇列的傳輸將顯示在此";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */

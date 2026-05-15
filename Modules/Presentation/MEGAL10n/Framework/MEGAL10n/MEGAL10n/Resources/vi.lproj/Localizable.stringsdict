@@ -2928,5 +2928,19 @@
         <string>Đã sẵn sàng %d trên [A]</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Phần thưởng hết hạn trong %d ngày.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
