@@ -4944,3 +4944,19 @@
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ indirim";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Aktarım müdahale gerektiriyor";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Podcast modu";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Müzik modu";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ ek depolama, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ depolama bonusu uygulandı, kalıcı olarak geçerli";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="MEGA masaüstü uygulamasını yükleyin ve %1$@ ücretsiz ek depolama alanı kazanın, %2$@.\nMasaüstü uygulaması Windows, macOS ve Linux için mevcuttur.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA mobil uygulamalarından birini yükleyin ve %1$@ ücretsiz ek depolama alanı kazanın, %2$@.\nMobil uygulamalar iOS ve Android için mevcuttur.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN uygulamalarından birini yükleyin, ücretsiz deneme başlatın ve %1$@ ücretsiz ek depolama alanı kazanın, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="MEGA Pass uygulamalarından birini yükleyin, ücretsiz deneme başlatın ve %1$@ ücretsiz ek depolama alanı kazanın, %2$@";

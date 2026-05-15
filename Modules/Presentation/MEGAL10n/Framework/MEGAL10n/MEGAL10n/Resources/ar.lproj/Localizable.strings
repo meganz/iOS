@@ -4927,4 +4927,36 @@
 /* Status text shown in the transfer Live Activity when files are being uploaded */
 "transfer.liveActivity.uploadingFiles"="جار ترفيع الملفات";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ إيقاف";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="الإفتراضي";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ مساحة تخزين إضافية، %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="تم تطبيق مكافأة التخزين %@ وستظل صالحة بشكل دائم";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي واحصل على %1$@ من مساحة التخزين الإضافية المجانية، %2$@.\nيتوفر تطبيق الحاسوب المكتبي لويندوز Windows و ماك أو إس macOS و لينكس Linux.";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="اتصالات النقل";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="يحدد الحد الأقصى لعدد الاتصالات المتوازية المستخدمة في عمليات النقل النشطة. قد تسرّع القيم الأعلى عمليات نقل الملفات الكبيرة لكنها تزيد من استهلاك البطارية والذاكرة.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="اتصالات التنزيل";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="اتصالات الرفع";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="الأفضل للشبكات البطيئة";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="زيادة في استهلاك البطارية والبيانات";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="يتطلب النقل الانتباه";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="قم بتثبيت أحد تطبيقات MEGA للجوال واحصل على %1$@ من مساحة التخزين الإضافية المجانية، %2$@.\nالتطبيقات المحمولة متاحة لـ iOS وAndroid.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="قم بتثبيت أحد تطبيقات MEGA VPN وابدأ تجربة مجانية، واحصل على %1$@ من مساحة التخزين الإضافية المجانية، %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="قم بتثبيت أحد تطبيقات MEGA Pass وابدأ تجربة مجانية، واحصل على %1$@ من مساحة التخزين الإضافية المجانية، %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="وضع بودكاست";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="وضع الموسيقى";

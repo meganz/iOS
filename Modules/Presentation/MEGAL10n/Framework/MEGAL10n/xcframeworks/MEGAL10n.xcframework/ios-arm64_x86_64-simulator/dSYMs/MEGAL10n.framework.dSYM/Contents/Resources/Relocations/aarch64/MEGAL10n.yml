@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/jn/Library/Developer/Xcode/DerivedData/MEGAL10n-cznrijzjwvcutfelerhbfvlcgbbg/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
+binary-path:     '/Users/mikecap/Library/Developer/Xcode/DerivedData/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
 relocations:
   - { offset: 0x29D22, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionString, symObjAddr: 0x0, symBinAddr: 0x12D340, symSize: 0x0 }
   - { offset: 0x29D59, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionNumber, symObjAddr: 0x30, symBinAddr: 0x12D370, symSize: 0x0 }

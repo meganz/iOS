@@ -55,7 +55,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>항목 %d개가 제거됨</string>
+        <string>항목 %d개 제거됨</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -2926,6 +2926,20 @@
         <string>d</string>
         <key>other</key>
         <string>[A] 중 %d개 준비됨</string>
+      </dict>
+    </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>보너스가 %d일 후 만료됩니다.</string>
       </dict>
     </dict>
   </dict>

@@ -4923,4 +4923,40 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Tampilkan aktivitas terbaru";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ mati";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Pindahkan koneksi";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Unduh koneksi";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Unggah koneksi";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Default";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Mengunduh berkas";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Mengunggah berkas";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Menetapkan jumlah maksimum koneksi paralel yang digunakan untuk transfer aktif. Nilai yang lebih tinggi dapat mempercepat transfer berkas besar, tetapi meningkatkan penggunaan baterai dan memori.";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Terbaik untuk jaringan yang lambat";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Penggunaan baterai dan data yang lebih tinggi";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Transfer memerlukan perhatian";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ penyimpanan tambahan, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ bonus penyimpanan diterapkan, berlaku secara permanen";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Pasang aplikasi desktop MEGA dan dapatkan %1$@ ruang penyimpanan tambahan gratis, %2$@.\nAplikasi desktop tersedia untuk Windows, macOS dan Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Pasang salah satu aplikasi seluler MEGA dan dapatkan %1$@ ruang penyimpanan tambahan gratis, %2$@.\nAplikasi seluler tersedia untuk iOS dan Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Pasang salah satu aplikasi MEGA VPN dan mulai masa percobaan gratis, dan dapatkan %1$@ ruang penyimpanan tambahan gratis, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Pasang salah satu aplikasi MEGA Pass dan mulai masa percobaan gratis, dan dapatkan %1$@ ruang penyimpanan tambahan gratis, %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Mode Podcast";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Mode Musik";

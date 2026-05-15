@@ -4944,3 +4944,19 @@
 "settings.transfers.connections.option.higherUsage"="Consum mai mare de baterie și trafic de date";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Transferul necesită atenție";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ spațiu de stocare suplimentar, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ bonus de spațiu de stocare aplicat, valabil permanent";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Instalați aplicația desktop MEGA și primiți %1$@ de spațiu de stocare suplimentar gratuit, %2$@.\nAplicația desktop este disponibilă pentru Windows, macOS și Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Instalați una dintre aplicațiile MEGA pentru mobil și obțineți %1$@ de spațiu de stocare suplimentar gratuit, %2$@.\nAplicațiile mobile sunt disponibile pentru iOS și Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Instalați una dintre aplicațiile MEGA VPN și începeți o perioadă de probă gratuită și obțineți %1$@ de spațiu de stocare suplimentar gratuit, %2$@.";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Instalați una dintre aplicațiile MEGA Pass și începeți o perioadă de probă gratuită și obțineți %1$@ de spațiu de stocare suplimentar gratuit, %2$@.";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Mod podcast";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Mod muzică";

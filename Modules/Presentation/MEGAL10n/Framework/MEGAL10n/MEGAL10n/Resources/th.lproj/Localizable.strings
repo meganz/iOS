@@ -4923,4 +4923,40 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="แสดงกิจกรรมล่าสุด";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ ปิด";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="การเชื่อมต่อถ่ายโอนข้อมูล";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="จำนวนการเชื่อมต่อดาวน์โหลด";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="จำนวนการเชื่อมต่ออัปโหลด";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="ค่าเริ่มต้น";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="พื้นที่จัดเก็บเพิ่มเติม %1$@ %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="รับโบนัสพื้นที่จัดเก็บ %@ แล้ว โดยมีผลถาวร";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="ติดตั้งแอปเดสก์ท็อป MEGA เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@ \nแอปเดสก์ท็อปพร้อมใช้งานสำหรับ Windows macOS และ Linux";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA VPN และเริ่มทดลองใช้งานฟรี เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ เป็นเวลา %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA Pass และเริ่มทดลองใช้งานฟรี เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ เป็นเวลา %2$@";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="กำลังดาวน์โหลดไฟล์";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="กำลังอัปโหลดไฟล์";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="ตั้งค่าจำนวนการเชื่อมต่อพร้อมกันสูงสุดที่ใช้สำหรับการถ่ายโอนข้อมูลที่กำลังดำเนินการ ค่าให้มากขึ้นอาจเร่งการถ่ายโอนไฟล์ขนาดใหญ่ได้ แต่จะเพิ่มการใช้แบตเตอรี่และหน่วยความจำ";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="เหมาะที่สุดสำหรับเครือข่ายที่ช้า";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="การใช้แบตเตอรี่และข้อมูลสูงขึ้น";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="การถ่ายโอนต้องการความใส่ใจ";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="ติดตั้งหนึ่งในแอปมือถือ MEGA แล้วรับ %1$@ ของพื้นที่เก็บข้อมูลเพิ่มเติมฟรี, %2$@.\nแอปมือถือมีให้บริการสำหรับ iOS และ Android.";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="โหมดพอดคาสต์";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="โหมดเพลง";

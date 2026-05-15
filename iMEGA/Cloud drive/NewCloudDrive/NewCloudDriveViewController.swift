@@ -40,7 +40,7 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
             audioPlayerManager: audioPlayerManager
         )
     }
-    
+
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,4 +64,19 @@ struct CloudDriveViewModeProvider {
 /// CloudDriveDisplayModeProvider is used for that purpose
 struct CloudDriveDisplayModeProvider {
     let displayMode: () -> DisplayMode?
+}
+
+// MARK: - SnackBarLayoutCustomizable
+extension NewCloudDriveViewController: SnackBarLayoutCustomizable {
+    var additionalSnackBarBottomInset: CGFloat {
+        guard #unavailable(iOS 26),
+              let tabBar = tabBarController?.tabBar,
+              !tabBar.isHidden else {
+            return 0
+        }
+        let tabBarHeight = tabBar.frame.height
+        let safeAreaBottom = tabBarController?.view.safeAreaInsets.bottom ?? 0
+
+        return max(tabBarHeight - safeAreaBottom, 0)
+    }
 }

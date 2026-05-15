@@ -4923,4 +4923,40 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Mostra l'attività recente";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ spento";
+/* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
+"settings.transfers.connections.option.default"="Default";
+/* Status text shown in the transfer Live Activity when files are being downloaded */
+"transfer.liveActivity.downloadingFiles"="Scaricamento dei file";
+/* Status text shown in the transfer Live Activity when files are being uploaded */
+"transfer.liveActivity.uploadingFiles"="Caricamento dei file";
+/* Section header in transfers settings */
+"settings.transfers.connections.title"="Connessioni per il trasferimento";
+/* Description in transfers settings explaining what parallel connections do */
+"settings.transfers.connections.description"="Imposta il numero massimo di connessioni parallele utilizzate per i trasferimenti attivi. Valori più elevati possono accelerare i trasferimenti di file di grandi dimensioni, ma aumentano il consumo di batteria e di memoria.";
+/* Title for the download connections row in transfers settings */
+"settings.transfers.connections.download.title"="Connessioni di download";
+/* Title for the upload connections row in transfers settings */
+"settings.transfers.connections.upload.title"="Connessioni di caricamento";
+/* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
+"settings.transfers.connections.option.bestForSlowNetworks"="Ideale per reti lente";
+/* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
+"settings.transfers.connections.option.higherUsage"="Maggiore consumo di batteria e traffico dati.";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="Il trasferimento richiede attenzione.";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@ spazio di archiviazione extra, %2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@ bonus di archiviazione applicato, valido permanentemente";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="Installa l'app desktop MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nL'app desktop è disponibile per Windows, macOS e Linux.";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installa una delle app mobili MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nLe app mobili sono disponibili per iOS e Android.";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installa una delle app MEGA VPN e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installa una delle app MEGA Pass e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="Modalità podcast";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="Modalità musica";

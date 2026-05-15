@@ -5018,5 +5018,29 @@
         <string>%d من [A] جاهز</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تنتهي صلاحية المكافأة اليوم.</string>
+        <key>one</key>
+        <string>تنتهي صلاحية المكافأة خلال يوم واحد.</string>
+        <key>two</key>
+        <string>تنتهي صلاحية المكافأة خلال يومين.</string>
+        <key>few</key>
+        <string>تنتهي صلاحية المكافأة خلال %d أيام.</string>
+        <key>many</key>
+        <string>تنتهي صلاحية المكافأة خلال %d يومًا.</string>
+        <key>other</key>
+        <string>تنتهي صلاحية المكافأة خلال %d يوم.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -603,7 +603,7 @@ struct CloudDriveViewControllerFactory {
             contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
 
-        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(
+        let (floatingAddButtonViewModel, floatingActionsHandler) = makeFloatingAddButtonViewModel(
             nodeSource: nodeSource, config: config,
             nodeUpdatesProvider: nodeUpdatesProvider,
             searchResultsViewModel: searchResultsVM
@@ -803,6 +803,8 @@ struct CloudDriveViewControllerFactory {
             audioPlayerManager: AudioPlayerManager.shared,
             parentNodeProvider: { nodeSource.parentNode }
         )
+
+        floatingActionsHandler.openLinkRouter = OpenLinkRouter(presenter: vc)
 
         let onContextMenuRefresh: () -> Void = {  [weak nodeBrowserViewModel] in
             Task { @MainActor [weak nodeBrowserViewModel] in
@@ -1240,15 +1242,13 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         searchResultsViewModel: SearchResultsViewModel
-    ) -> FloatingAddButtonViewModel {
+    ) -> (FloatingAddButtonViewModel, FloatingActionsHandler) {
 
         let floatingActionsHandler = FloatingActionsHandler(
             tracker: tracker,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )
-
-        floatingActionsHandler.openLinkRouter = OpenLinkRouter(presenter: navigationController)
 
         let actionProvider = FloatingActionsProvider(actionHandler: floatingActionsHandler)
 
@@ -1262,12 +1262,14 @@ struct CloudDriveViewControllerFactory {
             searchResultsViewStateProvider: viewStateProvider
         )
 
-        return FloatingAddButtonViewModel(
+        let viewModel = FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: actionProvider.actions,
             remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
             analyticsTracker: tracker
         )
+
+        return (viewModel, floatingActionsHandler)
     }
 }
 

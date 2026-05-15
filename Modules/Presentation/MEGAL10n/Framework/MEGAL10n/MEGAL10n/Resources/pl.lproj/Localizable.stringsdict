@@ -3775,9 +3775,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bonus expires in %d day.</string>
-        <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>Bonus wygasa za %d dzień.</string>
+        <key>few</key>
+        <string>Bonus wygasa za %d dni.</string>
+        <key>many</key>
+        <string>Bonus wygasa za %d dni.</string>
       </dict>
     </dict>
   </dict>

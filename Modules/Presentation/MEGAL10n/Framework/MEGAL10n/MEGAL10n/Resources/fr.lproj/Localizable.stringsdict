@@ -3764,5 +3764,23 @@
         <string>%d sur [A] prêts</string>
       </dict>
     </dict>
+    <key>achievementDetails.bonusExpiration.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>NSStringPluralRuleType</string>
+      <key>NSStringFormatSpecTypeKey</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le bonus expire dans %d jour.</string>
+        <key>many</key>
+        <string>Le bonus expire dans %d jours.</string>
+        <key>other</key>
+        <string>Le bonus expire dans %d jours.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -4941,4 +4941,22 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="更高的电量和数据使用量";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ 折扣";
+/* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievements.incomplete.subtitle"="%1$@额外存储空间, 有效期%2$@";
+/* The subtitle in Achievement Details screen, used when the award is permanent */
+"achievementDetails.complete.permanent"="%@额外存储已生效且永久有效";
+/* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.desktopApp.incomplete.explanation.label"="安装MEGA桌面应用，即可获得%1$@的额外免费存储空间，有效期%2$@。\n桌面应用可在Windows、macOS和Linux上使用。";
+/* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
+"transfer.liveActivity.requiresAttention"="传输需要注意";
+/* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.mobileApp.incomplete.explanation.label"="安装一个 MEGA 移动应用即可获得 %1$@ 的额外免费存储空间，%2$@。\n这些移动应用支持 iOS 和 Android。";
+/* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="安装一个 MEGA VPN 应用并开始免费试用，即可获得 %1$@ 的额外免费存储空间，%2$@";
+/* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="安装一个 MEGA Pass 应用并开始免费试用，即可获得 %1$@ 的额外免费存储空间，%2$@";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
+"media.audio.player.podcastMode"="播客模式";
+/* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
+"media.audio.player.musicMode"="音乐模式";
