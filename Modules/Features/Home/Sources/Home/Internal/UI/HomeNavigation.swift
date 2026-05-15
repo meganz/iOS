@@ -16,6 +16,7 @@ final class HomeNavigation: ObservableObject {
     }
 
     func removeLast() {
+        guard !path.isEmpty else { return }
         path.removeLast()
     }
 
