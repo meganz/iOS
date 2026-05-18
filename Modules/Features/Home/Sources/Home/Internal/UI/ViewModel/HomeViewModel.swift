@@ -16,7 +16,7 @@ final class HomeViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
 
     convenience init(
-        homeDeepLink: HomeDeepLink,
+        homeDeepLink: HomeDeepLink
     ) {
         self.init(
             homeDeepLink: homeDeepLink,
@@ -47,6 +47,7 @@ final class HomeViewModel: ObservableObject {
     }
 
     func monitorNetworkConnection() async {
+        isNetworkConnected = networkMonitoringUseCase.isConnected()
         for await connected in networkMonitoringUseCase.connectionSequence {
             isNetworkConnected = connected
         }
