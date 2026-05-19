@@ -7,7 +7,8 @@ import MEGARepo
 @MainActor
 public enum SharedTransferIndicator {
     private static var configuredViewModel: TransferIndicatorViewModel?
-    
+    private static var configuredUseCase: (any TransferIndicatorUseCaseProtocol)?
+
     /// Marks whether the currently stored view model is only a temporary fallback
     /// created before the shared indicator is properly configured. This allows
     /// `configure()` to later replace it with the real implementation.
@@ -15,6 +16,13 @@ public enum SharedTransferIndicator {
 
     /// Whether `configure()` has been called with a real use case.
     public static var isConfigured: Bool { configuredViewModel != nil && !isFallback }
+
+    static var useCase: (any TransferIndicatorUseCaseProtocol)? {
+        if configuredUseCase == nil {
+            assertionFailure("SharedTransferIndicator.useCase accessed before configure() was called.")
+        }
+        return configuredUseCase
+    }
 
     /// Shared Transfer Indicator ViewModel consumed across screens.
     ///
@@ -26,7 +34,9 @@ public enum SharedTransferIndicator {
         }
 
         assertionFailure("SharedTransferIndicator must be configured before use.")
-        let fallback = TransferIndicatorViewModel(useCase: HiddenTransferIndicatorUseCase())
+        let fallbackUseCase = HiddenTransferIndicatorUseCase()
+        let fallback = TransferIndicatorViewModel(useCase: fallbackUseCase)
+        configuredUseCase = fallbackUseCase
         configuredViewModel = fallback
         isFallback = true
         return fallback
@@ -69,6 +79,7 @@ public enum SharedTransferIndicator {
             preferenceUseCase: PreferenceUseCase.default,
             hasPendingUploads: hasPendingUploads
         )
+        configuredUseCase = useCase
 
         let viewModel = TransferIndicatorViewModel(useCase: useCase)
         viewModel.startMonitoring()
@@ -82,6 +93,10 @@ private final class HiddenTransferIndicatorUseCase: TransferIndicatorUseCaseProt
 
     var statePublisher: AnyPublisher<TransferIndicatorEntity, Never> {
         Just(.hidden).eraseToAnyPublisher()
+    }
+
+    var snapshotPublisher: AnyPublisher<TransferStatusSnapshot?, Never> {
+        Just(nil).eraseToAnyPublisher()
     }
 
     func startMonitoring() async {}

@@ -1,38 +1,25 @@
 import SwiftUI
 
 public struct CircularProgressView: View {
-    @State private var animatedProgress: Double = 0
     let progress: Double
-    let progressColor: Color
-    let backgroundColor: Color
-    let progressWidth: CGFloat = 5
+    let tint: Color
+    let lineWidth: CGFloat
 
-    public init(progress: Double, progressColor: Color, backgroundColor: Color) {
+    public init(progress: Double, tint: Color, lineWidth: CGFloat = 2) {
         self.progress = progress
-        self.progressColor = progressColor
-        self.backgroundColor = backgroundColor
+        self.tint = tint
+        self.lineWidth = lineWidth
     }
-    
+
     public var body: some View {
         ZStack {
             Circle()
-                .stroke(backgroundColor, lineWidth: progressWidth)
-            
+                .stroke(tint.opacity(0.3), lineWidth: lineWidth)
             Circle()
-                .trim(from: 0, to: animatedProgress)
-                .stroke(progressColor, lineWidth: progressWidth)
+                .trim(from: 0, to: progress)
+                .stroke(tint, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
-
-            Text("\(progress * 100, specifier: "%.0f")%")
-                .font(Font.system(.title3))
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-                .padding(10)
         }
-        .onAppear {
-            withAnimation(.easeOut.delay(0.3)) {
-                self.animatedProgress = progress
-            }
-        }
+        .padding(lineWidth / 2)
     }
 }

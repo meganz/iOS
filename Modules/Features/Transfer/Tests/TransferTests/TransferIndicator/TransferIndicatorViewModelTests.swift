@@ -123,6 +123,10 @@ private final class MockTransferIndicatorUseCase: TransferIndicatorUseCaseProtoc
         updates
     }
 
+    var snapshotPublisher: AnyPublisher<TransferStatusSnapshot?, Never> {
+        Empty().eraseToAnyPublisher()
+    }
+
     func startMonitoring() async {}
 
     func clearTerminalState() async {}

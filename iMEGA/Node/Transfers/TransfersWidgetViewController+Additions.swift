@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import Transfer
 import UIKit
 
 extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
@@ -37,6 +38,10 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func configProgressIndicator() {
+        if #available(iOS 16.2, *),
+           DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .transferLiveActivity) {
+            TransferLiveActivityCoordinator.shared.startMonitoring()
+        }
         guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne) else { return }
         
         let progressIndicatorView = ProgressIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))

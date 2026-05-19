@@ -1855,6 +1855,7 @@
 		A8ABAD0A2E21076600B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B09DEA29B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
+		A8B1C3712F7D610000772DE0 /* Transfer in Frameworks */ = {isa = PBXBuildFile; productRef = A8B1C3702F7D610000772DE0 /* Transfer */; };
 		A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51ADB27F3534F0030F1EA /* Haptica */; };
@@ -5700,6 +5701,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		A8B1C3582F7D5F0B00772DE0 /* LiveActivity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LiveActivity; sourceTree = "<group>"; };
 		BFB014E82EDABA8F00F600E7 /* MEGAModulesTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MEGAModulesTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -5809,6 +5811,7 @@
 				BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */,
 				6DFC67842CC87957000EA8BC /* MEGASwiftUI in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
+				A8B1C3712F7D610000772DE0 /* Transfer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9393,6 +9396,7 @@
 		83422B1F255984C200D46907 /* MEGAWidget */ = {
 			isa = PBXGroup;
 			children = (
+				A8B1C3582F7D5F0B00772DE0 /* LiveActivity */,
 				835EE35425811D4400D8E3B8 /* QuickAccess */,
 				8337BC56256283AF00F3A81A /* Shortcuts */,
 				83422B562559861600D46907 /* Supporting Files */,
@@ -13973,6 +13977,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				A8B1C3582F7D5F0B00772DE0 /* LiveActivity */,
+			);
 			name = MEGAWidgetExtension;
 			packageProductDependencies = (
 				A828E684286B317F004CED9E /* FirebaseCrashlytics */,
@@ -13981,6 +13988,7 @@
 				BF6149692A9FF39500AB051A /* MEGAL10n */,
 				6DFC67832CC87957000EA8BC /* MEGASwiftUI */,
 				25455BE92CCB8FE0008DE44E /* MEGAAssets */,
+				A8B1C3702F7D610000772DE0 /* Transfer */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -14326,6 +14334,7 @@
 				A5EA941E2EB5EEB2009778D3 /* XCLocalSwiftPackageReference "Modules/Features/Video" */,
 				A5EA941F2EB5EEE4009778D3 /* XCLocalSwiftPackageReference "Modules/Features/PhotosBrowser" */,
 				A8531BDC2EDF0FAB000B267A /* XCLocalSwiftPackageReference "Modules/Features/NodeBackgroundDownloader" */,
+				A8B1C3722F7D610100772DE0 /* XCLocalSwiftPackageReference "Modules/Features/Transfer" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -19111,6 +19120,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Features/NodeBackgroundDownloader;
 		};
+		A8B1C3722F7D610100772DE0 /* XCLocalSwiftPackageReference "Modules/Features/Transfer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/Transfer;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -19561,6 +19574,11 @@
 		A891E8AA29C1E0C40020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASdk;
+		};
+		A8B1C3702F7D610000772DE0 /* Transfer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8B1C3722F7D610100772DE0 /* XCLocalSwiftPackageReference "Modules/Features/Transfer" */;
+			productName = Transfer;
 		};
 		A8B51ADB27F3534F0030F1EA /* Haptica */ = {
 			isa = XCSwiftPackageProductDependency;

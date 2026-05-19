@@ -7,6 +7,11 @@ struct TransferStatusSnapshot: Sendable, Equatable {
     let hasOverquota: Bool
     let isPaused: Bool
     let isCompleted: Bool
+    let activeUploadCount: Int
+    let activeDownloadCount: Int
+    let completedFileCount: Int
+    let totalFileCount: Int
+    let speedBytesPerSecond: Int64
 }
 
 actor TransferProgressTracker {
@@ -19,6 +24,8 @@ actor TransferProgressTracker {
     private var hasCompleted = false
     private var hadTransfers = false
     private var isInitialized = false
+    private var completedFileCount: Int = 0
+    private var totalFileCount: Int = 0
 
     /// Seeds the tracker once from the current transfer inventory so monitoring starts
     /// from the same baseline as existing in-flight transfer work.
@@ -33,6 +40,7 @@ actor TransferProgressTracker {
             partialResult + min(max(transfer.transferredBytes, 0), max(transfer.totalBytes, 0))
         }
         hadTransfers = !filtered.isEmpty
+        totalFileCount = filtered.count
     }
 
     /// Clears the terminal outcome and cumulative byte counters for the current batch.
@@ -47,6 +55,8 @@ actor TransferProgressTracker {
         completedBytes = 0
         totalBytes = 0
         hadTransfers = false
+        completedFileCount = 0
+        totalFileCount = 0
     }
 
     /// Records that a transfer has started as part of the current batch.
@@ -84,12 +94,19 @@ actor TransferProgressTracker {
 
         if transfer.state == .complete {
             hasCompleted = true
+            completedFileCount += 1
             return
         }
 
         if transfer.state == .cancelled || transfer.state == .failed {
             completedBytes = max(0, completedBytes - progressContribution(for: transfer))
             totalBytes = max(0, totalBytes - max(transfer.totalBytes, 0))
+            // Cancellation reflects user intent ("don't count this"), so it's removed
+            // from the total. Failure stays in the total so the visible gap is explained
+            // by the error status icon ("0 of 1" reads as "the 1 thing I tried, failed").
+            if transfer.state == .cancelled {
+                totalFileCount = max(0, totalFileCount - 1)
+            }
         }
 
         guard transfer.state == .failed, let lastErrorExtended = transfer.lastErrorExtended else {
@@ -120,6 +137,7 @@ actor TransferProgressTracker {
         } else {
             totalBytes += max(transfer.totalBytes, 0)
             completedBytes += progressContribution(for: transfer)
+            totalFileCount += 1
         }
 
         activeTransfers[transfer.tag] = transfer
@@ -144,27 +162,79 @@ actor TransferProgressTracker {
 
         if transfers.isEmpty {
             if hasError {
-                return TransferStatusSnapshot(progress: 1, hasError: true, hasOverquota: false, isPaused: false, isCompleted: false)
+                return TransferStatusSnapshot(
+                    progress: 1,
+                    hasError: true,
+                    hasOverquota: false,
+                    isPaused: false,
+                    isCompleted: false,
+                    activeUploadCount: 0,
+                    activeDownloadCount: 0,
+                    completedFileCount: completedFileCount,
+                    totalFileCount: totalFileCount,
+                    speedBytesPerSecond: 0
+                )
             } else if hasOverquota {
-                return TransferStatusSnapshot(progress: 1, hasError: false, hasOverquota: true, isPaused: false, isCompleted: false)
+                return TransferStatusSnapshot(
+                    progress: 1,
+                    hasError: false,
+                    hasOverquota: true,
+                    isPaused: false,
+                    isCompleted: false,
+                    activeUploadCount: 0,
+                    activeDownloadCount: 0,
+                    completedFileCount: completedFileCount,
+                    totalFileCount: totalFileCount,
+                    speedBytesPerSecond: 0
+                )
             } else if hasCompleted {
                 if hasPendingUploads {
-                    return TransferStatusSnapshot(progress: 1, hasError: false, hasOverquota: false, isPaused: false, isCompleted: false)
+                    return TransferStatusSnapshot(
+                        progress: 1,
+                        hasError: false,
+                        hasOverquota: false,
+                        isPaused: false,
+                        isCompleted: false,
+                        activeUploadCount: 0,
+                        activeDownloadCount: 0,
+                        completedFileCount: completedFileCount,
+                        totalFileCount: totalFileCount,
+                        speedBytesPerSecond: 0
+                    )
                 }
-                return TransferStatusSnapshot(progress: 1, hasError: false, hasOverquota: false, isPaused: false, isCompleted: true)
+                return TransferStatusSnapshot(
+                    progress: 1,
+                    hasError: false,
+                    hasOverquota: false,
+                    isPaused: false,
+                    isCompleted: true,
+                    activeUploadCount: 0,
+                    activeDownloadCount: 0,
+                    completedFileCount: completedFileCount,
+                    totalFileCount: totalFileCount,
+                    speedBytesPerSecond: 0
+                )
             } else {
                 return nil
             }
         }
 
         let progress = calculateProgress()
+        let activeUploadCount = transfers.filter { $0.type == .upload }.count
+        let activeDownloadCount = transfers.filter { $0.type == .download }.count
+        let aggregateSpeed = max(0, transfers.reduce(Int64(0)) { $0 + Int64($1.speed) })
 
         return TransferStatusSnapshot(
             progress: progress,
             hasError: hasError,
             hasOverquota: hasOverquota,
             isPaused: isGloballyPaused,
-            isCompleted: false
+            isCompleted: false,
+            activeUploadCount: activeUploadCount,
+            activeDownloadCount: activeDownloadCount,
+            completedFileCount: completedFileCount,
+            totalFileCount: totalFileCount,
+            speedBytesPerSecond: aggregateSpeed
         )
     }
 

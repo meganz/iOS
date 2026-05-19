@@ -6,6 +6,7 @@ import MEGAPreference
 protocol TransferIndicatorUseCaseProtocol: AnyObject, Sendable {
     var currentState: TransferIndicatorEntity { get }
     var statePublisher: AnyPublisher<TransferIndicatorEntity, Never> { get }
+    var snapshotPublisher: AnyPublisher<TransferStatusSnapshot?, Never> { get }
     func startMonitoring() async
     func clearTerminalState() async
 }
@@ -18,18 +19,24 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
     private let hasPendingUploads: @Sendable () -> Bool
     private let tracker = TransferProgressTracker()
     private let stateSubject = CurrentValueSubject<TransferIndicatorEntity, Never>(.hidden)
+    private let snapshotSubject = CurrentValueSubject<TransferStatusSnapshot?, Never>(nil)
 
-    public var currentState: TransferIndicatorEntity {
+    var currentState: TransferIndicatorEntity {
         stateSubject.value
     }
 
-    public var statePublisher: AnyPublisher<TransferIndicatorEntity, Never> {
+    var statePublisher: AnyPublisher<TransferIndicatorEntity, Never> {
         stateSubject
             .removeDuplicates()
             .eraseToAnyPublisher()
     }
 
-    public init(
+    var snapshotPublisher: AnyPublisher<TransferStatusSnapshot?, Never> {
+        snapshotSubject
+            .eraseToAnyPublisher()
+    }
+
+    init(
         transferCounterUseCase: some TransferCounterUseCaseProtocol,
         transferInventoryUseCase: some TransferInventoryUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
@@ -47,7 +54,7 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
     ///
     /// The use case owns the latest state and publishes it through `statePublisher`,
     /// so multiple screens can observe the same source of truth passively.
-    public func startMonitoring() async {
+    func startMonitoring() async {
         let transferCounterUseCase = transferCounterUseCase
         let transferInventoryUseCase = transferInventoryUseCase
         let accountStorageUseCase = accountStorageUseCase
@@ -55,18 +62,18 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
         let hasPendingUploads = hasPendingUploads
         let tracker = tracker
         let stateSubject = stateSubject
+        let snapshotSubject = snapshotSubject
 
         let publishLatestState: @Sendable () async -> Void = {
             let transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true)
             await tracker.initializeIfNeeded(with: transfers)
             let isPaused: Bool = preferenceUseCase[PreferenceKeyEntity.transfersPaused.rawValue] ?? false
-            let entity = Self.makeEntity(
-                from: await tracker.snapshot(
-                    isGloballyPaused: isPaused,
-                    hasPendingUploads: hasPendingUploads()
-                )
+            let snapshot = await tracker.snapshot(
+                isGloballyPaused: isPaused,
+                hasPendingUploads: hasPendingUploads()
             )
-            stateSubject.send(entity)
+            snapshotSubject.send(snapshot)
+            stateSubject.send(Self.makeEntity(from: snapshot))
         }
 
         let transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true)
@@ -142,13 +149,12 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
         let transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true)
         await tracker.initializeIfNeeded(with: transfers)
         let isPaused: Bool = preferenceUseCase[PreferenceKeyEntity.transfersPaused.rawValue] ?? false
-        let entity = Self.makeEntity(
-            from: await tracker.snapshot(
-                isGloballyPaused: isPaused,
-                hasPendingUploads: hasPendingUploads()
-            )
+        let snapshot = await tracker.snapshot(
+            isGloballyPaused: isPaused,
+            hasPendingUploads: hasPendingUploads()
         )
-        stateSubject.send(entity)
+        snapshotSubject.send(snapshot)
+        stateSubject.send(Self.makeEntity(from: snapshot))
     }
 
     /// Converts the internal aggregate tracker snapshot into the externally visible
@@ -172,7 +178,7 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
     }
 
     /// Clears the current terminal batch state after presentation has consumed it.
-    public func clearTerminalState() async {
+    func clearTerminalState() async {
         await tracker.clearTerminalState()
         await publishLatestState()
     }
