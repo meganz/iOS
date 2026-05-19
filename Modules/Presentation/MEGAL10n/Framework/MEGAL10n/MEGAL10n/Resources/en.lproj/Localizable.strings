@@ -2976,6 +2976,20 @@
 "transfers.cancellable.donotclose"="Don’t close the app. If you close, transfers not yet queued will be lost.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer cancelled";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Active";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Completed";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Failed";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="No transfers";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="No active transfers";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="No completed transfers";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="No failed transfers";
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Report issue";
 /* Title of the dialog button to discard a report. */

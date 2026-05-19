@@ -32,6 +32,7 @@ let package = Package(
                 "MEGAL10n",
                 "MEGAPreference",
                 "MEGAAssets",
+                "MEGAL10n",
                 "MEGARepo",
                 "MEGADesignToken"
             ]

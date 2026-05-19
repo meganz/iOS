@@ -308,4 +308,7 @@ public struct MEGAImageBundle {
     public static var alertCircleSmallRegularSolid: Image { Image(.alertCircleSmallRegularSolid) }
     public static var checkSmallRegularOutline: Image { Image(.checkSmallRegularOutline) }
     public static var slidersVertical: Image { Image(.slidersVertical) }
+    public static var newTransfersEmptyState: Image { Image(.newTransfersEmptyState) }
+    public static var pauseMediumThinOutline: Image { Image(.pauseMediumThinOutline) }
+    public static var moreVerticalMediumThinOutline: Image { Image(.moreVerticalMediumThinOutline) }
 }

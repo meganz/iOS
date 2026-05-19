@@ -940,6 +940,15 @@ public struct MEGAImageBundle {
   public static var slidersVertical: SwiftUICore.Image {
     get
   }
+  public static var newTransfersEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var pauseMediumThinOutline: SwiftUICore.Image {
+    get
+  }
+  public static var moreVerticalMediumThinOutline: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

@@ -325,6 +325,9 @@ extension MEGAAssets {
         public static var alertTriangleSmallRegularSolid: SwiftUI.Image { MEGAImageBundle.alertTriangleSmallRegularSolid }
         public static var alertCircleSmallRegularSolid: SwiftUI.Image { MEGAImageBundle.alertCircleSmallRegularSolid }
         public static var checkSmallRegularOutline: SwiftUI.Image { MEGAImageBundle.checkSmallRegularOutline }
+        public static var newTransfersEmptyState: SwiftUI.Image { MEGAImageBundle.newTransfersEmptyState }
+        public static var pauseMediumThinOutline: SwiftUI.Image { MEGAImageBundle.pauseMediumThinOutline }
+        public static var moreVerticalMediumThinOutline: SwiftUI.Image { MEGAImageBundle.moreVerticalMediumThinOutline }
     }
 }
 

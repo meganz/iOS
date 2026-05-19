@@ -4941,6 +4941,17 @@ public enum Strings {
           public static func count(_ p1: Any, _ p2: Any) -> Swift.String
         }
       }
+      public enum EmptyState {
+        public static let noActiveTransfers: Swift.String
+        public static let noCompletedTransfers: Swift.String
+        public static let noFailedTransfers: Swift.String
+        public static let noTransfers: Swift.String
+      }
+      public enum Tab {
+        public static let active: Swift.String
+        public static let completed: Swift.String
+        public static let failed: Swift.String
+      }
     }
     public enum UpgradeAccountPlan {
       public enum Button {
