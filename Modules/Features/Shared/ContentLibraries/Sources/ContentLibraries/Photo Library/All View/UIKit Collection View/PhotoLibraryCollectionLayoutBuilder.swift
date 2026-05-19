@@ -17,7 +17,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     }
     
     func buildLayout() -> UICollectionViewLayout {
-        if isAlbumMode && isMediaRevampEnabled && !zoomState.isSingleColumn {
+        if isAlbumMode && AlbumLayoutGate.isMasonryLayoutEnabled && !zoomState.isSingleColumn {
             return buildMasonryLayout()
         } else if zoomState.isSingleColumn {
             return buildSingleColumnLayout()
@@ -166,7 +166,11 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     }
     
     private func isFirstSection(_ sectionIndex: Int) -> Bool {
-        isMediaRevampEnabled && sectionIndex == 0
+        // The first section uses a placeholder header so its date is rendered by
+        // the pinned global zoom header instead. Without a global header (e.g. the
+        // rolled-back album view) there is no other surface to show the date, so
+        // it must keep its real header.
+        isMediaRevampEnabled && photoGlobalHeaderType != .none && sectionIndex == 0
     }
     
     private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, isFirstSection: Bool) {

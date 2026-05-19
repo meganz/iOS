@@ -131,7 +131,7 @@ final class AlbumContentViewModel: ViewModelType {
     }()
     
     var photoSectionHeaderType: PhotoSectionHeaderType {
-        isMediaRevampEnabled ? .sort(headerSortViewModel) : .photoDate
+        AlbumLayoutGate.isMasonryLayoutEnabled ? .sort(headerSortViewModel) : .photoDate
     }
     
     // MARK: - Init
@@ -256,6 +256,13 @@ final class AlbumContentViewModel: ViewModelType {
     
     var isMediaRevampEnabled: Bool {
         remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
+    }
+
+    /// In rolled-back layout the right-bar action surface is the legacy `UIMenu`
+    /// (sort/filter/quick actions all live in one tree). The new more-button bottom
+    /// sheet is only used together with the masonry layout.
+    var usesLegacyContextMenu: Bool {
+        !AlbumLayoutGate.isMasonryLayoutEnabled
     }
     
     // MARK: Private

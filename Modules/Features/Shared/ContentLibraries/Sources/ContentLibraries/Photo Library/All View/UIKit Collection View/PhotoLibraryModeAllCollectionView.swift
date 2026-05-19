@@ -17,15 +17,11 @@ struct PhotoLibraryModeAllCollectionView: View {
         }
     }
 
-    private var isMediaRevampEnabled: Bool {
-        ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
-
     var body: some View {
         ZStack(alignment: .topTrailing) {
             PhotoLibraryCollectionViewRepresenter(viewModel: viewModel, router: router)
                 .ignoresSafeArea(edges: isLiquidGlassSupported ? .vertical : .bottom)
-            if !isMediaRevampEnabled {
+            if viewModel.shouldShowZoomControl {
                 PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
                     .offset(by: viewModel.photoZoomControlPositionTracker)
             }

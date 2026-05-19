@@ -96,16 +96,24 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
             let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-            let isFirstSection = isMediaRevampEnabled && indexPath.section == 0
-            
+            // First section is rendered as an empty placeholder only when the global zoom header
+            // is showing the date in its place. Without a global header (e.g. the rolled-back album
+            // view) the section must keep its own date label.
+            let isFirstSection = isMediaRevampEnabled
+                && representer.globalHeaderType != .none
+                && indexPath.section == 0
+
             // Disable interaction so pinned section headers don't intercept touches meant for the global zoom header above them.
             header.isUserInteractionEnabled = representer.globalHeaderType != .dateAndZoom
+            let isAlbumRollback = representer.contentMode == .album && !AlbumLayoutGate.isMasonryLayoutEnabled
             header.contentConfiguration = UIHostingConfiguration {
-                // First section uses a placeholder header (invisible) when media revamp is enabled
                 if isFirstSection {
                     EmptyView()
                 } else {
-                    PhotoSectionHeader(section: photoLibraryDataSource[indexPath.section])
+                    PhotoSectionHeader(
+                        section: photoLibraryDataSource[indexPath.section],
+                        useLegacyStyle: isAlbumRollback
+                    )
                 }
             }
             .margins(.all, 0)

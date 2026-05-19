@@ -41,7 +41,11 @@ extension AlbumContentViewController {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
             var rightBarButtonItems = [UIBarButtonItem]()
-            if viewModel.isMediaRevampEnabled {
+            if viewModel.usesLegacyContextMenu {
+                if let contextMenuBarButton = makeContextMenuBarButton(contextMenuConfiguration: contextMenuConfiguration) {
+                    rightBarButtonItems.append(contextMenuBarButton)
+                }
+            } else {
                 let button = UIBarButtonItem(
                     image: MEGAAssets.UIImage.moreNavigationBar,
                     primaryAction: UIAction { [weak viewModel] _ in
@@ -49,8 +53,6 @@ extension AlbumContentViewController {
                     })
                 button.tintColor = TokenColors.Text.primary
                 rightBarButtonItems.append(button)
-            } else if let contextMenuBarButton = makeContextMenuBarButton(contextMenuConfiguration: contextMenuConfiguration) {
-                rightBarButtonItems.append(contextMenuBarButton)
             }
             if canAddPhotosToAlbum {
                 rightBarButtonItems.append(addToAlbumBarButtonItem)

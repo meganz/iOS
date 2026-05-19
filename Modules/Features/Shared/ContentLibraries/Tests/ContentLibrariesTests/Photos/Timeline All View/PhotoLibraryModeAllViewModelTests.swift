@@ -505,7 +505,7 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
     // MARK: - Tests for masonry layout section selection
 
     @MainActor
-    func testInit_whenMediaRevampEnabledAndAlbumMode_usesMasonrySection() throws {
+    func testInit_whenAlbumModeWhileLayoutGateRolledBack_usesDateSections() throws {
         // Arrange
         let nodes = [
             NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date),
@@ -522,7 +522,7 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         )
 
         // Assert
-        XCTAssertEqual(sut.photoCategoryList.count, 1, "Should use single masonry section for album mode with media revamp")
+        XCTAssertGreaterThan(sut.photoCategoryList.count, 1, "Album rollback should use date sections regardless of media revamp")
     }
 
     @MainActor
@@ -568,7 +568,7 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testSubscribeToLibraryChange_whenLibraryUpdates_usesMasonrySection() async throws {
+    func testSubscribeToLibraryChange_whenLibraryUpdatesWhileLayoutGateRolledBack_usesDateSections() async throws {
         // Arrange
         let nodes = [
             NodeEntity(name: "0.jpg", handle: 0, modificationTime: try "2025-09-01T22:01:04Z".date)
@@ -593,7 +593,7 @@ final class PhotoLibraryModeAllCollectionViewModelTests: XCTestCase {
         let subscription = sut.$photoCategoryList
             .dropFirst()
             .sink { sections in
-                XCTAssertEqual(sections.count, 1, "Should still use single masonry section after library update")
+                XCTAssertGreaterThan(sections.count, 1, "Album rollback should keep date sections after library update")
                 expectation.fulfill()
             }
 

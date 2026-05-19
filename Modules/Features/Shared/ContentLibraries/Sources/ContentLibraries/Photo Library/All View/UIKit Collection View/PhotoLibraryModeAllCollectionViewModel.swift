@@ -11,6 +11,13 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
 
     private let isMediaRevampEnabled: Bool
 
+    /// Pre-revamp behaviour kept the +/- zoom control in the top-trailing corner. The
+    /// rolled-back Album also needs it back, even while `iosMediaRevamp` is still on.
+    var shouldShowZoomControl: Bool {
+        let isAlbumRollback = libraryViewModel.contentMode == .album && !AlbumLayoutGate.isMasonryLayoutEnabled
+        return !isMediaRevampEnabled || isAlbumRollback
+    }
+
     init(
         libraryViewModel: PhotoLibraryContentViewModel,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
@@ -27,7 +34,7 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
         subscribeToZoomStateChange()
 
         let isAlbumMode = libraryViewModel.contentMode == .album
-        if isAlbumMode && isMediaRevampEnabled && !zoomState.isSingleColumn {
+        if isAlbumMode && AlbumLayoutGate.isMasonryLayoutEnabled && !zoomState.isSingleColumn {
             photoCategoryList = [libraryViewModel.library.photoMasonrySection]
         }
     }
@@ -42,8 +49,7 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
             .map { [weak self] library in
                 guard let self else { return [] }
 
-                // Only use masonry layout for album mode when media revamp is enabled
-                if isAlbumMode && self.isMediaRevampEnabled && !self.zoomState.isSingleColumn {
+                if isAlbumMode && AlbumLayoutGate.isMasonryLayoutEnabled && !self.zoomState.isSingleColumn {
                     return [library.photoMasonrySection]
                 }
                 return library.photoDateSections(for: self.zoomState.scaleFactor)

@@ -7,6 +7,16 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
     @Environment(\.colorScheme) private var colorScheme
     
     let section: T
+    /// When true, render the pre-MediaRevamp pill-shaped header (rounded background
+    /// behind the date). Caller decides — e.g. the rolled-back Album sets this to
+    /// `true` so the section keeps its legacy look while the rest of the app still
+    /// follows the `iosMediaRevamp` flag.
+    let useLegacyStyle: Bool
+
+    init(section: T, useLegacyStyle: Bool = false) {
+        self.section = section
+        self.useLegacyStyle = useLegacyStyle
+    }
     
     private var backgroundColor: Color {
         colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI
@@ -16,9 +26,13 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
         ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
     }
 
+    private var shouldUseRevampStyle: Bool {
+        isMediaRevampEnabled && !useLegacyStyle
+    }
+    
     var body: some View {
         HStack {
-            if isMediaRevampEnabled {
+            if shouldUseRevampStyle {
                 Text(section.title)
                     .font(.subheadline)
                     .foregroundColor(TokenColors.Text.primary.swiftUI)

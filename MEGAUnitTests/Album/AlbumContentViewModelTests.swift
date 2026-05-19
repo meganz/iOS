@@ -773,23 +773,14 @@ struct AlbumContentViewModelTestSuite {
     
     @MainActor
     struct PhotoSectionHeader {
-        @Test
-        func legacyFlow_usesPhotoDateHeader() {
+        // While AlbumLayoutGate.isMasonryLayoutEnabled is `false` the album rollback
+        // forces the legacy photoDate header regardless of the iosMediaRevamp flag.
+        @Test(arguments: [false, true])
+        func usesPhotoDateHeaderWhileRolledBack(isMediaRevampEnabled: Bool) {
             let sut = makeSUT(
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: false]))
-            
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled]))
+
             #expect(sut.photoSectionHeaderType == .photoDate)
-        }
-        
-        @Test
-        func revampFlow_usesSortHeader() {
-            let sut = makeSUT(
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
-            
-            guard case .sort = sut.photoSectionHeaderType else {
-                Issue.record("Expected sort header when media revamp is enabled")
-                return
-            }
         }
     }
     
