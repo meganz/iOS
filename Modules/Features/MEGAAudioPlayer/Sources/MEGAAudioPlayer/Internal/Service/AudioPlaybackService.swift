@@ -1,16 +1,19 @@
 import Combine
 import Foundation
+import MEGADomain
 import SwiftUI
 
 /// Single state projection the VM subscribes to. Bundling avoids declaring a
-/// dozen separate publishers on the service protocol.
+/// dozen separate publishers on the service protocol. 
 struct AudioPlaybackState {
+    var currentSource: PlaybackSource
+    var currentNode: NodeEntity? { currentSource.primaryNode }
 }
 
 /// App-level audio service abstraction.
 @MainActor
 protocol AudioPlaybackServiceProtocol: AnyObject {
-    var statePublisher: AnyPublisher<AudioPlaybackState, Never> { get }
+    var statePublisher: AnyPublisher<AudioPlaybackState?, Never> { get }
 
     func play(source: PlaybackSource)
 }
@@ -22,9 +25,9 @@ protocol AudioPlaybackServiceProtocol: AnyObject {
 final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     static let shared = AudioPlaybackService()
 
-    private let stateSubject = CurrentValueSubject<AudioPlaybackState, Never>(.init())
+    private let stateSubject = CurrentValueSubject<AudioPlaybackState?, Never>(nil)
 
-    var statePublisher: AnyPublisher<AudioPlaybackState, Never> {
+    var statePublisher: AnyPublisher<AudioPlaybackState?, Never> {
         stateSubject.eraseToAnyPublisher()
     }
 
@@ -32,5 +35,8 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
 
     func play(source: PlaybackSource) {
         // Engine not wired yet — to be implemented in the engine-migration sprint.
+        // Until then, project the source into state so the VM (and three-dot
+        // actions menu) has enough context to build the right action sheet.
+        stateSubject.value = AudioPlaybackState(currentSource: source)
     }
 }

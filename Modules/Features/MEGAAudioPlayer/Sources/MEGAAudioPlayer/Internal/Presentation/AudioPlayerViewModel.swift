@@ -8,6 +8,24 @@ final class AudioPlayerViewModel: ObservableObject {
     // now; later: minimize to mini player). VM stays UI-agnostic — just forwards.
     var onDismiss: (() -> Void)?
 
+    // Router-injected callback for the three-dot button. Router owns presenting
+    // the legacy NodeActionViewController; VM only forwards the current source
+    // so the new player module stays free of UIKit action-sheet dependencies.
+    // Source (not just node) is forwarded so the host can branch between
+    // cloud/folder/chat → NodeActionViewController and fileLink →
+    // FileLinkActionViewControllerDelegate; offline never reaches the host
+    // because the ellipsis is hidden in that case.
+    var onMoreTap: ((PlaybackSource) -> Void)?
+
+    @Published private(set) var currentSource: PlaybackSource?
+
+    /// `true` when the three-dot menu should be hidden — matches the legacy
+    /// player which hides `moreButton` for offline playback.
+    var isActionsMenuHidden: Bool {
+        if case .offlineFiles = currentSource { return true }
+        return currentSource == nil
+    }
+
     private let service: (any AudioPlaybackServiceProtocol)?
     private var cancellables: Set<AnyCancellable> = []
 
@@ -32,10 +50,16 @@ final class AudioPlayerViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    private func apply(state: AudioPlaybackState) {
+    private func apply(state: AudioPlaybackState?) {
+        currentSource = state?.currentSource
     }
 
     func dismiss() {
         onDismiss?()
+    }
+
+    func didTapMore() {
+        guard let currentSource else { return }
+        onMoreTap?(currentSource)
     }
 }

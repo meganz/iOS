@@ -86,7 +86,7 @@ extension OfflineViewController {
                 source = nil
             }
             if let source {
-                MEGAAudioPlayerViewRouter(presenter: self).start(source: source)
+                MEGAAudioPlayerViewRouter(presenter: self, actionsHandler: MEGAAudioPlayerActionsHandler.make()).start(source: source)
             }
             return
         }

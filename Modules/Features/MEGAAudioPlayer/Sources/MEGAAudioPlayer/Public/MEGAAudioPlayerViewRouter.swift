@@ -5,28 +5,51 @@ import UIKit
 ///
 /// Host app usage:
 /// ```swift
-/// let router = MEGAAudioPlayerViewRouter(presenter: self)
+/// let router = MEGAAudioPlayerViewRouter(presenter: self, actionsHandler: handler)
 /// router.start(source: .cloudNode(node: node, queue: queue))     // start new playback
 /// router.showCurrent()                                            // expand mini → full
 /// ```
 @MainActor
 public final class MEGAAudioPlayerViewRouter {
+    /// Invoked when the user taps the three-dot button. The host app
+    /// builds and presents the appropriate action sheet from `hostVC`:
+    /// - `.cloudNode` / `.folderLink` / `.chatMessage` / `.searchResult` →
+    ///   legacy `NodeActionViewController` with the generic delegate.
+    /// - `.fileLink` → `NodeActionViewController` with
+    ///   `FileLinkActionViewControllerDelegate`.
+    /// - `.offlineFiles` → never fires (the player hides the three-dot button
+    ///   for offline playback, matching legacy behaviour).
+    public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ source: PlaybackSource) -> Void
+
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
+    private let actionsHandler: ActionsHandler?
 
     /// Public entry point. Constructs the router with the shared
     /// `AudioPlaybackService` (singleton). Callers from outside the module use
     /// only this initialiser.
-    public convenience init(presenter: UIViewController?) {
-        self.init(presenter: presenter, service: AudioPlaybackService.shared)
+    public convenience init(
+        presenter: UIViewController?,
+        actionsHandler: ActionsHandler? = nil
+    ) {
+        self.init(
+            presenter: presenter,
+            service: AudioPlaybackService.shared,
+            actionsHandler: actionsHandler
+        )
     }
 
     /// Internal designated initialiser. The `service` parameter is `internal`
     /// because `AudioPlaybackServiceProtocol` (and its concrete type) are
     /// internal to the module — used by tests/previews to inject a mock.
-    init(presenter: UIViewController?, service: any AudioPlaybackServiceProtocol) {
+    init(
+        presenter: UIViewController?,
+        service: any AudioPlaybackServiceProtocol,
+        actionsHandler: ActionsHandler? = nil
+    ) {
         self.presenter = presenter
         self.service = service
+        self.actionsHandler = actionsHandler
     }
 
     /// Start (or replace) playback with the given source and present the
@@ -61,6 +84,12 @@ public final class MEGAAudioPlayerViewRouter {
         // the reliable path.
         vm.onDismiss = { [weak host] in
             host?.dismiss(animated: true)
+        }
+
+        let actionsHandler = self.actionsHandler
+        vm.onMoreTap = { [weak host] source in
+            guard let host, let actionsHandler else { return }
+            actionsHandler(host, source)
         }
 
         // Wrap in a UIKit UINavigationController so SwiftUI's `ToolbarItem(placement:)`

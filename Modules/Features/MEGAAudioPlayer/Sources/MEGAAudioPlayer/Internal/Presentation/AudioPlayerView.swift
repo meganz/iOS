@@ -19,9 +19,12 @@ struct AudioPlayerView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                } label: {
-                    Image(systemName: "ellipsis")
+                if !vm.isActionsMenuHidden {
+                    Button {
+                        vm.didTapMore()
+                    } label: {
+                        Image(systemName: "ellipsis")
+                    }
                 }
             }
         }
