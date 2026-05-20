@@ -328,6 +328,7 @@ extension MEGAAssets {
         public static var newTransfersEmptyState: SwiftUI.Image { MEGAImageBundle.newTransfersEmptyState }
         public static var pauseMediumThinOutline: SwiftUI.Image { MEGAImageBundle.pauseMediumThinOutline }
         public static var moreVerticalMediumThinOutline: SwiftUI.Image { MEGAImageBundle.moreVerticalMediumThinOutline }
+        public static var audioIcon: SwiftUI.Image { MEGAImageBundle.audioIcon }
     }
 }
 
@@ -799,5 +800,6 @@ extension MEGAAssets {
         public static var transfersSettings: UIKit.UIImage { MEGAUIImageBundle.transfersSettings }
         public static var link02MediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.link02MediumThinOutline }
         public static var slidersVertical: UIKit.UIImage { MEGAUIImageBundle.slidersVertical }
+        public static var audioIcon: UIKit.UIImage { MEGAUIImageBundle.audioIcon }
     }
 }

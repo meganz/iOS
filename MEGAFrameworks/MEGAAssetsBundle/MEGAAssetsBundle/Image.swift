@@ -311,4 +311,5 @@ public struct MEGAImageBundle {
     public static var newTransfersEmptyState: Image { Image(.newTransfersEmptyState) }
     public static var pauseMediumThinOutline: Image { Image(.pauseMediumThinOutline) }
     public static var moreVerticalMediumThinOutline: Image { Image(.moreVerticalMediumThinOutline) }
+    public static var audioIcon: Image { Image(.audioIcon) }
 }
