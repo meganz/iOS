@@ -28,7 +28,7 @@ public struct PlanHeaderTagView: View {
         case .introOffer:
             guard let percentage = plan.introDiscountPercentage else { return "" }
             return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.generalDeal("\(percentage)%")
-        case .none:
+        case .noTag:
             return ""
         }
     }
@@ -38,16 +38,16 @@ public struct PlanHeaderTagView: View {
         case .currentPlan: currentPlanTagColor
         case .recommended: recommendedPlanTagColor
         case .introOffer: TokenColors.Button.brand.swiftUI
-        case .none: .clear
+        case .noTag: .clear
         }
     }
-    
+
     private var planTagTextColor: Color {
         switch planTag {
         case .currentPlan: TokenColors.Text.warning.swiftUI
         case .recommended: TokenColors.Text.info.swiftUI
         case .introOffer: TokenColors.Text.onColor.swiftUI
-        case .none: .clear
+        case .noTag: .clear
         }
     }
 }

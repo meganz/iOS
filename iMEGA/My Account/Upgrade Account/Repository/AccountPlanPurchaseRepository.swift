@@ -97,7 +97,8 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
                 transfer: transferGB(atProductIndex: index),
                 apiPrice: price(atProductIndex: index),
                 apiCurrencyCode: purchase.currency.localCurrencyName,
-                useAPIPrice: useAPIPrice
+                useAPIPrice: useAPIPrice,
+                mobileOfferLabel: mobileOfferLabel(atProductIndex: index)
             )
             accountPlans.append(plan)
         }
@@ -120,6 +121,10 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
 
         let localPriceInCents = Decimal(pricing.localPrice(atProductIndex: index))
         return localPriceInCents / 100.0
+    }
+
+    private func mobileOfferLabel(atProductIndex index: Int) -> String? {
+        purchase.pricing?.mobileOfferLabel(atProductIndex: index)
     }
 
     func startMonitoringSubmitReceiptAfterPurchase() {

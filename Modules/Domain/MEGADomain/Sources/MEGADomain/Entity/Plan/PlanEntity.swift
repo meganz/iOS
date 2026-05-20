@@ -26,6 +26,7 @@ public struct PlanEntity: Sendable {
     public var appStorePrice: PlanPriceEntity
 
     public var introductoryOffer: IntroductoryOfferEntity?
+    public var mobileOfferLabel: String?
 
     public var price: Decimal { appStorePrice.price }
     public var formattedPrice: String { appStorePrice.formattedPrice }
@@ -91,7 +92,8 @@ public struct PlanEntity: Sendable {
         transfer: String = "",
         price: Decimal = 0,
         formattedPrice: String = "",
-        introductoryOffer: IntroductoryOfferEntity? = nil
+        introductoryOffer: IntroductoryOfferEntity? = nil,
+        mobileOfferLabel: String? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -106,6 +108,7 @@ public struct PlanEntity: Sendable {
             currency: currency
         )
         self.introductoryOffer = introductoryOffer
+        self.mobileOfferLabel = mobileOfferLabel
     }
 
     public init(
@@ -118,7 +121,8 @@ public struct PlanEntity: Sendable {
         transfer: String = "",
         apiPrice: PlanPriceEntity? = nil,
         appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
-        introductoryOffer: IntroductoryOfferEntity? = nil
+        introductoryOffer: IntroductoryOfferEntity? = nil,
+        mobileOfferLabel: String? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -130,6 +134,7 @@ public struct PlanEntity: Sendable {
         self.apiPrice = apiPrice
         self.appStorePrice = appStorePrice
         self.introductoryOffer = introductoryOffer
+        self.mobileOfferLabel = mobileOfferLabel
     }
 }
 

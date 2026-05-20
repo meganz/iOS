@@ -9,7 +9,8 @@ extension SKProduct {
         transfer: Int = 0,
         apiPrice: Decimal? = nil,
         apiCurrencyCode: String? = nil,
-        useAPIPrice: Bool = false
+        useAPIPrice: Bool = false,
+        mobileOfferLabel: String? = nil
     ) -> PlanEntity {
         PlanEntity(
             product: self,
@@ -17,7 +18,8 @@ extension SKProduct {
             transferLimit: transfer,
             apiPrice: apiPrice,
             apiCurrencyCode: apiCurrencyCode,
-            useAPIPrice: useAPIPrice
+            useAPIPrice: useAPIPrice,
+            mobileOfferLabel: mobileOfferLabel
         )
     }
 }
@@ -56,9 +58,11 @@ fileprivate extension PlanEntity {
         transferLimit: Int,
         apiPrice: Decimal?,
         apiCurrencyCode: String?,
-        useAPIPrice: Bool
+        useAPIPrice: Bool,
+        mobileOfferLabel: String? = nil
     ) {
         self.init(productIdentifier: product.productIdentifier)
+        self.mobileOfferLabel = mobileOfferLabel
         
         let productIdentifier = product.productIdentifier
         subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)

@@ -35,7 +35,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertTrue(viewModel.isSelected)
         XCTAssertEqual(viewModel.plan, proIII_monthly)
         XCTAssertTrue(viewModel.isSelectionEnabled)
-        XCTAssertEqual(viewModel.planTag, .none)
+        XCTAssertEqual(viewModel.planTag, .noTag)
     }
 
     @MainActor
@@ -57,7 +57,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertFalse(viewModel.isSelected)
         XCTAssertEqual(viewModel.plan, proII_yearly)
         XCTAssertTrue(viewModel.isSelectionEnabled)
-        XCTAssertEqual(viewModel.planTag, .none)
+        XCTAssertEqual(viewModel.planTag, .noTag)
     }
 
     @MainActor
@@ -84,7 +84,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertFalse(yearlyPlanViewModel.isSelected)
         XCTAssertEqual(yearlyPlanViewModel.plan, proI_yearly)
         XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .noTag)
     }
 
     @MainActor
@@ -105,7 +105,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertFalse(monthlyPlanViewModel.isSelected)
         XCTAssertEqual(monthlyPlanViewModel.plan, proI_monthly)
         XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(monthlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .noTag)
 
         let yearlyPlanViewModel = sut.createAccountPlanViewModel(proI_yearly)
         XCTAssertFalse(yearlyPlanViewModel.isSelected)
@@ -186,13 +186,13 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertFalse(monthlyPlanViewModel.isSelected)
         XCTAssertEqual(monthlyPlanViewModel.plan, proII_monthly)
         XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(monthlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .noTag)
         
         let yearlyPlanViewModel = sut.createAccountPlanViewModel(proII_yearly)
         XCTAssertFalse(yearlyPlanViewModel.isSelected)
         XCTAssertEqual(yearlyPlanViewModel.plan, proII_yearly)
         XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .noTag)
     }
     
     @MainActor
@@ -213,13 +213,13 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertFalse(monthlyPlanViewModel.isSelected)
         XCTAssertEqual(monthlyPlanViewModel.plan, proIII_monthly)
         XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(monthlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .noTag)
         
         let yearlyPlanViewModel = sut.createAccountPlanViewModel(proIII_yearly)
         XCTAssertFalse(yearlyPlanViewModel.isSelected)
         XCTAssertEqual(yearlyPlanViewModel.plan, proIII_yearly)
         XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
-        XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .noTag)
     }
     
     @MainActor
@@ -309,7 +309,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(viewModel.planTag, .introOffer)
         
         let regularRecommendedViewModel = sut.createAccountPlanViewModel(proI_monthly)
-        XCTAssertEqual(regularRecommendedViewModel.planTag, .none)
+        XCTAssertEqual(regularRecommendedViewModel.planTag, .noTag)
     }
     
     // MARK: - Helper

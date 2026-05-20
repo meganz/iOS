@@ -518,7 +518,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     private func planTag(_ plan: PlanEntity) -> AccountPlanTagEntity {
-        guard let currentPlan else { return .none }
+        guard let currentPlan else { return .noTag }
         
         switch accountDetails.subscriptionCycle {
         case .none:
@@ -540,7 +540,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             }
         }
         
-        return .none
+        return .noTag
     }
 
     private func shouldShowRecommendedTag(for plan: PlanEntity) -> Bool {
