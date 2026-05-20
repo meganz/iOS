@@ -89,7 +89,6 @@ package final class FavouritesViewModel: ObservableObject {
             viewDisplayMode: .favourites,
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
-            usesRevampedLayout: true,
             contentUnavailableViewModelProvider: FavouritesContentUnavailableProvider()
         )
 

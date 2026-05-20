@@ -743,7 +743,7 @@
     }
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode isFromSharedItem:YES isSelectionEnabled:self.isCloudDriveRevampEnabled sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode isFromSharedItem:YES isSelectionEnabled:YES sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -1300,7 +1300,7 @@
                                                                             isBackupNode:isBackupNode
                                                                             sharedFolder:share
                                                                  shouldShowVerifyContact:indexPath.section == SharedItemsViewControllerSectionUnverified
-                                                                      isSelectionEnabled:self.isCloudDriveRevampEnabled
+                                                                      isSelectionEnabled:YES
                                                                                   sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }

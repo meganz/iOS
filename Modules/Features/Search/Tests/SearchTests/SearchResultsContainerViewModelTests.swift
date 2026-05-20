@@ -496,8 +496,7 @@ struct SearchResultsContainerViewModelTests {
                 askedForEmptyContent(chip, query)
             },
             rowAssets: testConfig.rowAssets,
-            colorAssets: testConfig.colorAssets,
-            contextPreviewFactory: testConfig.contextPreviewFactory
+            colorAssets: testConfig.colorAssets
         )
 
         return .init(
@@ -513,7 +512,6 @@ struct SearchResultsContainerViewModelTests {
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                usesRevampedLayout: false,
                 contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
             ),
             sortHeaderConfig: sortHeaderConfig,

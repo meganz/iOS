@@ -251,9 +251,6 @@ final class HomeScreenFactory: NSObject {
         }
 
         let config = SearchConfig.searchConfig(
-            contextPreviewFactory: contextPreviewFactory(
-                enableItemMultiSelection: enableItemMultiSelection
-            ),
             defaultEmptyViewAsset: {
                 .init(
                     image: MEGAAssets.Image.glassSearch02,
@@ -277,7 +274,6 @@ final class HomeScreenFactory: NSObject {
             viewDisplayMode: .homeSearch,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
-            usesRevampedLayout: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),
             contentUnavailableViewModelProvider: HomeScreenContentUnavailableViewModelProvider()
         )
 
@@ -380,63 +376,6 @@ final class HomeScreenFactory: NSObject {
     
     var notificationCenter: NotificationCenter {
         .default
-    }
-    
-    func previewViewController(
-        for node: MEGANode
-    ) -> UIViewController? {
-        if node.isFolder() {
-            let factory = CloudDriveViewControllerFactory.make()
-            // For preview mode, we don't support upgrade encouragement flow
-            let config = NodeBrowserConfig.withSupportsUpgradeEncouragement(false)
-            return factory.buildBare(parentNode: node.toNodeEntity(), config: config)
-        } else {
-            return nil
-        }
-    }
-    
-    func contextPreviewFactory(enableItemMultiSelection: Bool) -> SearchConfig.ContextPreviewFactory {
-        .init(
-            // this logic below, constructs actions and preview
-            // when an search item is long pressed
-            previewContentForResult: { [weak sdk] result in
-                guard let sdk else {
-                    return .init(actions: [], previewMode: .noPreview)
-                }
-                
-                if let node = sdk.node(forHandle: result.id) {
-                    let previewMode: () -> PreviewContent.PreviewMode = {
-                        if node.type == .folder {
-                            return .preview {
-                                self.previewViewController(for: node)
-                            }
-                        } else {
-                            return .noPreview
-                        }
-                    }
-                    return .init(
-                        actions: self.actionsFor(node: node, enableItemMultiSelection: enableItemMultiSelection),
-                        previewMode: previewMode()
-                    )
-                }
-                return .init(actions: [], previewMode: .noPreview)
-            }
-        )
-    }
-    
-    private func actionsFor(node: MEGANode, enableItemMultiSelection: Bool) -> [PeekAction] {
-        guard enableItemMultiSelection else {
-            // if not enabled, there's no preview action returned
-            return []
-        }
-        return [
-            .init(
-                title: Strings.Localizable.select,
-                imageName: "checkmark.circle",
-                handler: {
-                    print("selected tapped")
-                })
-        ]
     }
     
     func makeNodeDetailUseCase() -> some NodeDetailUseCaseProtocol {

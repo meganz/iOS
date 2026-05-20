@@ -1,13 +1,11 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
-import MEGADomain
 import MEGASwift
 
 @MainActor
 public final class FloatingAddButtonViewModel: ObservableObject {
     private let floatingButtonVisibilityDataSource: any FloatingAddButtonVisibilityDataSourceProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     public let uploadActions: [FloatingAddAction]
 
     @Published public private(set) var showsFloatingAddButton = false
@@ -22,14 +20,12 @@ public final class FloatingAddButtonViewModel: ObservableObject {
     public init(
         floatingButtonVisibilityDataSource: some FloatingAddButtonVisibilityDataSourceProtocol,
         uploadActions: [FloatingAddAction],
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         analyticsTracker: some AnalyticsTracking
     ) {
         self.floatingButtonVisibilityDataSource = floatingButtonVisibilityDataSource
         self.uploadActions = uploadActions
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.analyticsTracker = analyticsTracker
-        startObservingButtonVisibilityIfNeeded()
+        startObservingButtonVisibility()
     }
 
     public func addButtonTapAction() {
@@ -41,10 +37,7 @@ public final class FloatingAddButtonViewModel: ObservableObject {
         showActions = shows
     }
 
-    private func startObservingButtonVisibilityIfNeeded() {
-        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
-            return
-        }
+    private func startObservingButtonVisibility() {
         observingTask = Task { [weak self, floatingButtonVisibilityDataSource] in
             for await isVisible in floatingButtonVisibilityDataSource.floatingButtonVisibility {
                 guard !Task.isCancelled else { break }

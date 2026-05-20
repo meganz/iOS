@@ -30,7 +30,7 @@ extension OfflineViewController {
     }
 
     @objc var shouldShowHeaderView: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) && flavor != .HomeScreen
+        flavor != .HomeScreen
     }
 
     @objc func headerView(for controller: UIViewController) -> UIView {

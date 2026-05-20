@@ -41,25 +41,7 @@ extension SearchConfig {
                 checkmarkBackgroundTintColor: Color("00A886"),
                 listHeaderTextColor: .black,
                 listHeaderBackgroundColor: .white
-            ),
-            contextPreviewFactory: .test
-        )
-    }
-}
-
-extension SearchConfig.ContextPreviewFactory {
-    @MainActor static var test: Self {
-        SearchConfig.ContextPreviewFactory(
-            previewContentForResult: { _ in
-                    .init(
-                        actions: [
-                            .init(title: "Select", imageName: "checkmark.circle", handler: {})
-                        ],
-                        previewMode: .preview({
-                            UIHostingController(rootView: Text("I'm preview"))
-                        })
-                    )
-            }
+            )
         )
     }
 }

@@ -48,9 +48,7 @@ struct CloudDriveContextMenuConfigFactory {
                 currentViewMode: currentViewMode,
                 sortOrder: sortOrder
             )
-        } else if displayMode == .rubbishBin
-                    && isRubbishRoot(node: parentNode)
-                    && DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
+        } else if displayMode == .rubbishBin && isRubbishRoot(node: parentNode) {
             return .init(menuType: .menu(type: .rubbishBin), isRubbishBinFolder: true, isRubbishBinRootFolder: true)
         }
 

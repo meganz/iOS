@@ -10,9 +10,6 @@ extension SearchResultRowViewModel {
         let contextAction: (UIButton) -> Void
         /// result was selected
         let selectionAction: () -> Void
-        /// result was previewed with long pressed and then tapped
-        let previewTapAction: () -> Void
-
         /// Handles the long press in revamped UX
         let revampLongPress: () -> Void
     }
@@ -187,7 +184,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let query: () -> String?
 
     let colorAssets: SearchConfig.ColorAssets
-    let previewContent: PreviewContent
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
     let swipeActions: [SearchResultSwipeAction]
@@ -197,14 +193,12 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         query: @escaping () -> String?,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
-        previewContent: PreviewContent,
         actions: UserActions,
         swipeActions: [SearchResultSwipeAction]
     ) {
         self.result = result
         self.query = query
         self.colorAssets = colorAssets
-        self.previewContent = previewContent
         self.actions = actions
         self.rowAssets = rowAssets
         self.swipeActions = swipeActions

@@ -3,8 +3,6 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
-import MEGADomain
-import MEGADomainMock
 import MEGASwift
 import MEGATest
 import Testing
@@ -34,19 +32,8 @@ struct FloatingAddButtonViewModelTests {
             #expect(sut.showsFloatingAddButton == false)
         }
 
-        @Test("Feature is disabled, should not listen to visibility changes")
-        func visiblityChangeDisabled() async {
-            let visibilitySource = MockFloatingAddButtonVisibilityDataSource(visibilitySequence: [true].async.eraseToAnyAsyncSequence())
-            let sut = FloatingAddButtonViewModelTests.makeSut(
-                floatingButtonVisibilityDataSource: visibilitySource,
-                featureEnabled: false
-            )
-            for await _ in visibilitySource.floatingButtonVisibility {}
-            #expect(sut.showsFloatingAddButton == false)
-        }
-
-        @Test("Feature is enabled, should listen to visibility changes")
-        func visiblityChangeEnabled() async {
+        @Test("Should listen to visibility changes")
+        func visiblityChange() async {
             let visibilitySource = MockFloatingAddButtonVisibilityDataSource(visibilitySequence: [true].async.eraseToAnyAsyncSequence())
             let sut = FloatingAddButtonViewModelTests.makeSut(
                 floatingButtonVisibilityDataSource: visibilitySource
@@ -107,13 +94,11 @@ struct FloatingAddButtonViewModelTests {
     private static func makeSut(
         floatingButtonVisibilityDataSource: MockFloatingAddButtonVisibilityDataSource = .init(),
         uploadActions: [FloatingAddAction] = [],
-        featureEnabled: Bool = true,
         analyticsTracker: some MockTracker = .init()
     ) -> FloatingAddButtonViewModel {
         FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: uploadActions,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosCloudDriveRevamp: featureEnabled]),
             analyticsTracker: analyticsTracker
         )
     }

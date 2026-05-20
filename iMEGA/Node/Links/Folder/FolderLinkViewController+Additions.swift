@@ -12,10 +12,6 @@ import MEGASwift
 
 extension FolderLinkViewController {
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     @objc func isDecryptedFolder() -> Bool {
         parentNode?.isNodeKeyDecrypted() ?? false
     }
@@ -85,7 +81,7 @@ extension FolderLinkViewController {
     }
 
     @objc func configureImages() {
-        selectAllBarButtonItem?.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.checkStack : MEGAAssets.UIImage.selectAllItems
+        selectAllBarButtonItem?.image = MEGAAssets.UIImage.checkStack
         moreBarButtonItem.image = MEGAAssets.UIImage.moreNavigationBar
     }
     

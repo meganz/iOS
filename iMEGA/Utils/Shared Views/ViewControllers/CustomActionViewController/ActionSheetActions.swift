@@ -407,44 +407,39 @@ extension NodeAction {
 
 // MARK: Action images
 private extension UIImage {
-    private static var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
-    static var info: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.infoMono : MEGAAssets.UIImage.info }
-    static var select: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.checkCircle : MEGAAssets.UIImage.selectItem }
-    static var label: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.tagSimple : MEGAAssets.UIImage.label }
+    static var info: UIImage { MEGAAssets.UIImage.infoMono }
+    static var select: UIImage { MEGAAssets.UIImage.checkCircle }
+    static var label: UIImage { MEGAAssets.UIImage.tagSimple }
     static func favourite(isFavourite: Bool) -> UIImage {
-        if isCloudDriveRevampEnabled {
-            return isFavourite ? MEGAAssets.UIImage.heartBroken : MEGAAssets.UIImage.heartOutline
-        } else {
-            return isFavourite ? MEGAAssets.UIImage.removeFavourite : MEGAAssets.UIImage.favourite
-        }
+        isFavourite ? MEGAAssets.UIImage.heartBroken : MEGAAssets.UIImage.heartOutline
     }
 
-    static var download: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.offline }
-    static var shareLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link }
-    static var manageLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkGear : MEGAAssets.UIImage.link }
-    static var removelink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkOff02 : MEGAAssets.UIImage.removeLink }
-    static var shareFolder: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderUsersMono : MEGAAssets.UIImage.shareFolder }
+    static var download: UIImage { MEGAAssets.UIImage.arrowDownCircle }
+    static var shareLink: UIImage { MEGAAssets.UIImage.link01 }
+    static var manageLink: UIImage { MEGAAssets.UIImage.linkGear }
+    static var removelink: UIImage { MEGAAssets.UIImage.linkOff02 }
+    static var shareFolder: UIImage { MEGAAssets.UIImage.folderUsersMono }
 
-    static var editText: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.edit : MEGAAssets.UIImage.edittext }
-    static var saveToPhotos: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.photosApp : MEGAAssets.UIImage.saveToPhotos }
-    static var export: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.externalLink : MEGAAssets.UIImage.export }
-    static var sendToChat: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.messagePlus : MEGAAssets.UIImage.sendToChat }
-    static var rename: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.pen2 : MEGAAssets.UIImage.rename }
-    static var addTo: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.rectangleStackPlus : MEGAAssets.UIImage.addTo }
-    static var copy: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.copy01 : MEGAAssets.UIImage.copy }
-    static var rubbishBin: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.trash : MEGAAssets.UIImage.rubbishBin }
-    static var move: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.moveMono : MEGAAssets.UIImage.move }
-    static var leaveShare: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderUsersMono : MEGAAssets.UIImage.leaveShare }
-    static var restore: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.rotateCcw : MEGAAssets.UIImage.restore }
-    static var versions: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.clock : MEGAAssets.UIImage.versions }
-    static var history: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.clockRotate : MEGAAssets.UIImage.history }
+    static var editText: UIImage { MEGAAssets.UIImage.edit }
+    static var saveToPhotos: UIImage { MEGAAssets.UIImage.photosApp }
+    static var export: UIImage { MEGAAssets.UIImage.externalLink }
+    static var sendToChat: UIImage { MEGAAssets.UIImage.messagePlus }
+    static var rename: UIImage { MEGAAssets.UIImage.pen2 }
+    static var addTo: UIImage { MEGAAssets.UIImage.rectangleStackPlus }
+    static var copy: UIImage { MEGAAssets.UIImage.copy01 }
+    static var rubbishBin: UIImage { MEGAAssets.UIImage.trash }
+    static var move: UIImage { MEGAAssets.UIImage.moveMono }
+    static var leaveShare: UIImage { MEGAAssets.UIImage.folderUsersMono }
+    static var restore: UIImage { MEGAAssets.UIImage.rotateCcw }
+    static var versions: UIImage { MEGAAssets.UIImage.clock }
+    static var history: UIImage { MEGAAssets.UIImage.clockRotate }
 
-    static var cancelTransfers: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.x : MEGAAssets.UIImage.cancelTransfers }
-    static var delete: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.x : MEGAAssets.UIImage.delete }
-    static var search: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.searchSmall : MEGAAssets.UIImage.search }
+    static var cancelTransfers: UIImage { MEGAAssets.UIImage.x }
+    static var delete: UIImage { MEGAAssets.UIImage.x }
+    static var search: UIImage { MEGAAssets.UIImage.searchSmall }
 
-    static var disputeTakedown: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.alertTriangle : MEGAAssets.UIImage.disputeTakedown }
-    static var removeVideoFromVideoPlaylist: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.minusCircle : MEGAAssets.UIImage.hudMinus }
+    static var disputeTakedown: UIImage { MEGAAssets.UIImage.alertTriangle }
+    static var removeVideoFromVideoPlaylist: UIImage { MEGAAssets.UIImage.minusCircle }
 
-    static var `import`: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderArrow : MEGAAssets.UIImage.import }
+    static var `import`: UIImage { MEGAAssets.UIImage.folderArrow }
 }

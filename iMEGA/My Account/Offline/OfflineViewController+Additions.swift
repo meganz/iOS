@@ -8,10 +8,6 @@ import MEGAL10n
 import MEGARepo
 
 extension OfflineViewController {
-    @objc func isCloudDriveRevampEnabled() -> Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     @objc func makeSelectActionSheet(for indexPath: IndexPath) -> ActionSheetAction {
         ActionSheetAction(
             title: Strings.Localizable.select,

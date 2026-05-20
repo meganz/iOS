@@ -389,11 +389,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupRightNavigationBarButtons() {
-        if !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
-            navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
-        } else {
-            navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
-        }
+        navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
     }
     
     private func defaultRightBarButtonItems() -> [UIBarButtonItem] {

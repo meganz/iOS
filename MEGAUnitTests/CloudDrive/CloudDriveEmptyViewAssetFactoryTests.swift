@@ -1,6 +1,4 @@
 @testable import MEGA
-import MEGAAppPresentation
-import MEGAAppPresentationMock
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -18,9 +16,9 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         let sut = makeSUT()
         let emptyAsset = sut.defaultAsset(for: .mockRecentActionBucketEmpty, config: .init())
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
-            image: MEGAAssets.Image.searchEmptyState,
+            image: MEGAAssets.Image.glassSearch02,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-            titleTextColor: TokenColors.Icon.secondary.swiftUI
+            titleTextColor: TokenColors.Text.primary.swiftUI
         )
         XCTAssertEqual(emptyAsset, expectedEmptyAsset)
     }
@@ -29,43 +27,19 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: nil,
             displayMode: .unknown,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
 
-    func testDefaultAsset_forCloudDriveRootNodeWithReadPermission_shouldMatch() {
+    func testDefaultAsset_forCloudDriveRootNode_shouldMatch() {
         assert(
-            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .read),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .owner),
             nodeEntity: NodeEntity(nodeType: .root),
             displayMode: .cloudDrive,
-            expectedImage: MEGAAssets.Image.cloudEmptyState,
+            expectedImage: MEGAAssets.Image.glassCloud,
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle
         )
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithWritePermissionAndrevampEnabled_shouldMatch() {
-        assert(for: .readWrite, isCloudDriveRevampEnabled: true)
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithWritePermissionAndrevampDisabled_shouldMatch() {
-        assert(for: .readWrite, isCloudDriveRevampEnabled: false)
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithFullAccessPermissionAndrevampEnabled_shouldMatch() {
-        assert(for: .full, isCloudDriveRevampEnabled: true)
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithFullAccessPermissionAndrevampDisabled_shouldMatch() {
-        assert(for: .full, isCloudDriveRevampEnabled: false)
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithOwnerPermissionAndrevampEnabled_shouldMatch() {
-        assert(for: .owner, isCloudDriveRevampEnabled: true)
-    }
-
-    func testDefaultAsset_forCloudDriveRootNodeWithOwnerPermissionAndrevampDisabled_shouldMatch() {
-        assert(for: .owner, isCloudDriveRevampEnabled: false)
     }
 
     func testDefaultAsset_forRubbishBinNode_shouldMatch() {
@@ -73,7 +47,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase(isARubbishBinRootNodeValue: true),
             nodeEntity: NodeEntity(nodeType: .rubbish),
             displayMode: .rubbishBin,
-            expectedImage: MEGAAssets.Image.rubbishEmptyState,
+            expectedImage: MEGAAssets.Image.glassTrash,
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin
         )
     }
@@ -82,7 +56,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .cloudDrive,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -91,7 +65,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .rubbishBin,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -100,7 +74,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .file),
             displayMode: .cloudDrive,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -109,7 +83,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .sharedItem,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -118,7 +92,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .backup,
-            expectedImage: MEGAAssets.Image.folderEmptyState,
+            expectedImage: MEGAAssets.Image.glassFolder,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -128,53 +102,9 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
     typealias SUT = CloudDriveEmptyViewAssetFactory
 
     private func makeSUT(
-        tracker: some AnalyticsTracking = MockTracker(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
-        isCloudDriveRevampEnabled: Bool = true
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase()
     ) -> SUT {
-        .init(
-            tracker: tracker,
-            nodeInsertionRouter: MockNodeInsertionRouter(),
-            nodeUseCase: nodeUseCase,
-            isCloudDriveRevampEnabled: isCloudDriveRevampEnabled
-        )
-    }
-
-    private func assert(for nodeAccessLevel: NodeAccessTypeEntity, isCloudDriveRevampEnabled: Bool, file: StaticString = #file, line: UInt = #line) {
-        var expectedActions: [SearchConfig.EmptyViewAssets.Action] = []
-        if !isCloudDriveRevampEnabled {
-            expectedActions = [
-                .init(
-                    title: Strings.Localizable.addFiles,
-                    titleTextColor: TokenColors.Text.inverseAccent.swiftUI,
-                    backgroundColor: TokenColors.Support.success.swiftUI,
-                    menu: [
-                        .init(title: Strings.Localizable.newTextFile, image: MEGAAssets.Image.textfile, handler: {}),
-                        .init(title: Strings.Localizable.newFolder, image: MEGAAssets.Image.newFolder, handler: {}),
-                        .init(title: Strings.Localizable.scanDocument, image: MEGAAssets.Image.scanDocument, handler: {}),
-                        .init(
-                            title: Strings.Localizable.CloudDrive.Upload.importFromFiles,
-                            image: MEGAAssets.Image.import,
-                            handler: {}
-                        ),
-                        .init(title: Strings.Localizable.capturePhotoVideo, image: MEGAAssets.Image.capture, handler: {}),
-                        .init(title: Strings.Localizable.choosePhotoVideo, image: MEGAAssets.Image.saveToPhotos, handler: {})
-                    ]
-                )
-            ]
-        }
-
-        assert(
-            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel),
-            nodeEntity: NodeEntity(nodeType: .root),
-            displayMode: .cloudDrive,
-            expectedImage: MEGAAssets.Image.cloudEmptyState,
-            expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle,
-            isCloudDriveRevampEnabled: isCloudDriveRevampEnabled,
-            actions: expectedActions,
-            file: file,
-            line: line
-        )
+        .init(nodeUseCase: nodeUseCase)
     }
 
     private func assert(
@@ -183,19 +113,16 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         displayMode: DisplayMode,
         expectedImage: Image,
         expectedTitle: String,
-        isCloudDriveRevampEnabled: Bool = true,
-        actions: [SearchConfig.EmptyViewAssets.Action] = [],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let sut = makeSUT(nodeUseCase: nodeUseCase, isCloudDriveRevampEnabled: isCloudDriveRevampEnabled)
+        let sut = makeSUT(nodeUseCase: nodeUseCase)
         let emptyAsset = sut.defaultAsset(for: .node({ nodeEntity }), config: .init(displayMode: displayMode))
 
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
             image: expectedImage,
             title: expectedTitle,
-            titleTextColor: TokenColors.Icon.secondary.swiftUI,
-            actions: actions
+            titleTextColor: TokenColors.Text.primary.swiftUI
         )
         XCTAssertEqual(emptyAsset, expectedEmptyAsset, file: file, line: line)
     }

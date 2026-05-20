@@ -19,7 +19,6 @@ final class CloudDriveContentUnavailableViewModelProvider: ContentUnavailableVie
     private let nodeSource: NodeSource
     private let displayMode: DisplayMode?
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let usesRevampedUI: Bool
     // initially this is a let, but then because of complex circular reference we need to make this a var
     // Check the initialization of CloudDriveContentUnavailableViewModelProvider in CloudDriveViewControllerFactory
     // For more details
@@ -29,11 +28,9 @@ final class CloudDriveContentUnavailableViewModelProvider: ContentUnavailableVie
         defaultEmptyViewAssets: SearchConfig.EmptyViewAssets,
         nodeSource: NodeSource,
         displayMode: DisplayMode?,
-        nodeUseCase: some NodeUseCaseProtocol,
-        usesRevampedUI: Bool
+        nodeUseCase: some NodeUseCaseProtocol
     ) {
         self.defaultEmptyViewAssets = defaultEmptyViewAssets
-        self.usesRevampedUI = usesRevampedUI
         self.nodeSource = nodeSource
         self.displayMode = displayMode
         self.nodeUseCase = nodeUseCase
@@ -45,8 +42,7 @@ final class CloudDriveContentUnavailableViewModelProvider: ContentUnavailableVie
         config: SearchConfig
     ) -> ContentUnavailableViewModel {
 
-        // To show revamped UI, we should also check for the search query
-        guard usesRevampedUI, !query.isSearchActive, query.query.isEmpty, appliedChips.isEmpty else {
+        guard !query.isSearchActive, query.query.isEmpty, appliedChips.isEmpty else {
             return legacyEmptyViewModel(query: query, appliedChips: appliedChips, config: config)
         }
 

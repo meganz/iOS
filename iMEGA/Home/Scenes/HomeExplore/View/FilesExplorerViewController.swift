@@ -29,10 +29,6 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     override var displayMode: DisplayMode { .cloudDrive }
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     init(viewModel: FilesExplorerViewModel,
          delegate: some FilesExplorerViewControllerDelegate) {
         self.viewModel = viewModel
@@ -73,7 +69,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
                                           displayMode: .cloudDrive,
                                           isIncoming: false,
                                           isBackupNode: isBackupNode,
-                                          isSelectionEnabled: isCloudDriveRevampEnabled,
+                                          isSelectionEnabled: true,
                                           sender: sender)
         vc.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController.present(vc, animated: true, completion: nil)
@@ -162,8 +158,6 @@ extension FilesExplorerViewController: @MainActor DZNEmptyDataSetSource {
 
 extension FilesExplorerViewController {
     func addLongPressGesture(to scrollView: UIScrollView) {
-        guard isCloudDriveRevampEnabled else { return }
-        
         let longPressGesture = UILongPressGestureRecognizer(
             target: self,
             action: #selector(longPressGestureRecognized(sender:))

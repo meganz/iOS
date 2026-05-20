@@ -35,15 +35,37 @@ func testableSearchResultsViewModel(
         query: { nil },
         rowAssets: .example,
         colorAssets: .example,
-        previewContent: .example,
         actions: .init(
             contextAction: {_ in },
             selectionAction: {},
-            previewTapAction: {},
             revampLongPress: {}
         ),
         swipeActions: []
     )
     viewModel.thumbnailImage = TestAsset.Image.folder
     return viewModel
+}
+
+extension SearchResult {
+    static func previewResult(
+        idx: UInt64,
+        backgroundDisplayMode: VerticalBackgroundViewMode = .icon,
+        properties: [ResultProperty] = []
+    ) -> Self {
+        .init(
+            id: idx,
+            isFolder: false,
+            backgroundDisplayMode: backgroundDisplayMode,
+            title: "title\(idx)",
+            note: nil,
+            tags: [],
+            isSensitive: false,
+            hasThumbnail: false,
+            description: { _ in "desc\(idx)" },
+            type: .node,
+            properties: properties,
+            thumbnailImageData: { UIImage(systemName: "rectangle")!.pngData()! },
+            swipeActions: { _ in [] }
+        )
+    }
 }

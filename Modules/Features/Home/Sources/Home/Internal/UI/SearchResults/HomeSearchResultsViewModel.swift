@@ -45,7 +45,6 @@ final class HomeSearchResultsViewModel: ObservableObject {
             viewDisplayMode: .homeSearch,
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
-            usesRevampedLayout: true,
             contentUnavailableViewModelProvider: HomeScreenContentUnavailableViewModelProvider()
         )
 

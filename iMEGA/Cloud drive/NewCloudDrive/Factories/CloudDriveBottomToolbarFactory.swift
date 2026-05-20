@@ -34,10 +34,6 @@ struct CloudDriveBottomToolbarItemsFactory {
         DIContainer.tracker
     }
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     private func megaNodes(from nodeEntities: [NodeEntity]) -> [MEGANode] {
         nodeEntities.compactMap {
             sdk.node(forHandle: $0.handle)
@@ -181,7 +177,6 @@ struct CloudDriveBottomToolbarItemsFactory {
     }
 
     private func trackAnalyticsEvent(_ event: some EventIdentifier) {
-        guard isCloudDriveRevampEnabled else { return }
         tracker.trackAnalyticsEvent(with: event)
     }
 }

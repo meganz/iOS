@@ -1,4 +1,3 @@
-import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -9,10 +8,6 @@ import UIKit
 @MainActor private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
 
 extension NodeCollectionViewCell {
-
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
 
     private var loadThumbnailTask: Task<Void, any Error>? {
         get {
@@ -156,8 +151,7 @@ extension NodeCollectionViewCell {
     }
     
     @objc func updateSelection() {
-        // For Folder link, we need to update the selection state with the revamped UI when CD revamp is enabled
-        if isCloudDriveRevampEnabled, viewModel?.isFromFolderLink == true {
+        if viewModel?.isFromFolderLink == true {
             updateSelectionForRevampedUI()
         } else {
             updateSelectionForLegacyUI()

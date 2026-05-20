@@ -5,30 +5,16 @@ import Search
 import SwiftUI
 
 extension SearchConfig {
+    /// Folder Link currently only cares about empty assets.
+    /// The rest of config are either not supported or same as CloudDrive, so they are copied over from CloudDriveViewControllerFactory
     static var folderLink: SearchConfig {
-        let contextPreviewFactory = SearchConfig.ContextPreviewFactory { _ in
-            .init(actions: [], previewMode: .noPreview)
-        }
-        
         let emptyViewAssets = SearchConfig.EmptyViewAssets(
             image: MEGAAssets.Image.glassFolder,
             title: Strings.Localizable.emptyFolder,
             titleTextColor: TokenColors.Text.primary.swiftUI
         )
-        
-        return SearchConfig.searchConfig(
-            contextPreviewFactory: contextPreviewFactory,
-            defaultEmptyViewAsset: { emptyViewAssets }
-        )
-    }
-    
-    /// Folder Link currently only cares about context preview and empty assets
-    /// The rest of config are either not supported or same as CloudDrive, so they are copied over from CloudDriveViewControllerFactory
-    private static func searchConfig(
-        contextPreviewFactory: ContextPreviewFactory,
-        defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
-    ) -> SearchConfig {
-        .init(
+
+        return .init(
             chipAssets: .init(
                 selectionIndicatorImage: MEGAAssets.UIImage.turquoiseCheckmark,
                 closeIcon: MEGAAssets.UIImage.miniplayerClose,
@@ -37,9 +23,7 @@ extension SearchConfig {
                 normalForeground: TokenColors.Text.primary.swiftUI,
                 normalBackground: TokenColors.Button.secondary.swiftUI
             ),
-            emptyViewAssetFactory: { _, _ in
-                defaultEmptyViewAsset()
-            },
+            emptyViewAssetFactory: { _, _ in emptyViewAssets },
             rowAssets: .init(
                 contextImage: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
                 itemSelected: MEGAAssets.UIImage.checkBoxSelectedSemantic,
@@ -66,8 +50,7 @@ extension SearchConfig {
                 checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
                 listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
                 listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
-            ),
-            contextPreviewFactory: contextPreviewFactory
+            )
         )
     }
 }

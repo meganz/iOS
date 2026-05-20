@@ -219,8 +219,7 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
         layout collectionViewLayout: UICollectionViewLayout!,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),
-              section == 0,
+        guard section == 0,
               gridSource?.nodes?.isNotEmpty == true else {
             return 0
         }

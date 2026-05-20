@@ -902,9 +902,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         line: UInt = #line
     ) {
         let config = SearchConfig.searchConfig(
-            contextPreviewFactory: HomeScreenFactory().contextPreviewFactory(
-                enableItemMultiSelection: false
-            ),
             defaultEmptyViewAsset: { defaultEmptyAsset }
         )
 

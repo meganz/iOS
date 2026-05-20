@@ -48,10 +48,6 @@ struct CloudDriveViewControllerFactory {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let nodeActionsBridge: NodeActionsBridge
 
-    private static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     init(
         navigationController: UINavigationController,
         viewModeStore: some ViewModeStoring,
@@ -156,9 +152,7 @@ struct CloudDriveViewControllerFactory {
                         resultsMapper.map(node: node.toNodeEntity())
                     }
                     nodeActionBridge.selectedResultsHandler(results)
-                    if isCloudDriveRevampEnabled {
-                        tracker.trackAnalyticsEvent(with: CloudDriveSelectMenuItemEvent())
-                    }
+                    tracker.trackAnalyticsEvent(with: CloudDriveSelectMenuItemEvent())
                 default:
                     break
                 }
@@ -381,7 +375,7 @@ struct CloudDriveViewControllerFactory {
             onBack: { self.navigationController.popViewController(animated: true) },
             onCancel: { self.navigationController.dismiss(animated: true) },
             onEditingChanged: { enabled in
-                if Self.isCloudDriveRevampEnabled && enabled {
+                if enabled {
                     tracker.trackAnalyticsEvent(with: CloudDriveMultiSelectModeEnteredEvent())
                 }
                 onSelectionModeChange(enabled)
@@ -585,8 +579,7 @@ struct CloudDriveViewControllerFactory {
             defaultEmptyViewAssets: makeDefaultEmptyViewAsset(for: nodeSource, config: config),
             nodeSource: nodeSource,
             displayMode: config.displayMode,
-            nodeUseCase: nodeUseCase,
-            usesRevampedUI: Self.isCloudDriveRevampEnabled
+            nodeUseCase: nodeUseCase
         )
 
         let nodeUpdatesProvider = NodeUpdatesProvider()
@@ -598,8 +591,7 @@ struct CloudDriveViewControllerFactory {
             searchBridge: searchBridge,
             searchConfig: searchConfig,
             calendar: calendar,
-            usesRevampedLayout: Self.isCloudDriveRevampEnabled,
-            shouldForceListLayoutDuringSearch: Self.isCloudDriveRevampEnabled,
+            shouldForceListLayoutDuringSearch: true,
             contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
 
@@ -619,13 +611,7 @@ struct CloudDriveViewControllerFactory {
             || initialViewMode == .mediaDiscovery
         }
 
-        let headerType: SearchResultsContainerViewModel.HeaderType = if config.displayMode == .recents {
-            .none
-        } else if Self.isCloudDriveRevampEnabled {
-            .dynamic
-        } else {
-            .chips
-        }
+        let headerType: SearchResultsContainerViewModel.HeaderType = config.displayMode == .recents ? .none : .dynamic
 
         let searchResultsContainerViewModel = makeSearchResultsContainerViewModel(
             bridge: searchBridge,
@@ -641,15 +627,11 @@ struct CloudDriveViewControllerFactory {
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in
                 searchResultsVM?.bridge.queryCleaned()
-                if Self.isCloudDriveRevampEnabled {
-                    tracker.trackAnalyticsEvent(with: CloudDriveSearchBarCancelPressedEvent())
-                }
+                tracker.trackAnalyticsEvent(with: CloudDriveSearchBarCancelPressedEvent())
             }, onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
-                if Self.isCloudDriveRevampEnabled {
-                    searchResultsContainerViewModel?.searchActiveDidChange($0)
-                    if $0 {
-                        tracker.trackAnalyticsEvent(with: CloudDriveSearchBarPressedEvent())
-                    }
+                searchResultsContainerViewModel?.searchActiveDidChange($0)
+                if $0 {
+                    tracker.trackAnalyticsEvent(with: CloudDriveSearchBarPressedEvent())
                 }
             }
         )
@@ -1003,9 +985,6 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig
     ) -> SearchConfig {
         .searchConfig(
-            contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
-                enableItemMultiSelection: shouldEnableSelection(for: nodeSource)
-            ),
             defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
         )
     }
@@ -1017,7 +996,6 @@ struct CloudDriveViewControllerFactory {
         searchBridge: SearchBridge,
         searchConfig: SearchConfig,
         calendar: Calendar,
-        usesRevampedLayout: Bool,
         shouldForceListLayoutDuringSearch: Bool,
         contentUnavailableViewModelProvider: some ContentUnavailableViewModelProviding
     ) -> SearchResultsViewModel {
@@ -1034,7 +1012,6 @@ struct CloudDriveViewControllerFactory {
             viewDisplayMode: nodeBrowserConfig.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
             isSelectionEnabled: shouldEnableSelection(for: nodeSource),
-            usesRevampedLayout: usesRevampedLayout,
             contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
     }
@@ -1068,8 +1045,6 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig
     ) -> SearchConfig.EmptyViewAssets {
         CloudDriveEmptyViewAssetFactory(
-            tracker: tracker,
-            nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -1265,7 +1240,6 @@ struct CloudDriveViewControllerFactory {
         let viewModel = FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: actionProvider.actions,
-            remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
             analyticsTracker: tracker
         )
 

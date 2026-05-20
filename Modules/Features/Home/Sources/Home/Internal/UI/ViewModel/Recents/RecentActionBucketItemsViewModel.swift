@@ -63,7 +63,6 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
             viewDisplayMode: .recents,
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
-            usesRevampedLayout: true,
             contentUnavailableViewModelProvider: RecentActionBucketItemsContentUnavailableProvider()
         )
         

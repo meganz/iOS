@@ -14,20 +14,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     }
     
     @objc func configureNavigationBarButtons() {
-        guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
-            navigationItem.rightBarButtonItems = nil
-            TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
-            return
-        }
-
-        contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
-        
-        contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
-                                               menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
-        
-        contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
-        
-        navigationItem.rightBarButtonItems = [contextBarButtonItem]
+        navigationItem.rightBarButtonItems = nil
         TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
     }
     

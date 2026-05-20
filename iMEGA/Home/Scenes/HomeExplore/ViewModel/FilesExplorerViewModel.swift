@@ -164,17 +164,7 @@ final class FilesExplorerViewModel: ViewModelType {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
         }
 
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
-            configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .homeCards))
-        } else {
-            configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .display),
-                                                  viewMode: viewTypePreference == .list ? .list : .thumbnail,
-                                                  sortType: Helper.sortType(for: nil).toSortOrderEntity(),
-                                                  isFavouritesExplorer: explorerType == .favourites,
-                                                  isDocumentExplorer: explorerType == .allDocs,
-                                                  isAudiosExplorer: explorerType == .audio,
-                                                  isVideosExplorer: explorerType == .video)
-        }
+        configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .homeCards))
         
         guard let configForDisplayMenu,
               let menu = contextMenuManager?.contextMenu(with: configForDisplayMenu) else { return }

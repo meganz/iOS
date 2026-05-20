@@ -47,15 +47,15 @@ class NodeActionViewController: ActionSheetViewController {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = isCloudDriveRevampEnabled ? .preferredFont(style: .body, weight: .semibold) : .preferredFont(style: .subheadline, weight: .medium)
+        label.font = .preferredFont(style: .body, weight: .semibold)
         label.adjustsFontForContentSizeCategory = true
         return label
     }()
-    
+
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = isCloudDriveRevampEnabled ? .preferredFont(forTextStyle: .footnote) : .preferredFont(forTextStyle: .caption1)
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.adjustsFontForContentSizeCategory = true
         return label
     }()
@@ -66,15 +66,7 @@ class NodeActionViewController: ActionSheetViewController {
         return imageView
     }()
     
-    lazy var separatorLineView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = TokenColors.Border.strong
-        return view
-    }()
-    
     private var isUndecryptedFolder = false
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
     @MainActor private var loadActions: (() async -> Void)?
     
     // MARK: - NodeActionViewController initializers
@@ -442,7 +434,6 @@ class NodeActionViewController: ActionSheetViewController {
             titleLabel.textColor = TokenColors.Text.primary
         }
         subtitleLabel.textColor = TokenColors.Text.secondary
-        separatorLineView.backgroundColor = TokenColors.Border.strong
     }
     
     // MARK: - UITableViewDelegate
@@ -485,14 +476,11 @@ class NodeActionViewController: ActionSheetViewController {
         
         headerView?.addSubview(nodeImageView)
         nodeImageView.translatesAutoresizingMaskIntoConstraints = false
-        let iconSize = isCloudDriveRevampEnabled ? 32.0 : 40.0
-        let iconLeading = isCloudDriveRevampEnabled ? 16.0 : 8.0
-        let iconCenterYOffset = isCloudDriveRevampEnabled ? 12.0 : 0.0
         NSLayoutConstraint.activate([
-            nodeImageView.widthAnchor.constraint(equalToConstant: iconSize),
-            nodeImageView.heightAnchor.constraint(equalToConstant: iconSize),
-            nodeImageView.leadingAnchor.constraint(equalTo: headerView!.safeAreaLayoutGuide.leadingAnchor, constant: iconLeading),
-            nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: iconCenterYOffset)
+            nodeImageView.widthAnchor.constraint(equalToConstant: 32),
+            nodeImageView.heightAnchor.constraint(equalToConstant: 32),
+            nodeImageView.leadingAnchor.constraint(equalTo: headerView!.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: 12)
         ])
         nodeImageView.mnz_setThumbnail(by: node)
         Task { await configureSensitivity(for: node.toNodeEntity()) }
@@ -511,7 +499,7 @@ class NodeActionViewController: ActionSheetViewController {
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8).isActive = true
         
-        if (node.isFile() || isCloudDriveRevampEnabled) && MEGAStore.shareInstance().offlineNode(with: node) != nil {
+        if MEGAStore.shareInstance().offlineNode(with: node) != nil {
             headerView?.addSubview(downloadImageView)
             NSLayoutConstraint.activate([
                 downloadImageView.widthAnchor.constraint(equalToConstant: 12),
@@ -521,28 +509,18 @@ class NodeActionViewController: ActionSheetViewController {
                 downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
             ])
 
-            downloadImageView.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.downloaded
+            downloadImageView.image = MEGAAssets.UIImage.arrowDownCircle
             downloadImageView.tintColor = TokenColors.Icon.primary
         } else {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }
-        
+
         subtitleLabel.centerYAnchor.constraint(equalTo: nodeImageView.centerYAnchor, constant: 10).isActive = true
 
         if node.isFile() {
             subtitleLabel.text = sizeAndModicationDate(node.toNodeEntity())
         } else {
             subtitleLabel.text = getFilesAndFolders(node.toNodeEntity())
-        }
-
-        if !isCloudDriveRevampEnabled {
-            headerView?.addSubview(separatorLineView)
-            NSLayoutConstraint.activate([
-                separatorLineView.leadingAnchor.constraint(equalTo: headerView!.leadingAnchor),
-                separatorLineView.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor),
-                separatorLineView.bottomAnchor.constraint(equalTo: headerView!.bottomAnchor),
-                separatorLineView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
-            ])
         }
     }
 

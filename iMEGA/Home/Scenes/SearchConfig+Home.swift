@@ -1,4 +1,3 @@
-import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -7,11 +6,7 @@ import Search
 import SwiftUI
 
 extension SearchConfig {
-    static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
     static func searchConfig(
-        contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
         .init(
@@ -107,9 +102,7 @@ extension SearchConfig {
                 playImage: MEGAAssets.UIImage.videoList,
                 downloadedImage: MEGAAssets.UIImage.downloaded,
                 moreList: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                moreGrid: isCloudDriveRevampEnabled
-                ? MEGAAssets.UIImage.moreHorizontal
-                : MEGAAssets.UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                moreGrid: MEGAAssets.UIImage.moreHorizontal
             ),
             colorAssets: .init(
                 unselectedBorderColor: TokenColors.Border.strong.swiftUI,
@@ -120,16 +113,15 @@ extension SearchConfig {
                 tagsTextColor: UIColor.primaryTextColor().swiftUI,
                 textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
-                verticalThumbnailFooterText: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI: TokenColors.Text.primary.swiftUI,
-                verticalThumbnailFooterBackground: isCloudDriveRevampEnabled ? TokenColors.Background.surfaceTransparent.swiftUI :  TokenColors.Background.surface1.swiftUI,
+                verticalThumbnailFooterText: TokenColors.Icon.onColor.swiftUI,
+                verticalThumbnailFooterBackground: TokenColors.Background.surfaceTransparent.swiftUI,
                 verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
                 listRowSeparator: TokenColors.Border.strong.swiftUI,
                 checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
                 listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
                 listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
-            ),
-            contextPreviewFactory: contextPreviewFactory
+            )
         )
     }
     

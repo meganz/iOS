@@ -1,5 +1,4 @@
 import CloudDrive
-import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -11,10 +10,6 @@ import Transfer
 import UIKit
 
 struct NodeBrowserView: View {
-
-    var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
 
     @StateObject var viewModel: NodeBrowserViewModel
     @StateObject var floatingAddButtonViewModel: FloatingAddButtonViewModel
@@ -47,20 +42,16 @@ struct NodeBrowserView: View {
             }
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
                 VStack(spacing: 0) {
-                    if viewModel.shouldDisplayHeaderViewInMDView {
-                        ResultsHeaderView(height: 44) {
-                            SortHeaderView(config: viewModel.mediaDiscoverySortHeaderConfig, selection: $viewModel.mediaDiscoverySortOrder)
-                            .simultaneousGesture(TapGesture().onEnded { _ in
-                                viewModel.sortHeaderViewPressedForMediaDiscovery()
-                            })
-                        } rightView: {
-                            SearchResultsHeaderViewModeView(
-                                viewModel: viewModel.viewModeHeaderViewModelForMD,
-                                horizontalPadding: TokenSpacing._7
-                            )
-                        }
-                    } else {
-                        EmptyView()
+                    ResultsHeaderView(height: 44) {
+                        SortHeaderView(config: viewModel.mediaDiscoverySortHeaderConfig, selection: $viewModel.mediaDiscoverySortOrder)
+                        .simultaneousGesture(TapGesture().onEnded { _ in
+                            viewModel.sortHeaderViewPressedForMediaDiscovery()
+                        })
+                    } rightView: {
+                        SearchResultsHeaderViewModeView(
+                            viewModel: viewModel.viewModeHeaderViewModelForMD,
+                            horizontalPadding: TokenSpacing._7
+                        )
                     }
                     MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
                 }
@@ -95,11 +86,7 @@ struct NodeBrowserView: View {
             Button(
                 action: { viewModel.selectAll() },
                 label: {
-                    if isCloudDriveRevampEnabled {
-                        MEGAAssets.Image.checkStack.foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                    } else {
-                        MEGAAssets.Image.selectAllItems
-                    }
+                    MEGAAssets.Image.checkStack.foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 }
             )
         case .regular(let leftBarButton):
@@ -123,7 +110,7 @@ struct NodeBrowserView: View {
             Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         case .regular:
-            if !isCloudDriveRevampEnabled || viewModel.viewModeAwareMediaDiscoveryViewModel != nil {
+            if viewModel.viewModeAwareMediaDiscoveryViewModel != nil {
                 viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
             }
 
@@ -133,15 +120,15 @@ struct NodeBrowserView: View {
 
     @ViewBuilder
     private var moreOptionsView: some View {
-        switch (isCloudDriveRevampEnabled, viewModel.hasParentNode, viewModel.shouldShowContextMenu) {
-        case (true, true, _):
+        switch (viewModel.hasParentNode, viewModel.shouldShowContextMenu) {
+        case (true, _):
             ImageButtonWrapper(
                 image: Image(uiImage: MEGAAssets.UIImage.moreNavigationBar),
                 imageColor: TokenColors.Icon.primary.swiftUI,
                 action: viewModel.moreOptionsButtonTapped
             )
             .frame(width: 38, height: 38)
-        case (true, false, true), (false, _, _):
+        case (false, true):
             viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
         default:
             EmptyView()
@@ -167,7 +154,7 @@ struct NodeBrowserView: View {
 
     private var transferIndicatorTrailingItemCount: Int {
         if case .regular = viewModel.viewState {
-            return (!isCloudDriveRevampEnabled || viewModel.viewModeAwareMediaDiscoveryViewModel != nil) ? 2 : 1
+            return viewModel.viewModeAwareMediaDiscoveryViewModel != nil ? 2 : 1
         }
         return 0
     }

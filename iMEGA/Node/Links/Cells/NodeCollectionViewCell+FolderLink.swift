@@ -20,12 +20,11 @@ extension NodeCollectionViewCell {
         return cell
     }
 
-    @objc func configureCellForFolderLinkNode(
+    func configureCellForFolderLinkNode(
         _ node: MEGANode,
         allowedMultipleSelection: Bool,
         sdk: MEGASdk,
-        delegate: (any NodeCollectionViewCellDelegate)?,
-        usesRevampedUI: Bool
+        delegate: (any NodeCollectionViewCellDelegate)?
     ) {
         configureCell(
             forFolderLinkNode: node,
@@ -35,7 +34,6 @@ extension NodeCollectionViewCell {
         )
         downloadedImageView?.isHidden = !hasDownloaded(node: node)
 
-        guard usesRevampedUI else { return }
         nameLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
 
         let labelPath = node.toNodeEntity().label.labelString

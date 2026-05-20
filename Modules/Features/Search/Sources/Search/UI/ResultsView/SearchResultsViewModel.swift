@@ -88,8 +88,6 @@ public final class SearchResultsViewModel: ObservableObject {
     // Specifies whether the results are selectable or not.
     let isSelectionEnabled: Bool
 
-    let usesRevampedLayout: Bool
-
     weak var interactor: (any SearchResultsInteractor)?
 
     public init(
@@ -105,7 +103,6 @@ public final class SearchResultsViewModel: ObservableObject {
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol = HapticFeedbackUseCase(),
         listHeaderViewModel: ListHeaderViewModel?,
         isSelectionEnabled: Bool,
-        usesRevampedLayout: Bool,
         contentUnavailableViewModelProvider: some ContentUnavailableViewModelProviding
     ) {
         self.resultsProvider = resultsProvider
@@ -118,7 +115,6 @@ public final class SearchResultsViewModel: ObservableObject {
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
-        self.usesRevampedLayout = usesRevampedLayout
         self.hapticFeedbackUseCase = hapticFeedbackUseCase
         self.contentUnavailableViewModelProvider = contentUnavailableViewModelProvider
         self.bridge.queryChanged = { [weak self] query  in
@@ -405,7 +401,6 @@ public final class SearchResultsViewModel: ObservableObject {
     }
 
     private func mapSearchResultToViewModel(_ result: SearchResult) -> SearchResultRowViewModel {
-        let content = config.contextPreviewFactory.previewContentForResult(result)
         let swipeActions = result.swipeActions(viewDisplayMode)
         return SearchResultRowViewModel(
             result: result,
@@ -414,21 +409,6 @@ public final class SearchResultsViewModel: ObservableObject {
             },
             rowAssets: config.rowAssets,
             colorAssets: config.colorAssets,
-            previewContent: .init(
-                actions: content.actions.map({ action in
-                    return .init(
-                        title: action.title,
-                        imageName: action.imageName,
-                        handler: { [weak self] in
-                            Task { @MainActor in
-                                self?.actionPressedOn(result)
-                                action.handler()
-                            }
-                        }
-                    )
-                }),
-                previewMode: content.previewMode
-            ),
             actions: rowActions(for: result),
             swipeActions: swipeActions
         )
@@ -436,9 +416,7 @@ public final class SearchResultsViewModel: ObservableObject {
 
     private func actionPressedOn(_ result: SearchResult) {
         if !editing {
-            if usesRevampedLayout {
-                hapticFeedbackUseCase.generateHapticFeedback(.light)
-            }
+            hapticFeedbackUseCase.generateHapticFeedback(.light)
             handleEditingChanged(true)
         }
 
@@ -528,9 +506,7 @@ public final class SearchResultsViewModel: ObservableObject {
                     bridge.selection(selection)
                 }
             },
-            previewTapAction: { [weak self] in
-                self?.bridge.selection(selection)
-            }, revampLongPress: { [weak self] in
+            revampLongPress: { [weak self] in
                 guard let self, isSelectionEnabled else { return }
                 actionPressedOn(result)
             }

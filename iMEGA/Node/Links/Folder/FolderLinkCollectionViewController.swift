@@ -20,10 +20,6 @@ class FolderLinkCollectionViewController: UIViewController {
     
     lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView, controller: self)
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     private var displayNodes: [MEGANode]? {
         folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
     }
@@ -76,11 +72,10 @@ class FolderLinkCollectionViewController: UIViewController {
     }
 
     private func setupDataSource() {
-        diffableDataSource.configureDataSource(usesRevampedUI: isCloudDriveRevampEnabled)
+        diffableDataSource.configureDataSource()
     }
 
     private func addLongPressGestureIfNeeded() {
-        guard isCloudDriveRevampEnabled else { return }
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         collectionView.addGestureRecognizer(longPressGesture)
     }
@@ -113,12 +108,8 @@ class FolderLinkCollectionViewController: UIViewController {
     }
     
     func getNode(at indexPath: IndexPath) -> MEGANode? {
-        if isCloudDriveRevampEnabled {
-            let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
-            return listOfNodes?[safe: indexPath.row]
-        } else {
-            return indexPath.section == ThumbnailSection.file.rawValue ? fileList[safe: indexPath.row] : folderList[safe: indexPath.row]
-        }
+        let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
+        return listOfNodes?[safe: indexPath.row]
     }
     
     @objc func setCollectionViewEditing(_ editing: Bool, animated: Bool) {
@@ -132,34 +123,12 @@ class FolderLinkCollectionViewController: UIViewController {
     }
     
     @objc func reloadData() {
-        if isCloudDriveRevampEnabled {
-            reloadDataForRevampUI()
-        } else {
-            reloadDataForLegacyUI()
-        }
-    }
-
-    private func reloadDataForRevampUI() {
         if MEGAReachabilityManager.isReachable(), let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray,
            !listOfNodes.isEmpty {
             removeErrorViewIfRequired()
             // For revamp UI, we display one single section for listOfNodes instead of 2 sections for folders and files.
             // [SAO-3147] Refactor the data source to fully remove .folder and .file separation.
             diffableDataSource.load(data: [.folder: listOfNodes], keys: [.folder])
-        } else {
-            diffableDataSource.load(data: [:], keys: [])
-            showErrorViewIfRequired()
-        }
-    }
-
-    private func reloadDataForLegacyUI() {
-        fileList = buildNodeListFor(fileType: .file)
-        folderList = buildNodeListFor(fileType: .folder)
-        let isEmpty = fileList.isEmpty && folderList.isEmpty
-        
-        if MEGAReachabilityManager.isReachable(), !isEmpty {
-            removeErrorViewIfRequired()
-            diffableDataSource.load(data: [.folder: folderList, .file: fileList], keys: [.folder, .file])
         } else {
             diffableDataSource.load(data: [:], keys: [])
             showErrorViewIfRequired()
@@ -257,50 +226,12 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
         setCollectionViewEditing(true, animated: true)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        if isCloudDriveRevampEnabled { return nil }
-        let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
-            guard let node = self.getNode(at: indexPath) else { return nil }
-            if node.isFolder() {
-                let folderLinkVC = self.folderLink.fromNode(node)
-                return folderLinkVC
-            } else {
-                return nil
-            }
-        } actionProvider: { _ in
-            let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: MEGAAssets.UIImage.selectItem) { _ in
-                self.setCollectionViewEditing(true, animated: true)
-                self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
-                self.collectionView?.reloadData()
-            }
-            return UIMenu(title: "", children: [selectAction])
-        }
-
-        return contextMenuConfiguration
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: any UIContextMenuInteractionCommitAnimating) {
-        guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
-        animator.addCompletion {
-            self.navigationController?.pushViewController(folderLinkVC, animated: true)
-        }
-    }
 }
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-
-        if isCloudDriveRevampEnabled {
-            return CGSize(width: 184, height: 180) // (184, 180) is the size needed for the cells to match with that of revamped CD.
-        }
-
-        if indexPath.section == ThumbnailSection.file.rawValue || indexPath.section == ThumbnailSection.folder.rawValue {
-            return CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.height.rawValue))
-        } else {
-            return .zero
-        }
+        // (184, 180) is the size needed for the cells to match with that of revamped CD.
+        CGSize(width: 184, height: 180)
     }
 
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, heightForHeaderInSection section: Int) -> CGFloat {

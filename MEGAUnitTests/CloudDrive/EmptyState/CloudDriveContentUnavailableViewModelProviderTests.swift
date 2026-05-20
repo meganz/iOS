@@ -20,22 +20,8 @@ struct CloudDriveContentUnavailableViewModelProviderTests {
         @MainActor static let defaultEmptyViewAssets = SearchConfig.EmptyViewAssets.testAssets
     }
 
-    @Suite("When usesRevampedUI is disabled")
-    struct UsesRevampedUIDisabled {
-        @Test("Use the output from defaultEmptyViewAssets")
-        @MainActor func emptyViewModelWhenUsesRevampedUIIsFalse() async throws {
-            let sut = makeSUT(usesRevampedUI: false)
-            let output = sut.emptyViewModel(query: .initial, appliedChips: [], config: .testConfig)
-
-            #expect(output.title == TestData.defaultEmptyViewAssets.title)
-            #expect(output.image == TestData.defaultEmptyViewAssets.image)
-            #expect(output.subtitle == nil)
-            #expect(output.actions.isEmpty)
-        }
-    }
-
-    @Suite("When usesRevampedUI is enabled")
-    struct UsesRevampedUIEnabled {
+    @Suite("Empty view model rules")
+    struct EmptyViewModelRules {
         @Test("Different search parameter results in legacy outputs")
         @MainActor func emptyViewModelWithDifferentSearchQueries() async throws {
             let sut = makeSUT(nodeSource: NodeSource.node { NodeEntity(handle: 1) })
@@ -129,15 +115,13 @@ struct CloudDriveContentUnavailableViewModelProviderTests {
     static private func makeSUT(
         nodeSource: NodeSource = NodeSource.node { NodeEntity(handle: 0) },
         displayMode: DisplayMode? = nil,
-        nodeUseCase: MockNodeUseCase = MockNodeUseCase(),
-        usesRevampedUI: Bool = true
+        nodeUseCase: MockNodeUseCase = MockNodeUseCase()
     ) -> CloudDriveContentUnavailableViewModelProvider {
         CloudDriveContentUnavailableViewModelProvider(
             defaultEmptyViewAssets: TestData.defaultEmptyViewAssets,
             nodeSource: nodeSource,
             displayMode: displayMode,
-            nodeUseCase: nodeUseCase,
-            usesRevampedUI: usesRevampedUI
+            nodeUseCase: nodeUseCase
         )
     }
 }

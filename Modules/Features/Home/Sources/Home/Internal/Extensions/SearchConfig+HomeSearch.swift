@@ -50,9 +50,6 @@ extension SearchConfig {
                 checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
                 listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
                 listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
-            ),
-            contextPreviewFactory: .init( // This isn't used in Revamp UI, this is just here to satisfy the struct's initialization
-                previewContentForResult: { _ in .init(actions: [], previewMode: .noPreview) }
             )
         )
     }

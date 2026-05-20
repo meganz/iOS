@@ -71,8 +71,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
             sortOptionsForMD: [SortOption] = [SortOption(key: .name, localizedTitle: "")],
-            selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified),
-            featureFlagList: [RemoteFeatureFlag: Bool] = [:],
+            selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified)
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
@@ -127,7 +126,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                         viewDisplayMode: .unknown,
                         listHeaderViewModel: nil,
                         isSelectionEnabled: true,
-                        usesRevampedLayout: false,
                         contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
                     ),
                     sortHeaderConfig: SortHeaderConfig(
@@ -180,8 +178,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
                 onNodeStructureChanged: onNodeStructureChanged,
-                onMoreOptionsButtonTapped: { _ in },
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: featureFlagList)
+                onMoreOptionsButtonTapped: { _ in }
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -648,12 +645,6 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testShouldDisplayHeaderViewInMDView_isAlwaysFalse_shouldMatchResults() {
-        let (harness, _) = makeHarness()
-        XCTAssertFalse(harness.sut.shouldDisplayHeaderViewInMDView)
-    }
-
-    @MainActor
     func testViewModeHeaderViewModelForMD_whenInvoked_shouldMatchResults() {
         let (harness, _) = makeHarness()
         XCTAssertEqual(harness.sut.viewModeHeaderViewModelForMD.selectedViewMode, .mediaDiscovery)
@@ -703,15 +694,12 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testMoreOptionsButtonTapped_trackerShouldRecordCorrectEvent() {
-        let enabled = [false, true]
-        enabled.forEach {
-            let harness = Harness(node: .init(), featureFlagList: [.iosCloudDriveRevamp: $0])
-            harness.sut.moreOptionsButtonTapped(button: UIButton())
-            XCTAssertEqual(
-                harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == CloudDriveParentNodeMoreButtonPressedEvent().eventName }), $0
-            )
-        }
+    func testMoreOptionsButtonTapped_trackerShouldRecordEvent() {
+        let harness = Harness(node: .init())
+        harness.sut.moreOptionsButtonTapped(button: UIButton())
+        XCTAssertTrue(
+            harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == CloudDriveParentNodeMoreButtonPressedEvent().eventName })
+        )
     }
 
     @MainActor

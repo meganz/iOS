@@ -33,18 +33,3 @@ struct EmptyStateViewModifier: ViewModifier {
         }
     }
 }
-
-struct RevampedEmptyStateViewModifier: ViewModifier {
-    var emptyViewModel: ContentUnavailableViewModel?
-
-    func body(content: Content) -> some View {
-        if let emptyViewModel {
-            content
-                .overlay(
-                    RevampedContentUnavailableView(viewModel: emptyViewModel)
-                )
-        } else {
-            content
-        }
-    }
-}

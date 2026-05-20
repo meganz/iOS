@@ -6,27 +6,13 @@ import Search
 
 extension SearchConfig {
     static var recentAction: SearchConfig {
-        let contextPreviewFactory = SearchConfig.ContextPreviewFactory { _ in
-            .init(actions: [], previewMode: .noPreview)
-        }
-        
         let emptyViewAssets = SearchConfig.EmptyViewAssets(
             image: MEGAAssets.Image.glassFolder,
             title: Strings.Localizable.emptyFolder,
             titleTextColor: TokenColors.Text.primary.swiftUI
         )
-        
-        return SearchConfig.searchConfig(
-            contextPreviewFactory: contextPreviewFactory,
-            defaultEmptyViewAsset: { emptyViewAssets }
-        )
-    }
-    
-    private static func searchConfig(
-        contextPreviewFactory: ContextPreviewFactory,
-        defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
-    ) -> SearchConfig {
-        .init(
+
+        return .init(
             chipAssets: .init(
                 selectionIndicatorImage: MEGAAssets.UIImage.turquoiseCheckmark,
                 closeIcon: MEGAAssets.UIImage.miniplayerClose,
@@ -35,9 +21,7 @@ extension SearchConfig {
                 normalForeground: TokenColors.Text.primary.swiftUI,
                 normalBackground: TokenColors.Button.secondary.swiftUI
             ),
-            emptyViewAssetFactory: { _, _ in
-                defaultEmptyViewAsset()
-            },
+            emptyViewAssetFactory: { _, _ in emptyViewAssets },
             rowAssets: .init(
                 contextImage: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
                 itemSelected: MEGAAssets.UIImage.checkBoxSelectedSemantic,
@@ -64,8 +48,7 @@ extension SearchConfig {
                 checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
                 listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
                 listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
-            ),
-            contextPreviewFactory: contextPreviewFactory
+            )
         )
     }
 }

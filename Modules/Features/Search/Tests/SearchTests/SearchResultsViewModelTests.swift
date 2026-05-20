@@ -43,8 +43,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
 
         init(
             _ testcase: XCTestCase,
-            searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            usesRevampedLayout: Bool = false
+            searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding(
@@ -68,8 +67,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 chipAssets: base.chipAssets,
                 emptyViewAssetFactory: { _, _ in SearchConfig.EmptyViewAssets.testAssets },
                 rowAssets: base.rowAssets,
-                colorAssets: base.colorAssets,
-                contextPreviewFactory: base.contextPreviewFactory
+                colorAssets: base.colorAssets
             )
 
             hapticFeedbackUseCase = .init()
@@ -87,7 +85,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 hapticFeedbackUseCase: hapticFeedbackUseCase,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                usesRevampedLayout: usesRevampedLayout,
                 contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
             )
 
@@ -284,14 +281,9 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     listHeaderTextColor: Color.red,
                     listHeaderBackgroundColor: Color.white
                 ),
-                previewContent: .init(
-                    actions: [],
-                    previewMode: .noPreview
-                ),
                 actions: .init(
                     contextAction: { _ in},
                     selectionAction: {},
-                    previewTapAction: {},
                     revampLongPress: {}
                 ),
                 swipeActions: []
@@ -843,7 +835,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
 
     @MainActor
     func testHapticFeedback_whenRevampLongPressIsInvoked_shouldPerformHapticFeedback() async {
-        let harness = Harness(self, usesRevampedLayout: true).withSingleResultPrepared()
+        let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.task()
         harness.sut.listItems.first?.actions.revampLongPress()
         XCTAssertEqual(harness.hapticFeedbackUseCase.feedbacks, [.light])
@@ -888,8 +880,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             query: query,
             rowAssets: .example,
             colorAssets: .example,
-            previewContent: .example,
-            actions: .init(contextAction: { _ in }, selectionAction: {}, previewTapAction: {}, revampLongPress: {}),
+            actions: .init(contextAction: { _ in }, selectionAction: {}, revampLongPress: {}),
             swipeActions: []
         )
     }

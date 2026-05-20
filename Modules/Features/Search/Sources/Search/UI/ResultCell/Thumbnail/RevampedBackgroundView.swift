@@ -1,5 +1,10 @@
 import SwiftUI
 
+public enum VerticalBackgroundViewMode: Sendable {
+    case preview
+    case icon
+}
+
 /// View that displays either a full background image or a single color background and smaller icon image in the centre
 /// depending on the mode property
 /// It was refactored out of VerticalThumbnailView as it forms a separate unit and makes understanding VerticalThumbnailView easier

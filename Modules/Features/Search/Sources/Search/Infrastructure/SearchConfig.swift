@@ -11,31 +11,19 @@ public struct SearchConfig {
     public let rowAssets: RowAssets
     // [SAO-3133]: Refactor ColorAssets to remove unnecessary color properties
     public let colorAssets: ColorAssets
-    public let contextPreviewFactory: ContextPreviewFactory
-    
+
     public init(
         chipAssets: ChipAssets,
         emptyViewAssetFactory: @escaping (SearchChipEntity?, SearchQuery) -> EmptyViewAssets,
         rowAssets: RowAssets,
-        colorAssets: ColorAssets,
-        contextPreviewFactory: ContextPreviewFactory
+        colorAssets: ColorAssets
     ) {
         self.chipAssets = chipAssets
         self.emptyViewAssetFactory = emptyViewAssetFactory
         self.rowAssets = rowAssets
         self.colorAssets = colorAssets
-        self.contextPreviewFactory = contextPreviewFactory
     }
-    
-    public struct ContextPreviewFactory {
-        public let previewContentForResult: (SearchResult) -> PreviewContent
-        public init(
-            previewContentForResult: @escaping (SearchResult) -> PreviewContent
-        ) {
-            self.previewContentForResult = previewContentForResult
-        }
-    }
-    
+
     public struct ChipAssets {
         public init(
             selectionIndicatorImage: UIImage,

@@ -50,20 +50,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             navigationItem.rightBarButtonItem = editBarButtonItem
         } else {
             navigationItem.leftBarButtonItem = nil
-
-            guard !isCloudDriveRevampEnabled else {
-                navigationItem.rightBarButtonItem = nil
-                return
-            }
-
-            contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
-            
-            contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
-                                                   menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
-            
-            contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
-            
-            navigationItem.rightBarButtonItem = contextBarButtonItem
+            navigationItem.rightBarButtonItem = nil
         }
 
         TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)

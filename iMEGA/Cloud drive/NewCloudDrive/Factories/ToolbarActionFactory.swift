@@ -1,12 +1,8 @@
-import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 
 // Those are actions with bar button items present in the toolbar
 enum BottomToolbarAction {
-    var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
     case download
     case shareLink
     case move
@@ -14,23 +10,16 @@ enum BottomToolbarAction {
     case delete
     case restore
     case actions
-    
+
     var image: UIImage {
         switch self {
-        case .download:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.cloudDownload : MEGAAssets.UIImage.offline
-        case .shareLink:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link
-        case .move:
-            MEGAAssets.UIImage.move
-        case .copy:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.copy01 : MEGAAssets.UIImage.copy
-        case .delete:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.trash : MEGAAssets.UIImage.rubbishBin
-        case .restore:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.rotateCcw : MEGAAssets.UIImage.restore
-        case .actions:
-            isCloudDriveRevampEnabled ? MEGAAssets.UIImage.moreHorizontal : MEGAAssets.UIImage.moreNavigationBar
+        case .download: MEGAAssets.UIImage.cloudDownload
+        case .shareLink: MEGAAssets.UIImage.link01
+        case .move: MEGAAssets.UIImage.move
+        case .copy: MEGAAssets.UIImage.copy01
+        case .delete: MEGAAssets.UIImage.trash
+        case .restore: MEGAAssets.UIImage.rotateCcw
+        case .actions: MEGAAssets.UIImage.moreHorizontal
         }
     }
 }

@@ -140,11 +140,6 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
-            assertionFailure("Case not handled: \(kind) - at \(indexPath)")
-            return UICollectionReusableView()
-        }
-
         guard let headerView = collectionView.dequeueReusableSupplementaryView(
             ofKind: CHTCollectionElementKindSectionHeader,
             withReuseIdentifier: FilesExplorerGridHeaderView.reuseIdentifier,

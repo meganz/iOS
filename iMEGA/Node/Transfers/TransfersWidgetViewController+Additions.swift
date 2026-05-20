@@ -14,8 +14,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         static let defaultBottomAnchor: CGFloat = -60
     }
 
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
-
     @objc
     func createTransfersWidgetViewModel() -> TransfersWidgetViewModel {
         TransfersWidgetViewModel(
@@ -117,7 +115,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         progressViewLeadingConstraint = progressIndicatorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4.0)
         progressViewTraillingConstraint = progressIndicatorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -4.0)
 
-        let transferWidgetLeft = isCloudDriveRevampEnabled ? showProgressIndicatorViewFromLeft : UserDefaults.standard.bool(forKey: "TransferWidgetViewLocationLeft")
+        let transferWidgetLeft = showProgressIndicatorViewFromLeft
         let transferWidgetSideConstraint: NSLayoutConstraint
         if transferWidgetLeft {
             transferWidgetSideConstraint = progressViewLeadingConstraint
@@ -225,26 +223,14 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
             let location = panView?.center
             guard let x = location?.x else { return }
 
-            if isCloudDriveRevampEnabled {
-                if x > UIScreen.main.bounds.width / 2 {
-                    progressViewLeadingConstraint.isActive = false
-                    progressViewTraillingConstraint.isActive = true
-                    showProgressIndicatorViewFromLeft = false
-                } else {
-                    progressViewLeadingConstraint.isActive = true
-                    progressViewTraillingConstraint.isActive = false
-                    showProgressIndicatorViewFromLeft = true
-                }
+            if x > UIScreen.main.bounds.width / 2 {
+                progressViewLeadingConstraint.isActive = false
+                progressViewTraillingConstraint.isActive = true
+                showProgressIndicatorViewFromLeft = false
             } else {
-                if x > UIScreen.main.bounds.width / 2 {
-                    progressViewLeadingConstraint.isActive = false
-                    progressViewTraillingConstraint.isActive = true
-                    UserDefaults.standard.set(false, forKey: "TransferWidgetViewLocationLeft")
-                } else {
-                    progressViewLeadingConstraint.isActive = true
-                    progressViewTraillingConstraint.isActive = false
-                    UserDefaults.standard.set(true, forKey: "TransferWidgetViewLocationLeft")
-                }
+                progressViewLeadingConstraint.isActive = true
+                progressViewTraillingConstraint.isActive = false
+                showProgressIndicatorViewFromLeft = true
             }
 
             view.setNeedsLayout()

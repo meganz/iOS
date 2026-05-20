@@ -7,21 +7,7 @@ extension SearchConfig {
         chipAssets: .example,
         emptyViewAssetFactory: SearchConfig.EmptyViewAssets.exampleFactory,
         rowAssets: .example,
-        colorAssets: .example,
-        contextPreviewFactory: .example
-    )
-}
-
-extension SearchConfig.ContextPreviewFactory {
-    @MainActor static let example: Self = .init(
-        previewContentForResult: { result in
-            return .init(
-                actions: [],
-                previewMode: .preview({
-                    UIHostingController(rootView: Text(result.title))
-                })
-            )
-        }
+        colorAssets: .example
     )
 }
 

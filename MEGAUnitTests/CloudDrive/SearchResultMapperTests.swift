@@ -25,14 +25,14 @@ final class SearchResultMapperTests: XCTestCase {
                 return nodeHandle == 100 ?  true : false
             },
             expectedSwipeActionsCount: 1,
-            expectedSwipeActionImages: [MEGAAssets.Image.restore]
+            expectedSwipeActionImages: [MEGAAssets.Image.rotateCcw]
         )
     }
 
     func testSwipeActions_withNodeInCloudDrive_shouldReturnMultipleActions() {
         assertSwipeActions(
             expectedSwipeActionsCount: 3,
-            expectedSwipeActionImages: [MEGAAssets.Image.rubbishBin, MEGAAssets.Image.link, MEGAAssets.Image.offline]
+            expectedSwipeActionImages: [MEGAAssets.Image.trash, MEGAAssets.Image.link01, MEGAAssets.Image.arrowDownCircle]
         )
     }
 
@@ -40,7 +40,7 @@ final class SearchResultMapperTests: XCTestCase {
         assertSwipeActions(
             displayMode: .backup,
             expectedSwipeActionsCount: 2,
-            expectedSwipeActionImages: [MEGAAssets.Image.link, MEGAAssets.Image.offline]
+            expectedSwipeActionImages: [MEGAAssets.Image.link01, MEGAAssets.Image.arrowDownCircle]
         )
     }
 
@@ -157,8 +157,7 @@ final class SearchResultMapperTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
-        showHiddenNodeBlur: Bool = true,
-        isCloudDriveRevampEnabled: Bool = false
+        showHiddenNodeBlur: Bool = true
     ) -> SUT {
         .init(
             sdk: sdk,
@@ -168,8 +167,7 @@ final class SearchResultMapperTests: XCTestCase {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
-            showHiddenNodeBlur: showHiddenNodeBlur,
-            isCloudDriveRevampEnabled: isCloudDriveRevampEnabled
+            showHiddenNodeBlur: showHiddenNodeBlur
         )
     }
 

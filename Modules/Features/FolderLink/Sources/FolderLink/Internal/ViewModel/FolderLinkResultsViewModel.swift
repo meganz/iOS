@@ -129,7 +129,6 @@ package final class FolderLinkResultsViewModel: ObservableObject {
             viewDisplayMode: .folderLink,
             listHeaderViewModel: nil,
             isSelectionEnabled: true,
-            usesRevampedLayout: true,
             contentUnavailableViewModelProvider: FolderLinkContentUnavailableProvider()
         )
         

@@ -91,7 +91,6 @@ class NodeBrowserViewModel: ObservableObject {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let warningBannerViewRouter: any WarningBannerViewRouting
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onUpdateSearchBarVisibility: (Bool) -> Void
@@ -137,17 +136,9 @@ class NodeBrowserViewModel: ObservableObject {
 
     let mediaDiscoverySortHeaderConfig: SortHeaderConfig
     
-    var shouldDisplayHeaderViewInMDView: Bool {
-        isCloudDriveRevampEnabled
-    }
-
     lazy var viewModeHeaderViewModelForMD: SearchResultsHeaderViewModeViewModel = {
         .init(selectedViewMode: .mediaDiscovery, availableViewModes: [.list, .grid, .mediaDiscovery])
     }()
-
-    private var isCloudDriveRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
 
     @Published var mediaDiscoverySortOrder: MEGAUIComponent.SortOrder
     
@@ -187,8 +178,7 @@ class NodeBrowserViewModel: ObservableObject {
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
-        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
     ) {
         self.viewMode = viewMode
         self.searchResultsContainerViewModel = searchResultsContainerViewModel
@@ -219,7 +209,6 @@ class NodeBrowserViewModel: ObservableObject {
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
 
         self.mediaDiscoverySortOrder = if let mediaDiscoveryViewModel {
             mediaDiscoveryViewModel.sortOrder == .oldest ? SortOrder(key: .lastModified) : SortOrder(key: .lastModified, direction: .descending)
@@ -609,9 +598,7 @@ class NodeBrowserViewModel: ObservableObject {
 
     func moreOptionsButtonTapped(button: UIButton) {
         onMoreOptionsButtonTapped(button)
-        if isCloudDriveRevampEnabled {
-            tracker.trackAnalyticsEvent(with: CloudDriveParentNodeMoreButtonPressedEvent())
-        }
+        tracker.trackAnalyticsEvent(with: CloudDriveParentNodeMoreButtonPressedEvent())
     }
 
     /// Waits for the node to be loaded from the `NodeSource`.

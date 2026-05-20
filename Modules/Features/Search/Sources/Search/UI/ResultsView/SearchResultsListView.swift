@@ -23,9 +23,7 @@ struct SearchResultsListView<Header: View>: View {
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
-        .tint(
-            viewModel.usesRevampedLayout ? TokenColors.Components.selectionControlAlt.swiftUI : viewModel.colorAssets.checkmarkBackgroundTintColor
-        )
+        .tint(TokenColors.Components.selectionControlAlt.swiftUI)
     }
 
     @ViewBuilder
@@ -99,13 +97,7 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private func rowContent(rowViewModel: SearchResultRowViewModel) -> some View {
-        if viewModel.usesRevampedLayout {
-            RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
-                .listRowSeparator(.hidden)
-        } else {
-            SearchResultRowView(viewModel: rowViewModel)
-                .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
-                .listRowBackground(Color.clear)
-        }
+        RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
+            .listRowSeparator(.hidden)
     }
 }

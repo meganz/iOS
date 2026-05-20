@@ -60,10 +60,6 @@ struct NodeActions {
 // swiftlint:disable cyclomatic_complexity
 extension NodeActions {
 
-    private static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     private static var tracker: some AnalyticsTracking {
         DIContainer.tracker
     }
@@ -494,7 +490,6 @@ extension NodeActions {
     }
 
     private static func trackAnalyticsEvent(_ event: some EventIdentifier) {
-        guard isCloudDriveRevampEnabled else { return }
         tracker.trackAnalyticsEvent(with: event)
     }
 }

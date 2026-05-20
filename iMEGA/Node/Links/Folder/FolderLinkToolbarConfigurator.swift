@@ -1,51 +1,46 @@
 import Foundation
-import MEGAAppPresentation
 import MEGAAssets
 
 @MainActor
 final class FolderLinkToolbarConfigurator {
     typealias FolderLinkToolbarButtonAction = (UIBarButtonItem) -> Void
-    
+
     let importAction: FolderLinkToolbarButtonAction
     let downloadAction: FolderLinkToolbarButtonAction
     let saveToPhotosAction: FolderLinkToolbarButtonAction
     let shareLinkAction: FolderLinkToolbarButtonAction
-    
-    private(set) var activeBarButtons: [UIBarButtonItem] = []
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
+    private(set) var activeBarButtons: [UIBarButtonItem] = []
 
     lazy var flexibleItem = UIBarButtonItem(
         barButtonSystemItem: .flexibleSpace,
         target: nil,
         action: nil
     )
-    
+
     lazy var importItem = UIBarButtonItem(
-        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderArrow : MEGAAssets.UIImage.import,
+        image: MEGAAssets.UIImage.folderArrow,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
-    
+
     lazy var downloadItem = UIBarButtonItem(
-        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.cloudDownload : MEGAAssets.UIImage.offline,
+        image: MEGAAssets.UIImage.cloudDownload,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
-    
+
     lazy var saveToPhotosItem = UIBarButtonItem(
-        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.photosApp : MEGAAssets.UIImage.saveToPhotos,
+        image: MEGAAssets.UIImage.photosApp,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
-    
+
     lazy var shareLinkItem = UIBarButtonItem(
-        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link,
+        image: MEGAAssets.UIImage.link01,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

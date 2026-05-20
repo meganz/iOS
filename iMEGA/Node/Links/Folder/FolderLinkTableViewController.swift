@@ -12,7 +12,6 @@ class FolderLinkTableViewController: UIViewController {
 
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
     private let hapticFeedbackUsecase = HapticFeedbackUseCase()
 
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
@@ -36,7 +35,6 @@ class FolderLinkTableViewController: UIViewController {
     }
 
     func addLongPressGestureIfNeeded() {
-        guard isCloudDriveRevampEnabled else { return }
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         tableView.addGestureRecognizer(longPressGesture)
     }
@@ -67,7 +65,7 @@ class FolderLinkTableViewController: UIViewController {
         folderLink.setNavigationBarButton(editing)
         
         tableView.visibleCells.forEach { (cell) in
-            cell.setSelectedBackgroundView(withColor: isCloudDriveRevampEnabled ? TokenColors.Background.surface1 : .clear)
+            cell.setSelectedBackgroundView(withColor: TokenColors.Background.surface1)
         }
     }
     
@@ -131,9 +129,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = isCloudDriveRevampEnabled ? "RevampedNodeCell" : "nodeCell"
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NodeTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RevampedNodeCell", for: indexPath) as? NodeTableViewCell
         else {
             fatalError("Could not instantiate NodeCollectionViewCell")
         }
@@ -175,19 +172,13 @@ extension FolderLinkTableViewController: UITableViewDataSource {
                 }
             }
 
-            cell.setSelectedBackgroundView(withColor: isCloudDriveRevampEnabled ? TokenColors.Background.surface1 : .clear)
+            cell.setSelectedBackgroundView(withColor: TokenColors.Background.surface1)
         } else {
             cell.selectedBackgroundView = nil
         }
 
-        if !isCloudDriveRevampEnabled {
-            cell.separatorView.layer.borderColor = TokenColors.Border.strong.cgColor
-            cell.separatorView.layer.borderWidth = 0.5
-        } else {
-            cell.tintColor = TokenColors.Components.selectionControlAlt
-        }
-
-        cell.downloadedImageView.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.downloaded
+        cell.tintColor = TokenColors.Components.selectionControlAlt
+        cell.downloadedImageView.image = MEGAAssets.UIImage.arrowDownCircle
 
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
@@ -264,36 +255,6 @@ extension FolderLinkTableViewController: UITableViewDelegate {
         
         if !tableView.isEditing {
             setTableViewEditing(true, animated: true)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        if isCloudDriveRevampEnabled { return nil }
-        let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
-            guard let node = self.getNode(at: indexPath) else { return nil }
-            if node.isFolder() {
-                let folderLinkVC = self.folderLink.fromNode(node)
-                return folderLinkVC
-            } else {
-                return nil
-            }
-        } actionProvider: { _ in
-            let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: MEGAAssets.UIImage.selectItem) { _ in
-                self.setTableViewEditing(true, animated: true)
-                self.tableView?.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
-                self.tableView?.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-            }
-            return UIMenu(title: "", children: [selectAction])
-        }
-
-        return contextMenuConfiguration
-    }
-    
-    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: any UIContextMenuInteractionCommitAnimating) {
-        guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
-        animator.addCompletion {
-            self.navigationController?.pushViewController(folderLinkVC, animated: true)
         }
     }
 }

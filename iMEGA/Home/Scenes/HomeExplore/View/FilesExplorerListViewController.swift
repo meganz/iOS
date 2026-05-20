@@ -23,10 +23,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         }
     }
 
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -150,7 +146,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     }
 
     private func setHeaderIfNeeded() {
-        guard isCloudDriveRevampEnabled else { return }
         tableView.tableHeaderView = headerView()
     }
 

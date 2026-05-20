@@ -13,9 +13,6 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private(set) var chatId: HandleEntity?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
 
     private var tracker: some AnalyticsTracking {
         DIContainer.tracker
@@ -375,7 +372,6 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
 
     private func trackAnalyticsEvent(_ event: any EventIdentifier) {
-        guard isCloudDriveRevampEnabled else { return }
         tracker.trackAnalyticsEvent(with: event)
     }
 }

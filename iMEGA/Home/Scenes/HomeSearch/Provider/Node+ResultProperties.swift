@@ -1,4 +1,3 @@
-import MEGAAppPresentation
 import MEGAAssets
 import MEGAL10n
 import Search
@@ -24,14 +23,9 @@ enum NodePropertyId: String {
 extension ResultProperty {
     private typealias LayoutConfiguration = ResultProperty.Content.LayoutConfiguration
     private typealias Content = ResultProperty.Content
-    private static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
-    }
 
     private enum Constants {
-        static let legacyPropertySize = 12.0
-        // This is the padding value needed to correct the position the legacy label icon in revamped UI structure
-        static let legacyLabelHorizontalPadding: CGFloat = -3
+        static let propertyIconSize = 12.0
     }
 
     static func duration(string: String) -> Self {
@@ -48,78 +42,53 @@ extension ResultProperty {
         )
     }
 
-    private static func imageContent(
-        legacyImage: UIImage,
-        revampedImage: UIImage,
-        legacyScalable: Bool,
-        revampedScalable: Bool,
-        revampedSize: CGFloat
-    ) -> Content {
-        .icon(
-            image: isCloudDriveRevampEnabled ? revampedImage : legacyImage,
-            layoutConfig: .init(
-                scalable: isCloudDriveRevampEnabled ? revampedScalable : legacyScalable,
-                size: isCloudDriveRevampEnabled ? revampedSize : Constants.legacyPropertySize
-            )
-        )
+    private static func imageContent(image: UIImage, size: CGFloat) -> Content {
+        .icon(image: image, layoutConfig: .init(scalable: true, size: size))
     }
 
-    static let downloaded: Self = {
-        let content = imageContent(
-            legacyImage: MEGAAssets.UIImage.downloaded,
-            revampedImage: MEGAAssets.UIImage.arrowDownCircle,
-            legacyScalable: true,
-            revampedScalable: true,
-            revampedSize: 14
-        )
-
-        return .init(
-            id: NodePropertyId.downloaded.rawValue,
-            content: content,
-            vibrancyEnabled: false,
-            placement: { mode in
-                switch mode {
-                case .list: .secondary(.trailing)
-                case .thumbnail: isCloudDriveRevampEnabled ? .none : .secondary(.trailing)
-                }
+    static let downloaded: Self = .init(
+        id: NodePropertyId.downloaded.rawValue,
+        content: imageContent(image: MEGAAssets.UIImage.arrowDownCircle, size: 14),
+        vibrancyEnabled: false,
+        placement: { mode in
+            switch mode {
+            case .list: .secondary(.trailing)
+            case .thumbnail: .none
             }
-        )
-    }()
+        }
+    )
 
-    static let versioned: Self = {
-        let content = imageContent(
-            legacyImage: MEGAAssets.UIImage.versionedThumbnail,
-            revampedImage: MEGAAssets.UIImage.clockRotate,
-            legacyScalable: true,
-            revampedScalable: true,
-            revampedSize: 13
-        )
-        return .init(
-            id: NodePropertyId.versioned.rawValue,
-            content: content,
-            vibrancyEnabled: false,
-            placement: { mode in
-                switch mode {
-                case .list: .secondary(.leading)
-                case .thumbnail: isCloudDriveRevampEnabled ? .none : .secondary(.trailingEdge)
-                }
+    static let versioned: Self = .init(
+        id: NodePropertyId.versioned.rawValue,
+        content: imageContent(image: MEGAAssets.UIImage.clockRotate, size: 13),
+        vibrancyEnabled: false,
+        placement: { mode in
+            switch mode {
+            case .list: .secondary(.leading)
+            case .thumbnail: .none
             }
-        )
-    }()
+        }
+    )
 
-    static let favorite: Self = {
-        let content = imageContent(
-            legacyImage: MEGAAssets.UIImage.favouriteThumbnail,
-            revampedImage: MEGAAssets.UIImage.heart,
-            legacyScalable: true,
-            revampedScalable: true,
-            revampedSize: 12
-        )
-        return .init(
-            id: NodePropertyId.favorite.rawValue,
-            content: content,
+    static let favorite: Self = .init(
+        id: NodePropertyId.favorite.rawValue,
+        content: imageContent(image: MEGAAssets.UIImage.heart, size: 12),
+        vibrancyEnabled: false,
+        accessibilityLabel: Strings.Localizable.favourite,
+        placement: { mode in
+            switch mode {
+            case .list: .prominent(.trailing)
+            case .thumbnail: .secondary(.trailingEdge)
+            }
+        }
+    )
+
+    static var linked: ResultProperty {
+        .init(
+            id: NodePropertyId.linked.rawValue,
+            content: imageContent(image: MEGAAssets.UIImage.link01, size: 16),
             vibrancyEnabled: false,
-            accessibilityLabel: Strings.Localizable.favourite,
+            accessibilityLabel: Strings.Localizable.shared,
             placement: { mode in
                 switch mode {
                 case .list: .prominent(.trailing)
@@ -127,50 +96,18 @@ extension ResultProperty {
                 }
             }
         )
-    }()
-
-    static var linked: ResultProperty {
-        let content = imageContent(
-            legacyImage: MEGAAssets.UIImage.linkedThumbnail,
-            revampedImage: MEGAAssets.UIImage.link01,
-            legacyScalable: true,
-            revampedScalable: true,
-            revampedSize: 16
-        )
-        return .init(
-            id: NodePropertyId.linked.rawValue,
-            content: content,
-            vibrancyEnabled: false,
-            accessibilityLabel: Strings.Localizable.shared,
-            placement: { mode in
-                switch mode {
-                case .list:
-                        .prominent(.trailing)
-                case .thumbnail:
-                        .secondary(.trailingEdge)
-                }
-            }
-        )
     }
 
     static func label(path: String, accessibilityLabel: String) -> ResultProperty {
-        let overriddenPath = isCloudDriveRevampEnabled ? "\(path)Small" : path
-
-        let image = {
-            guard let image = MEGAAssets.UIImage.image(named: overriddenPath) else {
-                assertionFailure("Label image named \(overriddenPath) not found")
-                return MEGAAssets.UIImage.red
-            }
-            return image
+        let overriddenPath = "\(path)Small"
+        let image = MEGAAssets.UIImage.image(named: overriddenPath) ?? {
+            assertionFailure("Label image named \(overriddenPath) not found")
+            return MEGAAssets.UIImage.red
         }()
-
-        let layoutConfig: LayoutConfiguration = isCloudDriveRevampEnabled
-        ? .init(scalable: true, size: 9, renderingMode: .original)
-        : .init(scalable: false, size: 16, horizontalPadding: Constants.legacyLabelHorizontalPadding)
 
         return .init(
             id: NodePropertyId.label.rawValue,
-            content: .icon(image: image, layoutConfig: layoutConfig),
+            content: .icon(image: image, layoutConfig: .init(scalable: true, size: 9, renderingMode: .original)),
             vibrancyEnabled: false,
             accessibilityLabel: accessibilityLabel,
             placement: { _ in .prominent(.leading) }
@@ -193,7 +130,7 @@ extension ResultProperty {
     ) {
         self.init(
             id: propertyId.rawValue,
-            content: .icon(image: icon, layoutConfig: .init(scalable: true, size: Constants.legacyPropertySize)),
+            content: .icon(image: icon, layoutConfig: .init(scalable: true, size: Constants.propertyIconSize)),
             vibrancyEnabled: vibrancyEnabled,
             accessibilityLabel: accessibilityLabel,
             placement: placement
