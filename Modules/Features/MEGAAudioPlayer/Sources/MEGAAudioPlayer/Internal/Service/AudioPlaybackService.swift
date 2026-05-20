@@ -4,9 +4,17 @@ import MEGADomain
 import SwiftUI
 
 /// Single state projection the VM subscribes to. Bundling avoids declaring a
-/// dozen separate publishers on the service protocol. 
+/// dozen separate publishers on the service protocol.
 struct AudioPlaybackState {
     var currentSource: PlaybackSource
+
+    /// URL of the current track's cover artwork — typically produced by the
+    /// engine after it parses track metadata. `nil` when the file has no
+    /// embedded cover image (or the cover hasn't been extracted yet). The VM
+    /// downloads from this URL to derive the dominant color for the background
+    /// glow.
+    var artworkURLString: String?
+
     var currentNode: NodeEntity? { currentSource.primaryNode }
 }
 
