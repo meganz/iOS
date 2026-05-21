@@ -330,6 +330,7 @@ extension MEGAAssets {
         public static var moreVerticalMediumThinOutline: SwiftUI.Image { MEGAImageBundle.moreVerticalMediumThinOutline }
         public static var audioIcon: SwiftUI.Image { MEGAImageBundle.audioIcon }
         public static var hourglassNewestSmallRegularOutline: SwiftUI.Image { MEGAImageBundle.hourglassNewestSmallRegularOutline }
+        public static var megaLogoText: SwiftUI.Image { MEGAImageBundle.megaLogoText }
     }
 }
 

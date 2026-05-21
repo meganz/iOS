@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -10,6 +11,12 @@ struct TransferLiveActivityLockScreenView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
+            MEGAAssets.Image.megaLogoText
+                .resizable()
+                .scaledToFit()
+                .frame(width: 48, height: 16)
+                .padding(.horizontal, TokenSpacing._5)
+                .padding(.bottom, TokenSpacing._3)
             HStack {
                 state.statusIcon
                     .resizable()
@@ -27,11 +34,11 @@ struct TransferLiveActivityLockScreenView: View {
                     .tracking(-0.4)
                     .foregroundStyle(state.tintColor)
             }
-            .padding(.horizontal, TokenSpacing._9)
+            .padding(.horizontal, TokenSpacing._5)
 
             ProgressView(value: state.progressFraction)
                 .progressViewStyle(CapsuleProgressViewStyle(tint: state.tintColor, height: 12))
-                .padding(.horizontal, TokenSpacing._9)
+                .padding(.horizontal, TokenSpacing._5)
 
             HStack {
                 Text(state.fileCountText)
@@ -42,8 +49,8 @@ struct TransferLiveActivityLockScreenView: View {
                     .font(.liveActivityCaptionMd)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
-            .padding(.horizontal, TokenSpacing._11)
+            .padding(.horizontal, TokenSpacing._7)
         }
-        .padding(.vertical, TokenSpacing._7)
+        .padding(.vertical, TokenSpacing._5)
     }
 }

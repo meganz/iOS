@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "mega-logo-text.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

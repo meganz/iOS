@@ -955,6 +955,9 @@ public struct MEGAImageBundle {
   public static var hourglassNewestSmallRegularOutline: SwiftUICore.Image {
     get
   }
+  public static var megaLogoText: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
