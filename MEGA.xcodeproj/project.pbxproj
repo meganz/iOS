@@ -2385,6 +2385,7 @@
 		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
 		BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
+		BF1189300000A00000000002 /* AppDelegate+LiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1189300000A00000000001 /* AppDelegate+LiveActivity.swift */; };
 		BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */; };
 		BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
@@ -5301,6 +5302,7 @@
 		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetailsTests.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
+		BF1189300000A00000000001 /* AppDelegate+LiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+LiveActivity.swift"; sourceTree = "<group>"; };
 		BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
 		BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatViewAnimator.swift; sourceTree = "<group>"; };
@@ -11808,6 +11810,7 @@
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
 				998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */,
+				BF1189300000A00000000001 /* AppDelegate+LiveActivity.swift */,
 				258BA6242CC9FE2400349CD2 /* AppDelegate+ModuleConfigs.swift */,
 				C49949892E2F6621002B2F2B /* AppDelegate+Notifications.swift */,
 				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
@@ -14817,6 +14820,7 @@
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
 				0E261EB42DA5FE1600858151 /* AppDelegate+Authentication.swift in Sources */,
 				998CDC862E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift in Sources */,
+				BF1189300000A00000000002 /* AppDelegate+LiveActivity.swift in Sources */,
 				258BA6252CC9FE3C00349CD2 /* AppDelegate+ModuleConfigs.swift in Sources */,
 				C499498A2E2F6628002B2F2B /* AppDelegate+Notifications.swift in Sources */,
 				C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */,

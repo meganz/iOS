@@ -4968,3 +4968,5 @@
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Install one of the MEGA VPN apps and start a free trial, and get %1$@ of free additional storage space, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Install one of the MEGA Pass apps and start a free trial, and get %1$@ of free additional storage space, %2$@";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Open MEGA to resume";

@@ -302,7 +302,7 @@
     if (MEGASdk.isLoggedIn) {
         [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     }
-    
+
     [MEGASdk.shared areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
         if (pendingTransfers) {
             [self beginBackgroundTaskWithName:@"PendingTasks"];
@@ -370,6 +370,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
+    [self clearTransferLiveActivitySuspendedLock];
     
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
                                    msg:@"Application did become active"
@@ -566,6 +567,9 @@
     
     @try {
         UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
+            if ([name isEqualToString:@"PendingTasks"]) {
+                [self pushTransferLiveActivitySuspendedState];
+            }
             [self endBackgroundTaskWithName:name];
         }];
         

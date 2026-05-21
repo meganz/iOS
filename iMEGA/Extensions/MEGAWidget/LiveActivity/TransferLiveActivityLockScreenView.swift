@@ -19,6 +19,8 @@ struct TransferLiveActivityLockScreenView: View {
                 Text(state.statusText)
                     .font(.liveActivityStatus)
                     .tracking(-0.4)
+                    .minimumScaleFactor(0.8)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 Spacer()
                 Text(state.percentageText)
                     .font(.liveActivityPercentageSm)

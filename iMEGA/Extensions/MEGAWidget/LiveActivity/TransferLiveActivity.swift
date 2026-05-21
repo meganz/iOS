@@ -44,6 +44,7 @@ struct TransferLiveActivity: Widget {
                     .font(.liveActivityStatus)
                     .tracking(-0.4)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                 Spacer()
                 Text(state.percentageText)
                     .font(.liveActivityPercentageLg)
@@ -110,6 +111,7 @@ extension TransferLiveActivityAttributes.ContentState {
     var statusIcon: Image {
         switch state {
         case .paused: MEGAImageBundle.pauseSmallRegularSolid
+        case .suspended: MEGAImageBundle.hourglassNewestSmallRegularOutline
         case .error: MEGAImageBundle.alertCircleSmallRegularSolid
         case .overquota: MEGAImageBundle.alertTriangleSmallRegularSolid
         case .completed: MEGAImageBundle.checkSmallRegularOutline
@@ -125,7 +127,7 @@ extension TransferLiveActivityAttributes.ContentState {
     var tintColor: Color {
         switch state {
         case .active, .completed: TokenColors.Support.success.swiftUI
-        case .paused: TokenColors.Icon.secondary.swiftUI
+        case .paused, .suspended: TokenColors.Icon.secondary.swiftUI
         case .error: TokenColors.Support.error.swiftUI
         case .overquota: TokenColors.Support.warning.swiftUI
         }
@@ -137,7 +139,7 @@ extension TransferLiveActivityAttributes.ContentState {
             TokenColors.Support.error.swiftUI
         case .overquota:
             TokenColors.Support.warning.swiftUI
-        case .completed, .active, .paused:
+        case .completed, .active, .paused, .suspended:
             TokenColors.Icon.primary.swiftUI
         }
     }
