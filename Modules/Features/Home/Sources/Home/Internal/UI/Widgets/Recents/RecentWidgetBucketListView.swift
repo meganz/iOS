@@ -18,6 +18,7 @@ struct RecentWidgetBucketListView: View {
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
+        let isHomeRevampPhaseTwoEnabled: Bool
     }
 
     enum Route: Hashable {
@@ -30,9 +31,9 @@ struct RecentWidgetBucketListView: View {
     private let sections: [RecentActionBucketSection]
     private let recentActionBucketSectionMapper = RecentActionBucketSectionMapper()
     private let viewModel: RecentWidgetBucketListViewModel
-    
+
     @EnvironmentObject var navigator: HomeNavigation
-    
+
     init(
         dependency: Dependency,
         viewModel: RecentWidgetBucketListViewModel = RecentWidgetBucketListViewModel()
@@ -43,15 +44,31 @@ struct RecentWidgetBucketListView: View {
             bucketGroups: dependency.bucketGroups
         )
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             bucketsContent
-            viewAllBucketsButton
+            if !dependency.isHomeRevampPhaseTwoEnabled {
+                viewAllBucketsButton
+            }
         }
         .navigationDestination(for: Route.self) { route in
             navigationDestination(for: route)
         }
+    }
+
+    private var viewAllBucketsButton: some View {
+        Button {
+            viewModel.trackViewAllTapped()
+            navigator.append(Route.viewAllBuckets)
+        } label: {
+            Text(Strings.Localizable.Home.Recent.Widget.viewAll)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .underline()
+                .foregroundStyle(TokenColors.Button.primary.swiftUI)
+        }
+        .padding(TokenSpacing._5)
     }
     
     private var bucketsContent: some View {
@@ -85,20 +102,6 @@ struct RecentWidgetBucketListView: View {
                     .padding(.vertical, TokenSpacing._3)
             }
         }
-    }
-    
-    private var viewAllBucketsButton: some View {
-        Button {
-            viewModel.trackViewAllTapped()
-            navigator.append(Route.viewAllBuckets)
-        } label: {
-            Text(Strings.Localizable.Home.Recent.Widget.viewAll)
-                .font(.callout)
-                .fontWeight(.semibold)
-                .underline()
-                .foregroundStyle(TokenColors.Button.primary.swiftUI)
-        }
-        .padding(TokenSpacing._5)
     }
     
     @ViewBuilder

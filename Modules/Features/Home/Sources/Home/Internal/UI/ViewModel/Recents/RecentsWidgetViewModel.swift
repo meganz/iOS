@@ -57,6 +57,10 @@ final class RecentsWidgetViewModel: ObservableObject {
         await refreshState()
     }
     
+    func trackViewAllTapped() {
+        tracker.trackAnalyticsEvent(with: RecentsViewAllButtonPressedEvent())
+    }
+
     func clearRecentActivity() async -> String? {
         tracker.trackAnalyticsEvent(with: ClearRecentActivityMenuItemEvent())
         do {

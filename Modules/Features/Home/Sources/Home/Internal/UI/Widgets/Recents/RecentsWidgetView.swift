@@ -77,12 +77,31 @@ struct RecentsWidgetView: View {
 
             Spacer()
 
-            moreOptionsMenu
+            if dependency.isHomeRevampPhaseTwoEnabled {
+                viewAllChevronButton
+            } else {
+                moreOptionsMenu
+            }
         }
         .padding(.bottom, TokenSpacing._3)
         .padding(.horizontal, TokenSpacing._5)
     }
-    
+
+    @ViewBuilder
+    private var viewAllChevronButton: some View {
+        if case .nonEmpty = viewModel.state {
+            Button {
+                viewModel.trackViewAllTapped()
+                navigator.append(RecentWidgetBucketListView.Route.viewAllBuckets)
+            } label: {
+                MEGAAssets.Image.chevronRight
+                    .renderingMode(.template)
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    .frame(width: 24, height: 24)
+            }
+        }
+    }
+
     @ViewBuilder
     private var moreOptionsMenuLabel: some View {
         Button(
@@ -100,7 +119,7 @@ struct RecentsWidgetView: View {
            }
         )
     }
-    
+
     @ViewBuilder
     private var moreOptionsMenu: some View {
         switch viewModel.state {
@@ -129,7 +148,7 @@ struct RecentsWidgetView: View {
             } label: {
                 moreOptionsMenuLabel
             }
-            
+
         case .nonEmpty:
             Menu {
                 HideRecentActivityMenuItemView {
@@ -138,7 +157,7 @@ struct RecentsWidgetView: View {
                         navigator.showSnackBar(SnackBar(message: Strings.Localizable.Home.Recent.HideRecentActivity.Snackbar.message))
                     }
                 }
-                
+
                 ClearRecentActivityMenuItemView {
                     confirmingClearRecentActivity = true
                 }
@@ -191,7 +210,8 @@ struct RecentsWidgetView: View {
                 nodeActionHandler: dependency.nodeActionHandler,
                 moreActionsPresenter: dependency.moreActionsPresenter,
                 photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
             )
         )
     }
