@@ -50,8 +50,12 @@ extension RecentsViewController {
     
     @objc func presentAudioPlayer(node: MEGANode) {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
-            MEGAAudioPlayerViewRouter(presenter: self, actionsHandler: MEGAAudioPlayerActionsHandler.make())
-                .start(source: .cloudNode(node: node.toNodeEntity()))
+            MEGAAudioPlayerViewRouter(
+                presenter: self,
+                actionsHandler: MEGAAudioPlayerActionsHandler.make(),
+                navigationFactory: MEGAAudioPlayerNavigationController.make()
+            )
+            .start(source: .cloudNode(node: node.toNodeEntity()))
             return
         }
         if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {

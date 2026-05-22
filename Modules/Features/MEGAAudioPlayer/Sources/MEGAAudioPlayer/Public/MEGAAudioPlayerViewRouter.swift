@@ -5,7 +5,11 @@ import UIKit
 ///
 /// Host app usage:
 /// ```swift
-/// let router = MEGAAudioPlayerViewRouter(presenter: self, actionsHandler: handler)
+/// let router = MEGAAudioPlayerViewRouter(
+///     presenter: self,
+///     actionsHandler: handler,
+///     navigationFactory: { MEGAAudioPlayerNavigationController(rootViewController: $0) }
+/// )
 /// router.start(source: .cloudNode(node: node, queue: queue))     // start new playback
 /// router.showCurrent()                                            // expand mini → full
 /// ```
@@ -21,21 +25,28 @@ public final class MEGAAudioPlayerViewRouter {
     ///   for offline playback, matching legacy behaviour).
     public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ source: PlaybackSource) -> Void
 
+    /// Wraps the SwiftUI hosting controller in a `UINavigationController` of the
+    /// host app's choosing.
+    public typealias NavigationFactory = @MainActor (_ rootViewController: UIViewController) -> UINavigationController
+
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
     private let actionsHandler: ActionsHandler?
+    private let navigationFactory: NavigationFactory
 
     /// Public entry point. Constructs the router with the shared
     /// `AudioPlaybackService` (singleton). Callers from outside the module use
     /// only this initialiser.
     public convenience init(
         presenter: UIViewController?,
-        actionsHandler: ActionsHandler? = nil
+        actionsHandler: ActionsHandler? = nil,
+        navigationFactory: @escaping NavigationFactory
     ) {
         self.init(
             presenter: presenter,
             service: AudioPlaybackService.shared,
-            actionsHandler: actionsHandler
+            actionsHandler: actionsHandler,
+            navigationFactory: navigationFactory
         )
     }
 
@@ -45,11 +56,13 @@ public final class MEGAAudioPlayerViewRouter {
     init(
         presenter: UIViewController?,
         service: any AudioPlaybackServiceProtocol,
-        actionsHandler: ActionsHandler? = nil
+        actionsHandler: ActionsHandler? = nil,
+        navigationFactory: @escaping NavigationFactory
     ) {
         self.presenter = presenter
         self.service = service
         self.actionsHandler = actionsHandler
+        self.navigationFactory = navigationFactory
     }
 
     /// Start (or replace) playback with the given source and present the
@@ -99,7 +112,7 @@ public final class MEGAAudioPlayerViewRouter {
         // gradient background underneath bleeds through — relying on SwiftUI's
         // `.toolbarBackground(.hidden, ...)` is flaky under modal + dark override and
         // can leave a solid dark bar on top of the content.
-        let nav = UINavigationController(rootViewController: host)
+        let nav = navigationFactory(host)
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         nav.navigationBar.standardAppearance = appearance

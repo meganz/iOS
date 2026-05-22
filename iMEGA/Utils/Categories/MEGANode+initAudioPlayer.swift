@@ -55,7 +55,12 @@ extension MEGANode {
                                                        chatId: chatId,
                                                        messageId: messageId,
                                                        allNodes: allNodes) {
-                MEGAAudioPlayerViewRouter(presenter: presenter, actionsHandler: MEGAAudioPlayerActionsHandler.make()).start(source: source)
+                MEGAAudioPlayerViewRouter(
+                    presenter: presenter,
+                    actionsHandler: MEGAAudioPlayerActionsHandler.make(),
+                    navigationFactory: MEGAAudioPlayerNavigationController.make()
+                )
+                .start(source: source)
             }
             return
         }

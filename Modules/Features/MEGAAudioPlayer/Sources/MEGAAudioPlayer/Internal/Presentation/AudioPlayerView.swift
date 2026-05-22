@@ -6,27 +6,16 @@ import UIKit
 
 struct AudioPlayerView: View {
     @ObservedObject var vm: AudioPlayerViewModel
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-
-    private var isLandscape: Bool { verticalSizeClass == .compact }
 
     var body: some View {
         ZStack {
             BackgroundLayer()
                 .ignoresSafeArea()
 
-            if isLandscape {
-                HStack {
-                    ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor)
-                        .padding(.leading, TokenSpacing._9)
-                    Spacer()
-                }
-            } else {
-                VStack {
-                    ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor)
-                        .padding(.top, TokenSpacing._15)
-                    Spacer()
-                }
+            VStack {
+                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor)
+                    .padding(.top, TokenSpacing._15)
+                Spacer()
             }
         }
         .toolbar {
