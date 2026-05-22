@@ -99,7 +99,8 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
         unsigned long long temporaryDirectory = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSTemporaryDirectory()];
         unsigned long long groupDirectory = [NSFileManager.defaultManager mnz_groupSharedDirectorySize];
-        unsigned long long cacheSize = cachesFolderSize + temporaryDirectory + groupDirectory;
+        unsigned long long videoCacheSize = [self videoCacheAllocatedSize];
+        unsigned long long cacheSize = cachesFolderSize + temporaryDirectory + groupDirectory + videoCacheSize;
 
         self.cacheSizeString = [NSString memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
@@ -235,6 +236,13 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
+
+            // Coordinate two async paths: synchronous disk cleanup on a background queue and the
+            // FileService SDK reclaim. Dismiss the HUD and refresh the UI only once both finish so
+            // the displayed cache size reflects the post-reclaim state.
+            dispatch_group_t group = dispatch_group_create();
+
+            dispatch_group_enter(group);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
@@ -247,12 +255,18 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                 if (MEGASdk.shared.uploadTransfers.size == 0) {
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
                 }
+                dispatch_group_leave(group);
+            });
 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [SVProgressHUD dismiss];
-                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [self reloadUI];
-                });
+            dispatch_group_enter(group);
+            [self reclaimVideoCacheWithCompletion:^{
+                dispatch_group_leave(group);
+            }];
+
+            dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [self reloadUI];
             });
             break;
         }

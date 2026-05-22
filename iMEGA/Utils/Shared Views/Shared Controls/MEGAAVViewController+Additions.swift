@@ -84,13 +84,88 @@ extension MEGAAVViewController {
                 guard let self else { return }
                 switch status {
                 case .failed: logError(for: playerItem)
+                case .readyToPlay: configureThrottleBitrate(for: playerItem)
                 default: break
                 }
                 
                 didChangePlayerItemStatus(status)
             }
             .store(in: &subscriptions)
-        
+
+        return NSMutableSet(set: subscriptions)
+    }
+
+    /// Configures the SDK's HTTP streaming server throttle for the given player item.
+    ///
+    /// Sums the estimated data rate of every audio and video track in the asset. When the
+    /// total is above the high-bitrate floor (15 Mbps), a throttle scaled to the current
+    /// playback rate is installed and a rate observer is registered so the throttle stays
+    /// in sync with `AVPlayer.rate` changes. Below the floor, no throttle is installed.
+    ///
+    /// - Parameter playerItem: The player item whose asset bitrate determines the throttle.
+    private func configureThrottleBitrate(for playerItem: AVPlayerItem) {
+        guard apiForStreaming != nil else { return }
+        Task {
+            do {
+                let asset = playerItem.asset
+                var totalBitrate: Float = 0
+
+                let videoTracks = try await asset.loadTracks(withMediaType: .video)
+                for track in videoTracks {
+                    totalBitrate += try await track.load(.estimatedDataRate)
+                }
+
+                let audioTracks = try await asset.loadTracks(withMediaType: .audio)
+                for track in audioTracks {
+                    totalBitrate += try await track.load(.estimatedDataRate)
+                }
+                
+                // bitrate throttle lower bound: 15_000_000 bps
+                if totalBitrate > 15_000_000 {
+                    applyThrottleBitrate(totalBitrate: totalBitrate, playbackRate: player?.rate ?? 1.0)
+                    subscriptions.add(bindPlayerRateForThrottle(totalBitrate: totalBitrate))
+                } else {
+                    MEGALogInfo("[Throttle] Not high bitrate:\(totalBitrate), throttle not set")
+                }
+            } catch {
+                MEGALogError("[Throttle] Failed to load tracks: \(error)")
+            }
+        }
+    }
+
+    /// Applies an HTTP streaming throttle of `totalBitrate × playbackRate × 3` bps to the SDK.
+    ///
+    /// The 3× headroom keeps the streaming server comfortably ahead of playback. `playbackRate`
+    /// is clamped to a minimum of `1.0`
+    ///
+    /// - Parameters:
+    ///   - totalBitrate: Combined estimated data rate of all media tracks, in bits per second.
+    ///   - playbackRate: Current `AVPlayer.rate`; values below `1.0` are clamped to `1.0`.
+    private func applyThrottleBitrate(totalBitrate: Float, playbackRate: Float) {
+        guard let apiForStreaming, totalBitrate >= 0 else { return }
+        let rate = max(playbackRate, 1.0)
+        let throttleBps = UInt64(totalBitrate * rate * 3)
+        apiForStreaming.httpServerSetThrottleBitrate(throttleBps)
+        MEGALogInfo("[Throttle] Set throttle bitrate to \(throttleBps) bps (rate=\(rate) x3, total: \(Int64(totalBitrate)) bps)")
+    }
+
+    /// Observes `AVPlayer.rate` and re-applies the throttle whenever the playback rate changes.
+    ///
+    /// Only non-zero rates are forwarded, so pauses don't reset the throttle.
+    ///
+    /// - Parameter totalBitrate: Combined estimated data rate of all media tracks, in bits per second.
+    /// - Returns: A set containing the rate-observer subscription; retain it to keep the binding alive.
+    private func bindPlayerRateForThrottle(totalBitrate: Float) -> NSMutableSet {
+        var subscriptions = Set<AnyCancellable>()
+
+        player?.publisher(for: \.rate)
+            .removeDuplicates()
+            .filter { $0 > 0 } // only when playing
+            .sink { [weak self] rate in
+                self?.applyThrottleBitrate(totalBitrate: totalBitrate, playbackRate: rate)
+            }
+            .store(in: &subscriptions)
+
         return NSMutableSet(set: subscriptions)
     }
     
@@ -137,6 +212,8 @@ extension MEGAAVViewController {
     
     @objc func deallocPlayer() {
         cancelPlayerProcess()
+        // Reset throttle so it doesn't affect next video
+        apiForStreaming?.httpServerSetThrottleBitrate(0)
         player = nil
         subscriptions.removeAllObjects()
     }

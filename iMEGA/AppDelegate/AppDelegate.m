@@ -174,6 +174,7 @@
     [MEGAChatSdk.shared addChatRequestDelegate:self];
         
     [MEGASdk.shared httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
+    [self configureFileServiceReclaimOptions];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
