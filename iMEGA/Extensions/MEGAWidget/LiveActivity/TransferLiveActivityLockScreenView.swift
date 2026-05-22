@@ -52,5 +52,7 @@ struct TransferLiveActivityLockScreenView: View {
             .padding(.horizontal, TokenSpacing._7)
         }
         .padding(.vertical, TokenSpacing._5)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(state.accessibilityDescription)
     }
 }

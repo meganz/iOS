@@ -22,14 +22,18 @@ struct TransferLiveActivity: Widget {
                     .scaledToFit()
                     .frame(width: 16, height: 16)
                     .foregroundStyle(context.state.statusIconTint)
+                    .accessibilityHidden(true)
             } compactTrailing: {
                 Text(context.state.percentageText)
                     .font(.liveActivityPercentageSm)
                     .tracking(-0.4)
                     .foregroundStyle(context.state.tintColor)
                     .contentTransition(.numericText())
+                    .accessibilityLabel(context.state.compactAccessibilityDescription)
             } minimal: {
                 compactProgressIcon(state: context.state)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(context.state.compactAccessibilityDescription)
             }
         }
     }
@@ -71,6 +75,8 @@ struct TransferLiveActivity: Widget {
             }
             .padding(.horizontal, TokenSpacing._9)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(state.accessibilityDescription)
     }
 
     // MARK: - Compact / Minimal
@@ -142,6 +148,18 @@ extension TransferLiveActivityAttributes.ContentState {
         case .completed, .active, .paused, .suspended:
             TokenColors.Icon.primary.swiftUI
         }
+    }
+
+    var accessibilityDescription: String {
+        [statusText, percentageText, fileCountText, formattedSpeed]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+    }
+
+    var compactAccessibilityDescription: String {
+        [statusText, percentageText]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
     }
 }
 
