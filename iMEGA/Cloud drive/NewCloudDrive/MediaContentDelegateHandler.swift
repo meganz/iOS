@@ -8,6 +8,7 @@ final class MediaContentDelegateHandler: MediaDiscoveryContentDelegate {
     var isMediaDiscoverySelectionHandler: ((_ isHidden: Bool) -> Void)?
     var selectedPhotosHandler: ((_ selected: [NodeEntity], _ allPhotos: [NodeEntity]) -> Void)?
     var mediaDiscoverEmptyTappedHandler: ((EmptyMediaDiscoveryContentMenuAction) -> Void)?
+    var didEnterEditModeHandler: (() -> Void)?
     
     func selectedPhotos(selected: [NodeEntity], allPhotos: [NodeEntity]) {
         selectedPhotosHandler?(selected, allPhotos)
@@ -19,5 +20,9 @@ final class MediaContentDelegateHandler: MediaDiscoveryContentDelegate {
     
     func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
         mediaDiscoverEmptyTappedHandler?(menuAction)
+    }
+    
+    func didEnterEditMode() {
+        didEnterEditModeHandler?()
     }
 }

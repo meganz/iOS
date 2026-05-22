@@ -132,7 +132,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         }
     }
     
-    private func startEditingMode() {
+    func startEditingMode() {
         setEditing(true, animated: true)
         enablePhotoLibraryEditMode(isEditing)
         updateNavigationTitle(withSelectedPhotoCount: 0)

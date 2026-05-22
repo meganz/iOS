@@ -6,8 +6,34 @@ import SwiftUI
 public final class PhotoSelection: ObservableObject {
     private let selectLimit: Int?
     
+    private static let recentLongPressWindow: TimeInterval = 0.7
+    private var recentLongPressHandle: HandleEntity?
+    private var recentLongPressAt: Date?
+
     init(selectLimit: Int? = nil) {
         self.selectLimit = selectLimit
+    }
+
+    /// Records that `handle` was just added to the selection by a long-press gesture.
+    /// `wasRecentlyLongPressed(_:)` returns true for that handle until the window expires
+    /// or another action consumes the mark — used to keep drag-select from immediately
+    /// deselecting the long-pressed item when the user keeps the finger down and drags.
+    public func markRecentlyLongPressed(_ handle: HandleEntity) {
+        recentLongPressHandle = handle
+        recentLongPressAt = Date()
+    }
+
+    public func wasRecentlyLongPressed(_ handle: HandleEntity) -> Bool {
+        guard recentLongPressHandle == handle,
+              let at = recentLongPressAt,
+              Date().timeIntervalSince(at) < Self.recentLongPressWindow
+        else { return false }
+        return true
+    }
+
+    public func consumeRecentLongPressMark() {
+        recentLongPressHandle = nil
+        recentLongPressAt = nil
     }
     
     var isSelectionLimitReachedPublisher: AnyPublisher<Bool, Never>? {

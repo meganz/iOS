@@ -43,6 +43,11 @@ protocol PhotoUpdatePublisherProtocol {
             self?.photosVC?.viewModel.isSelectHidden = isPhotoSelectionHidden
             self?.photosVC?.setupNavigationBarButtons()
         }
+
+        photoLibraryPublisher.subscribeToEditModeChange { [weak self] editMode in
+            guard let vc = self?.photosVC, editMode.isEditing, !vc.isEditing else { return }
+            vc.setEditing(true, animated: true)
+        }
     }
     
     @objc func cancelSubscriptions() {

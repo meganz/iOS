@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
+import UIKit
 
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel
@@ -9,6 +10,13 @@ struct PhotoCellContent: View {
     private var tap: some Gesture { TapGesture().onEnded { _ in
         viewModel.select()
     }}
+
+    private var longPress: some Gesture {
+        LongPressGesture(minimumDuration: 0.5).onEnded { _ in
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            viewModel.handleLongPress()
+        }
+    }
     
     private var isMediaRevampEnabled: Bool {
         viewModel.isMediaRevamp
@@ -33,6 +41,7 @@ struct PhotoCellContent: View {
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
+        .gesture(viewModel.editMode.isEditing ? nil : longPress)
         .task { await viewModel.startLoadingThumbnail() }
         .task {
             if #available(iOS 16, *) {

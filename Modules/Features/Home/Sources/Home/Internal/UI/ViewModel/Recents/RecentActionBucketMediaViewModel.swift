@@ -58,6 +58,19 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+
+        // Mirror long-press-driven edit-mode entry back to viewModel.editMode so the
+        // navigation/toolbar (gated on viewModel.editMode) match the existing Select button.
+        photoLibraryContentViewModel.selection.$editMode
+            .dropFirst()
+            .map(\.isEditing)
+            .removeDuplicates()
+            .filter { $0 }
+            .sink { [weak self] _ in
+                guard let self, !editMode.isEditing else { return }
+                editMode = .active
+            }
+            .store(in: &cancellables)
         
         $selectedPhotos
             .map { $0.isEmpty }

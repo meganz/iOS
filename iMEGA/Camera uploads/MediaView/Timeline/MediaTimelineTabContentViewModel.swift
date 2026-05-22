@@ -48,6 +48,7 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
         self.uploadStateDebounceDuration = uploadStateDebounceDuration
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         setupEditModeSubscription()
+        setupLongPressEditModeBridge()
     }
 
     func monitorCameraUploads() async {
@@ -100,6 +101,20 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.timelineViewModel.updateEditMode($0)
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func setupLongPressEditModeBridge() {
+        timelineViewModel.photoLibraryContentViewModel.selection.$editMode
+            .dropFirst()
+            .removeDuplicates(by: { $0.isEditing == $1.isEditing })
+            .filter(\.isEditing)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self,
+                      sharedResourceProvider?.editMode.isEditing == false else { return }
+                editModeToggleRequested.send()
             }
             .store(in: &subscriptions)
     }

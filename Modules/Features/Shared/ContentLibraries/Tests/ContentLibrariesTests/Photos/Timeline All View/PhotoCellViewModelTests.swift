@@ -735,6 +735,95 @@ final class PhotoCellViewModelTests: XCTestCase {
         sut.select()
         XCTAssertFalse(sut.isSelected)
     }
+
+    @MainActor
+    func testHandleLongPress_whenNotEditing_shouldActivateEditModeAndSelectPhoto() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = makeSUT(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
+        )
+
+        XCTAssertFalse(libraryViewModel.selection.editMode.isEditing)
+        XCTAssertFalse(sut.isSelected)
+
+        sut.handleLongPress()
+
+        XCTAssertTrue(libraryViewModel.selection.editMode.isEditing)
+        XCTAssertTrue(libraryViewModel.selection.isPhotoSelected(photo))
+    }
+
+    @MainActor
+    func testHandleLongPress_whenAlreadyEditing_shouldDoNothing() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+        libraryViewModel.selection.editMode = .active
+
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = makeSUT(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
+        )
+
+        XCTAssertFalse(sut.isSelected)
+        sut.handleLongPress()
+        XCTAssertFalse(libraryViewModel.selection.isPhotoSelected(photo))
+    }
+
+    @MainActor
+    func testHandleLongPress_marksRecentlyLongPressedOnSelection() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+
+        let photo = NodeEntity(name: "0.jpg", handle: 42)
+        let sut = makeSUT(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
+        )
+
+        sut.handleLongPress()
+
+        XCTAssertTrue(libraryViewModel.selection.wasRecentlyLongPressed(photo.handle))
+        libraryViewModel.selection.consumeRecentLongPressMark()
+        XCTAssertFalse(libraryViewModel.selection.wasRecentlyLongPressed(photo.handle))
+    }
+
+    @MainActor
+    func testHandleLongPress_whenSelectionDisabled_shouldDoNothing() throws {
+        ContentLibraries.configuration = .mockConfiguration()
+        let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+        libraryViewModel.selection.isSelectionDisabled = true
+
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = makeSUT(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllViewModel(
+                libraryViewModel: libraryViewModel,
+                configuration: .mockConfiguration())
+        )
+
+        sut.handleLongPress()
+
+        XCTAssertFalse(libraryViewModel.selection.editMode.isEditing)
+        XCTAssertFalse(libraryViewModel.selection.isPhotoSelected(photo))
+    }
     
     @MainActor
     func testShouldApplyContentOpacity_onEditModeItemIsNotSelectedAndLimitReached_shouldChangeContentOpacity() throws {

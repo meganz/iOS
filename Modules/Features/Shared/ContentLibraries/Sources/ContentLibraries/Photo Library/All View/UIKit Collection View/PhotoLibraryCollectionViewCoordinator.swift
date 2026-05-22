@@ -311,12 +311,22 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
 
             dragInitialIndexPath = indexPath
             dragLastIndexPath = indexPath
-            dragSelectionMode = viewModel.libraryViewModel.selection.isPhotoSelected(photo) ? .deselect : .select
-            initialSelectionHandles = Set(viewModel.libraryViewModel.selection.photos.keys)
-            if let dragSelectionMode {
-                applySelectionMode(dragSelectionMode, to: photo)
+            let selection = viewModel.libraryViewModel.selection
+            let isInitialPhotoLongPressOrigin = selection.wasRecentlyLongPressed(photo.handle)
+            // When the user keeps the finger down after a long-press and continues into a drag,
+            // the initial cell is already selected by the long-press. Treat the drag as an
+            // extend-selection (.select) and skip toggling the initial cell so the user keeps it selected.
+            if isInitialPhotoLongPressOrigin {
+                dragSelectionMode = .select
+                selection.consumeRecentLongPressMark()
+            } else {
+                dragSelectionMode = selection.isPhotoSelected(photo) ? .deselect : .select
+                if let dragSelectionMode {
+                    applySelectionMode(dragSelectionMode, to: photo)
+                }
             }
-            
+            initialSelectionHandles = Set(selection.photos.keys)
+
         case .changed:
             updateAutoScrollIfNeeded(at: location)
             guard let indexPath = collectionView?.indexPathForItem(at: location) else {

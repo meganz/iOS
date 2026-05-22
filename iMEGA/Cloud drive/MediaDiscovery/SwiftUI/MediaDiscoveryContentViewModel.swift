@@ -27,6 +27,14 @@ protocol MediaDiscoveryContentDelegate: AnyObject {
     /// This is called immediately on tapping of menu action
     /// - Parameter menuAction: The tapped menu action
     func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction)
+
+    /// Triggered when the user enters edit (Select) mode from inside the media grid (e.g. via long-press on a thumbnail).
+    /// Owners that are the source of truth for editing state should mirror it.
+    func didEnterEditMode()
+}
+
+extension MediaDiscoveryContentDelegate {
+    func didEnterEditMode() {}
 }
 
 enum MediaDiscoveryContentViewState {
@@ -186,6 +194,14 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak delegate] in delegate?.isMediaDiscoverySelection(isHidden: $0) }
+            .store(in: &subscriptions)
+
+        photoLibraryContentViewModel.selection.$editMode
+            .dropFirst()
+            .removeDuplicates(by: { $0.isEditing == $1.isEditing })
+            .filter(\.isEditing)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak delegate] _ in delegate?.didEnterEditMode() }
             .store(in: &subscriptions)
     }
     

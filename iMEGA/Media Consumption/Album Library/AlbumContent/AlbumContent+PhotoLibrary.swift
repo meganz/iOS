@@ -17,6 +17,11 @@ extension AlbumContentViewController: PhotoLibraryProvider {
         photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] in
             self?.viewModel.dispatch(.configureContextMenu(isSelectHidden: $0))
         }
+        
+        photoLibraryPublisher.subscribeToEditModeChange { [weak self] editMode in
+            guard let self, editMode.isEditing, !isEditing else { return }
+            startEditingMode()
+        }
     }
     
     func didSelectedPhotoCountChange(_ count: Int) {

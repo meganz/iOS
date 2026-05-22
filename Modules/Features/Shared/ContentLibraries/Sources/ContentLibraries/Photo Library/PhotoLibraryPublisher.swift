@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import SwiftUI
 
 @MainActor
 public final class PhotoLibraryPublisher {
@@ -39,6 +40,17 @@ public final class PhotoLibraryPublisher {
             .store(in: &subscriptions)
     }
     
+    public func subscribeToEditModeChange(observer: @escaping (EditMode) -> Void) {
+        viewModel
+            .selection
+            .$editMode
+            .dropFirst()
+            .removeDuplicates(by: { $0.isEditing == $1.isEditing })
+            .receive(on: DispatchQueue.main)
+            .sink { observer($0) }
+            .store(in: &subscriptions)
+    }
+
     public func cancelSubscriptions() {
         subscriptions.removeAll()
     }

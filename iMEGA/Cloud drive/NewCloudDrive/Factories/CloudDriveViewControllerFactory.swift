@@ -739,6 +739,14 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
+        // When a long-press inside the media grid enters Select mode, mirror it to
+        // NodeBrowserViewModel via setEditMode so the toolbar AND nav-bar items both
+        // swap to edit mode (matching the existing toolbar "Select" entry point).
+        mediaContentDelegate.didEnterEditModeHandler = { [weak nodeBrowserViewModel] in
+            guard let nodeBrowserViewModel, !nodeBrowserViewModel.editing else { return }
+            nodeBrowserViewModel.setEditMode(true)
+        }
+
         let (contextMenuManager, actionHandlers) = makeContextMenuManager(
             nodeSource: nodeSource,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,

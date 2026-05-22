@@ -16,6 +16,11 @@ extension MediaDiscoveryViewController: PhotoLibraryProvider {
         photoLibraryPublisher.subscribeToPhotoSelectionHidden { [weak self] in
             self?.hideNavigationEditBarButton($0)
         }
+
+        photoLibraryPublisher.subscribeToEditModeChange { [weak self] editMode in
+            guard let self, editMode.isEditing, !isEditing else { return }
+            startEditingMode()
+        }
     }
     
     func hideNavigationEditBarButton(_ hide: Bool) {

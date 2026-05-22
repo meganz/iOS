@@ -85,6 +85,13 @@ open class PhotoCellViewModel: ObservableObject {
             selection.isItemSelectedAfterLimitReached = true
         }
     }
+
+    func handleLongPress() {
+        guard !selection.isSelectionDisabled, !editMode.isEditing else { return }
+        selection.editMode = .active
+        selection.selectPhoto(photo)
+        selection.markRecentlyLongPressed(photo.handle)
+    }
     
     // MARK: Thumbnail/Preview Loading
     public func startLoadingThumbnail() async {
