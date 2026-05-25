@@ -37,7 +37,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc
     func configProgressIndicator() {
         if #available(iOS 16.2, *),
-           DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .transferLiveActivity) {
+           DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransferLiveActivity) {
             TransferLiveActivityCoordinator.shared.startMonitoring()
         }
         guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne) else { return }
