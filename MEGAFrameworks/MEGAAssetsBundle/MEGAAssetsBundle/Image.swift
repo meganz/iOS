@@ -314,4 +314,11 @@ public struct MEGAImageBundle {
     public static var audioIcon: Image { Image(.audioIcon) }
     public static var hourglassNewestSmallRegularOutline: Image { Image(.hourglassNewestSmallRegularOutline) }
     public static var megaLogoText: Image { Image(.megaLogoText) }
+    public static var audioAirplay: Image { Image(.audioAirplay) }
+    public static var audioPlaylist: Image { Image(.audioPlaylist) }
+    public static var audioRepeat: Image { Image(.audioRepeat) }
+    public static var audioRepeatOne: Image { Image(.audioRepeatOne) }
+    public static var audioShuffle: Image { Image(.audioShuffle) }
+    public static var audioSkipBack: Image { Image(.audioSkipBack) }
+    public static var audioSkipForward: Image { Image(.audioSkipForward) }
 }

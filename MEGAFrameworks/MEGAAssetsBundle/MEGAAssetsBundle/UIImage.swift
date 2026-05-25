@@ -474,4 +474,11 @@ public struct MEGAUIImageBundle {
     public static var link02MediumThinOutline: UIImage { UIImage.link02MediumThinOutline }
     public static var slidersVertical: UIImage { UIImage.slidersVertical }
     public static var audioIcon: UIImage { UIImage.audioIcon }
+    public static var audioAirplay: UIImage { UIImage.audioAirplay }
+    public static var audioPlaylist: UIImage { UIImage.audioPlaylist }
+    public static var audioRepeat: UIImage { UIImage.audioRepeat }
+    public static var audioRepeatOne: UIImage { UIImage.audioRepeatOne }
+    public static var audioShuffle: UIImage { UIImage.audioShuffle }
+    public static var audioSkipBack: UIImage { UIImage.audioSkipBack }
+    public static var audioSkipForward: UIImage { UIImage.audioSkipForward }
 }

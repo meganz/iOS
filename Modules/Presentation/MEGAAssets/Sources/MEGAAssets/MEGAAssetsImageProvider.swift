@@ -331,6 +331,13 @@ extension MEGAAssets {
         public static var audioIcon: SwiftUI.Image { MEGAImageBundle.audioIcon }
         public static var hourglassNewestSmallRegularOutline: SwiftUI.Image { MEGAImageBundle.hourglassNewestSmallRegularOutline }
         public static var megaLogoText: SwiftUI.Image { MEGAImageBundle.megaLogoText }
+        public static var audioAirplay: SwiftUI.Image { MEGAImageBundle.audioAirplay }
+        public static var audioPlaylist: SwiftUI.Image { MEGAImageBundle.audioPlaylist }
+        public static var audioRepeat: SwiftUI.Image { MEGAImageBundle.audioRepeat }
+        public static var audioRepeatOne: SwiftUI.Image { MEGAImageBundle.audioRepeatOne }
+        public static var audioShuffle: SwiftUI.Image { MEGAImageBundle.audioShuffle }
+        public static var audioSkipBack: SwiftUI.Image { MEGAImageBundle.audioSkipBack }
+        public static var audioSkipForward: SwiftUI.Image { MEGAImageBundle.audioSkipForward }
     }
 }
 
@@ -803,5 +810,12 @@ extension MEGAAssets {
         public static var link02MediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.link02MediumThinOutline }
         public static var slidersVertical: UIKit.UIImage { MEGAUIImageBundle.slidersVertical }
         public static var audioIcon: UIKit.UIImage { MEGAUIImageBundle.audioIcon }
+        public static var audioAirplay: UIKit.UIImage { MEGAUIImageBundle.audioAirplay }
+        public static var audioPlaylist: UIKit.UIImage { MEGAUIImageBundle.audioPlaylist }
+        public static var audioRepeat: UIKit.UIImage { MEGAUIImageBundle.audioRepeat }
+        public static var audioRepeatOne: UIKit.UIImage { MEGAUIImageBundle.audioRepeatOne }
+        public static var audioShuffle: UIKit.UIImage { MEGAUIImageBundle.audioShuffle }
+        public static var audioSkipBack: UIKit.UIImage { MEGAUIImageBundle.audioSkipBack }
+        public static var audioSkipForward: UIKit.UIImage { MEGAUIImageBundle.audioSkipForward }
     }
 }
