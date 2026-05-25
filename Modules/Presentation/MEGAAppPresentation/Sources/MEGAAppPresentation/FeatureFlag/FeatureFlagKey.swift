@@ -15,7 +15,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case mediaRevamp = "Media Revamp"
     case audioPlayerRevamp = "Audio Player Revamp"
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
-    case transfersSettings = "Transfers Settings"
     case iosHomeRevampPhaseTwo = "iOS Home Revamp Phase Two"
     case newTransfers = "New Transfers"
     case transferLiveActivity = "Transfer Live Activity"

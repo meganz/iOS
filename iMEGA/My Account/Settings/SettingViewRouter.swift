@@ -151,13 +151,11 @@ private extension SettingViewRouter {
                                  router: CallsSettingsViewRouter(presenter: presenter))
         ]
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .transfersSettings) {
-            cells.append(
-                SettingCellViewModel(image: MEGAAssets.UIImage.transfersSettings.withTintColorAsOriginal(TokenColors.Icon.primary),
-                                     title: Strings.Localizable.transfers,
-                                     router: TransfersSettingsRouter(navigationController: presenter))
-            )
-        }
+        cells.append(
+            SettingCellViewModel(image: MEGAAssets.UIImage.transfersSettings.withTintColorAsOriginal(TokenColors.Icon.primary),
+                                 title: Strings.Localizable.transfers,
+                                 router: TransfersSettingsRouter(navigationController: presenter))
+        )
 
         return cells
     }
