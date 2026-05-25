@@ -19,7 +19,7 @@ enum MEGAAudioPlayerActionsHandler {
                  .chatMessage(let node, _, _),
                  .searchResult(let node):
                 presentNodeAction(for: node, on: hostVC)
-            case .fileLink(let url):
+            case .fileLink(let url, _):
                 presentFileLinkAction(for: url, on: hostVC)
             case .offlineFiles:
                 // The player hides the three-dot for offline playback, matching

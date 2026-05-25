@@ -103,7 +103,7 @@ extension MEGANode {
             return .folderLink(node: node.toNodeEntity(), queue: queue)
         }
         if let fileLink, let url = URL(string: fileLink) {
-            return .fileLink(url: url)
+            return .fileLink(url: url, node: node?.toNodeEntity())
         }
         if let node,
            let chatHandle = chatId?.uint64Value, chatHandle != .invalid,

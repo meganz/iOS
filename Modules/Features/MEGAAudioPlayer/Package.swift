@@ -16,7 +16,9 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
@@ -25,7 +27,9 @@ let package = Package(
             dependencies: [
                 "MEGADomain",
                 "MEGAAssets",
+                "MEGAL10n",
                 "MEGASwiftUI",
+                "MEGAInfrastructure",
                 "MEGADesignToken"
             ]
         ),

@@ -207,7 +207,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             if isFolderLink, let node {
                 source = .folderLink(node: node.toNodeEntity())
             } else if let fileLink, let url = URL(string: fileLink) {
-                source = .fileLink(url: url)
+                source = .fileLink(url: url, node: node?.toNodeEntity())
             } else if let filePaths, !filePaths.isEmpty {
                 source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
             } else if let node {

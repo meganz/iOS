@@ -3,19 +3,34 @@ import Foundation
 import MEGADomain
 import SwiftUI
 
-/// Single state projection the VM subscribes to. Bundling avoids declaring a
-/// dozen separate publishers on the service protocol.
+/// Single state projection the VM subscribes to.
 struct AudioPlaybackState {
     var currentSource: PlaybackSource
 
+    /// Display title for the current track. Starts as the filename / node name
+    /// when playback begins, then gets overwritten by the engine once ID3
+    /// `commonKeyTitle` is parsed
+    var title: String
+
+    /// Display artist for the current track.
+    var artist: String?
+
     /// URL of the current track's cover artwork — typically produced by the
-    /// engine after it parses track metadata. `nil` when the file has no
-    /// embedded cover image (or the cover hasn't been extracted yet). The VM
-    /// downloads from this URL to derive the dominant color for the background
-    /// glow.
+    /// engine after it parses track metadata.
     var artworkURLString: String?
 
+    /// Coarse playback status the mini player binds to.
+    var status: PlaybackStatus = .loading
+
     var currentNode: NodeEntity? { currentSource.primaryNode }
+}
+
+enum PlaybackStatus {
+    /// Audio is buffering or metadata is still being parsed — the mini player
+    /// shows the throbber and the play/pause toggle is inert.
+    case loading
+    case playing
+    case paused
 }
 
 /// App-level audio service abstraction.
@@ -24,6 +39,13 @@ protocol AudioPlaybackServiceProtocol: AnyObject {
     var statePublisher: AnyPublisher<AudioPlaybackState?, Never> { get }
 
     func play(source: PlaybackSource)
+
+    /// Flip between play and paused. Inert while loading. Wired to the mini
+    /// player's left-icon tap.
+    func togglePlayPause()
+
+    /// Stop playback entirely and tear down the session.
+    func stop()
 }
 
 /// Live implementation of `AudioPlaybackServiceProtocol`. Process-lifetime
@@ -43,8 +65,41 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
 
     func play(source: PlaybackSource) {
         // Engine not wired yet — to be implemented in the engine-migration sprint.
-        // Until then, project the source into state so the VM (and three-dot
-        // actions menu) has enough context to build the right action sheet.
-        stateSubject.value = AudioPlaybackState(currentSource: source)
+        stateSubject.value = AudioPlaybackState(
+            currentSource: source,
+            title: Self.displayName(for: source),
+            artist: nil
+        )
+    }
+
+    /// Filename / node-name projection used as the title; fall back to the local file URL's last path
+    /// component only for offline playback, where the URL is a `file://` URL
+    /// and the last path component IS the filename.
+    private static func displayName(for source: PlaybackSource) -> String {
+        switch source {
+        case .cloudNode(let node, _),
+             .chatMessage(let node, _, _),
+             .folderLink(let node, _),
+             .searchResult(let node):
+            return node.name
+        case .fileLink(_, let node):
+            return node?.name ?? ""
+        case .offlineFiles(let paths, let startIndex):
+            let url = paths.indices.contains(startIndex) ? paths[startIndex] : paths.first
+            return url?.lastPathComponent ?? ""
+        }
+    }
+
+    func togglePlayPause() {
+        // TBD: engine-migration sprint — flip the AVPlayer rate and let the
+        // engine's KVO push the resulting `.playing` / `.paused` status back
+        // through `stateSubject`. Until then this is intentionally inert so
+        // the mini player can still be exercised by previews and mocks.
+    }
+
+    func stop() {
+        // TBD: engine-migration sprint — tear down the audio session, clear
+        // now-playing info, and emit `nil` so the mini-player host removes
+        // itself from the tab-bar overlay. Inert until then.
     }
 }
