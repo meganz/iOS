@@ -7,7 +7,7 @@ import WidgetKit
 
 @available(iOS 16.2, *)
 struct TransferLiveActivityLockScreenView: View {
-    let state: TransferLiveActivityAttributes.ContentState
+    let viewState: TransferLiveActivityViewState
 
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
@@ -18,34 +18,34 @@ struct TransferLiveActivityLockScreenView: View {
                 .padding(.horizontal, TokenSpacing._5)
                 .padding(.bottom, TokenSpacing._3)
             HStack {
-                state.statusIcon
+                viewState.statusIcon
                     .resizable()
                     .scaledToFit()
                     .frame(width: 16, height: 16)
-                    .foregroundStyle(state.statusIconTint)
-                Text(state.statusText)
+                    .foregroundStyle(viewState.statusIconTint)
+                Text(viewState.statusText)
                     .font(.liveActivityStatus)
                     .tracking(-0.4)
                     .minimumScaleFactor(0.8)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 Spacer()
-                Text(state.percentageText)
+                Text(viewState.percentageText)
                     .font(.liveActivityPercentageSm)
                     .tracking(-0.4)
-                    .foregroundStyle(state.tintColor)
+                    .foregroundStyle(viewState.tintColor)
             }
             .padding(.horizontal, TokenSpacing._5)
 
-            ProgressView(value: state.progressFraction)
-                .progressViewStyle(CapsuleProgressViewStyle(tint: state.tintColor, height: 12))
+            ProgressView(value: viewState.progressFraction)
+                .progressViewStyle(CapsuleProgressViewStyle(tint: viewState.tintColor, height: 12))
                 .padding(.horizontal, TokenSpacing._5)
 
             HStack {
-                Text(state.fileCountText)
+                Text(viewState.fileCountText)
                     .font(.liveActivityCaptionMd)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 Spacer()
-                Text(state.formattedSpeed)
+                Text(viewState.speed)
                     .font(.liveActivityCaptionMd)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
             }
@@ -53,6 +53,6 @@ struct TransferLiveActivityLockScreenView: View {
         }
         .padding(.vertical, TokenSpacing._5)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(state.accessibilityDescription)
+        .accessibilityLabel(viewState.accessibilityDescription)
     }
 }

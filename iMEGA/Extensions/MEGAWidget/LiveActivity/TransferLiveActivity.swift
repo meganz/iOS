@@ -1,5 +1,4 @@
 import ActivityKit
-import MEGAAssetsBundle
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -12,67 +11,63 @@ struct TransferLiveActivity: Widget {
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TransferLiveActivityAttributes.self) { context in
-            TransferLiveActivityLockScreenView(state: context.state)
-                .widgetURL(deepLinkURL)
+            TransferLiveActivityLockScreenView(
+                viewState: TransferLiveActivityViewState(state: context.state, isStale: context.isStale)
+            )
+            .widgetURL(deepLinkURL)
         } dynamicIsland: { context in
-            DynamicIsland {
+            let viewState = TransferLiveActivityViewState(state: context.state, isStale: context.isStale)
+            return DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
-                    expandedContent(state: context.state)
+                    ExpandedContent(viewState: viewState)
                 }
             } compactLeading: {
-                context.state.statusIcon
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 16, height: 16)
-                    .foregroundStyle(context.state.statusIconTint)
-                    .accessibilityHidden(true)
+                CompactLeading(viewState: viewState)
             } compactTrailing: {
-                Text(context.state.percentageText)
-                    .font(.liveActivityPercentageSm)
-                    .tracking(-0.4)
-                    .foregroundStyle(context.state.tintColor)
-                    .contentTransition(.numericText())
-                    .accessibilityLabel(context.state.compactAccessibilityDescription)
+                CompactTrailing(viewState: viewState)
             } minimal: {
-                compactProgressIcon(state: context.state)
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityLabel(context.state.compactAccessibilityDescription)
+                Minimal(viewState: viewState)
             }
             .widgetURL(deepLinkURL)
         }
     }
+}
 
-    // MARK: - Expanded Dynamic Island
+// MARK: - Expanded
 
-    private func expandedContent(state: TransferLiveActivityAttributes.ContentState) -> some View {
+@available(iOS 16.2, *)
+private struct ExpandedContent: View {
+    let viewState: TransferLiveActivityViewState
+
+    var body: some View {
         VStack(spacing: TokenSpacing._3) {
             HStack {
-                iconBadge(state.statusIcon, tint: state.statusIconTint)
-                Text(state.statusText)
+                IconBadge(icon: viewState.statusIcon, tint: viewState.statusIconTint)
+                Text(viewState.statusText)
                     .font(.liveActivityStatus)
                     .tracking(-0.4)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 Spacer()
-                Text(state.percentageText)
+                Text(viewState.percentageText)
                     .font(.liveActivityPercentageLg)
                     .tracking(-0.4)
-                    .foregroundStyle(state.tintColor)
+                    .foregroundStyle(viewState.tintColor)
                     .contentTransition(.numericText())
             }
             .padding(.horizontal, TokenSpacing._7)
 
-            ProgressView(value: state.progressFraction)
-                .progressViewStyle(CapsuleProgressViewStyle(tint: state.tintColor, height: 8))
+            ProgressView(value: viewState.progressFraction)
+                .progressViewStyle(CapsuleProgressViewStyle(tint: viewState.tintColor, height: 8))
                 .padding(.horizontal, TokenSpacing._7)
 
             HStack {
-                Text(state.fileCountText)
+                Text(viewState.fileCountText)
                     .font(.liveActivityCaption)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .contentTransition(.numericText())
                 Spacer()
-                Text(state.formattedSpeed)
+                Text(viewState.speed)
                     .font(.liveActivityCaptionMd)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     .contentTransition(.identity)
@@ -80,29 +75,67 @@ struct TransferLiveActivity: Widget {
             .padding(.horizontal, TokenSpacing._9)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(state.accessibilityDescription)
+        .accessibilityLabel(viewState.accessibilityDescription)
     }
+}
 
-    // MARK: - Compact / Minimal
+// MARK: - Compact / Minimal
 
-    private func compactProgressIcon(state: TransferLiveActivityAttributes.ContentState) -> some View {
+@available(iOS 16.2, *)
+private struct CompactLeading: View {
+    let viewState: TransferLiveActivityViewState
+
+    var body: some View {
+        viewState.statusIcon
+            .resizable()
+            .scaledToFit()
+            .frame(width: 16, height: 16)
+            .foregroundStyle(viewState.statusIconTint)
+            .accessibilityHidden(true)
+    }
+}
+
+@available(iOS 16.2, *)
+private struct CompactTrailing: View {
+    let viewState: TransferLiveActivityViewState
+
+    var body: some View {
+        Text(viewState.percentageText)
+            .font(.liveActivityPercentageSm)
+            .tracking(-0.4)
+            .foregroundStyle(viewState.tintColor)
+            .contentTransition(.numericText())
+            .accessibilityLabel(viewState.compactAccessibilityDescription)
+    }
+}
+
+@available(iOS 16.2, *)
+private struct Minimal: View {
+    let viewState: TransferLiveActivityViewState
+
+    var body: some View {
         ZStack {
-            CircularProgressView(
-                progress: state.progressFraction,
-                tint: state.tintColor
-            )
-            state.statusIcon
+            CircularProgressView(progress: viewState.progressFraction, tint: viewState.tintColor)
+            viewState.statusIcon
                 .resizable()
                 .scaledToFit()
                 .frame(width: 16, height: 16)
-                .foregroundStyle(state.statusIconTint)
+                .foregroundStyle(viewState.statusIconTint)
         }
         .frame(width: 27, height: 27)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(viewState.compactAccessibilityDescription)
     }
+}
 
-    // MARK: - Helpers
+// MARK: - Helpers
 
-    private func iconBadge(_ icon: Image, tint: Color) -> some View {
+@available(iOS 16.2, *)
+private struct IconBadge: View {
+    let icon: Image
+    let tint: Color
+
+    var body: some View {
         icon
             .resizable()
             .scaledToFit()
@@ -110,60 +143,6 @@ struct TransferLiveActivity: Widget {
             .foregroundStyle(tint)
             .frame(width: 32, height: 32)
             .background(Circle().fill(TokenColors.Background.surface2.swiftUI))
-    }
-}
-
-// MARK: - Status Icon
-
-@available(iOS 16.2, *)
-extension TransferLiveActivityAttributes.ContentState {
-
-    var statusIcon: Image {
-        switch state {
-        case .paused: MEGAImageBundle.pauseSmallRegularSolid
-        case .suspended: MEGAImageBundle.hourglassNewestSmallRegularOutline
-        case .error: MEGAImageBundle.alertCircleSmallRegularSolid
-        case .overquota: MEGAImageBundle.alertTriangleSmallRegularSolid
-        case .completed: MEGAImageBundle.checkSmallRegularOutline
-        case .active:
-            switch direction {
-            case .mixed: MEGAImageBundle.arrowUpDownSmallRegularOutline
-            case .downloading: MEGAImageBundle.arrowDownSmallReguarOutline
-            case .uploading, .none: MEGAImageBundle.arrowUpSmallReguarOutline
-            }
-        }
-    }
-
-    var tintColor: Color {
-        switch state {
-        case .active, .completed: TokenColors.Support.success.swiftUI
-        case .paused, .suspended: TokenColors.Icon.secondary.swiftUI
-        case .error: TokenColors.Support.error.swiftUI
-        case .overquota: TokenColors.Support.warning.swiftUI
-        }
-    }
-
-    var statusIconTint: Color {
-        switch state {
-        case .error:
-            TokenColors.Support.error.swiftUI
-        case .overquota:
-            TokenColors.Support.warning.swiftUI
-        case .completed, .active, .paused, .suspended:
-            TokenColors.Icon.primary.swiftUI
-        }
-    }
-
-    var accessibilityDescription: String {
-        [statusText, percentageText, fileCountText, formattedSpeed]
-            .filter { !$0.isEmpty }
-            .joined(separator: ", ")
-    }
-
-    var compactAccessibilityDescription: String {
-        [statusText, percentageText]
-            .filter { !$0.isEmpty }
-            .joined(separator: ", ")
     }
 }
 

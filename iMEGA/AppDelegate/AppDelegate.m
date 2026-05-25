@@ -371,8 +371,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
-    [self clearTransferLiveActivitySuspendedLock];
-    
+
     [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
                                    msg:@"Application did become active"
                                   file:@(__FILENAME__)
@@ -568,9 +567,6 @@
     
     @try {
         UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
-            if ([name isEqualToString:@"PendingTasks"]) {
-                [self pushTransferLiveActivitySuspendedState];
-            }
             [self endBackgroundTaskWithName:name];
         }];
         

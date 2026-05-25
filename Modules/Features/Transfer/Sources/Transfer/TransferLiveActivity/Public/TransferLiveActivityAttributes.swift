@@ -48,7 +48,6 @@ public struct TransferLiveActivityAttributes: ActivityAttributes {
 public enum TransferLiveActivityState: String, Codable, Hashable, Sendable {
     case active
     case paused
-    case suspended
     case error
     case overquota
     case completed

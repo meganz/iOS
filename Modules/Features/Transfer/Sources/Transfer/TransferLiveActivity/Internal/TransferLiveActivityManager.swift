@@ -29,30 +29,6 @@ final class TransferLiveActivityManager {
     private var lastUpdateTime: ContinuousClock.Instant?
     private static let minimumUpdateInterval: Duration = .seconds(1)
 
-    /// True between the moment the AppDelegate expiration handler pushes a
-    /// `.suspended` frame and the moment the app returns to foreground. While
-    /// set, `handleSnapshot` defers processing (and stores the latest snapshot
-    /// in `latestSnapshotWhileLocked`) so the ~5s of remaining background time
-    /// can't overwrite the suspended frame with stale active snapshots. Cleared
-    /// by `clearSuspendedLock` (called from `applicationDidBecomeActive`) or by
-    /// `reset` when the activity ends externally.
-    private var isSuspendedFrameLocked = false
-
-    /// The latest snapshot received from the publisher while the lock was
-    /// active. Replayed by `clearSuspendedLock` so transfers that completed,
-    /// errored, or progressed during the brief grace window before iOS
-    /// suspended us are reflected the moment the user foregrounds.
-    ///
-    /// `.empty` means nothing was buffered. `.received(nil)` means the publisher
-    /// emitted `nil` while locked (which `handleSnapshot` treats as "no active
-    /// transfers, schedule end activity"), and must be distinguished from
-    /// `.empty` so the replay still triggers the end-activity path.
-    private enum BufferedSnapshot {
-        case empty
-        case received(TransferStatusSnapshot?)
-    }
-    private var latestSnapshotWhileLocked: BufferedSnapshot = .empty
-
     init(activityProvider: some TransferLiveActivityProviding) {
         self.activityProvider = activityProvider
     }
@@ -98,11 +74,6 @@ final class TransferLiveActivityManager {
     /// visible on warning/error states so the user has a persistent surface to
     /// resolve the failure from.
     private func handleSnapshot(_ snapshot: TransferStatusSnapshot?) {
-        if isSuspendedFrameLocked {
-            latestSnapshotWhileLocked = .received(snapshot)
-            return
-        }
-
         guard let snapshot else {
             if activityId != nil, endActivityTask == nil {
                 scheduleEndActivity()
@@ -136,49 +107,6 @@ final class TransferLiveActivityManager {
         }
     }
 
-    /// Called from the AppDelegate background-task expiration handler. Replaces
-    /// the last pushed active or user-paused state with a `.suspended` frame so
-    /// the Lock Screen LA stops showing data that's about to become stale once
-    /// iOS suspends the process. No-op when the LA is not running or when the
-    /// last pushed state is terminal or warning (`.error`, `.overquota`,
-    /// `.completed`) which the user expects to see preserved.
-    func pushSuspendedState() {
-        guard activityId != nil,
-              let lastContentState,
-              lastContentState.state == .active || lastContentState.state == .paused else { return }
-
-        let suspendedState = TransferLiveActivityAttributes.ContentState(
-            progressFraction: lastContentState.progressFraction,
-            state: .suspended,
-            direction: lastContentState.direction,
-            statusText: Self.makeStatusText(state: .suspended, direction: lastContentState.direction),
-            percentageText: lastContentState.percentageText,
-            fileCountText: lastContentState.fileCountText,
-            formattedSpeed: Self.makeFormattedSpeed(for: .suspended, bytesPerSecond: 0)
-        )
-        lastPushedState = .suspended
-        self.lastContentState = suspendedState
-        isSuspendedFrameLocked = true
-        // No staleDate: the suspended frame is the final word until the user
-        // foregrounds. Marking it stale 30s later would deprioritize it in the
-        // system's activity ordering and risk earlier dismissal under pressure.
-        pushUpdate(suspendedState, staleDate: nil)
-    }
-
-    /// Clears the suspended-frame lock so the snapshot publisher can resume
-    /// driving the activity. Called by the AppDelegate when the app returns to
-    /// foreground.
-    func clearSuspendedLock() {
-        isSuspendedFrameLocked = false
-        switch latestSnapshotWhileLocked {
-        case .empty:
-            return
-        case .received(let snapshot):
-            latestSnapshotWhileLocked = .empty
-            handleSnapshot(snapshot)
-        }
-    }
-
     // MARK: - Activity Lifecycle
 
     private func startActivity(with state: TransferLiveActivityAttributes.ContentState) {
@@ -189,7 +117,10 @@ final class TransferLiveActivityManager {
         }
         let newId: String
         do {
-            newId = try activityProvider.request(initialState: state)
+            newId = try activityProvider.request(
+                initialState: state,
+                staleDate: Self.staleDate(for: state.state)
+            )
         } catch {
             MEGALogError("[Transfer Live Activity] Failed to start activity: \(error)")
             return
@@ -258,18 +189,27 @@ final class TransferLiveActivityManager {
 
     // MARK: - Update Helpers
 
-    private func pushUpdate(
-        _ state: TransferLiveActivityAttributes.ContentState,
-        staleDate: Date? = Date().addingTimeInterval(30)
-    ) {
+    private func pushUpdate(_ state: TransferLiveActivityAttributes.ContentState) {
         guard let activityId else { return }
         lastUpdateTime = .now
+        let staleDate = Self.staleDate(for: state.state)
         updateTask = Task { [activityProvider] in
             await activityProvider.update(
                 activityId: activityId,
                 state: state,
                 staleDate: staleDate
             )
+        }
+    }
+
+    /// `.active` is the only state where "no recent update" implies the app stopped pushing.
+    /// `.paused`, `.error`, and `.overquota` describe transfers that are intentionally not
+    /// progressing; they must never auto-flip to stale, otherwise the views would falsely
+    /// surface "Open MEGA to resume" on a user-paused or terminal state.
+    private static func staleDate(for state: TransferLiveActivityState) -> Date? {
+        switch state {
+        case .active: Date().addingTimeInterval(8)
+        case .paused, .error, .overquota, .completed: nil
         }
     }
 
@@ -289,8 +229,6 @@ final class TransferLiveActivityManager {
         endActivityTask = nil
         updateTask = nil
         stateObservationTask = nil
-        isSuspendedFrameLocked = false
-        latestSnapshotWhileLocked = .empty
     }
 
     // MARK: - Mapping
@@ -371,7 +309,6 @@ final class TransferLiveActivityManager {
     ) -> String {
         switch state {
         case .paused: Strings.Localizable.paused
-        case .suspended: Strings.Localizable.Transfer.LiveActivity.openMEGAToResume
         case .error: Strings.Localizable.transferFailed
         case .overquota: Strings.Localizable.Transfer.LiveActivity.requiresAttention
         case .completed: Strings.Localizable.completed
@@ -415,8 +352,8 @@ final class TransferLiveActivityManager {
     }()
 
     /// Speed is only meaningful while transfers are actively in flight. For
-    /// paused, suspended, error, over-quota, and completed states we return an
-    /// empty string so the LA hides the speed line entirely (per design).
+    /// paused, error, over-quota, and completed states we return an empty
+    /// string so the LA hides the speed line entirely (per design).
     private static func makeFormattedSpeed(
         for state: TransferLiveActivityState,
         bytesPerSecond: Int64

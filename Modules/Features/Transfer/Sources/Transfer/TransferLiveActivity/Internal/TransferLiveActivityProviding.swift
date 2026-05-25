@@ -5,7 +5,7 @@ import MEGASwift
 @available(iOS 16.2, *)
 protocol TransferLiveActivityProviding: Sendable {
     /// Starts a new Live Activity and returns its identifier.
-    func request(initialState: TransferLiveActivityAttributes.ContentState) throws -> String
+    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) throws -> String
     /// Pushes an updated content state to an existing Live Activity.
     func update(activityId: String, state: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async
     /// Ends a Live Activity with the given dismissal policy.
@@ -31,8 +31,8 @@ struct TransferLiveActivityProvider {}
 @available(iOS 16.2, *)
 extension TransferLiveActivityProvider: TransferLiveActivityProviding {
 
-    func request(initialState: TransferLiveActivityAttributes.ContentState) throws -> String {
-        let content = ActivityContent(state: initialState, staleDate: Date().addingTimeInterval(30))
+    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) throws -> String {
+        let content = ActivityContent(state: initialState, staleDate: staleDate)
         let activity = try Activity<TransferLiveActivityAttributes>.request(
             attributes: TransferLiveActivityAttributes(),
             content: content,
