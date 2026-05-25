@@ -4970,3 +4970,5 @@
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Install one of the MEGA Pass apps and start a free trial, and get %1$@ of free additional storage space, %2$@";
 /* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
 "transfer.liveActivity.openMEGAToResume"="Open MEGA to resume";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Show in location";
