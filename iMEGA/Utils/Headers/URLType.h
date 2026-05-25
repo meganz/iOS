@@ -26,6 +26,7 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeShowFavourites,
     URLTypePresentFavouritesNode,
     URLTypeShowOffline,
+    URLTypeShowTransfers,
     URLTypePresentNode,
     URLTypePresentOfflineFile,
     URLTypeNewTextFile,

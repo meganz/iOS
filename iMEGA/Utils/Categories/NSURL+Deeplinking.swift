@@ -64,6 +64,7 @@ enum DeeplinkHostKey: String {
     case shortcutRecent = "widget.quickaccess.recents"
     case shortcutFavourites = "widget.quickaccess.favourites"
     case shortcutOffline = "widget.quickaccess.offline"
+    case liveActivityTransfers = "widget.liveactivity.transfers"
     case upgrade
     case presentNode = "presentNode"
     // https://mega.nz/# + Base64Handle
@@ -164,6 +165,8 @@ extension NSURL {
             DIContainer.tracker.trackAnalyticsEvent(with: QuickAccessWidgetOffilePressedEvent())
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile
+        case DeeplinkHostKey.liveActivityTransfers.rawValue:
+            return .showTransfers
         case DeeplinkHostKey.presentNode.rawValue:
             return .presentNode
         case DeeplinkHostKey.upgrade.rawValue:

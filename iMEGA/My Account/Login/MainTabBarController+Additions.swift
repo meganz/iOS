@@ -246,6 +246,12 @@ extension MainTabBarController {
         quickAccessRouter.handle(quickAccessRoute: .recents)
     }
 
+    @objc func showTransfers() {
+        Task { @MainActor in
+            TransferIndicatorBarItemConfigurator.presentTransfers()
+        }
+    }
+
     @objc func showOfflineAndPresentFile(handle base64handle: String?) {
         let homeTabIndex = TabManager.homeTabIndex()
         selectedIndex = homeTabIndex

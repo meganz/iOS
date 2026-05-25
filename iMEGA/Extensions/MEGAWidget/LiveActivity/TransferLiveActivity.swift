@@ -8,9 +8,12 @@ import WidgetKit
 
 @available(iOS 16.2, *)
 struct TransferLiveActivity: Widget {
+    private let deepLinkURL = URL(string: "mega://widget.liveactivity.transfers")
+
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TransferLiveActivityAttributes.self) { context in
             TransferLiveActivityLockScreenView(state: context.state)
+                .widgetURL(deepLinkURL)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
@@ -35,6 +38,7 @@ struct TransferLiveActivity: Widget {
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel(context.state.compactAccessibilityDescription)
             }
+            .widgetURL(deepLinkURL)
         }
     }
 

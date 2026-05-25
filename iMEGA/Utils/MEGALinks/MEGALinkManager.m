@@ -498,6 +498,18 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [self resetLinkAndURLType];
             }
             break;
+
+        case URLTypeShowTransfers:
+            if (![SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [self resetLinkAndURLType];
+                break;
+            }
+            if (UIApplication.mainTabBarRootViewController) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
+                [mainTBC showTransfers];
+                [self resetLinkAndURLType];
+            }
+            break;
             
         case URLTypeNewTextFile:
             [[CreateTextFileAlertViewRouter.alloc initWithPresenter:UIApplication.mnz_presentingViewController] start];
