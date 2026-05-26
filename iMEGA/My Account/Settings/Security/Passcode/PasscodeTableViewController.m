@@ -75,7 +75,7 @@
             wasPasscodeAlreadyEnabled = YES;
         }
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : LocalizedString(@"Immediately", @"");
+        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > (NSTimeInterval)RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : LocalizedString(@"Immediately", @"");
     } else {
         [self.biometricsSwitch setOn:NO];
     }
