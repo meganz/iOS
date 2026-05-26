@@ -4972,3 +4972,15 @@
 "transfer.liveActivity.openMEGAToResume"="Open MEGA to resume";
 /* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
 "home.recent.bucket.carousel.showInLocation"="Show in location";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Customise Home";
+/* The subtitle of the Customise Home screen */
+"home.customization.subtitle"="Drag sections to reorder";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Account status";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Continue where you left";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Do more with MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Viewed links";

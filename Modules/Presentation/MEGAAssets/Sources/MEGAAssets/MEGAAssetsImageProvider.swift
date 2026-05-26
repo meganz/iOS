@@ -338,6 +338,7 @@ extension MEGAAssets {
         public static var audioShuffle: SwiftUI.Image { MEGAImageBundle.audioShuffle }
         public static var audioSkipBack: SwiftUI.Image { MEGAImageBundle.audioSkipBack }
         public static var audioSkipForward: SwiftUI.Image { MEGAImageBundle.audioSkipForward }
+        public static var monoQueueLineMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoQueueLineMediumThinOutline }
     }
 }
 
@@ -817,5 +818,6 @@ extension MEGAAssets {
         public static var audioShuffle: UIKit.UIImage { MEGAUIImageBundle.audioShuffle }
         public static var audioSkipBack: UIKit.UIImage { MEGAUIImageBundle.audioSkipBack }
         public static var audioSkipForward: UIKit.UIImage { MEGAUIImageBundle.audioSkipForward }
+        public static var monoQueueLineMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoQueueLineMediumThinOutline }
     }
 }
