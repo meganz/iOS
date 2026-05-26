@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param record asset upload record with MOAssetUploadRecord type
  @param originalFileName the original file name to search and compare with
- @return a local unique file name by appending "_%d" after the originalFileName. the originalFileName will be returned directly if there is no same file names exist.
+ @return a local unique file name by appending "_%d" after the originalFileName. the originalFileName will be returned directly if there is no same file names exist. Returns nil when the upload record or persistent store has been invalidated (e.g. logout cleared the Core Data context mid-upload).
  */
-- (NSString *)generateUniqueLocalFileNameForUploadRecord:(MOAssetUploadRecord *)record withOriginalFileName:(NSString *)originalFileName;
+- (nullable NSString *)generateUniqueLocalFileNameForUploadRecord:(MOAssetUploadRecord *)record withOriginalFileName:(NSString *)originalFileName;
 
 @end
 

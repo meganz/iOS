@@ -120,7 +120,12 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 #pragma mark - generate local file name
 
 - (nullable NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension error:(NSError * __autoreleasing _Nullable *)error {
-    NSString *originalFileName = [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia];
+    // Intentional fallback: when creationDate is nil we use modificationDate or now.
+    // LocalFileNameGenerator dedupes collisions by suffixing "_N", so reused dates do not produce duplicate file names.
+    NSDate *nameDate = self.uploadInfo.asset.creationDate
+        ?: self.uploadInfo.asset.modificationDate
+        ?: [NSDate date];
+    NSString *originalFileName = [nameDate mnz_formattedDefaultNameForMedia];
     
     if ([self isKindOfClass:[LivePhotoUploadOperation class]]) {
         originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadLivePhotoExtension];
@@ -136,9 +141,14 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
         }
         
         return nil;
-    } else {
-        return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
     }
+
+    NSString *localFileName = [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
+    if (localFileName == nil && error != NULL) {
+        *error = [NSError mnz_cameraUploadEmptyFileNameError];
+    }
+
+    return localFileName;
 }
 
 @end
