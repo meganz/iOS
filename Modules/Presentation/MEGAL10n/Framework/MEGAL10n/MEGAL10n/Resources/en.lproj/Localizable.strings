@@ -4984,3 +4984,5 @@
 "home.customization.widget.doMoreWithMega"="Do more with MEGA";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Viewed links";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Show location";
