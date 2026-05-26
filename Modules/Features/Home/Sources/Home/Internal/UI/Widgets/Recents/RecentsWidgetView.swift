@@ -18,6 +18,7 @@ struct RecentsWidgetView: View {
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
+        let isHomeRevampPhaseTwoEnabled: Bool
     }
     
     private let supportedMenuActions: [HomeAddMenuAction] = [
@@ -153,7 +154,11 @@ struct RecentsWidgetView: View {
     private var content: some View {
         switch viewModel.state {
         case .loading:
-            RecentsLoadingContentView()
+            if dependency.isHomeRevampPhaseTwoEnabled {
+                RecentsLoadingContentView()
+            } else {
+                LegacyRecentsLoadingContentView()
+            }
         case let .nonEmpty(bucketGroups):
             nonEmptyContent(bucketGroups: bucketGroups)
         case .empty:
@@ -268,7 +273,7 @@ private struct ErrorRecentsContentView: View {
     }
 }
 
-private struct RecentsLoadingContentView: View {
+private struct LegacyRecentsLoadingContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
             ForEach(0..<2, id: \.self) { _ in
@@ -291,5 +296,54 @@ private struct RecentsLoadingContentView: View {
         .padding(.vertical, TokenSpacing._3)
         .redacted(reason: .placeholder)
         .shimmering()
+    }
+}
+
+private struct RecentsLoadingContentView: View {
+    private enum Constants {
+        static let iconSize: CGFloat = 32
+        static let iconCornerRadius: CGFloat = 6
+        static let lineCornerRadius: CGFloat = 4
+        static let titleHeight: CGFloat = 16
+        static let subtitleHeight: CGFloat = 12
+        static let sectionLabelWidth: CGFloat = 62
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: TokenSpacing._4) {
+            RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
+                .frame(width: Constants.sectionLabelWidth, height: Constants.titleHeight)
+            recentRow(extraSubtitleLines: 0)
+            recentRow(extraSubtitleLines: 0)
+
+            RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
+                .frame(width: Constants.sectionLabelWidth, height: Constants.titleHeight)
+            recentRow(extraSubtitleLines: 1)
+            recentRow(extraSubtitleLines: 1)
+        }
+        .padding(.horizontal, TokenSpacing._5)
+        .padding(.vertical, TokenSpacing._3)
+        .redacted(reason: .placeholder)
+        .shimmering()
+    }
+
+    private func recentRow(extraSubtitleLines: Int) -> some View {
+        HStack(spacing: TokenSpacing._4) {
+            RoundedRectangle(cornerRadius: Constants.iconCornerRadius)
+                .frame(width: Constants.iconSize, height: Constants.iconSize)
+
+            VStack(alignment: .leading, spacing: TokenSpacing._1) {
+                RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: Constants.titleHeight)
+
+                ForEach(0..<(extraSubtitleLines + 1), id: \.self) { _ in
+                    RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: Constants.subtitleHeight)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }

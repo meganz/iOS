@@ -249,7 +249,8 @@ public struct HomeView: View {
                             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
                             photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                            isHomeRevampPhaseTwoEnabled: dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
                         ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )
