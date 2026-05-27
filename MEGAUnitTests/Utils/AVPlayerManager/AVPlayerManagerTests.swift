@@ -115,13 +115,13 @@ class AVPlayerManagerTests: XCTestCase {
         let mockSDK = MockSdk(myEmail: "test@email.com")
         let manager = AVPlayerManager(sdk: mockSDK)
         let node = MockNode(handle: 0, fingerprint: "12345")
-        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
+        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK, fileLink: nil)
         let delegate: any AVPlayerViewControllerDelegate = manager
         
         delegate.playerViewControllerWillStartPictureInPicture?(controller)
         
         // Act
-        let secondController = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
+        let secondController = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK, fileLink: nil)
         
         // Assert
         XCTAssertEqual(controller, secondController)
@@ -134,10 +134,10 @@ class AVPlayerManagerTests: XCTestCase {
         
         let node = MockNode(handle: 0, fingerprint: "12345")
 
-        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
+        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK, fileLink: nil)
         
         // Act
-        let secondController = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
+        let secondController = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK, fileLink: nil)
         
         // Assert
         XCTAssertNotEqual(controller, secondController)
@@ -151,12 +151,12 @@ class AVPlayerManagerTests: XCTestCase {
         let node = MockNode(handle: 0, fingerprint: "12345")
         let delegate: any AVPlayerViewControllerDelegate = manager
         
-        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
+        let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK, fileLink: nil)
         delegate.playerViewControllerWillStartPictureInPicture?(controller)
 
         // Act
         let secondNode = MockNode(handle: 0, fingerprint: "54321")
-        let secondController = manager.makePlayerController(for: secondNode, folderLink: false, sdk: mockSDK)
+        let secondController = manager.makePlayerController(for: secondNode, folderLink: false, sdk: mockSDK, fileLink: nil)
         
         // Assert
         XCTAssertNotEqual(controller, secondController)

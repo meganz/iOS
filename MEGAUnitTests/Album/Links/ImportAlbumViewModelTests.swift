@@ -95,6 +95,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 AlbumImportScreenEvent(),
+                ShareLinkOpenedEvent(linkType: .album, authStatus: .loggedin),
                 ImportAlbumContentLoadedEvent()
             ]
         )
@@ -180,6 +181,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 AlbumImportInputDecryptionKeyDialogEvent(),
+                ShareLinkOpenedEvent(linkType: .album, authStatus: .loggedin),
                 ImportAlbumContentLoadedEvent()
             ]
         )

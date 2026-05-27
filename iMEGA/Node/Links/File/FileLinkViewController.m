@@ -168,7 +168,9 @@
     }
     
     self.node = self.request.publicNode;
-    
+
+    [self trackShareLinkOpened];
+
     if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.node.name]) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeFileLink isFromSharedItem:NO presentingNode:self.node];

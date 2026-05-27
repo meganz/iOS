@@ -22,6 +22,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
+    private let accountUseCase: any AccountUseCaseProtocol
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private let appDelegateRouter: any AppDelegateRouting
@@ -111,6 +112,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.transferWidgetResponder = transferWidgetResponder
         self.permissionHandler = permissionHandler
         self.tracker = tracker
+        self.accountUseCase = accountUseCase
         self.monitorUseCase = monitorUseCase
         self.appDelegateRouter = appDelegateRouter
         
@@ -278,6 +280,12 @@ final class ImportAlbumViewModel: ObservableObject {
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .modificationDesc)
             publicLinkStatus = .loaded
+            tracker.trackAnalyticsEvent(
+                with: ShareLinkOpenedEvent(
+                    linkType: .album,
+                    authStatus: accountUseCase.isLoggedIn() ? .loggedin : .loggedout
+                )
+            )
             tracker.trackAnalyticsEvent(with: DIContainer.importAlbumContentLoadedEvent)
         } catch is CancellationError {
             MEGALogError("[Import Album] loadPublicAlbumContents cancelled")

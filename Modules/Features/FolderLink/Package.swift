@@ -35,6 +35,7 @@ let package = Package(
         
         // Infra
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
@@ -45,8 +46,10 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGADomain",
+                "MEGAAppPresentation",
                 "MEGAAppSDKRepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 "MEGADesignToken"
             ]
         ),
@@ -58,7 +61,7 @@ let package = Package(
                 .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
-                .product(name: "SearchMock", package: "Search"),
+                .product(name: "SearchMock", package: "Search")
             ]
         )
     ]

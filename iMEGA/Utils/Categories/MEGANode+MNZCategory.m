@@ -112,7 +112,7 @@
         
     } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
-            return [[AVPlayerManager shared] makePlayerControllerFor:self folderLink:isFolderLink sdk:apiForStreaming];
+            return [[AVPlayerManager shared] makePlayerControllerFor:self folderLink:isFolderLink sdk:apiForStreaming fileLink:fileLink];
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:LocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];

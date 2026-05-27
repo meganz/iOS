@@ -1,5 +1,6 @@
 @preconcurrency import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -299,6 +300,7 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     }
     
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
+        trackShareLinkAudioPlayStarted(fileLink: fileLink, isFolderLink: isFolderLink)
         let configEntity = AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
@@ -577,5 +579,21 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     func hasAlivePlayerThatStartedFromFolderLink() -> Bool {
         guard let configEntity = miniPlayerRouter?.configEntity else { return false }
         return isPlayerAlive() && configEntity.isFolderLink
+    }
+
+    private func trackShareLinkAudioPlayStarted(fileLink: String?, isFolderLink: Bool) {
+        let linkType: AudioPlayStarted.LinkType
+        if fileLink != nil {
+            linkType = .file
+        } else if isFolderLink {
+            linkType = .folder
+        } else {
+            return
+        }
+        let isLoggedIn = AccountUseCase(repository: AccountRepository.newRepo).isLoggedIn()
+        let authStatus: AudioPlayStarted.AuthStatus = isLoggedIn ? .loggedin : .loggedout
+        DIContainer.tracker.trackAnalyticsEvent(
+            with: AudioPlayStartedEvent(linkType: linkType, authStatus: authStatus)
+        )
     }
 }

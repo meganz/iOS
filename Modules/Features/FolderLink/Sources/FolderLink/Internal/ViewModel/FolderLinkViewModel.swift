@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -60,15 +62,28 @@ package final class FolderLinkViewModel: ObservableObject {
     @Published package var isNetworkConnected: Bool
     private var folderLinkFlowStopped = false
     private let dependency: FolderLinkViewModel.Dependency
+    private let tracker: any AnalyticsTracking
+    private let accountUseCase: any AccountUseCaseProtocol
     private var folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol {
         dependency.folderLinkFlowUseCase
     }
      
     package init(
         dependency: FolderLinkViewModel.Dependency,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo)
     ) {
         self.dependency = dependency
+        self.tracker = tracker
+        self.accountUseCase = accountUseCase
         self.isNetworkConnected = dependency.networkUseCase.isConnected()
+    }
+
+    private func trackFolderLinkOpened() {
+        let authStatus: ShareLinkOpened.AuthStatus = accountUseCase.isLoggedIn() ? .loggedin : .loggedout
+        tracker.trackAnalyticsEvent(
+            with: ShareLinkOpenedEvent(linkType: .folder, authStatus: authStatus)
+        )
     }
     
     package func onAppear() async {
@@ -82,6 +97,7 @@ package final class FolderLinkViewModel: ObservableObject {
         do throws(FolderLinkFlowErrorEntity) {
             let handleEntity = try await folderLinkFlowUseCase.initialStart(with: dependency.link)
             viewState = .results(handleEntity)
+            trackFolderLinkOpened()
         } catch {
             handleFolderLinkFlowError(error)
         }
@@ -97,6 +113,7 @@ package final class FolderLinkViewModel: ObservableObject {
         do throws(FolderLinkFlowErrorEntity) {
             let handleEntity = try await folderLinkFlowUseCase.confirmDecryptionKey(with: dependency.link, decryptionKey: key)
             viewState = .results(handleEntity)
+            trackFolderLinkOpened()
         } catch {
             handleFolderLinkFlowError(error)
         }

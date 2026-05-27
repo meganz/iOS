@@ -449,10 +449,29 @@ extension MEGAAVViewController {
         
         setupVideoMetricsTracking()
         player?.play()
+        trackShareLinkVideoPlayStartedIfNeeded()
         subscriptions.add(bindPlayerTimeControlStatus())
         subscriptions.add(bindPlayerExternalPlayback())
     }
-    
+
+    private func trackShareLinkVideoPlayStartedIfNeeded() {
+        let linkType: VideoPlayStarted.LinkType
+        if isFromAlbumLink {
+            linkType = .album
+        } else if fileLink != nil {
+            linkType = .file
+        } else if isFolderLink {
+            linkType = .folder
+        } else {
+            return
+        }
+        let isLoggedIn = AccountUseCase(repository: AccountRepository.newRepo).isLoggedIn()
+        let authStatus: VideoPlayStarted.AuthStatus = isLoggedIn ? .loggedin : .loggedout
+        DIContainer.tracker.trackAnalyticsEvent(
+            with: VideoPlayStartedEvent(linkType: linkType, authStatus: authStatus)
+        )
+    }
+
     @objc func beginAudioPlayerInterruptionIfNeeded() {
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.audioInterruptionDidStart()

@@ -153,6 +153,18 @@ extension MEGAPhotoBrowserViewController {
                     return
                 }
 
+                // IOS-11914: thread share-link context to the underlying MEGAAVViewController so the analytics fire knows the link type.
+                if let avController = controller as? MEGAAVViewController {
+                    switch displayMode {
+                    case .fileLink:
+                        avController.fileLink = publicLink
+                    case .albumLink:
+                        avController.isFromAlbumLink = true
+                    default:
+                        break
+                    }
+                }
+
                 controller.modalPresentationStyle = .overFullScreen
                 present(controller, animated: true)
             }

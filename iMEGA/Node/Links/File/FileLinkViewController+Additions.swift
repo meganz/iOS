@@ -1,9 +1,19 @@
 import Accounts
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
 
 extension FileLinkViewController {
+    @objc func trackShareLinkOpened() {
+        let isLoggedIn = AccountUseCase(repository: AccountRepository.newRepo).isLoggedIn()
+        let authStatus: ShareLinkOpened.AuthStatus = isLoggedIn ? .loggedin : .loggedout
+        DIContainer.tracker.trackAnalyticsEvent(
+            with: ShareLinkOpenedEvent(linkType: .file, authStatus: authStatus)
+        )
+    }
+
     @objc func download() {
         guard let publicLinkString = publicLinkString, let linkUrl = URL(string: publicLinkString) else { return }
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()

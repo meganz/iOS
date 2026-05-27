@@ -1,6 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
 import MEGAUIComponent
@@ -65,6 +66,7 @@ import Search
     private let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let accountUseCase: any AccountUseCaseProtocol
     private var folderLinkFlowStopped = false
     
     private var subscriptions: Set<AnyCancellable> = []
@@ -106,16 +108,25 @@ import Search
         folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
         viewMode: ViewModePreferenceEntity,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo)
     ) {
         self.publicLink = publicLink
         self.folderLinkFlowUseCase = folderLinkFlowUseCase
         self.folderLinkUseCase = folderLinkUseCase
         self.saveMediaUseCase = saveMediaUseCase
         self.tracker = tracker
+        self.accountUseCase = accountUseCase
         self.viewMode = viewMode
         super.init()
         listenToViewModesUpdates()
+    }
+
+    private func trackFolderLinkOpened() {
+        let authStatus: ShareLinkOpened.AuthStatus = accountUseCase.isLoggedIn() ? .loggedin : .loggedout
+        tracker.trackAnalyticsEvent(
+            with: ShareLinkOpenedEvent(linkType: .folder, authStatus: authStatus)
+        )
     }
     
     deinit {
@@ -155,6 +166,7 @@ import Search
                 try await folderLinkFlowUseCase.initialStart(with: publicLink)
                 guard !Task.isCancelled else { return }
                 self?.invokeCommand?(.rootFolderLinkLoaded)
+                self?.trackFolderLinkOpened()
             } catch {
                 self?.handleFolderLinkFlowError(error)
             }
@@ -170,6 +182,7 @@ import Search
                 try await folderLinkFlowUseCase.confirmDecryptionKey(with: publicLink, decryptionKey: key)
                 guard !Task.isCancelled else { return }
                 self?.invokeCommand?(.rootFolderLinkLoaded)
+                self?.trackFolderLinkOpened()
             } catch {
                 self?.handleFolderLinkFlowError(error)
             }

@@ -12,8 +12,9 @@ import MEGAAppPresentation
     ///   - node: MegaNode
     ///   - folderLink: Bool
     ///   - sdk: MegaSDK used for streaming the node
+    ///   - fileLink: Public file-link URL string when the node is being played from a file share link; pass `nil` for other contexts (folder link, album link, cloud drive, offline, chat).
     /// - Returns: Creates or returns active AVPlayerViewcontroller
-    func makePlayerController(for node: MEGANode, folderLink: Bool, sdk: MEGASdk) -> AVPlayerViewController
+    func makePlayerController(for node: MEGANode, folderLink: Bool, sdk: MEGASdk, fileLink: String?) -> AVPlayerViewController
     
     ///  Creates a new AVPlayerViewController for the given node or return the current active AVPlayerViewController that is currently playing in Picture in Picture mode.
     /// - Parameters:
@@ -43,14 +44,15 @@ import MEGAAppPresentation
         self.sdk = sdk
     }
     
-    func makePlayerController(for node: MEGANode, folderLink: Bool, sdk: MEGASdk) -> AVPlayerViewController {
-        
-        guard let activeVideoViewController,
-              activeVideoViewController.fileFingerprint() == node.fingerprint else {
-            return MEGAAVViewController(node: node, folderLink: folderLink, apiForStreaming: sdk)
+    func makePlayerController(for node: MEGANode, folderLink: Bool, sdk: MEGASdk, fileLink: String?) -> AVPlayerViewController {
+        if let activeVideoViewController,
+           activeVideoViewController.fileFingerprint() == node.fingerprint {
+            activeVideoViewController.fileLink = fileLink
+            return activeVideoViewController
         }
-        
-        return activeVideoViewController
+        let controller = MEGAAVViewController(node: node, folderLink: folderLink, apiForStreaming: sdk)
+        controller.fileLink = fileLink
+        return controller
     }
     
     func makePlayerController(for url: URL) -> AVPlayerViewController {

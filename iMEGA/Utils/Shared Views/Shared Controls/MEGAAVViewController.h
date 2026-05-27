@@ -15,6 +15,8 @@
 @property (nonatomic, strong, nullable) NSURL *fileUrl;
 @property (nonatomic, strong, nullable) MEGASdk *apiForStreaming;
 @property (nonatomic, assign) BOOL isFolderLink;
+@property (nonatomic, copy, nullable) NSString *fileLink;
+@property (nonatomic, assign) BOOL isFromAlbumLink;
 @property (nonatomic, strong, nonnull) NSMutableSet *subscriptions;
 @property (nonatomic, assign) NSTimeInterval startTimeStamp;
 @property (nonatomic, strong, nullable) VideoMetricsTracker *metricsTracker;
