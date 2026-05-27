@@ -97,23 +97,71 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
         XCTAssertNil(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint])
     }
 
-    // MARK: - Helpers
-    
-    private func makeSUT() -> any PlaybackContinuationUseCaseProtocol {
-        mockPreviousSessionRepo = MockPreviousPlaybackSessionRepository()
-        return PlaybackContinuationUseCase(previousSessionRepo: mockPreviousSessionRepo)
+    // MARK: - Custom minimum playback time
+
+    func testStatus_whenCustomMinimum_andPreviousPlaybackMoreThanMinimum_shouldDisplayDialog() {
+        let expectedTime = moreThanRevampMinimumTime
+        assertStatus(
+            shouldBe: .displayDialog(playbackTime: expectedTime),
+            whenLastPlaybackTime: expectedTime,
+            minimumPlaybackTime: revampMinimumTime
+        )
     }
-    
+
+    func testStatus_whenCustomMinimum_andPreviousPlaybackLessThanMinimum_shouldStartFromBeginning() {
+        assertStatus(
+            shouldBe: .startFromBeginning,
+            whenLastPlaybackTime: lessThanRevampMinimumTime,
+            minimumPlaybackTime: revampMinimumTime
+        )
+    }
+
+    func testPlaybackStopped_whenCustomMinimum_andTimeMoreThanMinimum_shouldSaveLastPlaybackTime() {
+        let expectedTime = moreThanRevampMinimumTime
+        let sut = makeSUT(minimumPlaybackTime: revampMinimumTime)
+        sut.playbackStopped(
+            for: testFingerprint,
+            on: expectedTime,
+            outOf: expectedTime + completedThreshold
+        )
+
+        XCTAssertEqual(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint], expectedTime)
+    }
+
+    func testPlaybackStopped_whenCustomMinimum_andTimeLessThanMinimum_shouldNotSaveLastPlaybackTime() {
+        let exitTime = lessThanRevampMinimumTime
+        makeSUT(minimumPlaybackTime: revampMinimumTime).playbackStopped(
+            for: testFingerprint,
+            on: exitTime,
+            outOf: exitTime + completedThreshold
+        )
+
+        XCTAssertNil(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint])
+    }
+
+    // MARK: - Helpers
+
+    private func makeSUT(
+        minimumPlaybackTime: TimeInterval = Constants.minimumContinuationPlaybackTime
+    ) -> any PlaybackContinuationUseCaseProtocol {
+        mockPreviousSessionRepo = MockPreviousPlaybackSessionRepository()
+        return PlaybackContinuationUseCase(
+            previousSessionRepo: mockPreviousSessionRepo,
+            minimumPlaybackTime: minimumPlaybackTime
+        )
+    }
+
     private func assertStatus(
         shouldBe expectedStatus: PlaybackContinuationStatusEntity,
         whenLastPlaybackTime lastTimeInterval: TimeInterval?,
+        minimumPlaybackTime: TimeInterval = Constants.minimumContinuationPlaybackTime,
         and additionalAction: @escaping (any PlaybackContinuationUseCaseProtocol) -> Void = { _ in },
         line: UInt = #line
     ) {
-        let sut = makeSUT()
+        let sut = makeSUT(minimumPlaybackTime: minimumPlaybackTime)
         mockPreviousSessionRepo.mockTimeIntervals[testFingerprint] = lastTimeInterval
         additionalAction(sut)
-        
+
         XCTAssertEqual(
             sut.status(for: testFingerprint),
             expectedStatus,
@@ -124,8 +172,14 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
     private var testFingerprint = "test-fingerprint"
 }
 
-private let minimumTime = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.minimumContinuationPlaybackTime
-private let completedThreshold = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants.completedPlaybackThreshold
+private typealias Constants = PlaybackContinuationUseCase<MockPreviousPlaybackSessionRepository>.Constants
+
+private let minimumTime = Constants.minimumContinuationPlaybackTime
+private let completedThreshold = Constants.completedPlaybackThreshold
 
 private let lessThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) - 1)
 private let moreThanMinimumTime: TimeInterval = TimeInterval(Int(minimumTime) + 1)
+
+private let revampMinimumTime = Constants.minimumContinuationPlaybackTimeRevamp
+private let lessThanRevampMinimumTime: TimeInterval = TimeInterval(Int(revampMinimumTime) - 1)
+private let moreThanRevampMinimumTime: TimeInterval = TimeInterval(Int(revampMinimumTime) + 1)

@@ -38,9 +38,16 @@ public extension DIContainer {
 extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionRepository {
     /// We need to keep a single instance of this use case because we want to keep user's playback continuation preference.
     /// This preference only lives until the app is killed thus it shouldn't be kept in a local persistence framework like UserDefaults.
-    static let shared = PlaybackContinuationUseCase(
-        previousSessionRepo: PreviousPlaybackSessionRepository.newRepo
-    )
+    static let shared: PlaybackContinuationUseCase = {
+        let featureFlagUseCase = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)
+        let minimumPlaybackTime: TimeInterval = featureFlagUseCase.isFeatureFlagEnabled(for: FeatureFlagKey.iosHomeRevampPhaseTwo.rawValue)
+            ? Constants.minimumContinuationPlaybackTimeRevamp
+            : Constants.minimumContinuationPlaybackTime
+        return PlaybackContinuationUseCase(
+            previousSessionRepo: PreviousPlaybackSessionRepository.newRepo,
+            minimumPlaybackTime: minimumPlaybackTime
+        )
+    }()
 }
 
 // MARK: - Analytics

@@ -18,23 +18,31 @@ public final class PlaybackContinuationUseCase<
         /// The number of seconds before a playback full duration that will determine when the playback has ended.
         /// If this threshold is reached then the session will not be resumed in the future.
         public static var completedPlaybackThreshold: TimeInterval { 2.seconds }
-        
+
         /// The minimum playback time required to save a playback session to be resumed in the future.
         /// If playback is less than this value, then the session will not be saved and resumed in the future.
         public static var minimumContinuationPlaybackTime: TimeInterval { 15.minutes }
+
+        /// The minimum playback time when the home revamp phase two feature flag is enabled.
+        public static var minimumContinuationPlaybackTimeRevamp: TimeInterval { 15.seconds }
     }
-    
+
     private let currentPreference: Atomic<PlaybackContinuationPreferenceStatusEntity?> = Atomic(wrappedValue: nil)
-    
+
     private let previousSessionRepo: T
-    
-    public init(previousSessionRepo: T) {
+    private let minimumPlaybackTime: TimeInterval
+
+    public init(
+        previousSessionRepo: T,
+        minimumPlaybackTime: TimeInterval = Constants.minimumContinuationPlaybackTime
+    ) {
         self.previousSessionRepo = previousSessionRepo
+        self.minimumPlaybackTime = minimumPlaybackTime
     }
     
     public func status(for fingerprint: FingerprintEntity) -> PlaybackContinuationStatusEntity {
         guard let previousTimeInterval = previousSessionRepo.timeInterval(for: fingerprint),
-              previousTimeInterval >= Constants.minimumContinuationPlaybackTime else {
+              previousTimeInterval >= minimumPlaybackTime else {
             return .startFromBeginning
         }
         
@@ -55,7 +63,7 @@ public final class PlaybackContinuationUseCase<
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
     ) {
-        guard timeInterval >= Constants.minimumContinuationPlaybackTime,
+        guard timeInterval >= minimumPlaybackTime,
               fullTimeInterval - timeInterval >= Constants.completedPlaybackThreshold else {
             return previousSessionRepo.removeSavedTimeInterval(for: fingerprint)
         }
