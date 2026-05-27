@@ -48,6 +48,10 @@ public struct HomeView: View {
         isLiquidGlassSupported && isIphoneInLandscape
     }
 
+    private var isHomeRevampPhase2Enabled: Bool {
+        dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+    }
+
     public init(
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
@@ -55,7 +59,7 @@ public struct HomeView: View {
         quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
     ) {
         self.dependency = dependency
-        _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink))
+        _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink, featureFlagProvider: dependency.featureFlagProvider))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
         self.quickAccessRoutePublisher = quickAccessRoutePublisher
     }
@@ -116,7 +120,7 @@ public struct HomeView: View {
             .navigationTitle(Strings.Localizable.home)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) {
+                if isHomeRevampPhase2Enabled {
                     dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 2)
 
                     if #available(iOS 26.0, *) {
@@ -167,6 +171,7 @@ public struct HomeView: View {
             .navigationDestination(for: NavigationRoute.self) { route in
                 navigationDestinationBuilder(with: route)
             }
+            .task { viewModel.reloadWidgets() }
             .onAppear {
                 viewModel.trackHomeScreenAppear()
             }
@@ -254,6 +259,14 @@ public struct HomeView: View {
                         ),
                         addMenuActionHandler: dependency.homeAddMenuActionHandler
                     )
+                case .viewedLinks, .continueWhereYouLeft, .doMoreWithMega:
+                    if isHomeRevampPhase2Enabled {
+                        Text("\(widget.rawValue)") // corresponding view will be added later
+                            .frame(height: 30)
+                            .background([Color.red, Color.blue, Color.green].randomElement())
+                    } else {
+                        EmptyView()
+                    }
                 }
             }
         }

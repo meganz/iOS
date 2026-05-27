@@ -6,35 +6,52 @@ import MEGADomain
 @MainActor
 final class HomeViewModel: ObservableObject {
 
-    let widgets: [HomeWidgetType] = [.shortcuts, .accountDetails, .promotionalBanners, .recents]
+    @Published private(set) var widgets: [HomeWidgetType] = []
     @Published var isSearching: Bool
     @Published var presentsSheet = false
     @Published var hidesFloatingActionsButton: Bool = false
     @Published var isNetworkConnected = false
     private let homeDeepLink: HomeDeepLink
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
+    private let widgetConfigUseCase: any HomeWidgetConfigUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     convenience init(
-        homeDeepLink: HomeDeepLink
+        homeDeepLink: HomeDeepLink,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.init(
             homeDeepLink: homeDeepLink,
             networkMonitoringUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            tracker: DIContainer.tracker
+            widgetConfigUseCase: HomeWidgetConfigUseCase(),
+            tracker: DIContainer.tracker,
+            featureFlagProvider: featureFlagProvider
         )
     }
 
     package init(
         homeDeepLink: HomeDeepLink,
         networkMonitoringUseCase: some NetworkMonitorUseCaseProtocol,
-        tracker: some AnalyticsTracking
+        widgetConfigUseCase: some HomeWidgetConfigUseCaseProtocol,
+        tracker: some AnalyticsTracking,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.homeDeepLink = homeDeepLink
         self.networkMonitoringUseCase = networkMonitoringUseCase
+        self.widgetConfigUseCase = widgetConfigUseCase
         self.isSearching = homeDeepLink.homeSearch
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         isNetworkConnected = networkMonitoringUseCase.isConnected()
+    }
+
+    func reloadWidgets() {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else {
+            widgets = HomeWidgetType.phase1Widgets
+            return
+        }
+        widgets = widgetConfigUseCase.enabledWidgetTypes()
     }
 
     func togglePresentSheet() {

@@ -4986,3 +4986,5 @@
 "home.customization.widget.viewedLinks"="Viewed links";
 /* Button title to show the location of selected files */
 "general.action.showLocation"="Show location";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Banners";

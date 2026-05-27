@@ -54,6 +54,8 @@ No rules file. Do a focused scan for obvious bugs in the changed code only:
 - Race conditions or shared mutable state
 - Misuse of Swift APIs
 - Missing error propagation
+- New dead code
+- Memory leaks
 Ignore pre-existing issues and things the compiler/linter would catch.
 
 ---
