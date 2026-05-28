@@ -122,4 +122,6 @@ enum BottomSubViewType: Equatable {
     case audioPlayer
     /// A type representing the PSA banner
     case psa
+    /// A type representing the long-running request status progress bar.
+    case requestStatusProgress
 }

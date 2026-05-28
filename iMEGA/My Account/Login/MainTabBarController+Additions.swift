@@ -321,11 +321,11 @@ extension MainTabBarController: MEGAGlobalDelegate {
         Task { @MainActor in
             if event.type == .reqStatProgress {
                 if event.number == 0 {
-                    requestStatusProgressWindowManager.showProgressView(with: RequestStatusProgressViewModel(requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo)))
+                    requestStatusProgressWindowManager.showProgressView(with: RequestStatusProgressViewModel(requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo)), in: self)
                 }
                 
                 if event.number == -1 {
-                    requestStatusProgressWindowManager.hideProgressView()
+                    requestStatusProgressWindowManager.hideProgressView(in: self)
                 }
             }
         }
