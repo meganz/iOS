@@ -7,6 +7,10 @@ public final class MEGASlider: UISlider {
     @IBInspectable public var highlightedThumbRadius: CGFloat = 25
     @IBInspectable public var touchExpansion: CGFloat = 20
 
+    public var minimumTrackColor: UIColor? { didSet { configure() } }
+    public var maximumTrackColor: UIColor? { didSet { configure() } }
+    public var thumbColor: UIColor? { didSet { configure() } }
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         MainActor.assumeIsolated {
@@ -25,11 +29,15 @@ public final class MEGASlider: UISlider {
     }
 
     private func configure() {
-        setMinimumTrackImage(customMinimumTrackImage(bgColor: TokenColors.Components.selectionControl), for: .normal)
-        maximumTrackTintColor = TokenColors.Background.surface3
+        let minColor = minimumTrackColor ?? TokenColors.Components.selectionControl
+        let maxColor = maximumTrackColor ?? TokenColors.Background.surface3
+        let thColor = thumbColor ?? TokenColors.Components.selectionControl
 
-        setThumbImage(thumbImage(bgColor: TokenColors.Components.selectionControl, radius: thumbRadius), for: .normal)
-        setThumbImage(thumbImage(bgColor: TokenColors.Components.selectionControl, radius: highlightedThumbRadius), for: .highlighted)
+        setMinimumTrackImage(customMinimumTrackImage(bgColor: minColor), for: .normal)
+        maximumTrackTintColor = maxColor
+
+        setThumbImage(thumbImage(bgColor: thColor, radius: thumbRadius), for: .normal)
+        setThumbImage(thumbImage(bgColor: thColor, radius: highlightedThumbRadius), for: .highlighted)
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -83,23 +91,113 @@ public final class MEGASlider: UISlider {
     }
 }
 
-private struct MEGASliderView: UIViewRepresentable {
-    func makeUIView(context: Context) -> MEGASlider {
-        MEGASlider(frame: .zero)
+public struct MEGASliderView: UIViewRepresentable {
+    @Binding public var value: Double
+    public let isEnabled: Bool
+    public let minimumTrackColor: Color?
+    public let maximumTrackColor: Color?
+    public let thumbColor: Color?
+    public let onEditingChanged: (Bool) -> Void
+
+    public init(
+        value: Binding<Double>,
+        isEnabled: Bool = true,
+        minimumTrackColor: Color? = nil,
+        maximumTrackColor: Color? = nil,
+        thumbColor: Color? = nil,
+        onEditingChanged: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._value = value
+        self.isEnabled = isEnabled
+        self.minimumTrackColor = minimumTrackColor
+        self.maximumTrackColor = maximumTrackColor
+        self.thumbColor = thumbColor
+        self.onEditingChanged = onEditingChanged
     }
 
-    func updateUIView(_ uiView: MEGASlider, context: Context) {
+    public func makeCoordinator() -> Coordinator { Coordinator(self) }
 
+    public func makeUIView(context: Context) -> MEGASlider {
+        let slider = MEGASlider(frame: .zero)
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = Float(value)
+        slider.isEnabled = isEnabled
+
+        slider.addTarget(
+            context.coordinator,
+            action: #selector(Coordinator.valueChanged(_:)),
+            for: .valueChanged
+        )
+        slider.addTarget(
+            context.coordinator,
+            action: #selector(Coordinator.editingBegan(_:)),
+            for: .touchDown
+        )
+        slider.addTarget(
+            context.coordinator,
+            action: #selector(Coordinator.editingEnded(_:)),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel]
+        )
+        applyColors(to: slider)
+        return slider
+    }
+
+    public func updateUIView(_ uiView: MEGASlider, context: Context) {
+        if !context.coordinator.isEditing, abs(uiView.value - Float(value)) > .ulpOfOne {
+            uiView.value = Float(value)
+        }
+        uiView.isEnabled = isEnabled
+        applyColors(to: uiView)
+    }
+
+    private func applyColors(to slider: MEGASlider) {
+        let newMin = minimumTrackColor.map(UIColor.init)
+        if slider.minimumTrackColor != newMin {
+            slider.minimumTrackColor = newMin
+        }
+        let newMax = maximumTrackColor.map(UIColor.init)
+        if slider.maximumTrackColor != newMax {
+            slider.maximumTrackColor = newMax
+        }
+        let newThumb = thumbColor.map(UIColor.init)
+        if slider.thumbColor != newThumb {
+            slider.thumbColor = newThumb
+        }
+    }
+
+    @MainActor
+    public final class Coordinator: NSObject {
+        private let parent: MEGASliderView
+        fileprivate(set) var isEditing: Bool = false
+
+        init(_ parent: MEGASliderView) { self.parent = parent }
+
+        @objc func valueChanged(_ slider: UISlider) {
+            parent.value = Double(slider.value)
+        }
+
+        @objc func editingBegan(_ slider: UISlider) {
+            isEditing = true
+            parent.onEditingChanged(true)
+        }
+
+        @objc func editingEnded(_ slider: UISlider) {
+            isEditing = false
+            parent.onEditingChanged(false)
+        }
     }
 }
 
 @available(iOS 17.0, *)
 #Preview(traits: .fixedLayout(width: 300, height: 50)) {
-    MEGASliderView()
+    @Previewable @State var value: Double = 0.4
+    MEGASliderView(value: $value)
 }
 
 @available(iOS 17.0, *)
 #Preview(traits: .fixedLayout(width: 300, height: 50)) {
-    MEGASliderView()
+    @Previewable @State var value: Double = 0.4
+    MEGASliderView(value: $value)
         .preferredColorScheme(.dark)
 }
