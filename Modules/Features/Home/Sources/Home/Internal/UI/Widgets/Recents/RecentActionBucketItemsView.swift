@@ -95,6 +95,7 @@ struct RecentActionBucketItemsView: View {
                     navigator.showSnackBar(snackBar)
                 }
             }
+            .pageBackground()
     }
 
     @ViewBuilder
