@@ -7,7 +7,7 @@ struct HomeWidgetConfigEntity: Codable, Equatable, Sendable, Identifiable {
     let isEnabled: Bool
 
     var isDraggable: Bool {
-        type != .shortcuts
+        type != .shortcuts && type != .accountDetails
     }
 
     static var defaultConfigs: [HomeWidgetConfigEntity] {
