@@ -410,7 +410,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yk7-Dw-v3p">
                                         <rect key="frame" x="0.0" y="90" width="414" height="300.5"/>
                                         <subviews>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aoX-M6-nj9" customClass="MEGASlider" customModule="MEGA" customModuleProvider="target">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aoX-M6-nj9" customClass="MEGASlider" customModule="MEGASwiftUI">
                                                 <rect key="frame" x="16" y="10" width="382" height="34"/>
                                                 <connections>
                                                     <action selector="timeSliderValueChangeAction:forEvent:" destination="lET-6j-KAM" eventType="valueChanged" id="d5u-dn-uQQ"/>

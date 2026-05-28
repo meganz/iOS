@@ -2614,7 +2614,6 @@
 		C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */; };
 		C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */; };
 		C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */; };
-		C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390CC256587BF0026F215 /* MEGASlider.swift */; };
 		C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390D62565BB840026F215 /* MEGASelectedButton.swift */; };
 		C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */; };
 		C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */; };
@@ -5514,7 +5513,6 @@
 		C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandler.swift; sourceTree = "<group>"; };
 		C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaybackTests.swift; sourceTree = "<group>"; };
-		C45390CC256587BF0026F215 /* MEGASlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASlider.swift; sourceTree = "<group>"; };
 		C45390D62565BB840026F215 /* MEGASelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASelectedButton.swift; sourceTree = "<group>"; };
 		C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoUseCase.swift; sourceTree = "<group>"; };
 		C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeOwnerInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -12117,7 +12115,6 @@
 				5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */,
 				5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
-				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */,
 				147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */,
 			);
@@ -15712,7 +15709,6 @@
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
-				C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
 				B6F2ACCD29AD6E19004FC7A3 /* MEGAStore+Additions.swift in Sources */,

@@ -6,6 +6,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import UIKit
 
 class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNodeActionForwardingDelegate {
