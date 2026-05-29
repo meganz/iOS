@@ -606,6 +606,7 @@
 		41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		43514576A3C96A57F98E0482 /* CameraUploadManagerUploadOnlyNewPhotosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB799515F01BAADD6C47771 /* CameraUploadManagerUploadOnlyNewPhotosTests.swift */; };
 		4C0A55632ED6EFBC00A58D8B /* MediaTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55622ED6EFB500A58D8B /* MediaTabView.swift */; };
 		4C0A556A2ED6F61900A58D8B /* MediaTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55672ED6F61900A58D8B /* MediaTab.swift */; };
 		4C0A556B2ED6F61900A58D8B /* MediaTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */; };
@@ -3421,6 +3422,7 @@
 		32EC282029BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverPickerPhotoCellViewModelTests.swift; sourceTree = "<group>"; };
 		32F9E681283490620002132D /* AlbumToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfigurator.swift; sourceTree = "<group>"; };
 		32F9E683283490A40002132D /* AlbumToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarProvider.swift; sourceTree = "<group>"; };
+		3EB799515F01BAADD6C47771 /* CameraUploadManagerUploadOnlyNewPhotosTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CameraUploadManagerUploadOnlyNewPhotosTests.swift; sourceTree = "<group>"; };
 		410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAVViewController.h; sourceTree = "<group>"; };
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
 		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
@@ -7974,6 +7976,7 @@
 				0E827D042EA587B5002E8667 /* Progress */,
 				25B774C22B141722001F623A /* Timeline */,
 				25A58F8F2B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift */,
+				3EB799515F01BAADD6C47771 /* CameraUploadManagerUploadOnlyNewPhotosTests.swift */,
 				0E171B7F2EB31B63000B3B36 /* CameraUploadPaginationManagerTests.swift */,
 				0ECD29D82F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift */,
 				0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */,
@@ -16874,6 +16877,7 @@
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
 				0E827D2A2EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift in Sources */,
+				43514576A3C96A57F98E0482 /* CameraUploadManagerUploadOnlyNewPhotosTests.swift in Sources */,
 				0E171B802EB31B63000B3B36 /* CameraUploadPaginationManagerTests.swift in Sources */,
 				0E827D062EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift in Sources */,
 				0EEB29F12EC2B62800FABD8D /* CameraUploadProgressViewModelTests.swift in Sources */,

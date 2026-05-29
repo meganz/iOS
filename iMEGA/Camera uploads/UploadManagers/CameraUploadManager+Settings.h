@@ -30,6 +30,13 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=isCellularUploadForVideosAllowed) BOOL cellularUploadForVideosAllowed;
 @property (class) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
+#pragma mark - upload only new photos
+
+// When enabled, only media whose creationDate is on or after the cutoff are considered for upload.
+// Flipping this ON persists the current date as the cutoff; flipping it OFF clears the cutoff.
+@property (class, getter=shouldUploadOnlyNewPhotos) BOOL uploadOnlyNewPhotos;
+@property (class, nullable) NSDate *uploadOnlyNewPhotosCutoff;
+
 #pragma mark - advanced settings
 
 @property (class, getter=shouldUploadVideosForLivePhotos) BOOL uploadVideosForLivePhotos;

@@ -23,6 +23,8 @@ static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
 static NSString * const UploadVideosForLivePhotosKey = @"UploadVideosForLivePhotos";
 static NSString * const UploadSharedAlbumsKey = @"UploadSharedAlbums";
 static NSString * const UploadSyncedAlbumsKey = @"UploadSyncedAlbums";
+static NSString * const UploadOnlyNewPhotosEnabledKey = @"UploadOnlyNewPhotosEnabled";
+static NSString * const UploadOnlyNewPhotosCutoffKey = @"UploadOnlyNewPhotosCutoff";
 
 static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600;
 
@@ -201,6 +203,39 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 + (void)setUploadSyncedAlbums:(BOOL)uploadSyncedAlbums {
     [NSUserDefaults.standardUserDefaults setBool:uploadSyncedAlbums forKey:UploadSyncedAlbumsKey];
+}
+
+#pragma mark - upload only new photos
+
++ (BOOL)shouldUploadOnlyNewPhotos {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadOnlyNewPhotosEnabledKey];
+}
+
++ (void)setUploadOnlyNewPhotos:(BOOL)uploadOnlyNewPhotos {
+    BOOL wasEnabled = [self shouldUploadOnlyNewPhotos];
+    [NSUserDefaults.standardUserDefaults setBool:uploadOnlyNewPhotos forKey:UploadOnlyNewPhotosEnabledKey];
+
+    if (uploadOnlyNewPhotos) {
+        // Persist the activation timestamp only on the OFF -> ON transition so that
+        // re-affirming an already-enabled toggle does not move the cutoff forward.
+        if (!wasEnabled) {
+            [self setUploadOnlyNewPhotosCutoff:NSDate.date];
+        }
+    } else {
+        [self setUploadOnlyNewPhotosCutoff:nil];
+    }
+}
+
++ (NSDate *)uploadOnlyNewPhotosCutoff {
+    return [NSUserDefaults.standardUserDefaults objectForKey:UploadOnlyNewPhotosCutoffKey];
+}
+
++ (void)setUploadOnlyNewPhotosCutoff:(NSDate *)uploadOnlyNewPhotosCutoff {
+    if (uploadOnlyNewPhotosCutoff == nil) {
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadOnlyNewPhotosCutoffKey];
+    } else {
+        [NSUserDefaults.standardUserDefaults setObject:uploadOnlyNewPhotosCutoff forKey:UploadOnlyNewPhotosCutoffKey];
+    }
 }
 
 #pragma mark - readonly properties

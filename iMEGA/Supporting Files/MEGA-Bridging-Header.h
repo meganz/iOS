@@ -127,6 +127,7 @@
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAOperation.h"
 #import "CameraUploadManager+Settings.h"
+#import "PHFetchOptions+CameraUpload.h"
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "CameraUploadManager.h"
 #import "MEGAChatError.h"

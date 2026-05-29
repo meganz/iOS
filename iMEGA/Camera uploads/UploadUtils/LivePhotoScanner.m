@@ -40,7 +40,7 @@
 }
 
 - (BOOL)scanLivePhotosWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    PHFetchResult *livePhotoFetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForLivePhoto]];
+    PHFetchResult *livePhotoFetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_scanFetchOptionsForLivePhoto]];
     if (livePhotoFetchResult.count == 0) {
         return YES;
     }

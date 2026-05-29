@@ -63,7 +63,7 @@
             return;
         }
         
-        PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
+        PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_scanFetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
         
         [self updateScannedResultsByAssetFetchResult:[[AssetFetchResult alloc] initWithMediaTypes:mediaTypes fetchResult:fetchResult]];
         
