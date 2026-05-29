@@ -18,10 +18,17 @@ let package = Package(
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Repository/MEGARepo"),
-        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
+        .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../UI/MEGAUIKit"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../Search"),
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
         .target(
@@ -31,14 +38,25 @@ let package = Package(
                 "MEGADomain",
                 "MEGAL10n",
                 "MEGAPreference",
+                "MEGASwift",
                 "MEGAAssets",
+                "MEGAAppPresentation",
                 "MEGARepo",
-                "MEGADesignToken"
+                "MEGASwiftUI",
+                "MEGAUIKit",
+                "MEGAUIComponent",
+                "Search",
+                "MEGADesignToken",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]
         ),
         .testTarget(
             name: "TransferTests",
-            dependencies: ["Transfer", "MEGADomain"]
+            dependencies: [
+                "Transfer",
+                "MEGADomain",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
+            ]
         )
     ]
 )

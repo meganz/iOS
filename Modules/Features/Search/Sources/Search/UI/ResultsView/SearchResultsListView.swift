@@ -97,7 +97,13 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private func rowContent(rowViewModel: SearchResultRowViewModel) -> some View {
-        RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
-            .listRowSeparator(.hidden)
+        if let custom = viewModel.rowBuilder?(rowViewModel.result) {
+            custom
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+        } else {
+            RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
+                .listRowSeparator(.hidden)
+        }
     }
 }

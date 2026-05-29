@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import Search
 import SwiftUI
 
 public struct TransfersListView: View {
@@ -10,7 +11,7 @@ public struct TransfersListView: View {
         _viewModel = StateObject(wrappedValue: TransfersListViewModel())
     }
 
-    init(viewModel: TransfersListViewModel) {
+    public init(viewModel: TransfersListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -20,8 +21,9 @@ public struct TransfersListView: View {
                 tabBar
                 Divider()
             }
-            emptyState
+            tabContent
         }
+        .task { await viewModel.observeActiveItemCount() }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(Strings.Localizable.transfers)
@@ -42,6 +44,15 @@ public struct TransfersListView: View {
                     .disabled(true)
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private var tabContent: some View {
+        if let activeContainer = viewModel.activeContainerViewModel, viewModel.selectedTab == .active {
+            SearchResultsContainerView(viewModel: activeContainer)
+        } else {
+            emptyState
         }
     }
 
