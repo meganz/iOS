@@ -482,4 +482,5 @@ public struct MEGAUIImageBundle {
     public static var audioSkipBack: UIImage { UIImage.audioSkipBack }
     public static var audioSkipForward: UIImage { UIImage.audioSkipForward }
     public static var monoQueueLineMediumThinOutline: UIImage { UIImage.monoQueueLineMediumThinOutline }
+    public static var monoPlayMediumThinOutline: UIImage { UIImage.monoPlayMediumThinOutline }
 }
