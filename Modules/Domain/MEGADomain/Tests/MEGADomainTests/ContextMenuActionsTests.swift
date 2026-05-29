@@ -767,15 +767,10 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertEqual(filterQuickActions(from: actions), [ .rename ])
         XCTAssertEqual(filterDisplayActions(from: actions), [ .select ])
-        XCTAssertEqual(filterSortActions(from: actions), [
-            .defaultAsc,
-            .defaultDesc,
-            .modificationDesc,
-            .modificationAsc
-        ])
-        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .addVideosToVideoPlaylistContent, .delete ] )
+        XCTAssertTrue(filterSortActions(from: actions).isEmpty, "Sort actions moved out of the menu in the revamp layout")
+        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .delete ])
     }
-    
+
     func testVideoPlaylistContentMenu_onVideoPlaylistContentMenuTypeEmpty_shouldShowAllOptions() throws {
         let menuEntity = try XCTUnwrap(
             ContextMenuBuilder()
@@ -784,11 +779,11 @@ final class ContextMenuActionsTests: XCTestCase {
                 .setIsEmptyState(true)
                 .build()
         )
-        
+
         let actions = decomposeMenuIntoActions(menu: menuEntity)
-        
+
         XCTAssertEqual(filterQuickActions(from: actions), [ .rename ])
-        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .addVideosToVideoPlaylistContent, .delete ] )
+        XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .delete ])
         XCTAssertTrue(filterSortActions(from: actions).isEmpty, "Expect not to have sort on empty user video playlist content")
     }
     

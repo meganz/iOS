@@ -3,17 +3,10 @@ import MEGADomain
 
 /// Single source of truth for the Album content layout style.
 ///
-/// Why: the album content view was migrated to the masonry grid + sort header
-/// as part of `iosMediaRevamp`, but user feedback was negative and the layout
-/// is being rolled back behind its own remote feature flag
-/// (`iosAlbumMasonryLayout`). The masonry / sort-header code is intentionally
-/// kept so re-enabling is just a platform-side flag flip.
-///
-/// How to apply: replaces the `isMediaRevampEnabled` portion of the album
-/// layout decision in `PhotoLibraryModeAllCollectionViewModel`,
-/// `PhotoLibraryCollectionLayoutBuilder`, and `AlbumContentViewModel`. Other
-/// `iosMediaRevamp`-driven behaviour (cell styling, empty view, FAB, etc.)
-/// is unaffected and still follows the remote flag.
+/// The album content view was migrated to the masonry grid + sort header, but
+/// user feedback was negative and the layout is being rolled back behind its
+/// own remote feature flag (`iosAlbumMasonryLayout`). The masonry / sort-header
+/// code is intentionally kept so re-enabling is just a platform-side flag flip.
 public enum AlbumLayoutGate {
     /// Whether the album content view should use the masonry grid plus the
     /// sort-style section header. `false` restores the legacy multi-column

@@ -28,7 +28,6 @@ final class VideoCellViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
     private let searchText: String?
@@ -45,10 +44,6 @@ final class VideoCellViewModel: ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent)
     }
 
-    var isMediaRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
-    
     init(
         mode: VideoCellViewModel.Mode,
         viewContext: VideoCellViewModel.ViewContext,
@@ -57,7 +52,6 @@ final class VideoCellViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         onTapMoreOptions: @escaping (_ node: NodeEntity, _ shouldShowSelection: Bool) -> Void,
         onTapped: @escaping (_ node: NodeEntity) -> Void
@@ -69,7 +63,6 @@ final class VideoCellViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         self.onTapMoreOptions = onTapMoreOptions
         self.onTapped = onTapped

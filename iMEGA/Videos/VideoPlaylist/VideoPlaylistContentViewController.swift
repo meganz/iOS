@@ -505,8 +505,7 @@ extension VideoPlaylistContentViewController {
             isVideoPlaylistContent: true,
             isSelectHidden: false,
             isEmptyState: isEmptyState,
-            isPlaylistSharingFeatureFlagEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing),
-            isMediaRevampEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
+            isPlaylistSharingFeatureFlagEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlaylistSharing)
         )
         
         moreBarButtonItem.menu = contextMenuManager.contextMenu(with: contextMenuConfiguration)

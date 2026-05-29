@@ -39,10 +39,7 @@ public struct PhotoLibraryContentView: View {
                     if editMode.isEditing && viewModel.contentMode == .library {
                         EmptyView()
                     } else {
-                        PhotoLibraryPicker(
-                            selectedMode: $viewModel.selectedMode,
-                            isMediaRevampEnabled: ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-                        )
+                        PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
                     }
                 }
         } else {

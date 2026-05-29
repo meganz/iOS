@@ -47,21 +47,13 @@ public struct VideoListView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            if viewModel.mediaRevampEnabled {
-                sortHeaderView()
-                    .frame(height: (viewModel.showSortHeader && viewModel.viewState != .empty) ? 36 : 0)
-                    .clipped()
-            } else {
-                chipsView()
-                    .frame(height: viewModel.showFilterChips ? 60 : 0)
-                    .clipped()
-                    .background(videoConfig.colorAssets.pageBackgroundColor)
-            }
+            sortHeaderView()
+                .frame(height: (viewModel.showSortHeader && viewModel.viewState != .empty) ? 36 : 0)
+                .clipped()
             content
                 .overlay(placeholder)
         }
         .animation(.easeInOut(duration: 0.25), value: viewModel.showSortHeader)
-        .animation(.easeInOut(duration: 0.25), value: viewModel.showFilterChips)
         .task { await viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
         .sheet(isPresented: $viewModel.isSheetPresented) {
@@ -122,38 +114,16 @@ public struct VideoListView: View {
             selection: viewModel.selection,
             router: router,
             viewType: .allVideos,
-            sectionTopInset: (viewModel.mediaRevampEnabled && viewModel.showSortHeader) ? 0 : TokenSpacing._5,
+            sectionTopInset: viewModel.showSortHeader ? 0 : TokenSpacing._5,
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
-            remoteFeatureFlagUseCase: viewModel.remoteFeatureFlagUseCase,
             featureFlagProvider: viewModel.featureFlagProvider
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .ignoreVerticalSafeAreaForLiquidGlass()
     }
     
-    private func chipsView() -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(viewModel.chips, id: \.title) { item in
-                    PillView(viewModel: PillViewModel(
-                        title: item.title,
-                        icon: .trailing(Image(uiImage: videoConfig.videoListAssets.chipDownArrowImage.withRenderingMode(.alwaysTemplate))),
-                        foreground: item.isActive ? videoConfig.colorAssets.videoFilterChipActiveForegroundColor : videoConfig.colorAssets.videoFilterChipInactiveForegroundColor,
-                        background: item.isActive ? videoConfig.colorAssets.videoFilterChipActiveBackgroundColor : videoConfig.colorAssets.videoFilterChipInactiveBackgroundColor
-                    ))
-                    .onTapGesture {
-                        viewModel.newlySelectedChip = item
-                        viewModel.isSheetPresented = true
-                    }
-                }
-            }
-            .padding([.leading, .trailing], 6)
-            .padding([.top, .bottom], 12)
-        }
-    }
-
     @ViewBuilder
     private func sortHeaderView() -> some View {
         ResultsHeaderView(height: 44, leftView: {

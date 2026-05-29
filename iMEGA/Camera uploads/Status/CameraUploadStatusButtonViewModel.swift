@@ -19,7 +19,6 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private let monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
     private let cameraUploadsSettingsViewRouter: any Routing
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let tracker: any AnalyticsTracking
     
     var onTappedHandler: (() -> Void)?
@@ -31,7 +30,6 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         cameraUploadsSettingsViewRouter: some Routing,
         cameraUploadProgressRouter: some CameraUploadProgressRouting,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: any FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -42,7 +40,6 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
             featureFlagProvider: featureFlagProvider)
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.tracker = tracker
         imageViewModel = CameraUploadStatusImageViewModel(
             status: preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] ?? false ? .checkPendingItemsToUpload : .turnedOff)
@@ -79,17 +76,13 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     }
     
     func onTapped() {
-        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
-            tracker.trackAnalyticsEvent(with: MediaScreenTransfersMenuToolbarEvent())
-            guard isCameraUploadsEnabled else {
-                cameraUploadsSettingsViewRouter.start()
-                return
-            }
-            cameraUploadProgressRouter.start { [weak self] in
-                self?.restartMonitoring()
-            }
-        } else {
-            onTappedHandler?()
+        tracker.trackAnalyticsEvent(with: MediaScreenTransfersMenuToolbarEvent())
+        guard isCameraUploadsEnabled else {
+            cameraUploadsSettingsViewRouter.start()
+            return
+        }
+        cameraUploadProgressRouter.start { [weak self] in
+            self?.restartMonitoring()
         }
     }
     

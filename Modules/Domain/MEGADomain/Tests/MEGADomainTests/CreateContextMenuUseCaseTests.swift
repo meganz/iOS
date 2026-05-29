@@ -436,17 +436,12 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         let menuActions = decomposeMenuIntoActions(menu: contextMenuActionEntity)
         
         XCTAssertEqual(menuActions, [
-            .quickActions(actionType: .rename),
             .display(actionType: .select),
-            .videoPlaylist(actionType: .addVideosToVideoPlaylistContent),
-            .sort(actionType: .defaultAsc),
-            .sort(actionType: .defaultDesc),
-            .sort(actionType: .modificationDesc),
-            .sort(actionType: .modificationAsc),
+            .quickActions(actionType: .rename),
             .videoPlaylist(actionType: .delete)
         ])
     }
-    
+
     func testCreateContextMenu_videoPlaylistContentEmpty_shouldDeliverCorrectContextMenu() throws {
         let configEntity = CMConfigEntity(
             menuType: .menu(type: .videoPlaylistContent),
@@ -454,12 +449,11 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
             isEmptyState: true
         )
         let contextMenuActionEntity = try contextMenuActionEntity(with: configEntity)
-        
+
         let menuActions = decomposeMenuIntoActions(menu: contextMenuActionEntity)
-        
+
         XCTAssertEqual(menuActions, [
             .quickActions(actionType: .rename),
-            .videoPlaylist(actionType: .addVideosToVideoPlaylistContent),
             .videoPlaylist(actionType: .delete)
         ])
     }

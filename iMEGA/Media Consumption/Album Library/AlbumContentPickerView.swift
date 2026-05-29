@@ -100,14 +100,8 @@ struct AlbumContentPickerView: View {
         Button {
             viewModel.onCancel()
         } label: {
-            if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
-                MEGAAssets.Image.closeBannerButton
-                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-            } else {
-                Text(Strings.Localizable.cancel)
-                    .font(.body)
-                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-            }
+            MEGAAssets.Image.closeBannerButton
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
         }.padding(10)
     }
     

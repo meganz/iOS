@@ -56,10 +56,6 @@ struct AlbumListView: View {
         VStack(spacing: 0) {
             ScrollView {
                 LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
-                    if !viewModel.isMediaRevampEnabled {
-                        CreateAlbumCell { viewModel.onCreateAlbum() }
-                            .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
-                    }
                     ForEach(viewModel.albums, id: \.self) { album in
                         router.cell(album: album, selection: viewModel.selection) {
                             viewModel.album = $0
@@ -71,28 +67,18 @@ struct AlbumListView: View {
             .padding(.horizontal, 6)
         }
         .overlay(alignment: .bottomTrailing) {
-            if viewModel.isMediaRevampEnabled {
-                RoundedPrimaryImageButton(
-                    image: MEGAAssets.Image.plus,
-                    action: viewModel.onCreateAlbum)
-                .padding(TokenSpacing._5)
-                .opacity($editMode.wrappedValue.isEditing ? 0 : 1)
-            }
+            RoundedPrimaryImageButton(
+                image: MEGAAssets.Image.plus,
+                action: viewModel.onCreateAlbum)
+            .padding(TokenSpacing._5)
+            .opacity($editMode.wrappedValue.isEditing ? 0 : 1)
         }
     }
     
     private var placeholderView: some View {
         AlbumListPlaceholderView(
             isActive: viewModel.shouldLoad,
-            onCreateTapHandler: placeholderCreateTapHandler())
-    }
-    
-    private func placeholderCreateTapHandler() -> (() -> Void)? {
-        if !viewModel.isMediaRevampEnabled {
-            viewModel.onCreateAlbum
-        } else {
-            nil
-        }
+            onCreateTapHandler: nil)
     }
     
     @ViewBuilder

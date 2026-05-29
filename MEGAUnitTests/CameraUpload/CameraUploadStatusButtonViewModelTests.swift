@@ -167,7 +167,6 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         let sut = makeSUT(
             preferenceUseCase: preferenceUseCase,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]),
             tracker: tracker
         )
         
@@ -190,7 +189,6 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         let sut = makeSUT(
             preferenceUseCase: preferenceUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]),
             tracker: tracker
         )
         
@@ -213,7 +211,6 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
         cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: any FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker()
     ) -> CameraUploadStatusButtonViewModel {
@@ -224,7 +221,6 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             preferenceUseCase: preferenceUseCase,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: featureFlagProvider,
             tracker: tracker)
     }

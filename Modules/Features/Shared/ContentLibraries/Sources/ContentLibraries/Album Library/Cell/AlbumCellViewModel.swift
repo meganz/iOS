@@ -19,7 +19,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     let selection: AlbumSelection
     let isLinkShared: Bool
     let searchText: String?
-    let isMediaRevampEnabled: Bool
     
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
@@ -51,12 +50,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     var isPlaceholder: Bool {
         thumbnailContainer.type == .placeholder
     }
-    
-    var shouldShowGradient: Bool {
-        guard !isMediaRevampEnabled else { return false }
-        return album.isLinkShared && !isPlaceholder
-    }
-    
+
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let monitorUserAlbumPhotosUseCase: any MonitorUserAlbumPhotosUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -101,7 +95,6 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.searchText = searchText
         self.configuration = configuration
         
-        isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         title = if let searchText {
             AttributedString(album.name
                 .forceLeftToRight()
@@ -120,10 +113,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             thumbnailContainer = thumbnailLoader.initialImage(
                 for: coverNode,
                 type: .thumbnail,
-                placeholder: { [isMediaRevampEnabled] in isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline })
+                placeholder: { MEGAAssets.Image.image04Solid })
         } else {
             thumbnailContainer = ImageContainer(
-                image: isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline,
+                image: MEGAAssets.Image.image04Solid,
                 type: .placeholder)
         }
         
@@ -231,7 +224,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
             ImageContainer(
-                image: isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline,
+                image: MEGAAssets.Image.image04Solid,
                 type: .placeholder)
         }
         guard let imageContainer,

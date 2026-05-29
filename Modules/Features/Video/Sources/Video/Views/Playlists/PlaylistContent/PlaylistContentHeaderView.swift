@@ -10,8 +10,6 @@ import SwiftUI
 struct PlaylistContentHeaderView: View {
     let viewState: VideoPlaylistContentViewModel.ViewState
     let previewEntity: VideoPlaylistCellPreviewEntity
-    let isMediaRevampEnabled: Bool
-    let onTapAddButton: () -> Void
     
     var body: some View {
         HStack(alignment: .top) {
@@ -40,10 +38,6 @@ struct PlaylistContentHeaderView: View {
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
 
                     secondaryInformationView
-                }
-
-                if previewEntity.shouldShowAddButton && !isMediaRevampEnabled {
-                    addButton
                 }
             }
         }
@@ -134,19 +128,6 @@ struct PlaylistContentHeaderView: View {
         }
     }
     
-    @ViewBuilder
-    private var addButton: some View {
-        PillView(
-            viewModel: .init(
-                title: Strings.Localizable.Videos.Tab.Playlist.Content.Header.Button.Title.add,
-                icon: .leading(Image(systemName: "plus").renderingMode(.template)),
-                foreground: TokenColors.Text.accent.swiftUI,
-                background: TokenColors.Button.secondary.swiftUI,
-                shape: .capsule
-            )
-        )
-        .onTapGesture { onTapAddButton() }
-    }
 }
 
 // MARK: - Preview partial & loading
@@ -242,9 +223,7 @@ private func view(
             title: playlistName,
             isExported: isExported,
             type: playlistType
-        ),
-        isMediaRevampEnabled: false,
-        onTapAddButton: {}
+        )
     )
 }
 

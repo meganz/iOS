@@ -31,13 +31,17 @@ open class PhotoCellViewModel: ObservableObject {
         editMode.isEditing && currentZoomScaleFactor != .thirteen
     }
     
-    public let isMediaRevamp: Bool
     @Published public private(set) var shouldShowFavorite: Bool = false
+
+    /// True when the cell renders inside the rolled-back album layout, so it should
+    /// keep the legacy favorite-badge styling (small heart, gradient overlay, no
+    /// pill background) instead of the masonry/revamp pill heart.
+    let useLegacyFavoriteStyle: Bool
     
     var shouldApplyContentOpacity: Bool {
         editMode.isEditing && isSelectionLimitReached && !isSelected
     }
-        
+    
     // MARK: private state
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -52,7 +56,6 @@ open class PhotoCellViewModel: ObservableObject {
                 thumbnailLoader: some ThumbnailLoaderProtocol,
                 nodeUseCase: (any NodeUseCaseProtocol)?,
                 sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
-                remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
                 configuration: ContentLibraries.Configuration = ContentLibraries.configuration) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
@@ -60,7 +63,8 @@ open class PhotoCellViewModel: ObservableObject {
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.configuration = configuration
-        self.isMediaRevamp = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
+        self.useLegacyFavoriteStyle = viewModel.libraryViewModel.contentMode == .album
+            && !AlbumLayoutGate.isMasonryLayoutEnabled
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         isVideo = photo.mediaType == .video
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""

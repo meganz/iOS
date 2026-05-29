@@ -50,12 +50,12 @@ final class AlbumContentViewModel: ViewModelType {
         case showResultMessage(MessageType)
         case updateNavigationTitle
         case showDeleteAlbumAlert
-        case configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool)
+        case configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?)
         case showRenameAlbumAlert(viewModel: TextFieldAlertViewModel)
         case showRemoveLinkAlert
         case showSharePhotoLinks
         case updateAddToAlbumButton(Bool)
-        case showEmptyView(isEmpty: Bool, isRevampEnabled: Bool)
+        case showEmptyView(isEmpty: Bool)
         case showActions(viewModel: AlbumActionSheetViewModel)
         case startEditMode
         enum MessageType: Equatable {
@@ -77,7 +77,6 @@ final class AlbumContentViewModel: ViewModelType {
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let thumbnailLoader: any ThumbnailLoaderProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var loadingTask: Task<Void, Never>?
@@ -151,7 +150,6 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
@@ -168,7 +166,6 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentDataProvider = albumContentDataProvider
         self.albumCoverUseCase = albumCoverUseCase
         self.thumbnailLoader = thumbnailLoader
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -254,10 +251,6 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    var isMediaRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
-
     /// In rolled-back layout the right-bar action surface is the legacy `UIMenu`
     /// (sort/filter/quick actions all live in one tree). The new more-button bottom
     /// sheet is only used together with the masonry layout.
@@ -270,16 +263,10 @@ final class AlbumContentViewModel: ViewModelType {
     private var canAddPhotosToAlbum: Bool {
         album.type == .user && photoLibraryContainsPhotos
     }
-    
-    private var shouldAddContextMenuAddButton: Bool {
-        guard !isMediaRevampEnabled else { return false }
-        return canAddPhotosToAlbum
-    }
-    
+
     private func onViewReady() {
         tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
-        invokeCommand?(.configureRightBarButtons(
-            contextMenuConfiguration: nil, canAddPhotosToAlbum: shouldAddContextMenuAddButton))
+        invokeCommand?(.configureRightBarButtons(contextMenuConfiguration: nil))
         loadingTask = Task { [weak self] in
             guard let self else { return }
             await addNewAlbumPhotosIfNeeded()
@@ -309,7 +296,7 @@ final class AlbumContentViewModel: ViewModelType {
         let shouldDismissAlbum = photos.isEmpty && [AlbumEntityType.raw, .gif].contains(album.type)
         await shouldDismissAlbum ? invokeCommand?(.dismissAlbum) : showAlbumPhotos()
         guard !shouldDismissAlbum else { return }
-        invokeCommand?(.showEmptyView(isEmpty: photos.isEmpty, isRevampEnabled: isMediaRevampEnabled))
+        invokeCommand?(.showEmptyView(isEmpty: photos.isEmpty))
     }
     
     private func addNewAlbumPhotosIfNeeded() async {
@@ -529,9 +516,7 @@ final class AlbumContentViewModel: ViewModelType {
         let config = await makeConfigEntity()
         guard !Task.isCancelled else { return }
         
-        invokeCommand?(.configureRightBarButtons(
-            contextMenuConfiguration: config,
-            canAddPhotosToAlbum: shouldAddContextMenuAddButton))
+        invokeCommand?(.configureRightBarButtons(contextMenuConfiguration: config))
     }
     
     private func makeConfigEntity() async -> CMConfigEntity? {
@@ -612,8 +597,6 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func updateAddToAlbumFloatingActionButton(isEditing: Bool = false) async {
-        guard isMediaRevampEnabled else { return }
-        
         let isButtonVisible = if isEditing {
             false
         } else {

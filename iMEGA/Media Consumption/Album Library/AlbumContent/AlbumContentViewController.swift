@@ -34,33 +34,16 @@ final class AlbumContentViewController: UIViewController, ViewType {
         target: self,
         action: #selector(editButtonPressed(_:))
     )
-    lazy var addToAlbumBarButtonItem = UIBarButtonItem(
-        image: MEGAAssets.UIImage.navigationbarAdd,
+    lazy var leftBarButtonItem: UIBarButtonItem = UIBarButtonItem(
+        image: MEGAAssets.UIImage.backArrow,
         style: .plain,
         target: self,
-        action: #selector(addToAlbumButtonPressed(_:))
+        action: #selector(exitButtonTapped(_:))
     )
-    
-    lazy var leftBarButtonItem: UIBarButtonItem = {
-        if viewModel.isMediaRevampEnabled {
-            return UIBarButtonItem(image: MEGAAssets.UIImage.backArrow,
-                                   style: .plain,
-                                   target: self,
-                                   action: #selector(exitButtonTapped(_:))
-            )
-        } else {
-            return UIBarButtonItem(title: Strings.Localizable.close,
-                                   style: .plain,
-                                   target: self,
-                                   action: #selector(exitButtonTapped(_:))
-            )
-        }
-    }()
     
     lazy var toolbar = UIToolbar()
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
-    private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
     private lazy var emptyAlbumHostingController: UIHostingController<RevampedContentUnavailableView> = {
         let addItemsAction: (() -> Void)? = viewModel.isFavouriteAlbum ? nil : { [weak viewModel] in
             viewModel?.dispatch(.addToAlbumTap)
@@ -206,8 +189,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
             buildNavigationBar()
         case .showDeleteAlbumAlert:
             showAlbumDeleteConfirmation()
-        case .configureRightBarButtons(let config, let canAddPhotos):
-            configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotos)
+        case .configureRightBarButtons(let config):
+            configureRightBarButtons(contextMenuConfiguration: config)
         case .showRenameAlbumAlert(viewModel: let viewModel):
             present(UIAlertController(alert: viewModel), animated: true)
         case .showRemoveLinkAlert:
@@ -216,8 +199,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
             showSharePhotoLinks()
         case .updateAddToAlbumButton(let isVisible):
             isVisible ? addFloatingAddButton() : removeAddToAlbumFloatingActionButton()
-        case .showEmptyView(let isEmpty, let isRevampEnabled):
-            isEmpty ? showEmptyView(isRevampEnabled: isRevampEnabled) : removeEmptyView(isRevampEnabled: isRevampEnabled)
+        case .showEmptyView(let isEmpty):
+            isEmpty ? showEmptyView() : removeEmptyView()
         case .showActions(let viewModel):
             showMoreActions(viewModel: viewModel)
         case .startEditMode:
@@ -267,26 +250,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
             selectAllItemsBarButtonItem.tintColor = TokenColors.Text.primary
             navigationItem.leftBarButtonItem = selectAllItemsBarButtonItem
         } else {
-            if !viewModel.isMediaRevampEnabled {
-                leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
-            }
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }
     
-    private func showEmptyView(isRevampEnabled: Bool) {
-        guard !isRevampEnabled else {
-            showRevampEmptyView()
-            return
-        }
-        view.addSubview(emptyView)
-        
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        emptyView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-    }
-    
-    private func showRevampEmptyView() {
+    private func showEmptyView() {
         guard let emptyView = emptyAlbumHostingController.view else { return }
         
         addChild(emptyAlbumHostingController)
@@ -303,15 +271,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         emptyAlbumHostingController.didMove(toParent: self)
     }
     
-    private func removeEmptyView(isRevampEnabled: Bool) {
-        guard !isRevampEnabled else {
-            removeRevampEmptyView()
-            return
-        }
-        emptyView.removeFromSuperview()
-    }
-    
-    private func removeRevampEmptyView() {
+    private func removeEmptyView() {
         emptyAlbumHostingController.willMove(toParent: nil)
         emptyAlbumHostingController.view.removeFromSuperview()
         emptyAlbumHostingController.removeFromParent()
@@ -363,11 +323,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         configureToolbarButtonsWithAlbumType()
     }
     
-    @objc private func addToAlbumButtonPressed(_ barButtonItem: UIBarButtonItem) {
-        viewModel.dispatch(.addToAlbumTap)
-    }
-    
-    private func downloadSelectedNodes() {
+private func downloadSelectedNodes() {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
             return

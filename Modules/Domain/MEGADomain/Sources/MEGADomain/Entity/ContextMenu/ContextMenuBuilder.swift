@@ -44,7 +44,6 @@ public final class ContextMenuBuilder {
     private var isHidden: Bool?
     private var isCameraUploadsEnabled: Bool = false
     private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
-    private var isMediaRevampEnabled: Bool = false
     private var isTakenDown: Bool = false
     private var isDecrypted: Bool = true
     private var isS4Container: Bool = false
@@ -277,11 +276,6 @@ public final class ContextMenuBuilder {
     
     public func setIsVideoPlaylistSharingFeatureFlagEnabled(_ isEnabled: Bool) -> ContextMenuBuilder {
         self.isVideoPlaylistSharingFeatureFlagEnabled = isEnabled
-        return self
-    }
-
-    public func setIsMediaRevampEnabled(_ isEnabled: Bool) -> ContextMenuBuilder {
-        self.isMediaRevampEnabled = isEnabled
         return self
     }
 
@@ -797,25 +791,11 @@ public final class ContextMenuBuilder {
         let deleteMenu = CMEntity(displayInline: true, children: [deleteVideoPlaylist])
         
         if isVideoPlaylistContent {
-            if isMediaRevampEnabled {
-                if !isEmptyState {
-                    displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [select]))
-                }
-                displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [rename]))
-                displayActionsMenuChildren.append(deleteMenu)
-            } else {
-                displayActionsMenuChildren.append(CMEntity(
-                    displayInline: true,
-                    children: [
-                        isVideoPlaylistSharingFeatureFlagEnabled ? shareLink : nil,
-                        rename,
-                        isEmptyState ? nil : select,
-                        addVideosToVideoPlaylistContent
-                    ].compactMap { $0 }
-                ))
-                displayActionsMenuChildren.append(isEmptyState ? nil : sortMenu())
-                displayActionsMenuChildren.append(deleteMenu)
+            if !isEmptyState {
+                displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [select]))
             }
+            displayActionsMenuChildren.append(CMEntity(displayInline: true, children: [rename]))
+            displayActionsMenuChildren.append(deleteMenu)
         }
         
         return CMEntity(

@@ -9,20 +9,15 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     private let exportAction: ButtonAction
     private let sendToChatAction: ButtonAction
     private let albumType: AlbumType
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var favouriteItemImage: UIImage {
         albumType == .favourite ? MEGAAssets.UIImage.removeFavourite : MEGAAssets.UIImage.favourite
     }
-    
-    var isMediaRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
 
     private func makeDownloadItem() -> UIBarButtonItem {
         UIBarButtonItem(
-            image: isMediaRevampEnabled ? MEGAAssets.UIImage.offlineRevamp : MEGAAssets.UIImage.offline,
+            image: MEGAAssets.UIImage.offlineRevamp,
             style: .plain,
             target: self,
             action: #selector(buttonPressed(_:))
@@ -31,7 +26,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     
     private func makeShareLinkItem() -> UIBarButtonItem {
         UIBarButtonItem(
-            image: isMediaRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link,
+            image: MEGAAssets.UIImage.link01,
             style: .plain,
             target: self,
             action: #selector(buttonPressed(_:))
@@ -40,7 +35,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     
     private func makeExportItem() -> UIBarButtonItem {
         UIBarButtonItem(
-            image: isMediaRevampEnabled ? MEGAAssets.UIImage.exportRevamp : MEGAAssets.UIImage.export,
+            image: MEGAAssets.UIImage.exportRevamp,
             style: .plain,
             target: self,
             action: #selector(buttonPressed(_:))
@@ -53,16 +48,16 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         target: self,
         action: #selector(buttonPressed(_:))
     )
-    
+
     lazy var sendToChatItem = UIBarButtonItem(
-        image: isMediaRevampEnabled ? MEGAAssets.UIImage.sendToChatRevamp : MEGAAssets.UIImage.sendToChat,
+        image: MEGAAssets.UIImage.sendToChatRevamp,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var removeToRubbishBinItem = UIBarButtonItem(
-        image: isMediaRevampEnabled ? MEGAAssets.UIImage.rubbishBinRevamp : MEGAAssets.UIImage.rubbishBin,
+        image: MEGAAssets.UIImage.rubbishBinRevamp,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
@@ -80,7 +75,6 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         sendToChatAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
         albumType: AlbumType,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.favouriteAction = favouriteAction
@@ -88,7 +82,6 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         self.exportAction = exportAction
         self.sendToChatAction = sendToChatAction
         self.albumType = albumType
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         
         super.init(

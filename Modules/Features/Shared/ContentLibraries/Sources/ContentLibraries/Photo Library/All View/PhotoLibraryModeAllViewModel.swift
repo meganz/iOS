@@ -9,7 +9,7 @@ import MEGARepo
 public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
     @Published var zoomState: PhotoLibraryZoomState {
         didSet {
-            guard zoomState != oldValue, isMediaRevampEnabled else { return }
+            guard zoomState != oldValue else { return }
             tracker.trackZoomStateChange(zoomState)
         }
     }
@@ -21,8 +21,6 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
     private(set) var lastEnableCameraUploadBannerDismissedDate: Date?
     @PreferenceWrapper(key: PreferenceKeyEntity.limitedPhotoAccessBannerDismissedDate, defaultValue: nil)
     private(set) var limitedPhotoAccessBannerDismissedDate: Date?
-    private let isMediaRevampEnabled: Bool
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let devicePermissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
     private let updateBannerHeaderPassthroughSubject = PassthroughSubject<Void, Never>()
@@ -32,20 +30,12 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
         libraryViewModel: PhotoLibraryContentViewModel,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         devicePermissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler(),
-        tracker: some AnalyticsTracking = DIContainer.tracker,
-        configuration: ContentLibraries.Configuration = ContentLibraries.configuration
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
-        self.remoteFeatureFlagUseCase = configuration.remoteFeatureFlagUseCase
-        self.isMediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-        let supportedScaleFactors: [PhotoLibraryZoomState.ScaleFactor] = isMediaRevampEnabled
-        ? [.one, .three, .five]
-        : PhotoLibraryZoomState.ScaleFactor.allCases
-        let maximumScaleFactor: PhotoLibraryZoomState.ScaleFactor = isMediaRevampEnabled ? .five : .thirteen
-        
         self.zoomState = PhotoLibraryZoomState(
             scaleFactor: libraryViewModel.configuration?.scaleFactor ?? PhotoLibraryZoomState.defaultScaleFactor,
-            maximumScaleFactor: maximumScaleFactor,
-            supportedScaleFactors: supportedScaleFactors
+            maximumScaleFactor: .five,
+            supportedScaleFactors: [.one, .three, .five]
         )
         self.devicePermissionHandler = devicePermissionHandler
         self.tracker = tracker
@@ -61,9 +51,6 @@ public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSe
     }
     
     private var cameraUploadHeaderType: PhotoLibraryBannerType? {
-        guard isMediaRevampEnabled else {
-            return isCameraUploadsEnabled ? nil : .enableCameraUploads
-        }
         guard !isCameraUploadsEnabled else {
             return cameraUploadEnabledBannerType
         }

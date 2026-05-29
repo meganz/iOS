@@ -21,8 +21,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
         return PhotoLibraryModeAllViewModel(
-            libraryViewModel: libraryViewModel,
-            configuration: .mockConfiguration())
+            libraryViewModel: libraryViewModel)
     }()
     
     private var testNodes: [NodeEntity] {
@@ -685,8 +684,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -705,8 +703,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -728,8 +725,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -747,8 +743,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
 
         XCTAssertFalse(libraryViewModel.selection.editMode.isEditing)
@@ -772,8 +767,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
 
         XCTAssertFalse(sut.isSelected)
@@ -792,8 +786,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
 
         sut.handleLongPress()
@@ -815,8 +808,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
 
         sut.handleLongPress()
@@ -836,8 +828,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = makeSUT(
             photo: photo,
             viewModel: PhotoLibraryModeAllViewModel(
-                libraryViewModel: libraryViewModel,
-                configuration: .mockConfiguration())
+                libraryViewModel: libraryViewModel)
         )
         XCTAssertFalse(sut.shouldApplyContentOpacity)
         sut.editMode = .active
@@ -1116,7 +1107,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         configuration: ContentLibraries.Configuration = .mockConfiguration(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1124,12 +1114,10 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: viewModel ?? PhotoLibraryModeAllViewModel(
-                libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: [])),
-                configuration: configuration),
+                libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
             thumbnailLoader: thumbnailLoader,
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             configuration: configuration)
         addTeardownBlock { [weak sut] in
             // Add sleep to give `@Published` properties used in infinite async sequences via `.values` time to cancel

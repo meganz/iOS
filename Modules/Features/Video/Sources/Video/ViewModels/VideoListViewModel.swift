@@ -32,7 +32,6 @@ public final class VideoListViewModel: ObservableObject {
     let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     let nodeUseCase: any NodeUseCaseProtocol
     let featureFlagProvider: any FeatureFlagProviderProtocol
-    let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var selection: VideoSelection
@@ -41,8 +40,6 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
-    var mediaRevampEnabled = true
-    @Published private(set) var showFilterChips = true
     @Published private(set) var showSortHeader = true
     @Published private(set) var viewState: ViewState = .partial
     @Published var emptyViewModel: ContentUnavailableViewModel?
@@ -85,21 +82,15 @@ public final class VideoListViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
         self.featureFlagProvider = featureFlagProvider
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.syncModel = syncModel
         self.selection = selection
-
-        self.mediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-        self.showFilterChips = !mediaRevampEnabled
-        self.showSortHeader = mediaRevampEnabled
 
         self.contentProvider = contentProvider
 
@@ -264,21 +255,12 @@ public final class VideoListViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &selection.$editMode)
 
-        if !mediaRevampEnabled {
-            selection.$editMode
-                .map { editMode in
-                    return !editMode.isEditing
-                }
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$showFilterChips)
-        } else {
-            selection.$editMode
-                .map { editMode in
-                    return !editMode.isEditing
-                }
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$showSortHeader)
-        }
+        selection.$editMode
+            .map { editMode in
+                return !editMode.isEditing
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$showSortHeader)
     }
     
     private func subscribeToAllSelected() {

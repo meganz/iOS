@@ -5,42 +5,24 @@ import SwiftUI
 
 struct AlbumCellImage: View {
     let container: any ImageContaining
-    let isMediaRevampEnabled: Bool
     
     var body: some View {
         if container.type == .placeholder {
-            placeholderBackground
+            TokenColors.Background.surface1.swiftUI
                 .aspectRatio(contentMode: .fill)
                 .overlay(alignment: .center) {
                     container.image
                         .renderingMode(.template)
                         .resizable()
-                        .foregroundStyle(isMediaRevampEnabled ? TokenColors.Icon.primary.swiftUI : TokenColors.Text.disabled.swiftUI)
-                        .opacity(isMediaRevampEnabled ? 0.1 : 1.0)
-                        .frame(width: placeholderSize.width, height: placeholderSize.height)
+                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                        .opacity(0.1)
+                        .frame(width: 100, height: 100)
                 }
         } else {
             thumbnail
         }
     }
-    
-    @ViewBuilder
-    private var placeholderBackground: some View {
-        if isMediaRevampEnabled {
-            TokenColors.Background.surface1.swiftUI
-        } else {
-            TokenColors.Background.surface2.swiftUI
-        }
-    }
-    
-    private var placeholderSize: CGSize {
-        if isMediaRevampEnabled {
-            CGSize(width: 100, height: 100)
-        } else {
-            CGSize(width: 40, height: 40)
-        }
-    }
-    
+
     private var thumbnail: some View {
         container.image
             .resizable()
@@ -53,7 +35,6 @@ struct AlbumCellImage: View {
     AlbumCellImage(
         container: ImageContainer(
             image: Image("folder"),
-            type: .thumbnail),
-        isMediaRevampEnabled: true
+            type: .thumbnail)
     )
 }

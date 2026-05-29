@@ -25,7 +25,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     @Published var showShareAlbumLinks = false
     
-    let isMediaRevampEnabled: Bool
     lazy var selection = AlbumSelection()
     
     var createAlbumTask: Task<Void, Never>?
@@ -64,8 +63,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         overDiskQuotaChecker: some OverDiskQuotaChecking,
         alertViewModel: TextFieldAlertViewModel,
-        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
@@ -76,7 +74,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.overDiskQuotaChecker = overDiskQuotaChecker
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
-        isMediaRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         super.init()
         setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in

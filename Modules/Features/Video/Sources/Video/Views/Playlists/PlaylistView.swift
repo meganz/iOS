@@ -24,19 +24,14 @@ public struct PlaylistView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            if !viewModel.isMediaRevampEnabled {
-                newPlaylistView
-            }
             contentView
                 .overlay(placeholder)
         }
         .overlay(alignment: .bottomTrailing) {
-            if viewModel.isMediaRevampEnabled {
-                RoundedPrimaryImageButton(
-                    image: MEGAAssets.Image.plus,
-                    action: { viewModel.addPlaylistButtonTap() })
-                .padding(TokenSpacing._5)
-            }
+            RoundedPrimaryImageButton(
+                image: MEGAAssets.Image.plus,
+                action: { viewModel.addPlaylistButtonTap() })
+            .padding(TokenSpacing._5)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)
@@ -172,37 +167,6 @@ public struct PlaylistView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
     
-    private var newPlaylistView: some View {
-        HStack(spacing: 8) {
-            addPlaylistButton
-            Text(Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundColor(videoConfig.colorAssets.primaryTextColor)
-
-        }
-        .frame(height: 60)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding([.leading, .trailing], 8)
-    }
-    
-    private var addPlaylistButton: some View {
-        Button {
-            viewModel.addPlaylistButtonTap()
-        } label: {
-            ZStack {
-                Circle()
-                    .frame(width: 44, height: 44)
-                
-                Image(uiImage: videoConfig.rowAssets.addPlaylistImage.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .tint(videoConfig.colorAssets.addPlaylistButtonTextColor)
-            }
-        }
-        .tint(videoConfig.colorAssets.addPlaylistButtonBackgroundColor)
-        .frame(width: 44, height: 44)
-    }
-        
     private var listView: some View {
         VideoPlaylistsCollectionViewRepresenter(
             viewModel: viewModel,

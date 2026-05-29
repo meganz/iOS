@@ -12,7 +12,6 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     let router: any VideoRevampRouting
     let viewType: AllVideosViewControllerCollectionViewLayoutBuilder.ViewType
     let sectionTopInset: CGFloat
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     init(
@@ -26,7 +25,6 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.viewModel = AllVideosCollectionViewModel(
@@ -41,7 +39,6 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         self.router = router
         self.viewType = viewType
         self.sectionTopInset = sectionTopInset
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     
@@ -71,6 +68,6 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func makeCoordinator() -> AllVideosCollectionViewCoordinator {
-        AllVideosCollectionViewCoordinator(self, remoteFeatureFlagUseCase: remoteFeatureFlagUseCase, featureFlagProvider: featureFlagProvider)
+        AllVideosCollectionViewCoordinator(self, featureFlagProvider: featureFlagProvider)
     }
 }

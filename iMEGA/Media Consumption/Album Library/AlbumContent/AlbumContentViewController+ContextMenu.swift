@@ -25,7 +25,7 @@ extension AlbumContentViewController {
         return button
     }
     
-    func configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?, canAddPhotosToAlbum: Bool) {
+    func configureRightBarButtons(contextMenuConfiguration: CMConfigEntity?) {
         defer {
             TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
         }
@@ -53,9 +53,6 @@ extension AlbumContentViewController {
                     })
                 button.tintColor = TokenColors.Text.primary
                 rightBarButtonItems.append(button)
-            }
-            if canAddPhotosToAlbum {
-                rightBarButtonItems.append(addToAlbumBarButtonItem)
             }
             guard navigationItem.rightBarButtonItems !~ rightBarButtonItems else {
                 return

@@ -95,12 +95,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         self.collectionView = collectionView
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
-            let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
             // First section is rendered as an empty placeholder only when the global zoom header
             // is showing the date in its place. Without a global header (e.g. the rolled-back album
             // view) the section must keep its own date label.
-            let isFirstSection = isMediaRevampEnabled
-                && representer.globalHeaderType != .none
+            let isFirstSection = representer.globalHeaderType != .none
                 && indexPath.section == 0
 
             // Disable interaction so pinned section headers don't intercept touches meant for the global zoom header above them.
@@ -198,12 +196,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         subscribeToEditModeChanges()
 
-        if ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp) {
-            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-            panGesture.delegate = self
-            dragSelectionPanGesture = panGesture
-            collectionView.addGestureRecognizer(panGesture)
-        }
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.delegate = self
+        dragSelectionPanGesture = panGesture
+        collectionView.addGestureRecognizer(panGesture)
 
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -244,8 +240,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
     
     private func updateGlobalHeaderMonthTitle() {
-        guard ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp),
-              let globalHeaderView = globalHeaderView else {
+        guard let globalHeaderView = globalHeaderView else {
             return
         }
 

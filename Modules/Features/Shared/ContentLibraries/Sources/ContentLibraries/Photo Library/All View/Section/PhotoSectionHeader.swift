@@ -9,8 +9,7 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
     let section: T
     /// When true, render the pre-MediaRevamp pill-shaped header (rounded background
     /// behind the date). Caller decides — e.g. the rolled-back Album sets this to
-    /// `true` so the section keeps its legacy look while the rest of the app still
-    /// follows the `iosMediaRevamp` flag.
+    /// `true` so the section keeps its legacy look.
     let useLegacyStyle: Bool
 
     init(section: T, useLegacyStyle: Bool = false) {
@@ -21,29 +20,21 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
     private var backgroundColor: Color {
         colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI
     }
-
-    private var isMediaRevampEnabled: Bool {
-        ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
-
-    private var shouldUseRevampStyle: Bool {
-        isMediaRevampEnabled && !useLegacyStyle
-    }
     
     var body: some View {
         HStack {
-            if shouldUseRevampStyle {
-                Text(section.title)
-                    .font(.subheadline)
-                    .foregroundColor(TokenColors.Text.primary.swiftUI)
-                    .padding(EdgeInsets(top: TokenSpacing._3, leading: TokenSpacing._5, bottom: TokenSpacing._3, trailing: TokenSpacing._5))
-            } else {
+            if useLegacyStyle {
                 Text(section.attributedTitle)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .padding(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
                     .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20))
                     .background(backgroundColor, in: RoundedRectangle(cornerRadius: 20))
                     .padding(EdgeInsets(top: 15, leading: 8, bottom: 20, trailing: 8))
+            } else {
+                Text(section.title)
+                    .font(.subheadline)
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
+                    .padding(EdgeInsets(top: TokenSpacing._3, leading: TokenSpacing._5, bottom: TokenSpacing._3, trailing: TokenSpacing._5))
             }
 
             Spacer()

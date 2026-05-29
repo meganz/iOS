@@ -7,14 +7,11 @@ final class PhotoMonthSection: PhotoDateSection {
         let isCurrentYear = Calendar.current.component(.year, from: photoByMonth.categoryDate) == Calendar.current.component(.year, from: Date())
         let formatter: any DateFormatting = isCurrentYear ? DateFormatter.monthOnlyTemplate() : DateFormatter.monthTemplate()
         let title = formatter.localisedString(from: photoByMonth.categoryDate)
-        
-        let isMediaRevampEnabled = ContentLibraries.configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-        let finalTitle = isMediaRevampEnabled ? title : DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
 
         super.init(contentList: photoByMonth.allPhotos,
                    photoByDayList: photoByMonth.contentList,
                    categoryDate: photoByMonth.categoryDate,
-                   title: finalTitle)
+                   title: title)
     }
     
     override var attributedTitle: AttributedString {

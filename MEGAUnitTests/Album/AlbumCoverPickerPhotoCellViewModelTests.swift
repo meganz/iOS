@@ -23,13 +23,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
         let viewModel = PhotoLibraryModeAllViewModel(
-            libraryViewModel: libraryViewModel,
-            configuration: .init(
-                sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
-                featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-                nodeUseCase: MockNodeUseCase()
-            ))
+            libraryViewModel: libraryViewModel)
         
         let sut = AlbumCoverPickerPhotoCellViewModel(
             albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: 1)),

@@ -18,26 +18,20 @@ struct PhotoCellContent: View {
         }
     }
     
-    private var isMediaRevampEnabled: Bool {
-        viewModel.isMediaRevamp
-    }
-    
     private var shouldShowSelectionBorder: Bool {
-        isMediaRevampEnabled && viewModel.isSelected && viewModel.shouldShowEditState
+        viewModel.isSelected && viewModel.shouldShowEditState
     }
 
     var body: some View {
-        ZStack(alignment: isMediaRevampEnabled ? .topLeading : .bottomTrailing) {
+        ZStack(alignment: .topLeading) {
             image()
-            /// An overlayView to enhance visual selection thumbnail image. Requested by designers to not use design tokens for this one.
-                .overlay(Color.black.opacity(viewModel.isSelected && !isMediaRevampEnabled ? 0.2 : 0.0))
 
             checkMarkView
-                .offset(x: isMediaRevampEnabled ? 5 : -5, y: isMediaRevampEnabled ? 5 : -5)
+                .offset(x: 5, y: 5)
                 .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
         .border(shouldShowSelectionBorder ? TokenColors.Icon.accent.swiftUI : .clear, width: 2)
-        .favorite(viewModel.shouldShowFavorite, isMediaRevamp: isMediaRevampEnabled)
+        .favorite(viewModel.shouldShowFavorite, useLegacyStyle: viewModel.useLegacyFavoriteStyle)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
@@ -53,18 +47,14 @@ struct PhotoCellContent: View {
     }
     
     private var checkMarkForegroundColor: Color {
-        if viewModel.isSelected {
-            return isMediaRevampEnabled ? TokenColors.Icon.accent.swiftUI : TokenColors.Support.success.swiftUI
-        } else {
-            return TokenColors.Icon.onColor.swiftUI
-        }
+        viewModel.isSelected ? TokenColors.Icon.accent.swiftUI : TokenColors.Icon.onColor.swiftUI
     }
 
     private var checkMarkView: some View {
         CheckMarkView(
             markedSelected: viewModel.isSelected,
             foregroundColor: checkMarkForegroundColor,
-            isMediaRevamp: isMediaRevampEnabled
+            isMediaRevamp: true
         )
     }
     

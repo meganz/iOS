@@ -812,21 +812,11 @@ struct AlbumCellViewModelTestSuite {
     @Suite("Thumbnail")
     @MainActor
     struct Thumbnail {
-        @Test("when album has no cover it should set correct placeholder",
-              arguments: [
-                (false, MEGAAssets.Image.timeline),
-                (true, MEGAAssets.Image.image04Solid)
-              ])
-        func noCoverPlaceholder(
-            isMediaRevampEnabled: Bool,
-            expectedImage: Image
-        ) {
-            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled])
-            let sut = makeSUT(
-                album: .init(id: 8, type: .user),
-                configuration: .mockConfiguration(remoteFeatureFlagUseCase: remoteFeatureFlagUseCase))
-            
-            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
+        @Test("when album has no cover it should set image04Solid placeholder")
+        func noCoverPlaceholder() {
+            let sut = makeSUT(album: .init(id: 8, type: .user))
+
+            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssets.Image.image04Solid, type: .placeholder)))
         }
         
         @Test("when image container is placeholder it should return true",
@@ -841,27 +831,6 @@ struct AlbumCellViewModelTestSuite {
                         type: .thumbnail)))
             
             #expect(sut.isPlaceholder == isPlaceholder)
-        }
-    }
-    
-    @Suite("Album link shared")
-    @MainActor
-    struct LinkShared {
-        @Test("when link is shared and not placeholder it should show gradient",
-              arguments: [(Optional<NodeEntity>.none, true, false),
-                          (Optional<NodeEntity>.none, false, false),
-                          (NodeEntity(handle: 1), false, false),
-                          (NodeEntity(handle: 1), true, true)])
-        func showGradient(coverNode: NodeEntity?, isLinkShared: Bool, showGradient: Bool) {
-            let sut = makeSUT(
-                album: .init(id: 8, coverNode: coverNode,
-                             type: .user, sharedLinkStatus: .exported(isLinkShared)),
-                thumbnailLoader: MockThumbnailLoader(
-                    initialImage: ImageContainer(
-                        image: Image("folder"),
-                        type: .thumbnail)))
-            
-            #expect(sut.shouldShowGradient == showGradient)
         }
     }
     

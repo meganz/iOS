@@ -110,68 +110,6 @@ final class VideoListViewModelTests: XCTestCase {
         subscriptions = []
     }
     
-    // MARK: - init.subscribeToEditingMode
-    @MainActor
-    func testInit_initialState_shouldShowFilterChip() async {
-        let (sut, _, _, _) = makeSUT()
-        let exp = expectation(description: "show filter chip")
-        exp.assertForOverFulfill = false
-        var receivedValue = true
-        let cancellable = sut.$showFilterChips
-            .sink { showFilterChips in
-                receivedValue = showFilterChips
-                exp.fulfill()
-            }
-        
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        XCTAssertTrue(receivedValue)
-        cancellable.cancel()
-    }
-    
-    @MainActor
-    func testInit_whenIsNotEditing_shouldShowFilterChip() async {
-        let (sut, _, _, syncModel) = makeSUT()
-        let exp = expectation(description: "show filter chip")
-        exp.assertForOverFulfill = false
-        var receivedValue = true
-        let cancellable = sut.$showFilterChips
-            .dropFirst()
-            .sink { showFilterChips in
-                receivedValue = showFilterChips
-                exp.fulfill()
-            }
-        
-        syncModel.editMode = .inactive
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        XCTAssertTrue(receivedValue)
-        cancellable.cancel()
-    }
-    
-    @MainActor
-    func testInit_whenIsEditing_shouldNotShowFilterChip() async {
-        let (sut, _, _, syncModel) = makeSUT()
-        let exp = expectation(description: "should not show filter chip")
-        exp.assertForOverFulfill = false
-        var receivedValue = true
-        let cancellable = sut.$showFilterChips
-            .dropFirst()
-            .sink { showFilterChips in
-                receivedValue = showFilterChips
-                exp.fulfill()
-            }
-        
-        syncModel.editMode = .active
-        await Task.yield()
-        await Task.yield()
-        await Task.yield()
-        await fulfillment(of: [exp], timeout: 1)
-        
-        XCTAssertFalse(receivedValue)
-        cancellable.cancel()
-    }
-    
     // MARK: - onViewAppear
     
     @MainActor

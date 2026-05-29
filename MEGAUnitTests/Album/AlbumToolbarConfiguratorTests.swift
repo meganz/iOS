@@ -57,8 +57,7 @@ final class AlbumToolbarConfiguratorTest: XCTestCase {
         exportAction: @escaping AlbumToolbarConfigurator.ButtonAction = { _ in },
         sendToChatAction: @escaping AlbumToolbarConfigurator.ButtonAction = { _ in },
         moreAction: @escaping AlbumToolbarConfigurator.ButtonAction = { _ in },
-        albumType: AlbumType,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
+        albumType: AlbumType
     ) -> AlbumToolbarConfigurator {
         AlbumToolbarConfigurator(
             downloadAction: downloadAction,
@@ -71,7 +70,6 @@ final class AlbumToolbarConfiguratorTest: XCTestCase {
             exportAction: exportAction,
             sendToChatAction: sendToChatAction,
             moreAction: moreAction,
-            albumType: albumType,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+            albumType: albumType)
     }
 }

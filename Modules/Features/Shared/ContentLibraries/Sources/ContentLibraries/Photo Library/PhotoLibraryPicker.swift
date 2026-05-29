@@ -5,7 +5,6 @@ import SwiftUI
 struct PhotoLibraryPicker: View {
     @Environment(\.editMode) var editMode
     @Binding var selectedMode: PhotoLibraryViewMode
-    let isMediaRevampEnabled: Bool
     
     var body: some View {
         pickerView

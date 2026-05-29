@@ -9,25 +9,18 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
         shouldTrackScrollOffsetPublisher: $bannerType.map { $0 != nil },
         baseOffset: 0)
 
-    private let isMediaRevampEnabled: Bool
-
-    /// Pre-revamp behaviour kept the +/- zoom control in the top-trailing corner. The
-    /// rolled-back Album also needs it back, even while `iosMediaRevamp` is still on.
+    /// The rolled-back Album still needs the legacy top-trailing +/- zoom control.
     var shouldShowZoomControl: Bool {
-        let isAlbumRollback = libraryViewModel.contentMode == .album && !AlbumLayoutGate.isMasonryLayoutEnabled
-        return !isMediaRevampEnabled || isAlbumRollback
+        libraryViewModel.contentMode == .album && !AlbumLayoutGate.isMasonryLayoutEnabled
     }
 
     init(
         libraryViewModel: PhotoLibraryContentViewModel,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        configuration: ContentLibraries.Configuration = ContentLibraries.configuration
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
-        self.isMediaRevampEnabled = configuration.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
         super.init(
             libraryViewModel: libraryViewModel,
-            preferenceUseCase: preferenceUseCase,
-            configuration: configuration
+            preferenceUseCase: preferenceUseCase
         )
 
         subscribeToLibraryChange()

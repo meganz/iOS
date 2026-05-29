@@ -37,7 +37,6 @@ struct PlaylistContentScreen: View {
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
-            remoteFeatureFlagUseCase: viewModel.remoteFeatureFlagUseCase,
             featureFlagProvider: viewModel.featureFlagProvider,
             videoSelection: viewModel.videoSelection,
             isEditing: viewModel.isEditing,
@@ -117,7 +116,6 @@ struct PlaylistContentView: View {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videos: [NodeEntity]
     private let searchText: String?
@@ -140,7 +138,6 @@ struct PlaylistContentView: View {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         videoSelection: VideoSelection,
         isEditing: Bool,
@@ -154,7 +151,6 @@ struct PlaylistContentView: View {
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.featureFlagProvider = featureFlagProvider
         self.videos = videos
         self.searchText = searchText
@@ -167,21 +163,15 @@ struct PlaylistContentView: View {
         self.onTapAddButton = onTapAddButton
     }
     
-    private var isMediaRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaRevamp)
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             if !isEditing {
                 PlaylistContentHeaderView(
                     viewState: viewState,
-                    previewEntity: previewEntity,
-                    isMediaRevampEnabled: isMediaRevampEnabled,
-                    onTapAddButton: onTapAddButton
+                    previewEntity: previewEntity
                 )
             }
-            if isMediaRevampEnabled && !isEditing && viewState != .empty {
+            if !isEditing && viewState != .empty {
                 sortHeaderView()
                     .frame(height: 36)
             }
@@ -193,7 +183,7 @@ struct PlaylistContentView: View {
                 action: { onTapAddButton() }
             )
             .padding(TokenSpacing._5)
-            .opacity(isMediaRevampEnabled && !isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
+            .opacity(!isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
     }
@@ -255,11 +245,10 @@ struct PlaylistContentView: View {
             selection: videoSelection,
             router: router,
             viewType: .playlistContent(type: playlistType),
-            sectionTopInset: (isMediaRevampEnabled && !isEditing) ? 0 : TokenSpacing._5,
+            sectionTopInset: !isEditing ? 0 : TokenSpacing._5,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: featureFlagProvider
         )
     }

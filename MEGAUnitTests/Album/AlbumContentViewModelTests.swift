@@ -53,7 +53,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .changeSortOrder(expectedSortOrder), expectedCommands: [
             .showAlbumPhotos(photos: [], sortOrder: expectedSortOrder),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration),
+            .updateAddToAlbumButton(false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -208,7 +209,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             isEmptyState: true)
         
         test(viewModel: sut, action: .configureContextMenu(isSelectHidden: expectedContextConfigurationSelectHidden),
-             expectedCommands: [.configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false)],
+             expectedCommands: [.configureRightBarButtons(contextMenuConfiguration: configuration)],
              timeout: 1.0, expectationValidation: ==)
     }
     
@@ -308,7 +309,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             sharedLinkStatus: .exported(isExported)
         )
         await test(viewModel: sut, trigger: action, expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true)
+            .configureRightBarButtons(contextMenuConfiguration: configuration)
         ], timeout: 0.25, expectationValidation: ==)
     }
     
@@ -347,10 +348,11 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         let configuration = makeContextConfiguration(albumType: albumEntity.type)
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
+            .configureRightBarButtons(contextMenuConfiguration: nil),
             .showAlbumPhotos(photos: photoNodes, sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: false),
-            .showEmptyView(isEmpty: false, isRevampEnabled: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration),
+            .updateAddToAlbumButton(false),
+            .showEmptyView(isEmpty: false)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -365,7 +367,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
         
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: false),
+            .configureRightBarButtons(contextMenuConfiguration: nil),
             .dismissAlbum
         ], timeout: 1.0, expectationValidation: ==)
     }
@@ -390,10 +392,11 @@ final class AlbumContentViewModelTests: XCTestCase {
         )
         
         await test(viewModel: sut, actions: [.onViewReady, .onViewWillAppear], expectedCommands: [
-            .configureRightBarButtons(contextMenuConfiguration: nil, canAddPhotosToAlbum: true),
+            .configureRightBarButtons(contextMenuConfiguration: nil),
             .showAlbumPhotos(photos: [], sortOrder: .newest),
-            .configureRightBarButtons(contextMenuConfiguration: configuration, canAddPhotosToAlbum: true),
-            .showEmptyView(isEmpty: true, isRevampEnabled: false)
+            .configureRightBarButtons(contextMenuConfiguration: configuration),
+            .updateAddToAlbumButton(false),
+            .showEmptyView(isEmpty: true)
         ], timeout: 1.0, expectationValidation: ==)
     }
     
@@ -414,7 +417,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -431,7 +433,6 @@ final class AlbumContentViewModelTests: XCTestCase {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: featureFlagProvider)
     }
     
@@ -645,28 +646,14 @@ struct AlbumContentViewModelTestSuite {
     
     @MainActor
     struct FloatingAddButton {
-        @Test(arguments: [
-            (AlbumEntityType.favourite, false, false),
-            (.favourite, true, false),
-            (.user, false, true),
-            (.user, true, false)
-        ])
-        func onViewReady(
-            type: AlbumEntityType,
-            isMediaRevampEnabled: Bool,
-            addBarButton: Bool
-        ) async throws {
-            let sut = makeSUT(
-                album: .init(id: 8, type: type),
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled]))
-            
+        @Test(arguments: [AlbumEntityType.favourite, .user])
+        func onViewReady(type: AlbumEntityType) async throws {
+            let sut = makeSUT(album: .init(id: 8, type: type))
+
             try await confirmation { confirmation in
                 sut.invokeCommand = { command in
-                    switch command {
-                    case .configureRightBarButtons(_, let canAdd):
-                        #expect(canAdd == addBarButton)
+                    if case .configureRightBarButtons = command {
                         confirmation()
-                    default: break
                     }
                 }
                 
@@ -698,14 +685,12 @@ struct AlbumContentViewModelTestSuite {
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
                 photoLibraryUseCase: photoLibraryUseCase,
-                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
             
             try await confirmation(expectedCount: 2) { confirmation in
                 sut.invokeCommand = { command in
                     switch command {
-                    case .configureRightBarButtons(_, let canAdd):
-                        #expect(canAdd == false)
+                    case .configureRightBarButtons:
                         confirmation()
                         
                     case .updateAddToAlbumButton(let isVisible):
@@ -748,8 +733,7 @@ struct AlbumContentViewModelTestSuite {
                 monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
             let sut = makeSUT(
                 album: .init(id: 8, type: type),
-                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: true]))
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase)
             
             sut.dispatch(.onViewWillAppear)
             await sut.setupSubscriptionTask?.value
@@ -774,11 +758,10 @@ struct AlbumContentViewModelTestSuite {
     @MainActor
     struct PhotoSectionHeader {
         // While AlbumLayoutGate.isMasonryLayoutEnabled is `false` the album rollback
-        // forces the legacy photoDate header regardless of the iosMediaRevamp flag.
-        @Test(arguments: [false, true])
-        func usesPhotoDateHeaderWhileRolledBack(isMediaRevampEnabled: Bool) {
-            let sut = makeSUT(
-                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosMediaRevamp: isMediaRevampEnabled]))
+        // forces the photoDate header.
+        @Test
+        func usesPhotoDateHeaderWhileRolledBack() {
+            let sut = makeSUT()
 
             #expect(sut.photoSectionHeaderType == .photoDate)
         }
@@ -900,7 +883,6 @@ struct AlbumContentViewModelTestSuite {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -917,7 +899,6 @@ struct AlbumContentViewModelTestSuite {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
-            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             featureFlagProvider: featureFlagProvider)
     }
     
@@ -991,20 +972,21 @@ private extension AlbumContentViewModel.Command {
             lhsPhotos == rhsPhotos && lhsSortOrder == rhsSortOrder
         case (.showResultMessage(let lhsMessage), .showResultMessage(let rhsMessage)):
             lhsMessage == rhsMessage
-        case (.configureRightBarButtons(let lhsContextMenuConfiguration, let lhsCanAddPhotosToAlbum),
-              .configureRightBarButtons(let rhsContextMenuConfiguration, let rhsCanAddPhotosToAlbum)):
+        case (.configureRightBarButtons(let lhsContextMenuConfiguration),
+              .configureRightBarButtons(let rhsContextMenuConfiguration)):
             lhsContextMenuConfiguration?.menuType == rhsContextMenuConfiguration?.menuType &&
             lhsContextMenuConfiguration?.sortType == rhsContextMenuConfiguration?.sortType &&
             lhsContextMenuConfiguration?.filterType == rhsContextMenuConfiguration?.filterType &&
             lhsContextMenuConfiguration?.albumType == rhsContextMenuConfiguration?.albumType &&
             lhsContextMenuConfiguration?.isFilterEnabled == rhsContextMenuConfiguration?.isFilterEnabled &&
             lhsContextMenuConfiguration?.isEmptyState == rhsContextMenuConfiguration?.isEmptyState &&
-            lhsContextMenuConfiguration?.sharedLinkStatus == rhsContextMenuConfiguration?.sharedLinkStatus &&
-                lhsCanAddPhotosToAlbum == rhsCanAddPhotosToAlbum
+            lhsContextMenuConfiguration?.sharedLinkStatus == rhsContextMenuConfiguration?.sharedLinkStatus
         case (.showRenameAlbumAlert(let lhsViewModel), .showRenameAlbumAlert(let rhsViewModel)):
             lhsViewModel == rhsViewModel
-        case (.showEmptyView(let lhsIsEmpty, let lshIsRevampEnabled), .showEmptyView(let rhsIsEmpty, let rshIsRevampEnabled)):
-            lhsIsEmpty == rhsIsEmpty && lshIsRevampEnabled == rshIsRevampEnabled
+        case (.showEmptyView(let lhsIsEmpty), .showEmptyView(let rhsIsEmpty)):
+            lhsIsEmpty == rhsIsEmpty
+        case (.updateAddToAlbumButton(let lhsIsVisible), .updateAddToAlbumButton(let rhsIsVisible)):
+            lhsIsVisible == rhsIsVisible
         case (.dismissAlbum, .dismissAlbum),
             (.updateNavigationTitle, .updateNavigationTitle),
             (.startLoading, .startLoading),

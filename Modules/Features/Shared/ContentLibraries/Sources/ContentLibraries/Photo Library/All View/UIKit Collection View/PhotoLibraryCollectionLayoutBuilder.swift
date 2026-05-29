@@ -7,7 +7,6 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     
     let zoomState: PhotoLibraryZoomState
     let bannerType: PhotoLibraryBannerType?
-    let isMediaRevampEnabled: Bool
     let contentMode: PhotoLibraryContentMode
     let photoGlobalHeaderType: PhotoGlobalHeaderType
     let photoSectionHeaderType: PhotoSectionHeaderType
@@ -34,7 +33,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             boundaryItems.append(configureSupplementaryLayoutHeader(elementKind: elementKind))
         }
         
-        if isMediaRevampEnabled && photoGlobalHeaderType != .none {
+        if photoGlobalHeaderType != .none {
             boundaryItems.append(configureSupplementaryGlobalZoomHeader())
         }
         
@@ -135,7 +134,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
     
     private func configureSupplementaryLayoutHeader(elementKind: PhotoLibrarySupplementaryElementKind) -> NSCollectionLayoutBoundarySupplementaryItem {
         let bannerHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(isMediaRevampEnabled ? 120 : 80)),
+            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(120)),
             elementKind: elementKind.elementKind,
             alignment: .topLeading
         )
@@ -170,7 +169,7 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         // the pinned global zoom header instead. Without a global header (e.g. the
         // rolled-back album view) there is no other surface to show the date, so
         // it must keep its real header.
-        isMediaRevampEnabled && photoGlobalHeaderType != .none && sectionIndex == 0
+        photoGlobalHeaderType != .none && sectionIndex == 0
     }
     
     private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, isFirstSection: Bool) {
