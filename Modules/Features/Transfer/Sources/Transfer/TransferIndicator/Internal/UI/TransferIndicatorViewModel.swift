@@ -36,7 +36,8 @@ final class TransferIndicatorViewModel: ObservableObject {
         isMonitoring = true
         apply(entity: useCase.currentState)
         cancellable = useCase.statePublisher
-            .receive(on: DispatchQueue.main)
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+            .removeDuplicates()
             .sink { [weak self] entity in
                 self?.apply(entity: entity)
             }
