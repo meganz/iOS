@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
@@ -30,7 +31,8 @@ let package = Package(
                 "MEGAL10n",
                 "MEGASwiftUI",
                 "MEGAInfrastructure",
-                "MEGADesignToken"
+                "MEGADesignToken",
+                "MEGAUIComponent"
             ]
         ),
         .testTarget(

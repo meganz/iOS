@@ -29,6 +29,27 @@ final class AudioPlayerViewModel: ObservableObject {
     /// time so the View stays free of Core Image work.
     @Published private(set) var glowColor: Color?
 
+    /// Track title rendered above the scrubber.
+    @Published private(set) var title: String?
+
+    /// Track artist rendered below the title.
+    @Published private(set) var artist: String?
+
+    /// Current playback position in seconds.
+    @Published private(set) var currentTime: TimeInterval = 0
+
+    /// Track total duration. 
+    @Published private(set) var duration: TimeInterval?
+
+    /// Drives the center button's play/pause glyph.
+    @Published private(set) var isPlaying: Bool = false
+
+    @Published private(set) var isShuffleOn: Bool = false
+
+    @Published private(set) var repeatMode: RepeatMode = .off
+
+    @Published private(set) var playbackMode: PlaybackMode = .music
+
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
     var isActionsMenuHidden: Bool {
@@ -115,5 +136,62 @@ final class AudioPlayerViewModel: ObservableObject {
     func setArtwork(image: UIImage?, glowColor: Color?) {
         artworkImage = image
         self.glowColor = glowColor
+    }
+
+    /// Seed the Music Mode control-layout fields directly. Same purpose as
+    /// `setArtwork(image:glowColor:)` — gives previews and tests something
+    /// to render against until the audio engine wires real state in.
+    func setControlState(
+        title: String? = nil,
+        artist: String? = nil,
+        currentTime: TimeInterval = 0,
+        duration: TimeInterval? = nil,
+        isPlaying: Bool = false,
+        isShuffleOn: Bool = false,
+        repeatMode: RepeatMode = .off,
+        playbackMode: PlaybackMode = .music
+    ) {
+        self.title = title
+        self.artist = artist
+        self.currentTime = currentTime
+        self.duration = 100 // duration
+        self.isPlaying = isPlaying
+        self.isShuffleOn = isShuffleOn
+        self.repeatMode = repeatMode
+        self.playbackMode = playbackMode
+    }
+
+    // MARK: - Music Mode intents (engine integration pending)
+
+    func togglePlayPause() {
+        isPlaying.toggle()
+    }
+
+    func skipPrevious() {
+    }
+
+    func skipNext() {
+    }
+
+    func toggleShuffle() {
+        isShuffleOn.toggle()
+    }
+
+    func cycleRepeat() {
+        repeatMode = repeatMode.next
+    }
+
+    func seek(toFraction fraction: Double) {
+        guard let duration else { return }
+        currentTime = max(0, min(fraction, 1)) * duration
+    }
+
+    func presentAirPlay() {
+    }
+
+    func presentPlaylist() {
+    }
+
+    func switchPlaybackMode() {
     }
 }
