@@ -382,6 +382,51 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     return coreDataError == nil;
 }
 
++ (NSPredicate *)pendingRecordsToDeletePredicateBeforeDate:(NSDate *)cutoff {
+    // Preserve completed and in-flight work; the user did not ask to cancel uploads already in
+    // progress or the bandwidth/processing already invested.
+    NSArray<NSNumber *> *protectedStatuses = @[
+        @(CameraAssetUploadStatusDone),
+        @(CameraAssetUploadStatusQueuedUp),
+        @(CameraAssetUploadStatusProcessing),
+        @(CameraAssetUploadStatusUploading)
+    ];
+    NSPredicate *notInFlightOrDone = [NSPredicate predicateWithFormat:@"NOT (status IN %@)", protectedStatuses];
+    // `creationDate` is stored from `PHAsset.creationDate` at scan time and is stable, so comparing
+    // it to the cutoff mirrors the scan-time `creationDate >= cutoff` filter. A nil creationDate
+    // also fails that filter, so treat it as pre-cutoff. We deliberately do NOT resolve PHAssets
+    // here: under `.limited` photo permission a by-identifier lookup cannot see non-selected assets,
+    // so an existence check would wrongly delete still-present records.
+    NSPredicate *beforeCutoff = [NSPredicate predicateWithFormat:@"(creationDate == nil) OR (creationDate < %@)", cutoff];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:@[notInFlightOrDone, beforeCutoff]];
+}
+
+- (BOOL)deletePendingRecordsBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [CameraUploadRecordManager pendingRecordsToDeletePredicateBeforeDate:cutoff];
+        NSArray<MOAssetUploadRecord *> *records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+        if (coreDataError != nil) {
+            return;
+        }
+
+        for (MOAssetUploadRecord *record in records) {
+            [self.backgroundContext deleteObject:record];
+        }
+
+        if (self.backgroundContext.hasChanges) {
+            [self.backgroundContext save:&coreDataError];
+        }
+    }];
+
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+
+    return coreDataError == nil;
+}
+
 #pragma mark - error record management
 
 - (BOOL)deleteAllErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {

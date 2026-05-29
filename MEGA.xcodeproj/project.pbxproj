@@ -260,6 +260,7 @@
 		14F2EFC12EDD46B300C37318 /* APMKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFBF2EDD46B300C37318 /* APMKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		14F2EFC42EDD4BF400C37318 /* APMKit in Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFC32EDD4BF400C37318 /* APMKit */; };
 		14F2EFC52EDD4BF400C37318 /* APMKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 14F2EFC32EDD4BF400C37318 /* APMKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		159F9C435B71596C5B9610A2 /* CameraUploadRecordCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021468315180776D7E2E4CB0 /* CameraUploadRecordCleanupTests.swift */; };
 		16009FA42BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */; };
 		16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */; };
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
@@ -2891,6 +2892,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		021468315180776D7E2E4CB0 /* CameraUploadRecordCleanupTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CameraUploadRecordCleanupTests.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
 		0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelTests.swift; sourceTree = "<group>"; };
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -7982,6 +7984,7 @@
 				0E171B7F2EB31B63000B3B36 /* CameraUploadPaginationManagerTests.swift */,
 				0ECD29D82F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift */,
 				0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */,
+				021468315180776D7E2E4CB0 /* CameraUploadRecordCleanupTests.swift */,
 				0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */,
 				0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */,
 				A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */,
@@ -16887,6 +16890,7 @@
 				0EEB29F12EC2B62800FABD8D /* CameraUploadProgressViewModelTests.swift in Sources */,
 				0ECD29D92F7DCA2600FCCC77 /* CameraUploadQueueStatesTests.swift in Sources */,
 				0ECABE452E2762F6000A15C1 /* CameraUploadQueueStateTest.swift in Sources */,
+				159F9C435B71596C5B9610A2 /* CameraUploadRecordCleanupTests.swift in Sources */,
 				94F3B7612DB0150F00C285A5 /* CameraUploadsAdvancedOptionsViewModelTests.swift in Sources */,
 				94F3B7662DB0151F00C285A5 /* CameraUploadsSettingsViewModelTests.swift in Sources */,
 				25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */,

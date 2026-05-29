@@ -5,6 +5,8 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "CameraUploadRecordManager.h"
+#import "MEGAConstants.h"
 #import "MEGA-Swift.h"
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
@@ -212,18 +214,25 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setUploadOnlyNewPhotos:(BOOL)uploadOnlyNewPhotos {
-    BOOL wasEnabled = [self shouldUploadOnlyNewPhotos];
+    if (uploadOnlyNewPhotos == [self shouldUploadOnlyNewPhotos]) {
+        return;
+    }
+
     [NSUserDefaults.standardUserDefaults setBool:uploadOnlyNewPhotos forKey:UploadOnlyNewPhotosEnabledKey];
 
     if (uploadOnlyNewPhotos) {
-        // Persist the activation timestamp only on the OFF -> ON transition so that
-        // re-affirming an already-enabled toggle does not move the cutoff forward.
-        if (!wasEnabled) {
-            [self setUploadOnlyNewPhotosCutoff:NSDate.date];
-        }
+        // OFF -> ON: persist the activation timestamp, then reconcile already-existing records with
+        // the new scan filter by dropping pre-cutoff pending ones (in-flight work is preserved).
+        NSDate *cutoff = NSDate.date;
+        [self setUploadOnlyNewPhotosCutoff:cutoff];
+        [CameraUploadRecordManager.shared deletePendingRecordsBeforeDate:cutoff error:nil];
     } else {
+        // ON -> OFF: clear the cutoff and rescan so previously filtered older assets are backfilled.
         [self setUploadOnlyNewPhotosCutoff:nil];
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
     }
+
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
 }
 
 + (NSDate *)uploadOnlyNewPhotosCutoff {
