@@ -321,17 +321,18 @@ extension AppDelegate {
     /// Applied option values:
     /// - `ageThreshold` = 10 minutes — minimum file age before a cached chunk is eligible for eviction.
     /// - `delay` = 60 seconds — wait time after SDK startup before the first reclaim runs.
-    /// - `period` = 1 hour — interval between consecutive reclaims.
-    /// - `reclaimThreshold` = 1 GB — trigger size; reclaim is skipped while usage is below this.
+    /// - `period` = 30 minutes — interval between consecutive reclaims.
+    /// - `reclaimThreshold` = 512 MB — trigger size; reclaim is skipped while usage is below this.
     /// - `reclaimTarget` = 0 B — target size to reduce the cache to once a reclaim runs.
     @objc func configureFileServiceReclaimOptions() {
         let options = MEGAFileServiceReclaimOptions()
         options.ageThreshold = 10                           // 10 minutes
         options.delay = 60                                  // 60 seconds
-        options.period = 60 * 60                            // 1 hour
-        options.reclaimThreshold = 1024 * 1024 * 1024       // 1 GB
+        options.period = 30 * 60                            // 30 minutes
+        options.reclaimThreshold = 512 * 1024 * 1024       // 512 MB
         options.reclaimTarget = 0                           // 0 B
         MEGASdk.shared.setFileServiceReclaimOptions(options)
+        MEGASdk.sharedFolderLink.setFileServiceReclaimOptions(options)
     }
 }
 
