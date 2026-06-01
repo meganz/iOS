@@ -3357,9 +3357,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bonusun süresi %d gün içinde dolacak.</string>
+        <string>Bonus %d gün içinde sona eriyor.</string>
         <key>other</key>
-        <string>Bonusun süresi %d gün içinde dolacak.</string>
+        <string>Bonus %d gün içinde sona eriyor.</string>
       </dict>
     </dict>
   </dict>

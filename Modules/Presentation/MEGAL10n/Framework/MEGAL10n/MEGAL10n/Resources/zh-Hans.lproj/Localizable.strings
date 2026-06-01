@@ -4929,7 +4929,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="传输连接数";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="设置用于活动传输的并行连接的最大数量。较高的数值可能会加速大文件传输，但会增加电量和内存的使用。小文件不受影响。";
+"settings.transfers.connections.description"="设置用于活动传输的并行连接的最大数量。较高的数值可能会加速大文件传输，但会增加电量和内存的使用。";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="下载连接数";
 /* Title for the upload connections row in transfers settings */
@@ -4943,15 +4943,15 @@
 /* Custom offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ 折扣";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievements.incomplete.subtitle"="%1$@额外存储空间, 有效期%2$@";
+"achievements.incomplete.subtitle"="%1$@ 额外存储空间，%2$@";
 /* The subtitle in Achievement Details screen, used when the award is permanent */
 "achievementDetails.complete.permanent"="%@额外存储已生效且永久有效";
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.desktopApp.incomplete.explanation.label"="安装MEGA桌面应用，即可获得%1$@的额外免费存储空间，有效期%2$@。\n桌面应用可在Windows、macOS和Linux上使用。";
+"achievementDetails.desktopApp.incomplete.explanation.label"="安装 MEGA 桌面应用，即可获得%1$@的额外免费存储空间，%2$@。\n桌面应用可在Windows、macOS和Linux上使用。";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="传输需要注意";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="安装一个 MEGA 移动应用即可获得 %1$@ 的额外免费存储空间，%2$@。\n这些移动应用支持 iOS 和 Android。";
+"achievementDetails.mobileApp.incomplete.explanation.label"="安装一个 MEGA 移动应用即可获得 %1$@ 的额外免费存储空间，%2$@。\n移动应用支持 iOS 和 Android。";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="安装一个 MEGA VPN 应用并开始免费试用，即可获得 %1$@ 的额外免费存储空间，%2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -4960,3 +4960,33 @@
 "media.audio.player.podcastMode"="播客模式";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="音乐模式";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="进行中";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="已完成";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="失败";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="无传输";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="没有已完成的传输";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="没有失败的传输";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="显示位置";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="自定义主页";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="拖动区块以重新排序";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="从您上次停下的地方继续";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="用 MEGA 做更多事情";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="已查看的链接";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="没有正在进行中的传输";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="打开 MEGA 以继续";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="账户状态";

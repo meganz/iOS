@@ -255,9 +255,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="沒有聯絡人";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
+"noIncomingSharedItemsEmptyState_text"="沒有內收共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="沒有傳出的共享資料夾";
+"noOutgoingSharedItemsEmptyState_text"="沒有外發共享資料夾";
 /* Title of Contacts requests section */
 "contactRequests"="聯絡人邀請";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -293,7 +293,7 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="已入佇列";
+"queued"="已排入佇列";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="已暫停";
 /* Possible state of a transfer. When the transfer was cancelled */
@@ -1145,7 +1145,7 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="更新於";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="傳入的共享";
+"incomingShares"="內收共享";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳戶";
 /* account management button title in business account’s landing page */
@@ -1775,7 +1775,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾筒可自動為您清空。 最短期限為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="要停用自動清空垃圾筒或設定更長的保留期，您需要訂閱我們的其中一項方案。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="若要停用垃圾筒自動清理或設定更長的保留期，您需要訂閱我們的方案。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他工作階段嗎？這將使您登出除了目前頁面之外的所有其他進行中的工作階段。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -3171,13 +3171,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="發送邀請";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="您被下架的檔案「%@」已復原";
+"notifications.message.takenDownReinstated.file"="您被移除的檔案「%@」已復原";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="您被下架的資料夾「%@」已復原";
+"notifications.message.takenDownReinstated.folder"="您被移除的資料夾「%@」已復原";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="您公開共享的檔案「%@」已被下架";
+"notifications.message.takenDownPubliclyShared.file"="您公開共享的檔案「%@」已被移除";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="您公開共享的資料夾「%@」已被下架";
+"notifications.message.takenDownPubliclyShared.folder"="您公開共享的資料夾「%@」已被移除";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="允許非主持人新增參與者";
 /* Start conversation: Schedule meeting context menu */
@@ -3185,7 +3185,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被停權。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交恢復存取申請的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="由於違反MEGA的服務條款，您的帳戶已被終止。\n\n您將無法再存取您儲存的資料，也無法獲得註冊新MEGA帳戶的授權。";
+"account.suspension.message.nonCopyright"="由於違反MEGA的服務條款，您的帳戶已被終止。\n\n您將無法恢復您儲存資料的存取權限，也無法獲得註冊新MEGA帳戶的授權。";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="開啟MEGA應用程式並登入以繼續";
 /* Account Storage title label of used storage size */
@@ -3373,7 +3373,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="新增與會者";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="發送行事曆邀請";
+"meetings.scheduleMeeting.sendCalendarInvite"="發送會議邀請";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="允許非主持人新增參與者";
 /* Schedule meeting description field placeholder */
@@ -3723,7 +3723,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="編輯會議";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="透過電子郵件向與會者發送行事曆邀請，以便他們可以將會議加到行事曆中。";
+"meetings.scheduleMeeting.calendarInvite.description"="透過電子郵件向與會者發送會議邀請，以便他們可以將會議加到行事曆中。";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="開始會議";
 /* Recurring meeting tip view message bold text */
@@ -4923,7 +4923,7 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="顯示近期活動";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@：現省%2$@";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@：%2$@折扣";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
 "media.audio.player.podcastMode"="Podcast模式";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
@@ -4960,3 +4960,37 @@
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="安裝MEGA VPN應用程式並開始免費試用，即可獲得額外%1$@的免費儲存空間，有效期為%2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="安裝MEGA Pass應用程式並開始免費試用，即可獲得額外%1$@的免費儲存空間，有效期為%2$@";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="進行中";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="已完成";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="失敗";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="無傳輸項目";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="無進行中的傳輸";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="無已完成項目";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="無失敗項目";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="開啟MEGA以繼續";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="顯示位置";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="自訂主畫面";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="拖曳區塊以重新排序";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="從上次中斷的地方繼續";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="使用MEGA做更多事";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="已檢視的連結";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="帳戶狀態";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="顯示位置";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="橫幅";

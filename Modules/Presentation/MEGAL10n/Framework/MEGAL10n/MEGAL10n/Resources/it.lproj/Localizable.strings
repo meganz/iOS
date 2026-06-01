@@ -4923,7 +4923,7 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Mostra l'attività recente";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ spento";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ di sconto";
 /* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
 "settings.transfers.connections.option.default"="Default";
 /* Status text shown in the transfer Live Activity when files are being downloaded */
@@ -4943,20 +4943,54 @@
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
 "settings.transfers.connections.option.higherUsage"="Maggiore consumo di batteria e traffico dati.";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
-"transfer.liveActivity.requiresAttention"="Il trasferimento richiede attenzione.";
+"transfer.liveActivity.requiresAttention"="Il trasferimento richiede attenzione";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievements.incomplete.subtitle"="%1$@ spazio di archiviazione extra, %2$@";
+"achievements.incomplete.subtitle"="%1$@ di spazio di archiviazione extra, %2$@";
 /* The subtitle in Achievement Details screen, used when the award is permanent */
-"achievementDetails.complete.permanent"="%@ bonus di archiviazione applicato, valido permanentemente";
+"achievementDetails.complete.permanent"="%@ di spazio di archiviazione bonus applicato, valido permanentemente";
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.desktopApp.incomplete.explanation.label"="Installa l'app desktop MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nL'app desktop è disponibile per Windows, macOS e Linux.";
+"achievementDetails.desktopApp.incomplete.explanation.label"="Installa l'app per desktop MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nL'app per desktop è disponibile per Windows, macOS e Linux.";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="Installa una delle app mobili MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nLe app mobili sono disponibili per iOS e Android.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installa una delle app per mobile di MEGA e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@.\nLe app per mobile sono disponibili per iOS e Android.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installa una delle app MEGA VPN e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installa una delle app di MEGA VPN e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installa una delle app MEGA Pass e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installa una delle app di MEGA Pass e inizia una prova gratuita, e ottieni %1$@ di spazio di archiviazione aggiuntivo gratuito, %2$@";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
 "media.audio.player.podcastMode"="Modalità podcast";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Modalità musica";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Attiva";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Completato";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Fallito";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Nessun trasferimento";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Nessun trasferimento completato";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Nessun trasferimento fallito";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Mostra nella cartella";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Fai di più con MEGA";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Nessun trasferimento attivo";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Apri MEGA per riprendere";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Personalizza la Home";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Trascina le sezioni per riordinarle";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Stato dell'account";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Continua da dove hai lasciato";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Collegamenti visualizzati";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Mostra posizione";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Banner";

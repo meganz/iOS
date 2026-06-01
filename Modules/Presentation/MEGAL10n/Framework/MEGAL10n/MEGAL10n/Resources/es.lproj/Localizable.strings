@@ -4923,7 +4923,7 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Pega un enlace de MEGA para abrirlo";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ apagado";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ de descuento";
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Conexiones de las transferencias";
 /* Title for the download connections row in transfers settings */
@@ -4957,6 +4957,36 @@
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Instala una de las apps de MEGA Pass y comienza una prueba gratuita, y obtén %1$@ de almacenamiento adicional gratuito, %2$@";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
-"media.audio.player.podcastMode"="Modo podcast";
+"media.audio.player.podcastMode"="Modo de podcast";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Modo música";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Activas";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Completadas";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Fallidas";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="No hay transferencias";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="No hay transferencias activas";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="No hay transferencias completadas";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="No hay transferencias fallidas";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Abrir MEGA para reanudar";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Mostrar en destino";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Personalizar Inicio";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Arrastra las secciones para reordenarlas";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Continúa desde donde lo dejaste";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Sácale más partido a MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Enlaces visualizados";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Estado de la cuenta";

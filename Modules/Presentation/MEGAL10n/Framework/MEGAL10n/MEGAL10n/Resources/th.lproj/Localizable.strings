@@ -4919,13 +4919,13 @@
 /* The message to show when user tries to open an invalid link */
 "openLink.invalidLinkMessage"="ลิงก์ MEGA นี้ไม่ถูกต้อง";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="วางลิงก์ MEGA ใดก็ได้เพื่อเปิดไฟล์";
+"openLink.inputMessage"="วางลิงก์ MEGA เพื่อเปิดดู";
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="แสดงกิจกรรมล่าสุด";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ ปิด";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: รับส่วนลด %2$@";
 /* Section header in transfers settings */
-"settings.transfers.connections.title"="การเชื่อมต่อถ่ายโอนข้อมูล";
+"settings.transfers.connections.title"="การเชื่อมต่อสำหรับถ่ายโอนข้อมูล";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="จำนวนการเชื่อมต่อดาวน์โหลด";
 /* Title for the upload connections row in transfers settings */
@@ -4933,30 +4933,60 @@
 /* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
 "settings.transfers.connections.option.default"="ค่าเริ่มต้น";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievements.incomplete.subtitle"="พื้นที่จัดเก็บเพิ่มเติม %1$@ %2$@";
+"achievements.incomplete.subtitle"="รับพื้นที่จัดเก็บเพิ่ม %1$@ %2$@";
 /* The subtitle in Achievement Details screen, used when the award is permanent */
-"achievementDetails.complete.permanent"="รับโบนัสพื้นที่จัดเก็บ %@ แล้ว โดยมีผลถาวร";
+"achievementDetails.complete.permanent"="เปิดใช้งานโบนัสพื้นที่จัดเก็บ %@ แล้ว สามารถใช้งานได้ถาวร";
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.desktopApp.incomplete.explanation.label"="ติดตั้งแอปเดสก์ท็อป MEGA เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@ \nแอปเดสก์ท็อปพร้อมใช้งานสำหรับ Windows macOS และ Linux";
+"achievementDetails.desktopApp.incomplete.explanation.label"="ติดตั้งแอปเดสก์ท็อป MEGA เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@.\nแอปเดสก์ท็อปรองรับการใช้งานบนระบบ Windows macOS และ Linux";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA VPN และเริ่มทดลองใช้งานฟรี เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ เป็นเวลา %2$@";
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA VPN และเริ่มต้นทดลองใช้งานฟรีเพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.passFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA Pass และเริ่มทดลองใช้งานฟรี เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ เป็นเวลา %2$@";
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA Pass และเริ่มต้นทดลองใช้งานฟรีเพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@";
 /* Status text shown in the transfer Live Activity when files are being downloaded */
 "transfer.liveActivity.downloadingFiles"="กำลังดาวน์โหลดไฟล์";
 /* Status text shown in the transfer Live Activity when files are being uploaded */
 "transfer.liveActivity.uploadingFiles"="กำลังอัปโหลดไฟล์";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="ตั้งค่าจำนวนการเชื่อมต่อพร้อมกันสูงสุดที่ใช้สำหรับการถ่ายโอนข้อมูลที่กำลังดำเนินการ ค่าให้มากขึ้นอาจเร่งการถ่ายโอนไฟล์ขนาดใหญ่ได้ แต่จะเพิ่มการใช้แบตเตอรี่และหน่วยความจำ";
+"settings.transfers.connections.description"="กำหนดจำนวนการเชื่อมต่อพร้อมกันสูงสุดสำหรับการถ่ายโอนข้อมูลที่กำลังทำงาน การเพิ่มค่านี้อาจช่วยให้ถ่ายโอนไฟล์ขนาดใหญ่ได้เร็วขึ้น แต่จะส่งผลให้สิ้นเปลืองแบตเตอรี่และหน่วยความจำมากขึ้น";
 /* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
-"settings.transfers.connections.option.bestForSlowNetworks"="เหมาะที่สุดสำหรับเครือข่ายที่ช้า";
+"settings.transfers.connections.option.bestForSlowNetworks"="เหมาะสำหรับเครือข่ายความเร็วต่ำ";
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
-"settings.transfers.connections.option.higherUsage"="การใช้แบตเตอรี่และข้อมูลสูงขึ้น";
+"settings.transfers.connections.option.higherUsage"="สิ้นเปลืองแบตเตอรี่และอินเทอร์เน็ตมากขึ้น";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
-"transfer.liveActivity.requiresAttention"="การถ่ายโอนต้องการความใส่ใจ";
+"transfer.liveActivity.requiresAttention"="การถ่ายโอนข้อมูลพบปัญหาที่ต้องตรวจสอบ";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="ติดตั้งหนึ่งในแอปมือถือ MEGA แล้วรับ %1$@ ของพื้นที่เก็บข้อมูลเพิ่มเติมฟรี, %2$@.\nแอปมือถือมีให้บริการสำหรับ iOS และ Android.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="ติดตั้งแอปมือถือ MEGA เพื่อรับพื้นที่จัดเก็บเพิ่มเติมฟรี %1$@ %2$@.\nแอปมือถือรองรับการใช้งานบนระบบ iOS และ Android";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
-"media.audio.player.podcastMode"="โหมดพอดคาสต์";
+"media.audio.player.podcastMode"="โหมดพอดแคสต์";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
-"media.audio.player.musicMode"="โหมดเพลง";
+"media.audio.player.musicMode"="โหมดฟังเพลง";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="กำลังทำงาน";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="เสร็จสิ้น";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="ไม่สำเร็จ";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="ไม่พบรายการถ่ายโอน";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="ไม่มีรายการที่กำลังถ่ายโอน";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="ไม่มีรายการที่ถ่ายโอนเสร็จสิ้น";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="ไม่มีรายการที่ถ่ายโอนไม่สำเร็จ";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="เปิดใช้งาน MEGA เพื่อทำงานต่อ";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="แสดงในตำแหน่งที่จัดเก็บ";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="ปรับแต่งหน้าหลัก";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="ลากส่วนต่าง ๆ เพื่อจัดเรียงลำดับใหม่";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="ทำต่อจากที่คุณค้างไว้";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="บันดาลทุกสิ่งให้ได้ตามปรารถนาด้วย MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="ลิงก์ที่เปิดดู";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="สถานะบัญชี";

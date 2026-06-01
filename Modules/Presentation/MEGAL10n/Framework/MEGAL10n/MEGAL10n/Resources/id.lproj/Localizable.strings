@@ -4960,3 +4960,33 @@
 "media.audio.player.podcastMode"="Mode Podcast";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Mode Musik";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Aktif";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Selesai";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Gagal";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Tidak ada transfer";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Tidak ada transfer yang selesai";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Tidak ada transfer yang gagal";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Tunjukkan di lokasi";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Lanjutkan dari tempat Anda terakhir";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Lakukan lebih banyak dengan MEGA";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Tidak ada transfer aktif";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Buka MEGA untuk melanjutkan";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Sesuaikan Beranda";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Seret bagian-bagian untuk mengatur ulang urutan";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Status akun";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Tautan yang telah dilihat";

@@ -4931,7 +4931,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="전송 연결수";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="활성 전송에 이용될 최대 병렬 연결 수를 설정합니다. 높은 값은 속도를 향상시키지만 배터리와 메모리 이용량을 늘립니다. 작은 파일은 영향을 받지 않습니다.";
+"settings.transfers.connections.description"="활성 전송에 이용될 최대 병렬 연결 수를 설정합니다. 높은 값은 속도를 향상시키지만 배터리와 메모리 이용량을 늘립니다.";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="다운로드 연결수";
 /* Title for the upload connections row in transfers settings */
@@ -4949,9 +4949,9 @@
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.desktopApp.incomplete.explanation.label"="MEGA 데스크톱 앱을 설치하고 %1$@의 무료 추가 저장 공간을 받으세요, %2$@.\n데스크톱 앱은 Windows, macOS, 그리고 Linux에서 이용 가능합니다.";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
-"transfer.liveActivity.requiresAttention"="전송에는 주의가 필요합니다.";
+"transfer.liveActivity.requiresAttention"="전송에 주의가 필요함";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA 모바일 앱 중 하나를 설치하고 무료 추가 저장 공간 %1$@를 얻으세요, %2$@.\n모바일 앱은 iOS 및 안드로이드에서 이용 가능합니다.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA 모바일 앱 중 하나를 설치하고 무료 추가 저장 공간 %1$@를 얻으세요, %2$@.\n모바일 앱은 iOS와 안드로이드에서 이용 가능합니다.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN 앱 중 하나를 설치하고 무료 체험을 시작하면, 무료 추가 저장 공간 %1$@를 얻고, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -4960,3 +4960,37 @@
 "media.audio.player.podcastMode"="팟캐스트 모드";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="음악 모드";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="활성";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="완료됨";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="실패함";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="전송 없음";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="활성 상태의 전송 없음";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="완료된 전송 없음";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="실패한 전송 없음";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="재개하려면 MEGA를 여세요";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="위치에서 보기";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="홈 맞춤 설정";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="순서를 바꾸려면 섹션을 끌어다 놓으세요";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="계정 상태";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="멈춘 곳에서 계속하기";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="MEGA와 더 많은 것을 하기";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="조회한 링크";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="위치 보기";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="배너";

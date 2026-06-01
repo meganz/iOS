@@ -4949,14 +4949,44 @@
 /* The subtitle in Achievement Details screen, used when the award is permanent */
 "achievementDetails.complete.permanent"="%@ Speicherbonus angewendet, dauerhaft gültig";
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.desktopApp.incomplete.explanation.label"="Installieren Sie die MEGA-Desktop-App und erhalten Sie %1$@ kostenlosen Zusatzspeicherplatz, %2$@.\nDie Desktop-App ist für Windows, macOS und Linux verfügbar.";
+"achievementDetails.desktopApp.incomplete.explanation.label"="Installieren Sie die Desktop-App von MEGA und erhalten Sie %1$@ kostenlosen Zusatzspeicherplatz, %2$@.\nDie Desktop-App ist für Windows, macOS und Linux verfügbar.";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="Installiere eine der MEGA-Mobil-Apps und erhalte %1$@ an kostenlosem zusätzlichen Speicherplatz, %2$@.\nDie mobilen Apps sind für iOS und Android verfügbar.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installieren Sie eine der MEGA-Mobil-Apps und erhalten Sie %1$@ kostenlosen zusätzlichen Speicherplatz, %2$@.\nDie Mobil-Apps sind für iOS und Android verfügbar.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installiere eine der MEGA-VPN-Apps und starte eine kostenlose Testphase, und erhalte %1$@ an kostenlosem zusätzlichen Speicherplatz, %2$@";
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installieren Sie eine MEGA-VPN-App und starten Sie eine kostenlose Testphase, um %1$@ kostenlosen zusätzlichen Speicherplatz zu erhalten, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installiere eine der MEGA Pass-Apps und starte eine kostenlose Testphase, und erhalte %1$@ an kostenlosem zusätzlichen Speicherplatz, %2$@";
+"achievementDetails.passFreeTrial.incomplete.explanation.label"="Installieren Sie eine MEGA-Pass-App und starten Sie eine kostenlose Testphase, um %1$@ kostenlosen zusätzlichen Speicherplatz zu erhalten, %2$@";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
-"media.audio.player.podcastMode"="Podcast-Modus";
+"media.audio.player.podcastMode"="Podcastmodus";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
-"media.audio.player.musicMode"="Musik-Modus";
+"media.audio.player.musicMode"="Musikmodus";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Aktiv";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Abgeschlossen";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Fehlgeschlagen";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Keine Transfers";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Keine aktiven Transfers";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Keine abgeschlossenen Transfers";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Keine fehlgeschlagenen Transfers";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Öffnen Sie MEGA, um fortzufahren";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Am Speicherort anzeigen";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Startbildschirm anpassen";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Bereiche durch Ziehen neu anordnen";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Accountstatus";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Kürzliche Aktivitäten fortsetzen";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Erreichen Sie mehr mit MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Angesehene Links";

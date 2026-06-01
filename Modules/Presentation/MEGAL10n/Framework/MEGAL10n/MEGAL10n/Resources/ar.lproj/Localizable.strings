@@ -4927,7 +4927,7 @@
 /* Status text shown in the transfer Live Activity when files are being uploaded */
 "transfer.liveActivity.uploadingFiles"="جار ترفيع الملفات";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ إيقاف";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ خصم";
 /* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
 "settings.transfers.connections.option.default"="الإفتراضي";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -4960,3 +4960,37 @@
 "media.audio.player.podcastMode"="وضع بودكاست";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="وضع الموسيقى";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="اكتمل";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="نشط";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="لا يوجد عمليات تراسل معطيات";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="فشل";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="لا توجد عمليات تراسل نشطة";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="لا توجد تراسلات مكتملة";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="لا توجد تراسلات فاشلة";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="افتح ميغا MEGA لاستئناف العمل";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="عرض في الموقع";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="تخصيص الصفحة الرئيسية";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="اسحب الأقسام لإعادة ترتيبها";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="استمر من حيث توقفت";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="قم بالمزيد مع ميغا MEGA";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="حالة الحساب";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="الروابط التي تمت مشاهدتها";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="إظهار الموقع";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="لافتات";

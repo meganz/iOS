@@ -4923,7 +4923,7 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Collez n'importe quel lien MEGA pour l'ouvrir";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ désactivé";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ de réduction";
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Connexions par transfert";
 /* Title for the download connections row in transfers settings */
@@ -4945,18 +4945,52 @@
 /* Description in transfers settings explaining what parallel connections do */
 "settings.transfers.connections.description"="Définit le nombre maximal de connexions parallèles utilisées pour les transferts actifs. Des valeurs plus élevées peuvent accélérer les transferts de gros fichiers, mais augmentent la consommation de batterie et de mémoire.";
 /* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
-"settings.transfers.connections.option.bestForSlowNetworks"="Idéal pour les réseaux lents.";
+"settings.transfers.connections.option.bestForSlowNetworks"="Idéal pour les réseaux lents";
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
-"settings.transfers.connections.option.higherUsage"="Consommation accrue de la batterie et des données.";
+"settings.transfers.connections.option.higherUsage"="Consommation accrue de la batterie et des données";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
-"transfer.liveActivity.requiresAttention"="Le transfert nécessite une attention.";
+"transfer.liveActivity.requiresAttention"="Le transfert nécessite votre attention";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="Installez l'une des applications mobiles MEGA et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@.\nLes applications mobiles sont disponibles pour iOS et Android.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installez l'une des applis mobiles MEGA et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@.\nLes applis mobiles sont disponibles pour iOS et Android.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installez l'une des applications MEGA VPN et commencez un essai gratuit, et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@";
+"achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installez l'une des applis MEGA VPN et commencez un essai gratuit, et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Installez l'une des applications MEGA Pass et commencez un essai gratuit, et obtenez %1$@ d'espace de stockage supplémentaire gratuit, %2$@";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
 "media.audio.player.podcastMode"="Mode podcast";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Mode musique";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="En cours";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Terminés";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Échoués";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Aucun transfert";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Aucun transfert en cours";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Aucun transfert terminé";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Aucun transfert échoué";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Ouvrez MEGA pour reprendre";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Afficher dans l’emplacement";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Personnaliser l'accueil";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Faites glisser les sections pour les réorganiser";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Reprenez là où vous étiez";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Faites plus avec MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Liens consultés";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Statut du compte";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Afficher l'emplacement";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Bannières";

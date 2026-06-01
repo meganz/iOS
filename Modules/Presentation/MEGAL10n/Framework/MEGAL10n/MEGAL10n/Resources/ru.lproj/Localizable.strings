@@ -4960,3 +4960,33 @@
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Установите одно из приложений MEGA VPN, активируйте бесплатную пробную версию и получите ещё %1$@ на диске бесплатно, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Установите одно из приложений MEGA Pass, активируйте бесплатную пробную версию и получите ещё %1$@ на диске бесплатно, %2$@";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Активные";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Завершённые";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Ошибки";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Нет передач";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Нет активных передач";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Нет завершённых передач";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Нет неудавшихся передач";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Открыть расположение";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Настройка главной страницы";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Перетяните разделы, чтобы изменить порядок";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Продолжите, где остановились";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Будьте эффективнее с MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Просмотренные ссылки";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Откройте MEGA, чтобы продолжить";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Статус учетной записи";

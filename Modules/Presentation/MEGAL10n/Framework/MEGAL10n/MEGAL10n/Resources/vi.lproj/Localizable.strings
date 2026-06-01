@@ -77,7 +77,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Quá nhiều lời yêu cầu. Xin chờ.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
+"pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi địa chỉ email của mình. Xin sử dụng email hiện thời của tài khoản này rồi sau đó chạm lại vào đường liên kết để xác nhận.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -111,7 +111,7 @@
 /*  */
 "weak"="Yếu";
 /*  */
-"passwordVeryWeakOrWeak"="Mật khẩu này quá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường và chữ in HOA. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng.";
+"passwordVeryWeakOrWeak"="Mật khẩu của bạn quá dễ đoán. Xin thử đặt mật khẩu dài hơn. Kết hợp chữ Hoa, thường và ký tự đặc biệt. Không nên sử dụng tên riêng hoặc từ có trong từ điển.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "PasswordStrengthMedium"="Thường";
 /*  */
@@ -215,7 +215,7 @@
 /* folder link has expired */
 "cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Không có kết nối internet";
+"noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Thư mục rỗng";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -285,7 +285,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Các truyền tải tạm dừng";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Không có phiên truyền tải";
+"transfersEmptyState_titleAll"="Không có truyền tải nào";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="Không có phiên tải xuống";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -389,7 +389,7 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Cảnh báo bản quyền cho tất cả người dùng";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA tôn trọng luật bản quyền của tất cả đơn vị và yêu cầu người sử dụng dịch vụ MEGA Cloud nên tuân theo theo quy định của pháp luật về quyền tác giả.";
+"copyrightMessagePart1"="MEGA tôn trọng bản quyền của mọi cá nhân và yêu cầu tất cả người dùng dịch vụ Đám Mây MEGA tuân thủ luật bản quyền.";
 /* String already exists: 367, but we need to split paragraphs */
 "copyrightMessagePart2"="Quý vị bị nghiêm cấm sử dụng dịch vụ MEGA Cloud để vi phạm bản quyền. Quý vị không được tải lên, tải xuống, lưu trữ, chia sẻ, trình bày, phát trực tuyến, phân phối, gửi bằng email, tạo đường liên kết đến nội dung, truyền tải hoặc cung cấp bất kỳ tệp tin, dữ liệu hoặc nội dung nào có vi phạm bất kỳ bản quyền hoặc quyền sở hữu nào khác của bất kỳ cá nhân hoặc tổ chức nào.";
 /* button caption text that the user clicks when he agrees */
@@ -431,7 +431,7 @@
 /* Title show when a file is being downloaded */
 "downloading"="Đang tải xuống";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
-"selectDestination"="Chọn vị trí đích";
+"selectDestination"="Chọn điểm đích";
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Chọn tệp tin";
 /* Title for the action that allows you to move a file or folder */
@@ -603,11 +603,11 @@
 /* The text in the button to remove all contacts to a shared folder on one click */
 "Remove Share"="Loại bỏ chia sẻ";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Bạn có chắc muốn loại bỏ chia sẻ mục này không? (Hiện đang chia sẻ cho 1 tên liên lạc)";
+"removeOneShareOneContactMessage"="Bạn có chắc muốn loại bỏ chia sẻ mục này không? (Hiện đang chia sẻ cho 1 tên liên lạc)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Bạn có chắc muốn loại bỏ chia sẻ mục này không? (Mục này đang được chia sẻ cho %d người trong sổ liên lạc)";
+"removeOneShareMultipleContactsMessage"="Bạn có chắc muốn loại bỏ chia sẻ mục này không? (Mục này đang được chia sẻ cho %d người trong sổ liên lạc)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Bạn có chắc muốn loại bỏ các chia sẻ mục này không? (Những mục này đang được chia sẻ cho %d người trong sổ liên lạc)";
+"removeMultipleSharesMultipleContactsMessage"="Bạn có chắc muốn loại bỏ các chia sẻ mục này không? (Những mục này đang được chia sẻ cho %d người trong sổ liên lạc)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Chia sẻ đã bị loại bỏ";
 /* Message shown when some shares have been removed */
@@ -631,7 +631,7 @@
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Xóa tên liên lạc";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Bạn có chắc muốn xóa %d tên khỏi sổ liên lạc của bạn không?";
+"removeMultipleUsersMessage"="Bạn có chắc muốn xóa %d tên khỏi sổ liên lạc của mình không?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Đã xóa tên %@ khỏi sổ liên lạc";
 /* Label shown when a contact request is pending */
@@ -899,7 +899,7 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Xác nhận việc xóa bỏ";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
-"sharedItems.rubbish.warning.message"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %@. Bạn có muốn xóa không? (Không thể hồi lại sau khi xóa).";
+"sharedItems.rubbish.warning.message"="Bạn sắp xóa vĩnh viễn %@. Bạn có muốn tiếp tục không? (Sẽ không thể hoàn tác hành động này.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="Đã xóa 1 tệp tin khỏi MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -999,9 +999,9 @@
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
 "Completed"="Hoàn tất";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Phiên tải xuống";
+"downloads"="Các phiên tải xuống";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Phiên tải lên";
+"uploads"="Các phiên tải lên";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Truyền tải đã hủy";
 /* Success message shown when all the transfers have been cancelled */
@@ -1009,7 +1009,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Hủy các phiên truyền tải";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Bạn có muốn hủy TẤT CẢ phiên truyền tải không?";
+"cancelTransfersText"="Bạn có muốn hủy tất cả các truyền tải không?";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Nâng cấp";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1057,13 +1057,13 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Cài app MEGA cho máy tính";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ thêm cho không gian lưu trữ từ việc cài app MEGA cho máy tính";
+"account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ bổ sung vì đã cài app cho máy tính của chúng tôi";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Máy Tính, bạn sẽ nhận được thêm %1$@ cho lưu trữ, %2$@. App MEGA cho Máy Tính còn có cho Windows, macOS và đa số các bản phân phối Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Tải và cài đặt MEGA cho điện thoại";
+"account.achievement.mobileApp.title"="Cài app MEGA cho di động";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ thêm cho không gian lưu trữ từ việc cài app MEGA cho di động";
+"account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ bổ sung vì đã cài app cho di động của chúng tôi";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Di Động, bạn sẽ nhận được thêm %@ cho lưu trữ, %2$@. App MEGA cho Di Động còn có cho iOS và Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1119,7 +1119,7 @@
 /*  */
 "days"="ngày";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Đăng xuất";
+"logoutLabel"="Đăng xuất";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Đang đăng xuất";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1135,7 +1135,7 @@
 /* Title for "Local" used space. */
 "localLabel"="Cục bộ";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Không gian trống";
+"availableLabel"="Có thể dùng";
 /* title of the My Account screen */
 "accountType"="Hạng tài khoản:";
 /* Label to indicate that the current user has a Free account. */
@@ -1227,9 +1227,9 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Tệp nhật ký (MEGAiOS.log) sẽ bị xóa khỏi mục Ngoại Tuyến.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Bạn có chắc muốn xóa mục này khỏi mục lưu Ngoại Tuyến?";
+"removeItemFromOffline"="Bạn có chắc muốn xóa mục này khỏi mục lưu Ngoại Tuyến?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
+"removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
 /* Giphy section header */
 "Send GIF"="Gửi ảnh GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1309,7 +1309,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Xóa lịch sử chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
+"clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Lịch sử chat đã được dọn sạch";
 /* Message show when the history of a chat hasn’t been successfully deleted */
@@ -1481,7 +1481,7 @@
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Lỗi giải mã";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="Bad session ID";
+"Bad session ID"="Số ID phiên sai";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bị chặn";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
@@ -1581,7 +1581,7 @@
 /* Business role for sub-business account type named as User */
 "user"="Nhân viên";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Bạn có chắc muốn xóa phiên bản này?";
+"deleteVersion"="Bạn có chắc muốn xóa phiên bản này?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="Mục này sẽ bị xóa hoàn toàn";
 /*  */
@@ -1591,7 +1591,7 @@
 /*  */
 "download"="Tải xuống";
 /* Singular of file. 1 file */
-"file"="tệp";
+"file"="tệp tin";
 /* Label to desing a file matching */
 "chat.match.file"="Tệp tin";
 /* Title of section to display information of the current version of a file. */
@@ -1657,7 +1657,7 @@
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Thời lượng: %@";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="Dạng tệp tin không được hỗ trợ";
+"fileNotSupported"="Tệp tin không được hỗ trợ";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Tệp tin sẽ được lưu về Ngoại Tuyến nhưng sẽ cần một app tương thích để mở.";
 /* Item of a menu to forward a message chat to another chatroom */
@@ -1735,7 +1735,7 @@
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Bật thông báo";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo để báo hiệu ngay tức thì cho khi bạn có tin nhắn.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Chúng tôi muốn gửi thông báo để bạn nhận được tin nhắn mới trên thiết bị ngay lập tức.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Cấp quyền truy cập";
 /* Title of the Settings section where you can configure security details of your MEGA account */
@@ -1771,13 +1771,13 @@
 /* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
 "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="ngày";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày và lâu nhất là 30 ngày.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày và lâu nhất là 30 ngày.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Thùng Rác tự động được dọn dẹp cho bạn. Thời gian chờ ít nhất cho mỗi lần dọn là 7 ngày.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Để tắt tính năng tự động dọn Thùng Rác hoặc đặt thời gian trữ rác lâu hơn, bạn cần phải đăng ký một trong các gói của chúng tôi.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Bạn có muốn đóng tất cả các phiên khác không? Hành động này sẽ đăng xuất bạn khỏi tất cả các phiên đang hoạt động ngoại trừ phiên hiện tại.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Bạn có muốn đóng tất cả các phiên khác không? Thao tác này sẽ đăng xuất bạn khỏi tất cả các phiên đang hoạt động khác, ngoại trừ phiên hiện tại.";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ tham gia vào cuộc gọi.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1829,7 +1829,7 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ đã tham gia vào nhóm chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="Không thể tham gia cuộc gọi này vì đã quá mức số lượng thành viên đang có trong cuộc gọi.";
+"Error. No more participants are allowed in this group call."="Không thể vào cuộc gọi này vì đã quá mức số lượng người tham gia đang có trong cuộc gọi.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Không thể bật video cho cuộc gọi này được vì quá mức số lượng thành viên tham gia cuộc gọi đang sử dụng video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
@@ -1997,7 +1997,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Xin đi vào mục Quyền Riêng Tư trong Cài Đặt của iOS. Bật chức năng Dịch Vụ Định Vị và chỉnh MEGA từ “Khi dùng Ứng dụng” sang “Luôn luôn”.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA truy cập vị trí của bạn khi bạn chia sẻ với các tên liên lạc của mình trong cuộc chat.";
+"NSLocationWhenInUseUsageDescription"="MEGA có truy cập vào vị trí khi bạn chia sẻ định vị với các liên hệ trong cuộc chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Dùng dữ liệu mạng di dộng đã tắt";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2007,11 +2007,11 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Đổi sang máy chủ thử nghiệm?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi được.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi được.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Cấp quyền cho phép truy cập vào danh bạ của bạn";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Đi tới cài đặt của iOS";
+"Open Settings"="Mở cài đặt của iOS";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Mời thêm tên liên lạc và để bắt đầu trò chuyện thông qua MEGA và được bảo mật mạnh mẽ.";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
@@ -2169,9 +2169,9 @@
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Dọn mục đã chọn";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
-"Pause All"="Tạm dừng tất cả";
+"Pause All"="Tạm dừng tất cả";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Tiếp tục tất cả";
+"Resume All"="Tiếp tục tất cả";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Dọn Danh Sách";
 /* Alert header for asking permission to resume transfers */
@@ -2185,7 +2185,7 @@
 /* Description of High Image Quality option */
 "Send original size, increased quality images"="Luôn gửi hình ảnh với kích thước gốc.";
 /* Setting title for Doc scan view */
-"Save Settings"="Tùy chọn lưu lại";
+"Save Settings"="Lưu lại thiết đặt";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
 "cloudDrive.scanDocument.defaultName"="Bản quét %@";
 /* file type title, used in changing the export format of scaned doc */
@@ -2389,7 +2389,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Đặt lại mật khẩu";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Đường liên kết này không còn tồn tại vì tài khoản đã bị đóng do vi phạm nghiêm trọng với [A]Điều Khoản Dịch Vụ[/A] của MEGA.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Đường liên kết này không còn tồn tại vì tài khoản đã bị đóng do vi phạm lớn tới [A]Điều Khoản Sử Dụng[/A] của MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Thư mục hoặc tệp tin này đã được báo cáo là chứa nội dung phản cảm, chẳng hạn như tài liệu bóc lột trẻ em, bạo hành cực đoan, thú tính hay động vật luyến ái, phi nhân tính. Tài khoản của người tạo liên kết đã bị đóng và chi tiết đầy đủ của chủ tài khoản (bao gồm cả địa chỉ IP) đã được gửi cho chính quyền.";
 /* Text used to show the user that some resource is not available */
@@ -2435,11 +2435,11 @@
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn thư mục";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn chuyển thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn chuyển thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Tải lên tệp tin";
 /* Text title for shortcuts, ie in the widget */
-"Shortcuts"="Lối Tắt";
+"Shortcuts"="Lối tắt";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
 "Launch the MEGA app to perform an action"="Khởi động ứng dụng MEGA để thực hiện tác vụ";
 /* Title for document explorer view */
@@ -2515,7 +2515,7 @@
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Bạn không có quyền hạn cần thiết để khôi phục tệp tin này. Tuy nhiên, bạn có thể tạo một tệp tin mới với phiên bản trước đây. Bạn có muốn tiếp tục không?";
 /* The avatar picture button to go to my account page. Use for voice over. */
-"My Account"="Tài Khoản của Tôi";
+"My Account"="Tài khoản";
 /* Text for title for favourite nodes */
 "Favourites"="Ưa Thích";
 /* Text describing that there is not any node marked as favourite */
@@ -2607,7 +2607,7 @@
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Bạn đang tiến hành xóa đi thư mục chứa bản lưu trữ. Việc này sẽ xóa tất cả các lưu dự phòng bạn đã đặt. Bạn có chắc muốn thực hiện việc này không?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="Bạn có chắc muốn xóa thư mục chứa bản lưu trữ và tắt việc lưu dự phòng bạn đã đặt không?";
+"dialog.delete.backup.folder.warning.message"="Bạn có chắc muốn xóa thư mục chứa bản lưu trữ và tắt việc lưu dự phòng bạn đã đặt không?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Thêm mục vào “%@”";
 /* Add new items to a backup folder warning message */
@@ -2717,7 +2717,7 @@
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="Quý khách hiện đã có gói đăng ký dịch vụ đang hoạt động";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua hạng Pro thông qua CH Google Play hoặc AppGallery từ trước. Xin vui lòng hủy thủ công dịch vụ với bên Google Play hoặc Huawei AppGallery trên thiết bị của mình rồi quay lại đây để tiếp tục việc mua.";
+"account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua đăng ký gói Pro thông qua Google Play hoặc AppGallery. Vui lòng tự hủy thủ công gói đăng ký trực tiếp trên Google Play hoặc Huawei AppGallery trong thiết bị của quý khách, sau đó thử lại.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói đăng ký dịch vụ hiện tại để mua gói mới không?";
 /* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Truy cập trang AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Tất cả dữ liệu bạn đã lưu trên MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Cả tài khoản lẫn gói đăng ký của quý khách sẽ bị xóa và quý khách sẽ mất hoàn toàn tất cả dữ liệu được lưu trữ trong tài khoản. Để tiến hành, xin nhập mật khẩu vào dưới đây.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Đổi ảnh đại diện";
 /* Displayed when the user's Business account subscription is active. */
@@ -3005,7 +3005,7 @@
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.message"="Vui lòng thử lại sau, hoặc liên hệ với nhóm hỗ trợ của chúng tôi qua support@mega.io nếu vấn đề vẫn tiếp diễn";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.title"="Bạn có chắc chắn muốn hủy bỏ việc gửi đăng tải lên báo cáo?";
+"help.reportIssue.creating.cancel.title"="Bạn có chắc chắn muốn hủy bỏ việc gửi đăng tải lên báo cáo?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.message"="Vấn đề lỗi này sẽ không được gửi đi nếu bạn hủy bỏ.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
@@ -3495,13 +3495,13 @@
 /* Device Center backup error: Shared folder quota reached */
 "device.center.backup.error.userSharedQuotaReached"="Thư mục không thể đồng bộ được do tài khoản của người chia sẻ thư mục này đã vượt mức băng thông lưu trữ của họ.";
 /* Device Center backup error: Shared folder without full access */
-"device.center.backup.error.sharedFolderNoFullAccess"="Thư mục không thể đồng bộ được bởi vì thư mục đã chia sẻ mà không có cấp quyền hạn truy cập toàn quyền.";
+"device.center.backup.error.sharedFolderNoFullAccess"="Thư mục không thể đồng bộ được bởi vì thư mục đã chia sẻ mà không có cấp quyền hạn truy cập toàn quyền.";
 /* Device Center backup error: Files can't be synced */
 "device.center.backup.error.filesInFolder"="Các tệp tin trong thư mục này không thể đồng bộ hóa hoặc sao lưu được. Bạn sẽ cần phải kích hoạt lại đồng bộ hoặc sao lưu từ ứng dụng cho máy tính.";
 /* Device Center backup error: Folder contains synced folders */
-"device.center.backup.error.containsSyncedFolders"="Thư mục không thể đồng bộ được bởi vì nó đang nằm ở trong một thư mục được đồng bộ.";
+"device.center.backup.error.containsSyncedFolders"="Thư mục không thể đồng bộ được bởi vì nó đang nằm ở trong một thư mục được đồng bộ rồi.";
 /* Device Center backup error: Folder inside another synced folder */
-"device.center.backup.error.insideSyncedFolder"="Thư mục không thể đồng bộ được bởi vì nó đang nằm ở trong một thư mục được đồng bộ.";
+"device.center.backup.error.insideSyncedFolder"="Thư mục không thể đồng bộ được bởi vì nó đang nằm ở trong một thư mục được đồng bộ rồi.";
 /* Device Center backup error: MEGA folder in rubbish bin */
 "device.center.backup.error.folderInRubbish"="Thư mục không thể đồng bộ hoặc tạo sao lưu được bởi vì thư mục tương ứng trên MEGA đang nằm trong Thùng Rác.";
 /* Device Center backup error: Can't sync VirtualBox folders */
@@ -3577,7 +3577,7 @@
 /* Message show when the history of a meeting has been successfully deleted */
 "meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Đã dọn lịch sử cuộc họp";
 /* The alert message to delete the history of a meeting. */
-"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Bạn có chắc muốn dọn toàn bộ lịch sử các tin nhắn của cuộc họp này không?";
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Bạn có chắc muốn dọn toàn bộ lịch sử các tin nhắn của cuộc họp này không?";
 /* Text explaining users how the meeting links work. */
 "meetings.info.shareMeetingLink.explainLink"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp";
 /* The title of a menu button which allows users to rename a meeting. */
@@ -3625,7 +3625,7 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.save"="Mua từ trang web (giảm %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua từ trang web MEGA (giảm tới %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua từ trực tiếp từ web (giảm tới %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Mua trong app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -3685,7 +3685,7 @@
 /* Description for alert cancelling last occurrence without messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong bảo lưu và tất cả những người tham gia sẽ được thông báo.";
 /* Description for alert cancelling last occurrence with messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong Các cuộc họp trước đây và tất cả những người tham gia sẽ được thông báo.";
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong các Cuộc họp trước đây và tất cả những người tham gia sẽ được thông báo.";
 /* Title for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.title"="Hủy bỏ thời điểm tái diễn %@?";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
@@ -4155,7 +4155,7 @@
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Hiển thị các mục ẩn với ảnh thu nhỏ được làm mờ, để bạn có thể xác định từng cái mà không để lộ nội dung bên trong.";
 /* My Account page: Menu Title of user account page */
-"account.myAccount.title"="Tài Khoản của Tôi";
+"account.myAccount.title"="Tài khoản";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4173,7 +4173,7 @@
 /* Transfer sharing title */
 "transfer.sharing.title"="Chia sẻ lượng truyền tải";
 /* Rewind feature title */
-"rewind.feature.title"="Tua lại";
+"rewind.feature.title"="Tua lại";
 /* Rewind fro free users */
 "rewind.for.free.users"="Lên đến 30 ngày (chỉ được xem)";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
@@ -4231,7 +4231,7 @@
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. Chạm vào <b>Thanh toán và gói thuê bao.</b>";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Chạm vào <b>Gói thuê bao.</b>";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. Chạm vào <b>Gói thuê bao</b>";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. Trong phần gói đăng ký MEGA của bạn, chạm vào <b>Hủy đăng ký.</b>";
 /* More button in Call UI that shows context menu. */
@@ -4293,7 +4293,7 @@
 /* Cancel subscription survey reason with id 3 */
 "accounts.cancelSubscriptionSurvey.reason.three"="Tôi không cần tất cả dung lượng trong gói của mình";
 /* Cancel subscription survey reason with id 4 */
-"accounts.cancelSubscriptionSurvey.reason.four"="Tôi cần sử đụng các tính năng mà MEGA không có có";
+"accounts.cancelSubscriptionSurvey.reason.four"="Tôi cần sử đụng các tính năng mà MEGA không có";
 /* Cancel subscription survey reason with id 5 */
 "accounts.cancelSubscriptionSurvey.reason.five"="Tôi chuyển sang sử dụng hãng khác";
 /* Cancel subscription survey reason with id 6 */
@@ -4491,7 +4491,7 @@
 /* Description displayed in the popup when the user's Business account is deactivated, instructing them to reactivate their subscription on the MEGA website using a computer. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.masterBusiness"="Tài khoản Doanh Nghiệp MEGA của quý khách đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin kích hoạt lại gói đăng ký trên trang web MEGA trên máy tính.";
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Tài khoản Doanh Nghiệp MEGA của bạn đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin liên hệ với quản trị viên tài khoản Doanh Nghiệp của bạn.";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="Tài khoản Doanh Nghiệp của bạn đã bị vô hiệu. Để có thể quản lý gắn thẻ, xin liên hệ với quản trị viên tài khoản Doanh Nghiệp của bạn.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="OK, hiểu rồi";
 /* Add to collection button title to add items */
@@ -4779,7 +4779,7 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/giây";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Mua hằng năm";
+"upgradeAccountPlan.plan.yearly.footer"="Thu phí hằng năm";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Giá chỉ %@/tháng";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
@@ -4823,9 +4823,9 @@
 /* The title displayed in the empty view when Cloud Drive root is empty */
 "cloudDrive.emptyStateTitle.root"="Chưa có gì ở trong két sắt riêng của bạn";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
-"cloudDrive.emptyStateTitle.nonRoot"="Thư mục này rỗng";
+"cloudDrive.emptyStateTitle.nonRoot"="Thư mục này trống";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Giữ cho mọi thứ luôn được an toàn với mô hình mã hóa vô kiến thức";
+"cloudDrive.emptyStateSubtitle"="Hãy giữ mọi thứ an toàn với mô hình mã hóa vô kiến thức";
 /* Undecrypted file open error snackBar message */
 "cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Không thể xem trước các tệp tin chưa được giải mã";
 /* Title of Photo's large zoom scale title */
@@ -4865,11 +4865,11 @@
 /* Snackbar message shown after the user hides recent activity */
 "home.recent.hideRecentActivity.snackbar.message"="Hoạt động gần đây của bạn đã bị ẩn";
 /* Alert message shown when confirming the action to clear all recent activity */
-"home.recent.clearRecentActivity.alert.message"="Bạn có chắc chắn muốn xóa toàn bộ hoạt động gần đây không? Thao tác này sẽ không hoàn tác được.";
+"home.recent.clearRecentActivity.alert.message"="Bạn có chắc muốn xóa toàn bộ hoạt động gần đây không? Việc này không thể hoàn tác.";
 /* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.addedByLabel"="Đã thêm bởi %@";
 /* Snackbar message shown after the user clears all recent activity */
-"home.recent.clearRecentActivity.snackbar.message"="Hoạt động gần đây đã được dọn sạch";
+"home.recent.clearRecentActivity.snackbar.message"="Hoạt động gần đây của bạn đã bị xóa";
 /* The title for menu action button that will clear the recent activity */
 "home.recent.menu.action.clearRecentActivity"="Xóa hoạt động gần đây";
 /* The title for View all button in Home Recent Widget */
@@ -4901,13 +4901,13 @@
 /* The add subtitle from Cloud drive option in subtitle menu */
 "videoPlayer.subtitles.menu.addFromCloudDrive"="Lấy tệp phụ đề từ Ổ Mây";
 /* The add subtitle button in subtitle selection page */
-"videoPlayer.subtitles.select.addSubtitle"="Thêm phụ đề";
+"videoPlayer.subtitles.select.addSubtitle"="Thêm phụ đề";
 /* The empty state content in subtitle selection page */
-"videoPlayer.subtitles.select.empty.content"="Tải lên phụ đề định dạng SRT lên Ổ Mây của bạn";
+"videoPlayer.subtitles.select.empty.content"="Tải tệp phụ đề định dạng SRT lên Ổ Mây của bạn";
 /* The error state title in subtitle selection page */
 "videoPlayer.subtitles.select.error.title"="Không thể thêm phụ đề";
 /* The error state content in subtitle selection page */
-"videoPlayer.subtitles.select.error.content"="Có sự cố với tệp phụ đề.\nChọn một tệp phụ đề khác hoặc thử lại.";
+"videoPlayer.subtitles.select.error.content"="Có sự cố với tệp phụ đề. Chọn một tệp phụ đề khác hoặc thử lại.";
 /* Error message shown to users in the center line of HomeRecentWidgetView when recent activity cannot be loaded */
 "home.recent.widget.error.message"="Chúng tôi không thể tải hoạt động gần đây của bạn";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
@@ -4919,9 +4919,9 @@
 /* The message to show when user tries to open an invalid link */
 "openLink.invalidLinkMessage"="Đây không phải là đường liên kết MEGA hợp lệ";
 /* The input message to instruct user to enter the MEGA link */
-"openLink.inputMessage"="Nhập vào bất cứ đường liên kết MEGA để mở";
+"openLink.inputMessage"="Dán bất kỳ liên kết MEGA nào để mở nó";
 /* The title for menu action button that will show the recent activity */
-"home.recent.menu.action.showRecentActivity"="Hiện hoạt động gần đây";
+"home.recent.menu.action.showRecentActivity"="Hiển thị hoạt động gần đây";
 /* Custom offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: giảm %2$@";
 /* Title for the download connections row in transfers settings */
@@ -4929,7 +4929,7 @@
 /* Status text shown in the transfer Live Activity when files are being downloaded */
 "transfer.liveActivity.downloadingFiles"="Đang tải xuống tệp tin";
 /* Status text shown in the transfer Live Activity when files are being uploaded */
-"transfer.liveActivity.uploadingFiles"="Đang tải lên tệp tin";
+"transfer.liveActivity.uploadingFiles"="Đang tải lên các tệp tin";
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="Số đường kết nối truyền tải";
 /* Title for the upload connections row in transfers settings */
@@ -4960,3 +4960,33 @@
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Cài một trong các ứng dụng MEGA VPN và bắt đầu hạn dùng thử miễn phí để nhận thêm %1$@ không gian lưu trữ tặng thêm, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.passFreeTrial.incomplete.explanation.label"="Cài một trong các ứng dụng MEGA Pass và bắt đầu hạn dùng thử miễn phí để nhận thêm %1$@ không gian lưu trữ tặng thêm, %2$@";
+/* Empty-state label shown on the Active tab of the Transfers screen when there are no active transfers (other tabs may have items). */
+"transfers.emptyState.noActiveTransfers"="Không có phiên truyền nào đang hoạt động";
+/* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
+"transfers.emptyState.noTransfers"="Không có truyền tải nào";
+/* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
+"transfer.liveActivity.openMEGAToResume"="Mở MEGA để tiếp tục";
+/* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
+"transfers.tab.active"="Hoạt động";
+/* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
+"transfers.tab.completed"="Hoàn tất";
+/* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
+"transfers.tab.failed"="Thất bại";
+/* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
+"transfers.emptyState.noCompletedTransfers"="Chưa có phiên truyền tải nào đã hoàn tất";
+/* Empty-state label shown on the Failed tab of the Transfers screen when there are no failed transfers. */
+"transfers.emptyState.noFailedTransfers"="Chưa có phiên truyền tải thất bại nào";
+/* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
+"home.recent.bucket.carousel.showInLocation"="Hiện vị trí chứa tệp";
+/* The title of the Home's widget customization screen */
+"home.customization.title"="Tùy chỉnh Trang[w]Đầu";
+/* The subtitle of the Home's widget customization screen */
+"home.customization.subtitle"="Kéo từng phần để bố[w]trí lại";
+/* The title of the Continue where you left widget in Customise Home screen */
+"home.customization.widget.continueWhereYouLeftOff"="Tiếp tục từ nơi bạn đã dừng";
+/* The title of the Do more with MEGA widget in Customise Home screen */
+"home.customization.widget.doMoreWithMega"="Làm được nhiều việc hơn với MEGA";
+/* The title of the Viewed link widget in Customise Home screen */
+"home.customization.widget.viewedLinks"="Các liên[w]kết đã xem";
+/* The title of the Account status widget in Customise Home screen */
+"home.customization.widget.accountStatus"="Trạng thái tài khoản";

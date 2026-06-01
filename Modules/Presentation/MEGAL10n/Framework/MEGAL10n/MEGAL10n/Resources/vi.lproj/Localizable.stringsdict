@@ -27,7 +27,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Bạn và %d người khác đang giơ tay</string>
+        <string>Bạn và %d người khác đang giơ tay</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>

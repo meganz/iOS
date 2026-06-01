@@ -5021,8 +5021,8 @@
     <key>achievementDetails.bonusExpiration.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatSpecTypeKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
