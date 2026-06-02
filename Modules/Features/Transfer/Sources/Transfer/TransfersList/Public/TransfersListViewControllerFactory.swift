@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import SwiftUI
 import UIKit
@@ -21,11 +22,18 @@ public enum TransfersListViewControllerFactory {
             fileSystemRepository: FileSystemRepository.sharedRepo
         )
         let nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
+        
+        let transfersListenerUseCase = TransfersListenerUseCase(
+            repo: TransfersListenerRepository.newRepo,
+            preferenceUseCase: PreferenceUseCase.default
+        )
+        
         let viewModel = TransfersListViewModel(
             inventoryUseCase: inventoryUseCase,
             counterUseCase: counterUseCase,
             nodeUseCase: nodeUseCase,
-            nodeAttributeUseCase: nodeAttributeUseCase
+            nodeAttributeUseCase: nodeAttributeUseCase,
+            transfersListenerUseCase: transfersListenerUseCase
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
         host.hidesBottomBarWhenPushed = true

@@ -12,6 +12,7 @@ public final class TransfersListViewModel: ObservableObject {
     @Published public private(set) var hasActiveTransfers: Bool
     @Published public private(set) var hasCompletedTransfers: Bool
     @Published public private(set) var hasFailedTransfers: Bool
+    @Published public private(set) var isAllPaused: Bool
 
     private let registry: TransferRegistry
     public let activeContainerViewModel: SearchResultsContainerViewModel?
@@ -20,15 +21,18 @@ public final class TransfersListViewModel: ObservableObject {
     private let completedSearchResultsViewModel: SearchResultsViewModel?
     private let inventoryUseCase: (any TransferInventoryUseCaseProtocol)?
     private let filteringUserTransfers: Bool
+    private let transfersListenerUseCase: (any TransfersListenerUseCaseProtocol)?
 
     public init(
         hasActiveTransfers: Bool = false,
         hasCompletedTransfers: Bool = false,
-        hasFailedTransfers: Bool = false
+        hasFailedTransfers: Bool = false,
+        isAllPaused: Bool = false
     ) {
         self.hasActiveTransfers = hasActiveTransfers
         self.hasCompletedTransfers = hasCompletedTransfers
         self.hasFailedTransfers = hasFailedTransfers
+        self.isAllPaused = isAllPaused
         self.registry = TransferRegistry()
         self.activeContainerViewModel = nil
         self.completedContainerViewModel = nil
@@ -36,6 +40,7 @@ public final class TransfersListViewModel: ObservableObject {
         self.completedSearchResultsViewModel = nil
         self.inventoryUseCase = nil
         self.filteringUserTransfers = true
+        self.transfersListenerUseCase = nil
     }
 
     /// Production initializer. Constructs the registry, the Active and Completed
@@ -47,6 +52,7 @@ public final class TransfersListViewModel: ObservableObject {
         counterUseCase: some TransferCounterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         nodeAttributeUseCase: some NodeAttributeUseCaseProtocol,
+        transfersListenerUseCase: some TransfersListenerUseCaseProtocol,
         filteringUserTransfers: Bool = true
     ) {
         let registry = TransferRegistry()
@@ -61,6 +67,8 @@ public final class TransfersListViewModel: ObservableObject {
             nodeUseCase: nodeUseCase,
             nodeAttributeUseCase: nodeAttributeUseCase
         )
+        self.transfersListenerUseCase = transfersListenerUseCase
+        self.isAllPaused = transfersListenerUseCase.areTransfersPaused()
 
         let activeProvider = TransferSearchResultsProvider(
             filter: .active,
@@ -212,5 +220,20 @@ public final class TransfersListViewModel: ObservableObject {
         for await count in completedSearchResultsViewModel.itemCountSequence where count > 0 {
             hasCompletedTransfers = true
         }
+    }
+
+    /// Pause-all / resume-all toggle. Routes through `TransfersListenerUseCase`,
+    /// which writes the persisted `transfersPaused` / `queuedTransfersPaused` flags
+    /// (MEGAPreference) and forwards to the SDK. The `isAllPaused` flag updates
+    /// optimistically — matches the existing use case contract, which doesn't await
+    /// the SDK's request finish before persisting.
+    public func togglePauseAll() {
+        guard let transfersListenerUseCase else { return }
+        if isAllPaused {
+            transfersListenerUseCase.resumeTransfers()
+        } else {
+            transfersListenerUseCase.pauseTransfers()
+        }
+        isAllPaused.toggle()
     }
 }

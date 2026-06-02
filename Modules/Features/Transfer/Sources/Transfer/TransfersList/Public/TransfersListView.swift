@@ -32,12 +32,14 @@ public struct TransfersListView: View {
         .toolbar {
             if viewModel.hasAnyTransfers {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button {} label: {
-                        MEGAAssets.Image.pauseMediumThinOutline
-                            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    if viewModel.selectedTab == .active {
+                        Button {
+                            viewModel.togglePauseAll()
+                        } label: {
+                            pauseAllIcon
+                                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                        }
                     }
-                    .disabled(true)
-
                     Button {} label: {
                         MEGAAssets.Image.moreVerticalMediumThinOutline
                             .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -48,10 +50,17 @@ public struct TransfersListView: View {
         }
     }
 
+    private var pauseAllIcon: Image {
+        viewModel.isAllPaused
+            ? MEGAAssets.Image.monoPlayMediumThinOutline
+            : MEGAAssets.Image.pauseMediumThinOutline
+    }
+
     @ViewBuilder
     private var tabContent: some View {
         if viewModel.selectedTab == .active, let activeContainer = viewModel.activeContainerViewModel {
             SearchResultsContainerView(viewModel: activeContainer)
+                .environment(\.isAllTransfersPaused, viewModel.isAllPaused)
         } else if viewModel.selectedTab == .completed, let completedContainer = viewModel.completedContainerViewModel {
             SearchResultsContainerView(viewModel: completedContainer)
         } else {

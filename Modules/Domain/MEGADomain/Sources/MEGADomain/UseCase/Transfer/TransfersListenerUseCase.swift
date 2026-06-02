@@ -1,6 +1,6 @@
 import Foundation
-import MEGASwift
 import MEGAPreference
+import MEGASwift
 
 public protocol TransfersListenerUseCaseProtocol: Sendable {
     /// Async sequence of transfer objects
@@ -46,6 +46,7 @@ public struct TransfersListenerUseCase: TransfersListenerUseCaseProtocol {
     ) {
         self.repo = repo
         $queuedTransfersPaused.useCase = preferenceUseCase
+        $transfersPaused.useCase = preferenceUseCase
     }
     
     public func pauseQueuedTransfers() {

@@ -18,6 +18,7 @@ import SwiftUI
 /// row.
 struct TransferResultRowView: View {
     @ObservedObject var viewModel: TransferRowViewModel
+    @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
 
     private var isCompleted: Bool {
         viewModel.state.status == .completed
@@ -68,10 +69,13 @@ struct TransferResultRowView: View {
             // Wired later
         } label: {
             trailingImage
-                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                .foregroundStyle(isAllTransfersPaused
+                    ? TokenColors.Icon.disabled.swiftUI
+                    : TokenColors.Icon.secondary.swiftUI)
                 .frame(width: 24, height: 24)
         }
         .buttonStyle(.plain)
+        .disabled(isAllTransfersPaused)
     }
 
     private var progressTint: Color {
@@ -88,5 +92,16 @@ struct TransferResultRowView: View {
         case .paused, .failed, .cancelled: Image(systemName: "play.fill")
         case .completed: MEGAAssets.Image.moreVerticalMediumThinOutline
         }
+    }
+}
+
+private struct IsAllTransfersPausedKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var isAllTransfersPaused: Bool {
+        get { self[IsAllTransfersPausedKey.self] }
+        set { self[IsAllTransfersPausedKey.self] = newValue }
     }
 }
