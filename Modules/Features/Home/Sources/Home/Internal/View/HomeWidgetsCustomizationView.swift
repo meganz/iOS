@@ -68,7 +68,7 @@ private struct WidgetRow: View {
                 .fontWeight(.regular)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
-            Toggle("", isOn: Binding(
+            Toggle("\(config.type.rawValue)Switch", isOn: Binding(
                 get: { config.isEnabled },
                 set: { onToggle($0) }
             ))

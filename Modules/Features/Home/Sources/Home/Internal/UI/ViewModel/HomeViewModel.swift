@@ -13,7 +13,7 @@ final class HomeViewModel: ObservableObject {
     @Published var isNetworkConnected = false
     private let homeDeepLink: HomeDeepLink
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
-    private let widgetConfigUseCase: any HomeWidgetConfigUseCaseProtocol
+    private let widgetDisplayUseCase: any HomeWidgetDisplayUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
@@ -24,7 +24,7 @@ final class HomeViewModel: ObservableObject {
         self.init(
             homeDeepLink: homeDeepLink,
             networkMonitoringUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            widgetConfigUseCase: HomeWidgetConfigUseCase(),
+            widgetDisplayUseCase: HomeWidgetDisplayUseCase(),
             tracker: DIContainer.tracker,
             featureFlagProvider: featureFlagProvider
         )
@@ -33,13 +33,13 @@ final class HomeViewModel: ObservableObject {
     package init(
         homeDeepLink: HomeDeepLink,
         networkMonitoringUseCase: some NetworkMonitorUseCaseProtocol,
-        widgetConfigUseCase: some HomeWidgetConfigUseCaseProtocol,
+        widgetDisplayUseCase: some HomeWidgetDisplayUseCaseProtocol,
         tracker: some AnalyticsTracking,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.homeDeepLink = homeDeepLink
         self.networkMonitoringUseCase = networkMonitoringUseCase
-        self.widgetConfigUseCase = widgetConfigUseCase
+        self.widgetDisplayUseCase = widgetDisplayUseCase
         self.isSearching = homeDeepLink.homeSearch
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
@@ -51,7 +51,7 @@ final class HomeViewModel: ObservableObject {
             widgets = HomeWidgetType.phase1Widgets
             return
         }
-        widgets = widgetConfigUseCase.enabledWidgetTypes()
+        widgets = widgetDisplayUseCase.allVisibleWidgetTypes()
     }
 
     func togglePresentSheet() {

@@ -4,14 +4,14 @@ import MEGAL10n
 @MainActor
 final class HomeWidgetsCustomizationViewModel: ObservableObject {
     @Published var configs: [HomeWidgetConfigEntity] {
-        didSet { widgetConfigUseCase.save(configs) }
+        didSet { widgetCustomizationUseCase.save(configs) }
     }
 
-    private let widgetConfigUseCase: any HomeWidgetConfigUseCaseProtocol
+    private let widgetCustomizationUseCase: any HomeWidgetCustomizationUseCaseProtocol
 
-    package init(widgetConfigUseCase: some HomeWidgetConfigUseCaseProtocol = HomeWidgetConfigUseCase()) {
-        self.widgetConfigUseCase = widgetConfigUseCase
-        self.configs = widgetConfigUseCase.widgetConfigs()
+    package init(widgetCustomizationUseCase: some HomeWidgetCustomizationUseCaseProtocol = HomeWidgetCustomizationUseCase()) {
+        self.widgetCustomizationUseCase = widgetCustomizationUseCase
+        self.configs = widgetCustomizationUseCase.customizableConfigs()
     }
 
     func isEnabled(_ widget: HomeWidgetType) -> Bool {

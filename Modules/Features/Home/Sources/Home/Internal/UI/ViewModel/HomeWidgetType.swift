@@ -1,11 +1,11 @@
 import Foundation
 
-enum HomeWidgetType: String, CaseIterable, Identifiable, Codable {
-    var id: Self { self }
+package enum HomeWidgetType: String, CaseIterable, Identifiable, Codable {
+    package var id: Self { self }
     case shortcuts
-    case recents
     case accountDetails
     case promotionalBanners
+    case recents
     case viewedLinks
     case continueWhereYouLeft
     case doMoreWithMega

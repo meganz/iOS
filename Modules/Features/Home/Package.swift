@@ -54,7 +54,8 @@ let package = Package(
             dependencies: [
                 "Home",
                 .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
-                .product(name: "MEGADomainMock", package: "MEGADomain")
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")
             ]
         )
     ]
