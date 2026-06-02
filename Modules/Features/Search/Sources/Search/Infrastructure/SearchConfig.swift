@@ -20,15 +20,17 @@ public struct SearchConfig {
     public var rowBuilder: ((SearchResult) -> AnyView?)?
     
     public init(
-        chipAssets: ChipAssets,
+        chipAssets: ChipAssets = .default,
         emptyViewAssetFactory: @escaping (SearchChipEntity?, SearchQuery) -> EmptyViewAssets,
-        rowAssets: RowAssets,
-        colorAssets: ColorAssets
+        rowAssets: RowAssets = .default,
+        colorAssets: ColorAssets = .default,
+        rowBuilder: ((SearchResult) -> AnyView?)? = nil
     ) {
         self.chipAssets = chipAssets
         self.emptyViewAssetFactory = emptyViewAssetFactory
         self.rowAssets = rowAssets
         self.colorAssets = colorAssets
+        self.rowBuilder = rowBuilder
     }
 
     public struct ChipAssets {

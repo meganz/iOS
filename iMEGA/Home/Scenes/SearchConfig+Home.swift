@@ -1,7 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
-import MEGAUIKit
 import Search
 import SwiftUI
 
@@ -10,14 +9,6 @@ extension SearchConfig {
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
         .init(
-            chipAssets: .init(
-                selectionIndicatorImage: MEGAAssets.UIImage.turquoiseCheckmark,
-                closeIcon: MEGAAssets.UIImage.miniplayerClose,
-                selectedForeground: TokenColors.Text.inverse.swiftUI,
-                selectedBackground: TokenColors.Components.selectionControl.swiftUI,
-                normalForeground: TokenColors.Text.primary.swiftUI,
-                normalBackground: TokenColors.Button.secondary.swiftUI
-            ),
             emptyViewAssetFactory: { chip, query in
                 let titleTextColor = TokenColors.Icon.secondary.swiftUI
                 
@@ -94,34 +85,7 @@ extension SearchConfig {
                 default:
                     return defaultEmptyViewAsset()
                 }
-            },
-            rowAssets: .init(
-                contextImage: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                itemSelected: MEGAAssets.UIImage.checkBoxSelectedSemantic,
-                itemUnselected: MEGAAssets.UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong),
-                playImage: MEGAAssets.UIImage.videoList,
-                downloadedImage: MEGAAssets.UIImage.downloaded,
-                moreList: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                moreGrid: MEGAAssets.UIImage.moreHorizontal
-            ),
-            colorAssets: .init(
-                unselectedBorderColor: TokenColors.Border.strong.swiftUI,
-                selectedBorderColor: TokenColors.Support.success.swiftUI,
-                titleTextColor: UIColor.primaryTextColor().swiftUI,
-                subtitleTextColor: TokenColors.Text.secondary.swiftUI,
-                nodeDescriptionTextNormalColor: TokenColors.Text.secondary.swiftUI,
-                tagsTextColor: UIColor.primaryTextColor().swiftUI,
-                textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
-                vibrantColor: TokenColors.Text.error.swiftUI,
-                verticalThumbnailFooterText: TokenColors.Icon.onColor.swiftUI,
-                verticalThumbnailFooterBackground: TokenColors.Background.surfaceTransparent.swiftUI,
-                verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
-                verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
-                listRowSeparator: TokenColors.Border.strong.swiftUI,
-                checkmarkBackgroundTintColor: TokenColors.Support.success.swiftUI,
-                listHeaderTextColor: TokenColors.Text.secondary.swiftUI,
-                listHeaderBackgroundColor: TokenColors.Background.page.swiftUI
-            )
+            }
         )
     }
     
