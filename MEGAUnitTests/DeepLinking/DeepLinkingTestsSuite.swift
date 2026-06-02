@@ -351,25 +351,37 @@ struct DeepLinkingTestSuite {
     }
 
     // MARK: - Unrecognized Link Tests
-    @Suite("Unrecognized Link Tests - Verifies that unhandled MEGA-domain URLs return .unrecognized so the app does not reopen them in an in-app browser (IOS-11782).")
+    @Suite("Unrecognized Link Tests - Verifies that ignored paths on universal-link domains return .unrecognized (IOS-11782), while other unhandled URLs open in the browser (.default).")
     struct UnrecognizedLinkTests {
-        // mega.io/login itself is a 301 to mega.nz/login; the URL the app actually
-        // receives via universal link is https://mega.nz/login. mega.io variants are
-        // kept for documentation since the user-facing entry point is mega.io.
-        @Test("Unrecognized MEGA URL should return .unrecognized", arguments: [
+        @Test("Ignored path on universal-link domain should return .unrecognized", arguments: [
             "https://mega.nz/login",
             "https://mega.nz/login?a=sdf&b=123",
             "https://www.mega.nz/login",
             "https://mega.app/login",
+            "https://www.mega.nz/register",
+            "https://mega.app/register"
+        ])
+        
+        func ignoredUniversalLinkPathShouldReturnUnrecognizedType(url: String) {
+            assertDeepLinkType(urlString: url, expectedType: .unrecognized)
+        }
+
+        @Test("Unhandled path on any mega domain should return .default", arguments: [
+            "https://mega.nz/some-unknown-path",
+            "https://mega.app/some-unknown-path",
+            "https://www.mega.nz/another-path-that-is-not-mapped",
+            "https://mega.nz/transfer-it",
             "https://mega.io/login",
             "https://mega.io/",
             "https://mega.io/something-unknown",
-            "https://mega.nz/some-unknown-path",
-            "https://mega.app/some-unknown-path",
-            "https://www.mega.nz/another-path-that-is-not-mapped"
+            "https://vpn.mega.nz",
+            "https://vpn.mega.nz/",
+            "https://pwm.mega.nz",
+            "https://pwm.mega.nz/",
+            "https://mega.io/transfer-it"
         ])
-        func unrecognizedMegaURLShouldReturnUnrecognizedType(url: String) {
-            assertDeepLinkType(urlString: url, expectedType: .unrecognized)
+        func unhandledMegaURLShouldReturnDefaultType(url: String) {
+            assertDeepLinkType(urlString: url, expectedType: .default)
         }
     }
 
