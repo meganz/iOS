@@ -4988,3 +4988,9 @@
 "general.action.showLocation"="Show location";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="Banners";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Cancel all transfers";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Clear all transfers";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Retry all transfers";
