@@ -985,6 +985,9 @@ public struct MEGAImageBundle {
   public static var monoPlayMediumThinOutline: SwiftUICore.Image {
     get
   }
+  public static var monoEraserMediumThinOutline: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2616,6 +2619,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoPlayMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoEraserMediumThinOutline: UIKit.UIImage {
     get
   }
 }

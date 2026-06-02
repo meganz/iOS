@@ -323,4 +323,5 @@ public struct MEGAImageBundle {
     public static var audioSkipForward: Image { Image(.audioSkipForward) }
     public static var monoQueueLineMediumThinOutline: Image { Image(.monoQueueLineMediumThinOutline) }
     public static var monoPlayMediumThinOutline: Image { Image(.monoPlayMediumThinOutline) }
+    public static var monoEraserMediumThinOutline: Image { Image(.monoEraserMediumThinOutline) }
 }
