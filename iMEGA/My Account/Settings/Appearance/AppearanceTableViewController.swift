@@ -76,6 +76,7 @@ class AppearanceTableViewController: UITableViewController {
         let title = Strings.Localizable.Settings.Section.userInterface
         self.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
+        tableView.showsVerticalScrollIndicator = false
         
         defaultTabLabel.text = Strings.Localizable.defaultTab
         sortingAndViewModeLabel.text = Strings.Localizable.sortingAndViewMode
