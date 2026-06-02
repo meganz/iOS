@@ -19,6 +19,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SettingsTableViewCell" bundle:nil] forCellReuseIdentifier:@"SettingsTableViewCell"];
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.showsVerticalScrollIndicator = NO;
     [self setupColors];
     NSString *title = LocalizedString(@"settingsTitle", @"");
     self.navigationItem.title = title;
