@@ -25,6 +25,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     private let inventoryUseCase: any TransferInventoryUseCaseProtocol
     private let counterUseCase: any TransferCounterUseCaseProtocol
     private let registry: TransferRegistry
+    private let locationResolver: any TransferLocationResolving
     private let filteringUserTransfers: Bool
 
     private let cachedResultIds: Atomic<[ResultId]> = Atomic(wrappedValue: [])
@@ -34,12 +35,14 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         inventoryUseCase: some TransferInventoryUseCaseProtocol,
         counterUseCase: some TransferCounterUseCaseProtocol,
         registry: TransferRegistry,
+        locationResolver: some TransferLocationResolving,
         filteringUserTransfers: Bool = true
     ) {
         self.filter = filter
         self.inventoryUseCase = inventoryUseCase
         self.counterUseCase = counterUseCase
         self.registry = registry
+        self.locationResolver = locationResolver
         self.filteringUserTransfers = filteringUserTransfers
     }
 
@@ -70,13 +73,30 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         let results = entities.map(TransferEntityMapper.searchResult)
         let ids = results.map(\.id)
         cachedResultIds.mutate { $0 = ids }
+        let states = await rowStates(for: entities)
         let registry = self.registry
         await MainActor.run {
-            for entity in entities {
-                registry.upsert(TransferEntityMapper.rowState(for: entity))
+            for state in states {
+                registry.upsert(state)
             }
         }
         return SearchResultsEntity(results: results, availableChips: [], appliedChips: [])
+    }
+
+    /// Builds row states for a snapshot. Only the Completed tab needs the file
+    /// system path, and that path requires an SDK lookup for uploads, so location
+    /// is resolved here (off the main actor) rather than in the pure mapper.
+    private func rowStates(for entities: [TransferEntity]) async -> [TransferRowState] {
+        guard filter == .completed else {
+            return entities.map { TransferEntityMapper.rowState(for: $0) }
+        }
+        var states: [TransferRowState] = []
+        states.reserveCapacity(entities.count)
+        for entity in entities {
+            let location = await locationResolver.location(for: entity)
+            states.append(TransferEntityMapper.rowState(for: entity, location: location))
+        }
+        return states
     }
 
     private func currentEntries() async -> [TransferEntity] {
@@ -86,7 +106,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
             return all.filter(Self.isVisibleInList).filter(Self.isActive)
         case .completed:
             return inventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
-                .filter(Self.isVisibleInList).filter(Self.isCompleted)
+                .filter(Self.isVisibleCompleted)
         case .failed:
             return inventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
                 .filter(Self.isVisibleInList).filter(Self.isFailed)
@@ -126,6 +146,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     private func finishSignals() -> AnyAsyncSequence<SearchResultUpdateSignal> {
         let filter = self.filter
         let registry = self.registry
+        let locationResolver = self.locationResolver
         return counterUseCase.transferFinishUpdates
             .compactMap { response -> SearchResultUpdateSignal? in
                 let entity = response.transferEntity
@@ -134,10 +155,12 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
                 case .active:
                     await registry.remove(id: id)
                     return .generic
-                case .completed where Self.isCompleted(entity),
-                     .failed where Self.isFailed(entity):
-                    let state = TransferEntityMapper.rowState(for: entity)
-                    await registry.upsert(state)
+                case .completed where Self.isCompleted(entity):
+                    let location = await locationResolver.location(for: entity)
+                    await registry.upsert(TransferEntityMapper.rowState(for: entity, location: location))
+                    return .generic
+                case .failed where Self.isFailed(entity):
+                    await registry.upsert(TransferEntityMapper.rowState(for: entity))
                     return .generic
                 default:
                     return nil
@@ -164,6 +187,13 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
 
     private static func isCompleted(_ entity: TransferEntity) -> Bool {
         entity.state == .complete
+    }
+
+    /// Single source of truth for "would this transfer render as a row on the
+    /// Completed tab". Shared with `TransfersListViewModel.seedCompletedPresence()`
+    /// so the tab-bar presence flag never disagrees with the rendered list.
+    static func isVisibleCompleted(_ entity: TransferEntity) -> Bool {
+        isVisibleInList(entity) && isCompleted(entity)
     }
 
     private static func isFailed(_ entity: TransferEntity) -> Bool {

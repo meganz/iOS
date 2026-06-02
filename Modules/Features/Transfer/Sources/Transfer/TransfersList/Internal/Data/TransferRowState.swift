@@ -32,4 +32,9 @@ public struct TransferRowState: Sendable, Equatable {
     public var speed: Int64
     public var subtitle: String
     public var errorDescription: String?
+
+    /// File system path shown on the Completed row's second line: the destination
+    /// folder's cloud path for uploads, or the local destination folder for
+    /// downloads. `nil` on tabs that don't render it (e.g. Active).
+    public var location: String?
 }

@@ -5,12 +5,23 @@ import MEGASwiftUI
 import Search
 import SwiftUI
 
-/// Active-tab row layout matching the design: file-type icon, file name, "↑ 48% ·
-/// 30 MB of 100 MB · 4.2 MB/s" subtitle, trailing pause/play (or kebab) icon, and
-/// a linear progress bar at the bottom tinted by state. Observes one
-/// `TransferRowViewModel` so 1 Hz progress updates re-render only this row.
+/// Row layout for the new Transfers screen, with two variants driven by status:
+///
+/// - Active (and other in-flight states): file-type icon, file name, "↑ 48% · 30 MB
+///   of 100 MB · 4.2 MB/s" subtitle, trailing pause/play icon, and a state-tinted
+///   linear progress bar at the bottom.
+/// - Completed: file-type icon, file name, the file system path on a second line,
+///   "↑ 7 MB · 10 Aug 2024 19:09" on a third line, an inert kebab, and no progress
+///   bar.
+///
+/// Observes one `TransferRowViewModel` so 1 Hz progress updates re-render only this
+/// row.
 struct TransferResultRowView: View {
     @ObservedObject var viewModel: TransferRowViewModel
+
+    private var isCompleted: Bool {
+        viewModel.state.status == .completed
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -26,6 +37,14 @@ struct TransferResultRowView: View {
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         .lineLimit(1)
 
+                    if isCompleted, let location = viewModel.state.location {
+                        Text(location)
+                            .font(.caption)
+                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    }
+
                     Text(viewModel.state.subtitle)
                         .font(.caption.monospacedDigit())
                         .foregroundStyle(TokenColors.Text.secondary.swiftUI)
@@ -37,8 +56,10 @@ struct TransferResultRowView: View {
             }
             .padding(TokenSpacing._4)
 
-            ProgressView(value: viewModel.state.progress)
-                .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
+            if !isCompleted {
+                ProgressView(value: viewModel.state.progress)
+                    .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
+            }
         }
     }
 

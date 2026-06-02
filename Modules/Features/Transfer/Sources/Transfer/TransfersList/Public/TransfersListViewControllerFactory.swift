@@ -6,7 +6,11 @@ import UIKit
 
 @MainActor
 public enum TransfersListViewControllerFactory {
-    public static func make() -> UIViewController {
+    /// - Parameter nodeUseCase: supplied by the app composition root. The Completed
+    ///   tab resolves an upload's destination cloud path through it, and its
+    ///   `NodeValidationRepository` dependency is only constructible in the app
+    ///   target, so it can't be built here.
+    public static func make(nodeUseCase: some NodeUseCaseProtocol) -> UIViewController {
         let inventoryUseCase = TransferInventoryUseCase(
             transferInventoryRepository: TransferInventoryRepository.newRepo,
             fileSystemRepository: FileSystemRepository.sharedRepo
@@ -16,9 +20,12 @@ public enum TransfersListViewControllerFactory {
             transferInventoryRepository: TransferInventoryRepository.newRepo,
             fileSystemRepository: FileSystemRepository.sharedRepo
         )
+        let nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
         let viewModel = TransfersListViewModel(
             inventoryUseCase: inventoryUseCase,
-            counterUseCase: counterUseCase
+            counterUseCase: counterUseCase,
+            nodeUseCase: nodeUseCase,
+            nodeAttributeUseCase: nodeAttributeUseCase
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
         host.hidesBottomBarWhenPushed = true

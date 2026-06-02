@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAFoundation
 import Search
 
 /// Maps `TransferEntity` from the Domain layer into the dual representations
@@ -35,7 +36,10 @@ public enum TransferEntityMapper {
         )
     }
 
-    public static func rowState(for entity: TransferEntity) -> TransferRowState {
+    /// - Parameter location: file system path for the Completed row's second line,
+    ///   resolved by the Data adapter (upload destination cloud path or download
+    ///   local folder). `nil` for tabs that don't render it.
+    public static func rowState(for entity: TransferEntity, location: String? = nil) -> TransferRowState {
         let direction = direction(for: entity.type)
         let status = status(for: entity.state)
         let progress = progress(for: entity)
@@ -57,13 +61,20 @@ public enum TransferEntityMapper {
                 progress: progress,
                 transferredBytes: transferredBytes,
                 totalBytes: totalBytes,
-                speed: speed
+                speed: speed,
+                completionDate: completionDateString(for: entity)
             ),
-            errorDescription: entity.lastErrorExtended.map { String(describing: $0) }
+            errorDescription: entity.lastErrorExtended.map { String(describing: $0) },
+            location: location
         )
     }
 
     private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
+
+    private static func completionDateString(for entity: TransferEntity) -> String? {
+        guard let date = entity.updateTime else { return nil }
+        return DateFormatter.dateMediumTimeShort().localisedString(from: date)
+    }
 
     private static func subtitle(
         direction: TransferRowState.Direction,
@@ -71,7 +82,8 @@ public enum TransferEntityMapper {
         progress: Double,
         transferredBytes: Int64,
         totalBytes: Int64,
-        speed: Int64
+        speed: Int64,
+        completionDate: String?
     ) -> String {
         let arrow = direction == .upload ? "↑" : "↓"
         let percent = Int((progress * 100).rounded())
@@ -90,7 +102,8 @@ public enum TransferEntityMapper {
         case .cancelled:
             return "\(arrow) Cancelled"
         case .completed:
-            return "\(arrow) \(total)"
+            guard let completionDate else { return "\(arrow) \(total)" }
+            return "\(arrow) \(total) · \(completionDate)"
         }
     }
 

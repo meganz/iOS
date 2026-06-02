@@ -82,7 +82,20 @@ struct TransferSearchResultsProviderTests {
                 completedTransfers: completedTransfers
             ),
             counterUseCase: MockTransferCounterUseCase(),
-            registry: TransferRegistry()
+            registry: TransferRegistry(),
+            locationResolver: MockTransferLocationResolver()
         )
+    }
+}
+
+private struct MockTransferLocationResolver: TransferLocationResolving {
+    let location: String?
+
+    init(location: String? = nil) {
+        self.location = location
+    }
+
+    func location(for entity: TransferEntity) async -> String? {
+        location
     }
 }

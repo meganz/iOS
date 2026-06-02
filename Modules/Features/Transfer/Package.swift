@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Presentation/MEGAAssets"),
@@ -36,6 +37,7 @@ let package = Package(
             dependencies: [
                 "MEGAAppSDKRepo",
                 "MEGADomain",
+                "MEGAFoundation",
                 "MEGAL10n",
                 "MEGAPreference",
                 "MEGASwift",

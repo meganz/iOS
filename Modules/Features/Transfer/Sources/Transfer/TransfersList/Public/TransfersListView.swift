@@ -23,7 +23,8 @@ public struct TransfersListView: View {
             }
             tabContent
         }
-        .task { await viewModel.observeActiveItemCount() }
+        .task { viewModel.seedCompletedPresence() }
+        .task(id: viewModel.selectedTab) { await viewModel.observeSelectedTabItemCount() }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(Strings.Localizable.transfers)
@@ -49,8 +50,10 @@ public struct TransfersListView: View {
 
     @ViewBuilder
     private var tabContent: some View {
-        if let activeContainer = viewModel.activeContainerViewModel, viewModel.selectedTab == .active {
+        if viewModel.selectedTab == .active, let activeContainer = viewModel.activeContainerViewModel {
             SearchResultsContainerView(viewModel: activeContainer)
+        } else if viewModel.selectedTab == .completed, let completedContainer = viewModel.completedContainerViewModel {
+            SearchResultsContainerView(viewModel: completedContainer)
         } else {
             emptyState
         }

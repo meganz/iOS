@@ -1,4 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
+import MEGADomain
 import Transfer
 import UIKit
 
@@ -18,7 +20,13 @@ final class TransfersRouter {
     func showTransfers() {
         let transferVC: UIViewController
         if featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
-            transferVC = TransfersListViewControllerFactory.make()
+            transferVC = TransfersListViewControllerFactory.make(
+                nodeUseCase: NodeUseCase(
+                    nodeDataRepository: NodeDataRepository.newRepo,
+                    nodeValidationRepository: NodeValidationRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
+            )
         } else {
             transferVC = UIStoryboard(name: "Transfers", bundle: nil)
                 .instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")

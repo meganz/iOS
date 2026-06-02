@@ -1,5 +1,6 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import Transfer
@@ -34,7 +35,13 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
 
         let rootVC: UIViewController
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
-            rootVC = TransfersListViewControllerFactory.make()
+            rootVC = TransfersListViewControllerFactory.make(
+                nodeUseCase: NodeUseCase(
+                    nodeDataRepository: NodeDataRepository.newRepo,
+                    nodeValidationRepository: NodeValidationRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
+            )
         } else {
             let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
             guard transferWidgetVC.presentingViewController == nil,
