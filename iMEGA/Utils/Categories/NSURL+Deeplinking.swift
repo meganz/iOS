@@ -131,7 +131,7 @@ extension NSURL {
             return match.value
         }
 
-        return fragment.isEmpty ? .unrecognized : .handleLink
+        return fragment.isEmpty ? (isIgnoredUniversalLinkPath ? .unrecognized : .default) : .handleLink
     }
     
     private func parseMEGASchemeURL() -> URLType {
@@ -186,6 +186,24 @@ extension NSURL {
         }
     }
 
+    /// Paths on universal-link domains (MEGA.entitlements) that should be
+    /// silently dropped because  opening them in SFSafariViewController after jumping from external to MEGA causes
+    /// confusing behaviour after redirects (IOS-11782).
+    private var isIgnoredUniversalLinkPath: Bool {
+        guard let host = host?.lowercased(),
+              let path = path?.lowercased(),
+              Self.universalLinkHosts.contains(host) else { return false }
+        return Self.ignoredPaths.contains(where: { path.hasPrefix($0) })
+    }
+
+    private static let universalLinkHosts: Set<String> = [
+        "mega.nz", "www.mega.nz",
+        "mega.app", "www.mega.app",
+        "testbed.preview.mega.co.nz"
+    ]
+
+    private static let ignoredPaths: Set<String> = ["/login", "/register"]
+
     private func parseUniversalLinkURL() -> URLType {
         guard let path, host?.lowercased().contains("mega") == true else {
             return .default
@@ -229,6 +247,6 @@ extension NSURL {
             return parseFragmentType()
         }
 
-        return .unrecognized
+        return isIgnoredUniversalLinkPath ? .unrecognized : .default
     }
 }
