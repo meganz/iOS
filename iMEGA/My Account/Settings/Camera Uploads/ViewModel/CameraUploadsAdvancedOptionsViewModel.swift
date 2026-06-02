@@ -11,9 +11,20 @@ enum CameraUploadsAdvancedOptionsEvent {
 
 final class CameraUploadsAdvancedOptionsViewModel: NSObject {
     private let tracker: any AnalyticsTracking
-    
-    init(tracker: some AnalyticsTracking = DIContainer.tracker) {
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+
+    init(
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
+    }
+
+    /// Whether the "Upload only new photos" row should be shown. Gated behind the feature flag so
+    /// the option has no UI entry point until it is rolled out.
+    @objc var shouldShowUploadOnlyNewPhotosOption: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .uploadOnlyNewPhotos)
     }
     
     func trackEvent(_ event: CameraUploadsAdvancedOptionsEvent) {

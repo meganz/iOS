@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppPresentation
 import Photos
 import Testing
 
@@ -6,23 +7,44 @@ import Testing
 /// Serialized because the preference lives in process-global `UserDefaults`, so parallel cases
 /// would race on shared state. A `final class` (not a struct) so teardown can live in `deinit`,
 /// which always runs after each test — including when a `#require` throws — guaranteeing the
-/// mutated `standardUserDefaults` is restored and never leaks into other tests.
+/// mutated `standardUserDefaults` (and the feature-flag storage) is restored and never leaks
+/// into other tests.
 @Suite(.serialized)
 final class CameraUploadManagerUploadOnlyNewPhotosTests {
     private let enabledKey = "UploadOnlyNewPhotosEnabled"
     private let cutoffKey = "UploadOnlyNewPhotosCutoff"
     private let savedEnabled: Any?
     private let savedCutoff: Any?
+    private let savedFeatureFlags: Any?
 
     init() {
         savedEnabled = UserDefaults.standard.object(forKey: enabledKey)
         savedCutoff = UserDefaults.standard.object(forKey: cutoffKey)
+        savedFeatureFlags = Self.groupUserDefaults?.object(forKey: MEGAFeatureFlagsUserDefaultsKey)
+        // The preference getter is gated by the feature flag (kill switch); turn the flag on so the
+        // preference behaviour under test is observable.
+        Self.setUploadOnlyNewPhotosFeatureFlag(true)
         CameraUploadManager.shouldUploadOnlyNewPhotos = false
     }
 
     deinit {
+        CameraUploadRecordManager.shared().backgroundContext.performAndWait {}
         UserDefaults.standard.set(savedEnabled, forKey: enabledKey)
         UserDefaults.standard.set(savedCutoff, forKey: cutoffKey)
+        Self.groupUserDefaults?.set(savedFeatureFlags, forKey: MEGAFeatureFlagsUserDefaultsKey)
+    }
+
+    // Production code reads the flag through `DIContainer.featureFlagProvider`, which is backed by
+    // the feature-flags dictionary in the group user defaults — flip the real storage here.
+    private static var groupUserDefaults: UserDefaults? {
+        UserDefaults(suiteName: MEGAGroupIdentifier)
+    }
+
+    private static func setUploadOnlyNewPhotosFeatureFlag(_ enabled: Bool) {
+        guard let defaults = groupUserDefaults else { return }
+        var flags = defaults.object(forKey: MEGAFeatureFlagsUserDefaultsKey) as? [String: Any] ?? [:]
+        flags[FeatureFlagKey.uploadOnlyNewPhotos.rawValue] = enabled
+        defaults.set(flags, forKey: MEGAFeatureFlagsUserDefaultsKey)
     }
 
     private var mediaTypes: [NSNumber] {
@@ -64,6 +86,33 @@ final class CameraUploadManagerUploadOnlyNewPhotosTests {
         CameraUploadManager.shouldUploadOnlyNewPhotos = false
         #expect(CameraUploadManager.shouldUploadOnlyNewPhotos == false)
         #expect(CameraUploadManager.uploadOnlyNewPhotosCutoff == nil)
+    }
+
+    // MARK: - Feature flag kill switch
+
+    @Test func toggleOnButFlagOff_disablesBehaviourAndKeepsStoredPreference() throws {
+        CameraUploadManager.shouldUploadOnlyNewPhotos = true
+        #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
+
+        Self.setUploadOnlyNewPhotosFeatureFlag(false)
+
+        // Behaviour is off: the getter gates everything downstream of it, including the scan filter.
+        #expect(CameraUploadManager.shouldUploadOnlyNewPhotos == false)
+        let predicate = try #require(PHFetchOptions.mnz_scanFetchOptionsForCameraUpload(withMediaTypes: mediaTypes).predicate)
+        #expect(!predicate.predicateFormat.contains("creationDate"))
+        // The stored preference survives the rollback, so the user's choice is not lost.
+        #expect(UserDefaults.standard.bool(forKey: enabledKey))
+    }
+
+    @Test func flagComesBackOn_behaviourResumesWithOriginalCutoff() throws {
+        CameraUploadManager.shouldUploadOnlyNewPhotos = true
+        let originalCutoff = try #require(CameraUploadManager.uploadOnlyNewPhotosCutoff)
+
+        Self.setUploadOnlyNewPhotosFeatureFlag(false)
+        Self.setUploadOnlyNewPhotosFeatureFlag(true)
+
+        #expect(CameraUploadManager.shouldUploadOnlyNewPhotos)
+        #expect(CameraUploadManager.uploadOnlyNewPhotosCutoff == originalCutoff)
     }
 
     // MARK: - Scan fetch options (toggle OFF)

@@ -210,29 +210,37 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 #pragma mark - upload only new photos
 
 + (BOOL)shouldUploadOnlyNewPhotos {
-    return [NSUserDefaults.standardUserDefaults boolForKey:UploadOnlyNewPhotosEnabledKey];
+    return self.isUploadOnlyNewPhotosFeatureEnabled && [NSUserDefaults.standardUserDefaults boolForKey:UploadOnlyNewPhotosEnabledKey];
 }
 
 + (void)setUploadOnlyNewPhotos:(BOOL)uploadOnlyNewPhotos {
-    if (uploadOnlyNewPhotos == [self shouldUploadOnlyNewPhotos]) {
+    if (uploadOnlyNewPhotos == [NSUserDefaults.standardUserDefaults boolForKey:UploadOnlyNewPhotosEnabledKey]) {
         return;
     }
 
     [NSUserDefaults.standardUserDefaults setBool:uploadOnlyNewPhotos forKey:UploadOnlyNewPhotosEnabledKey];
 
     if (uploadOnlyNewPhotos) {
-        // OFF -> ON: persist the activation timestamp, then reconcile already-existing records with
-        // the new scan filter by dropping pre-cutoff pending ones (in-flight work is preserved).
+        // OFF -> ON: persist the activation timestamp synchronously so the scan filter takes effect
+        // right away, then reconcile already-existing records with the new filter by dropping
+        // pre-cutoff pending ones (in-flight work is preserved). The cleanup is asynchronous — its
+        // record count is unbounded and this setter is called from the settings switch on the main
+        // thread — so the stats refresh and the pipeline re-evaluation wait for it to land.
         NSDate *cutoff = NSDate.date;
         [self setUploadOnlyNewPhotosCutoff:cutoff];
-        [CameraUploadRecordManager.shared deletePendingRecordsBeforeDate:cutoff error:nil];
+        [CameraUploadRecordManager.shared deletePendingRecordsBeforeDate:cutoff completion:^(NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"[Camera Upload] error when deleting pre-cutoff pending records %@", error);
+            }
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+            [CameraUploadManager.shared startCameraUploadIfNeeded];
+        }];
     } else {
         // ON -> OFF: clear the cutoff and rescan so previously filtered older assets are backfilled.
         [self setUploadOnlyNewPhotosCutoff:nil];
         [CameraUploadManager.shared startCameraUploadIfNeeded];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
     }
-
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
 }
 
 + (NSDate *)uploadOnlyNewPhotosCutoff {

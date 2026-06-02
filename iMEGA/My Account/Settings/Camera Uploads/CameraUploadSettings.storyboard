@@ -906,6 +906,41 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="Only photos and videos added after this option is turned on will be uploaded." id="uon-Se-ct1" userLabel="Upload Only New Photos">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="48" id="uon-Ce-ll1">
+                                        <rect key="frame" x="0.0" y="419" width="375" height="48"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="uon-Ce-ll1" id="uon-Cv-iew">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uon-Sw-tch">
+                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForUploadOnlyNewPhotosSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="uon-Ac-ti1"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload only new photos" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uon-La-bel">
+                                                    <rect key="frame" x="16" y="13" width="286" height="22"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="uon-La-bel" firstAttribute="leading" secondItem="uon-Cv-iew" secondAttribute="leadingMargin" id="uon-Ct-001"/>
+                                                <constraint firstItem="uon-Sw-tch" firstAttribute="leading" secondItem="uon-La-bel" secondAttribute="trailing" constant="8" symbolic="YES" id="uon-Ct-002"/>
+                                                <constraint firstItem="uon-La-bel" firstAttribute="top" secondItem="uon-Cv-iew" secondAttribute="topMargin" constant="2" id="uon-Ct-003"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="uon-La-bel" secondAttribute="bottom" constant="2" id="uon-Ct-004"/>
+                                                <constraint firstItem="uon-Sw-tch" firstAttribute="trailing" secondItem="uon-Cv-iew" secondAttribute="trailingMargin" id="uon-Ct-005"/>
+                                                <constraint firstItem="uon-Sw-tch" firstAttribute="centerY" secondItem="uon-Cv-iew" secondAttribute="centerY" id="uon-Ct-006"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="BZj-6h-yKC" id="33X-Is-egX"/>
@@ -923,6 +958,8 @@
                         <outlet property="uploadSyncedAlbumsSwitch" destination="lWz-Nd-fkQ" id="WXL-OB-mOA"/>
                         <outlet property="uploadVideosForLivePhotosLabel" destination="0X0-1E-S4V" id="rX2-cV-VHX"/>
                         <outlet property="uploadVideosForlivePhotosSwitch" destination="tgG-aW-4D1" id="AZt-OW-McO"/>
+                        <outlet property="uploadOnlyNewPhotosLabel" destination="uon-La-bel" id="uon-Ol-001"/>
+                        <outlet property="uploadOnlyNewPhotosSwitch" destination="uon-Sw-tch" id="uon-Os-001"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGf-Nm-8Sk" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -36,6 +36,10 @@ extension CameraUploadManager {
     @objc func trackCameraUploadsEnableStatus(_ enable: Bool) {
         DIContainer.tracker.trackAnalyticsEvent(with: enable ? DIContainer.cameraUploadsEnabled : DIContainer.cameraUploadsDisabled)
     }
+
+    @objc class var isUploadOnlyNewPhotosFeatureEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .uploadOnlyNewPhotos)
+    }
     
     func photoQueuePausedReason() -> CameraUploadMediaTypePausedReason? {
         concurrentCountCalculator.photoQueuePausedReason()

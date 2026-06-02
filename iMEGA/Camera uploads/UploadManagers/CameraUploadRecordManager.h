@@ -68,10 +68,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// One-time cleanup for "Upload Only New Photos": deletes pending records (everything except the
 /// completed and currently in-flight statuses) whose stored capture date is before @c cutoff, so
 /// existing CoreData aligns with the scan-time @c creationDate filter. Done / QueuedUp / Processing
-/// / Uploading records are preserved. Runs on the background context.
-- (BOOL)deletePendingRecordsBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+/// / Uploading records are preserved. Asynchronous — the record count is unbounded, so the work
+/// runs on the background context in bounded batches without blocking the caller; @c completion is
+/// invoked on the context's queue with the first error encountered, or nil on success.
+- (void)deletePendingRecordsBeforeDate:(NSDate *)cutoff completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 
-/// The fetch predicate used by @c deletePendingRecordsBeforeDate:error: . Exposed for unit testing.
+/// The fetch predicate used by @c deletePendingRecordsBeforeDate:completion: . Exposed for unit testing.
 + (NSPredicate *)pendingRecordsToDeletePredicateBeforeDate:(NSDate *)cutoff;
 
 #pragma mark - upload error records management

@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISwitch *uploadSyncedAlbumsSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadHiddenAlbumSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadAllBurstPhotosSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadOnlyNewPhotosSwitch;
 
 @property (strong, nonatomic) CameraUploadsAdvancedOptionsViewModel *viewModel;
 

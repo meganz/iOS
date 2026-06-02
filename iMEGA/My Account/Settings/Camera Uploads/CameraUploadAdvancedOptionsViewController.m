@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionHiddenAlbum,
     AdvancedOptionSectionSharedAlbums,
     AdvancedOptionSectionSyncedAlbums,
+    AdvancedOptionSectionUploadOnlyNewPhotos,
 };
 
 @interface CameraUploadAdvancedOptionsViewController ()
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 @property (weak, nonatomic) IBOutlet UILabel *uploadHiddenAlbumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *uploadSharedAlbumsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *uploadSyncedAlbumsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *uploadOnlyNewPhotosLabel;
 
 @end
 
@@ -46,6 +48,9 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadSyncedAlbumsLabel.text = LocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
     
+    self.uploadOnlyNewPhotosLabel.text = LocalizedString(@"cameraUploads.settings.uploadOnlyNewPhotos.title", @"Title of the switch to config whether to upload only the photos and videos added after this option is turned on");
+    self.uploadOnlyNewPhotosSwitch.on = CameraUploadManager.shouldUploadOnlyNewPhotos;
+
     [self setupColors];
 }
 
@@ -97,6 +102,11 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     [self trackITunesSyncedAlbumsUploadEvent: sender.isOn];
 }
 
+- (IBAction)didChangeValueForUploadOnlyNewPhotosSwitch:(UISwitch *)sender {
+    CameraUploadManager.uploadOnlyNewPhotos = sender.isOn;
+    [self.tableView reloadData];
+}
+
 - (void)configCameraUploadWhenValueChangedForSwitch:(UISwitch *)sender {
     [self.tableView reloadData];
     if (sender.isOn) {
@@ -136,11 +146,24 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
         case AdvancedOptionSectionSyncedAlbums:
             title = LocalizedString(@"Synced albums are where you sync photos or videos to your device's Photos app from iTunes.", @"");
             break;
+        case AdvancedOptionSectionUploadOnlyNewPhotos:
+            title = LocalizedString(@"cameraUploads.settings.uploadOnlyNewPhotos.subtitle", @"Footer explaining the 'Upload only new photos' switch");
+            break;
         default:
             break;
     }
     
     return title;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // The "Upload only new photos" section is the last one in the storyboard. Drop it when the
+    // feature flag is off so the option has no UI entry point until it is rolled out.
+    NSInteger numberOfSections = [super numberOfSectionsInTableView:tableView];
+    if (!self.viewModel.shouldShowUploadOnlyNewPhotosOption) {
+        numberOfSections -= 1;
+    }
+    return numberOfSections;
 }
 
 

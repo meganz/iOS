@@ -34,6 +34,8 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 // When enabled, only media whose creationDate is on or after the cutoff are considered for upload.
 // Flipping this ON persists the current date as the cutoff; flipping it OFF clears the cutoff.
+// The getter is additionally gated by the `uploadOnlyNewPhotos` feature flag (kill switch): it
+// returns NO while the flag is off, even if the stored preference is ON.
 @property (class, getter=shouldUploadOnlyNewPhotos) BOOL uploadOnlyNewPhotos;
 @property (class, nullable) NSDate *uploadOnlyNewPhotosCutoff;
 

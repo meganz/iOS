@@ -41,4 +41,21 @@ struct CameraUploadsAdvancedOptionsViewModelTests {
             )
         }
     }
+
+    @Suite("Upload only new photos option visibility")
+    struct UploadOnlyNewPhotosOptionVisibility {
+        private func makeSUT(featureFlagEnabled: Bool) -> CameraUploadsAdvancedOptionsViewModel {
+            CameraUploadsAdvancedOptionsViewModel(
+                featureFlagProvider: MockFeatureFlagProvider(list: [.uploadOnlyNewPhotos: featureFlagEnabled])
+            )
+        }
+
+        @Test func shownWhenFeatureFlagOn() {
+            #expect(makeSUT(featureFlagEnabled: true).shouldShowUploadOnlyNewPhotosOption)
+        }
+
+        @Test func hiddenWhenFeatureFlagOff() {
+            #expect(makeSUT(featureFlagEnabled: false).shouldShowUploadOnlyNewPhotosOption == false)
+        }
+    }
 }

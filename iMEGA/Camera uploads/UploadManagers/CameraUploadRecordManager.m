@@ -401,30 +401,39 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     return [NSCompoundPredicate andPredicateWithSubpredicates:@[notInFlightOrDone, beforeCutoff]];
 }
 
-- (BOOL)deletePendingRecordsBeforeDate:(NSDate *)cutoff error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    [self.backgroundContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.predicate = [CameraUploadRecordManager pendingRecordsToDeletePredicateBeforeDate:cutoff];
-        NSArray<MOAssetUploadRecord *> *records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
-        if (coreDataError != nil) {
-            return;
-        }
+- (void)deletePendingRecordsBeforeDate:(NSDate *)cutoff completion:(void (^ _Nullable)(NSError * _Nullable))completion {
+    // There can be a LOT of pending records (think a huge library that just enabled camera uploads),
+    // so: run async to keep the caller (the settings switch on main) unblocked, and delete in small
+    // batches of faults to keep memory and transaction size in check. No NSBatchDeleteRequest here —
+    // it skips delete rules, and this entity cascades into errorPerLaunch / errorPerLogin /
+    // fileNameRecord, so batch deleting would leave orphans behind.
+    static const NSUInteger batchSize = 500;
+    [self.backgroundContext performBlock:^{
+        NSError *coreDataError = nil;
+        while (YES) {
+            NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+            request.predicate = [CameraUploadRecordManager pendingRecordsToDeletePredicateBeforeDate:cutoff];
+            request.fetchLimit = batchSize;
+            request.includesPropertyValues = NO;
+            NSArray<MOAssetUploadRecord *> *records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+            if (coreDataError != nil || records.count == 0) {
+                break;
+            }
 
-        for (MOAssetUploadRecord *record in records) {
-            [self.backgroundContext deleteObject:record];
-        }
+            for (MOAssetUploadRecord *record in records) {
+                [self.backgroundContext deleteObject:record];
+            }
 
-        if (self.backgroundContext.hasChanges) {
             [self.backgroundContext save:&coreDataError];
+            if (coreDataError != nil) {
+                break;
+            }
+        }
+
+        if (completion) {
+            completion(coreDataError);
         }
     }];
-
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-
-    return coreDataError == nil;
 }
 
 #pragma mark - error record management
