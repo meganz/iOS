@@ -216,6 +216,7 @@ private struct ScrubberSection: View {
                     set: { dragFraction = $0 }
                 ),
                 isEnabled: duration != nil,
+                tapToSeekEnabled: true,
                 minimumTrackColor: .audioPlayerAccent,
                 thumbColor: .audioPlayerAccent,
                 onEditingChanged: { editing in
@@ -233,9 +234,9 @@ private struct ScrubberSection: View {
 
     private var timeLabels: some View {
         HStack {
-            Text(formatElapsed(currentTime, duration: duration))
+            Text(formatElapsed(displayTime, duration: duration))
             Spacer()
-            Text(formatRemaining(currentTime: currentTime, duration: duration))
+            Text(formatRemaining(currentTime: displayTime, duration: duration))
                 .foregroundStyle(.white.opacity(0.6))
         }
         .font(.caption.monospacedDigit())
@@ -246,6 +247,11 @@ private struct ScrubberSection: View {
         if let dragFraction { return dragFraction }
         guard let duration, duration > 0 else { return 0 }
         return min(max(currentTime / duration, 0), 1)
+    }
+
+    private var displayTime: TimeInterval {
+        if let dragFraction, let duration { return dragFraction * duration }
+        return currentTime
     }
 
     private func formatElapsed(_ seconds: TimeInterval, duration: TimeInterval?) -> String {

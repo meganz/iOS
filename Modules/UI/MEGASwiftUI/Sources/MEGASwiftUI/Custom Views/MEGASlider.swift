@@ -7,6 +7,10 @@ public final class MEGASlider: UISlider {
     @IBInspectable public var highlightedThumbRadius: CGFloat = 25
     @IBInspectable public var touchExpansion: CGFloat = 20
 
+    /// When enabled, a touch on the track (outside the thumb's expanded hit area)
+    /// snaps the slider value to that location immediately on touch-down
+    public var tapToSeekEnabled: Bool = false
+
     public var minimumTrackColor: UIColor? { didSet { configure() } }
     public var maximumTrackColor: UIColor? { didSet { configure() } }
     public var thumbColor: UIColor? { didSet { configure() } }
@@ -89,11 +93,34 @@ public final class MEGASlider: UISlider {
         }
         return super.point(inside: point, with: event)
     }
+
+    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        guard tapToSeekEnabled else { return super.beginTracking(touch, with: event) }
+
+        let point = touch.location(in: self)
+        let track = trackRect(forBounds: bounds)
+        let thumb = thumbRect(forBounds: bounds, trackRect: track, value: value)
+        let expandedThumb = thumb.insetBy(dx: -touchExpansion, dy: -touchExpansion)
+
+        if !expandedThumb.contains(point), track.width > 0 {
+            // Tap on the track (not on the thumb): move thumb to the touch
+            // location BEFORE super.beginTracking, so UISlider sees the touch
+            // on the thumb and returns true. Without this, super returns false
+            // for off-thumb touches and tracking never starts.
+            let clampedX = min(max(point.x - track.minX, 0), track.width)
+            let fraction = Float(clampedX / track.width)
+            let newValue = minimumValue + fraction * (maximumValue - minimumValue)
+            setValue(newValue, animated: false)
+            sendActions(for: .valueChanged)
+        }
+        return super.beginTracking(touch, with: event)
+    }
 }
 
 public struct MEGASliderView: UIViewRepresentable {
     @Binding public var value: Double
     public let isEnabled: Bool
+    public let tapToSeekEnabled: Bool
     public let minimumTrackColor: Color?
     public let maximumTrackColor: Color?
     public let thumbColor: Color?
@@ -102,6 +129,7 @@ public struct MEGASliderView: UIViewRepresentable {
     public init(
         value: Binding<Double>,
         isEnabled: Bool = true,
+        tapToSeekEnabled: Bool = false,
         minimumTrackColor: Color? = nil,
         maximumTrackColor: Color? = nil,
         thumbColor: Color? = nil,
@@ -109,6 +137,7 @@ public struct MEGASliderView: UIViewRepresentable {
     ) {
         self._value = value
         self.isEnabled = isEnabled
+        self.tapToSeekEnabled = tapToSeekEnabled
         self.minimumTrackColor = minimumTrackColor
         self.maximumTrackColor = maximumTrackColor
         self.thumbColor = thumbColor
@@ -123,6 +152,7 @@ public struct MEGASliderView: UIViewRepresentable {
         slider.maximumValue = 1
         slider.value = Float(value)
         slider.isEnabled = isEnabled
+        slider.tapToSeekEnabled = tapToSeekEnabled
 
         slider.addTarget(
             context.coordinator,
@@ -148,6 +178,7 @@ public struct MEGASliderView: UIViewRepresentable {
             uiView.value = Float(value)
         }
         uiView.isEnabled = isEnabled
+        uiView.tapToSeekEnabled = tapToSeekEnabled
         applyColors(to: uiView)
     }
 
@@ -192,7 +223,7 @@ public struct MEGASliderView: UIViewRepresentable {
 @available(iOS 17.0, *)
 #Preview(traits: .fixedLayout(width: 300, height: 50)) {
     @Previewable @State var value: Double = 0.4
-    MEGASliderView(value: $value)
+    MEGASliderView(value: $value, tapToSeekEnabled: true)
 }
 
 @available(iOS 17.0, *)
