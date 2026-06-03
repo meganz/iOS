@@ -5002,3 +5002,11 @@
 "cameraUploads.settings.uploadOnlyNewPhotos.title"="Upload only new photos";
 /* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
 "cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Only photos and videos added after this option is turned on will be uploaded.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Cancel transfers?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="The selected transfers will be cancelled.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Cancel all transfers?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Cancel all";
