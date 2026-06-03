@@ -156,3 +156,5 @@ extension HomeViewHostingController: QuickAccessRouting {
         self.quickAccessRoute = quickAccessRoute
     }
 }
+
+extension HomeViewHostingController: TextFileEditable {}
