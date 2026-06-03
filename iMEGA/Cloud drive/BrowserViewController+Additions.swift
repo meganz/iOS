@@ -81,7 +81,7 @@ extension BrowserViewController {
             switch browserAction {
             case .documentProvider:
                 return (Strings.Localizable.cloudDrive, false)
-            case .newHomeUpload, .copy, .move, .import, .importFromFolderLink, .openIn, .saveToCloudDrive:
+            case .newHomeUpload, .newFileSave, .copy, .move, .import, .importFromFolderLink, .openIn, .saveToCloudDrive:
                 return (Strings.Localizable.selectDestination, false)
             default:
                 // not sure what to do with this, it's not localized
