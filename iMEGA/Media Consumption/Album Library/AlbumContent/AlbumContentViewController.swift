@@ -148,7 +148,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         setEditing(true, animated: true)
         viewModel.dispatch(.onEditModeChange(true))
         enablePhotoLibraryEditMode(isEditing)
-        updateNavigationTitle(selectedPhotoCount: 0)
+        updateNavigationTitle(selectedPhotoCount: photoLibraryContentViewModel.selection.photos.count)
         
         configureBarButtons()
         configureToolbarButtonsWithAlbumType()
