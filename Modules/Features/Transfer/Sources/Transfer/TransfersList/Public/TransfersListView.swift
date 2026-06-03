@@ -40,13 +40,44 @@ public struct TransfersListView: View {
                                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                         }
                     }
-                    Button {} label: {
-                        MEGAAssets.Image.moreVerticalMediumThinOutline
-                            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    if viewModel.showsMoreMenu {
+                        Menu {
+                            ForEach(viewModel.menuActions) { action in
+                                Button {
+                                    handle(action)
+                                } label: {
+                                    Label {
+                                        Text(action.title)
+                                    } icon: {
+                                        icon(for: action)
+                                    }
+                                }
+                            }
+                        } label: {
+                            MEGAAssets.Image.moreVerticalMediumThinOutline
+                                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                        }
                     }
-                    .disabled(true)
                 }
             }
+        }
+    }
+
+    private func icon(for action: TransferMoreMenuAction) -> Image {
+        switch action {
+        case .select: MEGAAssets.Image.selectAllItems
+        case .cancelAll: MEGAAssets.Image.rubbishBinInMenu
+        case .clearAll: MEGAAssets.Image.monoEraserMediumThinOutline
+        case .retryAll: MEGAAssets.Image.rotateCcw
+        }
+    }
+
+    private func handle(_ action: TransferMoreMenuAction) {
+        switch action {
+        case .select: viewModel.enterSelectMode()
+        case .cancelAll: viewModel.cancelAllTransfers()
+        case .clearAll: viewModel.clearAllTransfers()
+        case .retryAll: viewModel.retryAllTransfers()
         }
     }
 

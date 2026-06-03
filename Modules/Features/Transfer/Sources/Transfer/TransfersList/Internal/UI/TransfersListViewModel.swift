@@ -236,4 +236,42 @@ public final class TransfersListViewModel: ObservableObject {
         }
         isAllPaused.toggle()
     }
+
+    // MARK: - More menu
+
+    /// Tab-specific actions for the top-bar More menu. Each action is only offered
+    /// when the current tab has rows to act on, so an empty list means the More
+    /// button should be hidden (see `showsMoreMenu`).
+    var menuActions: [TransferMoreMenuAction] {
+        switch selectedTab {
+        case .active:
+            hasActiveTransfers ? [.select, .cancelAll] : []
+        case .completed:
+            hasCompletedTransfers ? [.select, .clearAll] : []
+        case .failed:
+            hasFailedTransfers ? [.select, .retryAll, .clearAll] : []
+        }
+    }
+
+    /// The More button is hidden when the current tab has no actions, to avoid
+    /// presenting an empty menu.
+    var showsMoreMenu: Bool {
+        !menuActions.isEmpty
+    }
+
+    func enterSelectMode() {
+        // Select mode: IOS-11933
+    }
+
+    func cancelAllTransfers() {
+        // Confirmation dialog + cancel-all: IOS-11934
+    }
+
+    func clearAllTransfers() {
+        // Confirmation dialog + clear-all: IOS-11934
+    }
+
+    func retryAllTransfers() {
+        // Retry-all: IOS-11943
+    }
 }
