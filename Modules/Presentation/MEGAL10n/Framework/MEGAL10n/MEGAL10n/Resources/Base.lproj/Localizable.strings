@@ -4998,3 +4998,7 @@
 "home.customization.moreButton.resetToDefault"="Reset to defaults";
 /* The title for the Reset to default action in Customise Home menu */
 "home.customization.moreButton.chooseDefaultLaunchTab"="Choose default launch tab";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Upload only new photos";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Only photos and videos added after this option is turned on will be uploaded.";
