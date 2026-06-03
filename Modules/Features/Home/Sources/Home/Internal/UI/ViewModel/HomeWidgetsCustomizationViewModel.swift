@@ -27,6 +27,15 @@ final class HomeWidgetsCustomizationViewModel: ObservableObject {
         configs.move(fromOffsets: source, toOffset: destination)
     }
 
+    func resetWidgetsToDefaults() {
+        // First we reset the configs, effectively make it `nil`
+        widgetCustomizationUseCase.reset()
+        // Then fetch customizableConfigs() to get the default configs
+        // and assign it to `configs`
+        // After assigning `configs`, `didSet` will trigger and widgetCustomizationUseCase will store the new default configs
+        configs = widgetCustomizationUseCase.customizableConfigs()
+    }
+
     func displayTitle(for type: HomeWidgetType) -> String {
         switch type {
         case .shortcuts: Strings.Localizable.shortcuts

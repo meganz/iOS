@@ -4994,3 +4994,7 @@
 "transfers.action.clearAllTransfers"="Clear all transfers";
 /* More menu action on the Transfers screen Failed tab to retry every failed transfer */
 "transfers.action.retryAllTransfers"="Retry all transfers";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Reset to defaults";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Choose default launch tab";

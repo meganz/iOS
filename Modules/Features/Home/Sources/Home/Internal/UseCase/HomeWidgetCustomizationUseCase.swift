@@ -6,6 +6,7 @@ import MEGAPreference
 protocol HomeWidgetCustomizationUseCaseProtocol: Sendable {
     func customizableConfigs() -> [HomeWidgetConfigEntity]
     func save(_ configs: [HomeWidgetConfigEntity])
+    func reset()
 }
 
 struct HomeWidgetCustomizationUseCase: HomeWidgetCustomizationUseCaseProtocol {
@@ -31,6 +32,10 @@ struct HomeWidgetCustomizationUseCase: HomeWidgetCustomizationUseCaseProtocol {
     func save(_ configs: [HomeWidgetConfigEntity]) {
         guard let data = try? JSONEncoder().encode(configs) else { return }
         storedData = data
+    }
+
+    func reset() {
+        $storedData.remove()
     }
 
     private func allStoredConfigs() -> [HomeWidgetConfigEntity] {

@@ -4,7 +4,13 @@ import MEGAL10n
 import SwiftUI
 
 struct HomeWidgetsCustomizationView: View {
+    enum Route: Hashable {
+        case chooseDefaultLaunchTab
+    }
+
     @StateObject private var viewModel = HomeWidgetsCustomizationViewModel()
+
+    @EnvironmentObject var navigator: HomeNavigation
 
     var body: some View {
         VStack(spacing: 0) {
@@ -39,12 +45,40 @@ struct HomeWidgetsCustomizationView: View {
         .navigationTitle(Strings.Localizable.Home.Customization.title)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    // IOS-11796: [Widget Customization] Handle More button
+                Menu {
+                    Section {
+                        Button {
+                            viewModel.resetWidgetsToDefaults()
+                        } label: {
+                            Label {
+                                Text(Strings.Localizable.Home.Customization.MoreButton.resetToDefault)
+                            } icon: {
+                                EmptyView()
+                            }
+                        }
+
+                        Button {
+                            navigator.append(Route.chooseDefaultLaunchTab)
+                        } label: {
+                            Label {
+                                Text(Strings.Localizable.Home.Customization.MoreButton.chooseDefaultLaunchTab)
+                            } icon: {
+                                EmptyView()
+                            }
+                        }
+                    }
                 } label: {
-                    MEGAAssets.Image.moreHorizontal
+                    Label {
+                        Text(Strings.Localizable.more)
+                    } icon: {
+                        MEGAAssets.Image.moreHorizontal
+                    }
                 }
             }
+        }
+        .navigationDestination(for: Route.self) { _ in
+            // IOS-11797: Handle new Choose Default Launch tab
+            Text("To be implemented later")
         }
     }
 }
@@ -54,7 +88,7 @@ struct HomeWidgetsCustomizationView: View {
 private struct WidgetRow: View {
     let config: HomeWidgetConfigEntity
     let displayTitle: String
-    let onToggle: (Bool) -> Void
+    let onToggle: @MainActor (Bool) -> Void
 
     var body: some View {
         HStack {
