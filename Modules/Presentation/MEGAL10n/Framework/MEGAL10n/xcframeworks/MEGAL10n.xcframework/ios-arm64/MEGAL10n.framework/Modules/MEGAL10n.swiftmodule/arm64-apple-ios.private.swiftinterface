@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
 // swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAL10n
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
 import Foundation
 import Swift
 import _Concurrency
@@ -314,6 +314,7 @@ public enum Strings {
     public static let expired: Swift.String
     public static func expiresOn(_ p1: Any) -> Swift.String
     public static let expiryDate: Swift.String
+    public static let explore: Swift.String
     public static let exportTheLinkAndDecryptionKeySeparately: Swift.String
     public static let exportMasterKeyFooter: Swift.String
     public static let exportRecoveryKey: Swift.String
@@ -3063,6 +3064,11 @@ public enum Strings {
           public static let hasOfflineFiles: Swift.String
           public static let noOfflineFiles: Swift.String
         }
+      }
+      public enum PromotionalDialog {
+        public static let header: Swift.String
+        public static let subtitle: Swift.String
+        public static let title: Swift.String
       }
       public enum Recent {
         public static func addedByLabel(_ p1: Any) -> Swift.String

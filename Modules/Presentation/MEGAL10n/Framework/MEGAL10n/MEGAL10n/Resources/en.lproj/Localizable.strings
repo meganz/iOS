@@ -5010,3 +5010,11 @@
 "transfers.confirmation.cancelAll.title"="Cancel all transfers?";
 /* Confirm button on the dialog shown before cancelling every active transfer */
 "transfers.confirmation.cancelAll.confirm"="Cancel all";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="What’s new";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Customise your Home screen";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Choose what you see and organise it to fit how you use MEGA";
+/* Title of Explore button */
+"explore"="Explore";

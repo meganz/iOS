@@ -342,6 +342,7 @@ extension MEGAAssets {
         public static var monoPlayMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoPlayMediumThinOutline }
         public static var monoEraserMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoEraserMediumThinOutline }
         public static var monoFileSearchMediumRegularOutline: SwiftUI.Image { MEGAImageBundle.monoFileSearchMediumRegularOutline }
+        public static var homeRevampWhatsNew: SwiftUI.Image { MEGAImageBundle.homeRevampWhatsNew }
     }
 }
 

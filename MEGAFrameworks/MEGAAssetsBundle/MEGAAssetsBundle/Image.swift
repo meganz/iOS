@@ -325,4 +325,5 @@ public struct MEGAImageBundle {
     public static var monoPlayMediumThinOutline: Image { Image(.monoPlayMediumThinOutline) }
     public static var monoEraserMediumThinOutline: Image { Image(.monoEraserMediumThinOutline) }
     public static var monoFileSearchMediumRegularOutline: Image { Image(.monoFileSearchMediumRegularOutline) }
+    public static var homeRevampWhatsNew: Image { Image(.homeRevampWhatsNew) }
 }
