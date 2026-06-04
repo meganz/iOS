@@ -13,6 +13,13 @@ private extension Color {
 struct AudioPlayerView: View {
     @ObservedObject var vm: AudioPlayerViewModel
 
+    /// Distance the user must drag down before a swipe is treated as a
+    /// dismiss intent. Below this, treat as accidental motion.
+    private let dismissDragThreshold: CGFloat = 100
+    /// Predicted end-position threshold, used so a quick flick dismisses
+    /// even when the absolute drag distance is short.
+    private let dismissFlickThreshold: CGFloat = 250
+
     var body: some View {
         ZStack {
             BackgroundLayer()
@@ -89,9 +96,26 @@ struct AudioPlayerView: View {
             }
         }
         .preferredColorScheme(.dark)
+        .simultaneousGesture(swipeDownToDismiss)
         .task(id: vm.artworkURLString) {
             await vm.loadArtwork()
         }
+    }
+
+    /// Dismiss the player on a downward swipe. Uses `simultaneousGesture` so
+    /// the scrubber and button taps still receive their touches; the gesture only acts on release with
+    /// sufficient vertical drag distance or flick velocity.
+    private var swipeDownToDismiss: some Gesture {
+        DragGesture(minimumDistance: 30)
+            .onEnded { value in
+                let dy = value.translation.height
+                let predictedDy = value.predictedEndTranslation.height
+                // Reject mostly-horizontal motion
+                guard abs(value.translation.width) < dy else { return }
+                if dy > dismissDragThreshold || predictedDy > dismissFlickThreshold {
+                    vm.dismiss()
+                }
+            }
     }
 }
 
