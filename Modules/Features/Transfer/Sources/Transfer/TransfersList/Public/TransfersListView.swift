@@ -117,7 +117,7 @@ public struct TransfersListView: View {
         } label: {
             VStack(spacing: 6) {
                 Text(tab.title)
-                    .font(.subheadline.weight(isSelected ? .semibold : .regular))
+                    .font(.callout.weight(isSelected ? .semibold : .regular))
                     .foregroundStyle(isSelected
                         ? TokenColors.Button.brand.swiftUI
                         : TokenColors.Text.secondary.swiftUI)
