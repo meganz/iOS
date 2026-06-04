@@ -2,23 +2,31 @@ import MEGADesignToken
 import SwiftUI
 struct SearchResultsListView<Header: View>: View {
     @ObservedObject var viewModel: SearchResultsViewModel
+    @ObservedObject var rowHighlighter: SearchResultsRowHighlighter
     @Environment(\.editMode) private var editMode
     @ViewBuilder private let header: () -> Header
 
     public init(
         viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
+        rowHighlighter: SearchResultsRowHighlighter,
         @ViewBuilder header: @escaping () -> Header
     ) {
         _viewModel = ObservedObject(wrappedValue: viewModel())
+        self.rowHighlighter = rowHighlighter
         self.header = header
     }
 
     public var body: some View {
-        Group {
-            if viewModel.isSelectionEnabled {
-                selectableListContent
-            } else {
-                nonselectableListContent
+        ScrollViewReader { proxy in
+            Group {
+                if viewModel.isSelectionEnabled {
+                    selectableListContent
+                } else {
+                    nonselectableListContent
+                }
+            }
+            .onChange(of: rowHighlighter.scrollToResultId) { resultId in
+                scrollToHighlightedRow(resultId: resultId, proxy: proxy)
             }
         }
         .environment(\.defaultMinListRowHeight, 0)
@@ -26,6 +34,30 @@ struct SearchResultsListView<Header: View>: View {
         .tint(TokenColors.Components.selectionControlAlt.swiftUI)
     }
 
+    private func scrollToHighlightedRow(resultId: ResultId?, proxy: ScrollViewProxy) {
+        guard let resultId else { return }
+        if viewModel.listItems.contains(where: { $0.result.id == resultId }) {
+            scroll(to: resultId, proxy: proxy)
+        } else {
+            // The target may live on a page that hasn't been mapped yet (the list
+            // is paginated). Load up to it first, then scroll.
+            Task {
+                await viewModel.loadResults(untilResultIdLoaded: resultId)
+                scroll(to: resultId, proxy: proxy)
+            }
+        }
+    }
+
+    private func scroll(to resultId: ResultId, proxy: ScrollViewProxy) {
+        guard let row = viewModel.listItems.first(where: { $0.result.id == resultId }) else { return }
+        withAnimation {
+            proxy.scrollTo(row.id, anchor: .center)
+        }
+        // Consume the one-shot request so the same row isn't re-scrolled on
+        // unrelated state changes.
+        rowHighlighter.scrollToResultId = nil
+    }
+    
     @ViewBuilder
     private var selectableListContent: some View {
         let list = List(selection: $viewModel.selectedRowIds) {
@@ -102,8 +134,14 @@ struct SearchResultsListView<Header: View>: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
         } else {
-            RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
-                .listRowSeparator(.hidden)
+            RevampedSearchResultRowView(
+                viewModel: rowViewModel,
+                selected: $viewModel.selectedResultIds,
+                isHighlightTarget: rowHighlighter.highlightedResultId == rowViewModel.result.id,
+                highlightPersists: rowHighlighter.highlightPersists,
+                hasFlashedForCurrentTarget: $rowHighlighter.hasFlashedForCurrentTarget
+            )
+            .listRowSeparator(.hidden)
         }
     }
 }

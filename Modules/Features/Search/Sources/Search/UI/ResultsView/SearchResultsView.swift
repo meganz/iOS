@@ -5,11 +5,17 @@ import SwiftUI
 
 struct SearchResultsView<Header: View>: View {
     @ObservedObject var viewModel: SearchResultsViewModel
+    private let rowHighlighter: SearchResultsRowHighlighter
     @Environment(\.editMode) private var editMode
     private let header: () -> Header
 
-    init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel, @ViewBuilder header: @escaping () -> Header) {
+    init(
+        viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
+        rowHighlighter: SearchResultsRowHighlighter,
+        @ViewBuilder header: @escaping () -> Header
+    ) {
         _viewModel = ObservedObject(wrappedValue: viewModel())
+        self.rowHighlighter = rowHighlighter
         self.header = header
     }
     
@@ -41,9 +47,9 @@ struct SearchResultsView<Header: View>: View {
     @ViewBuilder
     private var contentWrapper: some View {
         if viewModel.layout == .list {
-            SearchResultsListView(viewModel: viewModel, header: header)
+            SearchResultsListView(viewModel: viewModel, rowHighlighter: rowHighlighter, header: header)
         } else {
-            SearchResultsThumbnailView(viewModel: viewModel, header: header)
+            SearchResultsThumbnailView(viewModel: viewModel, rowHighlighter: rowHighlighter, header: header)
         }
     }
     

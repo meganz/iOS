@@ -1314,6 +1314,7 @@
 		83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */; };
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
+		84BB636E2FC6847000334B0D /* SharedItemsViewController+Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */; };
 		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
 		940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */; };
 		940196D72DAD1E0100181689 /* QRSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */; };
@@ -4211,6 +4212,7 @@
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
 		844A439E2F7D20B600AE5D17 /* Transfer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transfer; sourceTree = "<group>"; };
+		84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Highlight.swift"; sourceTree = "<group>"; };
 		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
 		940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryTests.swift; sourceTree = "<group>"; };
 		940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModelTests.swift; sourceTree = "<group>"; };
@@ -13816,6 +13818,7 @@
 				94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */,
 				A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */,
 				942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */,
+				84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */,
 				94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */,
 				BF07B7E72EC6DCBF0010641A /* SharedItemsViewController+Sorting.swift */,
 				BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */,
@@ -16218,6 +16221,7 @@
 				94282D3928A3B06D00F794BA /* SharedItemsViewController+Additions.swift in Sources */,
 				A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */,
 				942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */,
+				84BB636E2FC6847000334B0D /* SharedItemsViewController+Highlight.swift in Sources */,
 				94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */,
 				BF07B8052EC6E7DC0010641A /* SharedItemsViewController+Sorting.swift in Sources */,
 				BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */,

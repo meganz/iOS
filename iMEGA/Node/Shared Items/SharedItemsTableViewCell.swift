@@ -50,6 +50,30 @@ final class SharedItemsTableViewCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
         infoButton.isHidden = editing
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layer.removeAllAnimations()
+        backgroundColor = TokenColors.Background.page
+    }
+
+    @objc func flashHighlight() {
+        layer.removeAllAnimations()
+        backgroundColor = TokenColors.Background.surface1
+        UIView.animate(
+            withDuration: 1.2,
+            delay: 0.5,
+            options: [.curveEaseOut, .allowUserInteraction],
+            animations: { [weak self] in
+                self?.backgroundColor = TokenColors.Background.page
+            }
+        )
+    }
+    
+    @objc func setPersistentHighlight(_ isHighlighted: Bool) {
+        layer.removeAllAnimations()
+        backgroundColor = isHighlighted ? TokenColors.Background.surface1 : TokenColors.Background.page
+    }
     
     @IBAction func infoButtonTouchUpInside(_ sender: UIButton) {
         delegate?.didTapInfoButton(sender: sender)

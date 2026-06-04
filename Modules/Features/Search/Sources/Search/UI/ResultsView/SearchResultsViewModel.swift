@@ -376,6 +376,30 @@ public final class SearchResultsViewModel: ObservableObject {
         // trigger the `load more` process.
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
+
+    /// Pages through results until the row with `id` is mapped into `listItems`,
+    /// so that the list can scroll to it. The full (ordered) result set is
+    /// already held in memory by the provider — this only maps the pages up to
+    /// the target, avoiding an eager full-list mapping for large folders.
+    ///
+    /// No-op if the row is already loaded or `id` is not part of the result set.
+    func loadResults(untilResultIdLoaded id: ResultId) async {
+        guard !listItems.contains(where: { $0.result.id == id }) else { return }
+
+        let allIds = resultsProvider.currentResultIds()
+        guard allIds.contains(id) else { return }
+
+        var previousCount = -1
+        while !listItems.contains(where: { $0.result.id == id }),
+              listItems.count != previousCount,
+              listItems.count < allIds.count {
+            previousCount = listItems.count
+            await performSearch(using: currentQuery, lastItemIndex: max(listItems.count - 1, 0))
+            // `consume` appends the new page on a deferred main-actor task; yield
+            // so it is reflected in `listItems` before the next check.
+            await Task.yield()
+        }
+    }
     
     private func loadMoreIfNeededThumbnailMode(item: SearchResultRowViewModel) async {
         let isFileItem = !item.result.isFolder

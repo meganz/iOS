@@ -1,6 +1,7 @@
 import CloudDrive
 import MEGAAppPresentation
 import MEGADomain
+import Search
 import SwiftUI
 
 /// Mordern replacement of CloudDriveViewController
@@ -8,6 +9,9 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
     private(set) var viewModeProvider: CloudDriveViewModeProvider
     private(set) var displayModeProvider: CloudDriveDisplayModeProvider
     private let parentNodeProvider: ParentNodeProvider
+    /// Same instance the hosted `NodeBrowserView` observes, so highlight requests
+    /// reach the live list. Owned by the node browser view model.
+    private let searchResultsContainerViewModel: SearchResultsContainerViewModel
     
     var shouldShowSafeAreaOverlayCover: Bool {
         displayModeProvider.displayMode() == .rubbishBin
@@ -24,11 +28,13 @@ final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowse
         displayModeProvider: CloudDriveDisplayModeProvider,
         matchingNodeProvider: CloudDriveMatchingNodeProvider,
         audioPlayerManager: some AudioPlayerHandlerProtocol,
+        searchResultsContainerViewModel: SearchResultsContainerViewModel,
         parentNodeProvider: @escaping ParentNodeProvider
     ) {
         self.viewModeProvider = viewModeProvider
         self.displayModeProvider = displayModeProvider
         self.parentNodeProvider = parentNodeProvider
+        self.searchResultsContainerViewModel = searchResultsContainerViewModel
         super.init(
             rootView: rootView,
             wrapper: wrapper,
@@ -51,6 +57,14 @@ extension NewCloudDriveViewController: TextFileEditable {}
 extension NewCloudDriveViewController {
     var parentNode: NodeEntity? {
         parentNodeProvider()
+    }
+
+    func scrollToAndHighlight(handle: HandleEntity, persistent: Bool = false) {
+        searchResultsContainerViewModel.scrollToAndHighlight(resultId: handle, persistent: persistent)
+    }
+
+    func clearHighlight() {
+        searchResultsContainerViewModel.clearHighlight()
     }
 }
 

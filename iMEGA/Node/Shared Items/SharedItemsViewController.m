@@ -140,7 +140,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
@@ -221,6 +220,8 @@
     
     [self.tableView reloadData];
     [self updateEmptyStateIfNeeded];
+    // Re-apply a highlight requested before this tab's data finished loading.
+    [self applyHighlightAnimated:NO];
 }
 
 - (void)internetConnectionChanged {
@@ -982,6 +983,16 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Re-apply a persistent highlight when the row is (re)displayed, so it
+    // survives cell reuse during scrolling. Implemented in
+    // SharedItemsViewController+Highlight.swift.
+    if ([cell isKindOfClass:[SharedItemsTableViewCell class]]) {
+        MEGANode *node = [self nodeAtIndexPath:indexPath];
+        [self configureHighlightForCell:(SharedItemsTableViewCell *)cell handle:node.handle];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];

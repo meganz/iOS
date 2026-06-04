@@ -53,6 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UIView *headerContainerView;
 @property (nonatomic) SharedItemsTabSelection selectedTab;
 
+@property (nonatomic) uint64_t nodeHandleToHighlight;
+@property (nonatomic) BOOL highlightPersists;
+
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;

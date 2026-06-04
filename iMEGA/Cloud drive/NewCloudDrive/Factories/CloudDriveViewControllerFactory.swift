@@ -791,6 +791,7 @@ struct CloudDriveViewControllerFactory {
             displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel),
             matchingNodeProvider: makeMatchingNodeProvider(viewModel: nodeBrowserViewModel),
             audioPlayerManager: AudioPlayerManager.shared,
+            searchResultsContainerViewModel: nodeBrowserViewModel.searchResultsContainerViewModel,
             parentNodeProvider: { nodeSource.parentNode }
         )
 

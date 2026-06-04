@@ -17,7 +17,7 @@ public struct SearchResultsContainerView: View {
             header
                 .transition(.opacity)
 
-            SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
+            SearchResultsView(viewModel: viewModel.searchResultsViewModel, rowHighlighter: viewModel.rowHighlighter) {
                 if viewModel.shouldShowSortingAndViewModeHeader {
                     ResultsHeaderView {
                         SortHeaderView(config: viewModel.sortHeaderConfig, selection: $viewModel.sortOrder)

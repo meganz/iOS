@@ -16,9 +16,12 @@ import SwiftUI
 // The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 struct RevampedSearchResultRowView: View {
     private enum Constants {
-        static let easeInOutDuration = 0.05
+        static let highlightFadeInDuration = 0.05
+        static let tapHighlightFadeOutDuration = 0.05
+        static let flashHighlightFadeOutDuration = 0.3
         static let longPressMininumDuration = 0.5
         static let tapHighlightDurationNs: UInt64 = 100_000_000
+        static let flashHighlightDurationNs: UInt64 = 1_200_000_000
         static let defaultThumbnailSize: Double = 32
     }
     @ObservedObject var viewModel: SearchResultRowViewModel
@@ -28,11 +31,21 @@ struct RevampedSearchResultRowView: View {
 
     @Binding var selected: Set<ResultId>
 
+    var isHighlightTarget: Bool = false
+    var highlightPersists: Bool = false
+    
+    @Binding var hasFlashedForCurrentTarget: Bool
+    
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
     }
 
     @State private var highlighted = false
+
+    /// Persistent highlight stays tinted as long as this row is the target.
+    private var showsPersistentHighlight: Bool {
+        isHighlightTarget && highlightPersists
+    }
     var body: some View {
         contentWithInsetsAndSwipeActions
             .task {
@@ -81,21 +94,29 @@ struct RevampedSearchResultRowView: View {
             Spacer()
                 .frame(width: 16)
         }
-        .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity( isSelected || highlighted ? 1 : 0))
+        .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity(isSelected || highlighted || showsPersistentHighlight ? 1 : 0))
         .contentShape(Rectangle())
         .padding(.vertical, 10)
         .frame(minHeight: 58)
+        .onChange(of: isHighlightTarget) { isTarget in
+            flashHighlightIfNeeded(isTarget: isTarget)
+        }
+        .onAppear {
+            // Covers the case where the target was set before the row appeared
+            // (e.g. it had to be scrolled into view first).
+            flashHighlightIfNeeded(isTarget: isHighlightTarget)
+        }
         .onTapGesture {
             // Here we only highlight for tap selection in non-Edit mode
             // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
             if editMode?.wrappedValue.isEditing != true {
-                withAnimation(.easeInOut(duration: Constants.easeInOutDuration)) {
+                withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
                     highlighted = true
                 }
 
                 Task {
                     try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
-                    withAnimation(.easeInOut(duration: 0.05)) {
+                    withAnimation(.easeInOut(duration: Constants.tapHighlightFadeOutDuration)) {
                         highlighted = false
                     }
                 }
@@ -104,6 +125,25 @@ struct RevampedSearchResultRowView: View {
         }
         .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
             viewModel.actions.revampLongPress()
+        }
+    }
+
+    /// Runs a one-shot flash when this row becomes the highlight target and the
+    /// highlight is not persistent. Reuses the same `highlighted` state as the
+    /// tap cue, but with a longer duration so it reads as "look here".
+    private func flashHighlightIfNeeded(isTarget: Bool) {
+        guard isTarget,
+              !highlightPersists,
+              !hasFlashedForCurrentTarget else { return }
+        hasFlashedForCurrentTarget = true
+        withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
+            highlighted = true
+        }
+        Task {
+            try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
+            withAnimation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration)) {
+                highlighted = false
+            }
         }
     }
 

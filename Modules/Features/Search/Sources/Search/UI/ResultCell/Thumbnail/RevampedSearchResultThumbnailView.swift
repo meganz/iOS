@@ -41,16 +41,31 @@ struct RevampedSearchResultThumbnailView: View {
         static let topViewHeight = 148.0
         static let standardIconSize = 24.0
         static let bottomTrailingPropertyImageSize = 16.0
-
+        static let highlightFadeInDuration = 0.05
+        static let flashHighlightFadeOutDuration = 0.3
+        static let flashHighlightDurationNs: UInt64 = 1_200_000_000
+        static let highlightBorderWidth: CGFloat = 2
         static let backgroundSurface1 = TokenColors.Background.surface1.swiftUI
+        static let highlightTint = TokenColors.Background.surface2.swiftUI
     }
 
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
+    
+    var isHighlightTarget: Bool = false
+    var highlightPersists: Bool = false
+    
+    @Binding var hasFlashedForCurrentTarget: Bool
+    
     @State private var highlighted = false
 
     private let layout: ResultCellLayout = .thumbnail
+
+    /// Persistent highlight stays tinted as long as this cell is the target.
+    private var showsPersistentHighlight: Bool {
+        isHighlightTarget && highlightPersists
+    }
 
     var body: some View {
         VStack(spacing: .zero) {
@@ -58,13 +73,43 @@ struct RevampedSearchResultThumbnailView: View {
             bottomInfoView
         }
         .frame(height: Constants.cellHeight)
-        .background(Constants.backgroundSurface1.opacity(highlighted ? 1 : 0))
+        .background(Constants.highlightTint.opacity(highlighted || showsPersistentHighlight ? 1 : 0))
         .clipped()
+        .overlay(
+            RoundedRectangle(cornerRadius: TokenRadius.small)
+                .strokeBorder(
+                    Constants.highlightTint,
+                    lineWidth: Constants.highlightBorderWidth
+                )
+                .opacity(highlighted || showsPersistentHighlight ? 1 : 0)
+        )
+        .onChange(of: isHighlightTarget) { isTarget in
+            flashHighlightIfNeeded(isTarget: isTarget)
+        }
+        .onAppear {
+            flashHighlightIfNeeded(isTarget: isHighlightTarget)
+        }
         .task {
             await viewModel.loadThumbnail()
         }
     }
 
+    private func flashHighlightIfNeeded(isTarget: Bool) {
+        guard isTarget,
+              !highlightPersists,
+              !hasFlashedForCurrentTarget else { return }
+        hasFlashedForCurrentTarget = true
+        withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
+            highlighted = true
+        }
+        Task {
+            try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
+            withAnimation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration)) {
+                highlighted = false
+            }
+        }
+    }
+    
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
     }
