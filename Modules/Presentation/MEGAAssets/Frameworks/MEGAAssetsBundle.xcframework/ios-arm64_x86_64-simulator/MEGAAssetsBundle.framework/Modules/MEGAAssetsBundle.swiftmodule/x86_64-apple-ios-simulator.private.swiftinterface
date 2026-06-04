@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
-// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -986,6 +986,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var monoEraserMediumThinOutline: SwiftUICore.Image {
+    get
+  }
+  public static var monoFileSearchMediumRegularOutline: SwiftUICore.Image {
     get
   }
 }
@@ -2622,6 +2625,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoEraserMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoFileSearchMediumRegularOutline: UIKit.UIImage {
     get
   }
 }

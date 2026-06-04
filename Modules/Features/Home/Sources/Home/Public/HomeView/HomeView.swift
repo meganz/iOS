@@ -212,7 +212,8 @@ public struct HomeView: View {
                     nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                     moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
                     photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                    isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
                 )
             )
         case .widgetsCustomization:

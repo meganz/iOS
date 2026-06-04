@@ -27,12 +27,21 @@ struct RecentWidgetBucketListView: View {
         case multipleMedia(String, RecentActionBucketEntity)
     }
     
+    private enum CarouselSheetDeferredAction {
+        case openNode(handle: HandleEntity, siblings: [HandleEntity])
+        case showInLocation(HandleEntity)
+        case seeAll(RecentActionBucketEntity)
+    }
+
     private let dependency: Dependency
     private let sections: [RecentActionBucketSection]
     private let recentActionBucketSectionMapper = RecentActionBucketSectionMapper()
     private let viewModel: RecentWidgetBucketListViewModel
 
     @EnvironmentObject var navigator: HomeNavigation
+    @State private var carouselBucket: RecentActionBucketEntity?
+    @State private var carouselSectionTitle: String?
+    @State private var carouselDeferredAction: CarouselSheetDeferredAction?
 
     init(
         dependency: Dependency,
@@ -55,6 +64,7 @@ struct RecentWidgetBucketListView: View {
         .navigationDestination(for: Route.self) { route in
             navigationDestination(for: route)
         }
+        .sheet(isPresented: carouselSheetBinding, onDismiss: { performDeferredCarouselAction() }, content: { carouselSheetContent })
     }
 
     private var viewAllBucketsButton: some View {
@@ -89,7 +99,8 @@ struct RecentWidgetBucketListView: View {
                                 case let .singleFile(node), let .singleMedia(node):
                                     dependency.selectionHandler.handle(selection: NodeSelection(handle: node.handle, siblings: []))
                                 }
-                            }
+                            },
+                            bucketCarouselPresenter: makeCarouselPresenter(sectionTitle: section.title)
                         )
                     )
                 }
@@ -117,7 +128,8 @@ struct RecentWidgetBucketListView: View {
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter,
                     photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
                 )
             )
         case let .bucketItems(bucket):
@@ -142,6 +154,69 @@ struct RecentWidgetBucketListView: View {
                     transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
                 )
             )
+        }
+    }
+
+    private func makeCarouselPresenter(sectionTitle: String) -> RecentActionBucketContainerView.BucketCarouselPresenter? {
+        guard dependency.isHomeRevampPhaseTwoEnabled else { return nil }
+        return { bucket in
+            carouselDeferredAction = nil
+            carouselSectionTitle = sectionTitle
+            carouselBucket = bucket
+        }
+    }
+
+    private var carouselSheetBinding: Binding<Bool> {
+        Binding(
+            get: { carouselBucket != nil },
+            set: { isPresented in
+                if !isPresented {
+                    carouselBucket = nil
+                }
+            }
+        )
+    }
+
+    @ViewBuilder
+    private var carouselSheetContent: some View {
+        if let bucket = carouselBucket {
+            RecentBucketCarouselSheetView(
+                dependency: RecentBucketCarouselSheetView.Dependency(
+                    bucket: bucket,
+                    actionHandler: { action in
+                        switch action {
+                        case let .openNode(handle, siblings):
+                            carouselDeferredAction = .openNode(handle: handle, siblings: siblings)
+                        case let .showInLocation(handle):
+                            carouselDeferredAction = .showInLocation(handle)
+                        case .seeAll:
+                            carouselDeferredAction = .seeAll(bucket)
+                        }
+                        carouselBucket = nil
+                    }
+                )
+            )
+        }
+    }
+
+    private func performDeferredCarouselAction() {
+        guard let action = carouselDeferredAction else { return }
+        carouselDeferredAction = nil
+        let sectionTitle = carouselSectionTitle
+        carouselSectionTitle = nil
+        switch action {
+        case let .openNode(handle, siblings):
+            dependency.selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: siblings))
+        case let .showInLocation(handle):
+            // [IOS-11800] Add "Show location" button to bucket content screen
+            dependency.selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: []))
+        case let .seeAll(bucket):
+            switch bucket.type {
+            case .multipleMedia:
+                navigator.append(Route.multipleMedia(sectionTitle ?? "", bucket))
+            default:
+                navigator.append(Route.bucketItems(bucket))
+            }
         }
     }
 }

@@ -22,7 +22,9 @@ public struct ImageButtonWrapper: View {
             Coordinator(self)
         }
 
-        public func updateUIView(_ uiView: UIButton, context: Self.Context) {}
+        public func updateUIView(_ uiView: UIButton, context: Self.Context) {
+            context.coordinator.parent = self
+        }
 
         @MainActor
         public final class Coordinator: NSObject {
