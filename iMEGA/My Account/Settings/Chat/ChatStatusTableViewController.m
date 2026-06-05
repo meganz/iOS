@@ -36,6 +36,7 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    self.tableView.showsVerticalScrollIndicator = NO;
     
     self.navigationItem.title = LocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
