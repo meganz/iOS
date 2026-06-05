@@ -5018,3 +5018,7 @@
 "home.promotionalDialog.subtitle"="Choose what you see and organise it to fit how you use MEGA";
 /* Title of Explore button */
 "explore"="Explore";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Your account was inactive for too long";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Because you didn't log in for over %@ months, your files and messages were removed as per our inactivity policy.";

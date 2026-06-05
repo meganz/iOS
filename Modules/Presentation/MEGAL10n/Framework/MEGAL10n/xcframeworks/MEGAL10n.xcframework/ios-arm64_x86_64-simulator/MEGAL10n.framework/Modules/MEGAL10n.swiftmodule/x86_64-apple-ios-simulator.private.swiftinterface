@@ -2405,6 +2405,12 @@ public enum Strings {
           }
         }
       }
+      public enum PurgeBanner {
+        public enum Inactivity {
+          public static func subtitle(_ p1: Any) -> Swift.String
+          public static let title: Swift.String
+        }
+      }
       public enum ScanDocument {
         public static func defaultName(_ p1: Any) -> Swift.String
       }
