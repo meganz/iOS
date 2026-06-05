@@ -43,7 +43,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    self.tableView.showsVerticalScrollIndicator = NO;
+
     [self configureNavigationBar];
     [self configureLabelsText];
     [self configImageFormatTexts];
