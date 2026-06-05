@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAudioPlayer
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private var currentPresenter: (any AudioPlayerPresenterProtocol)? {
@@ -48,6 +49,9 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func updateMiniPlayerVisibility(for viewController: UIViewController) -> Bool {
+        if isAudioPlayerRevampEnabled {
+            return updateRevampedMiniPlayerInset(for: viewController)
+        }
         guard AudioPlayerManager.shared.isPlayerAlive() else {
             if let presenter = viewController as? (any AudioPlayerPresenterProtocol),
                presenter.hasUpdatedContentView() {
@@ -125,6 +129,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     /// and the presenter’s content view should be updated accordingly. If these conditions aren’t met, this
     /// function assigns the proper delegate and refreshes the content view’s height.
     @objc func refreshMiniPlayerVisibility() {
+        guard !isAudioPlayerRevampEnabled else { return }
         guard let currentPresenter else { return }
         
         let bottomContainerVisible = (bottomOverlayContainer?.frame.height ?? 0) != 0
@@ -140,11 +145,28 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     @objc func registerMiniPlayerHandler() {
+        guard !isAudioPlayerRevampEnabled else { return }
         AudioPlayerManager.shared.addMiniPlayerHandler(self)
     }
     
     @objc func unregisterMiniPlayerHandler() {
+        guard !isAudioPlayerRevampEnabled else { return }
         AudioPlayerManager.shared.removeMiniPlayerHandler(self)
+    }
+
+    private var isAudioPlayerRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp)
+    }
+
+    private func updateRevampedMiniPlayerInset(for viewController: UIViewController) -> Bool {
+        let miniPlayerVisible = bottomOverlayManager?.contains(.audioPlayer) == true && !isMiniPlayerHidden()
+        guard let presenter = viewController as? (any BottomOverlayPresenterProtocol) else { return miniPlayerVisible }
+        if miniPlayerVisible {
+            presenter.updateContentView(bottomOverlayContainer?.frame.height ?? 0)
+        } else if presenter.hasUpdatedContentView() {
+            presenter.updateContentView(0)
+        }
+        return miniPlayerVisible
     }
     
     @objc func updateTransferWidgetBottomConstraint() -> Float {
@@ -156,5 +178,45 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         if viewControllers.contains(viewController) { return true }
         guard let navigationVC = viewController.navigationController else { return false }
         return navigationVC.viewControllers.first === viewController && viewControllers.contains(navigationVC)
+    }
+}
+
+// MARK: - Revamped mini player (audioPlayerRevamp)
+
+extension MainTabBarController {
+    @objc func setupRevampedMiniPlayerIfNeeded() {
+        guard isAudioPlayerRevampEnabled, miniPlayerOverlayCoordinator == nil else { return }
+
+        let coordinator = MEGAMiniPlayerOverlayCoordinator()
+
+        coordinator.onAttach = { [weak self] hostViewController, height in
+            guard let self, let pill = hostViewController.view else { return }
+            addChild(hostViewController)
+            updateOverlayLayout { [weak self] in
+                self?.addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: height)
+            }
+            hostViewController.didMove(toParent: self)
+        }
+
+        coordinator.onDetach = { [weak self] hostViewController in
+            guard let self else { return }
+            hostViewController.willMove(toParent: nil)
+            updateOverlayLayout { [weak self] in
+                self?.removeSubviewFromOverlay(.audioPlayer)
+            }
+            hostViewController.removeFromParent()
+        }
+
+        coordinator.onExpand = { [weak self] in
+            guard let self else { return }
+            MEGAAudioPlayerViewRouter(
+                presenter: self,
+                actionsHandler: MEGAAudioPlayerActionsHandler.make(),
+                navigationFactory: MEGAAudioPlayerNavigationController.make()
+            ).showCurrent()
+        }
+
+        coordinator.startObserving()
+        miniPlayerOverlayCoordinator = coordinator
     }
 }

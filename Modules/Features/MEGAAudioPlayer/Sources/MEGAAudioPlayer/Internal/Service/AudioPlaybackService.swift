@@ -64,7 +64,6 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     private init() {}
 
     func play(source: PlaybackSource) {
-        // Engine not wired yet — to be implemented in the engine-migration sprint.
         stateSubject.value = AudioPlaybackState(
             currentSource: source,
             title: Self.displayName(for: source),
@@ -98,8 +97,6 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     }
 
     func stop() {
-        // TBD: engine-migration sprint — tear down the audio session, clear
-        // now-playing info, and emit `nil` so the mini-player host removes
-        // itself from the tab-bar overlay. Inert until then.
+        stateSubject.value = nil
     }
 }

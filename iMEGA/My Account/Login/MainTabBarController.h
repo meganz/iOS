@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) MainTabBarAdsViewModel *mainTabBarAdsViewModel;
 @property (nonatomic, strong, nullable) PSAViewModel *psaViewModel;
 
+@property (nonatomic, strong, nullable) id miniPlayerOverlayCoordinator;
+
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
 
 - (void)showAchievements;

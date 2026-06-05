@@ -1456,6 +1456,7 @@
             [MEGAPurchase.sharedInstance removeAllProducts];
             [self.quickAccessWidgetManager stopWidgetManager];
             if (request.flag || sessionInvalidateInOtherClient) {
+                [self stopAudioPlaybackSession];
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
                 

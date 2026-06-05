@@ -27,6 +27,7 @@
     [MEGAChatSdk.shared addChatDelegate:self];
     [self addMEGAGlobalDelegate];
     [self setupBottomOverlayIfNeeded];
+    [self setupRevampedMiniPlayerIfNeeded];
 }
 
 - (void)viewDidLayoutSubviews {

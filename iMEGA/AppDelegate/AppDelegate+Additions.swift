@@ -11,6 +11,7 @@ import MEGAAccountManagement
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAudioPlayer
 import MEGADomain
 import MEGAFoundation
 import MEGAInfrastructure
@@ -24,6 +25,11 @@ import SafariServices
 extension AppDelegate {
     @objc var domainName: String {
         DIContainer.domainName
+    }
+
+    /// Ends the revamped playback session on logout
+    @objc func stopAudioPlaybackSession() {
+        MEGAAudioPlayerSession.stop()
     }
 
     @objc func listenToDomainUpdates() {
