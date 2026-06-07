@@ -375,7 +375,6 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
                 if let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController {
                     browserVC.browserAction = .shareExtension
                     browserVC.parentNode = parentNode
-                    browserVC.isChildBrowser = true
                     browserVC.browserViewControllerDelegate = self
                     navigationController?.setToolbarHidden(false, animated: true)
                     navigationController?.pushViewController(browserVC, animated: true)
