@@ -165,6 +165,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/Features\/Transfer",
+        "identifier" : "TransferTests",
+        "name" : "TransferTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Features\/FolderLink",
         "identifier" : "FolderLinkTests",
         "name" : "FolderLinkTests"

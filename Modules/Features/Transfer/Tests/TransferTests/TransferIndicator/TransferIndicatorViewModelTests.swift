@@ -7,7 +7,7 @@ import Testing
 struct TransferIndicatorViewModelTests {
 
     @Test
-    func init_withNoOngoingTransfers_hidesIndicator() async {
+    func init_withNoOngoingTransfers_hidesIndicator() {
         let sut = makeSUT(initialState: .hidden)
 
         sut.startMonitoring()
@@ -16,7 +16,7 @@ struct TransferIndicatorViewModelTests {
     }
 
     @Test
-    func init_withCurrentTransferProgress_showsIndicator() async {
+    func init_withCurrentTransferProgress_showsIndicator() {
         let sut = makeSUT(initialState: .inProgress(progress: 0.4))
 
         sut.startMonitoring()
@@ -26,60 +26,50 @@ struct TransferIndicatorViewModelTests {
     }
 
     @Test
-    func monitorStatus_whenTransferFinishes_hidesIndicator() async {
+    func monitorStatus_whenTransferFinishes_hidesIndicator() {
         let subject = CurrentValueSubject<TransferIndicatorEntity, Never>(.inProgress(progress: 0.4))
         let sut = makeSUT(initialState: .inProgress(progress: 0.4), updates: subject.eraseToAnyPublisher())
 
         sut.startMonitoring()
-        await waitForTasks()
-
         subject.send(.hidden)
-        await waitForTasks()
 
         #expect(sut.isVisible == false)
     }
 
     @Test
-    func monitorStatus_whenTransferUpdates_updatesState() async {
+    func monitorStatus_whenTransferUpdates_updatesState() {
         let subject = CurrentValueSubject<TransferIndicatorEntity, Never>(.inProgress(progress: 0.1))
         let sut = makeSUT(initialState: .inProgress(progress: 0.1), updates: subject.eraseToAnyPublisher())
 
         sut.startMonitoring()
-        await waitForTasks()
-
         subject.send(.inProgress(progress: 0.75))
-        await waitForTasks()
 
         #expect(sut.isVisible == true)
         #expect(sut.state == .inProgress(progress: 0.75))
     }
 
     @Test
-    func state_overquotaRecovery_clearsWarningState() async {
+    func state_overquotaRecovery_clearsWarningState() {
         let subject = CurrentValueSubject<TransferIndicatorEntity, Never>(.warning)
         let sut = makeSUT(initialState: .warning, updates: subject.eraseToAnyPublisher())
 
         sut.startMonitoring()
-        await waitForTasks()
         #expect(sut.state == .warning)
 
         subject.send(.inProgress(progress: 0.5))
-        await waitForTasks()
 
         #expect(sut.state == .inProgress(progress: 0.5))
     }
 
     @Test
-    func state_errorPersistsThroughNewTransfer() async {
+    func state_errorPersistsThroughNewTransfer() {
         let subject = CurrentValueSubject<TransferIndicatorEntity, Never>(.error)
         let sut = makeSUT(initialState: .error, updates: subject.eraseToAnyPublisher())
 
         sut.startMonitoring()
-        await waitForTasks()
         #expect(sut.state == .error)
 
         subject.send(.error)
-        await waitForTasks()
 
         #expect(sut.state == .error)
     }
@@ -92,14 +82,9 @@ struct TransferIndicatorViewModelTests {
             useCase: MockTransferIndicatorUseCase(
                 currentState: initialState,
                 updates: updates
-            )
+            ),
+            throttle: { $0 }
         )
-    }
-
-    private func waitForTasks() async {
-        for _ in 0..<10 {
-            await Task.yield()
-        }
     }
 }
 

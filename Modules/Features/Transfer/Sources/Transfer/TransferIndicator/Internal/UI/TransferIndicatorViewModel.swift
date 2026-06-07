@@ -4,11 +4,16 @@ import SwiftUI
 
 @MainActor
 final class TransferIndicatorViewModel: ObservableObject {
+    /// Transforms the raw entity stream before it reaches the UI. Production throttles on the
+    /// main queue; tests inject an identity transform to make delivery synchronous.
+    typealias StatePublisherThrottle = (AnyPublisher<TransferIndicatorEntity, Never>) -> AnyPublisher<TransferIndicatorEntity, Never>
+
     @Published public private(set) var state: TransferIndicatorViewState = .initial
     @Published public private(set) var isVisible = false
 
     private let useCase: any TransferIndicatorUseCaseProtocol
     private let viewStateMapper: any TransferIndicatorViewStateMapping
+    private let throttle: StatePublisherThrottle
     private var cancellable: AnyCancellable?
     private var monitoringTask: Task<Void, Never>?
     private var completedDismissTask: Task<Void, Never>?
@@ -16,10 +21,15 @@ final class TransferIndicatorViewModel: ObservableObject {
 
     public init(
         useCase: some TransferIndicatorUseCaseProtocol,
-        viewStateMapper: some TransferIndicatorViewStateMapping = TransferIndicatorViewStateMapper()
+        viewStateMapper: some TransferIndicatorViewStateMapping = TransferIndicatorViewStateMapper(),
+        throttle: @escaping StatePublisherThrottle = {
+            $0.throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+                .eraseToAnyPublisher()
+        }
     ) {
         self.useCase = useCase
         self.viewStateMapper = viewStateMapper
+        self.throttle = throttle
     }
 
     deinit {
@@ -35,8 +45,7 @@ final class TransferIndicatorViewModel: ObservableObject {
         guard !isMonitoring else { return }
         isMonitoring = true
         apply(entity: useCase.currentState)
-        cancellable = useCase.statePublisher
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+        cancellable = throttle(useCase.statePublisher.eraseToAnyPublisher())
             .removeDuplicates()
             .sink { [weak self] entity in
                 self?.apply(entity: entity)
