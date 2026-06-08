@@ -71,9 +71,10 @@ struct WarningBannerView: View {
     
     private func newBannerContent() -> some View {
         HStack(alignment: .top) {
-            if let iconName = viewModel.warningType.iconName {
-                Image(iconName)
+            if let icon = viewModel.warningType.icon {
+                icon
                     .padding(.leading, 5)
+                    .foregroundStyle(viewModel.warningType.iconColor)
             }
             
             VStack(alignment: .leading) {

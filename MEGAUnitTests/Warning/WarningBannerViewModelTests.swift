@@ -2,7 +2,9 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGAL10n
+
 import XCTest
 
 final class WarningBannerViewModelTests: XCTestCase {
@@ -95,7 +97,7 @@ final class WarningBannerViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.warningType.description, Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.description)
         XCTAssertEqual(sut.warningType.title, Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.title)
-        XCTAssertEqual(sut.warningType.iconName, "fullStorageAlert")
+        XCTAssertEqual(sut.warningType.icon, MEGAAssets.Image.fullStorageAlert)
         XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.button)
         XCTAssertEqual(sut.warningType.severity, .critical)
     }
@@ -106,7 +108,7 @@ final class WarningBannerViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.warningType.description, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.description)
         XCTAssertEqual(sut.warningType.title, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.title)
-        XCTAssertEqual(sut.warningType.iconName, "almostFullStorageAlert")
+        XCTAssertEqual(sut.warningType.icon, MEGAAssets.Image.almostFullStorageAlert)
         XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.button)
         XCTAssertEqual(sut.warningType.severity, .warning)
     }

@@ -994,6 +994,12 @@ public struct MEGAImageBundle {
   public static var homeRevampWhatsNew: SwiftUICore.Image {
     get
   }
+  public static var fullStorageAlert: SwiftUICore.Image {
+    get
+  }
+  public static var almostFullStorageAlert: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

@@ -13789,6 +13789,90 @@
                 "accessorKind": "get"
               }
             ]
+          },
+          {
+            "kind": "Var",
+            "name": "fullStorageAlert",
+            "printedName": "fullStorageAlert",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Image",
+                "printedName": "SwiftUI.Image",
+                "usr": "s:7SwiftUI5ImageV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAImageB0V16fullStorageAlert7SwiftUI5ImageVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V16fullStorageAlert7SwiftUI5ImageVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Image",
+                    "printedName": "SwiftUI.Image",
+                    "usr": "s:7SwiftUI5ImageV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAImageB0V16fullStorageAlert7SwiftUI5ImageVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V16fullStorageAlert7SwiftUI5ImageVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "almostFullStorageAlert",
+            "printedName": "almostFullStorageAlert",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Image",
+                "printedName": "SwiftUI.Image",
+                "usr": "s:7SwiftUI5ImageV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAImageB0V22almostFullStorageAlert7SwiftUI5ImageVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V22almostFullStorageAlert7SwiftUI5ImageVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Image",
+                    "printedName": "SwiftUI.Image",
+                    "usr": "s:7SwiftUI5ImageV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAImageB0V22almostFullStorageAlert7SwiftUI5ImageVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V22almostFullStorageAlert7SwiftUI5ImageVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
           }
         ],
         "declKind": "Struct",
