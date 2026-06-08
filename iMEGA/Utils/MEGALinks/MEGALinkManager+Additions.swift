@@ -386,11 +386,7 @@ extension MEGALinkManager {
     @objc static func newFolderLinkViewController(link: String) -> UIViewController {
         NewFolderLinkViewController(link: link)
     }
-    
-    @objc static func shouldUseNewFolderLink() -> Bool {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosNewFolderLink)
-    }
-    
+
     static func buildFolderLink(_ link: String, with key: String) -> String {
         MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: true)
     }

@@ -4,8 +4,6 @@ import UIKit
 
 typealias CloudDriveContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & RubbishBinMenuDelegate & UploadAddMenuDelegate
 
-typealias FolderLinkContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & UploadAddMenuDelegate & RubbishBinMenuDelegate
-
 typealias FileLinkContextMenuDelegate = QuickActionsMenuDelegate & UploadAddMenuDelegate & RubbishBinMenuDelegate
 
 @MainActor

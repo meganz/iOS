@@ -11,7 +11,6 @@ extension Notification.Name {
 
 // Code for determining a view mode for
 // [FM-1457] OfflineViewController
-// [FM-1458] FolderLinkViewController
 
 enum CustomViewModeLocation {
     static let HomeSearch = "HomeSearchResults"

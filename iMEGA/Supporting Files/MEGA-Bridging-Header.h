@@ -54,8 +54,8 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGARequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
-#import "FolderLinkViewController.h"
 #import "FileLinkViewController.h"
+#import "UnavailableLinkView.h"
 #import "MEGAStore.h"
 
 #import "MEGALinkManager.h"

@@ -80,11 +80,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     }
     
     func isAFolderLinkPresenter() -> Bool {
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosNewFolderLink) {
-            presenter?.isKind(of: NewFolderLinkViewController.self) ?? false
-        } else {
-            presenter?.isKind(of: FolderLinkViewController.self) ?? false
-        }
+        presenter?.isKind(of: NewFolderLinkViewController.self) ?? false
     }
     
     func refresh(with newConfig: AudioPlayerConfigEntity) {

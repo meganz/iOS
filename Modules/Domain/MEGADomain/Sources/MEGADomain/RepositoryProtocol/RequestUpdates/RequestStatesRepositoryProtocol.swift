@@ -19,9 +19,6 @@ public protocol RequestStatesRepositoryProtocol: RepositoryProtocol, Sendable {
     var requestUpdates: AnyAsyncSequence<RequestEntity> { get }
     var requestTemporaryErrorUpdates: AnyAsyncSequence<RequestResponseEntity> { get }
     var requestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> { get }
-    
-    var folderLinkRequestStartUpdates: AnyAsyncSequence<RequestEntity> { get }
-    var folderLinkRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> { get }
 }
 
 public extension RequestStatesRepositoryProtocol {

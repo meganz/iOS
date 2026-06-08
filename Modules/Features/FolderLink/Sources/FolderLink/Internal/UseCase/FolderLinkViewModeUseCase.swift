@@ -13,7 +13,8 @@ package struct FolderLinkViewModeUseCase: FolderLinkViewModeUseCaseProtocol {
         self.folderLinkRepository = folderLinkRepository
     }
     
-    /// Clone the logic from determineViewMode in FolderLinkViewController.m
+    /// Determines the view mode when opening a folder based on the ratio of
+    /// nodes that have a thumbnail (image/video) versus those that do not.
     /// Media Discovery mode will be handled separately in IOS-11103.
     package func viewModeForOpeningFolder(_ handle: HandleEntity) -> SearchResultsViewMode {
         let children = folderLinkRepository.children(of: handle)
