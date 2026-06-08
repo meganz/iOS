@@ -28,7 +28,7 @@ final class OnboardingUSPViewController: UIHostingController<OnboardingView<Load
         }
         
         super.init(rootView: OnboardingView(
-            viewModel: self.viewModel.onboardingViewModel,
+            viewModel: viewModel,
             configuration: .welcome,
             loadingView: {
                 LoadingSpinner()
