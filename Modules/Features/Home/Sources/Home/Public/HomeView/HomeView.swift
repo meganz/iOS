@@ -1,9 +1,10 @@
 import Combine
 import Favourites
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGAAssets
-import MEGAConnectivity
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import Search
@@ -114,6 +115,7 @@ public struct HomeView: View {
             .noNetworkConnection {
                 noInternetView
             }
+            .modifier(HomeLandscapeNoInternetViewModifier())
             .background(TokenColors.Background.page.swiftUI)
             .searchableTransitionWorkaround()
             .snackBar($navigator.snackBar)
