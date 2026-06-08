@@ -109,6 +109,7 @@ class GetLinkViewController: UIViewController {
         }
         
         configureNavigation()
+        TransferIndicatorBarItemConfigurator.injectIfNeeded(into: self)
         setupColors()
         tableView.sectionHeaderTopPadding = 0
         
