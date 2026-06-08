@@ -56,4 +56,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case limitedPhotoAccessBannerDismissedDate
     case lastKnownProLevel
     case homeWidgetConfigs = "HomeWidgetsCustomizationConfigs"
+    case homePromotionalDialogShown
 }

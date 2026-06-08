@@ -28,6 +28,7 @@ public struct HomeView: View {
 
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var navigator: HomeNavigation
+    @StateObject private var promotionalDialogViewModel = HomePromotionalDialogViewModel()
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var searchText = ""
     private let quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
@@ -70,7 +71,7 @@ public struct HomeView: View {
             content
         }
         .background(HomeBackButtonConfigurator())
-        .tint(TokenColors.Icon.primary.swiftUI)
+            .tint(TokenColors.Icon.primary.swiftUI)
         .environmentObject(navigator)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .task { await viewModel.monitorNetworkConnection() }
@@ -90,6 +91,16 @@ public struct HomeView: View {
                 dependency.router.openNode(base64Handle: handle)
             }
         }
+        .sheet(isPresented: $promotionalDialogViewModel.isPresented, onDismiss: {
+            if promotionalDialogViewModel.shouldNavigateToCustomizationAfterDismissal {
+                navigator.append(NavigationRoute.widgetsCustomization)
+            }
+        }, content: {
+            HomePromotionalDialogView(
+                onExplore: { promotionalDialogViewModel.handleExplore() },
+                onDismiss: { promotionalDialogViewModel.handleDismiss() }
+            )
+        })
     }
 
     var content: some View {
@@ -99,12 +110,12 @@ public struct HomeView: View {
                 viewModel.hidesFloatingActionsButton = $0
             }
             .floatingButton(isHidden: viewModel.hidesFloatingActionsButton) {
-                viewModel.togglePresentSheet()
+                viewModel.togglePresentHomeActionsSheet()
             }
-            .sheet(isPresented: $viewModel.presentsSheet) {
+            .sheet(isPresented: $viewModel.presentHomeActions) {
                 HomeMenuActionsSheetView(
                                         actionHandler: dependency.homeAddMenuActionHandler,
-                                        isPresented: $viewModel.presentsSheet
+                                        isPresented: $viewModel.presentHomeActions
                                     )
             }
             .overlay {
@@ -176,6 +187,7 @@ public struct HomeView: View {
             .task { viewModel.reloadWidgets() }
             .onAppear {
                 viewModel.trackHomeScreenAppear()
+                promotionalDialogViewModel.presentIfNeeded(featureEnabled: isHomeRevampPhase2Enabled)
             }
     }
 

@@ -8,7 +8,7 @@ final class HomeViewModel: ObservableObject {
 
     @Published private(set) var widgets: [HomeWidgetType] = []
     @Published var isSearching: Bool
-    @Published var presentsSheet = false
+    @Published var presentHomeActions = false
     @Published var hidesFloatingActionsButton: Bool = false
     @Published var isNetworkConnected = false
     private let homeDeepLink: HomeDeepLink
@@ -54,9 +54,9 @@ final class HomeViewModel: ObservableObject {
         widgets = widgetDisplayUseCase.allVisibleWidgetTypes()
     }
 
-    func togglePresentSheet() {
+    func togglePresentHomeActionsSheet() {
         tracker.trackAnalyticsEvent(with: HomeFabOptionsButtonPressedEvent())
-        presentsSheet.toggle()
+        presentHomeActions.toggle()
     }
 
     func trackHomeScreenAppear() {
