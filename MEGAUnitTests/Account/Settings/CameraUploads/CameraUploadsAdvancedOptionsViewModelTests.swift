@@ -2,6 +2,7 @@
 @preconcurrency import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGADomainMock
 import Testing
 
 struct CameraUploadsAdvancedOptionsViewModelTests {
@@ -46,7 +47,7 @@ struct CameraUploadsAdvancedOptionsViewModelTests {
     struct UploadOnlyNewPhotosOptionVisibility {
         private func makeSUT(featureFlagEnabled: Bool) -> CameraUploadsAdvancedOptionsViewModel {
             CameraUploadsAdvancedOptionsViewModel(
-                featureFlagProvider: MockFeatureFlagProvider(list: [.uploadOnlyNewPhotos: featureFlagEnabled])
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosUploadOnlyNewPhotos: featureFlagEnabled])
             )
         }
 

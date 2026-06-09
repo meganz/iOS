@@ -36,9 +36,15 @@ extension CameraUploadManager {
     @objc func trackCameraUploadsEnableStatus(_ enable: Bool) {
         DIContainer.tracker.trackAnalyticsEvent(with: enable ? DIContainer.cameraUploadsEnabled : DIContainer.cameraUploadsDisabled)
     }
+    
+    nonisolated(unsafe) static var remoteFeatureFlagRepository: any RemoteFeatureFlagRepositoryProtocol = RemoteFeatureFlagRepository.newRepo
 
+    static var remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol {
+        RemoteFeatureFlagUseCase(repository: remoteFeatureFlagRepository)
+    }
+    
     @objc class var isUploadOnlyNewPhotosFeatureEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .uploadOnlyNewPhotos)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUploadOnlyNewPhotos)
     }
     
     func photoQueuePausedReason() -> CameraUploadMediaTypePausedReason? {

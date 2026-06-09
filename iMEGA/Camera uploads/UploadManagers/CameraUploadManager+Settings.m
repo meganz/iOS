@@ -210,6 +210,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 #pragma mark - upload only new photos
 
 + (BOOL)shouldUploadOnlyNewPhotos {
+    // The remote flag is a kill switch for the behaviour, not just the settings row: if the flag
+    // is rolled back while the preference is ON, the scan-time cutoff filter must turn off too —
+    // otherwise the hidden toggle would keep filtering uploads with no UI left to disable it. The
+    // stored preference is kept untouched so the user's choice survives a temporary rollback.
     return self.isUploadOnlyNewPhotosFeatureEnabled && [NSUserDefaults.standardUserDefaults boolForKey:UploadOnlyNewPhotosEnabledKey];
 }
 

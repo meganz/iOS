@@ -1,5 +1,6 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGADomain
 
 enum CameraUploadsAdvancedOptionsEvent {
     case livePhotoVideoUploads(Bool)
@@ -11,20 +12,20 @@ enum CameraUploadsAdvancedOptionsEvent {
 
 final class CameraUploadsAdvancedOptionsViewModel: NSObject {
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     init(
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
 
-    /// Whether the "Upload only new photos" row should be shown. Gated behind the feature flag so
-    /// the option has no UI entry point until it is rolled out.
+    /// Whether the "Upload only new photos" row should be shown. Gated behind the same remote flag
+    /// that gates the behaviour, so the option has no UI entry point until it is rolled out.
     @objc var shouldShowUploadOnlyNewPhotosOption: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .uploadOnlyNewPhotos)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUploadOnlyNewPhotos)
     }
     
     func trackEvent(_ event: CameraUploadsAdvancedOptionsEvent) {
