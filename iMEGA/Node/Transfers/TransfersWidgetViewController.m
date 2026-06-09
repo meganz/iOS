@@ -26,7 +26,7 @@
 #import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
-@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
+@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
@@ -103,6 +103,7 @@ static TransfersWidgetViewController* instance = nil;
     [MEGASdk.shared addMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
     [MEGASdk.shared addMEGARequestDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [MEGASdk.sharedFolderLink retryPendingConnections];
     
@@ -130,6 +131,7 @@ static TransfersWidgetViewController* instance = nil;
     [MEGASdk.shared removeMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink removeMEGATransferDelegate:self];
     [MEGASdk.shared removeMEGARequestDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [MEGASdk.sharedFolderLink retryPendingConnections];
     
@@ -225,6 +227,7 @@ static TransfersWidgetViewController* instance = nil;
     
     [MEGASdk.shared removeMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink removeMEGATransferDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -903,6 +906,18 @@ static TransfersWidgetViewController* instance = nil;
             
         default:
             break;
+    }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    // After a cold launch the widget can read the transfer list before the SDK has
+    // finished resuming cached transfers from the previous session, leaving the list
+    // empty until a tab switch. EVENT_TRANSFERS_RESUMED signals that resumed transfers
+    // are now available, so reload to populate them.
+    if (event.type == EventTransfersResumed) {
+        [self reloadView];
     }
 }
 

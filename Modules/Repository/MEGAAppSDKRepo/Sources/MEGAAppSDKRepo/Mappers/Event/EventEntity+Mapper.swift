@@ -25,6 +25,8 @@ extension EventEntity.EventType {
         case .downgradeAttack: 18
         case .confirmUserEmail: 19
         case .creditCardExpiry: 20
+        case .networkActivity: 22
+        case .transfersResumed: 23
         }
     }
 }
@@ -116,6 +118,8 @@ extension Event {
         case .downgradeAttack: EventEntity.EventType.downgradeAttack
         case .confirmUserEmail: EventEntity.EventType.confirmUserEmail
         case .creditCardExpiry: EventEntity.EventType.creditCardExpiry
+        case .networkActivity: EventEntity.EventType.networkActivity
+        case .transfersResumed: EventEntity.EventType.transfersResumed
         @unknown default:  nil
         }
     }
