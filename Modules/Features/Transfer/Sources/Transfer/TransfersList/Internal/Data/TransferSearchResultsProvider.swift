@@ -103,13 +103,13 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         switch filter {
         case .active:
             let all = await inventoryUseCase.transfers(filteringUserTransfers: filteringUserTransfers)
-            return all.filter(Self.isVisibleInList).filter(Self.isActive)
+            return all.filter(\.isVisibleInList).filter(Self.isActive)
         case .completed:
             return inventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
-                .filter(Self.isVisibleCompleted)
+                .filter(\.isVisibleOnCompletedTab)
         case .failed:
             return inventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
-                .filter(Self.isVisibleInList).filter(Self.isFailed)
+                .filter(\.isVisibleOnFailedTab)
         }
     }
 
@@ -171,13 +171,6 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
 
     // MARK: - State classification
 
-    /// Folder and streaming transfers are excluded so the snapshot stays in sync
-    /// with `TransferCounterUseCase`, which filters them out of its delegate
-    /// streams. 
-    private static func isVisibleInList(_ entity: TransferEntity) -> Bool {
-        !entity.isFolderTransfer && !entity.isStreamingTransfer
-    }
-
     private static func isActive(_ entity: TransferEntity) -> Bool {
         switch entity.state {
         case .none, .queued, .active, .paused, .retrying, .completing: true
@@ -187,13 +180,6 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
 
     private static func isCompleted(_ entity: TransferEntity) -> Bool {
         entity.state == .complete
-    }
-
-    /// Single source of truth for "would this transfer render as a row on the
-    /// Completed tab". Shared with `TransfersListViewModel.seedCompletedPresence()`
-    /// so the tab-bar presence flag never disagrees with the rendered list.
-    static func isVisibleCompleted(_ entity: TransferEntity) -> Bool {
-        isVisibleInList(entity) && isCompleted(entity)
     }
 
     private static func isFailed(_ entity: TransferEntity) -> Bool {

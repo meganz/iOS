@@ -68,6 +68,21 @@ struct TransferSearchResultsProviderTests {
         #expect(results?.results.map(\.id) == [TransferEntityMapper.resultId(for: file)])
     }
 
+    @Test
+    func snapshot_failed_includesFailedAndCancelled_excludesComplete() async {
+        let failed = TransferEntity(type: .download, tag: 1, state: .failed)
+        let cancelled = TransferEntity(type: .upload, tag: 2, state: .cancelled)
+        let complete = TransferEntity(type: .upload, tag: 3, state: .complete)
+        let sut = makeSUT(filter: .failed, completedTransfers: [failed, cancelled, complete])
+
+        let results = await sut.search(queryRequest: .initial, lastItemIndex: nil)
+
+        #expect(results?.results.map(\.id) == [
+            TransferEntityMapper.resultId(for: failed),
+            TransferEntityMapper.resultId(for: cancelled)
+        ])
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(

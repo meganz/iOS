@@ -10,9 +10,10 @@ import SwiftUI
 /// - Active (and other in-flight states): file-type icon, file name, "↑ 48% · 30 MB
 ///   of 100 MB · 4.2 MB/s" subtitle, trailing pause/play icon, and a state-tinted
 ///   linear progress bar at the bottom.
-/// - Completed: file-type icon, file name, the file system path on a second line,
-///   "↑ 7 MB · 10 Aug 2024 19:09" on a third line, an inert kebab, and no progress
-///   bar.
+/// - Read-only terminal states (Completed / Failed / Cancelled): file-type icon, file
+///   name, an inert more button, and no progress bar. Completed additionally shows the file
+///   system path on a second line and "↑ 7 MB · 10 Aug 2024 19:09" on a third line;
+///   Failed and Cancelled show a "↑ Failed" / "↑ Cancelled" state label instead.
 ///
 /// Observes one `TransferRowViewModel` so 1 Hz progress updates re-render only this
 /// row.
@@ -22,6 +23,14 @@ struct TransferResultRowView: View {
 
     private var isCompleted: Bool {
         viewModel.state.status == .completed
+    }
+
+    /// Terminal states render a static, row with no progress bar.
+    private var isReadOnly: Bool {
+        switch viewModel.state.status {
+        case .completed, .failed, .cancelled: true
+        case .queued, .active, .paused: false
+        }
     }
 
     var body: some View {
@@ -57,7 +66,7 @@ struct TransferResultRowView: View {
             }
             .padding(TokenSpacing._4)
 
-            if !isCompleted {
+            if !isReadOnly {
                 ProgressView(value: viewModel.state.progress)
                     .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
             }
@@ -89,8 +98,8 @@ struct TransferResultRowView: View {
     private var trailingImage: Image {
         switch viewModel.state.status {
         case .active, .queued: MEGAAssets.Image.pauseMediumThinOutline
-        case .paused, .failed, .cancelled: Image(systemName: "play.fill")
-        case .completed: MEGAAssets.Image.moreVerticalMediumThinOutline
+        case .paused: MEGAAssets.Image.monoPlayMediumThinOutline
+        case .completed, .failed, .cancelled: MEGAAssets.Image.moreVerticalMediumThinOutline
         }
     }
 }

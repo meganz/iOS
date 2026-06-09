@@ -1,5 +1,6 @@
 import Combine
 import MEGAAppPresentation
+import MEGASwift
 import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
@@ -317,6 +318,13 @@ extension SearchResultsContainerViewModel: SearchResultsInteractor {
 public extension SearchResultsContainerViewModel {
     var selectedResultsCount: Int {
         searchResultsViewModel.selectedResultIds.count
+    }
+
+    /// Forwards the underlying results' live item count so consumers outside the
+    /// Search module observe it through the container rather than holding the
+    /// `SearchResultsViewModel` directly.
+    var itemCountSequence: AnyAsyncSequence<Int> {
+        searchResultsViewModel.itemCountSequence
     }
 
     private func setSearchChipsVisible(_ visible: Bool, animated: Bool = true) {

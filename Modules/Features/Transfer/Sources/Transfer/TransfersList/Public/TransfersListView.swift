@@ -1,17 +1,13 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
-import Search
+import MEGASwiftUI
 import SwiftUI
 
 public struct TransfersListView: View {
     @StateObject private var viewModel: TransfersListViewModel
 
-    public init() {
-        _viewModel = StateObject(wrappedValue: TransfersListViewModel())
-    }
-
-    public init(viewModel: TransfersListViewModel) {
+    init(viewModel: TransfersListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -23,8 +19,10 @@ public struct TransfersListView: View {
             }
             tabContent
         }
-        .task { viewModel.seedCompletedPresence() }
-        .task(id: viewModel.selectedTab) { await viewModel.observeSelectedTabItemCount() }
+        .onAppear {
+            viewModel.seedCompletedPresence()
+            viewModel.seedFailedPresence()
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(Strings.Localizable.transfers)
@@ -87,15 +85,43 @@ public struct TransfersListView: View {
             : MEGAAssets.Image.pauseMediumThinOutline
     }
 
-    @ViewBuilder
+    // The Active container stays mounted even with no transfers, so its result-
+    // monitoring task keeps running and a transfer that starts here is still detected.
+    // It would render "No active transfers" while empty, so cover it with the generic
+    // "No transfers" instead. Driven by `hasAnyTransfers`, this clears reactively the
+    // moment any transfer appears — something the container's own empty view can't do,
+    // since it only recomputes on a results refresh.
     private var tabContent: some View {
-        if viewModel.selectedTab == .active, let activeContainer = viewModel.activeContainerViewModel {
-            SearchResultsContainerView(viewModel: activeContainer)
-                .environment(\.isAllTransfersPaused, viewModel.isAllPaused)
-        } else if viewModel.selectedTab == .completed, let completedContainer = viewModel.completedContainerViewModel {
-            SearchResultsContainerView(viewModel: completedContainer)
-        } else {
-            emptyState
+        tabContainer
+            .overlay {
+                if !viewModel.hasAnyTransfers {
+                    RevampedContentUnavailableView(
+                        viewModel: .transfersEmptyState(title: Strings.Localizable.Transfers.EmptyState.noTransfers)
+                    )
+                    .pageBackground()
+                }
+            }
+    }
+
+    @ViewBuilder
+    private var tabContainer: some View {
+        switch viewModel.selectedTab {
+        case .active:
+            ActiveTransfersTab(
+                dependency: viewModel.dependency,
+                isAllPaused: viewModel.isAllPaused,
+                presence: $viewModel.activePresence
+            )
+        case .completed:
+            CompletedTransfersTab(
+                dependency: viewModel.dependency,
+                presence: $viewModel.completedPresence
+            )
+        case .failed:
+            FailedTransfersTab(
+                dependency: viewModel.dependency,
+                presence: $viewModel.failedPresence
+            )
         }
     }
 
@@ -128,51 +154,5 @@ public struct TransfersListView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: TokenSpacing._5) {
-            Spacer()
-            MEGAAssets.Image.newTransfersEmptyState
-                .resizable()
-                .scaledToFit()
-                .frame(width: 120, height: 120)
-            Text(viewModel.emptyStateLabel)
-                .font(.body)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            Spacer()
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
-
-#Preview("No transfers") {
-    NavigationView {
-        TransfersListView(viewModel: TransfersListViewModel())
-    }
-}
-
-#Preview("No active transfers (others have data)") {
-    NavigationView {
-        TransfersListView(viewModel: TransfersListViewModel(
-            hasActiveTransfers: false,
-            hasCompletedTransfers: true,
-            hasFailedTransfers: true
-        ))
-    }
-}
-
-#Preview("Failed tab empty") {
-    NavigationView {
-        TransfersListView(viewModel: {
-            let vm = TransfersListViewModel(
-                hasActiveTransfers: true,
-                hasCompletedTransfers: true,
-                hasFailedTransfers: false
-            )
-            vm.selectedTab = .failed
-            return vm
-        }())
     }
 }

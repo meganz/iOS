@@ -74,3 +74,27 @@ struct TransferEntityMapperTests {
         #expect(state.location == nil)
     }
 }
+
+@Suite("TransferEntityMapper failed rows")
+struct TransferEntityMapperFailedRowsTests {
+
+    @Test func failedDownload_usesFailedLabel() {
+        let entity = TransferEntity(type: .download, fileName: "a.txt", state: .failed)
+
+        let state = TransferEntityMapper.rowState(for: entity)
+
+        #expect(state.status == .failed)
+        #expect(state.subtitle == "↓ Failed")
+        #expect(state.location == nil)
+    }
+
+    @Test func cancelledUpload_usesCancelledLabel() {
+        let entity = TransferEntity(type: .upload, fileName: "b.txt", state: .cancelled)
+
+        let state = TransferEntityMapper.rowState(for: entity)
+
+        #expect(state.status == .cancelled)
+        #expect(state.subtitle == "↑ Cancelled")
+        #expect(state.location == nil)
+    }
+}

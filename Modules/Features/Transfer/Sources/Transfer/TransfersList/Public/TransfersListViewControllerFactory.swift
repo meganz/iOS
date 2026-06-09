@@ -22,17 +22,25 @@ public enum TransfersListViewControllerFactory {
             fileSystemRepository: FileSystemRepository.sharedRepo
         )
         let nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
-        
+
         let transfersListenerUseCase = TransfersListenerUseCase(
             repo: TransfersListenerRepository.newRepo,
             preferenceUseCase: PreferenceUseCase.default
         )
-        
-        let viewModel = TransfersListViewModel(
+
+        let dependency = TransferTabDependency(
             inventoryUseCase: inventoryUseCase,
             counterUseCase: counterUseCase,
-            nodeUseCase: nodeUseCase,
-            nodeAttributeUseCase: nodeAttributeUseCase,
+            registry: TransferRegistry(),
+            locationResolver: TransferLocationResolver(
+                nodeUseCase: nodeUseCase,
+                nodeAttributeUseCase: nodeAttributeUseCase
+            ),
+            filteringUserTransfers: true
+        )
+
+        let viewModel = TransfersListViewModel(
+            dependency: dependency,
             transfersListenerUseCase: transfersListenerUseCase
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
