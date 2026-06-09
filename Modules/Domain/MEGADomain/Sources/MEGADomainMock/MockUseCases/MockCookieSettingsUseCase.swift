@@ -52,6 +52,4 @@ public struct MockCookieSettingsUseCase: CookieSettingsUseCaseProtocol {
     }
     
     public func setCrashlyticsEnabled(_ bool: Bool) {}
-    
-    public func setAnalyticsEnabled(_ bool: Bool) {}
 }

@@ -9,7 +9,7 @@ public struct MockCookieSettingsRepository: CookieSettingsRepositoryProtocol {
     let cookieBannerEnable: Bool
     let cookieSettings: (Result<Int, CookieSettingsErrorEntity>)
     let setCookieSettings: (Result<Int, CookieSettingsErrorEntity>)
-    
+
     public init(cookieBannerEnable: Bool = false,
                 cookieSettings: Result<Int, CookieSettingsErrorEntity> = .failure(.generic),
                 setCookieSettings: Result<Int, CookieSettingsErrorEntity> = .failure(.generic)) {

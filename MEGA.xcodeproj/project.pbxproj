@@ -240,6 +240,7 @@
 		141C6BA52FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141C6BA42FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift */; };
 		141C714A2FBEE71E000CCFBB /* MEGAAudioPlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141C71492FBEE71E000CCFBB /* MEGAAudioPlayerNavigationController.swift */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
+		14C0336E2FBAD9C200BC12C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */; };
 		14C131092FAF21640021D501 /* MEGAAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 14C131082FAF21640021D501 /* MEGAAudioPlayer */; };
 		14D55C182ECF113D00825803 /* MEGAPreferenceMocks in Frameworks */ = {isa = PBXBuildFile; productRef = 14D55C172ECF113D00825803 /* MEGAPreferenceMocks */; };
 		14DE60422F2A46E800C7F913 /* PSASwiftUIBackedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DE60412F2A46E100C7F913 /* PSASwiftUIBackedView.swift */; };
@@ -5668,6 +5669,7 @@
 				16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				BF26E7AF2F3EDB8800AF51E5 /* Favourites in Frameworks */,
+				14C0336E2FBAD9C200BC12C1 /* FirebaseAnalytics in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */,
@@ -13819,6 +13821,7 @@
 				A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */,
 				A83E525F2F8508F8002A37C3 /* MediaImport */,
 				14C131082FAF21640021D501 /* MEGAAudioPlayer */,
+				14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -17320,7 +17323,7 @@
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-Wno-error=quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -17383,7 +17386,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG";
+				OTHER_CFLAGS = "-DNDEBUG -Wno-error=quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -18331,7 +18334,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG";
+				OTHER_CFLAGS = "-DNDEBUG -Wno-error=quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -19171,6 +19174,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 		14C131082FAF21640021D501 /* MEGAAudioPlayer */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -126,7 +126,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         title = viewModel.viewTitle
         
-        saveBarButtonItem.title = Strings.Localizable.close
+        saveBarButtonItem.title = Strings.Localizable.save
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
 
         if #available(iOS 26.0, *) {

@@ -348,11 +348,35 @@ extension AppDelegate {
     @objc func configAppWithNewCookieSettings() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
         
+        let analyticsConsentUseCase = makeFirebaseAnalyticsConsentUseCase()
+
         Task {
-            let bitmap = try await cookieSettingsUseCase.cookieSettings()
-            let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
-            cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
+            do {
+                let bitmap = try await cookieSettingsUseCase.cookieSettings()
+                let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
+                cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
+                await analyticsConsentUseCase.updateCollection(performanceAndAnalyticsConsent: isPerformanceAndAnalyticsEnabled)
+            } catch {
+                if case CookieSettingsErrorEntity.bitmapNotSet = error {
+                    MEGALogDebug("Cookie settings bitmap not set yet; disabling Crashlytics and Analytics by default")
+                } else {
+                    MEGALogError("Error loading cookie settings. Error: \(error)")
+                }
+                cookieSettingsUseCase.setCrashlyticsEnabled(false)
+                analyticsConsentUseCase.disableCollection()
+            }
         }
+    }
+
+    @objc func disableFirebaseAnalyticsCollection() {
+        makeFirebaseAnalyticsConsentUseCase().disableCollection()
+    }
+
+    private func makeFirebaseAnalyticsConsentUseCase() -> some FirebaseAnalyticsConsentUseCaseProtocol {
+        FirebaseAnalyticsConsentUseCase(
+            analyticsRepository: FirebaseAnalyticsRepository.newRepo,
+            regionRepository: AnalyticsRegionRepository.newRepo
+        )
     }
 }
 

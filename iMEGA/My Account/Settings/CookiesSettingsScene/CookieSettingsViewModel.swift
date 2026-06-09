@@ -80,6 +80,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
 
     private let accountUseCase: any AccountUseCaseProtocol
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
+    private let firebaseAnalyticsConsentUseCase: any FirebaseAnalyticsConsentUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let adMobConsentManager: any GoogleMobileAdsConsentManagerProtocol
     private let router: any CookieSettingsRouting
@@ -108,12 +109,14 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     init(
         accountUseCase: some AccountUseCaseProtocol,
         cookieSettingsUseCase: some CookieSettingsUseCaseProtocol,
+        firebaseAnalyticsConsentUseCase: some FirebaseAnalyticsConsentUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
         router: some CookieSettingsRouting
     ) {
         self.accountUseCase = accountUseCase
         self.cookieSettingsUseCase = cookieSettingsUseCase
+        self.firebaseAnalyticsConsentUseCase = firebaseAnalyticsConsentUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.adMobConsentManager = adMobConsentManager
         self.router = router
@@ -259,6 +262,9 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
                 }
                 
                 _ = try await cookieSettingsUseCase.setCookieSettings(with: cookiesBitmap.rawValue)
+                await firebaseAnalyticsConsentUseCase.updateCollection(
+                    performanceAndAnalyticsConsent: cookiesBitmap.contains(.analytics)
+                )
                 invokeCommand?(.cookieSettingsSaved)
             } catch {
                 guard let error = error as? CookieSettingsErrorEntity else {

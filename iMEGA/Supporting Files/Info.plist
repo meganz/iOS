@@ -126,6 +126,8 @@
 	<string></string>
 	<key>FirebaseCrashlyticsCollectionEnabled</key>
 	<false/>
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

@@ -204,6 +204,7 @@ class CookieSettingsViewModelTests: XCTestCase {
         let sut = CookieSettingsViewModel(
             accountUseCase: accountUseCase,
             cookieSettingsUseCase: cookieSettingsUseCase,
+            firebaseAnalyticsConsentUseCase: MockFirebaseAnalyticsConsentUseCase(),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             adMobConsentManager: adMobConsentManager,
             router: mockRouter

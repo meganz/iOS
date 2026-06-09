@@ -89,6 +89,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
+    [self disableFirebaseAnalyticsCollection];
     [AppEnvironmentConfigurator configAppEnvironment];
     
 #if defined(DEBUG) || defined(QA_CONFIG)

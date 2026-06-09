@@ -1,8 +1,17 @@
 import Accounts
+import FirebaseAnalytics
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+
+struct FirebaseAnalyticsRepository: FirebaseAnalyticsRepositoryProtocol {
+    static var newRepo: FirebaseAnalyticsRepository { FirebaseAnalyticsRepository() }
+
+    func setAnalyticsEnabled(_ enabled: Bool) {
+        Analytics.setAnalyticsCollectionEnabled(enabled)
+    }
+}
 
 @MainActor
 protocol CookieSettingsRouting: Routing, Sendable {
@@ -33,6 +42,10 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
         let viewModel = CookieSettingsViewModel(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo),
+            firebaseAnalyticsConsentUseCase: FirebaseAnalyticsConsentUseCase(
+                analyticsRepository: FirebaseAnalyticsRepository.newRepo,
+                regionRepository: AnalyticsRegionRepository.newRepo
+            ),
             router: self
         )
         
