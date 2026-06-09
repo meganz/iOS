@@ -17323,7 +17323,7 @@
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-Wno-error=quoted-include-in-framework-header";
+				OTHER_CFLAGS = "-Wno-quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -17386,7 +17386,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG -Wno-error=quoted-include-in-framework-header";
+				OTHER_CFLAGS = "-DNDEBUG -Wno-quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -18334,7 +18334,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG -Wno-error=quoted-include-in-framework-header";
+				OTHER_CFLAGS = "-DNDEBUG -Wno-quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
