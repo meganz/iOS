@@ -46,6 +46,8 @@ public struct EventEntity: Sendable {
         case downgradeAttack
         case confirmUserEmail
         case creditCardExpiry
+        case networkActivity
+        case transfersResumed
     }
 
     public enum ReasonError: Sendable {
