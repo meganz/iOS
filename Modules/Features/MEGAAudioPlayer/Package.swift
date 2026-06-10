@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
@@ -29,6 +30,7 @@ let package = Package(
                 "MEGADomain",
                 "MEGAAssets",
                 "MEGAL10n",
+                "MEGAAppSDKRepo",
                 "MEGASwiftUI",
                 "MEGAInfrastructure",
                 "MEGADesignToken",
@@ -37,7 +39,10 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGAAudioPlayerTests",
-            dependencies: ["MEGAAudioPlayer"]
+            dependencies: [
+                "MEGAAudioPlayer",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
+            ]
         )
     ]
 )
