@@ -85,8 +85,7 @@ extension MEGAPhotoBrowserViewController {
                 return
             }
 
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) &&
-                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
                 let allVideoNodes = dataProvider.allPhotos.filter { node in
                     let fileName = node.name ?? ""
                     return fileName.fileExtensionGroup.isVideo
