@@ -15,9 +15,12 @@ struct AudioPlaybackState {
     /// Display artist for the current track.
     var artist: String?
 
-    /// URL of the current track's cover artwork — typically produced by the
-    /// engine after it parses track metadata.
-    var artworkURLString: String?
+    /// Raw cover-art bytes parsed from the file's embedded tags (ID3 / MP4).
+    /// The presentation layer decodes it to an image.
+    var artworkData: Data?
+
+    /// Track duration in seconds, parsed from the asset.
+    var duration: TimeInterval?
 
     /// Coarse playback status the mini player binds to.
     var status: PlaybackStatus = .loading
@@ -48,27 +51,64 @@ protocol AudioPlaybackServiceProtocol: AnyObject {
     func stop()
 }
 
-/// Live implementation of `AudioPlaybackServiceProtocol`. Process-lifetime
-/// singleton via `shared`. Currently a stub — engine, audio-session, remote
-/// command, now-playing, and stats wiring land in the engine-migration
 @MainActor
 final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     static let shared = AudioPlaybackService()
 
     private let stateSubject = CurrentValueSubject<AudioPlaybackState?, Never>(nil)
+    private let urlResolution: any AudioURLResolutionUseCaseProtocol
+    private let metadataLoader: any AudioMetadataLoading
+
+    /// In-flight metadata parse for the current track. Cancelled when a new
+    /// track starts or playback stops.
+    private var metadataTask: Task<Void, Never>?
+
+    /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
+    /// superseded track can detect it lost the race and drop its result.
+    private var playGeneration = 0
 
     var statePublisher: AnyPublisher<AudioPlaybackState?, Never> {
         stateSubject.eraseToAnyPublisher()
     }
 
-    private init() {}
+    private init(
+        urlResolution: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
+        metadataLoader: some AudioMetadataLoading = AudioMetadataLoader()
+    ) {
+        self.urlResolution = urlResolution
+        self.metadataLoader = metadataLoader
+    }
 
     func play(source: PlaybackSource) {
+        metadataTask?.cancel()
+        playGeneration += 1
+        let generation = playGeneration
+
         stateSubject.value = AudioPlaybackState(
             currentSource: source,
             title: Self.displayName(for: source),
             artist: nil
         )
+
+        guard let url = urlResolution.url(for: source) else { return }
+
+        metadataTask = Task { [metadataLoader] in
+            guard let metadata = try? await metadataLoader.loadMetadata(from: url),
+                  !metadata.isEmpty,
+                  !Task.isCancelled else { return }
+            self.applyMetadata(metadata, generation: generation)
+        }
+    }
+
+    private func applyMetadata(_ metadata: AudioMetadata, generation: Int) {
+        guard generation == playGeneration, var state = stateSubject.value else { return }
+        if let title = metadata.title, !title.isEmpty {
+            state.title = title
+        }
+        state.artist = metadata.artist
+        state.artworkData = metadata.artworkData
+        state.duration = metadata.duration
+        stateSubject.value = state
     }
 
     /// Filename / node-name projection used as the title; fall back to the local file URL's last path
@@ -97,6 +137,9 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     }
 
     func stop() {
+        metadataTask?.cancel()
+        metadataTask = nil
+        playGeneration += 1
         stateSubject.value = nil
     }
 }

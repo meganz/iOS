@@ -97,7 +97,7 @@ struct AudioPlayerView: View {
         }
         .preferredColorScheme(.dark)
         .simultaneousGesture(swipeDownToDismiss)
-        .task(id: vm.artworkURLString) {
+        .task(id: vm.artworkData) {
             await vm.loadArtwork()
         }
     }

@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import MEGASwiftUI
 import SwiftUI
 import UIKit
 
@@ -15,10 +14,8 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var currentSource: PlaybackSource?
 
-    /// Current track's artwork URL — mirrored from the service state. Exposed
-    /// publicly so the View can attach `.task(id: vm.artworkURLString)` and get
-    /// cancel-on-change behavior for free, instead of the VM owning a Task.
-    @Published private(set) var artworkURLString: String?
+    /// Cover-art bytes parsed from the file's embedded tags
+    @Published private(set) var artworkData: Data?
 
     /// Downloaded cover artwork for the current track. `nil` when the file has
     /// no detectable cover image — in that case the View falls back to the
@@ -58,23 +55,17 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     private let service: (any AudioPlaybackServiceProtocol)?
-    private let imageLoader: any ImageLoadingProtocol
     private var cancellables: Set<AnyCancellable> = []
 
     /// Preview / placeholder init. No service binding; intents are no-ops.
-    init(imageLoader: any ImageLoadingProtocol = ImageLoader()) {
+    init() {
         self.service = nil
-        self.imageLoader = imageLoader
     }
 
     /// Production init. VM mirrors the service's `statePublisher` into its
     /// `@Published` fields and forwards all user intents back to the service.
-    init(
-        service: any AudioPlaybackServiceProtocol,
-        imageLoader: any ImageLoadingProtocol = ImageLoader()
-    ) {
+    init(service: any AudioPlaybackServiceProtocol) {
         self.service = service
-        self.imageLoader = imageLoader
         bindService(service)
     }
 
@@ -89,37 +80,32 @@ final class AudioPlayerViewModel: ObservableObject {
 
     private func apply(state: AudioPlaybackState?) {
         currentSource = state?.currentSource
-        artworkURLString = state?.artworkURLString
+        title = state?.title
+        artist = state?.artist
+        artworkData = state?.artworkData
+        duration = state?.duration
     }
 
-    /// Download cover artwork for the current `artworkURLString` and publish
-    /// the resulting image + dominant glow color. Driven by the View via
-    /// `.task(id: vm.artworkURLString)`, which provides cancel-on-change and
-    /// cancel-on-disappear automatically — no stored Task on the VM needed.
+    /// Decode the current track's embedded cover (`artworkData`, parsed from the
+    /// file's ID3 / MP4 tags) into an image + dominant glow color
     func loadArtwork() async {
-        guard let urlString = artworkURLString,
-              let url = URL(string: urlString) else {
+        guard let artworkData else {
             artworkImage = nil
             glowColor = nil
             return
         }
 
-        guard let image = await imageLoader.loadImage(from: url) else { return }
-        let color = await extractDominantColor(from: image)
-
-        // `.task(id:)` cancels us when the URL changes; defend against assigning
-        // stale artwork to the (already-superseded) Published properties.
+        let result = await decodeArtwork(from: artworkData)
         guard !Task.isCancelled else { return }
-        artworkImage = image
-        glowColor = color
+        artworkImage = result?.image
+        glowColor = result?.color
     }
 
-    /// `nonisolated async` ensures Core Image work (`CIAreaAverage`) runs on the
-    /// cooperative pool rather than the MainActor's executor (per SE-0338,
-    /// non-actor-isolated async functions never run on an actor's executor).
-    nonisolated private func extractDominantColor(from image: UIImage) async -> Color? {
-        guard !Task.isCancelled else { return nil }
-        return image.mnz_dominantColor.map(Color.init(uiColor:))
+    /// Decode embedded cover bytes into an image and its dominant glow tint
+    nonisolated private func decodeArtwork(from data: Data) async -> (image: UIImage, color: Color?)? {
+        guard !Task.isCancelled, let image = UIImage(data: data) else { return nil }
+        let color = image.mnz_dominantColor.map(Color.init(uiColor:))
+        return (image, color)
     }
 
     func dismiss() {
@@ -132,7 +118,7 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     /// Seed `artworkImage` + `glowColor` directly. Normally driven by the
-    /// artwork-URL pipeline in `applyArtworkURL`; exposed for tests / preview.
+    /// `loadArtwork()` decode pipeline; exposed for tests / preview.
     func setArtwork(image: UIImage?, glowColor: Color?) {
         artworkImage = image
         self.glowColor = glowColor
