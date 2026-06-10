@@ -10,13 +10,13 @@ extension AppDelegate {
     }
 
     @objc func adsMainTabBarController(_ tabBar: MainTabBarController, onViewFirstAppeared: (() -> Void)?) -> UIViewController {
-        AdsSlotRouter(
+        tabBar.onViewFirstAppeared = onViewFirstAppeared
+        return AdsSlotRouter(
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(
-            onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: { [weak self] in
                 self?.showUpgradePlanPageFromAds()
             }

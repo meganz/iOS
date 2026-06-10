@@ -42,7 +42,6 @@ public struct AdsSlotRouter<T: View> {
     }
     
     public func build(
-        onViewFirstAppeared: (() -> Void)? = nil,
         adsFreeViewProPlanAction: (() -> Void)? = nil
     ) -> UIViewController {
         let viewModel = AdsSlotViewModel(
@@ -53,7 +52,6 @@ public struct AdsSlotRouter<T: View> {
             accountUseCase: accountUseCase,
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: PreferenceUseCase.default,
-            onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: adsFreeViewProPlanAction,
             publicNodeLink: publicLink,
             isFolderLink: isFolderLink

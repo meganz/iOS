@@ -52,9 +52,6 @@ public struct AdsSlotView<T: View>: View {
                 .opacity(adsContainerOpacity)
             }
         }
-        .onFirstAppear(perform: {
-            viewModel.onViewFirstAppeared?()
-        })
         .onAppear {
             viewModel.setupSubscriptions()
             viewModel.startMonitoringAdsSlotUpdates()

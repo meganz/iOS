@@ -30,7 +30,6 @@ final public class AdsSlotViewModel: ObservableObject {
     @Published var displayAds: Bool = false
     @Published var showCloseButton: Bool = false
     @Published var showAdsFreeView: Bool = false
-    private(set) var onViewFirstAppeared: (() -> Void)?
     public let adsFreeViewProPlanAction: (() -> Void)?
     private let notificationCenter: NotificationCenter
     private let publicNodeLink: String?
@@ -58,7 +57,6 @@ final public class AdsSlotViewModel: ObservableObject {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        onViewFirstAppeared: (() -> Void)? = nil,
         adsFreeViewProPlanAction: (() -> Void)? = nil,
         currentDate: @escaping @Sendable () -> Date = { Date() },
         notificationCenter: NotificationCenter = .default,
@@ -74,7 +72,6 @@ final public class AdsSlotViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.tracker = tracker
-        self.onViewFirstAppeared = onViewFirstAppeared
         self.adsFreeViewProPlanAction = adsFreeViewProPlanAction
         self.currentDate = currentDate
         self.notificationCenter = notificationCenter

@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) id miniPlayerOverlayCoordinator;
 
+@property (nonatomic, copy, nullable) void (^onViewFirstAppeared)(void);
+
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
 
 - (void)showAchievements;

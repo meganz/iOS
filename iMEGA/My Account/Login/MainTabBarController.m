@@ -15,6 +15,8 @@
 
 @interface MainTabBarController () < MEGAGlobalDelegate>
 
+@property (nonatomic) BOOL hasFiredViewFirstAppeared;
+
 @end
 
 @implementation MainTabBarController
@@ -69,6 +71,13 @@
     [self shouldShowMiniPlayer];
     
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
+
+    if (!self.hasFiredViewFirstAppeared) {
+        self.hasFiredViewFirstAppeared = YES;
+        if (self.onViewFirstAppeared) {
+            self.onViewFirstAppeared();
+        }
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
