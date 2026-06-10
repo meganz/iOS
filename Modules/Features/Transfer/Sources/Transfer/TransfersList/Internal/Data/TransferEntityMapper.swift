@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import Search
 
 /// Maps `TransferEntity` from the Domain layer into the dual representations
@@ -98,9 +99,9 @@ public enum TransferEntityMapper {
         case .queued:
             return "\(arrow) Queued"
         case .failed:
-            return "\(arrow) Failed"
+            return "\(arrow) \(Strings.Localizable.Transfers.Tab.failed)"
         case .cancelled:
-            return "\(arrow) Cancelled"
+            return "\(arrow) \(Strings.Localizable.cancelled)"
         case .completed:
             guard let completionDate else { return "\(arrow) \(total)" }
             return "\(arrow) \(total) · \(completionDate)"

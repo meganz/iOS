@@ -57,7 +57,7 @@ struct TransferResultRowView: View {
 
                     Text(viewModel.state.subtitle)
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                        .foregroundStyle(subtitleColor)
                         .lineLimit(1)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -85,6 +85,15 @@ struct TransferResultRowView: View {
         }
         .buttonStyle(.plain)
         .disabled(isAllTransfersPaused)
+    }
+
+    /// Failed rows show their state label in red; every other status (including
+    /// the user-cancelled grey label) uses the standard secondary tint.
+    private var subtitleColor: Color {
+        switch viewModel.state.status {
+        case .failed: TokenColors.Support.error.swiftUI
+        case .queued, .active, .paused, .completed, .cancelled: TokenColors.Text.secondary.swiftUI
+        }
     }
 
     private var progressTint: Color {

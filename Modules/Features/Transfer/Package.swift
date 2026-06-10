@@ -57,6 +57,7 @@ let package = Package(
             dependencies: [
                 "Transfer",
                 "MEGADomain",
+                "MEGAL10n",
                 .product(name: "MEGADomainMock", package: "MEGADomain")
             ]
         )

@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import Testing
 @testable import Transfer
 
@@ -84,7 +85,7 @@ struct TransferEntityMapperFailedRowsTests {
         let state = TransferEntityMapper.rowState(for: entity)
 
         #expect(state.status == .failed)
-        #expect(state.subtitle == "↓ Failed")
+        #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Tab.failed)")
         #expect(state.location == nil)
     }
 
@@ -94,7 +95,7 @@ struct TransferEntityMapperFailedRowsTests {
         let state = TransferEntityMapper.rowState(for: entity)
 
         #expect(state.status == .cancelled)
-        #expect(state.subtitle == "↑ Cancelled")
+        #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
         #expect(state.location == nil)
     }
 }
