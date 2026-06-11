@@ -22,7 +22,9 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorDisabledMediaSubtype,
     CameraUploadErrorEmptyFileName,
     CameraUploadErrorFileHandleException,
-    CameraUploadErrorCoreDataException
+    CameraUploadErrorCoreDataException,
+    CameraUploadErrorEmptyFileURL,
+    CameraUploadErrorEmptyDirectoryURL
 };
 
 @interface NSError (CameraUpload)
@@ -130,6 +132,23 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  @return a NSError object with CameraUploadErrorCoreDataException error code
  */
 + (NSError *)mnz_cameraUploadCoreDataException:(NSException *)exception;
+
+/**
+ create a NSError object when the asset processing directory URL is nil
+
+ @param identifier the asset's saved local identifier
+ @return a NSError object with CameraUploadErrorEmptyDirectoryURL error code
+ */
++ (NSError *)mnz_cameraUploadEmptyDirectoryURLErrorForLocalIdentifier:(nullable NSString *)identifier;
+
+/**
+ create a NSError object when the local file URL for upload is nil
+
+ @param directoryURL the asset processing directory URL
+ @param fileName the generated local file name
+ @return a NSError object with CameraUploadErrorEmptyFileURL error code
+ */
++ (NSError *)mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:(nullable NSURL *)directoryURL fileName:(nullable NSString *)fileName;
 
 @end
 

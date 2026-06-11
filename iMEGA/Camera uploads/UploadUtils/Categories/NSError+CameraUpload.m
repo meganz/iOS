@@ -76,4 +76,12 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     }];
 }
 
++ (NSError *)mnz_cameraUploadEmptyDirectoryURLErrorForLocalIdentifier:(nullable NSString *)identifier {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEmptyDirectoryURL userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"empty asset processing directory URL for local identifier %@", identifier ?: @"nil"]}];
+}
+
++ (NSError *)mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:(nullable NSURL *)directoryURL fileName:(nullable NSString *)fileName {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEmptyFileURL userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"empty local file URL, directoryURL %@, fileName %@", directoryURL.absoluteString ?: @"nil", fileName ?: @"nil"]}];
+}
+
 @end

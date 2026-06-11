@@ -84,7 +84,15 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
     [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:CameraAssetUploadStatusProcessing error:nil];
     
-    self.uploadInfo.directoryURL = [self URLForAssetProcessing];
+    NSURL *processingDirectoryURL = [self URLForAssetProcessing];
+    if (processingDirectoryURL == nil) {
+        MEGALogError(@"[Camera Upload] %@ failed to create asset processing directory", self);
+        [[FIRCrashlytics crashlytics] recordError:[NSError mnz_cameraUploadEmptyDirectoryURLErrorForLocalIdentifier:self.uploadInfo.savedLocalIdentifier]];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+
+    self.uploadInfo.directoryURL = processingDirectoryURL;
 }
 
 - (void)cancel {

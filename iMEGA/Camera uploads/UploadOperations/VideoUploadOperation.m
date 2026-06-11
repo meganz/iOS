@@ -3,6 +3,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "AVAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
+#import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 
@@ -19,6 +20,10 @@
 
 - (void)start {
     [super start];
+
+    if (self.isFinished) {
+        return;
+    }
 
     [self requestVideoDataByVersion:PHVideoRequestOptionsVersionOriginal];
 }
@@ -162,6 +167,12 @@
     [AVAssetExportSession determineCompatibilityOfExportPreset:preset withAsset:asset outputFileType:outputFileType completionHandler:^(BOOL compatible) {
         if (compatible) {
             AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:preset];
+            if (session == nil) {
+                MEGALogError(@"[Camera Upload] %@ failed to create export session with preset %@", self, preset);
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                return;
+            }
+
             self.exportSession = session;
             session.outputFileType = outputFileType;
             
@@ -183,8 +194,16 @@
                 return;
             }
             
-            session.outputURL = self.uploadInfo.fileURL;
-            
+            NSURL *outputURL = self.uploadInfo.fileURL;
+            if (outputURL == nil) {
+                MEGALogError(@"[Camera Upload] %@ output URL is nil, directoryURL %@, fileName %@", self, self.uploadInfo.directoryURL, self.uploadInfo.fileName);
+                [[FIRCrashlytics crashlytics] recordError:[NSError mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:self.uploadInfo.directoryURL fileName:self.uploadInfo.fileName]];
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+                return;
+            }
+
+            session.outputURL = outputURL;
+
             __weak __typeof__(self) weakSelf = self;
             [session exportAsynchronouslyWithCompletionHandler:^{
                 if (weakSelf.isCancelled) {
@@ -249,8 +268,16 @@
         return;
     }
     
+    NSURL *toURL = self.uploadInfo.fileURL;
+    if (toURL == nil) {
+        MEGALogError(@"[Camera Upload] %@ file URL is nil when to copy original video, directoryURL %@, fileName %@", self, self.uploadInfo.directoryURL, self.uploadInfo.fileName);
+        [[FIRCrashlytics crashlytics] recordError:[NSError mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:self.uploadInfo.directoryURL fileName:self.uploadInfo.fileName]];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+
     NSError *error;
-    [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
+    [NSFileManager.defaultManager copyItemAtURL:URL toURL:toURL error:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
         if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {

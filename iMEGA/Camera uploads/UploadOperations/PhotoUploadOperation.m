@@ -3,6 +3,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
+#import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 @import UniformTypeIdentifiers;
@@ -22,7 +23,11 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (void)start {
     [super start];
-    
+
+    if (self.isFinished) {
+        return;
+    }
+
     [self requestImageData];
 }
 
@@ -136,9 +141,17 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
+    NSURL *outputURL = self.uploadInfo.fileURL;
+    if (outputURL == nil) {
+        MEGALogError(@"[Camera Upload] %@ output URL is nil, directoryURL %@, fileName %@", self, self.uploadInfo.directoryURL, self.uploadInfo.fileName);
+        [[FIRCrashlytics crashlytics] recordError:[NSError mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:self.uploadInfo.directoryURL fileName:self.uploadInfo.fileName]];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+
     __weak __typeof__(self) weakSelf = self;
     BOOL shouldStripGPSInfo = !CameraUploadManager.shouldIncludeGPSTags || !self.uploadInfo.asset.location;
-    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:shouldStripGPSInfo completion:^(BOOL succeeded) {
+    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:outputURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:shouldStripGPSInfo completion:^(BOOL succeeded) {
         if (weakSelf.isCancelled) {
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;

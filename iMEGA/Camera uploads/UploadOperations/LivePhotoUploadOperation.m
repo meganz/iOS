@@ -2,6 +2,7 @@
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
+#import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import Photos;
 @import CoreServices;
@@ -19,7 +20,11 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
 
 - (void)start {
     [super start];
-    
+
+    if (self.isFinished) {
+        return;
+    }
+
     [self requestLivePhotoResource];
 }
 
@@ -50,6 +55,12 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:URL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
+    if (session == nil) {
+        MEGALogError(@"[Camera Upload] %@ failed to create export session for live photo", self);
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+
     self.exportSession = session;
     session.outputFileType = AVFileTypeMPEG4;
     
@@ -62,7 +73,15 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         return;
     }
     
-    session.outputURL = self.uploadInfo.fileURL;
+    NSURL *outputURL = self.uploadInfo.fileURL;
+    if (outputURL == nil) {
+        MEGALogError(@"[Camera Upload] %@ output URL is nil, directoryURL %@, fileName %@", self, self.uploadInfo.directoryURL, self.uploadInfo.fileName);
+        [[FIRCrashlytics crashlytics] recordError:[NSError mnz_cameraUploadEmptyFileURLErrorWithDirectoryURL:self.uploadInfo.directoryURL fileName:self.uploadInfo.fileName]];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        return;
+    }
+
+    session.outputURL = outputURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
     
