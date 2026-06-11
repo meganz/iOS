@@ -74,8 +74,13 @@ extension OfflineViewController {
     @objc func presentAudioPlayer(fileLink: String?, filePaths: [String]?) {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
             let source: PlaybackSource?
-            if let fileLink, let url = URL(string: fileLink) {
-                source = .fileLink(url: url)
+            if let fileLink {
+                let allPaths = filePaths ?? [fileLink]
+                let startIndex = allPaths.firstIndex(of: fileLink) ?? 0
+                source = .offlineFiles(
+                    paths: allPaths.map { URL(fileURLWithPath: $0) },
+                    startIndex: startIndex
+                )
             } else if let filePaths, !filePaths.isEmpty {
                 source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
             } else {

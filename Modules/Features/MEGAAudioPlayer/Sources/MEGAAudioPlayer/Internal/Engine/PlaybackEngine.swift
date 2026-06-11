@@ -8,7 +8,7 @@ import Foundation
 protocol PlaybackEngineProtocol: AnyObject {
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
-    var isPlayingPublisher: AnyPublisher<Bool, Never> { get }
+    var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
 
     func play(url: URL)
     func togglePlayPause()
@@ -25,7 +25,7 @@ protocol PlaybackEngineProtocol: AnyObject {
 final class PlaybackEngine {
     private let currentTimeSubject = CurrentValueSubject<TimeInterval, Never>(0)
     private let durationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
-    private let isPlayingSubject = CurrentValueSubject<Bool, Never>(false)
+    private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
 
     private let player = AVPlayer()
     private var timeObserverToken: Any?
@@ -55,8 +55,8 @@ extension PlaybackEngine: PlaybackEngineProtocol {
         durationSubject.eraseToAnyPublisher()
     }
 
-    var isPlayingPublisher: AnyPublisher<Bool, Never> {
-        isPlayingSubject.eraseToAnyPublisher()
+    var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> {
+        playbackStatusSubject.eraseToAnyPublisher()
     }
 }
 
@@ -68,6 +68,7 @@ extension PlaybackEngine {
         let item = AVPlayerItem(url: url)
         observeDuration(of: item)
         player.replaceCurrentItem(with: item)
+        playbackStatusSubject.send(.buffering)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
         player.play()
@@ -98,7 +99,7 @@ extension PlaybackEngine {
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
-        isPlayingSubject.send(false)
+        playbackStatusSubject.send(.paused)
     }
 }
 
@@ -129,12 +130,21 @@ extension PlaybackEngine {
 
 extension PlaybackEngine {
     private func observeTimeControlStatus() {
-        let subject = isPlayingSubject
+        let subject = playbackStatusSubject
         rateObservation = player.observe(\.timeControlStatus, options: [.initial, .new]) { player, _ in
-            let playing = player.timeControlStatus == .playing
             Task { @MainActor in
-                subject.send(playing)
+                let status = PlaybackEngine.playbackStatus(from: player.timeControlStatus)
+                subject.send(status)
             }
+        }
+    }
+
+    private static func playbackStatus(from timeControlStatus: AVPlayer.TimeControlStatus) -> PlaybackStatus {
+        switch timeControlStatus {
+        case .paused: .paused
+        case .waitingToPlayAtSpecifiedRate: .buffering
+        case .playing: .playing
+        @unknown default: .paused
         }
     }
 

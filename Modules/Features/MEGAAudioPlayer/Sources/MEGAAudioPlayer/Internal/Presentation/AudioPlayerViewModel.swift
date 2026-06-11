@@ -83,7 +83,9 @@ final class AudioPlayerViewModel: ObservableObject {
         title = state?.title
         artist = state?.artist
         artworkData = state?.artworkData
+        currentTime = state?.currentTime ?? 0
         duration = state?.duration
+        isPlaying = state?.status == .playing || state?.status == .buffering
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -140,17 +142,17 @@ final class AudioPlayerViewModel: ObservableObject {
         self.title = title
         self.artist = artist
         self.currentTime = currentTime
-        self.duration = 100 // duration
+        self.duration = duration
         self.isPlaying = isPlaying
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode
         self.playbackMode = playbackMode
     }
 
-    // MARK: - Music Mode intents (engine integration pending)
+    // MARK: - Music Mode intents
 
     func togglePlayPause() {
-        isPlaying.toggle()
+        service?.togglePlayPause()
     }
 
     func skipPrevious() {
@@ -168,8 +170,10 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func seek(toFraction fraction: Double) {
-        guard let duration else { return }
-        currentTime = max(0, min(fraction, 1)) * duration
+        if let duration {
+            currentTime = max(0, min(fraction, 1)) * duration
+        }
+        service?.seek(toFraction: fraction)
     }
 
     func presentAirPlay() {

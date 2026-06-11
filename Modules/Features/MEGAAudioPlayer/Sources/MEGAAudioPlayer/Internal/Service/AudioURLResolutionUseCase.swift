@@ -10,12 +10,10 @@ protocol AudioURLResolutionUseCaseProtocol {
 // MARK: - Implementation
 
 struct AudioURLResolutionUseCase: AudioURLResolutionUseCaseProtocol {
-    private let streamingUseCase: any StreamingUseCaseProtocol
-    private let folderLinkStreamingUseCase: any StreamingUseCaseProtocol
+    private let streamingRepository: any AudioStreamingRepositoryProtocol
 
-    init(streamingUseCase: some StreamingUseCaseProtocol, folderLinkStreamingUseCase: some StreamingUseCaseProtocol) {
-        self.streamingUseCase = streamingUseCase
-        self.folderLinkStreamingUseCase = folderLinkStreamingUseCase
+    init(streamingRepository: some AudioStreamingRepositoryProtocol) {
+        self.streamingRepository = streamingRepository
     }
 
     func url(for source: PlaybackSource) -> URL? {
@@ -26,32 +24,22 @@ struct AudioURLResolutionUseCase: AudioURLResolutionUseCaseProtocol {
         case .cloudNode(let node, _),
              .chatMessage(let node, _, _),
              .searchResult(let node):
-            return streamingURL(for: node, using: streamingUseCase)
+            return streamingRepository.streamingURL(for: .account(NodeEntityAdapter(node)))
 
         case .folderLink(let node, _):
-            return streamingURL(for: node, using: folderLinkStreamingUseCase)
+            return streamingRepository.streamingURL(for: .folderLink(NodeEntityAdapter(node)))
 
         case .fileLink(_, let node):
             guard let node else {
                 assertionFailure("[AudioURLResolutionUseCase] .fileLink source has nil node — caller must resolve the node before calling play(source:)")
                 return nil
             }
-            return streamingURL(for: node, using: folderLinkStreamingUseCase)
+            return streamingRepository.streamingURL(for: .fileLink(node))
         }
-    }
-
-    // MARK: - Private
-
-    private func streamingURL(for node: NodeEntity, using useCase: any StreamingUseCaseProtocol) -> URL? {
-        if !useCase.isStreaming { useCase.startStreaming() }
-        return useCase.streamingLink(for: NodeEntityAdapter(node))
     }
 }
 
 // MARK: - NodeEntityAdapter
-
-/// Bridges `NodeEntity` to `PlayableNode` so `StreamingUseCaseProtocol` can
-/// accept domain entities without knowing about SDK types.
 private struct NodeEntityAdapter: PlayableNode {
     let handle: UInt64
     let name: String?

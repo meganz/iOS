@@ -1,29 +1,60 @@
 import MEGADomain
 import MEGASdk
 
-public struct AudioStreamingRepository: StreamingRepositoryProtocol {
-    public static var newRepo: Self { Self(sdk: .sharedSdk) }
-    public static var folderLinkRepo: Self { Self(sdk: .sharedFolderLinkSdk) }
-
-    public var httpServerIsLocalOnly: Bool { sdk.httpServerIsLocalOnly() }
-    public var httpServerIsRunning: Int { sdk.httpServerIsRunning() }
+public struct AudioStreamingRepository: AudioStreamingRepositoryProtocol {
+    public static var newRepo: AudioStreamingRepository {
+        AudioStreamingRepository(sdk: .sharedSdk, folderSDK: .sharedFolderLinkSdk)
+    }
 
     private let sdk: MEGASdk
+    private let folderSDK: MEGASdk
 
-    public init(sdk: MEGASdk) { self.sdk = sdk }
+    public init(sdk: MEGASdk, folderSDK: MEGASdk) {
+        self.sdk = sdk
+        self.folderSDK = folderSDK
+    }
 
-    public func httpServerGetLocalLink(_ node: any PlayableNode) -> URL? {
-        guard let megaNode = sdk.node(forHandle: node.handle), let authorized = sdk.authorizeNode(megaNode) else {
-            return nil
+    private var streamingSDK: MEGASdk {
+        MEGASdk.isLoggedIn ? sdk : folderSDK
+    }
+
+    public var isServerRunning: Bool { streamingSDK.httpServerIsRunning() != 0 }
+
+    public func startServer() { streamingSDK.httpServerStart(false, port: 4443) }
+
+    public func stopServer() { streamingSDK.httpServerStop() }
+
+    public func streamingURL(for node: StreamingNode) -> URL? {
+        switch node {
+        case .account(let node):
+            // Cloud / chat / search nodes live in the account tree and stream without authorization.
+            guard let megaNode = resolve(node, in: sdk) else { return nil }
+            return localLink(for: megaNode)
+
+        case .folderLink(let node):
+            // Authorized against the folder-link tree, then streamed via the login-state server.
+            guard let megaNode = resolve(node, in: folderSDK),
+                  let authorized = folderSDK.authorizeNode(megaNode) else { return nil }
+            return localLink(for: authorized)
+
+        case .fileLink(let node):
+            // A standalone public node already resolved upstream — used directly, no authorization.
+            guard let megaNode = node as? MEGANode else { return nil }
+            return localLink(for: megaNode)
         }
-        return sdk.httpServerGetLocalLink(authorized)
     }
 
-    public func httpServerStart(_ localOnly: Bool, port: Int) {
-        sdk.httpServerStart(localOnly, port: port)
+    // MARK: - Private
+
+    /// Returns the underlying `MEGANode`: the object directly when one was carried
+    /// through, otherwise a tree lookup by handle in the given SDK.
+    private func resolve(_ node: any PlayableNode, in sdk: MEGASdk) -> MEGANode? {
+        (node as? MEGANode) ?? sdk.node(forHandle: node.handle)
     }
 
-    public func httpServerStop() {
-        sdk.httpServerStop()
+    private func localLink(for node: MEGANode) -> URL? {
+        let server = streamingSDK
+        guard let link = server.httpServerGetLocalLink(node) else { return nil }
+        return server.httpServerIsLocalOnly() ? link : link.updatedURLWithCurrentAddress()
     }
 }

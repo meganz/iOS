@@ -8,7 +8,8 @@ import MEGADomain
 public enum PlaybackSource: Sendable {
     case cloudNode(node: NodeEntity, queue: [NodeEntity] = [])
     case chatMessage(node: NodeEntity, chatId: HandleEntity, messageId: HandleEntity)
-    case fileLink(url: URL, node: NodeEntity? = nil)
+    /// a file-link node is a standalone public node that isn't in any tree, so the streaming layer needs the object itself, not a handle.
+    case fileLink(url: URL, node: (any PlayableNode)? = nil)
     case folderLink(node: NodeEntity, queue: [NodeEntity] = [])
     case offlineFiles(paths: [URL], startIndex: Int = 0)
     case searchResult(node: NodeEntity)
@@ -20,9 +21,7 @@ public enum PlaybackSource: Sendable {
              .folderLink(let node, _),
              .searchResult(let node):
             return node
-        case .fileLink(_, let node):
-            return node
-        case .offlineFiles:
+        case .fileLink, .offlineFiles:
             return nil
         }
     }

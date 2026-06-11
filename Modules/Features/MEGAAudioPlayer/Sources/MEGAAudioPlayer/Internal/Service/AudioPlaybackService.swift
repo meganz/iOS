@@ -1,18 +1,10 @@
 import Combine
 import Foundation
 import MEGADomain
-import SwiftUI
 
-/// Single state projection the VM subscribes to.
 struct AudioPlaybackState {
     var currentSource: PlaybackSource
-
-    /// Display title for the current track. Starts as the filename / node name
-    /// when playback begins, then gets overwritten by the engine once ID3
-    /// `commonKeyTitle` is parsed
     var title: String
-
-    /// Display artist for the current track.
     var artist: String?
 
     /// Raw cover-art bytes parsed from the file's embedded tags (ID3 / MP4).
@@ -24,30 +16,26 @@ struct AudioPlaybackState {
 
     /// Coarse playback status the mini player binds to.
     var status: PlaybackStatus = .loading
+    var currentTime: TimeInterval = 0
 
     var currentNode: NodeEntity? { currentSource.primaryNode }
 }
 
-enum PlaybackStatus {
-    /// Audio is buffering or metadata is still being parsed — the mini player
-    /// shows the throbber and the play/pause toggle is inert.
+enum PlaybackStatus: Equatable {
     case loading
     case playing
     case paused
+    case buffering
+    case error(String)
 }
 
-/// App-level audio service abstraction.
 @MainActor
 protocol AudioPlaybackServiceProtocol: AnyObject {
     var statePublisher: AnyPublisher<AudioPlaybackState?, Never> { get }
 
     func play(source: PlaybackSource)
-
-    /// Flip between play and paused. Inert while loading. Wired to the mini
-    /// player's left-icon tap.
     func togglePlayPause()
-
-    /// Stop playback entirely and tear down the session.
+    func seek(toFraction fraction: Double)
     func stop()
 }
 
@@ -56,8 +44,10 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     static let shared = AudioPlaybackService()
 
     private let stateSubject = CurrentValueSubject<AudioPlaybackState?, Never>(nil)
-    private let urlResolution: any AudioURLResolutionUseCaseProtocol
+    private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
+    private let streamingRepository: any AudioStreamingRepositoryProtocol
     private let metadataLoader: any AudioMetadataLoading
+    private let engine: any PlaybackEngineProtocol
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
@@ -66,17 +56,24 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
+    
+    private var cancellables: Set<AnyCancellable> = []
 
     var statePublisher: AnyPublisher<AudioPlaybackState?, Never> {
         stateSubject.eraseToAnyPublisher()
     }
 
-    private init(
-        urlResolution: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
-        metadataLoader: some AudioMetadataLoading = AudioMetadataLoader()
+    init(
+        urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
+        streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
+        metadataLoader: some AudioMetadataLoading = AudioMetadataLoader(),
+        engine: some PlaybackEngineProtocol = PlaybackEngine()
     ) {
-        self.urlResolution = urlResolution
+        self.urlResolutionUseCase = urlResolutionUseCase
+        self.streamingRepository = streamingRepository
         self.metadataLoader = metadataLoader
+        self.engine = engine
+        bindEngineToState()
     }
 
     func play(source: PlaybackSource) {
@@ -87,17 +84,23 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
         stateSubject.value = AudioPlaybackState(
             currentSource: source,
             title: Self.displayName(for: source),
-            artist: nil
+            status: .loading,
+            currentTime: 0
         )
-
-        guard let url = urlResolution.url(for: source) else { return }
-
-        metadataTask = Task { [metadataLoader] in
+        
+        startStreamingServerIfNeeded(for: source)
+        guard let url = urlResolutionUseCase.url(for: source) else {
+            stateSubject.value?.status = .error("url resolution error")
+            return
+        }
+        metadataTask = Task { [metadataLoader, weak self] in
+            guard let self else { return }
             guard let metadata = try? await metadataLoader.loadMetadata(from: url),
                   !metadata.isEmpty,
                   !Task.isCancelled else { return }
             self.applyMetadata(metadata, generation: generation)
         }
+        engine.play(url: url)
     }
 
     private func applyMetadata(_ metadata: AudioMetadata, generation: Int) {
@@ -111,9 +114,50 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
         stateSubject.value = state
     }
 
-    /// Filename / node-name projection used as the title; fall back to the local file URL's last path
-    /// component only for offline playback, where the URL is a `file://` URL
-    /// and the last path component IS the filename.
+    func togglePlayPause() {
+        engine.togglePlayPause()
+    }
+
+    func seek(toFraction fraction: Double) {
+        engine.seek(toFraction: fraction)
+    }
+
+    func stop() {
+        metadataTask?.cancel()
+        metadataTask = nil
+        playGeneration += 1
+        stateSubject.value = nil
+        engine.stop()
+        streamingRepository.stopServer()
+    }
+
+    // MARK: - Private
+    private func startStreamingServerIfNeeded(for source: PlaybackSource) {
+        if case .offlineFiles = source { return }
+        guard !streamingRepository.isServerRunning else { return }
+        streamingRepository.startServer()
+    }
+
+    private func bindEngineToState() {
+        Publishers.CombineLatest3(
+            engine.currentTimePublisher,
+            engine.durationPublisher,
+            engine.playbackStatusPublisher
+        )
+        .sink { [weak self] currentTime, duration, status in
+            self?.mergeEngineState(currentTime: currentTime, duration: duration, status: status)
+        }
+        .store(in: &cancellables)
+    }
+
+    private func mergeEngineState(currentTime: TimeInterval, duration: TimeInterval?, status: PlaybackStatus) {
+        guard var current = stateSubject.value else { return }
+        current.currentTime = currentTime
+        current.duration = duration
+        current.status = status
+        stateSubject.value = current
+    }
+
     private static func displayName(for source: PlaybackSource) -> String {
         switch source {
         case .cloudNode(let node, _),
@@ -127,19 +171,5 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
             let url = paths.indices.contains(startIndex) ? paths[startIndex] : paths.first
             return url?.lastPathComponent ?? ""
         }
-    }
-
-    func togglePlayPause() {
-        // TBD: engine-migration sprint — flip the AVPlayer rate and let the
-        // engine's KVO push the resulting `.playing` / `.paused` status back
-        // through `stateSubject`. Until then this is intentionally inert so
-        // the mini player can still be exercised by previews and mocks.
-    }
-
-    func stop() {
-        metadataTask?.cancel()
-        metadataTask = nil
-        playGeneration += 1
-        stateSubject.value = nil
     }
 }

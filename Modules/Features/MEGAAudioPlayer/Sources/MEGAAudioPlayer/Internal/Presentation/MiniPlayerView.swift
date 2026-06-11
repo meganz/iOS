@@ -70,11 +70,11 @@ struct MiniPlayerView: View {
         case .loading:
             LoaderThrobber()
                 .frame(width: Sizes.iconSize, height: Sizes.iconSize)
-        case .playing:
+        case .playing, .buffering:
             Image(uiImage: MEGAAssets.UIImage.miniplayerPause)
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-        case .paused:
+        case .paused, .error:
             Image(uiImage: MEGAAssets.UIImage.miniplayerPlay)
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)

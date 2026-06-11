@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGAAudioPlayer
 
 extension MEGANode {
@@ -103,7 +104,12 @@ extension MEGANode {
             return .folderLink(node: node.toNodeEntity(), queue: queue)
         }
         if let fileLink, let url = URL(string: fileLink) {
-            return .fileLink(url: url, node: node?.toNodeEntity())
+            guard let node else {
+                assertionFailure("[AudioPlayer] .fileLink source has nil node — resolve node before presenting player")
+                MEGALogError("[AudioPlayer] .fileLink source has nil node — playback skipped")
+                return nil
+            }
+            return .fileLink(url: url, node: node)
         }
         if let node,
            let chatHandle = chatId?.uint64Value, chatHandle != .invalid,

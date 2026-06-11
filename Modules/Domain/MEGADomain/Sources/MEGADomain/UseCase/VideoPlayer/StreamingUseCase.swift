@@ -47,7 +47,7 @@ extension URL {
     /// accessible from external clients such as Chromecast, AirPlay, or other peers.
     ///
     /// - Returns: A new `URL` instance with the loopback address replaced, or `self` if the local IP address is not available.
-    func updatedURLWithCurrentAddress() -> URL {
+    public func updatedURLWithCurrentAddress() -> URL {
         let loopbackAddress = "[::1]"
         guard let localIPAddress = localWiFiIPAddress() else {
             return self
