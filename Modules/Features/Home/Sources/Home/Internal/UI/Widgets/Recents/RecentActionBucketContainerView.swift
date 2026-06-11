@@ -35,16 +35,19 @@ struct RecentActionBucketContainerView: View {
             }
     }
     
-    private var content: RecentActionBucketView {
+    @ViewBuilder
+    private var content: some View {
         switch dependency.bucket.type {
         case let .singleFile(fileNode):
             RecentActionBucketView(dependency: contentDependency) { button in
                 dependency.nodeActionHandler.handle(action: NodeAction(handle: fileNode.handle, sender: button))
             }
+            .sensitive(fileNode.isMarkedSensitive ? .opacity : .none)
         case let .singleMedia(mediaNode):
             RecentActionBucketView(dependency: contentDependency) { button in
                 dependency.nodeActionHandler.handle(action: NodeAction(handle: mediaNode.handle, sender: button))
             }
+            .sensitive(mediaNode.isMarkedSensitive ? .opacity : .none)
         case .mixedFiles, .multipleMedia:
             RecentActionBucketView(dependency: contentDependency, moreAction: bucketCarouselMoreAction)
         }
