@@ -24,6 +24,8 @@ public protocol TransfersListenerUseCaseProtocol: Sendable {
     /// Checks if any transfers (in-progress or queued) are currently paused.
     /// - Returns: `true` if any transfers (in-progress or queued) are paused, otherwise `false`.
     func areTransfersPaused() -> Bool
+    /// Cancels every ongoing transfer, both downloads and uploads.
+    func cancelTransfers()
 }
 
 // MARK: - Use case implementation -
@@ -75,5 +77,9 @@ public struct TransfersListenerUseCase: TransfersListenerUseCaseProtocol {
     
     public func areTransfersPaused() -> Bool {
         transfersPaused || queuedTransfersPaused
+    }
+
+    public func cancelTransfers() {
+        repo.cancelTransfers()
     }
 }

@@ -19,6 +19,10 @@ public final class TransfersListViewModel: ObservableObject {
     @Published var activePresence: Int = 0
     @Published var completedPresence: Int = 0
     @Published var failedPresence: Int = 0
+    
+    /// Drives the cancel-all confirmation alert. Cancel is the only destructive action
+    /// that prompts (clear-all and retry-all run immediately, per design).
+    @Published var isPresentingCancelAllConfirmation = false
 
     /// Shared dependencies for the screen, also handed to each tab to build its own
     /// `TransferTabViewModel`. The parent VM reads `inventoryUseCase` /
@@ -110,8 +114,9 @@ public final class TransfersListViewModel: ObservableObject {
 
     /// Upgrade-only: while `CompletedTransfersTab` mounts, its count sequence emits a
     /// stale 0 before `task()` populates it. Confirming presence on a non-zero count
-    /// but never clearing on zero avoids flickering the tab bar during that window
-    /// (clearing completed transfers is not yet supported, so the list only grows).
+    /// but never clearing on zero avoids flickering the tab bar during that window. A
+    /// genuine clear is handled out-of-band by `clearAllTransfers()`, which flips the
+    /// flag to false directly, so this observer never needs to clear it.
     private func updateCompletedPresence(count: Int) {
         if count > 0 {
             hasCompletedTransfers = true
@@ -120,8 +125,8 @@ public final class TransfersListViewModel: ObservableObject {
 
     /// Upgrade-only, for the same reason as `updateCompletedPresence(count:)`:
     /// confirm presence on a non-zero count but never clear on the stale 0 emitted
-    /// while `FailedTransfersTab` mounts (clearing failed transfers is not yet
-    /// supported, so the list only grows).
+    /// while `FailedTransfersTab` mounts. A genuine clear flips the flag to false
+    /// directly in `clearAllTransfers()`.
     private func updateFailedPresence(count: Int) {
         if count > 0 {
             hasFailedTransfers = true
@@ -168,12 +173,49 @@ public final class TransfersListViewModel: ObservableObject {
         // Select mode: IOS-11933
     }
 
-    func cancelAllTransfers() {
-        // Confirmation dialog + cancel-all: IOS-11934
+    // MARK: - Confirmation dialog
+
+    /// Cancel is the only action that prompts. Opens the dialog from the More menu;
+    /// the selected-subset variant arrives with select mode (IOS-11933).
+    func requestCancelAllConfirmation() {
+        isPresentingCancelAllConfirmation = true
     }
 
+    /// Runs the confirmed cancel-all. SwiftUI clears `isPresentingCancelAllConfirmation`
+    /// when the alert dismisses, so no manual reset is needed here.
+    func confirmCancelAll() {
+        cancelAllTransfers()
+    }
+
+    // MARK: - Bulk actions
+
+    /// Cancels every ongoing transfer. The Active list empties reactively as the SDK
+    /// reports each transfer finished, so no manual refresh is needed here. Cancelled
+    /// transfers then surface on the Failed tab.
+    private func cancelAllTransfers() {
+        transfersListenerUseCase.cancelTransfers()
+    }
+
+    /// Clears the current tab's list with no confirmation (per design). The tab
+    /// presence flag is flipped manually so `hasAnyTransfers` (which drives the tab
+    /// bar and the all-empty "No transfers" overlay) and `menuActions` (which hides
+    /// the More button) update immediately. The flip is manual because the
+    /// Completed/Failed observers are upgrade-only (they never clear on a zero count).
+    /// Clearing is a silent SDK cache removal that fires no transfer delegate event, so
+    /// the mounted tab's Search list wouldn't re-query on its own; the clear use case
+    /// emits a `clearedSignals` ping (observed by the provider) that re-snapshots the
+    /// now-empty cache.
     func clearAllTransfers() {
-        // Confirmation dialog + clear-all: IOS-11934
+        switch selectedTab {
+        case .completed:
+            dependency.clearTransfersUseCase.clearCompletedTransfers()
+            hasCompletedTransfers = false
+        case .failed:
+            dependency.clearTransfersUseCase.clearFailedTransfers()
+            hasFailedTransfers = false
+        case .active:
+            return
+        }
     }
 
     func retryAllTransfers() {

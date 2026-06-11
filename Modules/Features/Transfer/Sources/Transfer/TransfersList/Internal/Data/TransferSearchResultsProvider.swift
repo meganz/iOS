@@ -27,6 +27,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     private let registry: TransferRegistry
     private let locationResolver: any TransferLocationResolving
     private let filteringUserTransfers: Bool
+    private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
 
     private let cachedResultIds: Atomic<[ResultId]> = Atomic(wrappedValue: [])
 
@@ -36,7 +37,8 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         counterUseCase: some TransferCounterUseCaseProtocol,
         registry: TransferRegistry,
         locationResolver: some TransferLocationResolving,
-        filteringUserTransfers: Bool = true
+        filteringUserTransfers: Bool = true,
+        clearTransfersUseCase: some ClearTransfersUseCaseProtocol
     ) {
         self.filter = filter
         self.inventoryUseCase = inventoryUseCase
@@ -44,6 +46,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         self.registry = registry
         self.locationResolver = locationResolver
         self.filteringUserTransfers = filteringUserTransfers
+        self.clearTransfersUseCase = clearTransfersUseCase
     }
 
     // MARK: - SearchResultsProviding
@@ -62,8 +65,11 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     }
 
     func searchResultUpdateSignalSequence() -> AnyAsyncSequence<SearchResultUpdateSignal> {
-        merge(startSignals(), updateSignals(), finishSignals())
-            .eraseToAnyAsyncSequence()
+        merge(
+            merge(startSignals(), updateSignals(), finishSignals()),
+            clearSignals()
+        )
+        .eraseToAnyAsyncSequence()
     }
 
     // MARK: - Snapshot
@@ -114,6 +120,15 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     }
 
     // MARK: - Signal streams
+
+    /// Re-query pings from the bulk-clear action, mapped to a generic re-snapshot.
+    /// Clearing is a silent SDK cache removal that fires no transfer delegate event,
+    /// so this is the only signal that re-snapshots the list after a clear.
+    private func clearSignals() -> AnyAsyncSequence<SearchResultUpdateSignal> {
+        clearTransfersUseCase.clearedSignals
+            .map { _ in SearchResultUpdateSignal.generic }
+            .eraseToAnyAsyncSequence()
+    }
 
     private func startSignals() -> AnyAsyncSequence<SearchResultUpdateSignal> {
         let filter = self.filter

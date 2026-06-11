@@ -7,6 +7,7 @@ public final class MockTransfersListenerRepository: TransfersListenerRepositoryP
     
     public var pauseTransfers_calledTimes = 0
     public var resumeTransfers_calledTimes = 0
+    public var cancelTransfers_calledTimes = 0
     
     public var completedTransfers: AnyAsyncSequence<TransferEntity> {
         stream.eraseToAnyAsyncSequence()
@@ -34,5 +35,9 @@ public final class MockTransfersListenerRepository: TransfersListenerRepositoryP
     
     public func resumeTransfers() {
         resumeTransfers_calledTimes += 1
+    }
+
+    public func cancelTransfers() {
+        cancelTransfers_calledTimes += 1
     }
 }

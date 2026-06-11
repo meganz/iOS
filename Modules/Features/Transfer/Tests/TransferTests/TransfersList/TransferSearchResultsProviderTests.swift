@@ -98,7 +98,8 @@ struct TransferSearchResultsProviderTests {
             ),
             counterUseCase: MockTransferCounterUseCase(),
             registry: TransferRegistry(),
-            locationResolver: MockTransferLocationResolver()
+            locationResolver: MockTransferLocationResolver(),
+            clearTransfersUseCase: MockClearTransfersUseCase()
         )
     }
 }

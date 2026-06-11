@@ -11,4 +11,6 @@ public protocol TransfersListenerRepositoryProtocol: RepositoryProtocol, Sendabl
     /// Resumes all paused transfers.
     /// If any transfers were paused previously, this method resume those transfers.
     func resumeTransfers()
+    /// Cancels every ongoing transfer, both downloads and uploads.
+    func cancelTransfers()
 }

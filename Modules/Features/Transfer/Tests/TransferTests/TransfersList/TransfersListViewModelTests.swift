@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import Testing
 @testable import Transfer
 
@@ -80,6 +81,74 @@ struct TransfersListViewModelMoreMenuTests {
 
         sut.selectedTab = .failed
         #expect(sut.menuActions == [.select, .retryAll, .clearAll])
+    }
+
+    // MARK: - Cancel-all confirmation
+
+    @Test func requestCancelAll_presentsDialog() {
+        let sut = makeSUT(hasActiveTransfers: true)
+
+        sut.requestCancelAllConfirmation()
+
+        #expect(sut.isPresentingCancelAllConfirmation)
+    }
+
+    @Test func confirmCancelAll_cancelsTransfers() {
+        let listener = MockTransfersListenerUseCase()
+        let sut = makeSUT(hasActiveTransfers: true, listener: listener)
+        sut.requestCancelAllConfirmation()
+
+        sut.confirmCancelAll()
+
+        #expect(listener.cancelTransfersCalledTimes == 1)
+    }
+
+    @Test func dismissingDialog_runsNoAction() {
+        let listener = MockTransfersListenerUseCase()
+        let sut = makeSUT(hasActiveTransfers: true, listener: listener)
+        sut.requestCancelAllConfirmation()
+
+        // Tapping Dismiss flips the binding without confirming.
+        sut.isPresentingCancelAllConfirmation = false
+
+        #expect(listener.cancelTransfersCalledTimes == 0)
+    }
+
+    // MARK: - Clear-all (no confirmation)
+
+    @Test func clearAll_onCompleted_clearsCompletedAndEmptiesTab() {
+        let clear = MockClearTransfersUseCase()
+        let sut = makeSUT(hasCompletedTransfers: true, clearTransfersUseCase: clear)
+        sut.selectedTab = .completed
+
+        sut.clearAllTransfers()
+
+        #expect(clear.clearCompletedTransfersCalledTimes == 1)
+        #expect(clear.clearFailedTransfersCalledTimes == 0)
+        #expect(sut.hasCompletedTransfers == false)
+    }
+
+    @Test func clearAll_onFailed_clearsFailedAndEmptiesTab() {
+        let clear = MockClearTransfersUseCase()
+        let sut = makeSUT(hasFailedTransfers: true, clearTransfersUseCase: clear)
+        sut.selectedTab = .failed
+
+        sut.clearAllTransfers()
+
+        #expect(clear.clearFailedTransfersCalledTimes == 1)
+        #expect(clear.clearCompletedTransfersCalledTimes == 0)
+        #expect(sut.hasFailedTransfers == false)
+    }
+
+    @Test func clearAll_onActive_doesNothing() {
+        let clear = MockClearTransfersUseCase()
+        let sut = makeSUT(hasActiveTransfers: true, clearTransfersUseCase: clear)
+        sut.selectedTab = .active
+
+        sut.clearAllTransfers()
+
+        #expect(clear.clearCompletedTransfersCalledTimes == 0)
+        #expect(clear.clearFailedTransfersCalledTimes == 0)
     }
 }
 
@@ -270,18 +339,42 @@ struct TransfersListViewModelDerivedStateTests {
 @MainActor
 private func makeSUT(
     completedTransfers: [TransferEntity] = [],
+    hasActiveTransfers: Bool = false,
+    hasCompletedTransfers: Bool = false,
+    hasFailedTransfers: Bool = false,
     listener: MockTransfersListenerUseCase = MockTransfersListenerUseCase(),
+    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
     filteringUserTransfers: Bool = true
 ) -> TransfersListViewModel {
-    TransfersListViewModel(
-        dependency: TransferTabDependency(
-            inventoryUseCase: MockTransferInventoryUseCase(completedTransfers: completedTransfers),
-            counterUseCase: MockTransferCounterUseCase(),
-            registry: TransferRegistry(),
-            locationResolver: StubTransferLocationResolver(),
-            filteringUserTransfers: filteringUserTransfers
+    let sut = TransfersListViewModel(
+        dependency: makeDependency(
+            completedTransfers: completedTransfers,
+            filteringUserTransfers: filteringUserTransfers,
+            clearTransfersUseCase: clearTransfersUseCase
         ),
         transfersListenerUseCase: listener
+    )
+    // Seed tab-presence through the same `*Presence` channel production uses, so a
+    // test can spin up a VM in a known tab-bar state in one call.
+    if hasActiveTransfers { sut.activePresence = 1 }
+    if hasCompletedTransfers { sut.completedPresence = 1 }
+    if hasFailedTransfers { sut.failedPresence = 1 }
+    return sut
+}
+
+@MainActor
+private func makeDependency(
+    completedTransfers: [TransferEntity] = [],
+    filteringUserTransfers: Bool = true,
+    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
+) -> TransferTabDependency {
+    TransferTabDependency(
+        inventoryUseCase: MockTransferInventoryUseCase(completedTransfers: completedTransfers),
+        counterUseCase: MockTransferCounterUseCase(),
+        registry: TransferRegistry(),
+        locationResolver: StubTransferLocationResolver(),
+        filteringUserTransfers: filteringUserTransfers,
+        clearTransfersUseCase: clearTransfersUseCase
     )
 }
 

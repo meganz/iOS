@@ -43,7 +43,8 @@ final class TransferTabViewModel: ObservableObject {
             counterUseCase: dependency.counterUseCase,
             registry: dependency.registry,
             locationResolver: dependency.locationResolver,
-            filteringUserTransfers: dependency.filteringUserTransfers
+            filteringUserTransfers: dependency.filteringUserTransfers,
+            clearTransfersUseCase: dependency.clearTransfersUseCase
         )
 
         let bridge = SearchBridge(

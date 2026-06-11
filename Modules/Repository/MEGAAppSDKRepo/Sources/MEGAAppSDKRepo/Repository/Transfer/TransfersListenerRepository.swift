@@ -28,4 +28,9 @@ public struct TransfersListenerRepository: TransfersListenerRepositoryProtocol {
     public func resumeTransfers() {
         sdk.pauseTransfers(false)
     }
+
+    public func cancelTransfers() {
+        sdk.cancelTransfers(forDirection: MEGATransferType.download.rawValue)
+        sdk.cancelTransfers(forDirection: MEGATransferType.upload.rawValue)
+    }
 }

@@ -103,12 +103,19 @@ struct TransfersListenerUseCaseTestSuite {
         func testAreTransfersPausedReflectsCorrectState() {
             let (sut, _) = TransfersListenerUseCaseTestSuite.makeSUT()
             #expect(sut.areTransfersPaused() == false, "Initially, transfers should not be paused")
-            
+
             sut.pauseQueuedTransfers()
             #expect(sut.areTransfersPaused() == true, "Should reflect true when queued transfers are paused")
-            
+
             sut.resumeQueuedTransfers()
             #expect(sut.areTransfersPaused() == false, "Should reflect false when no transfers are paused")
+        }
+
+        @Test("Cancelling all transfers forwards to the repository exactly once")
+        func testCancelTransfersForwardsToRepository() {
+            let (sut, repo) = TransfersListenerUseCaseTestSuite.makeSUT()
+            sut.cancelTransfers()
+            #expect(repo.cancelTransfers_calledTimes == 1, "cancelTransfers should be called exactly once.")
         }
     }
 }

@@ -36,7 +36,8 @@ public enum TransfersListViewControllerFactory {
                 nodeUseCase: nodeUseCase,
                 nodeAttributeUseCase: nodeAttributeUseCase
             ),
-            filteringUserTransfers: true
+            filteringUserTransfers: true,
+            clearTransfersUseCase: ClearTransfersUseCase(repo: ClearTransfersRepository.newRepo)
         )
 
         let viewModel = TransfersListViewModel(

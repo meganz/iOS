@@ -11,6 +11,7 @@ public final class MockTransfersListenerUseCase: TransfersListenerUseCaseProtoco
     public var resumeQueuedTransfersCalledTimes = 0
     public var pauseTransfersCalledTimes = 0
     public var resumeTransfersCalledTimes = 0
+    public var cancelTransfersCalledTimes = 0
     
     public var completedTransfers: AnyAsyncSequence<TransferEntity> {
         stream.eraseToAnyAsyncSequence()
@@ -48,5 +49,9 @@ public final class MockTransfersListenerUseCase: TransfersListenerUseCaseProtoco
     
     public func areTransfersPaused() -> Bool {
         paused
+    }
+
+    public func cancelTransfers() {
+        cancelTransfersCalledTimes += 1
     }
 }

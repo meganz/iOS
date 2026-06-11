@@ -27,6 +27,15 @@ public struct TransfersListView: View {
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(Strings.Localizable.transfers)
         .navigationBarTitleDisplayMode(.large)
+        .alert(
+            Strings.Localizable.Transfers.Confirmation.CancelAll.title,
+            isPresented: $viewModel.isPresentingCancelAllConfirmation
+        ) {
+            Button(Strings.Localizable.Transfers.Confirmation.CancelAll.confirm, role: .destructive) {
+                viewModel.confirmCancelAll()
+            }
+            Button(Strings.Localizable.dismiss, role: .cancel) {}
+        }
         .toolbar {
             if viewModel.hasAnyTransfers {
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -73,7 +82,7 @@ public struct TransfersListView: View {
     private func handle(_ action: TransferMoreMenuAction) {
         switch action {
         case .select: viewModel.enterSelectMode()
-        case .cancelAll: viewModel.cancelAllTransfers()
+        case .cancelAll: viewModel.requestCancelAllConfirmation()
         case .clearAll: viewModel.clearAllTransfers()
         case .retryAll: viewModel.retryAllTransfers()
         }
