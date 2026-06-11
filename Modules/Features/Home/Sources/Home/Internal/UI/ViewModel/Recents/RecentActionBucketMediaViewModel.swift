@@ -38,6 +38,7 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
         self.photoLibraryContentViewModel = PhotoLibraryContentViewModel(
             library: bucket.photoLibrary,
             contentMode: .recentBucket,
+            sectionHeaderType: .none,
             globalHeaderType: .none
         )
         self.bucketItemsUseCase = bucketItemsUseCase

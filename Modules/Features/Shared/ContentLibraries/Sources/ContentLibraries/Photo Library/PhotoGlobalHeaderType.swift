@@ -22,6 +22,8 @@ extension PhotoHeaderSortViewModel: Equatable {
 public enum PhotoSectionHeaderType: Sendable, Equatable {
     case photoDate
     case sort(PhotoHeaderSortViewModel)
+    /// No section header at all. Use when the surrounding screen already shows its own header
+    case none
 }
 
 public enum PhotoGlobalHeaderType: Sendable, Equatable {

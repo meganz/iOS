@@ -115,6 +115,8 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             configureSupplementaryPhotoDateSectionHeader(for: section, isPlaceholder: isPlaceholder)
         case .sort:
             configureSectionSortHeader(for: section)
+        case .none:
+            break
         }
     }
     
