@@ -26,7 +26,7 @@ struct AudioPlayerView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor)
+                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, isPlaying: vm.isPlaying)
                     .padding(.top, TokenSpacing._15)
 
                 Spacer(minLength: TokenSpacing._9)
@@ -140,8 +140,10 @@ private struct BackgroundLayer: View {
 private struct ArtworkSection: View {
     let coverImage: UIImage?
     let glowColor: Color?
+    let isPlaying: Bool
 
-    private let artworkSize = 322.0
+    private let coverMaxSize = 322.0
+    private let coverReducedSize = 290.0
     private let placeholderWidth = 183.0
     private let placeholderHeight = 206.0
     private let glowHeight = 315.0
@@ -152,6 +154,12 @@ private struct ArtworkSection: View {
             glow
             cover
         }
+        .scaleEffect(coverScale, anchor: .center)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isPlaying)
+    }
+
+    private var coverScale: CGFloat {
+        isPlaying ? 1 : coverReducedSize / coverMaxSize
     }
 
     /// color halo behind the artwork . The blur extends rendered pixels ~125pt beyond
@@ -168,7 +176,7 @@ private struct ArtworkSection: View {
                 ],
                 center: UnitPoint(x: 0.5, y: 0.08)
             )
-            .frame(width: artworkSize, height: glowHeight)
+            .frame(width: coverMaxSize, height: glowHeight)
             .cornerRadius(TokenSpacing._5)
             .blur(radius: glowBlurRadius)
         }
@@ -176,7 +184,7 @@ private struct ArtworkSection: View {
 
     private var cover: some View {
         coverContent
-            .frame(width: artworkSize, height: artworkSize)
+            .frame(width: coverMaxSize, height: coverMaxSize)
             .background(Color.white.opacity(0.05))
             .clipShape(RoundedRectangle(cornerRadius: TokenRadius.large))
     }
