@@ -44,4 +44,5 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeMoveVideoInVideoPlaylistContentToRubbishBin,
     MegaNodeActionTypeAddTo,
     MegaNodeActionTypeAddToAlbum,
+    MegaNodeActionTypeShowInLocation,
 };

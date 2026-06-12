@@ -26,6 +26,10 @@ struct SearchResultsThumbnailView<Header: View>: View {
                 .onChange(of: rowHighlighter.scrollToResultId) { resultId in
                     scrollToHighlightedRow(resultId: resultId, proxy: scrollProxy)
                 }
+                .onChange(of: viewModel.listItems.isEmpty) { isEmpty in
+                    guard !isEmpty, let pendingResultId = rowHighlighter.scrollToResultId else { return }
+                    scrollToHighlightedRow(resultId: pendingResultId, proxy: scrollProxy)
+                }
             }
         }
     }
@@ -40,7 +44,6 @@ struct SearchResultsThumbnailView<Header: View>: View {
                     selected: $viewModel.selectedResultIds,
                     selectionEnabled: $viewModel.editing,
                     isHighlightTarget: rowHighlighter.highlightedResultId == item.result.id,
-                    highlightPersists: rowHighlighter.highlightPersists,
                     hasFlashedForCurrentTarget: $rowHighlighter.hasFlashedForCurrentTarget
                 )
                 .onAppear {

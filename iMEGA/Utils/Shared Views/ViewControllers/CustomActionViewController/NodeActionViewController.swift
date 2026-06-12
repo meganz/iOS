@@ -79,6 +79,7 @@ class NodeActionViewController: ActionSheetViewController {
         isBackupNode: Bool,
         isFromSharedItem: Bool = false,
         isSelectionEnabled: Bool = false,
+        showInLocation: Bool = false,
         sender: Any
     ) {
             guard let node = MEGASdk.shared.node(forHandle: node) else { return nil }
@@ -90,6 +91,7 @@ class NodeActionViewController: ActionSheetViewController {
                 isBackupNode: isBackupNode,
                 isFromSharedItem: isFromSharedItem,
                 isSelectionEnabled: isSelectionEnabled,
+                showInLocation: showInLocation,
                 sender: sender
             )
         }
@@ -207,7 +209,37 @@ class NodeActionViewController: ActionSheetViewController {
             isSelectionEnabled: isSelectionEnabled
         )
     }
-    
+
+    init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
+        isSelectionEnabled: Bool = false,
+        showInLocation: Bool,
+        sender: Any
+    ) {
+        self.nodes = [node]
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        super.init(nibName: nil, bundle: nil)
+
+        configurePresentationStyle(from: sender)
+
+        self.setupActions(
+            node: node,
+            displayMode: displayMode,
+            isIncoming: isIncoming,
+            isBackupNode: isBackupNode,
+            isFromSharedItem: isFromSharedItem,
+            isSelectionEnabled: isSelectionEnabled,
+            showInLocation: showInLocation
+        )
+    }
+
     @objc init(
         node: MEGANode,
         delegate: any NodeActionViewControllerDelegate,
@@ -558,7 +590,8 @@ class NodeActionViewController: ActionSheetViewController {
         shouldShowVerifyContact: Bool = false,
         isFromSharedItem: Bool = false,
         viewInFolder: Bool = false,
-        isSelectionEnabled: Bool = false
+        isSelectionEnabled: Bool = false,
+        showInLocation: Bool = false
     ) {
         loadActions = { [self] in
             let nodeEntity = node.toNodeEntity()
@@ -604,6 +637,7 @@ class NodeActionViewController: ActionSheetViewController {
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
                 .setViewInFolder(viewInFolder)
+                .setShowInLocation(showInLocation)
                 .setIsAudioFileLink(isAudioFileLink)
                 .setIsSelectionEnabled(isSelectionEnabled)
                 .setIsFolderEmpty(node.isFolder() && viewModel.isEmptyFolder(nodeHandle: node.handle))

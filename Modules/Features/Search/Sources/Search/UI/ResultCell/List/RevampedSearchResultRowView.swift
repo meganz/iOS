@@ -32,7 +32,6 @@ struct RevampedSearchResultRowView: View {
     @Binding var selected: Set<ResultId>
 
     var isHighlightTarget: Bool = false
-    var highlightPersists: Bool = false
     
     @Binding var hasFlashedForCurrentTarget: Bool
     
@@ -42,10 +41,8 @@ struct RevampedSearchResultRowView: View {
 
     @State private var highlighted = false
 
-    /// Persistent highlight stays tinted as long as this row is the target.
-    private var showsPersistentHighlight: Bool {
-        isHighlightTarget && highlightPersists
-    }
+    @State private var showsFlash = false
+
     var body: some View {
         contentWithInsetsAndSwipeActions
             .task {
@@ -94,7 +91,17 @@ struct RevampedSearchResultRowView: View {
             Spacer()
                 .frame(width: 16)
         }
-        .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity(isSelected || highlighted || showsPersistentHighlight ? 1 : 0))
+        .listRowBackground(
+            ZStack {
+                // Selection / tap highlight — instant, as before.
+                TokenColors.Background.surface1.swiftUI
+                    .opacity(isSelected || highlighted ? 1 : 0)
+                // One-shot flash — fades in/out via its own value animation.
+                TokenColors.Background.surface1.swiftUI
+                    .opacity(showsFlash ? 1 : 0)
+                    .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: showsFlash)
+            }
+        )
         .contentShape(Rectangle())
         .padding(.vertical, 10)
         .frame(minHeight: 58)
@@ -128,22 +135,16 @@ struct RevampedSearchResultRowView: View {
         }
     }
 
-    /// Runs a one-shot flash when this row becomes the highlight target and the
-    /// highlight is not persistent. Reuses the same `highlighted` state as the
-    /// tap cue, but with a longer duration so it reads as "look here".
+    /// Runs a one-shot flash when this row becomes the highlight target. Fades a
+    /// tint in, holds, then fades it out so it reads as "look here".
     private func flashHighlightIfNeeded(isTarget: Bool) {
         guard isTarget,
-              !highlightPersists,
               !hasFlashedForCurrentTarget else { return }
         hasFlashedForCurrentTarget = true
-        withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
-            highlighted = true
-        }
+        showsFlash = true
         Task {
             try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
-            withAnimation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration)) {
-                highlighted = false
-            }
+            showsFlash = false
         }
     }
 

@@ -43,16 +43,20 @@ final class HomeSearchResultRouter: NodeRouting {
     
     private let nodeUseCase: any NodeUseCaseProtocol
     
+    private let showsShowInLocationAction: Bool
+
     init(
         navigationController: UINavigationController,
         nodeActionViewControllerDelegate: some NodeActionViewControllerDelegate,
         backupsUseCase: some BackupsUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        showsShowInLocationAction: Bool = false
     ) {
         self.navigationController = navigationController
         self.nodeActionViewControllerDelegate = nodeActionViewControllerDelegate
         self.backupsUseCase = backupsUseCase
         self.nodeUseCase = nodeUseCase
+        self.showsShowInLocationAction = showsShowInLocationAction
     }
     
     func didTapMoreAction(
@@ -78,6 +82,7 @@ final class HomeSearchResultRouter: NodeRouting {
             isBackupNode: isBackupNode,
             isFromSharedItem: isFromSharedItem,
             isSelectionEnabled: true,
+            showInLocation: showsShowInLocationAction,
             sender: button
         ) else { return }
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate

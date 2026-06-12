@@ -42,6 +42,11 @@ public protocol NodeSelectionHandling {
 }
 
 @MainActor
+public protocol NodeLocationHandling {
+    func showInLocation(of nodeHandle: HandleEntity)
+}
+
+@MainActor
 public protocol MoreNodeActionsPresenting {
     /// Presents the action sheet that offers bulk operations (e.g. move, copy,
     /// share) on the given nodes.

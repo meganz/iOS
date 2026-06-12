@@ -59,12 +59,8 @@ extension NewCloudDriveViewController {
         parentNodeProvider()
     }
 
-    func scrollToAndHighlight(handle: HandleEntity, persistent: Bool = false) {
-        searchResultsContainerViewModel.scrollToAndHighlight(resultId: handle, persistent: persistent)
-    }
-
-    func clearHighlight() {
-        searchResultsContainerViewModel.clearHighlight()
+    func scrollToAndHighlight(handle: HandleEntity) {
+        searchResultsContainerViewModel.scrollToAndHighlight(resultId: handle)
     }
 }
 

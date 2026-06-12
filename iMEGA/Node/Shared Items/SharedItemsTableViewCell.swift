@@ -70,11 +70,6 @@ final class SharedItemsTableViewCell: UITableViewCell {
         )
     }
     
-    @objc func setPersistentHighlight(_ isHighlighted: Bool) {
-        layer.removeAllAnimations()
-        backgroundColor = isHighlighted ? TokenColors.Background.surface1 : TokenColors.Background.page
-    }
-    
     @IBAction func infoButtonTouchUpInside(_ sender: UIButton) {
         delegate?.didTapInfoButton(sender: sender)
     }

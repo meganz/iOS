@@ -85,6 +85,10 @@ extension HomeScreenFactory {
             sdk: MEGASdk.sharedSdk
         )
 
+        let recentActionBucketLocationHandler = RecentActionBucketLocationHandler(
+            nodeUseCase: nodeUseCase
+        )
+
         let homeAddMenuActionHandler = makeHomeAddMenuActionHandler(newChatRouter: newChatRouter, navigationController: navigationController)
 
         let dependency = HomeView.Dependency(
@@ -119,9 +123,12 @@ extension HomeScreenFactory {
             searchResultsSelectionHandler: HomeSearchNodeSelectionHandler(nodeRouter: nodeRouter),
             searchResultNodeActionHandler: HomeSearchNodesActionHandler(nodeRouter: nodeRouter),
             recentActionBucketNodeSelectionHandler: RecentActionBucketNodeSelectionHandler(nodeRouter: nodeRouter),
+            recentActionBucketLocationHandler: recentActionBucketLocationHandler,
             recentActionBucketNodesActionHandler: makeRecentActionBucketNodesActionHandler(
                 navigationController: navigationController,
-                nodeActions: nodeActions
+                nodeActions: nodeActions,
+                locationHandler: recentActionBucketLocationHandler,
+                showsShowInLocationAction: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
             ),
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
@@ -197,22 +204,28 @@ extension HomeScreenFactory {
 
     private func makeRecentActionBucketNodesActionHandler(
         navigationController: MEGANavigationController,
-        nodeActions: NodeActions
+        nodeActions: NodeActions,
+        locationHandler: some NodeLocationHandling,
+        showsShowInLocationAction: Bool
     ) -> RecentActionBucketNodesActionHandler {
         let nodeRouter = HomeSearchResultRouter(
             navigationController: navigationController,
             nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
                 viewController: navigationController,
                 moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-                nodeActionListener: { nodeActionType, _ in
+                nodeActionListener: { nodeActionType, nodes in
                     if nodeActionType == .hide {
                         DIContainer.tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
+                    } else if nodeActionType == .showInLocation, let handle = nodes.first?.handle {
+                        MainActor.assumeIsolated {
+                            locationHandler.showInLocation(of: handle)
+                        }
                     }
                 }
             ),
             backupsUseCase: backupsUseCase,
-            nodeUseCase: nodeUseCase
-
+            nodeUseCase: nodeUseCase,
+            showsShowInLocationAction: showsShowInLocationAction
         )
         let nodeActionsHandler = nodeActions.makeNodeActionsHandler(toggleEditMode: { _ in })
 

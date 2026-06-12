@@ -4,6 +4,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import Search
 import SwiftUI
 
@@ -13,8 +14,10 @@ struct RecentActionBucketItemsView: View {
         let resultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
+        let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
+        let isHomeRevampPhaseTwoEnabled: Bool
     }
 
     @StateObject private var viewModel: RecentActionBucketItemsViewModel
@@ -95,7 +98,26 @@ struct RecentActionBucketItemsView: View {
                     navigator.showSnackBar(snackBar)
                 }
             }
+            .overlay(alignment: .bottom) {
+                showLocationButton
+            }
             .pageBackground()
+    }
+
+    @ViewBuilder
+    private var showLocationButton: some View {
+        if dependency.isHomeRevampPhaseTwoEnabled,
+           let parentHandle = dependency.bucket.parent?.handle,
+           !viewModel.editMode.isEditing {
+            MEGAButton(
+                Strings.Localizable.General.Action.showLocation,
+                type: .primary
+            ) {
+                dependency.locationHandler.showInLocation(of: parentHandle)
+            }
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.bottom, TokenSpacing._3)
+        }
     }
 
     @ViewBuilder

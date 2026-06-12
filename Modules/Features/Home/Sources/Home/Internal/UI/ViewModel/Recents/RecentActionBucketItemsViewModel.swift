@@ -145,7 +145,15 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
     }
     
     func observeEmptyItemsEvent() async {
-        _ = await bucketItemsUpdateUseCase.bucketUpdates(forId: dependency.bucket.id).first { @Sendable in $0 == RecentActionBucketUpdatesEntity.unavailable }
+        let unavailableUpdate = await bucketItemsUpdateUseCase
+            .bucketUpdates(forId: dependency.bucket.id)
+            .first { @Sendable in $0 == RecentActionBucketUpdatesEntity.unavailable }
+        // `first(where:)` returns nil both when `.unavailable` fires AND when the
+        // stream just ends — including when our task is cancelled (e.g. "Show in
+        // location" pushes Cloud Drive over this screen). Guarding here stops us
+        // from treating that cancellation as an empty bucket and wrongly bouncing
+        // the user out with a "files no longer available" snackbar.
+        guard unavailableUpdate != nil else { return }
         isBucketEmpty = true
         fileNoLongerAvailableSnackBar = SnackBar(message: Strings.Localizable.Home.Recent.MixedFileBucket.Snackbar.filesNotAvailable)
     }

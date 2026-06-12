@@ -45,6 +45,7 @@ extension HomeView {
         let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
         // recent action bucket
         let recentActionBucketNodeSelectionHandler: any NodeSelectionHandling
+        let recentActionBucketLocationHandler: any NodeLocationHandling
         let recentActionBucketNodesActionHandler: any NodesActionHandling
         let recentActionBucketMoreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
@@ -73,6 +74,7 @@ extension HomeView {
             searchResultsSelectionHandler: some NodeSelectionHandling,
             searchResultNodeActionHandler: some NodesActionHandling,
             recentActionBucketNodeSelectionHandler: some NodeSelectionHandling,
+            recentActionBucketLocationHandler: some NodeLocationHandling,
             recentActionBucketNodesActionHandler: some NodesActionHandling,
             recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting,
             photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting,
@@ -100,6 +102,7 @@ extension HomeView {
             self.searchResultNodeActionHandler = searchResultNodeActionHandler
             self.offlineFilesUseCase = offlineFilesUseCase
             self.recentActionBucketNodeSelectionHandler = recentActionBucketNodeSelectionHandler
+            self.recentActionBucketLocationHandler = recentActionBucketLocationHandler
             self.recentActionBucketNodesActionHandler = recentActionBucketNodesActionHandler
             self.recentActionBucketMoreActionsPresenter = recentActionBucketMoreActionsPresenter
             self.photoLibraryContentViewRouter = photoLibraryContentViewRouter

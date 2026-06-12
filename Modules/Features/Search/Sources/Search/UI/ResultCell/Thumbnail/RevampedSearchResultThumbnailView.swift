@@ -54,7 +54,6 @@ struct RevampedSearchResultThumbnailView: View {
     @Binding var selectionEnabled: Bool
     
     var isHighlightTarget: Bool = false
-    var highlightPersists: Bool = false
     
     @Binding var hasFlashedForCurrentTarget: Bool
     
@@ -62,18 +61,13 @@ struct RevampedSearchResultThumbnailView: View {
 
     private let layout: ResultCellLayout = .thumbnail
 
-    /// Persistent highlight stays tinted as long as this cell is the target.
-    private var showsPersistentHighlight: Bool {
-        isHighlightTarget && highlightPersists
-    }
-
     var body: some View {
         VStack(spacing: .zero) {
             topInfoView
             bottomInfoView
         }
         .frame(height: Constants.cellHeight)
-        .background(Constants.highlightTint.opacity(highlighted || showsPersistentHighlight ? 1 : 0))
+        .background(Constants.highlightTint.opacity(highlighted ? 1 : 0))
         .clipped()
         .overlay(
             RoundedRectangle(cornerRadius: TokenRadius.small)
@@ -81,7 +75,7 @@ struct RevampedSearchResultThumbnailView: View {
                     Constants.highlightTint,
                     lineWidth: Constants.highlightBorderWidth
                 )
-                .opacity(highlighted || showsPersistentHighlight ? 1 : 0)
+                .opacity(highlighted ? 1 : 0)
         )
         .onChange(of: isHighlightTarget) { isTarget in
             flashHighlightIfNeeded(isTarget: isTarget)
@@ -96,7 +90,6 @@ struct RevampedSearchResultThumbnailView: View {
 
     private func flashHighlightIfNeeded(isTarget: Bool) {
         guard isTarget,
-              !highlightPersists,
               !hasFlashedForCurrentTarget else { return }
         hasFlashedForCurrentTarget = true
         withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {

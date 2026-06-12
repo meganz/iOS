@@ -277,6 +277,10 @@ extension NodeAction {
     class func viewInFolderAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.viewInFolder, image: .search, type: .viewInFolder)
     }
+
+    class func showInLocationAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.Home.Recent.Bucket.Carousel.showInLocation, image: .showInLocation, type: .showInLocation)
+    }
     
     class func clearAction() -> NodeAction {
         let action = NodeAction(title: Strings.Localizable.clear, image: .cancelTransfers, type: .clear)
@@ -437,6 +441,7 @@ private extension UIImage {
     static var cancelTransfers: UIImage { MEGAAssets.UIImage.x }
     static var delete: UIImage { MEGAAssets.UIImage.x }
     static var search: UIImage { MEGAAssets.UIImage.searchSmall }
+    static var showInLocation: UIImage { MEGAAssets.UIImage.monoFileSearchMediumRegularOutline }
 
     static var disputeTakedown: UIImage { MEGAAssets.UIImage.alertTriangle }
     static var removeVideoFromVideoPlaylist: UIImage { MEGAAssets.UIImage.minusCircle }

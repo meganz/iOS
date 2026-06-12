@@ -31,18 +31,11 @@ public class SearchResultsContainerViewModel: ObservableObject {
     /// `SearchResultsViewModel`. Observed by the list view.
     let rowHighlighter = SearchResultsRowHighlighter()
 
-    /// Scrolls the row with `resultId` into view and highlights it, so callers
+    /// Scrolls the row with `resultId` into view and flashes it once, so callers
     /// outside the Search module (e.g. the Cloud Drive "Show location" flow)
     /// don't need access to the list internals.
-    /// - Parameter persistent: `true` keeps the row tinted until
-    ///   `clearHighlight()`; `false` flashes it once.
-    public func scrollToAndHighlight(resultId: ResultId, persistent: Bool = false) {
-        rowHighlighter.scrollToAndHighlight(resultId: resultId, persistent: persistent)
-    }
-
-    /// Removes a persistent highlight.
-    public func clearHighlight() {
-        rowHighlighter.clear()
+    public func scrollToAndHighlight(resultId: ResultId) {
+        rowHighlighter.scrollToAndHighlight(resultId: resultId)
     }
 
     var colorAssets: SearchConfig.ColorAssets { config.colorAssets }

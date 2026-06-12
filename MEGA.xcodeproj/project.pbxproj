@@ -295,7 +295,7 @@
 		244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
 		2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */; };
-		245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */; };
+		245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift */; };
 		245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */; };
 		245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
@@ -3132,7 +3132,7 @@
 		244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTableViewControllerTests.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSourceTests.swift; sourceTree = "<group>"; };
-		245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MegaNodeActionType+NodeActionTypeEntity_Mapper.swift"; sourceTree = "<group>"; };
+		245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MegaNodeActionType+NodeActionTypeEntityMapper.swift"; sourceTree = "<group>"; };
 		245603662CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModel.swift; sourceTree = "<group>"; };
 		245603682CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaylistContentContainerViewModelTests.swift; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
@@ -7946,7 +7946,7 @@
 				948D92672B2373CE0020E894 /* DisplayMode.h */,
 				77F63E7E24C0A95800DEEA66 /* JoinViewState.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
-				245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift */,
+				245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 				83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */,
 				773DF39A20EE1470004C3418 /* SendMode.h */,
@@ -15527,7 +15527,7 @@
 				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				9443B38C2B28BA8500D87E35 /* MEGANode+MNZCategory.swift in Sources */,
-				245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntity_Mapper.swift in Sources */,
+				245570642CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
 				B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */,
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
@@ -17386,7 +17386,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG -Wno-quoted-include-in-framework-header";
+				OTHER_CFLAGS = (
+					"-DNDEBUG",
+					"-Wno-quoted-include-in-framework-header",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
@@ -18334,7 +18337,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 18.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "-DNDEBUG -Wno-quoted-include-in-framework-header";
+				OTHER_CFLAGS = (
+					"-DNDEBUG",
+					"-Wno-quoted-include-in-framework-header",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;

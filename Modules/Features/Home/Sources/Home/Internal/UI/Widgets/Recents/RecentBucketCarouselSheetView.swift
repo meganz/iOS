@@ -131,6 +131,10 @@ struct RecentBucketCarouselSheetView: View {
         }
         .padding(.horizontal, TokenSpacing._5)
         .padding(.top, TokenSpacing._5)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.onShowInLocationTap()
+        }
     }
 }
 

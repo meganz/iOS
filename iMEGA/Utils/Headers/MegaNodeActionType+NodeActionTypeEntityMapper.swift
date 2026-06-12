@@ -50,6 +50,9 @@ extension MegaNodeActionType {
         case .moveVideoInVideoPlaylistContentToRubbishBin: .moveVideoInVideoPlaylistContentToRubbishBin
         case .addTo: .addTo
         case .addToAlbum: .addToAlbum
+        // showInLocation isn't a node operation like download/move/rename
+        // it's a Recents/Home navigation action. It never needs to travel through the Domain layer.
+        case .showInLocation: nil
         @unknown default: nil
         }
     }

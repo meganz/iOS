@@ -28,6 +28,12 @@ struct SearchResultsListView<Header: View>: View {
             .onChange(of: rowHighlighter.scrollToResultId) { resultId in
                 scrollToHighlightedRow(resultId: resultId, proxy: proxy)
             }
+            // When the list goes from empty to non-empty
+            // if a auto-scroll is pending, fire it.
+            .onChange(of: viewModel.listItems.isEmpty) { isEmpty in
+                guard !isEmpty, let pendingResultId = rowHighlighter.scrollToResultId else { return }
+                scrollToHighlightedRow(resultId: pendingResultId, proxy: proxy)
+            }
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
@@ -138,7 +144,6 @@ struct SearchResultsListView<Header: View>: View {
                 viewModel: rowViewModel,
                 selected: $viewModel.selectedResultIds,
                 isHighlightTarget: rowHighlighter.highlightedResultId == rowViewModel.result.id,
-                highlightPersists: rowHighlighter.highlightPersists,
                 hasFlashedForCurrentTarget: $rowHighlighter.hasFlashedForCurrentTarget
             )
             .listRowSeparator(.hidden)

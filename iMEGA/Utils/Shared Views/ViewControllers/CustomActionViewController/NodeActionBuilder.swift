@@ -36,6 +36,7 @@ final class NodeActionBuilder {
     private var isHiddenNodesFeatureEnabled: Bool = false
     private var addToDestination: NodeActionAddToDestination = .none
     private var viewInFolder: Bool = false
+    private var showInLocation: Bool = false
     private var isAudioFileLink: Bool = false
     private var isSelectionEnabled: Bool = false
     private var isFolderEmpty = false
@@ -200,6 +201,11 @@ final class NodeActionBuilder {
         self.viewInFolder = viewInFolder
         return self
     }
+
+    func setShowInLocation(_ showInLocation: Bool) -> NodeActionBuilder {
+        self.showInLocation = showInLocation
+        return self
+    }
     
     func setIsAudioFileLink(_ isAudioFileLink: Bool) -> NodeActionBuilder {
         self.isAudioFileLink = isAudioFileLink
@@ -232,8 +238,15 @@ final class NodeActionBuilder {
             }
             
             nodeActions.append(contentsOf: nodeActionsForDisplayModeOrAccessLevels())
+
+            if showInLocation {
+                // Place it right below "Info" (second from the top); fall back to
+                // the top if there's no info action.
+                let insertIndex = nodeActions.firstIndex { $0.type == .info }.map { $0 + 1 } ?? 0
+                nodeActions.insert(.showInLocationAction(), at: insertIndex)
+            }
         }
-    
+        
         return filterForUndecrypted(nodeActions)
     }
     

@@ -5,15 +5,18 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 import Transfer
 
 struct RecentActionBucketMediaView: View {
     struct Dependency {
         let router: any PhotoLibraryContentViewRouting
+        let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
+        let isHomeRevampPhaseTwoEnabled: Bool
     }
 
     @StateObject private var viewModel: RecentActionBucketMediaViewModel
@@ -86,6 +89,25 @@ struct RecentActionBucketMediaView: View {
                     navigator.showSnackBar(snackBar)
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                showLocationButton
+            }
+    }
+
+    @ViewBuilder
+    private var showLocationButton: some View {
+        if dependency.isHomeRevampPhaseTwoEnabled,
+           let parentHandle = bucket.parent?.handle,
+           !viewModel.editMode.isEditing {
+            MEGAButton(
+                Strings.Localizable.General.Action.showLocation,
+                type: .primary
+            ) {
+                dependency.locationHandler.showInLocation(of: parentHandle)
+            }
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.bottom, TokenSpacing._3)
+        }
     }
 
     private var content: some View {

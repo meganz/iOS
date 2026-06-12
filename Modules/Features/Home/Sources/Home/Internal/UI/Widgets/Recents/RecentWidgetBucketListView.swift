@@ -14,6 +14,7 @@ struct RecentWidgetBucketListView: View {
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
+        let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
@@ -125,6 +126,7 @@ struct RecentWidgetBucketListView: View {
                     recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                     downloadedNodesListener: dependency.downloadedNodesListener,
                     selectionHandler: dependency.selectionHandler,
+                    locationHandler: dependency.locationHandler,
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter,
                     photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
@@ -139,8 +141,10 @@ struct RecentWidgetBucketListView: View {
                     resultMapper: dependency.recentActionBucketItemResultMapper,
                     downloadedNodesListener: dependency.downloadedNodesListener,
                     selectionHandler: dependency.selectionHandler,
+                    locationHandler: dependency.locationHandler,
                     nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter
+                    moreActionsPresenter: dependency.moreActionsPresenter,
+                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
                 )
             )
         case let .multipleMedia(headerTitle, bucket):
@@ -149,9 +153,11 @@ struct RecentWidgetBucketListView: View {
                 bucket: bucket,
                 dependency: RecentActionBucketMediaView.Dependency(
                     router: dependency.photoLibraryContentViewRouter,
+                    locationHandler: dependency.locationHandler,
                     nodeActionHandler: dependency.nodeActionHandler,
                     moreActionsPresenter: dependency.moreActionsPresenter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
                 )
             )
         }
@@ -208,8 +214,7 @@ struct RecentWidgetBucketListView: View {
         case let .openNode(handle, siblings):
             dependency.selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: siblings))
         case let .showInLocation(handle):
-            // [IOS-11800] Add "Show location" button to bucket content screen
-            dependency.selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: []))
+            dependency.locationHandler.showInLocation(of: handle)
         case let .seeAll(bucket):
             switch bucket.type {
             case .multipleMedia:

@@ -14,6 +14,7 @@ struct RecentsWidgetView: View {
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
+        let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
@@ -207,6 +208,7 @@ struct RecentsWidgetView: View {
                 recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                 downloadedNodesListener: dependency.downloadedNodesListener,
                 selectionHandler: dependency.selectionHandler,
+                locationHandler: dependency.locationHandler,
                 nodeActionHandler: dependency.nodeActionHandler,
                 moreActionsPresenter: dependency.moreActionsPresenter,
                 photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,

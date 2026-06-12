@@ -3,62 +3,38 @@ import UIKit
 
 extension SharedItemsViewController {
 
-    /// How a highlighted row should look.
-    enum RowHighlightStyle {
-        /// One-shot tint that fades back to the page background.
-        case flash
-        /// Stays tinted until `clearPersistentHighlight()` is called. Survives
-        /// cell reuse via the `willDisplayCell` hook.
-        case persistent
-    }
-
-    /// Scrolls the row matching `handle` into view and highlights it.
+    /// Scrolls the row matching `handle` into view and flashes it once.
     ///
     /// If the currently selected tab's data has not loaded yet (e.g. the caller
     /// invokes this right after pushing the screen), the request is remembered
     /// and re-applied by `reloadUI` once the table finishes its next reload.
-    ///
-    /// - Parameter style: `.flash` (default) for a one-shot cue, or `.persistent`
-    ///   to keep the row tinted until `clearPersistentHighlight()` is called.
-    func scrollToAndHighlightNode(handle: HandleEntity, style: RowHighlightStyle = .flash) {
+    func scrollToAndHighlightNode(handle: HandleEntity) {
         nodeHandleToHighlight = handle
-        highlightPersists = (style == .persistent)
         applyHighlight(animated: true)
-    }
-
-    /// Removes a persistent highlight previously set via `.persistent` style.
-    func clearPersistentHighlight() {
-        let handle = nodeHandleToHighlight
-        nodeHandleToHighlight = 0
-        highlightPersists = false
-        guard handle != 0,
-              let indexPath = indexPathForNode(handle: handle),
-              let cell = tableView?.cellForRow(at: indexPath) as? SharedItemsTableViewCell else { return }
-        cell.setPersistentHighlight(false)
     }
 
     @objc(applyHighlightAnimated:)
     func applyHighlight(animated: Bool) {
         guard nodeHandleToHighlight != 0,
-              let indexPath = indexPathForNode(handle: nodeHandleToHighlight) else {
-            // Either nothing is highlighted, or the tab's data isn't ready yet —
-            // keep the request so the next reloadUI can retry.
+              let indexPath = indexPathForNode(handle: nodeHandleToHighlight),
+              let tableView,
+              indexPath.section < tableView.numberOfSections,
+              indexPath.row < tableView.numberOfRows(inSection: indexPath.section) else {
+            // Either nothing is highlighted, or the table hasn't reloaded this
+            // tab's data yet — the model arrays can be populated before
+            // `reloadData` runs (e.g. right after pushing the screen), so the
+            // index path would be out of bounds. Keep the request so the next
+            // reloadUI can retry once the table is in sync.
             return
         }
 
-        // Only scroll when the row isn't already on screen, so a reload that
-        // re-applies a persistent highlight doesn't yank the user's scroll
-        // position.
-        let isVisible = tableView?.indexPathsForVisibleRows?.contains(indexPath) ?? false
-        if !isVisible {
-            tableView?.scrollToRow(at: indexPath, at: .middle, animated: animated)
-        }
+        // The flash is one-shot: forget the handle so later reloads don't re-flash.
+        nodeHandleToHighlight = 0
 
-        let persists = highlightPersists
-        // Flash is one-shot: forget the handle so later reloads don't re-flash.
-        // Persistent keeps the handle so `willDisplayCell` can re-tint on reuse.
-        if !persists {
-            nodeHandleToHighlight = 0
+        // Only scroll when the row isn't already on screen.
+        let isVisible = tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false
+        if !isVisible {
+            tableView.scrollToRow(at: indexPath, at: .middle, animated: animated)
         }
 
         // Animated scrolls take ~0.3s; defer grabbing the destination cell until
@@ -66,19 +42,8 @@ extension SharedItemsViewController {
         let delay: TimeInterval = (!isVisible && animated) ? 0.3 : 0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             guard let cell = self?.tableView?.cellForRow(at: indexPath) as? SharedItemsTableViewCell else { return }
-            if persists {
-                cell.setPersistentHighlight(true)
-            } else {
-                cell.flashHighlight()
-            }
+            cell.flashHighlight()
         }
-    }
-
-    /// Re-applies the persistent highlight when a cell is (re)displayed, so it
-    /// survives scrolling. Called from `willDisplayCell`.
-    @objc(configureHighlightForCell:handle:)
-    func configureHighlight(for cell: SharedItemsTableViewCell, handle: HandleEntity) {
-        cell.setPersistentHighlight(highlightPersists && nodeHandleToHighlight != 0 && handle == nodeHandleToHighlight)
     }
 
     private func indexPathForNode(handle: HandleEntity) -> IndexPath? {
