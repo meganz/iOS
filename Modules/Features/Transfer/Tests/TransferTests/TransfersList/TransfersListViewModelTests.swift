@@ -94,24 +94,24 @@ struct TransfersListViewModelMoreMenuTests {
     }
 
     @Test func confirmCancelAll_cancelsTransfers() {
-        let listener = MockTransfersListenerUseCase()
-        let sut = makeSUT(hasActiveTransfers: true, listener: listener)
+        let useCase = MockTransferListUseCase(paused: false)
+        let sut = makeSUT(hasActiveTransfers: true, useCase: useCase)
         sut.requestCancelAllConfirmation()
 
         sut.confirmCancelAll()
 
-        #expect(listener.cancelTransfersCalledTimes == 1)
+        #expect(useCase.cancelTransfersCalledTimes == 1)
     }
 
     @Test func dismissingDialog_runsNoAction() {
-        let listener = MockTransfersListenerUseCase()
-        let sut = makeSUT(hasActiveTransfers: true, listener: listener)
+        let useCase = MockTransferListUseCase(paused: false)
+        let sut = makeSUT(hasActiveTransfers: true)
         sut.requestCancelAllConfirmation()
 
         // Tapping Dismiss flips the binding without confirming.
         sut.isPresentingCancelAllConfirmation = false
 
-        #expect(listener.cancelTransfersCalledTimes == 0)
+        #expect(useCase.cancelTransfersCalledTimes == 0)
     }
 
     // MARK: - Clear-all (no confirmation)
@@ -173,10 +173,7 @@ struct TransfersListViewModelPresenceTests {
     }
 
     @Test func activePresence_droppingToZero_clearsActiveAndReseedsFromInventory() {
-        let sut = makeSUT(completedTransfers: [
-            .init(type: .download, tag: 1, state: .complete),
-            .init(type: .upload, tag: 2, state: .failed)
-        ])
+        let sut = makeSUT(hasCompletedTransfers: true, hasFailedTransfers: true)
 
         sut.activePresence = 2
         sut.activePresence = 0
@@ -225,38 +222,36 @@ struct TransfersListViewModelPresenceTests {
     }
 }
 
-@Suite("TransfersListViewModel inventory seeding")
+@Suite("TransfersListViewModel seeding")
 @MainActor
 struct TransfersListViewModelSeedingTests {
 
-    @Test func seedCompletedPresence_withVisibleCompleted_setsTrue() {
-        let sut = makeSUT(completedTransfers: [.init(type: .download, tag: 1, state: .complete)])
+    @Test func seedCompletedPresence_whenUseCaseHasCompleted_setsTrue() {
+        let sut = makeSUT(hasCompletedTransfers: true)
 
         sut.seedCompletedPresence()
 
         #expect(sut.hasCompletedTransfers)
     }
 
-    @Test func seedCompletedPresence_withoutVisibleCompleted_setsFalse() {
-        // A failed transfer isn't visible on the Completed tab.
-        let sut = makeSUT(completedTransfers: [.init(type: .download, tag: 1, state: .failed)])
+    @Test func seedCompletedPresence_whenUseCaseHasNoCompleted_setsFalse() {
+        let sut = makeSUT(hasCompletedTransfers: false)
 
         sut.seedCompletedPresence()
 
         #expect(!sut.hasCompletedTransfers)
     }
 
-    @Test func seedFailedPresence_withVisibleFailedOrCancelled_setsTrue() {
-        let sut = makeSUT(completedTransfers: [.init(type: .upload, tag: 1, state: .cancelled)])
+    @Test func seedFailedPresence_whenUseCaseHasFailed_setsTrue() {
+        let sut = makeSUT(hasFailedTransfers: true)
 
         sut.seedFailedPresence()
 
         #expect(sut.hasFailedTransfers)
     }
 
-    @Test func seedFailedPresence_withoutVisibleFailed_setsFalse() {
-        // A completed transfer isn't visible on the Failed tab.
-        let sut = makeSUT(completedTransfers: [.init(type: .download, tag: 1, state: .complete)])
+    @Test func seedFailedPresence_whenUseCaseHasNoFailed_setsFalse() {
+        let sut = makeSUT(hasFailedTransfers: false)
 
         sut.seedFailedPresence()
 
@@ -268,30 +263,30 @@ struct TransfersListViewModelSeedingTests {
 @MainActor
 struct TransfersListViewModelPauseTests {
 
-    @Test func isAllPaused_reflectsListenerStateOnInit() {
-        #expect(makeSUT(listener: MockTransfersListenerUseCase(paused: true)).isAllPaused)
-        #expect(!makeSUT(listener: MockTransfersListenerUseCase(paused: false)).isAllPaused)
+    @Test func isAllPaused_reflectsUseCaseStateOnInit() {
+        #expect(makeSUT(useCase: MockTransferListUseCase(paused: true)).isAllPaused)
+        #expect(!makeSUT(useCase: MockTransferListUseCase(paused: false)).isAllPaused)
     }
 
     @Test func togglePauseAll_whenNotPaused_pausesAndFlipsFlag() {
-        let listener = MockTransfersListenerUseCase(paused: false)
-        let sut = makeSUT(listener: listener)
+        let useCase = MockTransferListUseCase(paused: false)
+        let sut = makeSUT(useCase: useCase)
 
         sut.togglePauseAll()
 
-        #expect(listener.pauseTransfersCalledTimes == 1)
-        #expect(listener.resumeTransfersCalledTimes == 0)
+        #expect(useCase.pauseTransfersCalledTimes == 1)
+        #expect(useCase.resumeTransfersCalledTimes == 0)
         #expect(sut.isAllPaused)
     }
 
     @Test func togglePauseAll_whenPaused_resumesAndFlipsFlag() {
-        let listener = MockTransfersListenerUseCase(paused: true)
-        let sut = makeSUT(listener: listener)
+        let useCase = MockTransferListUseCase(paused: true)
+        let sut = makeSUT(useCase: useCase)
 
         sut.togglePauseAll()
 
-        #expect(listener.resumeTransfersCalledTimes == 1)
-        #expect(listener.pauseTransfersCalledTimes == 0)
+        #expect(useCase.resumeTransfersCalledTimes == 1)
+        #expect(useCase.pauseTransfersCalledTimes == 0)
         #expect(!sut.isAllPaused)
     }
 }
@@ -342,7 +337,7 @@ private func makeSUT(
     hasActiveTransfers: Bool = false,
     hasCompletedTransfers: Bool = false,
     hasFailedTransfers: Bool = false,
-    listener: MockTransfersListenerUseCase = MockTransfersListenerUseCase(),
+    useCase: MockTransferListUseCase? = nil,
     clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
     filteringUserTransfers: Bool = true
 ) -> TransfersListViewModel {
@@ -352,7 +347,10 @@ private func makeSUT(
             filteringUserTransfers: filteringUserTransfers,
             clearTransfersUseCase: clearTransfersUseCase
         ),
-        transfersListenerUseCase: listener
+        transferListUseCase: useCase ?? MockTransferListUseCase(
+            hasCompletedTransfers: hasCompletedTransfers,
+            hasFailedTransfers: hasFailedTransfers
+        )
     )
     // Seed tab-presence through the same `*Presence` channel production uses, so a
     // test can spin up a VM in a known tab-bar state in one call.

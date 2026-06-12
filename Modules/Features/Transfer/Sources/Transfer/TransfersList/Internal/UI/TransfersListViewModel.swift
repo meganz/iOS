@@ -24,11 +24,10 @@ public final class TransfersListViewModel: ObservableObject {
     /// that prompts (clear-all and retry-all run immediately, per design).
     @Published var isPresentingCancelAllConfirmation = false
 
-    /// Shared dependencies for the screen, also handed to each tab to build its own
-    /// `TransferTabViewModel`. The parent VM reads `inventoryUseCase` /
-    /// `filteringUserTransfers` from it to seed presence.
+    /// Shared dependencies for the screen, handed to each tab to build its own
+    /// `TransferTabViewModel`.
     let dependency: TransferTabDependency
-    private let transfersListenerUseCase: any TransfersListenerUseCaseProtocol
+    private let transferListUseCase: any TransferListUseCaseProtocol
     private var cancellables: Set<AnyCancellable> = []
 
     /// Production initializer. Tab presence (`hasActiveTransfers` /
@@ -37,14 +36,14 @@ public final class TransfersListViewModel: ObservableObject {
     /// bindings, observed in `observePresence()`.
     init(
         dependency: TransferTabDependency,
-        transfersListenerUseCase: some TransfersListenerUseCaseProtocol
+        transferListUseCase: some TransferListUseCaseProtocol
     ) {
         self.hasActiveTransfers = false
         self.hasCompletedTransfers = false
         self.hasFailedTransfers = false
         self.dependency = dependency
-        self.transfersListenerUseCase = transfersListenerUseCase
-        self.isAllPaused = transfersListenerUseCase.areTransfersPaused()
+        self.transferListUseCase = transferListUseCase
+        self.isAllPaused = transferListUseCase.areTransfersPaused()
 
         observePresence()
     }
@@ -85,9 +84,7 @@ public final class TransfersListViewModel: ObservableObject {
     /// view is mounted, so the inventory is the only source of truth for a user
     /// whose sole transfers are completed ones. Call once on appear.
     public func seedCompletedPresence() {
-        hasCompletedTransfers = dependency.inventoryUseCase
-            .completedTransfers(filteringUserTransfers: dependency.filteringUserTransfers)
-            .contains(where: \.isVisibleOnCompletedTab)
+        hasCompletedTransfers = transferListUseCase.hasCompletedTransfers()
     }
 
     /// Seeds Failed presence from the inventory, for the same reason as
@@ -95,9 +92,7 @@ public final class TransfersListViewModel: ObservableObject {
     /// its view is mounted, so a user whose only transfers are failed/cancelled needs
     /// the inventory to keep the tab bar visible. Call once on appear.
     public func seedFailedPresence() {
-        hasFailedTransfers = dependency.inventoryUseCase
-            .completedTransfers(filteringUserTransfers: dependency.filteringUserTransfers)
-            .contains(where: \.isVisibleOnFailedTab)
+        hasFailedTransfers = transferListUseCase.hasFailedTransfers()
     }
 
     /// Tracks Active presence from the tab's live item count, reported by
@@ -132,17 +127,12 @@ public final class TransfersListViewModel: ObservableObject {
             hasFailedTransfers = true
         }
     }
-
-    /// Pause-all / resume-all toggle. Routes through `TransfersListenerUseCase`,
-    /// which writes the persisted `transfersPaused` / `queuedTransfersPaused` flags
-    /// (MEGAPreference) and forwards to the SDK. The `isAllPaused` flag updates
-    /// optimistically — matches the existing use case contract, which doesn't await
-    /// the SDK's request finish before persisting.
+    
     public func togglePauseAll() {
         if isAllPaused {
-            transfersListenerUseCase.resumeTransfers()
+            transferListUseCase.resumeTransfers()
         } else {
-            transfersListenerUseCase.pauseTransfers()
+            transferListUseCase.pauseTransfers()
         }
         isAllPaused.toggle()
     }
@@ -193,7 +183,7 @@ public final class TransfersListViewModel: ObservableObject {
     /// reports each transfer finished, so no manual refresh is needed here. Cancelled
     /// transfers then surface on the Failed tab.
     private func cancelAllTransfers() {
-        transfersListenerUseCase.cancelTransfers()
+        transferListUseCase.cancelTransfers()
     }
 
     /// Clears the current tab's list with no confirmation (per design). The tab

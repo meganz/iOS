@@ -42,7 +42,11 @@ public enum TransfersListViewControllerFactory {
 
         let viewModel = TransfersListViewModel(
             dependency: dependency,
-            transfersListenerUseCase: transfersListenerUseCase
+            transferListUseCase: TransferListUseCase(
+                inventoryUseCase: inventoryUseCase,
+                transfersListenerUseCase: transfersListenerUseCase,
+                filteringUserTransfers: true
+            )
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
         host.hidesBottomBarWhenPushed = true
