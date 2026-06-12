@@ -338,6 +338,10 @@ extension MEGAAssets {
         public static var audioShuffle: SwiftUI.Image { MEGAImageBundle.audioShuffle }
         public static var audioSkipBack: SwiftUI.Image { MEGAImageBundle.audioSkipBack }
         public static var audioSkipForward: SwiftUI.Image { MEGAImageBundle.audioSkipForward }
+        public static var audioBackward15: SwiftUI.Image { MEGAImageBundle.audioBackward15 }
+        public static var audioClock: SwiftUI.Image { MEGAImageBundle.audioClock }
+        public static var audioClockStop: SwiftUI.Image { MEGAImageBundle.audioClockStop }
+        public static var audioForward15: SwiftUI.Image { MEGAImageBundle.audioForward15 }
         public static var monoQueueLineMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoQueueLineMediumThinOutline }
         public static var monoPlayMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoPlayMediumThinOutline }
         public static var monoEraserMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoEraserMediumThinOutline }
@@ -824,6 +828,10 @@ extension MEGAAssets {
         public static var audioShuffle: UIKit.UIImage { MEGAUIImageBundle.audioShuffle }
         public static var audioSkipBack: UIKit.UIImage { MEGAUIImageBundle.audioSkipBack }
         public static var audioSkipForward: UIKit.UIImage { MEGAUIImageBundle.audioSkipForward }
+        public static var audioBackward15: UIKit.UIImage { MEGAUIImageBundle.audioBackward15 }
+        public static var audioClock: UIKit.UIImage { MEGAUIImageBundle.audioClock }
+        public static var audioClockStop: UIKit.UIImage { MEGAUIImageBundle.audioClockStop }
+        public static var audioForward15: UIKit.UIImage { MEGAUIImageBundle.audioForward15 }
         public static var monoQueueLineMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoQueueLineMediumThinOutline }
         public static var monoPlayMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoPlayMediumThinOutline }
         public static var monoEraserMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoEraserMediumThinOutline }
