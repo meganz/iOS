@@ -112,6 +112,8 @@ public final class MEGASlider: UISlider {
             let newValue = minimumValue + fraction * (maximumValue - minimumValue)
             setValue(newValue, animated: false)
             sendActions(for: .valueChanged)
+            _ = super.beginTracking(touch, with: event)
+            return true
         }
         return super.beginTracking(touch, with: event)
     }
