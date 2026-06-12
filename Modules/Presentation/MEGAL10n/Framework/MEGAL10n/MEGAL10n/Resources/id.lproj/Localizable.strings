@@ -4990,3 +4990,41 @@
 "home.customization.widget.accountStatus"="Status akun";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Tautan yang telah dilihat";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Tampilkan lokasi";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Spanduk";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Batalkan semua transfer";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Hapus semua transfer";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Coba lagi semua transfer";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Kembalikan ke pengaturan default";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Pilih tab peluncuran default";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Unggah hanya foto baru";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Hanya foto dan video yang ditambahkan setelah opsi ini diaktifkan yang akan diunggah.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Batalkan semua transfer?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Transfer yang dipilih akan dibatalkan.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Batalkan semua transfer?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Batalkan semua";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Apa yang baru";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Sesuaikan layar Beranda Anda";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Pilih apa yang Anda lihat dan atur agar sesuai dengan bagaimana Anda menggunakan MEGA";
+/* Title of Explore button */
+"explore"="Telusuri";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Akun Anda terlalu lama tidak aktif";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Karena akun Anda tidak aktif selama lebih dari %@ bulan, file Anda telah dihapus sesuai kebijakan tidak aktif kami.";

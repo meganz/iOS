@@ -4897,7 +4897,7 @@
 /* The title in subtitle selection page */
 "videoPlayer.subtitles.select.title"="字幕ファイルを選択";
 /* The no search results title in subtitle selection page */
-"videoPlayer.subtitles.select.search.noResults"="検索結果が見つかりませんでした";
+"videoPlayer.subtitles.select.search.noResults"="検索結果なし";
 /* The title of the No Internet state in Home screen */
 "home.noInternet.title"="オフラインです";
 /* The subtitle of the No Internet state in Home screen when there are no offline files */
@@ -4929,7 +4929,7 @@
 /* Section header in transfers settings */
 "settings.transfers.connections.title"="転送接続数";
 /* Description in transfers settings explaining what parallel connections do */
-"settings.transfers.connections.description"="アクティブな転送で使用する並列接続数の上限を設定します。値を大きくすると大きなファイルの転送速度が向上する可能性がありますが、バッテリーとメモリの消費量が増加します。小さなファイルには影響しません。";
+"settings.transfers.connections.description"="アクティブな転送で使用する並列接続数の上限を設定します。値を大きくすると大きなファイルの転送速度が向上する可能性がありますが、バッテリーとメモリの消費量が増加します。";
 /* Title for the download connections row in transfers settings */
 "settings.transfers.connections.download.title"="ダウンロード接続数";
 /* Title for the upload connections row in transfers settings */
@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="場所を表示";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="バナー";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="すべての転送をキャンセル";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="転送をすべてクリア";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="すべての転送を再試行";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="デフォルトに戻す";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="デフォルトの起動タブを選択する";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="新しい写真のみアップロード";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="このオプションをオンにした後に追加された写真と動画のみがアップロードされます。";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="転送をキャンセルしますか？";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="選択された転送はキャンセルされます。";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="転送をすべてキャンセルしますか？";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="すべてキャンセル";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="新機能";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="ホーム画面をカスタマイズ";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="表示内容を選択し、MEGAの使い方に合わせて整理しましょう";
+/* Title of Explore button */
+"explore"="さわってみる";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="長期間アカウントの利用（ログイン）がありませんでした";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="お客様のアカウントが%@か月以上利用されていなかったため、当社の非アクティブポリシーに基づき、お客様のファイルは削除されました。";

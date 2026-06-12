@@ -319,7 +319,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="En eski";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Fotoğraflardan seç";
+"choosePhotoVideo"="Fotoğraflar’dan seç";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Yakala";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
@@ -361,7 +361,7 @@
 /* List option shown on the details of a file or folder after the user has copied it */
 "cloudDrive.browser.paste"="Yapıştır";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
-"cloudDrive.upload.importFromFiles"="Dosyalardan aktar";
+"cloudDrive.upload.importFromFiles"="Dosyalar’dan aktar";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A], [B] adıyla zaten yüklendi";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -759,9 +759,9 @@
 /* Footer description when upload videos for Live Photos is disabled */
 "Only the photo in each Live Photo will be uploaded."="Her Live Photo’nun yalnızca fotoğraf sürümü yüklenecektir.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="Seri çekim fotoğraf dizilerinizdeki tüm fotoğraflar yüklenecektir.";
+"All the photos from your burst photo sequences will be uploaded."="Seri çekim dizilerinizdeki tüm fotoğraflar yüklenecektir.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Yalnızca seri çekim fotoğraf dizilerinizdeki favori fotoğraflar yüklenecektir.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Seri çekim dizilerinizdeki yalnızca favori fotoğraflar yüklenecektir.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Gizli albüm, cihazınızın Fotoğraflar uygulamasındaki fotoğraf veya videoları gizlediğiniz yerdir.";
 /* Title of the switch to config whether to upload Shared Albums */
@@ -997,7 +997,7 @@
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="Devam ediyor";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
-"Completed"="Tamamlanan";
+"Completed"="Tamamlandı";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="İndirmeler";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1713,7 +1713,7 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Doğrulayıcı cihazınızı mı kaybettiniz?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Görüntüleri Fotoğraflar’a kaydet";
+"Save Images in Photos"="Fotoğrafları, Fotoğraflar’a kaydet";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Videoları Fotoğraflar’a kaydet";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
@@ -1721,7 +1721,7 @@
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Fotoğraflara Kaydet";
+"Save in Photos"="Fotoğraflar’a kaydet";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA Uygulamasından çekilen fotoğrafların ve videoların bir kopyasını cihazınızın medya arşivine kaydedin.";
 /* Title of the Spotlight Search section */
@@ -1789,15 +1789,15 @@
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="Aramaya geri dönmek için dokunun";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Fotoğraflara Kaydet";
+"Save to Photos"="Fotoğraflar’a kaydet";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Fotoğraflara kaydediliyor…";
+"Saving to Photos…"="Fotoğraflar’a kaydediliyor…";
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Tüm medya";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
 "Downloading %@"="%@ indiriliyor";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Fotoğraflara kaydedildi";
+"Saved to Photos"="Fotoğraflar’a kaydedildi";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Öğe kaydedilemedi";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
@@ -3471,7 +3471,7 @@
 /* Device Center backup inactive status */
 "device.center.backup.inactive.status.message"="Etkin değil";
 /* Device Center device attention needed status */
-"device.center.device.attentionNeeded.status.message"="Dikkat gerekiyor";
+"device.center.device.attentionNeeded.status.message"="Kontrol gerekiyor";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Bilinmeyen hata.";
 /* Device Center backup error: Filesystem not supported */
@@ -4990,3 +4990,41 @@
 "home.customization.widget.doMoreWithMega"="MEGA ile daha fazlasını yapın";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Görüntülenen bağlantılar";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Konumu göster";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Banner’lar";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Tüm aktarımları iptal et";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Tüm aktarımları temizle";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Tüm aktarımları tekrar dene";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Varsayılana sıfırla";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Varsayılan başlangıç sekmesini seçin";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Sadece yeni fotoğrafları yükle";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Sadece bu seçenek etkinleştirildikten sonra eklenen fotoğraflar ve videolar yüklenecektir.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Aktarımlar iptal edilsin mi?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Seçilen aktarımlar iptal edilecektir.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Tüm aktarımlar iptal edilsin mi?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Tümünü iptal et";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Yenilikler";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Ana ekranınızı özelleştirin";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Neleri göreceğinizi seçin ve MEGA’yı kullanım şeklinize göre düzenleyin";
+/* Title of Explore button */
+"explore"="Keşfet";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Hesabınız çok uzun süredir etkin değil";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Hesabınız %@ aydan uzun süredir etkin olmadığından, dosyalarınız hareketsizlik politikamız gereği kaldırılmıştır.";

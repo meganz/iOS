@@ -4990,3 +4990,41 @@
 "home.customization.widget.doMoreWithMega"="Erreichen Sie mehr mit MEGA";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Angesehene Links";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Speicherort anzeigen";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Banner";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Alle Transfers löschen";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Alle Transfers löschen";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Alle Transfers wiederholen";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Standardwerte wiederherstellen";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Standard-Startreiter auswählen";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Nur neue Fotos hochladen";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Es werden nur Fotos und Videos hochgeladen, die nach dem Aktivieren dieser Option hinzugefügt werden.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Transfers abbrechen?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Die ausgewählten Transfers werden storniert";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Alle Transfers abbrechen?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Alle stornieren";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Das ist neu";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Passen Sie Ihren Startbildschirm an";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Ordnen Sie Ihre gewünschten Inhalte so an, dass Sie MEGA optimal verwenden können";
+/* Title of Explore button */
+"explore"="Entdecken";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Ihr Account war zu lange inaktiv";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Da Ihr Account länger als %@ Monate inaktiv war, wurden Ihre Dateien gemäß unserer Inaktivitätsrichtlinie gelöscht.";

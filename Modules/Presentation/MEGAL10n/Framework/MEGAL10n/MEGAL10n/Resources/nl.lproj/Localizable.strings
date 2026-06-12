@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="Lokatie weergeven";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="Banners";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Alle overdrachten annuleren";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Alle overdrachten wissen";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Alle overdrachten opnieuw proberen";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Resetten naar standaard";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Kies standaard openings tablad";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Alleen nieuwe foto's uploaden";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Alleen foto's en video's die zijn toegevoegd nadat deze optie is ingeschakeld, worden geüpload.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Overdrachten annuleren?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="De geselecteerde overdrachten worden geannuleerd.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Alle overdrachten annuleren?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Alles annuleren";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Wat is nieuw";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Uw Start scherm aanpassen";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Kies wat u ziet en organiseer het zodat het past bij hoe u MEGA gebruikt";
+/* Title of Explore button */
+"explore"="Ontdekken";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Uw account is te lang inactief geweest";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Omdat uw account langer dan %@ maanden inactief is geweest, zijn uw bestanden verwijderd conform ons inactiviteitsbeleid.";

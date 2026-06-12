@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="إظهار الموقع";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="لافتات";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="إلغاء كل عمليات التراسل";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="مسح جميع التحويلات";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="أعد المحاولة لجميع التحويلات";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="إعادة الضبط إلى الافتراضي";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="اختر علامة التبويب الافتراضية عند البدء";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="تحميل الصور الجديدة فقط";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="فقط الصور والفيديوهات التي تمت إضافتها بعد تفعيل هذا الخيار سيتم رفعها.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="إلغاء التحويلات؟";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="سيتم إلغاء التحويلات المحددة.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="إلغاء جميع التحويلات؟";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="إلغاء الكل";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="ما الجديد";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="خصص الشاشة الرئيسية";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="اختر ما تراه ونظمه ليناسب طريقة استخدامك لـ MEGA";
+/* Title of Explore button */
+"explore"="استكشف";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="كان حسابك غير نشط لفترة طويلة جدًا";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="لأن حسابك كان غير نشط لأكثر من %@ شهور، تمت إزالة ملفاتك وفقًا لسياسة عدم النشاط لدينا.";

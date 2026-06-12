@@ -3973,7 +3973,7 @@
 /* Videos: video tab title all videos */
 "videos.tab.title.all"="Todos los vídeos";
 /* Videos: video tab title playlists */
-"videos.tab.title.playlist"="Listas de reproducción";
+"videos.tab.title.playlist"="Listas";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="No se han encontrado vídeos";
 /* Videos: videos filter title for location */
@@ -4990,3 +4990,41 @@
 "home.customization.widget.viewedLinks"="Enlaces visualizados";
 /* The title of the Account status widget in Customise Home screen */
 "home.customization.widget.accountStatus"="Estado de la cuenta";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Mostrar ubicación";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Banners";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Cancelar todas las transferencias";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Eliminar todas las transferencias";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Reintentar todas las transferencias";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Restablecer a valores predeterminados";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Elegir pestaña de inicio predeterminada";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Subir solo fotos nuevas";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Sólo las fotos y vídeos añadidos después de activar esta opción se subirán.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="¿Cancelar transferencias?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Las transferencias seleccionadas serán canceladas.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="¿Cancelar todas las transferencias?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Cancelar todo";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Novedades";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Personaliza tu pantalla de inicio";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Elige lo que ves y organízalo para adaptarlo a cómo usas MEGA";
+/* Title of Explore button */
+"explore"="Explorar";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Tu cuenta estuvo inactiva durante demasiado tiempo";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Como tu cuenta estuvo inactiva durante más de %@ meses, tus archivos fueron eliminados de acuerdo con nuestra política de inactividad.";

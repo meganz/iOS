@@ -4731,7 +4731,7 @@
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="รูปภาพที่บันทึกไว้ในอุปกรณ์ของคุณ";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="เล่นวิดีโอซ้อนภาพ";
+"videoPlayer.pip.bottomSheet.title"="โหมดภาพซ้อนภาพ";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="กู้คืนข้อมูลที่ถูกลบได้นานสูงสุด 60 วัน";
 /* Subscription benefit for for calls and meetings */
@@ -4977,16 +4977,54 @@
 /* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
 "transfer.liveActivity.openMEGAToResume"="เปิดใช้งาน MEGA เพื่อทำงานต่อ";
 /* Bottom sheet button shown on a multi-file recent activity bucket. Tapping it opens the parent folder of the bucket in Cloud Drive. */
-"home.recent.bucket.carousel.showInLocation"="แสดงในตำแหน่งที่จัดเก็บ";
+"home.recent.bucket.carousel.showInLocation"="แสดงในตำแหน่งที่ตั้ง";
 /* The title of the Home's widget customization screen */
-"home.customization.title"="ปรับแต่งหน้าหลัก";
+"home.customization.title"="ปรับแต่งหน้าแรก";
 /* The subtitle of the Home's widget customization screen */
 "home.customization.subtitle"="ลากส่วนต่าง ๆ เพื่อจัดเรียงลำดับใหม่";
 /* The title of the Continue where you left widget in Customise Home screen */
-"home.customization.widget.continueWhereYouLeftOff"="ทำต่อจากที่คุณค้างไว้";
+"home.customization.widget.continueWhereYouLeftOff"="ทำต่อจากที่ค้างไว้ล่าสุด";
 /* The title of the Do more with MEGA widget in Customise Home screen */
-"home.customization.widget.doMoreWithMega"="บันดาลทุกสิ่งให้ได้ตามปรารถนาด้วย MEGA";
+"home.customization.widget.doMoreWithMega"="เพิ่มประสิทธิภาพการทำงานด้วย MEGA";
 /* The title of the Viewed link widget in Customise Home screen */
-"home.customization.widget.viewedLinks"="ลิงก์ที่เปิดดู";
+"home.customization.widget.viewedLinks"="ลิงก์ที่เปิดดูแล้ว";
 /* The title of the Account status widget in Customise Home screen */
-"home.customization.widget.accountStatus"="สถานะบัญชี";
+"home.customization.widget.accountStatus"="สถานะบัญชีผู้ใช้";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="แสดงตำแหน่งที่ตั้ง";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="แบนเนอร์ประชาสัมพันธ์";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="ยกเลิกรายการถ่ายโอนทั้งหมด";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="ล้างรายการถ่ายโอนทั้งหมด";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="ลองถ่ายโอนข้อมูลทั้งหมดอีกครั้ง";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="คืนค่าเริ่มต้น";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="เลือกแท็บเริ่มต้นเมื่อเปิดใช้งานแอป";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="อัปโหลดเฉพาะรูปถ่ายใหม่เท่านั้น";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="ระบบจะอัปโหลดเฉพาะรูปถ่ายและวิดีโอที่เพิ่มเข้ามาใหม่หลังจากเปิดใช้งานตัวเลือกนี้เท่านั้น";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="ต้องการยกเลิกการถ่ายโอนข้อมูลหรือไม่";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="ระบบจะยกเลิกรายการถ่ายโอนข้อมูลที่เลือกไว้ทั้งหมด";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="ต้องการยกเลิกรายการถ่ายโอนข้อมูลทั้งหมดหรือไม่";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="ยกเลิกรายการทั้งหมด";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="สิ่งใหม่ ๆ ในเวอร์ชันนี้";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="ปรับแต่งหน้าจอหลัก";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="เลือกสิ่งที่คุณต้องการดู พร้อมจัดระเบียบให้ตรงกับลักษณะการใช้งาน MEGA";
+/* Title of Explore button */
+"explore"="สำรวจฟีเจอร์";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="บัญชีของคุณไม่มีความเคลื่อนไหวนานเกินไป";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="เนื่องจากบัญชีของคุณไม่มีความเคลื่อนไหวนานกว่า %@ เดือน ระบบจึงได้ลบไฟล์ออกตามนโยบายการไม่มีการใช้งาน";

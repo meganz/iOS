@@ -231,11 +231,11 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="選項";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="投影片選項";
+"slideshow.preferenceSetting.slideshowOptions"="幻燈片選項";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="投影片播放包含子資料夾的圖片";
+"slideshow.preferenceSetting.mediaInSubFolders"="幻燈片播放包含子資料夾的圖片";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="投影片播放速度";
+"slideshow.preferenceSetting.speed"="幻燈片播放速度";
 /* Slideshow Speed preference slow */
 "slideshow.preferenceSetting.speed.slow"="慢（8秒）";
 /* Slideshow Speed preference normal */
@@ -243,7 +243,7 @@
 /* Slideshow Speed preference fast */
 "slideshow.preferenceSetting.speed.fast"="快（2秒）";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="投影片播放順序";
+"slideshow.preferenceSetting.order"="幻燈片播放順序";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="隨機";
 /* Slideshow Preference Setting repeat */
@@ -2219,7 +2219,7 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="媒體檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="以圖像檢視方式開啟僅包含圖片或影片的資料夾。以縮圖檢視方式瀏覽媒體，並按日期篩選。";
+"settings.userInterface.mediaDiscovery.footer.body"="以視覺化格狀佈局開啟僅包含圖片或影片的資料夾。透過縮圖瀏覽媒體，並依日期進行篩選。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
 "settings.userInterface.mediaDiscovery.footer.link"="瞭解有關媒體檢視的更多資訊";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
@@ -2391,7 +2391,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="由於嚴重違反MEGA的[A]服務條款[/A]，該用戶的帳戶已被關閉，所以此連結無法使用。";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="據報告此資料夾/檔案包含令人反感的內容，例如兒童色情、暴力極端主義、或獸交。建立此連結的帳戶已經被關閉，其帳戶的細節，包括IP位置已提交給相關部門。";
+"Taken down due to severe violation of our terms of service"="據報告此資料夾或檔案包含令人反感的內容，例如兒少剝削內容、暴力極端主義、或獸交。建立此連結的帳戶已經被關閉，其帳戶的細節，包括IP位置已提交給相關部門。";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="無法使用的";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -3897,7 +3897,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="您無法移動此資料夾，因為目的地是同一個資料夾。";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體檢視中將其開啟。您可以透過更沉浸式的外觀享受您的影像內容。您可以在設定中停用此功能。";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已自動以媒體檢視開啟。您可以透過更具沉浸感的佈局來欣賞您的影像內容。您可以在設定中停用此功能。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen content header for pro plan feature list */
@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="顯示位置";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="橫幅";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="取消所有傳輸";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="清除所有傳輸";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="重試所有傳輸";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="恢復預設值";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="選擇預設啟動分頁";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="僅上傳新照片";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="僅會上傳開啟此選項後所新增的照片和影片。";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="要取消傳輸嗎？";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="所選定的傳輸將被取消。";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="取消所有傳輸？";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="全部取消";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="最新功能";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="自訂主畫面";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="自訂您想顯示的內容，打造專屬的MEGA版面";
+/* Title of Explore button */
+"explore"="深入瞭解";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="帳戶閒置時間過長";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="由於您的帳戶已閒置超過%@個月，根據我們的閒置帳戶政策，您的檔案已被移除。";

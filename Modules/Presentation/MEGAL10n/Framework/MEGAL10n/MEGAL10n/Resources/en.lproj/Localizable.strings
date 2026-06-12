@@ -4743,7 +4743,7 @@
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Image saved to your device";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Picture-in-picture";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Subtitles";
 /* The add subtitle from Cloud drive option in subtitle menu */
@@ -5021,4 +5021,4 @@
 /* The title of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.title"="Your account was inactive for too long";
 /* The subtitle of the purge banner caused by account inactivity */
-"cloudDrive.purgeBanner.inactivity.subtitle"="Because you didn't log in for over %@ months, your files and messages were removed as per our inactivity policy.";
+"cloudDrive.purgeBanner.inactivity.subtitle"="Because your account was inactive for over %@ months, your files were removed as per our inactivity policy.";

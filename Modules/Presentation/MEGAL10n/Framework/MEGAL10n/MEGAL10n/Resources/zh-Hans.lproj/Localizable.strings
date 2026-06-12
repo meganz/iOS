@@ -4990,3 +4990,41 @@
 "transfer.liveActivity.openMEGAToResume"="打开 MEGA 以继续";
 /* The title of the Account status widget in Customise Home screen */
 "home.customization.widget.accountStatus"="账户状态";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="显示位置";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="横幅";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="取消所有传输";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="清除所有传输";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="重试所有传输";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="重置为默认设置";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="选择默认启动标签页";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="仅上传新照片";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="只有在此选项开启后添加的照片和视频才会被上传。";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="是否取消传输？";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="所选传输将被取消。";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="要取消所有传输吗？";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="全部取消";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="新增内容";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="自定义您的主页";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="选择您看到的内容，并按您使用 MEGA 的方式进行整理";
+/* Title of Explore button */
+"explore"="探索";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="您的账户已长时间未使用";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="由于您的账户已超过 %@ 个月未使用，根据我们的账户活跃政策，您的文件已被删除。";

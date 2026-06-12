@@ -4731,7 +4731,7 @@
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Image enregistrée sur votre appareil";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Image dans l'image";
+"videoPlayer.pip.bottomSheet.title"="Picture-in-picture";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Récupération de données supprimées sur une période pouvant aller jusqu'à 60 jours";
 /* Subscription benefit for for calls and meetings */
@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="Afficher l'emplacement";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="Bannières";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Annuler tous les transferts";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Effacer tous les transferts";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Réessayer tous les transferts";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Réinitialiser les paramètres par défaut";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Choisir l’onglet de démarrage par défaut";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Téléverser uniquement les nouvelles photos";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Seules les photos et vidéos ajoutées après l’activation de cette option seront téléversées.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Annuler les transferts ?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Les transferts sélectionnés seront annulés.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Annuler tous les transferts ?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Tout annuler";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Nouveautés";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Personnalisez votre écran d'accueil";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Choisissez ce que vous voyez et organisez-le selon votre utilisation de MEGA";
+/* Title of Explore button */
+"explore"="Découvrir";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Votre compte a été inactif pendant trop longtemps";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Comme votre compte a été inactif pendant plus de %@ mois, vos fichiers ont été supprimés conformément à notre politique d'inactivité.";

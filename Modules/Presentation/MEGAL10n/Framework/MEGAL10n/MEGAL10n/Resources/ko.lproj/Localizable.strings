@@ -4994,3 +4994,37 @@
 "general.action.showLocation"="위치 보기";
 /* The title of the Banners widget in Customise Home screen */
 "home.customization.widget.banners"="배너";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="모든 전송 취소";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="모든 전송 지우기";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="모든 전송 재시도";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="기본값으로 초기화";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="기본 실행 탭 선택";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="새 사진만 업로드";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="이 옵션을 켠 후 추가된 사진과 동영상만 업로드 됩니다.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="전송을 취소할까요?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="선택한 전송이 취소됩니다.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="모든 전송을 취소할까요?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="모두 취소";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="새로운 점";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="홈 화면을 개인화 하세요";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="당신이 MEGA를 쓰는 방법에 맞도록 보고 싶은 것을 선택하고 정리하세요";
+/* Title of Explore button */
+"explore"="탐색";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="당신의 계정이 너무 오랫동안 활동이 없었습니다";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="당신의 계정이 %1개월 이상 활동하지 않았기 때문에, 당신의 파일은 저희의 비활성 정책에 따라 제거되었습니다.";

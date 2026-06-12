@@ -4990,3 +4990,41 @@
 "home.customization.widget.viewedLinks"="Các liên[w]kết đã xem";
 /* The title of the Account status widget in Customise Home screen */
 "home.customization.widget.accountStatus"="Trạng thái tài khoản";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Hiển thị vị trí";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Biểu ngữ";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Hủy tất cả quá trình truyền";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Xóa tất cả quá trình truyền";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Thử lại tất cả quá trình truyền";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Đặt lại về mặc định";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Chọn tab khởi động mặc định";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Tải lên chỉ ảnh mới";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Chỉ những ảnh và video được thêm sau khi tùy chọn này được bật sẽ được tải lên.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Hủy các quá trình truyền?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Các quá trình truyền được chọn sẽ bị hủy.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Hủy tất cả quá trình truyền?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Hủy tất cả";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Những gì mới";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Tùy chỉnh màn hình chính";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Chọn những gì bạn nhìn thấy và sắp xếp nó cho phù hợp với cách bạn sử dụng MEGA";
+/* Title of Explore button */
+"explore"="Khám phá";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Tài khoản của bạn đã không hoạt động quá lâu";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Vì tài khoản của bạn đã không hoạt động trong hơn %@ tháng, các tệp của bạn đã bị xóa theo chính sách không hoạt động của chúng tôi.";

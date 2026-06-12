@@ -4990,3 +4990,41 @@
 "home.customization.widget.accountStatus"="Starea contului";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Linkuri vizualizate";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Afișează locația";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Bannere";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Anulează toate transferurile";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Șterge toate transferurile";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Reîncearcă toate transferurile";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Resetează la valorile implicite";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Alege fila implicită de lansare";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Încarcă doar fotografii noi";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Numai fotografiile și videoclipurile adăugate după ce această opțiune este activată vor fi încărcate.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Anulează transferurile?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Transferurile selectate vor fi anulate.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Anulează toate transferurile?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Anulează toate";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Ce este nou";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Personalizează-ți ecranul principal";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Alege ce vezi și organizează-l astfel încât să se potrivească modului în care folosești MEGA";
+/* Title of Explore button */
+"explore"="Explorează";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Contul tău a fost inactiv pentru prea mult timp";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Pentru că contul tău a fost inactiv pentru mai mult de %@ luni, fișierele tale au fost eliminate conform politicii noastre privind inactivitatea.";

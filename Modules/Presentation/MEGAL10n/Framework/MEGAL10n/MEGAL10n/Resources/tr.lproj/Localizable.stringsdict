@@ -3341,9 +3341,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] içinden %d hazır</string>
+        <string>[A] öğeden %d tanesi hazır</string>
         <key>other</key>
-        <string>[A] içinden %d hazır</string>
+        <string>[A] öğeden %d tanesi hazır</string>
       </dict>
     </dict>
     <key>achievementDetails.bonusExpiration.days</key>

@@ -4990,3 +4990,41 @@
 "transfer.liveActivity.openMEGAToResume"="Откройте MEGA, чтобы продолжить";
 /* The title of the Account status widget in Customise Home screen */
 "home.customization.widget.accountStatus"="Статус учетной записи";
+/* Button title to show the location of selected files */
+"general.action.showLocation"="Показать местоположение";
+/* The title of the Banners widget in Customise Home screen */
+"home.customization.widget.banners"="Баннеры";
+/* More menu action on the Transfers screen Active tab to cancel every active transfer */
+"transfers.action.cancelAllTransfers"="Отменить все передачи";
+/* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
+"transfers.action.clearAllTransfers"="Очистить все передачи";
+/* More menu action on the Transfers screen Failed tab to retry every failed transfer */
+"transfers.action.retryAllTransfers"="Повторить все передачи";
+/* The title for the Reset to default action in Customise Home's menu */
+"home.customization.moreButton.resetToDefault"="Сброс настроек по умолчанию";
+/* The title for the Reset to default action in Customise Home menu */
+"home.customization.moreButton.chooseDefaultLaunchTab"="Выберите вкладку запуска по умолчанию";
+/* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
+"cameraUploads.settings.uploadOnlyNewPhotos.title"="Загружать только новые фотографии";
+/* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Будут загружаться только фотографии и видео, добавленные после включения этой опции.";
+/* Title of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.title"="Отменить передачи?";
+/* Body of the confirmation dialog shown before cancelling the selected transfers */
+"transfers.confirmation.cancelSelected.message"="Выбранные передачи будут отменены.";
+/* Title of the confirmation dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.title"="Отменить все передачи?";
+/* Confirm button on the dialog shown before cancelling every active transfer */
+"transfers.confirmation.cancelAll.confirm"="Отменить всё";
+/* Header of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.header"="Что нового";
+/* Title of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.title"="Настроить главный экран";
+/* Subtitle of the What's new promotional dialog in Home screen */
+"home.promotionalDialog.subtitle"="Выберите, что видите, и организуйте это под свой стиль использования MEGA";
+/* Title of Explore button */
+"explore"="Исследовать";
+/* The title of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.title"="Ваш аккаунт был неактивен слишком долго";
+/* The subtitle of the purge banner caused by account inactivity */
+"cloudDrive.purgeBanner.inactivity.subtitle"="Поскольку ваша учетная запись была неактивна более %@ месяцев, ваши файлы были удалены в соответствии с нашей политикой неактивности.";
