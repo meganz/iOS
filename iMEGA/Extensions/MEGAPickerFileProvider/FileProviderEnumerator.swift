@@ -30,6 +30,11 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable
                     
                     guard let sessionId = authUseCase.sessionId() else {
                         MEGALogError("[Picker] Can't login: no session")
+                        observer.finishEnumeratingWithError(
+                                NSError(
+                                    domain: NSFileProviderErrorDomain,
+                                    code: NSFileProviderError.notAuthenticated.rawValue
+                                ))
                         return
                     }
                     
