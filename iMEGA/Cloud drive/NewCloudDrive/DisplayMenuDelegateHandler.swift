@@ -6,7 +6,7 @@ import MEGAL10n
 // as related to uploading and rubbish bin
 final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggering {
     
-    var presenterViewController: UIViewController?
+    weak var presenterViewController: UIViewController?
     var refreshMenu: (() -> Void)?
     
     let toggleSelection: () -> Void
