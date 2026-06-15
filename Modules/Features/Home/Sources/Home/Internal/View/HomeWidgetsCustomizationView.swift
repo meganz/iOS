@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct HomeWidgetsCustomizationView: View {
@@ -42,6 +43,7 @@ struct HomeWidgetsCustomizationView: View {
             .scrollContentBackground(.hidden)
         }
         .background(TokenColors.Background.page.swiftUI)
+        .snackBar($viewModel.snackBar)
         .navigationTitle(Strings.Localizable.Home.Customization.title)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

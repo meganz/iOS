@@ -1,11 +1,14 @@
 import Foundation
 import MEGAL10n
+import MEGASwiftUI
 
 @MainActor
 final class HomeWidgetsCustomizationViewModel: ObservableObject {
     @Published var configs: [HomeWidgetConfigEntity] {
         didSet { widgetCustomizationUseCase.save(configs) }
     }
+
+    @Published var snackBar: SnackBar?
 
     private let widgetCustomizationUseCase: any HomeWidgetCustomizationUseCaseProtocol
 
@@ -20,6 +23,10 @@ final class HomeWidgetsCustomizationViewModel: ObservableObject {
 
     func toggle(_ widget: HomeWidgetType, isOn: Bool) {
         guard let index = configs.firstIndex(where: { $0.type == widget }) else { return }
+        if !isOn, configs[index].isEnabled, configs.filter(\.isEnabled).count == 1 {
+            snackBar = SnackBar(message: Strings.Localizable.Home.Customization.DisableLastWidget.Snackbar.message)
+            return
+        }
         configs[index] = HomeWidgetConfigEntity(type: configs[index].type, isEnabled: isOn)
     }
 
