@@ -11,15 +11,8 @@ import UIKit
 
 @MainActor
 final class AccountDetailsWidgetViewModel: ObservableObject {
-    enum Constants {
-        static let criticalStorageLevel = 0.9
-        static let warningStorageLevel = 0.8
-    }
-
-    // Enum type to represent storage availability
-    // In our code we use both StorageStatusEntity and used storage to demtermine progress bar color
-    // and to display the upgrade button. This enum unifies both StorageStatusEntity and the used storage
-    // into one single type for convenient computation
+    // Enum type to represent storage availability.
+    // This determines the progress bar color and whether to display the upgrade button.
     private enum StorageAvailabilityState {
         case good, warning, critical
     }
@@ -123,12 +116,10 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private var storageAvailabilityState: StorageAvailabilityState {
-        if storageStatus == .full || storageUsedFraction >= 0.9 {
-            .critical
-        } else if storageStatus == .almostFull || storageUsedFraction >= 0.8 {
-            .warning
-        } else {
-            .good
+        switch storageStatus {
+        case .full: .critical
+        case .almostFull: .warning
+        default: .good // includes .noStorageProblems
         }
     }
 
