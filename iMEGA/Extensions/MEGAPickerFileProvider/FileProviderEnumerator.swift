@@ -25,30 +25,12 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable
                         startingAt page: NSFileProviderPage) {
         Task {
             do {
-                if MEGASdk.shared.isLoggedIn() == 0 {
-                    let authUseCase = AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo)
-                    
-                    guard let sessionId = authUseCase.sessionId() else {
-                        MEGALogError("[Picker] Can't login: no session")
-                        observer.finishEnumeratingWithError(
-                                NSError(
-                                    domain: NSFileProviderErrorDomain,
-                                    code: NSFileProviderError.notAuthenticated.rawValue
-                                ))
-                        return
-                    }
-                    
-                    try await authUseCase.login(sessionId: sessionId)
-                    
-                    let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-                    
-                    try await nodeActionUseCase.fetchNodes()
-                }
-                
+                // Single-flight login + fetchNodes so concurrent enumerations don't race on login()
+                // (which would fail all-but-one with API_EACCESS).
+                try await FileProviderSession.shared.ensureReady()
+
                 let items = try await fetchItems()
-                
                 observer.didEnumerate(items)
-                
                 observer.finishEnumerating(upTo: nil)
             } catch {
                 observer.finishEnumeratingWithError(error)
