@@ -127,11 +127,13 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
     // MARK: - Private
         
     private func isFileInCloud() -> Bool {
-        guard let path = nodeAttributeUseCase.pathFor(node: node) else {
+        guard node.isFile, let path = nodeAttributeUseCase.pathFor(node: node) else {
             return false
         }
         let itemURL = NSFileProviderManager.default.documentStorageURL.appendingPathComponent(path)
-        guard FileManager.default.fileExists(atPath: itemURL.path) else {
+        var isDirectory: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: itemURL.path, isDirectory: &isDirectory),
+              !isDirectory.boolValue else {
             return false
         }
         return MEGASdk.shared.fingerprint(forFilePath: itemURL.path) == node.fingerprint
