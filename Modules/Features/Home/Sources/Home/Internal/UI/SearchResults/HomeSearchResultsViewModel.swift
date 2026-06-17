@@ -44,7 +44,7 @@ final class HomeSearchResultsViewModel: ObservableObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: .homeSearch,
             listHeaderViewModel: nil,
-            isSelectionEnabled: true,
+            isSelectionEnabled: false,
             contentUnavailableViewModelProvider: HomeScreenContentUnavailableViewModelProvider()
         )
 
