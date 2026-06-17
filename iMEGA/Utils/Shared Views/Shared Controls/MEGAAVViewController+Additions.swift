@@ -142,11 +142,16 @@ extension MEGAAVViewController {
     ///   - totalBitrate: Combined estimated data rate of all media tracks, in bits per second.
     ///   - playbackRate: Current `AVPlayer.rate`; values below `1.0` are clamped to `1.0`.
     private func applyThrottleBitrate(totalBitrate: Float, playbackRate: Float) {
-        guard let apiForStreaming, totalBitrate >= 0 else { return }
-        let rate = max(playbackRate, 1.0)
-        let throttleBps = UInt64(totalBitrate * rate * 3)
+        guard let apiForStreaming, totalBitrate.isFinite, totalBitrate >= 0 else { return }
+        let rate = max(playbackRate.isFinite ? playbackRate : 1.0, 1.0)
+        let scaled = totalBitrate * rate * 3
+        guard scaled.isFinite, scaled >= 0, scaled < Float(UInt64.max) else {
+            MEGALogError("[Throttle] Invalid throttle value: \(scaled), throttle not set")
+            return
+        }
+        let throttleBps = UInt64(scaled)
         apiForStreaming.httpServerSetThrottleBitrate(throttleBps)
-        MEGALogInfo("[Throttle] Set throttle bitrate to \(throttleBps) bps (rate=\(rate) x3, total: \(Int64(totalBitrate)) bps)")
+        MEGALogInfo("[Throttle] Set throttle bitrate to \(throttleBps) bps (rate=\(rate) x3, total: \(String(format: "%.1f", totalBitrate)) bps)")
     }
 
     /// Observes `AVPlayer.rate` and re-applies the throttle whenever the playback rate changes.
