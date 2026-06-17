@@ -184,6 +184,12 @@ public struct HomeView: View {
             .navigationDestination(for: NavigationRoute.self) { route in
                 navigationDestinationBuilder(with: route)
             }
+            .navigationDestination(for: RecentWidgetBucketListView.Route.self) { route in
+                recentWidgetBucketListDestinationBuilder(with: route)
+            }
+            .navigationDestination(for: RecentActionBucketsListView.Route.self) { route in
+                recentActionBucketsListDestinationBuilder(with: route)
+            }
             .task { viewModel.reloadWidgets() }
             .onAppear {
                 viewModel.trackHomeScreenAppear()
@@ -217,23 +223,81 @@ public struct HomeView: View {
                 EmptyView() // Handled by UIKit routing
             }
         case .recents:
-            RecentActionBucketsListView(
-                dependency: RecentActionBucketsListView.Dependency(
-                    userNameProvider: dependency.userNameProvider,
-                    recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
-                    downloadedNodesListener: dependency.downloadedNodesListener,
-                    selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
-                    locationHandler: dependency.recentActionBucketLocationHandler,
-                    nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
-                    moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
-                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-                    isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
-                )
-            )
+            recentActionBucketsListView
         case .widgetsCustomization:
             HomeWidgetsCustomizationView()
         }
+    }
+
+    private var recentActionBucketsListView: some View {
+        RecentActionBucketsListView(dependency: recentActionBucketsListDependency)
+    }
+
+    private var recentActionBucketsListDependency: RecentActionBucketsListView.Dependency {
+        RecentActionBucketsListView.Dependency(
+            userNameProvider: dependency.userNameProvider,
+            recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
+            downloadedNodesListener: dependency.downloadedNodesListener,
+            selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+            locationHandler: dependency.recentActionBucketLocationHandler,
+            nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+            moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
+            photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
+            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+            isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
+        )
+    }
+
+    @ViewBuilder
+    private func recentWidgetBucketListDestinationBuilder(with route: RecentWidgetBucketListView.Route) -> some View {
+        switch route {
+        case .viewAllBuckets:
+            recentActionBucketsListView
+        case let .bucketItems(bucket):
+            recentActionBucketItemsView(bucket: bucket)
+        case let .multipleMedia(headerTitle, bucket):
+            recentActionBucketMediaView(headerTitle: headerTitle, bucket: bucket)
+        }
+    }
+
+    @ViewBuilder
+    private func recentActionBucketsListDestinationBuilder(with route: RecentActionBucketsListView.Route) -> some View {
+        switch route {
+        case let .bucketItems(bucket):
+            recentActionBucketItemsView(bucket: bucket)
+        case let .multipleMedia(headerTitle, bucket):
+            recentActionBucketMediaView(headerTitle: headerTitle, bucket: bucket)
+        }
+    }
+
+    private func recentActionBucketItemsView(bucket: RecentActionBucketEntity) -> some View {
+        RecentActionBucketItemsView(
+            dependency: RecentActionBucketItemsView.Dependency(
+                bucket: bucket,
+                resultMapper: dependency.recentActionBucketItemResultMapper,
+                downloadedNodesListener: dependency.downloadedNodesListener,
+                selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+                locationHandler: dependency.recentActionBucketLocationHandler,
+                nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+                moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
+                isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
+            )
+        )
+    }
+
+    private func recentActionBucketMediaView(headerTitle: String, bucket: RecentActionBucketEntity) -> some View {
+        RecentActionBucketMediaView(
+            headerTitle: headerTitle,
+            bucket: bucket,
+            dependency: RecentActionBucketMediaView.Dependency(
+                router: dependency.photoLibraryContentViewRouter,
+                locationHandler: dependency.recentActionBucketLocationHandler,
+                nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+                moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
+                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
+            )
+        )
     }
 
     private var listContent: some View {

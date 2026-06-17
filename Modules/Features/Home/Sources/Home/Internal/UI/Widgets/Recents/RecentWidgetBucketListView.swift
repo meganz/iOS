@@ -62,9 +62,6 @@ struct RecentWidgetBucketListView: View {
                 viewAllBucketsButton
             }
         }
-        .navigationDestination(for: Route.self) { route in
-            navigationDestination(for: route)
-        }
         .sheet(isPresented: carouselSheetBinding, onDismiss: { performDeferredCarouselAction() }, content: { carouselSheetContent })
     }
 
@@ -113,53 +110,6 @@ struct RecentWidgetBucketListView: View {
                     .padding(.horizontal, TokenSpacing._5)
                     .padding(.vertical, TokenSpacing._3)
             }
-        }
-    }
-    
-    @ViewBuilder
-    private func navigationDestination(for route: Route) -> some View {
-        switch route {
-        case .viewAllBuckets:
-            RecentActionBucketsListView(
-                dependency: RecentActionBucketsListView.Dependency(
-                    userNameProvider: dependency.userNameProvider,
-                    recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
-                    downloadedNodesListener: dependency.downloadedNodesListener,
-                    selectionHandler: dependency.selectionHandler,
-                    locationHandler: dependency.locationHandler,
-                    nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter,
-                    photoLibraryContentViewRouter: dependency.photoLibraryContentViewRouter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
-                )
-            )
-        case let .bucketItems(bucket):
-            RecentActionBucketItemsView(
-                dependency: RecentActionBucketItemsView.Dependency(
-                    bucket: bucket,
-                    resultMapper: dependency.recentActionBucketItemResultMapper,
-                    downloadedNodesListener: dependency.downloadedNodesListener,
-                    selectionHandler: dependency.selectionHandler,
-                    locationHandler: dependency.locationHandler,
-                    nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter,
-                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
-                )
-            )
-        case let .multipleMedia(headerTitle, bucket):
-            RecentActionBucketMediaView(
-                headerTitle: headerTitle,
-                bucket: bucket,
-                dependency: RecentActionBucketMediaView.Dependency(
-                    router: dependency.photoLibraryContentViewRouter,
-                    locationHandler: dependency.locationHandler,
-                    nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
-                )
-            )
         }
     }
 
