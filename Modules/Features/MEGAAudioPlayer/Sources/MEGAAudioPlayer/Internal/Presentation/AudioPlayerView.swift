@@ -6,10 +6,6 @@ import MEGAUIComponent
 import SwiftUI
 import UIKit
 
-private extension Color {
-    static let audioPlayerAccent = Color(red: 0.95, green: 0.20, blue: 0.20)
-}
-
 struct AudioPlayerView: View {
     @ObservedObject var vm: AudioPlayerViewModel
 
@@ -58,8 +54,16 @@ struct AudioPlayerView: View {
                             onRepeat: vm.cycleRepeat
                         )
                     case .podcast:
-                        // PodcastModeControlsSection lands in a follow-up ticket.
-                        EmptyView()
+                        PodcastModeControlsSection(
+                            isPlaying: vm.isPlaying,
+                            speed: vm.podcastPlaybackSpeed,
+                            isSleepTimerActive: vm.isSleepTimerActive,
+                            onSpeed: vm.presentSpeedPicker,
+                            onBackward: vm.skipBackward,
+                            onPlayPause: vm.togglePlayPause,
+                            onForward: vm.skipForward,
+                            onSleepTimer: vm.presentSleepTimer
+                        )
                     }
                 }
                 .padding(.horizontal, TokenSpacing._5)
@@ -218,12 +222,12 @@ private struct TrackInfoSection: View {
         VStack(alignment: .leading, spacing: TokenSpacing._1) {
             Text(title ?? "")
                 .font(.title3.bold())
-                .foregroundStyle(.white)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .lineLimit(1)
 
             Text(artist ?? "")
                 .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .lineLimit(1)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -249,8 +253,8 @@ private struct ScrubberSection: View {
                 ),
                 isEnabled: duration != nil,
                 tapToSeekEnabled: true,
-                minimumTrackColor: .audioPlayerAccent,
-                thumbColor: .audioPlayerAccent,
+                minimumTrackColor: TokenColors.Icon.brand.swiftUI,
+                thumbColor: TokenColors.Icon.brand.swiftUI,
                 onEditingChanged: { editing in
                     if !editing, let fraction = dragFraction {
                         onSeek(fraction)
@@ -269,10 +273,10 @@ private struct ScrubberSection: View {
             Text(formatElapsed(displayTime, duration: duration))
             Spacer()
             Text(formatRemaining(currentTime: displayTime, duration: duration))
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
         .font(.caption.monospacedDigit())
-        .foregroundStyle(.white)
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
 
     private var displayFraction: Double {
@@ -314,7 +318,6 @@ private struct MusicModeControlsSection: View {
     let onRepeat: () -> Void
 
     private let secondaryIconSize: CGFloat = 22
-    private let playPauseIconSize: CGFloat = 44
 
     var body: some View {
         HStack {
@@ -325,6 +328,7 @@ private struct MusicModeControlsSection: View {
                 action: onShuffle
             )
             .overlay(alignment: .bottom) { activeDot(isVisible: isShuffleOn) }
+            .padding(TokenSpacing._5)
             Spacer()
             iconButton(
                 image: MEGAAssets.Image.audioSkipBack,
@@ -333,12 +337,13 @@ private struct MusicModeControlsSection: View {
                 action: onSkipPrevious
             )
             Spacer()
-            iconButton(
-                image: Image(systemName: isPlaying ? "pause.fill" : "play.fill"),
-                size: playPauseIconSize,
-                isAccented: false,
-                action: onPlayPause
-            )
+            (isPlaying ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                .frame(width: TokenSpacing._15, height: TokenSpacing._15)
+                .contentShape(Rectangle())
+                .onTapGesture(perform: onPlayPause)
             Spacer()
             iconButton(
                 image: MEGAAssets.Image.audioSkipForward,
@@ -354,21 +359,108 @@ private struct MusicModeControlsSection: View {
                 action: onRepeat
             )
             .overlay(alignment: .bottom) { activeDot(isVisible: repeatMode != .off) }
+            .padding(TokenSpacing._5)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
 
     private func iconButton(image: Image, size: CGFloat, isAccented: Bool, action: @escaping () -> Void) -> some View {
         image
-            .font(.system(size: size, weight: .medium))
-            .foregroundStyle(isAccented ? Color.audioPlayerAccent : Color.white)
+            .foregroundStyle(isAccented ? TokenColors.Icon.brand.swiftUI : TokenColors.Icon.primary.swiftUI)
+            .frame(width: size)
             .contentShape(Rectangle())
             .onTapGesture(perform: action)
     }
 
     private func activeDot(isVisible: Bool) -> some View {
         Circle()
-            .fill(Color.audioPlayerAccent)
+            .fill(TokenColors.Icon.brand.swiftUI)
+            .frame(width: TokenSpacing._2, height: TokenSpacing._2)
+            .offset(y: TokenSpacing._3)
+            .opacity(isVisible ? 1 : 0)
+    }
+}
+
+// MARK: - Podcast Mode Controls
+private struct PodcastModeControlsSection: View {
+    let isPlaying: Bool
+    let speed: Float
+    let isSleepTimerActive: Bool
+    let onSpeed: () -> Void
+    let onBackward: () -> Void
+    let onPlayPause: () -> Void
+    let onForward: () -> Void
+    let onSleepTimer: () -> Void
+
+    private let secondaryIconSize: CGFloat = 22
+
+    var body: some View {
+        HStack {
+            speedButton
+                .overlay(alignment: .bottom) { activeDot(isVisible: isSpeedActive) }
+                .padding(TokenSpacing._5)
+            Spacer()
+            iconButton(
+                image: MEGAAssets.Image.audioBackward15,
+                size: TokenSpacing._8,
+                action: onBackward
+            )
+            Spacer()
+            (isPlaying ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                .frame(width: TokenSpacing._15, height: TokenSpacing._15)
+                .contentShape(Rectangle())
+                .onTapGesture(perform: onPlayPause)
+            Spacer()
+            iconButton(
+                image: MEGAAssets.Image.audioForward15,
+                size: TokenSpacing._8,
+                action: onForward
+            )
+            Spacer()
+            iconButton(
+                image: isSleepTimerActive ? MEGAAssets.Image.audioClockStop : MEGAAssets.Image.audioClock,
+                size: secondaryIconSize,
+                isAccented: isSleepTimerActive,
+                action: onSleepTimer
+            )
+            .overlay(alignment: .bottom) { activeDot(isVisible: isSleepTimerActive) }
+            .padding(TokenSpacing._5)
+        }
+        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+    }
+
+    private var isSpeedActive: Bool {
+        speed != 1
+    }
+
+    private var speedLabel: String {
+        "\(String(format: "%g", speed))×"
+    }
+
+    private var speedButton: some View {
+        Text(speedLabel)
+            .font(.headline.weight(.medium))
+            .foregroundStyle(isSpeedActive ? TokenColors.Text.brand.swiftUI : TokenColors.Text.primary.swiftUI)
+            .fixedSize()
+            .frame(width: secondaryIconSize, height: secondaryIconSize)
+            .contentShape(Rectangle())
+            .onTapGesture(perform: onSpeed)
+    }
+
+    private func iconButton(image: Image, size: CGFloat, isAccented: Bool = false, action: @escaping () -> Void) -> some View {
+        image
+            .foregroundStyle(isAccented ? TokenColors.Icon.brand.swiftUI : TokenColors.Icon.primary.swiftUI)
+            .frame(width: size)
+            .contentShape(Rectangle())
+            .onTapGesture(perform: action)
+    }
+
+    private func activeDot(isVisible: Bool) -> some View {
+        Circle()
+            .fill(TokenColors.Icon.brand.swiftUI)
             .frame(width: TokenSpacing._2, height: TokenSpacing._2)
             .offset(y: TokenSpacing._3)
             .opacity(isVisible ? 1 : 0)
@@ -401,7 +493,7 @@ private struct BottomActionsSection: View {
 
             iconButton(image: MEGAAssets.Image.audioPlaylist, action: onPlaylist)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
 
     private func iconButton(image: Image, action: @escaping () -> Void) -> some View {
@@ -440,4 +532,21 @@ private struct BottomActionsSection: View {
 
 #Preview("Music — Empty / idle") {
     AudioPlayerView(vm: AudioPlayerViewModel())
+}
+
+#Preview("Podcast — Playing") {
+    AudioPlayerView(vm: {
+        let vm = AudioPlayerViewModel()
+        vm.setControlState(
+            title: "Orange (Live)",
+            artist: "Arcy Drive",
+            currentTime: 80,
+            duration: 234,
+            isPlaying: true,
+            playbackMode: .podcast,
+            podcastPlaybackSpeed: 2,
+            isSleepTimerActive: true
+        )
+        return vm
+    }())
 }

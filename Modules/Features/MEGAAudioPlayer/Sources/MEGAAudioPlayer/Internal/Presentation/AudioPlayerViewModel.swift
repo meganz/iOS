@@ -38,14 +38,22 @@ final class AudioPlayerViewModel: ObservableObject {
     /// Track total duration. 
     @Published private(set) var duration: TimeInterval?
 
+    @Published private(set) var playbackMode: PlaybackMode = .music
+
     /// Drives the center button's play/pause glyph.
     @Published private(set) var isPlaying: Bool = false
+
+    // MARK: - Music Mode state
 
     @Published private(set) var isShuffleOn: Bool = false
 
     @Published private(set) var repeatMode: RepeatMode = .off
 
-    @Published private(set) var playbackMode: PlaybackMode = .music
+    // MARK: - Podcast Mode state
+
+    @Published private(set) var podcastPlaybackSpeed: Float = 1
+
+    @Published private(set) var isSleepTimerActive: Bool = false
 
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
@@ -137,7 +145,9 @@ final class AudioPlayerViewModel: ObservableObject {
         isPlaying: Bool = false,
         isShuffleOn: Bool = false,
         repeatMode: RepeatMode = .off,
-        playbackMode: PlaybackMode = .music
+        playbackMode: PlaybackMode = .music,
+        podcastPlaybackSpeed: Float = 1,
+        isSleepTimerActive: Bool = false
     ) {
         self.title = title
         self.artist = artist
@@ -147,6 +157,8 @@ final class AudioPlayerViewModel: ObservableObject {
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode
         self.playbackMode = playbackMode
+        self.podcastPlaybackSpeed = podcastPlaybackSpeed
+        self.isSleepTimerActive = isSleepTimerActive
     }
 
     // MARK: - Music Mode intents
@@ -183,5 +195,22 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func switchPlaybackMode() {
+        playbackMode = playbackMode.toggled
+    }
+
+    // MARK: - Podcast Mode intents
+
+    func presentSpeedPicker() {
+    }
+
+    /// Seek backward by the podcast skip interval (15s). Stub until wired to the engine.
+    func skipBackward() {
+    }
+
+    /// Seek forward by the podcast skip interval (15s). Stub until wired to the engine.
+    func skipForward() {
+    }
+
+    func presentSleepTimer() {
     }
 }
