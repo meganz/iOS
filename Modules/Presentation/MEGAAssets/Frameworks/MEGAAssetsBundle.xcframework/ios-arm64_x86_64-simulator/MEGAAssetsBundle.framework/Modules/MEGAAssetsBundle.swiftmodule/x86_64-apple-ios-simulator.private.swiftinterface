@@ -1012,6 +1012,12 @@ public struct MEGAImageBundle {
   public static var almostFullStorageAlert: SwiftUICore.Image {
     get
   }
+  public static var monoPauseMediumThinSolid: SwiftUICore.Image {
+    get
+  }
+  public static var monoPlayMediumThinSolid: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2661,6 +2667,12 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoFileSearchMediumRegularOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoPauseMediumThinSolid: UIKit.UIImage {
+    get
+  }
+  public static var monoPlayMediumThinSolid: UIKit.UIImage {
     get
   }
 }

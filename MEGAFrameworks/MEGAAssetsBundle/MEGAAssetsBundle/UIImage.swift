@@ -489,4 +489,6 @@ public struct MEGAUIImageBundle {
     public static var monoPlayMediumThinOutline: UIImage { UIImage.monoPlayMediumThinOutline }
     public static var monoEraserMediumThinOutline: UIImage { UIImage.monoEraserMediumThinOutline }
     public static var monoFileSearchMediumRegularOutline: UIImage { UIImage.monoFileSearchMediumRegularOutline }
+    public static var monoPauseMediumThinSolid: UIImage { UIImage.monoPauseMediumThinSolid }
+    public static var monoPlayMediumThinSolid: UIImage { UIImage.monoPlayMediumThinSolid }
 }
