@@ -21,4 +21,6 @@ final public class MockNetworkMonitorManager: NetworkMonitorManaging, @unchecked
     public var networkPathStream: AsyncStream<any NetworkPath> {
         stream
     }
+    
+    public static func configure() {}
 }

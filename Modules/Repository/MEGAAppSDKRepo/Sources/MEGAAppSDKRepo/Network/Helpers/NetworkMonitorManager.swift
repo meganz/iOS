@@ -5,6 +5,7 @@ import Network
 public protocol NetworkMonitorManaging: Sendable {
     var currentNetworkPath: any NetworkPath { get }
     var networkPathStream: AsyncStream<any NetworkPath> { get }
+    static func configure()
 }
 
 private struct UpdateHandler: Hashable, Sendable {
@@ -32,6 +33,10 @@ public class NetworkMonitorManager: NetworkMonitorManaging, @unchecked Sendable 
 
     public var currentNetworkPath: any NetworkPath {
         monitor.currentPath
+    }
+    
+    public static func configure() {
+        _ = NetworkMonitorManager.shared
     }
     
     public var networkPathStream: AsyncStream<any NetworkPath> {

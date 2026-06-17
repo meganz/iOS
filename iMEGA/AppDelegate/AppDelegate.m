@@ -88,6 +88,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self configureNetworkManager];
     [FIRApp configure];
     [self disableFirebaseAnalyticsCollection];
     [AppEnvironmentConfigurator configAppEnvironment];

@@ -340,6 +340,10 @@ extension AppDelegate {
         MEGASdk.shared.setFileServiceReclaimOptions(options)
         MEGASdk.sharedFolderLink.setFileServiceReclaimOptions(options)
     }
+    
+    @objc func configureNetworkManager() {
+        NetworkMonitorManager.configure()
+    }
 }
 
 // MARK: - Config Cookie Settings
