@@ -62,9 +62,6 @@ struct RecentActionBucketsListView: View {
                 }
             }
             .background(TokenColors.Background.page.swiftUI)
-            .navigationDestination(for: Route.self) { route in
-                navigationDestination(for: route)
-            }
             .confirmClearRecentActivityAlert(isPresented: $viewModel.isConfirmingClearRecentActivity) {
                 Task {
                     await viewModel.clearRecentActivity()
@@ -174,38 +171,6 @@ struct RecentActionBucketsListView: View {
             }
         }
         .listStyle(.plain)
-    }
-    
-    @ViewBuilder
-    private func navigationDestination(for route: Route) -> some View {
-        switch route {
-        case let .bucketItems(bucket):
-            RecentActionBucketItemsView(
-                dependency: RecentActionBucketItemsView.Dependency(
-                    bucket: bucket,
-                    resultMapper: dependency.recentActionBucketItemResultMapper,
-                    downloadedNodesListener: dependency.downloadedNodesListener,
-                    selectionHandler: dependency.selectionHandler,
-                    locationHandler: dependency.locationHandler,
-                    nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter,
-                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
-                )
-            )
-        case let .multipleMedia(headerTitle, bucket):
-            RecentActionBucketMediaView(
-                headerTitle: headerTitle,
-                bucket: bucket,
-                dependency: RecentActionBucketMediaView.Dependency(
-                    router: dependency.photoLibraryContentViewRouter,
-                    locationHandler: dependency.locationHandler,
-                    nodeActionHandler: dependency.nodeActionHandler,
-                    moreActionsPresenter: dependency.moreActionsPresenter,
-                    transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
-                    isHomeRevampPhaseTwoEnabled: dependency.isHomeRevampPhaseTwoEnabled
-                )
-            )
-        }
     }
 
     private func makeCarouselPresenter(sectionTitle: String) -> RecentActionBucketContainerView.BucketCarouselPresenter? {
