@@ -8,6 +8,7 @@ enum CameraUploadsAdvancedOptionsEvent {
     case hiddenAlbumUpload(Bool)
     case sharedAlbumsUpload(Bool)
     case iTunesSyncedAlbumsUpload(Bool)
+    case uploadOnlyNewPhotos(Bool)
 }
 
 final class CameraUploadsAdvancedOptionsViewModel: NSObject {
@@ -49,6 +50,10 @@ final class CameraUploadsAdvancedOptionsViewModel: NSObject {
         case .iTunesSyncedAlbumsUpload(let enabled):
             tracker.trackAnalyticsEvent(
                 with: enabled ? ITunesSyncedAlbumsUploadEnabledEvent() : ITunesSyncedAlbumsUploadDisabledEvent()
+            )
+        case .uploadOnlyNewPhotos(let enabled):
+            tracker.trackAnalyticsEvent(
+                with: enabled ? UploadOnlyNewPhotosEnabledEvent() : UploadOnlyNewPhotosDisabledEvent()
             )
         }
     }
