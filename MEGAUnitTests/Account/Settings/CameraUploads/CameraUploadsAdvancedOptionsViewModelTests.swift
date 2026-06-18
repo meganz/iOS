@@ -28,7 +28,10 @@ struct CameraUploadsAdvancedOptionsViewModelTests {
             TestCaseData(event: .sharedAlbumsUpload(false), expectedEventIdentifier: SharedAlbumsUploadDisabledEvent()),
             
             TestCaseData(event: .iTunesSyncedAlbumsUpload(true), expectedEventIdentifier: ITunesSyncedAlbumsUploadEnabledEvent()),
-            TestCaseData(event: .iTunesSyncedAlbumsUpload(false), expectedEventIdentifier: ITunesSyncedAlbumsUploadDisabledEvent())
+            TestCaseData(event: .iTunesSyncedAlbumsUpload(false), expectedEventIdentifier: ITunesSyncedAlbumsUploadDisabledEvent()),
+
+            TestCaseData(event: .uploadOnlyNewPhotos(true), expectedEventIdentifier: UploadOnlyNewPhotosEnabledEvent()),
+            TestCaseData(event: .uploadOnlyNewPhotos(false), expectedEventIdentifier: UploadOnlyNewPhotosDisabledEvent())
         ])
         @MainActor func trackCorrectAnalyticsEvent(testCase: TestCaseData) {
             let tracker = MockTracker()

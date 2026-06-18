@@ -104,6 +104,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 - (IBAction)didChangeValueForUploadOnlyNewPhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadOnlyNewPhotos = sender.isOn;
+    [self trackUploadOnlyNewPhotosEvent:sender.isOn];
     [self.tableView reloadData];
 }
 

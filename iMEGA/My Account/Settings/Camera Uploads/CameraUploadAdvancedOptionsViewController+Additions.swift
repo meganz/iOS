@@ -33,4 +33,8 @@ extension CameraUploadAdvancedOptionsViewController {
     @objc func trackITunesSyncedAlbumsUploadEvent(_ enabled: Bool) {
         viewModel.trackEvent(.iTunesSyncedAlbumsUpload(enabled))
     }
+
+    @objc func trackUploadOnlyNewPhotosEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.uploadOnlyNewPhotos(enabled))
+    }
 }
