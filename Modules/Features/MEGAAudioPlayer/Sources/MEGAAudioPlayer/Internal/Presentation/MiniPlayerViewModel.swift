@@ -20,7 +20,7 @@ final class MiniPlayerViewModel: ObservableObject {
         self.service = nil
     }
 
-    /// Production init. Mirrors the service's `statePublisher` into the
+    /// Production init. Mirrors the service's state publishers into the
     /// `@Published` fields and forwards user intents back to the service.
     init(service: any AudioPlaybackServiceProtocol) {
         self.service = service
@@ -28,19 +28,22 @@ final class MiniPlayerViewModel: ObservableObject {
     }
 
     private func bindService(_ service: any AudioPlaybackServiceProtocol) {
-        service.statePublisher
+        service.titlePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.apply(state: state)
+            .sink { [weak self] in self?.title = $0 }
+            .store(in: &cancellables)
+
+        service.artistPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] artist in
+                self?.artist = artist ?? Strings.Localizable.Media.Audio.Metadata.Missing.artist
             }
             .store(in: &cancellables)
-    }
 
-    private func apply(state: AudioPlaybackState?) {
-        guard let state else { return }
-        status = state.status
-        title = state.title
-        artist = state.artist ?? Strings.Localizable.Media.Audio.Metadata.Missing.artist
+        service.statusPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.status = $0 }
+            .store(in: &cancellables)
     }
 
     // MARK: - Intents

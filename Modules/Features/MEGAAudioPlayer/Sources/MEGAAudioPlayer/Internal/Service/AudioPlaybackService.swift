@@ -2,48 +2,16 @@ import Combine
 import Foundation
 import MEGADomain
 
-struct AudioPlaybackState {
-    var currentSource: PlaybackSource
-    var title: String
-    var artist: String?
-
-    /// Raw cover-art bytes parsed from the file's embedded tags (ID3 / MP4).
-    /// The presentation layer decodes it to an image.
-    var artworkData: Data?
-
-    /// Track duration in seconds, parsed from the asset.
-    var duration: TimeInterval?
-
-    /// Coarse playback status the mini player binds to.
-    var status: PlaybackStatus = .loading
-    var currentTime: TimeInterval = 0
-
-    var currentNode: NodeEntity? { currentSource.primaryNode }
-}
-
-enum PlaybackStatus: Equatable {
-    case loading
-    case playing
-    case paused
-    case buffering
-    case error(String)
-}
-
 @MainActor
-protocol AudioPlaybackServiceProtocol: AnyObject {
-    var statePublisher: AnyPublisher<AudioPlaybackState?, Never> { get }
-
-    func play(source: PlaybackSource)
-    func togglePlayPause()
-    func seek(toFraction fraction: Double)
-    func stop()
-}
-
-@MainActor
-final class AudioPlaybackService: AudioPlaybackServiceProtocol {
+final class AudioPlaybackService {
     static let shared = AudioPlaybackService()
 
-    private let stateSubject = CurrentValueSubject<AudioPlaybackState?, Never>(nil)
+    private let currentSourceSubject = CurrentValueSubject<PlaybackSource?, Never>(nil)
+    private let titleSubject = CurrentValueSubject<String, Never>("")
+    private let artistSubject = CurrentValueSubject<String?, Never>(nil)
+    private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
+    private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+
     private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
     private let metadataLoader: any AudioMetadataLoading
@@ -59,10 +27,6 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     
     private var cancellables: Set<AnyCancellable> = []
 
-    var statePublisher: AnyPublisher<AudioPlaybackState?, Never> {
-        stateSubject.eraseToAnyPublisher()
-    }
-
     init(
         urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
@@ -76,62 +40,17 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
         bindEngineToState()
     }
 
-    func play(source: PlaybackSource) {
-        metadataTask?.cancel()
-        playGeneration += 1
-        let generation = playGeneration
-
-        stateSubject.value = AudioPlaybackState(
-            currentSource: source,
-            title: Self.displayName(for: source),
-            status: .loading,
-            currentTime: 0
-        )
-        
-        startStreamingServerIfNeeded(for: source)
-        guard let url = urlResolutionUseCase.url(for: source) else {
-            stateSubject.value?.status = .error("url resolution error")
-            return
-        }
-        metadataTask = Task { [metadataLoader, weak self] in
-            guard let self else { return }
-            guard let metadata = try? await metadataLoader.loadMetadata(from: url),
-                  !metadata.isEmpty,
-                  !Task.isCancelled else { return }
-            self.applyMetadata(metadata, generation: generation)
-        }
-        engine.play(url: url)
-    }
+    // MARK: - Private
 
     private func applyMetadata(_ metadata: AudioMetadata, generation: Int) {
-        guard generation == playGeneration, var state = stateSubject.value else { return }
+        guard generation == playGeneration, currentSource != nil else { return }
         if let title = metadata.title, !title.isEmpty {
-            state.title = title
+            self.title = title
         }
-        state.artist = metadata.artist
-        state.artworkData = metadata.artworkData
-        state.duration = metadata.duration
-        stateSubject.value = state
+        artist = metadata.artist
+        artworkData = metadata.artworkData
     }
 
-    func togglePlayPause() {
-        engine.togglePlayPause()
-    }
-
-    func seek(toFraction fraction: Double) {
-        engine.seek(toFraction: fraction)
-    }
-
-    func stop() {
-        metadataTask?.cancel()
-        metadataTask = nil
-        playGeneration += 1
-        stateSubject.value = nil
-        engine.stop()
-        streamingRepository.stopServer()
-    }
-
-    // MARK: - Private
     private func startStreamingServerIfNeeded(for source: PlaybackSource) {
         if case .offlineFiles = source { return }
         guard !streamingRepository.isServerRunning else { return }
@@ -139,23 +58,17 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
     }
 
     private func bindEngineToState() {
-        Publishers.CombineLatest3(
-            engine.currentTimePublisher,
-            engine.durationPublisher,
-            engine.playbackStatusPublisher
-        )
-        .sink { [weak self] currentTime, duration, status in
-            self?.mergeEngineState(currentTime: currentTime, duration: duration, status: status)
-        }
-        .store(in: &cancellables)
+        engine.playbackStatusPublisher
+            .sink { [weak self] in self?.applyEngineStatus($0) }
+            .store(in: &cancellables)
     }
 
-    private func mergeEngineState(currentTime: TimeInterval, duration: TimeInterval?, status: PlaybackStatus) {
-        guard var current = stateSubject.value else { return }
-        current.currentTime = currentTime
-        current.duration = duration
-        current.status = status
-        stateSubject.value = current
+    /// The engine drives `status` during playback, but only while a session is
+    /// active — a post-`stop()` `.paused` from the engine must not resurrect a
+    /// cleared session.
+    private func applyEngineStatus(_ status: PlaybackStatus) {
+        guard currentSource != nil else { return }
+        self.status = status
     }
 
     private static func displayName(for source: PlaybackSource) -> String {
@@ -171,5 +84,114 @@ final class AudioPlaybackService: AudioPlaybackServiceProtocol {
             let url = paths.indices.contains(startIndex) ? paths[startIndex] : paths.first
             return url?.lastPathComponent ?? ""
         }
+    }
+}
+
+// MARK: - PlaybackStateObservable
+
+extension AudioPlaybackService: PlaybackStateObservable {
+    private(set) var currentSource: PlaybackSource? {
+        get { currentSourceSubject.value }
+        set { currentSourceSubject.send(newValue) }
+    }
+
+    private(set) var title: String {
+        get { titleSubject.value }
+        set { titleSubject.send(newValue) }
+    }
+
+    private(set) var artist: String? {
+        get { artistSubject.value }
+        set { artistSubject.send(newValue) }
+    }
+
+    private(set) var artworkData: Data? {
+        get { artworkDataSubject.value }
+        set { artworkDataSubject.send(newValue) }
+    }
+
+    private(set) var status: PlaybackStatus {
+        get { statusSubject.value }
+        set { statusSubject.send(newValue) }
+    }
+
+    var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
+        currentSourceSubject.eraseToAnyPublisher()
+    }
+
+    var titlePublisher: AnyPublisher<String, Never> {
+        titleSubject.eraseToAnyPublisher()
+    }
+
+    var artistPublisher: AnyPublisher<String?, Never> {
+        artistSubject.eraseToAnyPublisher()
+    }
+
+    var artworkDataPublisher: AnyPublisher<Data?, Never> {
+        artworkDataSubject.eraseToAnyPublisher()
+    }
+
+    var durationPublisher: AnyPublisher<TimeInterval?, Never> {
+        engine.durationPublisher
+    }
+
+    var currentTimePublisher: AnyPublisher<TimeInterval, Never> {
+        engine.currentTimePublisher
+    }
+
+    var statusPublisher: AnyPublisher<PlaybackStatus, Never> {
+        statusSubject.eraseToAnyPublisher()
+    }
+}
+
+// MARK: - PlaybackControllable
+
+extension AudioPlaybackService: PlaybackControllable {
+    func play(source: PlaybackSource) {
+        metadataTask?.cancel()
+        metadataTask = nil
+        playGeneration += 1
+        let generation = playGeneration
+
+        currentSource = source
+        title = Self.displayName(for: source)
+        artist = nil
+        artworkData = nil
+        status = .loading
+
+        startStreamingServerIfNeeded(for: source)
+        guard let url = urlResolutionUseCase.url(for: source) else {
+            status = .error("url resolution error")
+            return
+        }
+        metadataTask = Task { [metadataLoader, weak self] in
+            guard let self else { return }
+            guard let metadata = try? await metadataLoader.loadMetadata(from: url),
+                  !metadata.isEmpty,
+                  !Task.isCancelled else { return }
+            self.applyMetadata(metadata, generation: generation)
+        }
+        engine.play(url: url)
+    }
+
+    func togglePlayPause() {
+        engine.togglePlayPause()
+    }
+
+    func seek(toFraction fraction: Double) {
+        engine.seek(toFraction: fraction)
+    }
+
+    func stop() {
+        metadataTask?.cancel()
+        metadataTask = nil
+        playGeneration += 1
+        currentSource = nil
+        title = ""
+        artist = nil
+        artworkData = nil
+        status = .loading
+        engine.stop()
+        streamingRepository.stopServer()
     }
 }

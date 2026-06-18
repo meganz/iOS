@@ -70,7 +70,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.service = nil
     }
 
-    /// Production init. VM mirrors the service's `statePublisher` into its
+    /// Production init. VM mirrors the service's state publishers into its
     /// `@Published` fields and forwards all user intents back to the service.
     init(service: any AudioPlaybackServiceProtocol) {
         self.service = service
@@ -78,22 +78,42 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     private func bindService(_ service: any AudioPlaybackServiceProtocol) {
-        service.statePublisher
+        service.currentSourcePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.apply(state: state)
+            .sink { [weak self] in self?.currentSource = $0 }
+            .store(in: &cancellables)
+
+        service.titlePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.title = $0 }
+            .store(in: &cancellables)
+
+        service.artistPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.artist = $0 }
+            .store(in: &cancellables)
+
+        service.artworkDataPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.artworkData = $0 }
+            .store(in: &cancellables)
+
+        service.currentTimePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.currentTime = $0 }
+            .store(in: &cancellables)
+
+        service.durationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.duration = $0 }
+            .store(in: &cancellables)
+
+        service.statusPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.isPlaying = status == .playing || status == .buffering
             }
             .store(in: &cancellables)
-    }
-
-    private func apply(state: AudioPlaybackState?) {
-        currentSource = state?.currentSource
-        title = state?.title
-        artist = state?.artist
-        artworkData = state?.artworkData
-        currentTime = state?.currentTime ?? 0
-        duration = state?.duration
-        isPlaying = state?.status == .playing || state?.status == .buffering
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the

@@ -32,7 +32,7 @@ public final class MEGAMiniPlayerOverlayCoordinator {
 
     /// Starts mirroring the playback session into attach/detach callbacks
     public func startObserving() {
-        cancellable = service.statePublisher
+        cancellable = service.currentSourcePublisher
             .map { $0 != nil }
             .removeDuplicates()
             .sink { [weak self] hasActiveSession in

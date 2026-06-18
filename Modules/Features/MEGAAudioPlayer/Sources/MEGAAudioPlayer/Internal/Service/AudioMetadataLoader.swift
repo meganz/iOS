@@ -12,14 +12,8 @@ struct AudioMetadata: Sendable, Equatable {
     var album: String?
     var artworkData: Data?
 
-    /// Track duration in seconds. `nil` when the asset reports an
-    /// indefinite / unavailable duration (e.g. a live stream). With
-    /// `AVURLAssetPreferPreciseDurationAndTimingKey` off this can be an estimate
-    /// for headerless VBR MP3; the engine's live duration supersedes it later.
-    var duration: TimeInterval?
-
     var isEmpty: Bool {
-        title == nil && artist == nil && album == nil && artworkData == nil && duration == nil
+        title == nil && artist == nil && album == nil && artworkData == nil
     }
 }
 
@@ -32,23 +26,17 @@ protocol AudioMetadataLoading: Sendable {
 // MARK: - Implementation
 struct AudioMetadataLoader: AudioMetadataLoading {
     func loadMetadata(from url: URL) async throws -> AudioMetadata {
-        let asset = AVURLAsset(
-            url: url,
-            options: [AVURLAssetPreferPreciseDurationAndTimingKey: false]
-        )
+        let asset = AVURLAsset(url: url)
 
         try Task.checkCancellation()
         let items = try await asset.load(.commonMetadata)
-        try Task.checkCancellation()
-        let duration = Self.seconds(from: try await asset.load(.duration))
         try Task.checkCancellation()
 
         return AudioMetadata(
             title: try await Self.string(in: items, for: .commonKeyTitle),
             artist: try await Self.string(in: items, for: .commonKeyArtist),
             album: try await Self.string(in: items, for: .commonKeyAlbumName),
-            artworkData: try await Self.data(in: items, for: .commonKeyArtwork),
-            duration: duration
+            artworkData: try await Self.data(in: items, for: .commonKeyArtwork)
         )
     }
 
@@ -60,13 +48,5 @@ struct AudioMetadataLoader: AudioMetadataLoading {
 
     private static func data(in items: [AVMetadataItem], for key: AVMetadataKey) async throws -> Data? {
         try await items.first { $0.commonKey == key }?.load(.value) as? Data
-    }
-
-    /// Convert a track `CMTime` duration to seconds, rejecting invalid,
-    /// indefinite, or non-positive values (matches the engine's duration guard).
-    private static func seconds(from time: CMTime) -> TimeInterval? {
-        guard time.isNumeric else { return nil }
-        let seconds = CMTimeGetSeconds(time)
-        return (seconds.isFinite && seconds > 0) ? seconds : nil
     }
 }
