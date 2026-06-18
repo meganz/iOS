@@ -15,23 +15,31 @@ package protocol ClearTransfersUseCaseProtocol: Sendable {
 }
 
 // MARK: - Use case implementation -
-/// `@unchecked Sendable`: the only stored member is a `PassthroughSubject`, whose
-/// `send`/`subscribe` are documented thread-safe, so cross-actor sharing is sound.
+/// `@unchecked Sendable`: injected collaborators are Sendable, and the
+/// `PassthroughSubject` is used only for thread-safe `send`/`subscribe` bridging
+/// into `clearedSignals`.
 package final class ClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked Sendable {
     private let repo: any ClearTransfersRepositoryProtocol
+    private let finishDateProvider: (any TransferFinishDateProviding)?
     private let clearedSubject = PassthroughSubject<Void, Never>()
 
-    package init(repo: some ClearTransfersRepositoryProtocol) {
+    package init(
+        repo: some ClearTransfersRepositoryProtocol,
+        finishDateProvider: (any TransferFinishDateProviding)? = nil
+    ) {
         self.repo = repo
+        self.finishDateProvider = finishDateProvider
     }
 
     package func clearCompletedTransfers() {
-        repo.clearCompletedTransfers()
+        let removedTags = repo.clearCompletedTransfers()
+        finishDateProvider?.removeDates(forTags: removedTags)
         clearedSubject.send()
     }
 
     package func clearFailedTransfers() {
-        repo.clearFailedTransfers()
+        let removedTags = repo.clearFailedTransfers()
+        finishDateProvider?.removeDates(forTags: removedTags)
         clearedSubject.send()
     }
 

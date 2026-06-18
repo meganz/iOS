@@ -40,7 +40,14 @@ public enum TransferEntityMapper {
     /// - Parameter location: file system path for the Completed row's second line,
     ///   resolved by the Data adapter (upload destination cloud path or download
     ///   local folder). `nil` for tabs that don't render it.
-    public static func rowState(for entity: TransferEntity, location: String? = nil) -> TransferRowState {
+    /// - Parameter finishDate: the wall-clock instant the transfer finished,
+    ///   captured live by `SharedTransferFinishRecorder`. Do not derive it from
+    ///   `TransferEntity.updateTime`; SDK transfer update time has no defined epoch.
+    public static func rowState(
+        for entity: TransferEntity,
+        location: String? = nil,
+        finishDate: Date? = nil
+    ) -> TransferRowState {
         let direction = direction(for: entity.type)
         let status = status(for: entity.state)
         let progress = progress(for: entity)
@@ -63,7 +70,7 @@ public enum TransferEntityMapper {
                 transferredBytes: transferredBytes,
                 totalBytes: totalBytes,
                 speed: speed,
-                completionDate: completionDateString(for: entity)
+                finishDate: finishDateString(from: finishDate)
             ),
             errorDescription: entity.lastErrorExtended.map { String(describing: $0) },
             location: location
@@ -72,8 +79,8 @@ public enum TransferEntityMapper {
 
     private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
 
-    private static func completionDateString(for entity: TransferEntity) -> String? {
-        guard let date = entity.updateTime else { return nil }
+    private static func finishDateString(from date: Date?) -> String? {
+        guard let date else { return nil }
         return DateFormatter.dateMediumTimeShort().localisedString(from: date)
     }
 
@@ -84,7 +91,7 @@ public enum TransferEntityMapper {
         transferredBytes: Int64,
         totalBytes: Int64,
         speed: Int64,
-        completionDate: String?
+        finishDate: String?
     ) -> String {
         let arrow = direction == .upload ? "↑" : "↓"
         let percent = Int((progress * 100).rounded())
@@ -103,9 +110,13 @@ public enum TransferEntityMapper {
         case .cancelled:
             return "\(arrow) \(Strings.Localizable.cancelled)"
         case .completed:
-            guard let completionDate else { return "\(arrow) \(total)" }
-            return "\(arrow) \(total) · \(completionDate)"
+            return appending(finishDate, to: "\(arrow) \(total)")
         }
+    }
+
+    private static func appending(_ finishDate: String?, to base: String) -> String {
+        guard let finishDate else { return base }
+        return "\(base) · \(finishDate)"
     }
 
     private static func direction(for type: TransferTypeEntity) -> TransferRowState.Direction {

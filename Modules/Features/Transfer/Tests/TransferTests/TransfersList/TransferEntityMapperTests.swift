@@ -8,16 +8,21 @@ import Testing
 @Suite("TransferEntityMapper completed rows")
 struct TransferEntityMapperTests {
 
-    @Test func completedDownload_carriesLocationAndDateInSubtitle() {
+    @Test func completedDownload_carriesLocationAndCompletionDateInSubtitle() {
+        let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
         let entity = TransferEntity(
             type: .download,
             totalBytes: 7_000_000,
             fileName: "Document_1A.pdf",
-            updateTime: Date(timeIntervalSince1970: 1_723_316_940),
+            updateTime: Date(timeIntervalSince1970: 0),
             state: .complete
         )
 
-        let state = TransferEntityMapper.rowState(for: entity, location: "/Downloads/MEGA")
+        let state = TransferEntityMapper.rowState(
+            for: entity,
+            location: "/Downloads/MEGA",
+            finishDate: finishDate
+        )
 
         #expect(state.status == .completed)
         #expect(state.direction == .download)
@@ -27,16 +32,21 @@ struct TransferEntityMapperTests {
         #expect(state.subtitle.contains(" · "))
     }
 
-    @Test func completedUpload_usesUpArrowAndLocation() {
+    @Test func completedUpload_usesUpArrowLocationAndCompletionDate() {
+        let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
         let entity = TransferEntity(
             type: .upload,
             totalBytes: 1024,
             fileName: "note.txt",
-            updateTime: Date(timeIntervalSince1970: 1_723_316_940),
+            updateTime: Date(timeIntervalSince1970: 0),
             state: .complete
         )
 
-        let state = TransferEntityMapper.rowState(for: entity, location: "/Cloud drive/Documents")
+        let state = TransferEntityMapper.rowState(
+            for: entity,
+            location: "/Cloud drive/Documents",
+            finishDate: finishDate
+        )
 
         #expect(state.direction == .upload)
         #expect(state.location == "/Cloud drive/Documents")
@@ -44,12 +54,12 @@ struct TransferEntityMapperTests {
         #expect(state.subtitle.contains(" · "))
     }
 
-    @Test func completedWithoutUpdateTime_omitsDateSeparator() {
+    @Test func completedWithoutCompletionDate_ignoresUpdateTimeAndOmitsDateSeparator() {
         let entity = TransferEntity(
             type: .download,
             totalBytes: 2048,
             fileName: "b.txt",
-            updateTime: nil,
+            updateTime: Date(timeIntervalSince1970: 0),
             state: .complete
         )
 
@@ -79,7 +89,7 @@ struct TransferEntityMapperTests {
 @Suite("TransferEntityMapper failed rows")
 struct TransferEntityMapperFailedRowsTests {
 
-    @Test func failedDownload_usesFailedLabel() {
+    @Test func failedDownload_withoutDate_usesFailedLabelOnly() {
         let entity = TransferEntity(type: .download, fileName: "a.txt", state: .failed)
 
         let state = TransferEntityMapper.rowState(for: entity)
@@ -89,7 +99,7 @@ struct TransferEntityMapperFailedRowsTests {
         #expect(state.location == nil)
     }
 
-    @Test func cancelledUpload_usesCancelledLabel() {
+    @Test func cancelledUpload_withoutDate_usesCancelledLabelOnly() {
         let entity = TransferEntity(type: .upload, fileName: "b.txt", state: .cancelled)
 
         let state = TransferEntityMapper.rowState(for: entity)
@@ -97,5 +107,23 @@ struct TransferEntityMapperFailedRowsTests {
         #expect(state.status == .cancelled)
         #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
         #expect(state.location == nil)
+    }
+
+    @Test func failedDownload_withDateStillUsesFailedLabelOnly() {
+        let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
+        let entity = TransferEntity(type: .download, fileName: "a.txt", state: .failed)
+
+        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate)
+
+        #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Tab.failed)")
+    }
+
+    @Test func cancelledUpload_withDateStillUsesCancelledLabelOnly() {
+        let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
+        let entity = TransferEntity(type: .upload, fileName: "b.txt", state: .cancelled)
+
+        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate)
+
+        #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
     }
 }

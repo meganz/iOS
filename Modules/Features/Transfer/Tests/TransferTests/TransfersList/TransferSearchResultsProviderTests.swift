@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 import MEGADomainMock
 import Search
@@ -55,6 +56,43 @@ struct TransferSearchResultsProviderTests {
         #expect(results?.results.map(\.id) == [TransferEntityMapper.resultId(for: file)])
     }
 
+    @Test
+    func snapshot_completed_usesRecordedCompletionDateInRowState() async {
+        let file = TransferEntity(
+            type: .download,
+            totalBytes: 2048,
+            tag: 1,
+            updateTime: Date(timeIntervalSince1970: 0),
+            state: .complete
+        )
+        let registry = TransferRegistry()
+        let sut = makeSUT(
+            filter: .completed,
+            completedTransfers: [file],
+            registry: registry,
+            finishDateProvider: MockTransferFinishDateProvider(
+                datesByTag: [1: Date(timeIntervalSince1970: 1_723_316_940)]
+            )
+        )
+
+        _ = await sut.search(queryRequest: .initial, lastItemIndex: nil)
+
+        let state = registry.rowViewModel(for: TransferEntityMapper.resultId(for: file))?.state
+        #expect(state?.subtitle.contains(" · ") == true)
+    }
+
+    @Test
+    func snapshot_completed_withoutRecordedDate_omitsDateSeparator() async {
+        let file = TransferEntity(type: .download, totalBytes: 2048, tag: 1, state: .complete)
+        let registry = TransferRegistry()
+        let sut = makeSUT(filter: .completed, completedTransfers: [file], registry: registry)
+
+        _ = await sut.search(queryRequest: .initial, lastItemIndex: nil)
+
+        let state = registry.rowViewModel(for: TransferEntityMapper.resultId(for: file))?.state
+        #expect(state?.subtitle.contains(" · ") == false)
+    }
+
     // MARK: - Failed
 
     @Test
@@ -88,7 +126,10 @@ struct TransferSearchResultsProviderTests {
     private func makeSUT(
         filter: TransferSearchResultsProvider.Filter,
         transfers: [TransferEntity] = [],
-        completedTransfers: [TransferEntity] = []
+        completedTransfers: [TransferEntity] = [],
+        registry: TransferRegistry? = nil,
+        locationResolver: MockTransferLocationResolver = MockTransferLocationResolver(),
+        finishDateProvider: MockTransferFinishDateProvider = MockTransferFinishDateProvider()
     ) -> TransferSearchResultsProvider {
         TransferSearchResultsProvider(
             filter: filter,
@@ -97,8 +138,9 @@ struct TransferSearchResultsProviderTests {
                 completedTransfers: completedTransfers
             ),
             counterUseCase: MockTransferCounterUseCase(),
-            registry: TransferRegistry(),
-            locationResolver: MockTransferLocationResolver(),
+            registry: registry ?? TransferRegistry(),
+            locationResolver: locationResolver,
+            finishDateProvider: finishDateProvider,
             clearTransfersUseCase: MockClearTransfersUseCase()
         )
     }
@@ -114,4 +156,22 @@ private struct MockTransferLocationResolver: TransferLocationResolving {
     func location(for entity: TransferEntity) async -> String? {
         location
     }
+}
+
+private struct MockTransferFinishDateProvider: TransferFinishDateProviding {
+    let datesByTag: [Int: Date]
+
+    init(datesByTag: [Int: Date] = [:]) {
+        self.datesByTag = datesByTag
+    }
+
+    func finishDate(forTag tag: Int) -> Date? {
+        datesByTag[tag]
+    }
+
+    func recordIfAbsent(tag: Int, date: Date) -> Date {
+        datesByTag[tag] ?? date
+    }
+
+    func removeDates(forTags tags: Set<Int>) {}
 }

@@ -26,6 +26,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     private let counterUseCase: any TransferCounterUseCaseProtocol
     private let registry: TransferRegistry
     private let locationResolver: any TransferLocationResolving
+    private let finishDateProvider: any TransferFinishDateProviding
     private let filteringUserTransfers: Bool
     private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
 
@@ -37,6 +38,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         counterUseCase: some TransferCounterUseCaseProtocol,
         registry: TransferRegistry,
         locationResolver: some TransferLocationResolving,
+        finishDateProvider: some TransferFinishDateProviding,
         filteringUserTransfers: Bool = true,
         clearTransfersUseCase: some ClearTransfersUseCaseProtocol
     ) {
@@ -45,6 +47,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         self.counterUseCase = counterUseCase
         self.registry = registry
         self.locationResolver = locationResolver
+        self.finishDateProvider = finishDateProvider
         self.filteringUserTransfers = filteringUserTransfers
         self.clearTransfersUseCase = clearTransfersUseCase
     }
@@ -89,20 +92,30 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         return SearchResultsEntity(results: results, availableChips: [], appliedChips: [])
     }
 
-    /// Builds row states for a snapshot. Only the Completed tab needs the file
-    /// system path, and that path requires an SDK lookup for uploads, so location
-    /// is resolved here (off the main actor) rather than in the pure mapper.
+    /// Builds row states for a snapshot. The Completed tab shows the captured
+    /// finish date, looked up by tag, plus the file system path, which requires
+    /// an SDK lookup for uploads. Both are resolved here (off the main actor)
+    /// rather than in the pure mapper.
     private func rowStates(for entities: [TransferEntity]) async -> [TransferRowState] {
-        guard filter == .completed else {
+        switch filter {
+        case .active:
+            return entities.map { TransferEntityMapper.rowState(for: $0) }
+        case .completed:
+            var states: [TransferRowState] = []
+            states.reserveCapacity(entities.count)
+            for entity in entities {
+                let location = await locationResolver.location(for: entity)
+                let finishDate = finishDateProvider.finishDate(forTag: entity.tag)
+                states.append(TransferEntityMapper.rowState(
+                    for: entity,
+                    location: location,
+                    finishDate: finishDate
+                ))
+            }
+            return states
+        case .failed:
             return entities.map { TransferEntityMapper.rowState(for: $0) }
         }
-        var states: [TransferRowState] = []
-        states.reserveCapacity(entities.count)
-        for entity in entities {
-            let location = await locationResolver.location(for: entity)
-            states.append(TransferEntityMapper.rowState(for: entity, location: location))
-        }
-        return states
     }
 
     private func currentEntries() async -> [TransferEntity] {
@@ -162,6 +175,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         let filter = self.filter
         let registry = self.registry
         let locationResolver = self.locationResolver
+        let finishDateProvider = self.finishDateProvider
         return counterUseCase.transferFinishUpdates
             .compactMap { response -> SearchResultUpdateSignal? in
                 let entity = response.transferEntity
@@ -172,7 +186,15 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
                     return .generic
                 case .completed where Self.isCompleted(entity):
                     let location = await locationResolver.location(for: entity)
-                    await registry.upsert(TransferEntityMapper.rowState(for: entity, location: location))
+                    // `recordIfAbsent`, not a plain read: the finish is happening now,
+                    // so stamping the current instant is correct, and set-if-absent
+                    // dedupes against the app-lifetime recorder's own copy of this event.
+                    let finishDate = finishDateProvider.recordIfAbsent(tag: entity.tag, date: Date())
+                    await registry.upsert(TransferEntityMapper.rowState(
+                        for: entity,
+                        location: location,
+                        finishDate: finishDate
+                    ))
                     return .generic
                 case .failed where Self.isFailed(entity):
                     await registry.upsert(TransferEntityMapper.rowState(for: entity))

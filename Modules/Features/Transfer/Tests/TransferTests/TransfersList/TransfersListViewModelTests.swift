@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -371,6 +372,7 @@ private func makeDependency(
         counterUseCase: MockTransferCounterUseCase(),
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
+        finishDateProvider: StubTransferFinishDateProvider(),
         filteringUserTransfers: filteringUserTransfers,
         clearTransfersUseCase: clearTransfersUseCase
     )
@@ -378,4 +380,10 @@ private func makeDependency(
 
 private struct StubTransferLocationResolver: TransferLocationResolving {
     func location(for entity: TransferEntity) async -> String? { nil }
+}
+
+private struct StubTransferFinishDateProvider: TransferFinishDateProviding {
+    func finishDate(forTag tag: Int) -> Date? { nil }
+    func recordIfAbsent(tag: Int, date: Date) -> Date { date }
+    func removeDates(forTags tags: Set<Int>) {}
 }

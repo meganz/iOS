@@ -27,6 +27,7 @@ public enum TransfersListViewControllerFactory {
             repo: TransfersListenerRepository.newRepo,
             preferenceUseCase: PreferenceUseCase.default
         )
+        let completionRecorder = SharedTransferFinishRecorder.shared
 
         let dependency = TransferTabDependency(
             inventoryUseCase: inventoryUseCase,
@@ -36,8 +37,12 @@ public enum TransfersListViewControllerFactory {
                 nodeUseCase: nodeUseCase,
                 nodeAttributeUseCase: nodeAttributeUseCase
             ),
+            finishDateProvider: completionRecorder,
             filteringUserTransfers: true,
-            clearTransfersUseCase: ClearTransfersUseCase(repo: ClearTransfersRepository.newRepo)
+            clearTransfersUseCase: ClearTransfersUseCase(
+                repo: ClearTransfersRepository.newRepo,
+                finishDateProvider: completionRecorder
+            )
         )
 
         let viewModel = TransfersListViewModel(

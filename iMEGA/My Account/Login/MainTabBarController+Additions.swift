@@ -26,6 +26,9 @@ extension MainTabBarController {
         SharedTransferIndicator.configure {
             !transferInventoryUseCaseHelper.queuedUploadTransfers().isEmpty
         }
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+            SharedTransferFinishRecorder.shared.configure()
+        }
         let appTabs = TabManager.appTabs
 
         let viewControllers = appTabs.map {

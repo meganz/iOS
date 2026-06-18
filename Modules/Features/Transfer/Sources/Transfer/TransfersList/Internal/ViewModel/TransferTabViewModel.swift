@@ -43,6 +43,7 @@ final class TransferTabViewModel: ObservableObject {
             counterUseCase: dependency.counterUseCase,
             registry: dependency.registry,
             locationResolver: dependency.locationResolver,
+            finishDateProvider: dependency.finishDateProvider,
             filteringUserTransfers: dependency.filteringUserTransfers,
             clearTransfersUseCase: dependency.clearTransfersUseCase
         )
