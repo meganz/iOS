@@ -19,9 +19,8 @@ public struct TransfersListView: View {
             }
             tabContent
         }
-        .onAppear {
-            viewModel.seedCompletedPresence()
-            viewModel.seedFailedPresence()
+        .task {
+            await viewModel.observeTabPresence()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
@@ -94,12 +93,10 @@ public struct TransfersListView: View {
             : MEGAAssets.Image.pauseMediumThinOutline
     }
 
-    // The Active container stays mounted even with no transfers, so its result-
-    // monitoring task keeps running and a transfer that starts here is still detected.
-    // It would render "No active transfers" while empty, so cover it with the generic
-    // "No transfers" instead. Driven by `hasAnyTransfers`, this clears reactively the
-    // moment any transfer appears — something the container's own empty view can't do,
-    // since it only recomputes on a results refresh.
+    // When the current tab is empty its container renders a tab-specific empty state
+    // (e.g. "No active transfers"). While there are no transfers on any tab, cover that
+    // with the generic "No transfers" instead. Driven by `hasAnyTransfers` from the
+    // count observer, the overlay clears reactively the moment any transfer appears.
     private var tabContent: some View {
         tabContainer
             .overlay {
@@ -112,25 +109,18 @@ public struct TransfersListView: View {
             }
     }
 
+    // Each tab is its own view type, so switching tabs tears down the previous tab and
+    // builds the next: the dismissed tab's Search container is released and only the
+    // selected tab observes the SDK delegate streams.
     @ViewBuilder
     private var tabContainer: some View {
         switch viewModel.selectedTab {
         case .active:
-            ActiveTransfersTab(
-                dependency: viewModel.dependency,
-                isAllPaused: viewModel.isAllPaused,
-                presence: $viewModel.activePresence
-            )
+            ActiveTransfersTab(dependency: viewModel.dependency, isAllPaused: viewModel.isAllPaused)
         case .completed:
-            CompletedTransfersTab(
-                dependency: viewModel.dependency,
-                presence: $viewModel.completedPresence
-            )
+            CompletedTransfersTab(dependency: viewModel.dependency)
         case .failed:
-            FailedTransfersTab(
-                dependency: viewModel.dependency,
-                presence: $viewModel.failedPresence
-            )
+            FailedTransfersTab(dependency: viewModel.dependency)
         }
     }
 

@@ -29,6 +29,11 @@ public enum TransfersListViewControllerFactory {
         )
         let completionRecorder = SharedTransferFinishRecorder.shared
 
+        let clearTransfersUseCase = ClearTransfersUseCase(
+            repo: ClearTransfersRepository.newRepo,
+            finishDateProvider: completionRecorder
+        )
+
         let dependency = TransferTabDependency(
             inventoryUseCase: inventoryUseCase,
             counterUseCase: counterUseCase,
@@ -39,17 +44,16 @@ public enum TransfersListViewControllerFactory {
             ),
             finishDateProvider: completionRecorder,
             filteringUserTransfers: true,
-            clearTransfersUseCase: ClearTransfersUseCase(
-                repo: ClearTransfersRepository.newRepo,
-                finishDateProvider: completionRecorder
-            )
+            clearTransfersUseCase: clearTransfersUseCase
         )
 
         let viewModel = TransfersListViewModel(
             dependency: dependency,
-            transferListUseCase: TransferListUseCase(
+            transferListUseCase: TransferListUseCase(transfersListenerUseCase: transfersListenerUseCase),
+            monitorPresenceUseCase: MonitorTransferTabPresenceUseCase(
                 inventoryUseCase: inventoryUseCase,
-                transfersListenerUseCase: transfersListenerUseCase,
+                counterUseCase: counterUseCase,
+                clearTransfersUseCase: clearTransfersUseCase,
                 filteringUserTransfers: true
             )
         )

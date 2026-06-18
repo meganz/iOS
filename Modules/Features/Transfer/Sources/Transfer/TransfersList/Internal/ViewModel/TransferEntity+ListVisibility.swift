@@ -15,6 +15,14 @@ extension TransferEntity {
         !isFolderTransfer && !isStreamingTransfer
     }
 
+    var isVisibleOnActiveTab: Bool {
+        guard isVisibleInList else { return false }
+        switch state {
+        case .none, .queued, .active, .paused, .retrying, .completing: return true
+        case .complete, .cancelled, .failed: return false
+        }
+    }
+
     /// Whether this transfer would render as a row on the Completed tab.
     var isVisibleOnCompletedTab: Bool {
         isVisibleInList && state == .complete

@@ -1,7 +1,8 @@
+import AsyncAlgorithms
 import Foundation
 import MEGADomain
 import MEGADomainMock
-import MEGAL10n
+import MEGASwift
 import Testing
 @testable import Transfer
 
@@ -11,17 +12,18 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Active
 
-    @Test func activeTab_withRows_offersSelectAndCancelAll() {
-        let sut = makeSUT()
-        sut.activePresence = 1
+    @Test func activeTab_withRows_offersSelectAndCancelAll() async {
+        let sut = makeSUT(hasActiveTransfers: true)
+        await sut.observeTabPresence()
         sut.selectedTab = .active
 
         #expect(sut.menuActions == [.select, .cancelAll])
         #expect(sut.showsMoreMenu)
     }
 
-    @Test func activeTab_withoutRows_hidesMoreMenu() {
+    @Test func activeTab_withoutRows_hidesMoreMenu() async {
         let sut = makeSUT()
+        await sut.observeTabPresence()
         sut.selectedTab = .active
 
         #expect(sut.menuActions.isEmpty)
@@ -30,17 +32,18 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Completed
 
-    @Test func completedTab_withRows_offersSelectAndClearAll() {
-        let sut = makeSUT()
-        sut.completedPresence = 1
+    @Test func completedTab_withRows_offersSelectAndClearAll() async {
+        let sut = makeSUT(hasCompletedTransfers: true)
+        await sut.observeTabPresence()
         sut.selectedTab = .completed
 
         #expect(sut.menuActions == [.select, .clearAll])
         #expect(sut.showsMoreMenu)
     }
 
-    @Test func completedTab_withoutRows_hidesMoreMenu() {
+    @Test func completedTab_withoutRows_hidesMoreMenu() async {
         let sut = makeSUT()
+        await sut.observeTabPresence()
         sut.selectedTab = .completed
 
         #expect(sut.menuActions.isEmpty)
@@ -49,17 +52,18 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Failed
 
-    @Test func failedTab_withRows_offersSelectRetryAllAndClearAll() {
-        let sut = makeSUT()
-        sut.failedPresence = 1
+    @Test func failedTab_withRows_offersSelectRetryAllAndClearAll() async {
+        let sut = makeSUT(hasFailedTransfers: true)
+        await sut.observeTabPresence()
         sut.selectedTab = .failed
 
         #expect(sut.menuActions == [.select, .retryAll, .clearAll])
         #expect(sut.showsMoreMenu)
     }
 
-    @Test func failedTab_withoutRows_hidesMoreMenu() {
+    @Test func failedTab_withoutRows_hidesMoreMenu() async {
         let sut = makeSUT()
+        await sut.observeTabPresence()
         sut.selectedTab = .failed
 
         #expect(sut.menuActions.isEmpty)
@@ -68,10 +72,9 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Menu reads only the selected tab
 
-    @Test func menu_readsOnlyTheSelectedTabState() {
-        let sut = makeSUT()
-        sut.completedPresence = 1
-        sut.failedPresence = 1
+    @Test func menu_readsOnlyTheSelectedTabState() async {
+        let sut = makeSUT(hasCompletedTransfers: true, hasFailedTransfers: true)
+        await sut.observeTabPresence()
 
         // Active is empty even though other tabs have rows.
         sut.selectedTab = .active
@@ -87,7 +90,7 @@ struct TransfersListViewModelMoreMenuTests {
     // MARK: - Cancel-all confirmation
 
     @Test func requestCancelAll_presentsDialog() {
-        let sut = makeSUT(hasActiveTransfers: true)
+        let sut = makeSUT()
 
         sut.requestCancelAllConfirmation()
 
@@ -95,8 +98,8 @@ struct TransfersListViewModelMoreMenuTests {
     }
 
     @Test func confirmCancelAll_cancelsTransfers() {
-        let useCase = MockTransferListUseCase(paused: false)
-        let sut = makeSUT(hasActiveTransfers: true, useCase: useCase)
+        let useCase = MockTransferListUseCase()
+        let sut = makeSUT(useCase: useCase)
         sut.requestCancelAllConfirmation()
 
         sut.confirmCancelAll()
@@ -105,8 +108,8 @@ struct TransfersListViewModelMoreMenuTests {
     }
 
     @Test func dismissingDialog_runsNoAction() {
-        let useCase = MockTransferListUseCase(paused: false)
-        let sut = makeSUT(hasActiveTransfers: true)
+        let useCase = MockTransferListUseCase()
+        let sut = makeSUT(useCase: useCase)
         sut.requestCancelAllConfirmation()
 
         // Tapping Dismiss flips the binding without confirming.
@@ -117,33 +120,31 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Clear-all (no confirmation)
 
-    @Test func clearAll_onCompleted_clearsCompletedAndEmptiesTab() {
+    @Test func clearAll_onCompleted_clearsCompleted() {
         let clear = MockClearTransfersUseCase()
-        let sut = makeSUT(hasCompletedTransfers: true, clearTransfersUseCase: clear)
+        let sut = makeSUT(clearTransfersUseCase: clear)
         sut.selectedTab = .completed
 
         sut.clearAllTransfers()
 
         #expect(clear.clearCompletedTransfersCalledTimes == 1)
         #expect(clear.clearFailedTransfersCalledTimes == 0)
-        #expect(sut.hasCompletedTransfers == false)
     }
 
-    @Test func clearAll_onFailed_clearsFailedAndEmptiesTab() {
+    @Test func clearAll_onFailed_clearsFailed() {
         let clear = MockClearTransfersUseCase()
-        let sut = makeSUT(hasFailedTransfers: true, clearTransfersUseCase: clear)
+        let sut = makeSUT(clearTransfersUseCase: clear)
         sut.selectedTab = .failed
 
         sut.clearAllTransfers()
 
         #expect(clear.clearFailedTransfersCalledTimes == 1)
         #expect(clear.clearCompletedTransfersCalledTimes == 0)
-        #expect(sut.hasFailedTransfers == false)
     }
 
     @Test func clearAll_onActive_doesNothing() {
         let clear = MockClearTransfersUseCase()
-        let sut = makeSUT(hasActiveTransfers: true, clearTransfersUseCase: clear)
+        let sut = makeSUT(clearTransfersUseCase: clear)
         sut.selectedTab = .active
 
         sut.clearAllTransfers()
@@ -153,110 +154,40 @@ struct TransfersListViewModelMoreMenuTests {
     }
 }
 
-@Suite("TransfersListViewModel presence observation")
+@Suite("TransfersListViewModel presence")
 @MainActor
 struct TransfersListViewModelPresenceTests {
 
     @Test func freshlyConstructed_hasNoPresence() {
-        let sut = makeSUT()
+        let sut = makeSUT(hasActiveTransfers: true, hasCompletedTransfers: true, hasFailedTransfers: true)
 
+        // Presence stays empty until the observer runs.
         #expect(!sut.hasActiveTransfers)
         #expect(!sut.hasCompletedTransfers)
         #expect(!sut.hasFailedTransfers)
     }
 
-    @Test func activePresence_positive_marksActivePresent() {
-        let sut = makeSUT()
+    @Test func observeTabPresence_appliesEmittedPresence() async {
+        let sut = makeSUT(hasActiveTransfers: true, hasCompletedTransfers: true)
 
-        sut.activePresence = 3
+        await sut.observeTabPresence()
 
         #expect(sut.hasActiveTransfers)
+        #expect(sut.hasCompletedTransfers)
+        #expect(!sut.hasFailedTransfers)
     }
 
-    @Test func activePresence_droppingToZero_clearsActiveAndReseedsFromInventory() {
-        let sut = makeSUT(hasCompletedTransfers: true, hasFailedTransfers: true)
+    @Test func observeTabPresence_appliesLatestOfMultipleEmissions() async {
+        let updates = [
+            TransferTabPresence(hasActive: true, hasCompleted: false, hasFailed: false),
+            TransferTabPresence(hasActive: false, hasCompleted: true, hasFailed: false)
+        ].async.eraseToAnyAsyncSequence()
+        let sut = makeSUT(presenceUpdates: updates)
 
-        sut.activePresence = 2
-        sut.activePresence = 0
+        await sut.observeTabPresence()
 
         #expect(!sut.hasActiveTransfers)
-        // Reaching zero re-seeds Completed/Failed so the tab bar survives a transfer
-        // finishing in the Active tab (the other tabs aren't mounted to observe it).
         #expect(sut.hasCompletedTransfers)
-        #expect(sut.hasFailedTransfers)
-    }
-
-    @Test func completedPresence_positive_marksCompletedPresent() {
-        let sut = makeSUT()
-
-        sut.completedPresence = 5
-
-        #expect(sut.hasCompletedTransfers)
-    }
-
-    @Test func completedPresence_droppingToZero_keepsCompletedPresent() {
-        let sut = makeSUT()
-
-        sut.completedPresence = 5
-        sut.completedPresence = 0
-
-        // Upgrade-only: clearing completed transfers isn't supported, so a stale 0
-        // (emitted while the tab mounts) must not hide the tab bar.
-        #expect(sut.hasCompletedTransfers)
-    }
-
-    @Test func failedPresence_positive_marksFailedPresent() {
-        let sut = makeSUT()
-
-        sut.failedPresence = 1
-
-        #expect(sut.hasFailedTransfers)
-    }
-
-    @Test func failedPresence_droppingToZero_keepsFailedPresent() {
-        let sut = makeSUT()
-
-        sut.failedPresence = 1
-        sut.failedPresence = 0
-
-        #expect(sut.hasFailedTransfers)
-    }
-}
-
-@Suite("TransfersListViewModel seeding")
-@MainActor
-struct TransfersListViewModelSeedingTests {
-
-    @Test func seedCompletedPresence_whenUseCaseHasCompleted_setsTrue() {
-        let sut = makeSUT(hasCompletedTransfers: true)
-
-        sut.seedCompletedPresence()
-
-        #expect(sut.hasCompletedTransfers)
-    }
-
-    @Test func seedCompletedPresence_whenUseCaseHasNoCompleted_setsFalse() {
-        let sut = makeSUT(hasCompletedTransfers: false)
-
-        sut.seedCompletedPresence()
-
-        #expect(!sut.hasCompletedTransfers)
-    }
-
-    @Test func seedFailedPresence_whenUseCaseHasFailed_setsTrue() {
-        let sut = makeSUT(hasFailedTransfers: true)
-
-        sut.seedFailedPresence()
-
-        #expect(sut.hasFailedTransfers)
-    }
-
-    @Test func seedFailedPresence_whenUseCaseHasNoFailed_setsFalse() {
-        let sut = makeSUT(hasFailedTransfers: false)
-
-        sut.seedFailedPresence()
-
-        #expect(!sut.hasFailedTransfers)
     }
 }
 
@@ -296,31 +227,33 @@ struct TransfersListViewModelPauseTests {
 @MainActor
 struct TransfersListViewModelDerivedStateTests {
 
-    @Test func hasAnyTransfers_isFalseWhenNoTabHasRows() {
-        #expect(!makeSUT().hasAnyTransfers)
+    @Test func hasAnyTransfers_isFalseWhenNoTabHasRows() async {
+        let sut = makeSUT()
+        await sut.observeTabPresence()
+        #expect(!sut.hasAnyTransfers)
     }
 
-    @Test func hasAnyTransfers_isTrueWhenActiveHasRows() {
-        let sut = makeSUT()
-        sut.activePresence = 1
+    @Test func hasAnyTransfers_isTrueWhenActiveHasRows() async {
+        let sut = makeSUT(hasActiveTransfers: true)
+        await sut.observeTabPresence()
         #expect(sut.hasAnyTransfers)
     }
 
-    @Test func hasAnyTransfers_isTrueWhenCompletedHasRows() {
-        let sut = makeSUT()
-        sut.completedPresence = 1
+    @Test func hasAnyTransfers_isTrueWhenCompletedHasRows() async {
+        let sut = makeSUT(hasCompletedTransfers: true)
+        await sut.observeTabPresence()
         #expect(sut.hasAnyTransfers)
     }
 
-    @Test func hasAnyTransfers_isTrueWhenFailedHasRows() {
-        let sut = makeSUT()
-        sut.failedPresence = 1
+    @Test func hasAnyTransfers_isTrueWhenFailedHasRows() async {
+        let sut = makeSUT(hasFailedTransfers: true)
+        await sut.observeTabPresence()
         #expect(sut.hasAnyTransfers)
     }
 
-    @Test func isCurrentTabEmpty_tracksTheSelectedTab() {
-        let sut = makeSUT()
-        sut.activePresence = 1
+    @Test func isCurrentTabEmpty_tracksTheSelectedTab() async {
+        let sut = makeSUT(hasActiveTransfers: true)
+        await sut.observeTabPresence()
 
         sut.selectedTab = .active
         #expect(!sut.isCurrentTabEmpty)
@@ -334,46 +267,38 @@ struct TransfersListViewModelDerivedStateTests {
 
 @MainActor
 private func makeSUT(
-    completedTransfers: [TransferEntity] = [],
     hasActiveTransfers: Bool = false,
     hasCompletedTransfers: Bool = false,
     hasFailedTransfers: Bool = false,
-    useCase: MockTransferListUseCase? = nil,
-    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
-    filteringUserTransfers: Bool = true
+    useCase: MockTransferListUseCase = MockTransferListUseCase(),
+    presenceUpdates: AnyAsyncSequence<TransferTabPresence>? = nil,
+    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
 ) -> TransfersListViewModel {
-    let sut = TransfersListViewModel(
-        dependency: makeDependency(
-            completedTransfers: completedTransfers,
-            filteringUserTransfers: filteringUserTransfers,
-            clearTransfersUseCase: clearTransfersUseCase
-        ),
-        transferListUseCase: useCase ?? MockTransferListUseCase(
-            hasCompletedTransfers: hasCompletedTransfers,
-            hasFailedTransfers: hasFailedTransfers
+    let seed = TransferTabPresence(
+        hasActive: hasActiveTransfers,
+        hasCompleted: hasCompletedTransfers,
+        hasFailed: hasFailedTransfers
+    )
+    return TransfersListViewModel(
+        dependency: makeDependency(clearTransfersUseCase: clearTransfersUseCase),
+        transferListUseCase: useCase,
+        monitorPresenceUseCase: MockMonitorTransferTabPresenceUseCase(
+            presenceUpdates: presenceUpdates ?? [seed].async.eraseToAnyAsyncSequence()
         )
     )
-    // Seed tab-presence through the same `*Presence` channel production uses, so a
-    // test can spin up a VM in a known tab-bar state in one call.
-    if hasActiveTransfers { sut.activePresence = 1 }
-    if hasCompletedTransfers { sut.completedPresence = 1 }
-    if hasFailedTransfers { sut.failedPresence = 1 }
-    return sut
 }
 
 @MainActor
 private func makeDependency(
-    completedTransfers: [TransferEntity] = [],
-    filteringUserTransfers: Bool = true,
     clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
 ) -> TransferTabDependency {
     TransferTabDependency(
-        inventoryUseCase: MockTransferInventoryUseCase(completedTransfers: completedTransfers),
+        inventoryUseCase: MockTransferInventoryUseCase(),
         counterUseCase: MockTransferCounterUseCase(),
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),
-        filteringUserTransfers: filteringUserTransfers,
+        filteringUserTransfers: true,
         clearTransfersUseCase: clearTransfersUseCase
     )
 }

@@ -122,7 +122,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         switch filter {
         case .active:
             let all = await inventoryUseCase.transfers(filteringUserTransfers: filteringUserTransfers)
-            return all.filter(\.isVisibleInList).filter(Self.isActive)
+            return all.filter(\.isVisibleOnActiveTab)
         case .completed:
             return inventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
                 .filter(\.isVisibleOnCompletedTab)
@@ -163,7 +163,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         let temporaryError = counterUseCase.transferTemporaryErrorUpdates.map(\.transferEntity)
         return merge(progress, temporaryError)
             .compactMap { entity -> SearchResultUpdateSignal? in
-                guard filter == .active, Self.isActive(entity) else { return nil }
+                guard filter == .active, entity.isVisibleOnActiveTab else { return nil }
                 let state = TransferEntityMapper.rowState(for: entity)
                 await registry.upsert(state)
                 return .specific(result: TransferEntityMapper.searchResult(for: entity))
@@ -207,13 +207,6 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
     }
 
     // MARK: - State classification
-
-    private static func isActive(_ entity: TransferEntity) -> Bool {
-        switch entity.state {
-        case .none, .queued, .active, .paused, .retrying, .completing: true
-        case .complete, .cancelled, .failed: false
-        }
-    }
 
     private static func isCompleted(_ entity: TransferEntity) -> Bool {
         entity.state == .complete
