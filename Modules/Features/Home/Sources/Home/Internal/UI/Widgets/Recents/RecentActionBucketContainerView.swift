@@ -29,28 +29,36 @@ struct RecentActionBucketContainerView: View {
     
     var body: some View {
         content
-            .contentShape(Rectangle())
-            .onTapGesture {
-                dependency.bucketSelectionHandler(dependency.bucket)
-            }
     }
-    
+
     @ViewBuilder
     private var content: some View {
         switch dependency.bucket.type {
         case let .singleFile(fileNode):
-            RecentActionBucketView(dependency: contentDependency) { button in
-                dependency.nodeActionHandler.handle(action: NodeAction(handle: fileNode.handle, sender: button))
-            }
+            RecentActionBucketView(
+                dependency: contentDependency,
+                moreAction: { button in
+                    dependency.nodeActionHandler.handle(action: NodeAction(handle: fileNode.handle, sender: button))
+                },
+                onSelect: selectBucket
+            )
             .sensitive(fileNode.isMarkedSensitive ? .opacity : .none)
         case let .singleMedia(mediaNode):
-            RecentActionBucketView(dependency: contentDependency) { button in
-                dependency.nodeActionHandler.handle(action: NodeAction(handle: mediaNode.handle, sender: button))
-            }
+            RecentActionBucketView(
+                dependency: contentDependency,
+                moreAction: { button in
+                    dependency.nodeActionHandler.handle(action: NodeAction(handle: mediaNode.handle, sender: button))
+                },
+                onSelect: selectBucket
+            )
             .sensitive(mediaNode.isMarkedSensitive ? .opacity : .none)
         case .mixedFiles, .multipleMedia:
-            RecentActionBucketView(dependency: contentDependency, moreAction: bucketCarouselMoreAction)
+            RecentActionBucketView(dependency: contentDependency, moreAction: bucketCarouselMoreAction, onSelect: selectBucket)
         }
+    }
+
+    private func selectBucket() {
+        dependency.bucketSelectionHandler(dependency.bucket)
     }
 
     private var bucketCarouselMoreAction: RecentActionBucketView.MoreActionHandler? {
