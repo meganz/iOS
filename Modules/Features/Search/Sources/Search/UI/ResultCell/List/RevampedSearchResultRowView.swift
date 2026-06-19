@@ -23,6 +23,8 @@ struct RevampedSearchResultRowView: View {
         static let tapHighlightDurationNs: UInt64 = 100_000_000
         static let flashHighlightDurationNs: UInt64 = 1_200_000_000
         static let defaultThumbnailSize: Double = 32
+        static let moreButtonWidth: CGFloat = 40
+        static let moreButtonTrailingInset: CGFloat = 16
     }
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
@@ -75,64 +77,79 @@ struct RevampedSearchResultRowView: View {
             )
     }
 
+    // The moreButton is overlaid on top of the row content rather than placed beside it in the same HStack, so its
+    // tap gesture isn't intercepted by the row's selection tap gesture.
     private var content: some View {
-        HStack {
-            HStack {
-                thumbnail
-                Spacer()
-                    .frame(width: 8)
-                lines
-                    .padding(.vertical, TokenSpacing._2)
-                Spacer()
-            }
-            .sensitive(viewModel.isSensitive ? .opacity : .none)
+        innerContent
+            .padding(.vertical, 10)
+            .frame(minHeight: 58)
+            .padding(.trailing, showsMoreButton ? Constants.moreButtonWidth + Constants.moreButtonTrailingInset : 0)
             .contentShape(Rectangle())
-            moreButton
-            Spacer()
-                .frame(width: 16)
-        }
-        .listRowBackground(
-            ZStack {
-                // Selection / tap highlight — instant, as before.
-                TokenColors.Background.surface1.swiftUI
-                    .opacity(isSelected || highlighted ? 1 : 0)
-                // One-shot flash — fades in/out via its own value animation.
-                TokenColors.Background.surface1.swiftUI
-                    .opacity(showsFlash ? 1 : 0)
-                    .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: showsFlash)
+            .onTapGesture {
+                handleSelectionTap()
             }
-        )
-        .contentShape(Rectangle())
-        .padding(.vertical, 10)
-        .frame(minHeight: 58)
-        .onChange(of: isHighlightTarget) { isTarget in
-            flashHighlightIfNeeded(isTarget: isTarget)
-        }
-        .onAppear {
-            // Covers the case where the target was set before the row appeared
-            // (e.g. it had to be scrolled into view first).
-            flashHighlightIfNeeded(isTarget: isHighlightTarget)
-        }
-        .onTapGesture {
-            // Here we only highlight for tap selection in non-Edit mode
-            // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
-            if editMode?.wrappedValue.isEditing != true {
-                withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
-                    highlighted = true
-                }
+            .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
+                viewModel.actions.revampLongPress()
+            }
+            .overlay(alignment: .trailing) {
+                moreButton
+                    .padding(.trailing, Constants.moreButtonTrailingInset)
+            }
+            .listRowBackground(rowBackground)
+            .onChange(of: isHighlightTarget) { isTarget in
+                flashHighlightIfNeeded(isTarget: isTarget)
+            }
+            .onAppear {
+                // Covers the case where the target was set before the row appeared
+                // (e.g. it had to be scrolled into view first).
+                flashHighlightIfNeeded(isTarget: isHighlightTarget)
+            }
+    }
 
-                Task {
-                    try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
-                    withAnimation(.easeInOut(duration: Constants.tapHighlightFadeOutDuration)) {
-                        highlighted = false
-                    }
+    private var showsMoreButton: Bool {
+        editMode?.wrappedValue.isEditing != true
+    }
+
+    private var innerContent: some View {
+        HStack {
+            thumbnail
+            Spacer()
+                .frame(width: 8)
+            lines
+                .padding(.vertical, TokenSpacing._2)
+            Spacer()
+        }
+        .sensitive(viewModel.isSensitive ? .opacity : .none)
+    }
+
+    private var rowBackground: some View {
+        ZStack {
+            // Selection / tap highlight — instant, as before.
+            TokenColors.Background.surface1.swiftUI
+                .opacity(isSelected || highlighted ? 1 : 0)
+            // One-shot flash — fades in/out via its own value animation.
+            TokenColors.Background.surface1.swiftUI
+                .opacity(showsFlash ? 1 : 0)
+                .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: showsFlash)
+        }
+    }
+
+    private func handleSelectionTap() {
+        // Here we only highlight for tap selection in non-Edit mode
+        // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
+        if editMode?.wrappedValue.isEditing != true {
+            withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
+                highlighted = true
+            }
+
+            Task {
+                try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
+                withAnimation(.easeInOut(duration: Constants.tapHighlightFadeOutDuration)) {
+                    highlighted = false
                 }
             }
-            viewModel.actions.selectionAction()
         }
-        .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
-            viewModel.actions.revampLongPress()
-        }
+        viewModel.actions.selectionAction()
     }
 
     /// Runs a one-shot flash when this row becomes the highlight target. Fades a
@@ -254,14 +271,14 @@ struct RevampedSearchResultRowView: View {
 
     @ViewBuilder
     private var moreButton: some View {
-        if editMode?.wrappedValue.isEditing != true {
+        if showsMoreButton {
             ImageButtonWrapper(
                 image: Image(uiImage: viewModel.contextButtonImage),
                 imageColor: TokenColors.Icon.secondary.swiftUI
             ) { button in
                 viewModel.actions.contextAction(button)
             }
-            .frame(width: 40)
+            .frame(width: Constants.moreButtonWidth)
         }
     }
 }

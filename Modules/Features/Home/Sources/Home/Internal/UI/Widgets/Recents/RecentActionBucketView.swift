@@ -16,22 +16,54 @@ struct RecentActionBucketModel {
 }
 
 struct RecentActionBucketView: View {
+    private enum Constants {
+        static let moreActionButtonSize: CGFloat = 40
+    }
+
     struct Dependency {
         let bucket: RecentActionBucketEntity
         let userNameProvider: any UserNameProviderProtocol
     }
-    
+
     typealias MoreActionHandler = @MainActor (UIButton) -> Void
+    typealias SelectionHandler = @MainActor () -> Void
     private let bucketModel: RecentActionBucketModel
     private let moreActionHandler: MoreActionHandler?
-    
-    init(dependency: Dependency, moreAction: MoreActionHandler?) {
+    private let selectionHandler: SelectionHandler
+
+    init(dependency: Dependency, moreAction: MoreActionHandler?, onSelect: @escaping SelectionHandler) {
         let mapper = RecentActionBucketModelMapper(userNameProvider: dependency.userNameProvider)
         self.bucketModel = mapper.map(from: dependency.bucket)
         self.moreActionHandler = moreAction
+        self.selectionHandler = onSelect
     }
-    
+
+    private var hasMoreAction: Bool {
+        moreActionHandler != nil
+    }
+
     var body: some View {
+        content
+    }
+
+    // The moreActionView is overlaid on top of the row content rather than placed beside it in the same HStack, so its
+    // tap gesture isn't intercepted by the row's selection tap gesture.
+    private var content: some View {
+        rowContent
+            .padding(.leading, TokenSpacing._4)
+            .padding(.vertical, TokenSpacing._3)
+            .padding(.trailing, hasMoreAction ? TokenSpacing._5 + Constants.moreActionButtonSize + TokenSpacing._4 : TokenSpacing._5)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectionHandler()
+            }
+            .overlay(alignment: .trailing) {
+                moreActionView
+                    .padding(.trailing, TokenSpacing._5)
+            }
+    }
+
+    private var rowContent: some View {
         HStack(spacing: TokenSpacing._4) {
             thumbnailView
 
@@ -45,12 +77,7 @@ struct RecentActionBucketView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
-            moreActionView
         }
-        .padding(.leading, TokenSpacing._4)
-        .padding(.trailing, TokenSpacing._5)
-        .padding(.vertical, TokenSpacing._3)
     }
     
     private var titleView: some View {
@@ -120,7 +147,7 @@ struct RecentActionBucketView: View {
             ) { button in
                 moreActionHandler(button)
             }
-            .frame(width: 40, height: 40)
+            .frame(width: Constants.moreActionButtonSize, height: Constants.moreActionButtonSize)
         }
     }
 }
