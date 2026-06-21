@@ -1936,6 +1936,7 @@
 		B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */; };
 		B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */; };
 		B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */; };
+		FAB12046DE1E6A7E50000002 /* MEGAPurchaseDelegatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */; };
 		B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */; };
 		B56717502A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */; };
 		B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */; };
@@ -2230,6 +2231,7 @@
 		BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9412803AF6000C21F11 /* SAMKeychain */; };
 		BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */; };
 		BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */; };
+		BF0DB7912DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */; };
 		BF0FE7512DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */; };
 		BF0FE7582DB312150083E23B /* SubscriptionPurchaseFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */; };
 		BF0FE75C2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */; };
@@ -4807,6 +4809,7 @@
 		B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGAPurchase.swift; sourceTree = "<group>"; };
 		B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSKProduct.swift; sourceTree = "<group>"; };
 		B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPlanPurchaseRepositoryTests.swift; sourceTree = "<group>"; };
+		FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPurchaseDelegatesTests.swift; sourceTree = "<group>"; };
 		B56675992A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareDestinationTableViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationTableViewCell.swift; sourceTree = "<group>"; };
 		B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
@@ -5148,6 +5151,7 @@
 		BF0BD60C2C5307AD003E608A /* NodeDescriptionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterView.swift; sourceTree = "<group>"; };
 		BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOccurrenceNotification.swift; sourceTree = "<group>"; };
 		BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Pricing.swift"; sourceTree = "<group>"; };
+		BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Delegates.swift"; sourceTree = "<group>"; };
 		BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseHeaderView.swift; sourceTree = "<group>"; };
 		BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFeatureView.swift; sourceTree = "<group>"; };
 		BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFeaturesView.swift; sourceTree = "<group>"; };
@@ -6211,6 +6215,7 @@
 				940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */,
 				24CCAC472B1363BD00BE4726 /* DownloadFileRepositoryTests.swift */,
 				328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */,
+				FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */,
 				94CFB3BF2D11E29E0064D846 /* OfflineFileFetcherRepositoryTests.swift */,
 				940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */,
 			);
@@ -11687,6 +11692,7 @@
 			isa = PBXGroup;
 			children = (
 				16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */,
+				BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */,
 				BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */,
 				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
 				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
@@ -15549,6 +15555,7 @@
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
 				16886B382E20B67A0096D21D /* MEGAPurchase+CheckCancellation.swift in Sources */,
+				BF0DB7912DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift in Sources */,
 				BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */,
 				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
 				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,
@@ -16866,6 +16873,7 @@
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				BF25A3742E41894B00583D88 /* MEGAProcessAssetTests.swift in Sources */,
+				FAB12046DE1E6A7E50000002 /* MEGAPurchaseDelegatesTests.swift in Sources */,
 				A8F6624E2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift in Sources */,
 				6DEEA7B82C119596004641C9 /* MEGASDKErrorTypeTests.swift in Sources */,
 				2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */,

@@ -10,9 +10,12 @@
 
 @interface MEGAPurchase : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, MEGARequestDelegate>
 
+// These 3 mutable arrays are exposed so that Swift extensions can read and modify them
+// DO NOT DIRECTLY MODIFY THESE ARRAYS, use the methods in MEGAPurchase+Delegates instead!
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchaseDelegate>> *purchaseDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGARestoreDelegate>> *restoreDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchasePricingDelegate>> *pricingsDelegateMutableArray;
+
 @property (nonatomic, strong) MEGAPricing *pricing;
 @property (nonatomic, strong) MEGACurrency *currency;
 @property (nonatomic, readonly, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;

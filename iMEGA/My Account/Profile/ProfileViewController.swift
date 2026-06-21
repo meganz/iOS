@@ -78,7 +78,7 @@ import UIKit
         configureGestures()
         
         MEGASdk.shared.add(self)
-        MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
+        MEGAPurchase.sharedInstance()?.addPricingsDelegate(self)
         
         setupColors()
         
@@ -114,7 +114,7 @@ import UIKit
         
         if isMovingFromParent {
             MEGASdk.shared.remove(self)
-            MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.remove(self)
+            MEGAPurchase.sharedInstance()?.removePricingsDelegate(self)
         }
     }
     

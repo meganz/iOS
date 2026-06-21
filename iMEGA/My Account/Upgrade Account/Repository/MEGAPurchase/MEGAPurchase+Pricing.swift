@@ -17,12 +17,12 @@ extension MEGAPurchase {
             self.purchase = purchase
             self.continuation = continuation
             super.init()
-            purchase.pricingsDelegateMutableArray.add(self)
+            purchase.addPricingsDelegate(self)
         }
 
         func pricingsReady() {
             continuation.resume()
-            purchase.pricingsDelegateMutableArray.remove(self)
+            purchase.removePricingsDelegate(self)
         }
     }
 }

@@ -161,7 +161,7 @@
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingsDelegateMutableArray.copy) {
+        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingDelegates) {
             [pricingsDelegate pricingsReady];
         }
     });
@@ -209,7 +209,7 @@
 
                 MEGALogDebug(@"[StoreKit] Transaction purchased");
 
-                for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
+                for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegates) {
                     [delegate successfulPurchase:self];
                 }
 
@@ -230,7 +230,7 @@
                 if (!hasSubmittedReceipt) {
                     [self submitReceiptIfNeededWithReceipt:receipt transactions:transactions hasSubmittedReceipt:&hasSubmittedReceipt];
                     MEGALogDebug(@"[StoreKit] Transaction restored");
-                    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+                    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegates) {
                         [restoreDelegate successfulRestore:self];
                     }
                 }
@@ -243,7 +243,7 @@
                 MEGALogError(@"[StoreKit] Transaction failed");
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
 
-                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
+                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegates) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {
                         [purchaseDelegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                     }
@@ -273,7 +273,7 @@
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
     if ([queue.transactions count] == 0) {
-        for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+        for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegates) {
             if ([restoreDelegate respondsToSelector:@selector(incompleteRestore)]) {
                 [restoreDelegate incompleteRestore];
             }
@@ -287,7 +287,7 @@
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
     MEGALogDebug(@"[StoreKit] Restore failed with error %@", error);
-    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
+    for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegates) {
         if ([restoreDelegate respondsToSelector:@selector(failedRestore:message:)]) {
             [restoreDelegate failedRestore:error.code message:error.localizedDescription];
         }
@@ -337,7 +337,7 @@
                 [self finishSubmittedTransactions];
             } else {
                 MEGALogError(@"[StoreKit] Submitting receipt failed with error: %@ - %ld", error.name, (long)error.type);
-                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
+                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegates) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedSubmitReceipt:)]) {
                         [purchaseDelegate failedSubmitReceipt:error.type];
                     }
@@ -358,7 +358,7 @@
     } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         MEGALogDebug(@"[StoreKit] Receipt submitted successfully");
         [self setIsSubmittingReceipt:false];
-        for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
+        for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegates) {
             if ([delegate respondsToSelector:@selector(successSubmitReceipt)]) {
                 [delegate successSubmitReceipt];
             }

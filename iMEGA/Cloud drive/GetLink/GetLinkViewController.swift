@@ -136,8 +136,8 @@ class GetLinkViewController: UIViewController {
         if !MEGASdk.shared.mnz_isProAccount {
             MEGASdk.shared.add(self as any MEGARequestDelegate)
             
-            MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.add(self)
-            MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.add(self)
+            MEGAPurchase.sharedInstance()?.addPurchaseDelegate(self)
+            MEGAPurchase.sharedInstance()?.addRestoreDelegate(self)
         }
         
         getLinkVM.invokeCommand = executeCommand(_:)
@@ -463,8 +463,8 @@ class GetLinkViewController: UIViewController {
     private func removeDelegates() {
         MEGASdk.shared.remove(self as any MEGARequestDelegate)
         
-        MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.remove(self)
-        MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.remove(self)
+        MEGAPurchase.sharedInstance()?.removePurchaseDelegate(self)
+        MEGAPurchase.sharedInstance()?.removeRestoreDelegate(self)
     }
     
     private func update(expiryDate: Date, shouldCreateLink: Bool) {

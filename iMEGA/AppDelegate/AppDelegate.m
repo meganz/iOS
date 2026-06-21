@@ -1102,13 +1102,13 @@
 - (void)pricingsReady {
     if (self.loadProductsAndShowAccountUpgradeScreen) {
         self.loadProductsAndShowAccountUpgradeScreen = NO;
-        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
+        [MEGAPurchase.sharedInstance removePricingsDelegate:self];
         [self showUpgradeAccount];
     } else if (self.showChooseAccountTypeLater) {
         [self showChooseAccountPlanTypeView];
 
         self.chooseAccountTypeLater = NO;
-        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
+        [MEGAPurchase.sharedInstance removePricingsDelegate:self];
     }
 
 }

@@ -22,6 +22,14 @@ import MEGARepo
 import PushKit
 import SafariServices
 
+// AppDelegate implements `pricingsReady` (declared in AppDelegate.h) in Obj-C.
+// Declaring the conformance here makes it visible to Swift so AppDelegate can be
+// passed to the type-safe MEGAPurchase delegate-registration methods.
+// `@preconcurrency` defers isolation checking to run time: AppDelegate is main
+// actor-isolated (via UIApplicationDelegate) while the Obj-C protocol requirement
+// is nonisolated, and MEGAPurchase always invokes `pricingsReady` on the main thread.
+extension AppDelegate: @preconcurrency MEGAPurchasePricingDelegate {}
+
 extension AppDelegate {
     @objc var domainName: String {
         DIContainer.domainName
@@ -646,7 +654,7 @@ extension AppDelegate {
     @objc func showUpgradeAccount() {
         guard MEGAPurchase.sharedInstance().products != nil && MEGAPurchase.sharedInstance().products.isNotEmpty else {
             MEGALogDebug("[Upgrade Account] In app purchase products not loaded")
-            MEGAPurchase.sharedInstance().pricingsDelegateMutableArray.add(self)
+            MEGAPurchase.sharedInstance().addPricingsDelegate(self)
             self.loadProductsAndShowAccountUpgradeScreen = true
             return
         }

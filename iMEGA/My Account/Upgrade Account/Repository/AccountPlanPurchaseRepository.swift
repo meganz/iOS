@@ -55,19 +55,19 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     }
     
     func registerRestoreDelegate() async {
-        purchase.restoreDelegateMutableArray.add(self)
+        purchase.addRestoreDelegate(self)
     }
-    
+
     func deRegisterRestoreDelegate() async {
-        purchase.restoreDelegateMutableArray.remove(self)
+        purchase.removeRestoreDelegate(self)
     }
-    
+
     func registerPurchaseDelegate() async {
-        purchase.purchaseDelegateMutableArray.add(self)
+        purchase.addPurchaseDelegate(self)
     }
-    
+
     func deRegisterPurchaseDelegate() async {
-        purchase.purchaseDelegateMutableArray.remove(self)
+        purchase.removePurchaseDelegate(self)
     }
 
     func restorePurchase() {
