@@ -4,6 +4,7 @@ import Transfer
 final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked Sendable {
     private(set) var clearCompletedTransfersCalledTimes = 0
     private(set) var clearFailedTransfersCalledTimes = 0
+    private(set) var clearedTransferTags: [Int] = []
 
     init() {}
 
@@ -13,6 +14,10 @@ final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked
 
     func clearFailedTransfers() {
         clearFailedTransfersCalledTimes += 1
+    }
+
+    func clearTransfer(tag: Int) {
+        clearedTransferTags.append(tag)
     }
 
     var clearedSignals: AnyAsyncSequence<Void> {

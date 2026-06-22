@@ -41,6 +41,19 @@ struct ClearTransfersUseCaseTests {
         #expect(repo.clearCompletedTransfers_calledTimes == 0)
         #expect(finishDateProvider.removedTags == [3, 4])
     }
+
+    @Test("Clearing a single transfer removes only that tag's finish date")
+    func clearsSingleTransfer() {
+        let (sut, repo, finishDateProvider) = Self.makeSUT()
+        repo.clearTransferTags = [9]
+
+        sut.clearTransfer(tag: 9)
+
+        #expect(repo.clearTransfer_tags == [9])
+        #expect(repo.clearCompletedTransfers_calledTimes == 0)
+        #expect(repo.clearFailedTransfers_calledTimes == 0)
+        #expect(finishDateProvider.removedTags == [9])
+    }
 }
 
 private final class SpyTransferFinishDateProvider: TransferFinishDateProviding, @unchecked Sendable {

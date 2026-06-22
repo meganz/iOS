@@ -4,8 +4,10 @@ import Transfer
 final class MockClearTransfersRepository: ClearTransfersRepositoryProtocol, @unchecked Sendable {
     private(set) var clearCompletedTransfers_calledTimes = 0
     private(set) var clearFailedTransfers_calledTimes = 0
+    private(set) var clearTransfer_tags: [Int] = []
     var clearCompletedTransfersTags: Set<Int> = []
     var clearFailedTransfersTags: Set<Int> = []
+    var clearTransferTags: Set<Int> = []
 
     static var newRepo: MockClearTransfersRepository {
         MockClearTransfersRepository()
@@ -21,5 +23,10 @@ final class MockClearTransfersRepository: ClearTransfersRepositoryProtocol, @unc
     func clearFailedTransfers() -> Set<Int> {
         clearFailedTransfers_calledTimes += 1
         return clearFailedTransfersTags
+    }
+
+    func clearTransfer(tag: Int) -> Set<Int> {
+        clearTransfer_tags.append(tag)
+        return clearTransferTags
     }
 }

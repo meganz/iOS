@@ -7,6 +7,8 @@ package protocol ClearTransfersUseCaseProtocol: Sendable {
     func clearCompletedTransfers()
     /// Clears the list of failed and cancelled transfers shown on the Failed tab.
     func clearFailedTransfers()
+    /// Clears a single completed or failed transfer by tag (per-row Clear action).
+    func clearTransfer(tag: Int)
     /// Emits once each time a clear runs. Clearing is a silent SDK cache removal that
     /// fires no transfer delegate event, so the mounted tab observes this to re-query
     /// the now-changed cache. Multicast: the emitter outlives the tabs, while each tab
@@ -39,6 +41,12 @@ package final class ClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unche
 
     package func clearFailedTransfers() {
         let removedTags = repo.clearFailedTransfers()
+        finishDateProvider?.removeDates(forTags: removedTags)
+        clearedSubject.send()
+    }
+
+    package func clearTransfer(tag: Int) {
+        let removedTags = repo.clearTransfer(tag: tag)
         finishDateProvider?.removeDates(forTags: removedTags)
         clearedSubject.send()
     }
