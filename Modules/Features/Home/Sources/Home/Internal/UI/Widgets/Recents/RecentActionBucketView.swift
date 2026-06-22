@@ -78,6 +78,7 @@ struct RecentActionBucketView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .pageBackground()
     }
     
     private var titleView: some View {
