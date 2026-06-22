@@ -334,4 +334,5 @@ public struct MEGAImageBundle {
     public static var almostFullStorageAlert: Image { Image(.almostFullStorageAlert) }
     public static var monoPauseMediumThinSolid: Image { Image(.monoPauseMediumThinSolid) }
     public static var monoPlayMediumThinSolid: Image { Image(.monoPlayMediumThinSolid) }
+    public static var monoCornerUpRightMediumThinOutline: Image { Image(.monoCornerUpRightMediumThinOutline) }
 }

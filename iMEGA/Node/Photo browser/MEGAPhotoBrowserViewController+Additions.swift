@@ -780,7 +780,16 @@ extension MEGAPhotoBrowserViewController {
             break
         }
     }
-    
+
+    @objc func configureBarButtonImages() {
+        self.customActionsButton?.image = MEGAAssets.UIImage.moreHorizontal
+        self.leftToolbarItem?.image = MEGAAssets.UIImage.folderArrow
+        self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
+        self.saveToolbarItem.image = MEGAAssets.UIImage.photosApp
+        self.importToolbarItem.image = MEGAAssets.UIImage.folderArrow
+        self.forwardToolbarItem.image = MEGAAssets.UIImage.cornerUpLeft
+    }
+
     @objc class func photoBrowserDataProvider(currentPhoto: MEGANode, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider {
         PhotoBrowserDataProvider(currentPhoto: currentPhoto.toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
     }

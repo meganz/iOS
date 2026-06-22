@@ -1,6 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -131,6 +132,15 @@ extension PreviewDocumentViewController {
             presenter: self,
             dismissBeforePresent: false
         ).start()
+    }
+
+    @objc func configureBarButtonImages() {
+        self.exportFileBarButtonItem?.image = MEGAAssets.UIImage.externalLink
+        self.importBarButtonItem.image = MEGAAssets.UIImage.folderArrow
+        self.downloadBarButtonItem.image = MEGAAssets.UIImage.arrowDownCircle
+        self.moreBarButtonItem.image = MEGAAssets.UIImage.moreHorizontal
+        self.searchBarButtonItem.image = MEGAAssets.UIImage.searchSmall
+        self.thumbnailBarButtonItem.image = MEGAAssets.UIImage.squares4
     }
 }
 

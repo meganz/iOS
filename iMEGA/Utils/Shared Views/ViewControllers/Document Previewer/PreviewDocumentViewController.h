@@ -13,6 +13,13 @@
 @property (nonatomic) MEGAHandle chatId;
 @property (nonatomic) MEGAHandle messageId;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *thumbnailBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportFileBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+
 - (void)sendToChatWhenLogin;
 
 @end

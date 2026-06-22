@@ -29,12 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak, nonatomic) IBOutlet PDFView *pdfView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *thumbnailBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportFileBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) MEGAQLPreviewController *previewController;
@@ -56,9 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self configureImages];
-    
+
     if (self.node == nil && self.nodeHandle != MEGAInvalidHandle) {
         self.node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
     }
@@ -75,6 +67,11 @@
     if (self.showUnknownEncodeHud) {
         [SVProgressHUD showErrorWithStatus:LocalizedString(@"general.textEditor.hud.unknownEncode", @"Hud info message when read unknown encode file.")];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self configureBarButtonImages];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -140,14 +137,6 @@
 }
 
 #pragma mark - Private
-- (void)configureImages {
-    self.exportFileBarButtonItem.image = [UIImage megaImageWithNamed:@"export"];
-    self.importBarButtonItem.image = [UIImage megaImageWithNamed:@"import"];
-    self.downloadBarButtonItem.image = [UIImage megaImageWithNamed:@"offline"];
-    self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
-    self.searchBarButtonItem.image = [UIImage megaImageWithNamed:@"search"];
-    self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
-}
 
 - (void)configureNavigation {
     [self setTitle:[self.node nameAfterDecryptionCheck]];

@@ -351,6 +351,7 @@ extension MEGAAssets {
         public static var almostFullStorageAlert: SwiftUI.Image { MEGAImageBundle.almostFullStorageAlert }
         public static var monoPauseMediumThinSolid: SwiftUI.Image { MEGAImageBundle.monoPauseMediumThinSolid }
         public static var monoPlayMediumThinSolid: SwiftUI.Image { MEGAImageBundle.monoPlayMediumThinSolid }
+        public static var monoCornerUpRightMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCornerUpRightMediumThinOutline }
     }
 }
 
@@ -840,5 +841,6 @@ extension MEGAAssets {
         public static var monoFileSearchMediumRegularOutline: UIKit.UIImage { MEGAUIImageBundle.monoFileSearchMediumRegularOutline }
         public static var monoPauseMediumThinSolid: UIKit.UIImage { MEGAUIImageBundle.monoPauseMediumThinSolid }
         public static var monoPlayMediumThinSolid: UIKit.UIImage { MEGAUIImageBundle.monoPlayMediumThinSolid }
+        public static var monoCornerUpRightMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCornerUpRightMediumThinOutline }
     }
 }

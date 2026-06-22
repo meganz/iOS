@@ -37,6 +37,14 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 @property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *saveToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *importToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *exportFileToolbarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *forwardToolbarItem;
+
 - (void)reloadUI;
 - (void)configureNodeIntoImage:(MEGANode *) node nodeIndex:(NSUInteger) index;
 - (BOOL)isPreviewingVersion;

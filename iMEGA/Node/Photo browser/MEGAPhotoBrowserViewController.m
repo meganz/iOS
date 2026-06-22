@@ -41,14 +41,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *saveToolbarItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *importToolbarItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *exportFileToolbarItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *forwardToolbarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *allMediaToolBarItem;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
@@ -100,8 +93,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self onViewDidLoad];
-    
-    [self configureImages];
     
     self.imageViewsZoomCache = [[NSCache<NSNumber *, NSNumber *> alloc] init];
 
@@ -173,7 +164,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self configureBarButtonImages];
     [self onViewWillAppear];
     [TransferIndicatorBarItemConfigurator injectIfNeededInto:self];
     if (self.displayMode != DisplayModeTransfers) {
@@ -363,15 +354,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 #pragma mark - Private
-
-- (void)configureImages {
-    self.customActionsButton.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
-    self.leftToolbarItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
-    self.rightToolbarItem.image = [UIImage megaImageWithNamed:@"export"];
-    self.saveToolbarItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
-    self.importToolbarItem.image = [UIImage megaImageWithNamed:@"import"];
-    self.forwardToolbarItem.image = [UIImage megaImageWithNamed:@"forwardToolbar"];
-}
 
 - (void)shareFileLink {
     NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
