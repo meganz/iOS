@@ -75,7 +75,7 @@ struct TransferResultRowView: View {
 
     private var trailingAction: some View {
         Button {
-            // Wired later
+            Task { await viewModel.togglePauseResume() }
         } label: {
             trailingImage
                 .foregroundStyle(isAllTransfersPaused

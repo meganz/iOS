@@ -34,10 +34,12 @@ public enum TransfersListViewControllerFactory {
             finishDateProvider: completionRecorder
         )
 
+        let registry = TransferRegistry(controlUseCase: DependencyInjection.transferControlUseCase)
+
         let dependency = TransferTabDependency(
             inventoryUseCase: inventoryUseCase,
             counterUseCase: counterUseCase,
-            registry: TransferRegistry(),
+            registry: registry,
             locationResolver: TransferLocationResolver(
                 nodeUseCase: nodeUseCase,
                 nodeAttributeUseCase: nodeAttributeUseCase

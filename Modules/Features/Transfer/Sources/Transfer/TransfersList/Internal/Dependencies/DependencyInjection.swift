@@ -10,4 +10,8 @@ enum DependencyInjection {
             fileSystemRepository: FileSystemRepository.sharedRepo
         )
     }
+
+    static var transferControlUseCase: some TransferControlUseCaseProtocol {
+        TransferControlUseCase(repo: TransferControlRepository.newRepo)
+    }
 }

@@ -85,8 +85,8 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
         let states = await rowStates(for: entities)
         let registry = self.registry
         await MainActor.run {
-            for state in states {
-                registry.upsert(state)
+            for (state, entity) in zip(states, entities) {
+                registry.upsert(state, transfer: entity)
             }
         }
         return SearchResultsEntity(results: results, availableChips: [], appliedChips: [])
@@ -150,7 +150,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
             .compactMap { entity -> SearchResultUpdateSignal? in
                 guard filter == .active else { return nil }
                 let state = TransferEntityMapper.rowState(for: entity)
-                await registry.upsert(state)
+                await registry.upsert(state, transfer: entity)
                 return .generic
             }
             .eraseToAnyAsyncSequence()
@@ -165,7 +165,7 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
             .compactMap { entity -> SearchResultUpdateSignal? in
                 guard filter == .active, entity.isVisibleOnActiveTab else { return nil }
                 let state = TransferEntityMapper.rowState(for: entity)
-                await registry.upsert(state)
+                await registry.upsert(state, transfer: entity)
                 return .specific(result: TransferEntityMapper.searchResult(for: entity))
             }
             .eraseToAnyAsyncSequence()
@@ -194,10 +194,10 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
                         for: entity,
                         location: location,
                         finishDate: finishDate
-                    ))
+                    ), transfer: entity)
                     return .generic
                 case .failed where Self.isFailed(entity):
-                    await registry.upsert(TransferEntityMapper.rowState(for: entity))
+                    await registry.upsert(TransferEntityMapper.rowState(for: entity), transfer: entity)
                     return .generic
                 default:
                     return nil

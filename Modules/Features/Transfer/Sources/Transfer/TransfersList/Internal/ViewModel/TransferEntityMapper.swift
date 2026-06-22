@@ -77,6 +77,24 @@ public enum TransferEntityMapper {
         )
     }
 
+    /// Returns a copy of `state` flipped to `status`, recomputing the subtitle so the
+    /// row reads consistently. Used to reflect a confirmed per-row pause/resume; the
+    /// live SDK stream later overwrites it with the real state.
+    static func rowState(_ state: TransferRowState, status: TransferRowState.Status) -> TransferRowState {
+        var newState = state
+        newState.status = status
+        newState.subtitle = subtitle(
+            direction: state.direction,
+            status: status,
+            progress: state.progress,
+            transferredBytes: state.transferredBytes,
+            totalBytes: state.totalBytes,
+            speed: state.speed,
+            finishDate: nil
+        )
+        return newState
+    }
+
     private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
 
     private static func finishDateString(from date: Date?) -> String? {

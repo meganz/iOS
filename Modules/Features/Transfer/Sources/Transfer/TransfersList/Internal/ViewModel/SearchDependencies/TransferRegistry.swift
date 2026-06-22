@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import Search
 
 /// Side-channel store of per-row view models keyed by `ResultId`.
@@ -11,18 +12,25 @@ import Search
 @MainActor
 final class TransferRegistry {
     private var rowViewModelsById: [ResultId: TransferRowViewModel] = [:]
+    private let controlUseCase: any TransferControlUseCaseProtocol
 
-    init() {}
+    init(controlUseCase: some TransferControlUseCaseProtocol) {
+        self.controlUseCase = controlUseCase
+    }
 
     func rowViewModel(for id: ResultId) -> TransferRowViewModel? {
         rowViewModelsById[id]
     }
 
-    func upsert(_ state: TransferRowState) {
+    func upsert(_ state: TransferRowState, transfer: TransferEntity) {
         if let existing = rowViewModelsById[state.id] {
-            existing.update(state: state)
+            existing.update(state: state, transfer: transfer)
         } else {
-            rowViewModelsById[state.id] = TransferRowViewModel(state: state)
+            rowViewModelsById[state.id] = TransferRowViewModel(
+                state: state,
+                transfer: transfer,
+                controlUseCase: controlUseCase
+            )
         }
     }
 
