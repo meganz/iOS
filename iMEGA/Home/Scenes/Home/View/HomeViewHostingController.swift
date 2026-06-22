@@ -20,6 +20,7 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
 
     private let dependency: HomeView.Dependency
     private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
+    private let tabBarSafeAreaInsetCompensation: TabBarSafeAreaInsetCompensation = TabBarSafeAreaInsetCompensation()
     private let homeDeepLink: HomeDeepLink = HomeDeepLink()
     private var shouldHandleSearchDeeplink = false
 
@@ -46,6 +47,24 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
         // Without this, UIKit clamps the hosting view above the tab bar,
         // causing an unexpected bottom gap.
         extendedLayoutIncludesOpaqueBars = true
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Root cause: hiding the tab bar imperatively via `tabBar.isHidden` (around edit mode), plus a
+        // background/foreground cycle, leaves the bottom safe area value stale, it stops accounting for the
+        // visible tab bar.
+        // The tab bar's frame height stays reliable, so we publish the gap between the two;
+        // bottom-anchored SwiftUI content adds it as padding to stay above the tab bar (0 when the
+        // safe area is correct, > 0 when stale).
+        // Only iOS 26 exhibits the stale safe area; on earlier versions it stays correct, so any
+        // compensation would double-pad and push the location button up — keep it at 0 there.
+        if #available(iOS 26.0, *), let tabBar = tabBarController?.tabBar {
+            let newValue = max(0, tabBar.frame.height - view.safeAreaInsets.bottom)
+            if tabBarSafeAreaInsetCompensation.value != newValue {
+                tabBarSafeAreaInsetCompensation.value = newValue
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +95,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
             quickAccessRoutePublisher: $quickAccessRoute.eraseToAnyPublisher()
         )
         .environmentObject(miniPlayerVisibility)
-        
+        .environmentObject(tabBarSafeAreaInsetCompensation)
+
         let hostingViewController = UIHostingController(rootView: homeView)
         addChild(hostingViewController)
         

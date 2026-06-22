@@ -25,6 +25,7 @@ struct RecentActionBucketMediaView: View {
     private let headerTitle: String
     @EnvironmentObject var navigator: HomeNavigation
     @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
+    @EnvironmentObject var tabBarSafeAreaInsetCompensation: TabBarSafeAreaInsetCompensation
     
     init(
         headerTitle: String,
@@ -89,8 +90,14 @@ struct RecentActionBucketMediaView: View {
                     navigator.showSnackBar(snackBar)
                 }
             }
-            .safeAreaInset(edge: .bottom) {
+            .overlay(alignment: .bottom) {
+                // The overlay sits on top of the system bottom safe area as usual; the extra
+                // compensation padding covers the case where that safe area has gone stale and no
+                // longer accounts for the visible tab bar, which would otherwise leave the button
+                // behind it (see TabBarSafeAreaInsetCompensation).
+                // The mini player height is added too.
                 showLocationButton
+                    .padding(.bottom, miniPlayerVisibility.height + tabBarSafeAreaInsetCompensation.value)
             }
     }
 
