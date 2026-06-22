@@ -144,14 +144,13 @@ final class NameCollisionViewModel: ObservableObject {
         for i in 0..<collisions.count {
             var collision = collisions[i]
             collision.collisionAction = action
-            if action == .rename {
-                transfers?.forEach({ transfer in
-                    let newName = nameCollisionUseCase.renameNode(
-                        named: collision.name as NSString,
-                        inParent: collision.parentHandle
-                    )
-                    transfer.setName(newName)
-                })
+            if action == .rename,
+               let transfer = transfers?.first(where: { $0.localFileURL == collision.fileUrl }) {
+                let newName = nameCollisionUseCase.renameNode(
+                    named: collision.name as NSString,
+                    inParent: collision.parentHandle
+                )
+                transfer.setName(newName)
             }
             collisions[i] = collision
         }

@@ -71,6 +71,17 @@ import MEGASwift
     public func setName(_ newName: String?) {
         $name.mutate { $0 = newName }
     }
+
+    /// Upload options to use for this transfer, applying any name override set via `setName(_:)`.
+    ///
+    /// `name` is set when a name collision is resolved with the "Rename" action, so it must take precedence
+    /// over `uploadOptions.fileName` to ensure the file is uploaded with the suggested name instead of
+    /// creating a new version of the colliding node.
+    var resolvedUploadOptions: UploadOptionsEntity {
+        let options = uploadOptions ?? UploadOptionsEntity()
+        guard let name else { return options }
+        return options.updating(fileName: name)
+    }
     
     struct Factory {
         let node: MEGANode

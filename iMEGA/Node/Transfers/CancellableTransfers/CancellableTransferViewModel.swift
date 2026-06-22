@@ -204,7 +204,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             uploadFileUseCase.uploadFile(
                 uploadLocalURL,
                 toParent: transferViewEntity.parentHandle,
-                uploadOptions: transferViewEntity.uploadOptions ?? UploadOptionsEntity(),
+                uploadOptions: transferViewEntity.resolvedUploadOptions,
                 start: { [weak self] transferEntity in
                     transferViewEntity.setState(transferEntity.state)
                     self?.continueFolderTransfersIfNeeded()
@@ -231,7 +231,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             }
             uploadFileUseCase.uploadFile(uploadLocalURL,
                                          toParent: transferViewEntity.parentHandle,
-                                         uploadOptions: transferViewEntity.uploadOptions ?? UploadOptionsEntity(),
+                                         uploadOptions: transferViewEntity.resolvedUploadOptions,
                                          start: nil) { transferEntity in
                 transferViewEntity.setStage(transferEntity.stage)
                 transferViewEntity.setState(transferEntity.state)

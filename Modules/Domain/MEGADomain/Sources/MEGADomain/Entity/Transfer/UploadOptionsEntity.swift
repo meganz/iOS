@@ -78,4 +78,20 @@ public struct UploadOptionsEntity: Sendable {
         self.isChatUpload = isChatUpload
         self.pitagTarget = pitagTarget
     }
+
+    /// Returns a copy of these options with a different file name.
+    ///
+    /// - Parameter fileName: The custom name to use for the upload. Pass `nil` to take the name from the local path.
+    public func updating(fileName: String?) -> UploadOptionsEntity {
+        UploadOptionsEntity(
+            fileName: fileName,
+            mtime: mtime,
+            appData: appData,
+            isSourceTemporary: isSourceTemporary,
+            startFirst: startFirst,
+            pitagTrigger: pitagTrigger,
+            isChatUpload: isChatUpload,
+            pitagTarget: pitagTarget
+        )
+    }
 }
