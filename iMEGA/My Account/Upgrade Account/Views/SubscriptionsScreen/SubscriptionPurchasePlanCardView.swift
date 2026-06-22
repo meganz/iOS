@@ -132,6 +132,7 @@ struct SubscriptionPurchasePlanCardView: View {
                 newPricePerMonthText(for: formattedMonthlyPriceForYearlyPlan)
                 Text(formattedPriceForYearlyPlan)
                     .font(.title3.bold())
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 chargedYearlyText
             }
         }
