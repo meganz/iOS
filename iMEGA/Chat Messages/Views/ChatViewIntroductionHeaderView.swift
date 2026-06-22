@@ -18,11 +18,11 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var authenticityStackView: UIStackView!
     @IBOutlet weak var participantsInformationStackView: UIStackView!
     @IBOutlet weak var noteToSelfStackView: UIStackView!
-
+    
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var avatarImageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarImageViewWidthConstraint: NSLayoutConstraint!
-
+    
     @IBOutlet weak var chattingWithTextLabel: UILabel!
     @IBOutlet weak var participantsLabel: UILabel!
     
@@ -33,7 +33,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     @IBOutlet weak var confidentialityImageView: UIImageView!
     @IBOutlet weak var confidentialityTextLabel: UILabel!
-
+    
     @IBOutlet weak var authenticityImageView: UIImageView!
     @IBOutlet weak var authenticityTextLabel: UILabel!
     
@@ -43,7 +43,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     private let contentSpacing: CGFloat = 20.0
     
     private let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-
+    
     var chatRoom: ChatRoomEntity? {
         didSet {
             updateStatus()
@@ -70,7 +70,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         }
         
         participantsLabel.text = chatRoom.isNoteToSelf ? Strings.Localizable.Chat.Messages.NoteToSelf.Header.title : participantNames(for: chatRoom)
-
+        
         updateAvatar(for: chatRoom)
         updateStatusView(for: chatRoom)
         updateAppearance()
@@ -143,7 +143,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         descriptionLabel.textColor = TokenColors.Text.secondary
         participantsLabel.textColor = TokenColors.Text.primary
         statusLabel.textColor = TokenColors.Text.secondary
-
+        
         chattingWithTextLabel.text = Strings.Localizable.chattingWith
         descriptionLabel.text = Strings.Localizable.Chat.IntroductionHeader.Privacy.description
         
@@ -170,11 +170,11 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let description = (string as NSString).replacingOccurrences(of: String(format: "[S]%@[/S]", title), with: "")
         
         let titleAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
-                                                               NSAttributedString.Key.foregroundColor: UIColor.mnz_red()]
+                                                              NSAttributedString.Key.foregroundColor: UIColor.mnz_red()]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
-                                                                     NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary]
+                                                                    NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         
         titleAttributedString.append(descriptionAttributedString)
@@ -191,8 +191,8 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let participantsLabelSize = participantsLabel.sizeThatFits(participantsInformationAvailableSize)
         let statusLabelSize = statusLabel.text?.isEmpty ?? true ? .zero : statusLabel.sizeThatFits(participantsInformationAvailableSize)
         let participantInformationHeight = statusLabelSize == .zero ?
-                                                                chattingWithTextLabelSize.height + participantsInformationStackView.spacing + participantsLabelSize.height
-                                                                : chattingWithTextLabelSize.height + participantsInformationStackView.spacing + participantsLabelSize.height + participantsInformationStackView.spacing + statusLabelSize.height
+        chattingWithTextLabelSize.height + participantsInformationStackView.spacing + participantsLabelSize.height
+        : chattingWithTextLabelSize.height + participantsInformationStackView.spacing + participantsLabelSize.height + participantsInformationStackView.spacing + statusLabelSize.height
         
         let participantsInformationHeight = max(avatarImageViewHeightConstraint.constant, participantInformationHeight)
         
@@ -203,24 +203,35 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     private func calculateFittingHeight(with participantsInfoHeight: CGFloat, maxSize: CGSize) -> CGFloat {
         let descriptionHeight = calculateLabelHeight(for: descriptionLabel, maxSize: maxSize, includeSpacing: true)
-        let confidentialityHeight = calculateStackViewHeight(for: confidentialityStackView, imageView: confidentialityImageView, label: confidentialityTextLabel, maxSize: maxSize, includeSpacing: true)
-        let authenticityHeight = calculateStackViewHeight(for: authenticityStackView, imageView: authenticityImageView, label: authenticityTextLabel, maxSize: maxSize, includeSpacing: false)
-        let noteToSelfHeight = calculateStackViewHeight(for: noteToSelfStackView, imageView: noteToSelfImageView, label: noteToSelfTextLabel, maxSize: maxSize, includeSpacing: false)
-
+        let confidentialityHeight = calculateStackViewHeight(for: confidentialityStackView,
+                                                             imageView: confidentialityImageView,
+                                                             label: confidentialityTextLabel,
+                                                             maxSize: maxSize, includeSpacing: true)
+        let authenticityHeight = calculateStackViewHeight(for: authenticityStackView,
+                                                          imageView: authenticityImageView,
+                                                          label: authenticityTextLabel,
+                                                          maxSize: maxSize,
+                                                          includeSpacing: true)
+        let noteToSelfHeight = calculateStackViewHeight(for: noteToSelfStackView,
+                                                        imageView: noteToSelfImageView,
+                                                        label: noteToSelfTextLabel,
+                                                        maxSize: maxSize,
+                                                        includeSpacing: false)
+        
         return topConstraint.constant
-            + participantsInfoHeight
-            + descriptionHeight
-            + confidentialityHeight
-            + authenticityHeight
-            + noteToSelfHeight
-            + bottomConstraint.constant
+        + participantsInfoHeight
+        + descriptionHeight
+        + confidentialityHeight
+        + authenticityHeight
+        + noteToSelfHeight
+        + bottomConstraint.constant
     }
-
+    
     private func calculateLabelHeight(for label: UILabel, maxSize: CGSize, includeSpacing: Bool) -> CGFloat {
         guard !label.isHidden else { return 0 }
         return label.sizeThatFits(maxSize).height + (includeSpacing ? mainStackView.spacing : 0)
     }
-
+    
     private func calculateStackViewHeight(for stackView: UIStackView, imageView: UIImageView, label: UILabel, maxSize: CGSize, includeSpacing: Bool) -> CGFloat {
         guard !stackView.isHidden else { return 0 }
         let labelHeight = label.sizeThatFits(maxSize).height
@@ -237,7 +248,7 @@ extension ChatViewIntroductionHeaderView: MEGARequestDelegate {
             return
         }
         //        fix me
-
-//        avatarImageView.image = chatRoom?.avatarImage(delegate: nil)
+        
+        //        avatarImageView.image = chatRoom?.avatarImage(delegate: nil)
     }
 }
