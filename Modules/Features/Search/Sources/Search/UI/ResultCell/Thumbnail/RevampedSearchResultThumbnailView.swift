@@ -43,7 +43,7 @@ struct RevampedSearchResultThumbnailView: View {
         static let bottomTrailingPropertyImageSize = 16.0
         static let highlightFadeInDuration = 0.05
         static let flashHighlightFadeOutDuration = 0.3
-        static let flashHighlightDurationNs: UInt64 = 1_200_000_000
+        static let flashHighlightDurationNs: UInt64 = 1_500_000_000
         static let highlightBorderWidth: CGFloat = 2
         static let backgroundSurface1 = TokenColors.Background.surface1.swiftUI
         static let highlightTint = TokenColors.Background.surface2.swiftUI
@@ -53,12 +53,12 @@ struct RevampedSearchResultThumbnailView: View {
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
     
-    var isHighlightTarget: Bool = false
-    
-    @Binding var hasFlashedForCurrentTarget: Bool
+    var flashRequest: RowFlashRequest?
     
     @State private var highlighted = false
 
+    @State private var lastFlashedToken: Int?
+    
     private let layout: ResultCellLayout = .thumbnail
 
     var body: some View {
@@ -77,26 +77,30 @@ struct RevampedSearchResultThumbnailView: View {
                 )
                 .opacity(highlighted ? 1 : 0)
         )
-        .onChange(of: isHighlightTarget) { isTarget in
-            flashHighlightIfNeeded(isTarget: isTarget)
+        .onChange(of: flashRequest) { _ in
+            flashHighlightIfNeeded()
         }
         .onAppear {
-            flashHighlightIfNeeded(isTarget: isHighlightTarget)
+            flashHighlightIfNeeded()
         }
         .task {
             await viewModel.loadThumbnail()
         }
     }
 
-    private func flashHighlightIfNeeded(isTarget: Bool) {
-        guard isTarget,
-              !hasFlashedForCurrentTarget else { return }
-        hasFlashedForCurrentTarget = true
+    private func flashHighlightIfNeeded() {
+        guard let flashRequest,
+              flashRequest.resultId == viewModel.result.id,
+              flashRequest.token != lastFlashedToken else { return }
+        let token = flashRequest.token
+        lastFlashedToken = token
         withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
             highlighted = true
         }
         Task {
             try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
+            // Skip if a newer flash has since taken over, so it isn't cleared early.
+            guard lastFlashedToken == token else { return }
             withAnimation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration)) {
                 highlighted = false
             }

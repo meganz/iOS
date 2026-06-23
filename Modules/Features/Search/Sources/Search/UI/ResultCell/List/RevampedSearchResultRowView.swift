@@ -21,7 +21,7 @@ struct RevampedSearchResultRowView: View {
         static let flashHighlightFadeOutDuration = 0.3
         static let longPressMininumDuration = 0.5
         static let tapHighlightDurationNs: UInt64 = 100_000_000
-        static let flashHighlightDurationNs: UInt64 = 1_200_000_000
+        static let flashHighlightDurationNs: UInt64 = 1_500_000_000
         static let defaultThumbnailSize: Double = 32
         static let moreButtonWidth: CGFloat = 40
         static let moreButtonTrailingInset: CGFloat = 16
@@ -33,9 +33,7 @@ struct RevampedSearchResultRowView: View {
 
     @Binding var selected: Set<ResultId>
 
-    var isHighlightTarget: Bool = false
-    
-    @Binding var hasFlashedForCurrentTarget: Bool
+    var flashRequest: RowFlashRequest?
     
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
@@ -45,6 +43,8 @@ struct RevampedSearchResultRowView: View {
 
     @State private var showsFlash = false
 
+    @State private var lastFlashedToken: Int?
+    
     var body: some View {
         contentWithInsetsAndSwipeActions
             .task {
@@ -96,13 +96,13 @@ struct RevampedSearchResultRowView: View {
                     .padding(.trailing, Constants.moreButtonTrailingInset)
             }
             .listRowBackground(rowBackground)
-            .onChange(of: isHighlightTarget) { isTarget in
-                flashHighlightIfNeeded(isTarget: isTarget)
+            .onChange(of: flashRequest) { _ in
+                flashHighlightIfNeeded()
             }
             .onAppear {
                 // Covers the case where the target was set before the row appeared
                 // (e.g. it had to be scrolled into view first).
-                flashHighlightIfNeeded(isTarget: isHighlightTarget)
+                flashHighlightIfNeeded()
             }
     }
 
@@ -152,15 +152,20 @@ struct RevampedSearchResultRowView: View {
         viewModel.actions.selectionAction()
     }
 
-    /// Runs a one-shot flash when this row becomes the highlight target. Fades a
-    /// tint in, holds, then fades it out so it reads as "look here".
-    private func flashHighlightIfNeeded(isTarget: Bool) {
-        guard isTarget,
-              !hasFlashedForCurrentTarget else { return }
-        hasFlashedForCurrentTarget = true
+    /// Runs a one-shot flash when this row is the flash target. Fades a tint in,
+    /// holds, then fades it out so it reads as "look here". Each request token
+    /// flashes at most once, so the same row can be re-flashed on repeat taps.
+    private func flashHighlightIfNeeded() {
+        guard let flashRequest,
+              flashRequest.resultId == viewModel.result.id,
+              flashRequest.token != lastFlashedToken else { return }
+        let token = flashRequest.token
+        lastFlashedToken = token
         showsFlash = true
         Task {
             try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
+            // Skip if a newer flash has since taken over, so it isn't cleared early.
+            guard lastFlashedToken == token else { return }
             showsFlash = false
         }
     }
