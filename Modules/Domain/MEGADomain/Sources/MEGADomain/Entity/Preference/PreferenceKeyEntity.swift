@@ -34,6 +34,7 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case isWaitingRoomListVisible
     case shouldDisplayMediaDiscoveryWhenMediaOnly
     case mediaDiscoveryShouldIncludeSubfolderMedia
+    case viewModePreference = "MEGAViewModePreference"
     case autoMediaDiscoveryBannerDismissed
     case isCameraUploadsEnabled = "IsCameraUploadsEnabled"
     case cameraUploadsCellularDataUsageAllowed = "IsUseCellularConnectionEnabled"

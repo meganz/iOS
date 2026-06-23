@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPreference
 import Search
 
 package protocol FolderLinkViewModeUseCaseProtocol: Sendable {
@@ -8,16 +9,37 @@ package protocol FolderLinkViewModeUseCaseProtocol: Sendable {
 
 package struct FolderLinkViewModeUseCase: FolderLinkViewModeUseCaseProtocol {
     private let folderLinkRepository: any FolderLinkRepositoryProtocol
-    
-    package init(folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo) {
+
+    @PreferenceWrapper(key: PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly, defaultValue: true, useCase: PreferenceUseCase.default)
+    private var autoMediaDiscoveryEnabled: Bool
+
+    @PreferenceWrapper(key: PreferenceKeyEntity.viewModePreference, defaultValue: ViewModePreferenceEntity.perFolder.rawValue, useCase: PreferenceUseCase.default)
+    private var savedViewModePreference: Int
+
+    package init(
+        folderLinkRepository: some FolderLinkRepositoryProtocol = FolderLinkRepository.newRepo,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
+    ) {
         self.folderLinkRepository = folderLinkRepository
+        $autoMediaDiscoveryEnabled.useCase = preferenceUseCase
+        $savedViewModePreference.useCase = preferenceUseCase
     }
-    
-    /// Determines the view mode when opening a folder based on the ratio of
-    /// nodes that have a thumbnail (image/video) versus those that do not.
-    /// Media Discovery mode will be handled separately in IOS-11103.
+
     package func viewModeForOpeningFolder(_ handle: HandleEntity) -> SearchResultsViewMode {
         let children = folderLinkRepository.children(of: handle)
+
+        if autoMediaDiscoveryEnabled, !children.isEmpty, children.allSatisfy({ $0.mediaType != nil }) {
+            return .mediaDiscovery
+        }
+
+        switch ViewModePreferenceEntity(rawValue: savedViewModePreference) {
+        case .list: return .list
+        case .thumbnail: return .grid
+        default: return automaticViewMode(for: children)
+        }
+    }
+
+    private func automaticViewMode(for children: [NodeEntity]) -> SearchResultsViewMode {
         let (withThumbnail, withoutThumbnail) = children.reduce(into: (withThumbnail: 0, withoutThumbnail: 0)) { counts, node in
             if node.hasThumbnail {
                 counts.withThumbnail += 1
@@ -25,10 +47,10 @@ package struct FolderLinkViewModeUseCase: FolderLinkViewModeUseCaseProtocol {
                 counts.withoutThumbnail += 1
             }
         }
-        
+
         return withThumbnail > withoutThumbnail ? .grid : .list
     }
-    
+
     package func shouldEnableMediaDiscoveryMode(for handle: HandleEntity) -> Bool {
         let children = folderLinkRepository.children(of: handle)
         return children.contains(where: { $0.mediaType != nil })
