@@ -223,7 +223,7 @@ extension UsageViewController {
     }
     
     private func formattedQuotaValue(from value: Int64) -> String {
-        value == 0 ? "-" : String.memoryStyleString(fromByteCount: value)
+        String.memoryStyleString(fromByteCount: value).formattedByteCountString()
     }
 
     private func quotaDetails(for currentPage: Int) -> (Int64, Int64, String) {
