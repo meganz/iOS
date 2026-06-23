@@ -6,6 +6,13 @@ import MEGAUIComponent
 import SwiftUI
 
 extension AchievementsDetailsViewController {
+    @objc func configureNavigationItemAppearance() {
+        if #available(iOS 26.0, *) {
+            navigationController?.navigationBar.isTranslucent = true
+            AppearanceManager.applyLiquidGlassAppearance(to: navigationItem, backgroundColor: TokenColors.Background.surface1)
+        }
+    }
+
     @objc func showAddPhoneNumber() {
         let router = SMSVerificationViewRouter(
             verificationType: .addPhoneNumber,
@@ -72,12 +79,12 @@ extension AchievementsDetailsViewController {
     }
 
     @objc func setupColors() {
-        scrollView.backgroundColor = TokenColors.Background.surface1
+        scrollView.backgroundColor = TokenColors.Background.page
         view.backgroundColor = defaultBackgroundColor
         subtitleLabel?.textColor = TokenColors.Text.primary
         subtitleView?.layer.cornerRadius = TokenRadius.small
         howItWorksTopSeparatorView.backgroundColor = TokenColors.Border.strong
-        howItWorksView.backgroundColor = TokenColors.Background.surface1
+        howItWorksView.backgroundColor = TokenColors.Background.page
         howItWorksLabel?.textColor = TokenColors.Text.primary
         howItWorksExplanationLabel?.textColor = TokenColors.Text.secondary
         addPhoneNumberButton?.mnz_setupPrimary()

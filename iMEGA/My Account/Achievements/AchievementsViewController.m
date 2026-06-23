@@ -160,6 +160,7 @@
     achievementsDetailsVC.onAchievementDetailsUpdated = ^(MEGAAchievementsDetails* achievementDetails){
         [self setupView:achievementDetails];
     };
+    [achievementsDetailsVC configureNavigationItemAppearance];
 
     [self trackSelectedAchievementIfNeededWithAchievementClass:achievementClass];
 

@@ -504,7 +504,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstItem="AQS-fQ-dv2" firstAttribute="top" secondItem="0TF-6U-VT5" secondAttribute="top" constant="40" id="4Vh-hf-daV"/>
                                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dRp-ZT-f2f" secondAttribute="trailing" constant="20" id="4ZD-7U-cjX"/>

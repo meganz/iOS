@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureNavigationItemAppearance];
     [self configureImages];
     [self setupTitleImage];
     [self setupView];
