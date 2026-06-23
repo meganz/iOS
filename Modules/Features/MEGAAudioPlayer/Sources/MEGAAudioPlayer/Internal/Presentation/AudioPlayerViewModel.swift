@@ -43,6 +43,8 @@ final class AudioPlayerViewModel: ObservableObject {
     /// Drives the center button's play/pause glyph.
     @Published private(set) var isPlaying: Bool = false
 
+    @Published private(set) var isAirPlayActive: Bool = false
+
     // MARK: - Music Mode state
 
     @Published private(set) var isShuffleOn: Bool = false
@@ -114,6 +116,11 @@ final class AudioPlayerViewModel: ObservableObject {
                 self?.isPlaying = status == .playing || status == .buffering
             }
             .store(in: &cancellables)
+
+        service.isAirPlayActivePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.isAirPlayActive = $0 }
+            .store(in: &cancellables)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -167,7 +174,8 @@ final class AudioPlayerViewModel: ObservableObject {
         repeatMode: RepeatMode = .off,
         playbackMode: PlaybackMode = .music,
         podcastPlaybackSpeed: Float = 1,
-        isSleepTimerActive: Bool = false
+        isSleepTimerActive: Bool = false,
+        isAirPlayActive: Bool = false
     ) {
         self.title = title
         self.artist = artist
@@ -179,6 +187,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.playbackMode = playbackMode
         self.podcastPlaybackSpeed = podcastPlaybackSpeed
         self.isSleepTimerActive = isSleepTimerActive
+        self.isAirPlayActive = isAirPlayActive
     }
 
     // MARK: - Music Mode intents
@@ -206,9 +215,6 @@ final class AudioPlayerViewModel: ObservableObject {
             currentTime = max(0, min(fraction, 1)) * duration
         }
         service?.seek(toFraction: fraction)
-    }
-
-    func presentAirPlay() {
     }
 
     func presentPlaylist() {

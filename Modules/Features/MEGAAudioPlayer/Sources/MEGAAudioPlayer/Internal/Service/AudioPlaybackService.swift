@@ -1,3 +1,4 @@
+import AVFoundation
 import Combine
 import Foundation
 import MEGADomain
@@ -11,6 +12,7 @@ final class AudioPlaybackService {
     private let artistSubject = CurrentValueSubject<String?, Never>(nil)
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+    private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
 
     private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
@@ -38,6 +40,7 @@ final class AudioPlaybackService {
         self.metadataLoader = metadataLoader
         self.engine = engine
         bindEngineToState()
+        observeAirPlayRouteChanges()
     }
 
     // MARK: - Private
@@ -61,6 +64,22 @@ final class AudioPlaybackService {
         engine.playbackStatusPublisher
             .sink { [weak self] in self?.applyEngineStatus($0) }
             .store(in: &cancellables)
+    }
+
+    private func observeAirPlayRouteChanges() {
+        updateAirPlayState()
+        NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.updateAirPlayState() }
+            .store(in: &cancellables)
+    }
+
+    private func updateAirPlayState() {
+        isAirPlayActive = Self.detectAirPlayRoute()
+    }
+
+    private static func detectAirPlayRoute() -> Bool {
+        AVAudioSession.sharedInstance().currentRoute.outputs.contains { $0.portType == .airPlay }
     }
 
     /// The engine drives `status` during playback, but only while a session is
@@ -115,6 +134,11 @@ extension AudioPlaybackService: PlaybackStateObservable {
         set { statusSubject.send(newValue) }
     }
 
+    private(set) var isAirPlayActive: Bool {
+        get { isAirPlayActiveSubject.value }
+        set { isAirPlayActiveSubject.send(newValue) }
+    }
+
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
         currentSourceSubject.eraseToAnyPublisher()
     }
@@ -141,6 +165,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
     var statusPublisher: AnyPublisher<PlaybackStatus, Never> {
         statusSubject.eraseToAnyPublisher()
+    }
+
+    var isAirPlayActivePublisher: AnyPublisher<Bool, Never> {
+        isAirPlayActiveSubject.removeDuplicates().eraseToAnyPublisher()
     }
 }
 

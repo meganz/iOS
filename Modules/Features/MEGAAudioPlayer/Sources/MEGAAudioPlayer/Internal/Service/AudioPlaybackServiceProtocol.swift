@@ -11,6 +11,7 @@ protocol PlaybackStateObservable {
     var artist: String? { get }
     var artworkData: Data? { get }
     var status: PlaybackStatus { get }
+    var isAirPlayActive: Bool { get }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> { get }
     var titlePublisher: AnyPublisher<String, Never> { get }
@@ -19,6 +20,7 @@ protocol PlaybackStateObservable {
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var statusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
+    var isAirPlayActivePublisher: AnyPublisher<Bool, Never> { get }
 }
 
 @MainActor

@@ -72,7 +72,7 @@ struct AudioPlayerView: View {
 
                 BottomActionsSection(
                     currentMode: vm.playbackMode,
-                    onAirPlay: vm.presentAirPlay,
+                    isAirPlayActive: vm.isAirPlayActive,
                     onModeToggle: vm.switchPlaybackMode,
                     onPlaylist: vm.presentPlaylist
                 )
@@ -471,13 +471,13 @@ private struct PodcastModeControlsSection: View {
 
 private struct BottomActionsSection: View {
     let currentMode: PlaybackMode
-    let onAirPlay: () -> Void
+    let isAirPlayActive: Bool
     let onModeToggle: () -> Void
     let onPlaylist: () -> Void
 
     var body: some View {
         HStack {
-            iconButton(image: MEGAAssets.Image.audioAirplay, action: onAirPlay)
+            AirPlayIconButton(isActive: isAirPlayActive)
 
             Spacer()
 
@@ -510,6 +510,27 @@ private struct BottomActionsSection: View {
         case .music: Strings.Localizable.Media.Audio.Player.podcastMode
         case .podcast: Strings.Localizable.Media.Audio.Player.musicMode
         }
+    }
+}
+
+// MARK: - AirPlay Button
+
+private struct AirPlayIconButton: View {
+    let isActive: Bool
+
+    var body: some View {
+        MEGAAssets.Image.audioAirplay
+            .foregroundStyle(
+                isActive
+                    ? TokenColors.Icon.brand.swiftUI
+                    : TokenColors.Icon.primary.swiftUI
+            )
+            .padding(.vertical, TokenSpacing._4)
+            .padding(.horizontal, TokenSpacing._5)
+            .overlay {
+                AirPlayButton()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
     }
 }
 
