@@ -1,13 +1,37 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAInfrastructure
 import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
 import UIKit
 
+private enum PodcastMenu {
+    case speed
+}
+
+/// Bounds of the podcast controls that anchor a popover menu
+private struct PodcastMenuAnchors {
+    var speed: Anchor<CGRect>?
+
+    init(speed: Anchor<CGRect>? = nil) {
+        self.speed = speed
+    }
+}
+
+private struct PodcastMenuAnchorsKey: PreferenceKey {
+    static let defaultValue = PodcastMenuAnchors()
+    static func reduce(value: inout PodcastMenuAnchors, nextValue: () -> PodcastMenuAnchors) {
+        let next = nextValue()
+        if let speed = next.speed { value.speed = speed }
+    }
+}
+
 struct AudioPlayerView: View {
     @ObservedObject var vm: AudioPlayerViewModel
+
+    @State private var activeMenu: PodcastMenu?
 
     /// Distance the user must drag down before a swipe is treated as a
     /// dismiss intent. Below this, treat as accidental motion.
@@ -56,9 +80,9 @@ struct AudioPlayerView: View {
                     case .podcast:
                         PodcastModeControlsSection(
                             isPlaying: vm.isPlaying,
-                            speed: vm.podcastPlaybackSpeed,
+                            speed: vm.playbackSpeed,
                             isSleepTimerActive: vm.isSleepTimerActive,
-                            onSpeed: vm.presentSpeedPicker,
+                            onSpeed: { activeMenu = .speed },
                             onBackward: vm.skipBackward,
                             onPlayPause: vm.togglePlayPause,
                             onForward: vm.skipForward,
@@ -80,6 +104,9 @@ struct AudioPlayerView: View {
                 .padding(.vertical, TokenSpacing._7)
                 .frame(height: 96)
             }
+        }
+        .overlayPreferenceValue(PodcastMenuAnchorsKey.self) { anchors in
+            podcastMenuOverlay(anchors)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -120,6 +147,53 @@ struct AudioPlayerView: View {
                     vm.dismiss()
                 }
             }
+    }
+
+    // MARK: - Podcast popover menus
+    @ViewBuilder
+    private func podcastMenuOverlay(_ anchors: PodcastMenuAnchors) -> some View {
+        if let activeMenu {
+            GeometryReader { proxy in
+                ZStack(alignment: .topLeading) {
+                    Color.clear
+                        .ignoresSafeArea()
+                        .contentShape(Rectangle())
+                        .onTapGesture { self.activeMenu = nil }
+
+                    positionedMenu(activeMenu, anchors: anchors, proxy: proxy)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func positionedMenu(_ menu: PodcastMenu, anchors: PodcastMenuAnchors, proxy: GeometryProxy) -> some View {
+        switch menu {
+        case .speed:
+            if let anchor = anchors.speed {
+                let rect = proxy[anchor]
+                speedMenu.offset(
+                    x: rect.maxX + TokenSpacing._3,
+                    y: rect.maxY + TokenSpacing._3 - GlassMenu.height(rowCount: vm.playbackSpeedOptions.count)
+                )
+            }
+        }
+    }
+
+    private var speedMenu: some View {
+        GlassMenu(
+            width: GlassMenu.defaultWidth,
+            rows: vm.playbackSpeedOptions.map { value in
+                GlassMenu.Row(
+                    title: "\(String(format: "%g", value))×",
+                    isChecked: vm.isSelectedSpeed(value),
+                    action: {
+                        vm.selectPlaybackSpeed(value)
+                        activeMenu = nil
+                    }
+                )
+            }
+        )
     }
 }
 
@@ -448,6 +522,7 @@ private struct PodcastModeControlsSection: View {
             .frame(width: secondaryIconSize, height: secondaryIconSize)
             .contentShape(Rectangle())
             .onTapGesture(perform: onSpeed)
+            .anchorPreference(key: PodcastMenuAnchorsKey.self, value: .bounds) { PodcastMenuAnchors(speed: $0) }
     }
 
     private func iconButton(image: Image, size: CGFloat, isAccented: Bool = false, action: @escaping () -> Void) -> some View {
@@ -464,6 +539,85 @@ private struct PodcastModeControlsSection: View {
             .frame(width: TokenSpacing._2, height: TokenSpacing._2)
             .offset(y: TokenSpacing._3)
             .opacity(isVisible ? 1 : 0)
+    }
+}
+
+// MARK: - Glass Menu
+private struct GlassMenu: View {
+    struct Row: Identifiable {
+        var id: String { title }
+        let title: String
+        let isChecked: Bool
+        let action: (() -> Void)?
+
+        init(title: String, isChecked: Bool = false, action: (() -> Void)? = nil) {
+            self.title = title
+            self.isChecked = isChecked
+            self.action = action
+        }
+    }
+
+    let width: CGFloat
+    let rows: [Row]
+
+    static let defaultWidth: CGFloat = 160
+    static let rowContentHeight: CGFloat = TokenSpacing._6
+    static let rowSpacing: CGFloat = TokenSpacing._4
+    static func height(rowCount: Int) -> CGFloat {
+        rowContentHeight * CGFloat(rowCount) + rowSpacing * CGFloat(rowCount + 1)
+    }
+
+    /// Surface tint over the glass — tames Liquid Glass's transparency so the rows stay legible over a busy background.
+    private static let surfaceOpacity: CGFloat = 0.67
+    private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: TokenRadius.extraLarge) }
+
+    var body: some View {
+        if #available(iOS 26.0, *), !ProcessInfo.isRunningIOS26_0Beta {
+            content
+                .glassEffect(
+                    .regular.tint(TokenColors.Background.surface1.swiftUI.opacity(Self.surfaceOpacity)),
+                    in: shape
+                )
+        } else {
+            content
+                .background(legacyBackground)
+        }
+    }
+
+    private var legacyBackground: some View {
+        ZStack {
+            shape.fill(.ultraThinMaterial)
+            shape.fill(TokenColors.Background.surface1.swiftUI.opacity(Self.surfaceOpacity))
+        }
+    }
+
+    private var content: some View {
+        VStack(spacing: Self.rowSpacing) {
+            ForEach(rows) { row in
+                rowView(row)
+            }
+        }
+        .padding(.vertical, Self.rowSpacing)
+        .frame(width: width)
+    }
+
+    private func rowView(_ row: Row) -> some View {
+        HStack(spacing: TokenSpacing._1) {
+            MEGAAssets.Image.check
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: TokenSpacing._4, height: TokenSpacing._4)
+                .opacity(row.isChecked ? 1 : 0)
+            Text(row.title)
+                .font(.caption2.weight(.medium))
+            Spacer(minLength: 0)
+        }
+        .foregroundStyle(TokenColors.Text.onColor.swiftUI)
+        .frame(height: Self.rowContentHeight)
+        .padding(.horizontal, TokenSpacing._3)
+        .contentShape(Rectangle())
+        .onTapGesture { row.action?() }
     }
 }
 
@@ -565,7 +719,7 @@ private struct AirPlayIconButton: View {
             duration: 234,
             isPlaying: true,
             playbackMode: .podcast,
-            podcastPlaybackSpeed: 2,
+            playbackSpeed: 2,
             isSleepTimerActive: true
         )
         return vm

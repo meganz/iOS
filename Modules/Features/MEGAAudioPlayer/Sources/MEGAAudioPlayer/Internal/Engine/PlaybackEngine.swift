@@ -9,10 +9,12 @@ protocol PlaybackEngineProtocol: AnyObject {
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
+    var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
 
     func play(url: URL)
     func togglePlayPause()
     func seek(toFraction: Double)
+    func setPlaybackSpeed(_ rate: Float)
     func stop()
 }
 
@@ -26,6 +28,7 @@ final class PlaybackEngine {
     private let currentTimeSubject = CurrentValueSubject<TimeInterval, Never>(0)
     private let durationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
     private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+    private let playbackSpeedSubject = CurrentValueSubject<Float, Never>(1)
 
     private let player = AVPlayer()
     private var timeObserverToken: Any?
@@ -57,6 +60,10 @@ extension PlaybackEngine: PlaybackEngineProtocol {
 
     var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> {
         playbackStatusSubject.eraseToAnyPublisher()
+    }
+
+    var playbackSpeedPublisher: AnyPublisher<Float, Never> {
+        playbackSpeedSubject.eraseToAnyPublisher()
     }
 }
 
@@ -93,9 +100,18 @@ extension PlaybackEngine {
         player.seek(to: CMTime(seconds: target, preferredTimescale: 600))
     }
 
+    func setPlaybackSpeed(_ rate: Float) {
+        playbackSpeedSubject.send(rate)
+        player.defaultRate = rate
+        if player.rate != 0 {
+            player.rate = rate
+        }
+    }
+
     func stop() {
         player.pause()
         player.replaceCurrentItem(with: nil)
+        setPlaybackSpeed(1)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         currentTimeSubject.send(0)
         durationSubject.send(nil)

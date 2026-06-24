@@ -53,7 +53,10 @@ final class AudioPlayerViewModel: ObservableObject {
 
     // MARK: - Podcast Mode state
 
-    @Published private(set) var podcastPlaybackSpeed: Float = 1
+    /// Available podcast playback speeds, in display order.
+    let playbackSpeedOptions: [Float] = [2, 1.5, 1, 0.5]
+
+    @Published private(set) var playbackSpeed: Float = 1
 
     @Published private(set) var isSleepTimerActive: Bool = false
 
@@ -121,6 +124,10 @@ final class AudioPlayerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isAirPlayActive = $0 }
             .store(in: &cancellables)
+        
+        service.playbackSpeedPublisher
+            .sink { [weak self] in self?.playbackSpeed = $0 }
+            .store(in: &cancellables)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -173,7 +180,7 @@ final class AudioPlayerViewModel: ObservableObject {
         isShuffleOn: Bool = false,
         repeatMode: RepeatMode = .off,
         playbackMode: PlaybackMode = .music,
-        podcastPlaybackSpeed: Float = 1,
+        playbackSpeed: Float = 1,
         isSleepTimerActive: Bool = false,
         isAirPlayActive: Bool = false
     ) {
@@ -185,7 +192,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode
         self.playbackMode = playbackMode
-        self.podcastPlaybackSpeed = podcastPlaybackSpeed
+        self.playbackSpeed = playbackSpeed
         self.isSleepTimerActive = isSleepTimerActive
         self.isAirPlayActive = isAirPlayActive
     }
@@ -226,7 +233,12 @@ final class AudioPlayerViewModel: ObservableObject {
 
     // MARK: - Podcast Mode intents
 
-    func presentSpeedPicker() {
+    func isSelectedSpeed(_ rate: Float) -> Bool {
+        rate == playbackSpeed
+    }
+
+    func selectPlaybackSpeed(_ rate: Float) {
+        service?.setPlaybackSpeed(rate)
     }
 
     /// Seek backward by the podcast skip interval (15s). Stub until wired to the engine.

@@ -21,6 +21,7 @@ protocol PlaybackStateObservable {
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var statusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> { get }
+    var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
 }
 
 @MainActor
@@ -28,6 +29,7 @@ protocol PlaybackControllable {
     func play(source: PlaybackSource)
     func togglePlayPause()
     func seek(toFraction fraction: Double)
+    func setPlaybackSpeed(_ rate: Float)
     func stop()
 }
 

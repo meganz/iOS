@@ -170,6 +170,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> {
         isAirPlayActiveSubject.removeDuplicates().eraseToAnyPublisher()
     }
+    
+    var playbackSpeedPublisher: AnyPublisher<Float, Never> {
+        engine.playbackSpeedPublisher
+    }
 }
 
 // MARK: - PlaybackControllable
@@ -208,6 +212,10 @@ extension AudioPlaybackService: PlaybackControllable {
 
     func seek(toFraction fraction: Double) {
         engine.seek(toFraction: fraction)
+    }
+
+    func setPlaybackSpeed(_ rate: Float) {
+        engine.setPlaybackSpeed(rate)
     }
 
     func stop() {
