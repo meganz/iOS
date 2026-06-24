@@ -8,6 +8,13 @@ package protocol TransferControlRepositoryProtocol: RepositoryProtocol, Sendable
     func pauseTransfer(_ transfer: TransferEntity) async throws
     /// Resumes a single paused transfer in the transfer engine.
     func resumeTransfer(_ transfer: TransferEntity) async throws
+    /// Re-queues a finished (failed or cancelled) transfer. The SDK implements retry as
+    /// creating a fresh transfer with the same parameters; the retried transfer runs on the Active tab.
+    func retryTransfer(_ transfer: TransferEntity) async throws
+}
+
+package enum TransferControlRepositoryError: Error {
+    case transferNotFound
 }
 
 package struct TransferControlRepository: TransferControlRepositoryProtocol {
@@ -27,6 +34,21 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
 
     package func resumeTransfer(_ transfer: TransferEntity) async throws {
         try await setTransfer(transfer, paused: false)
+    }
+
+    package func retryTransfer(_ transfer: TransferEntity) async throws {
+        guard let megaTransfer = completedMEGATransfer(for: transfer) else {
+            throw TransferControlRepositoryError.transferNotFound
+        }
+        sdk.retryTransfer(megaTransfer)
+    }
+
+    /// Finished transfers are no longer addressable by tag in the transfer engine
+    /// (`transferByTag:` only returns active transfers), so the original `MEGATransfer`
+    /// must be recovered from the completed-transfers list, which retains failed and
+    /// cancelled transfers.
+    private func completedMEGATransfer(for transfer: TransferEntity) -> MEGATransfer? {
+        (sdk.completedTransfers as? [MEGATransfer])?.first { $0.tag == transfer.tag }
     }
 
     /// Pause and resume share a single SDK entry point (`pauseTransferByTag:pause:`),

@@ -4,8 +4,10 @@ import Transfer
 final class MockTransferControlRepository: TransferControlRepositoryProtocol, @unchecked Sendable {
     private(set) var pausedTransfers: [TransferEntity] = []
     private(set) var resumedTransfers: [TransferEntity] = []
+    private(set) var retriedTransfers: [TransferEntity] = []
     var pauseError: (any Error)?
     var resumeError: (any Error)?
+    var retryError: (any Error)?
 
     static var newRepo: MockTransferControlRepository {
         MockTransferControlRepository()
@@ -21,5 +23,10 @@ final class MockTransferControlRepository: TransferControlRepositoryProtocol, @u
     func resumeTransfer(_ transfer: TransferEntity) async throws {
         resumedTransfers.append(transfer)
         if let resumeError { throw resumeError }
+    }
+
+    func retryTransfer(_ transfer: TransferEntity) async throws {
+        retriedTransfers.append(transfer)
+        if let retryError { throw retryError }
     }
 }

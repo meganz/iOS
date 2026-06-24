@@ -3,11 +3,12 @@ import MEGADomainMock
 import Testing
 import Transfer
 
-@Suite("TransferControlUseCase forwards per-transfer pause/resume requests.")
+@Suite("TransferControlUseCase forwards per-transfer pause/resume/retry requests.")
 struct TransferControlUseCaseTests {
     private enum TestError: Error, Equatable {
         case pause
         case resume
+        case retry
     }
 
     private static func makeSUT(
@@ -62,5 +63,31 @@ struct TransferControlUseCaseTests {
         }
         #expect(repo.resumedTransfers.map(\.tag) == [4])
         #expect(repo.pausedTransfers.isEmpty)
+    }
+
+    @Test("Retrying a transfer forwards the transfer to the repository")
+    func retryTransfer() async throws {
+        let (sut, repo) = Self.makeSUT()
+        let transfer = TransferEntity(tag: 5)
+
+        try await sut.retryTransfer(transfer)
+
+        #expect(repo.retriedTransfers.map(\.tag) == [5])
+        #expect(repo.pausedTransfers.isEmpty)
+        #expect(repo.resumedTransfers.isEmpty)
+    }
+
+    @Test("Retry errors are rethrown")
+    func retryTransferRethrowsRepositoryError() async {
+        let repo = MockTransferControlRepository.newRepo
+        repo.retryError = TestError.retry
+        let (sut, _) = Self.makeSUT(repo: repo)
+
+        await #expect(throws: TestError.retry) {
+            try await sut.retryTransfer(TransferEntity(tag: 6))
+        }
+        #expect(repo.retriedTransfers.map(\.tag) == [6])
+        #expect(repo.pausedTransfers.isEmpty)
+        #expect(repo.resumedTransfers.isEmpty)
     }
 }
