@@ -298,6 +298,7 @@ private func makeDependency(
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),
+        rowRouter: MockTransferRowRouting(),
         filteringUserTransfers: true,
         clearTransfersUseCase: clearTransfersUseCase
     )

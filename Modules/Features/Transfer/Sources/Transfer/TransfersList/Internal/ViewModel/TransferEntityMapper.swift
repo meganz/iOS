@@ -43,10 +43,13 @@ public enum TransferEntityMapper {
     /// - Parameter finishDate: the wall-clock instant the transfer finished,
     ///   captured live by `SharedTransferFinishRecorder`. Do not derive it from
     ///   `TransferEntity.updateTime`; SDK transfer update time has no defined epoch.
+    /// - Parameter canViewInFolder: whether the Completed row should offer
+    ///   `View in folder`. 
     public static func rowState(
         for entity: TransferEntity,
         location: String? = nil,
-        finishDate: Date? = nil
+        finishDate: Date? = nil,
+        canViewInFolder: Bool = true
     ) -> TransferRowState {
         let direction = direction(for: entity.type)
         let status = status(for: entity.state)
@@ -73,7 +76,8 @@ public enum TransferEntityMapper {
                 finishDate: finishDateString(from: finishDate)
             ),
             errorDescription: entity.lastErrorExtended.map { String(describing: $0) },
-            location: location
+            location: location,
+            canViewInFolder: canViewInFolder
         )
     }
 

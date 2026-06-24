@@ -71,20 +71,38 @@ struct TransferResultRowView: View {
                     .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if isCompleted { viewModel.openFile() }
+        }
     }
 
+    /// In-flight rows show a pause/play toggle; terminal rows show the `…` button that
+    /// presents the per-row action sheet.
+    @ViewBuilder
     private var trailingAction: some View {
-        Button {
-            Task { await viewModel.togglePauseResume() }
-        } label: {
-            trailingImage
-                .foregroundStyle(isAllTransfersPaused
-                    ? TokenColors.Icon.disabled.swiftUI
-                    : TokenColors.Icon.secondary.swiftUI)
-                .frame(width: 24, height: 24)
+        if isReadOnly {
+            Button {
+                viewModel.presentActions()
+            } label: {
+                MEGAAssets.Image.moreVerticalMediumThinOutline
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                    .frame(width: 24, height: 24)
+            }
+            .buttonStyle(.plain)
+        } else {
+            Button {
+                Task { await viewModel.togglePauseResume() }
+            } label: {
+                trailingImage
+                    .foregroundStyle(isAllTransfersPaused
+                        ? TokenColors.Icon.disabled.swiftUI
+                        : TokenColors.Icon.secondary.swiftUI)
+                    .frame(width: 24, height: 24)
+            }
+            .buttonStyle(.plain)
+            .disabled(isAllTransfersPaused)
         }
-        .buttonStyle(.plain)
-        .disabled(isAllTransfersPaused)
     }
 
     /// Failed rows show their state label in red; every other status (including

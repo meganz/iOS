@@ -1,9 +1,13 @@
 @testable import Transfer
 
 extension TransferRegistry {
-    /// Test convenience: builds a registry with a no-op control use case for
-    /// tests that only exercise row-state upserts, not per-row pause/resume.
+    /// Test convenience: builds a registry with no-op collaborators for tests that
+    /// only exercise row-state upserts, not per-row actions.
     convenience init() {
-        self.init(controlUseCase: MockTransferControlUseCase())
+        self.init(
+            controlUseCase: MockTransferControlUseCase(),
+            rowRouter: MockTransferRowRouting(),
+            clearTransfersUseCase: MockClearTransfersUseCase()
+        )
     }
 }

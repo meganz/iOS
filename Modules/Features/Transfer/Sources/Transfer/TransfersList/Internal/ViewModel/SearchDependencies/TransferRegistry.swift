@@ -13,9 +13,17 @@ import Search
 final class TransferRegistry {
     private var rowViewModelsById: [ResultId: TransferRowViewModel] = [:]
     private let controlUseCase: any TransferControlUseCaseProtocol
+    private let rowRouter: any TransferRowRouting
+    private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
 
-    init(controlUseCase: some TransferControlUseCaseProtocol) {
+    init(
+        controlUseCase: some TransferControlUseCaseProtocol,
+        rowRouter: some TransferRowRouting,
+        clearTransfersUseCase: some ClearTransfersUseCaseProtocol
+    ) {
         self.controlUseCase = controlUseCase
+        self.rowRouter = rowRouter
+        self.clearTransfersUseCase = clearTransfersUseCase
     }
 
     func rowViewModel(for id: ResultId) -> TransferRowViewModel? {
@@ -29,7 +37,9 @@ final class TransferRegistry {
             rowViewModelsById[state.id] = TransferRowViewModel(
                 state: state,
                 transfer: transfer,
-                controlUseCase: controlUseCase
+                controlUseCase: controlUseCase,
+                rowRouter: rowRouter,
+                clearTransfersUseCase: clearTransfersUseCase
             )
         }
     }

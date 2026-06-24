@@ -12,22 +12,51 @@ public final class TransferRowViewModel: ObservableObject {
 
     private var transfer: TransferEntity
     private let controlUseCase: any TransferControlUseCaseProtocol
+    private let rowRouter: any TransferRowRouting
+    private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
 
     init(
         state: TransferRowState,
         transfer: TransferEntity,
-        controlUseCase: some TransferControlUseCaseProtocol
+        controlUseCase: some TransferControlUseCaseProtocol,
+        rowRouter: some TransferRowRouting,
+        clearTransfersUseCase: some ClearTransfersUseCaseProtocol
     ) {
         self.state = state
         self.transfer = transfer
         self.controlUseCase = controlUseCase
+        self.rowRouter = rowRouter
+        self.clearTransfersUseCase = clearTransfersUseCase
     }
 
     func update(state: TransferRowState, transfer: TransferEntity) {
         self.state = state
         self.transfer = transfer
     }
-    
+
+    // MARK: - Context actions
+
+    func presentActions() {
+        let context = TransferRowActionContext(
+            name: state.fileName,
+            detail: state.subtitle,
+            canViewInFolder: state.canViewInFolder
+        )
+        rowRouter.presentActions(for: transfer, context: context) { [weak self] in
+            self?.clear()
+        }
+    }
+
+    func openFile() {
+        rowRouter.openFile(for: transfer)
+    }
+
+    private func clear() {
+        clearTransfersUseCase.clearTransfer(tag: transfer.tag)
+    }
+
+    // MARK: - Pause / resume
+
     func togglePauseResume() async {
         do {
             switch state.status {

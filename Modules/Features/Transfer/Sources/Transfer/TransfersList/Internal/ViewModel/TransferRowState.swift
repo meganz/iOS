@@ -37,4 +37,9 @@ public struct TransferRowState: Sendable, Equatable {
     /// folder's cloud path for uploads, or the local destination folder for
     /// downloads. `nil` on tabs that don't render it (e.g. Active).
     public var location: String?
+
+    /// Whether the Completed row offers `View in folder`. `false` for downloads saved
+    /// to Photos, which have no deep-linkable folder. Only meaningful on the Completed
+    /// tab; defaults to `true` everywhere else.
+    public var canViewInFolder: Bool = true
 }

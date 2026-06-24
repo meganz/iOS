@@ -1,5 +1,6 @@
 import AsyncAlgorithms
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
 import Search
@@ -109,7 +110,8 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
                 states.append(TransferEntityMapper.rowState(
                     for: entity,
                     location: location,
-                    finishDate: finishDate
+                    finishDate: finishDate,
+                    canViewInFolder: !entity.isSavedToPhotos
                 ))
             }
             return states
@@ -193,7 +195,8 @@ final class TransferSearchResultsProvider: SearchResultsProviding, Sendable {
                     await registry.upsert(TransferEntityMapper.rowState(
                         for: entity,
                         location: location,
-                        finishDate: finishDate
+                        finishDate: finishDate,
+                        canViewInFolder: !entity.isSavedToPhotos
                     ), transfer: entity)
                     return .generic
                 case .failed where Self.isFailed(entity):

@@ -10,12 +10,17 @@ struct TransferRowViewModelTests {
 
     private static func makeSUT(
         entity: TransferEntity,
-        controlUseCase: MockTransferControlUseCase = MockTransferControlUseCase()
+        state: TransferRowState? = nil,
+        controlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
+        rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
+        clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
     ) -> (sut: TransferRowViewModel, useCase: MockTransferControlUseCase) {
         let sut = TransferRowViewModel(
-            state: TransferEntityMapper.rowState(for: entity),
+            state: state ?? TransferEntityMapper.rowState(for: entity),
             transfer: entity,
-            controlUseCase: controlUseCase
+            controlUseCase: controlUseCase,
+            rowRouter: rowRouter,
+            clearTransfersUseCase: clearTransfersUseCase
         )
         return (sut, controlUseCase)
     }
@@ -100,5 +105,51 @@ struct TransferRowViewModelTests {
         await sut.togglePauseResume()
 
         #expect(sut.state.status == .paused)
+    }
+
+    // MARK: - Context actions
+
+    @Test("Presenting actions forwards the transfer and a header context")
+    func presentActionsForwardsToRouter() {
+        let router = MockTransferRowRouting()
+        let entity = TransferEntity(fileName: "clip.mov", tag: 42, state: .complete)
+        var state = TransferEntityMapper.rowState(for: entity)
+        state.canViewInFolder = false
+        let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
+
+        sut.presentActions()
+
+        #expect(router.presentActionsTags == [42])
+        #expect(router.presentActionsContexts.first?.canViewInFolder == false)
+        #expect(router.presentActionsContexts.first?.name == "clip.mov")
+    }
+
+    @Test("Tapping Clear in the presented sheet removes the row's entry by tag")
+    func clearFromSheetRemovesEntryByTag() {
+        let router = MockTransferRowRouting()
+        let clearUseCase = MockClearTransfersUseCase()
+        let (sut, _) = Self.makeSUT(
+            entity: TransferEntity(tag: 7, state: .complete),
+            rowRouter: router,
+            clearTransfersUseCase: clearUseCase
+        )
+
+        sut.presentActions()
+        router.lastOnClear?()
+
+        #expect(clearUseCase.clearedTransferTags == [7])
+    }
+
+    @Test("Tapping a completed row opens the file via the row router")
+    func openFileRoutesToRouter() {
+        let router = MockTransferRowRouting()
+        let (sut, _) = Self.makeSUT(
+            entity: TransferEntity(tag: 42, state: .complete),
+            rowRouter: router
+        )
+
+        sut.openFile()
+
+        #expect(router.openFileTags == [42])
     }
 }

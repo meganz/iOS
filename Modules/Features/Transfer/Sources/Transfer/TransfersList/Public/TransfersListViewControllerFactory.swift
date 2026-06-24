@@ -11,7 +11,13 @@ public enum TransfersListViewControllerFactory {
     ///   tab resolves an upload's destination cloud path through it, and its
     ///   `NodeValidationRepository` dependency is only constructible in the app
     ///   target, so it can't be built here.
-    public static func make(nodeUseCase: some NodeUseCaseProtocol) -> UIViewController {
+    /// - Parameter rowRouter: app-implemented navigation for per-row actions (View in
+    ///   folder, Open with, Share link, open file); none of those destinations are
+    ///   constructible from this package, so the app injects the router.
+    public static func make(
+        nodeUseCase: some NodeUseCaseProtocol,
+        rowRouter: some TransferRowRouting
+    ) -> UIViewController {
         let inventoryUseCase = TransferInventoryUseCase(
             transferInventoryRepository: TransferInventoryRepository.newRepo,
             fileSystemRepository: FileSystemRepository.sharedRepo
@@ -34,7 +40,11 @@ public enum TransfersListViewControllerFactory {
             finishDateProvider: completionRecorder
         )
 
-        let registry = TransferRegistry(controlUseCase: DependencyInjection.transferControlUseCase)
+        let registry = TransferRegistry(
+            controlUseCase: DependencyInjection.transferControlUseCase,
+            rowRouter: rowRouter,
+            clearTransfersUseCase: clearTransfersUseCase
+        )
 
         let dependency = TransferTabDependency(
             inventoryUseCase: inventoryUseCase,
@@ -45,6 +55,7 @@ public enum TransfersListViewControllerFactory {
                 nodeAttributeUseCase: nodeAttributeUseCase
             ),
             finishDateProvider: completionRecorder,
+            rowRouter: rowRouter,
             filteringUserTransfers: true,
             clearTransfersUseCase: clearTransfersUseCase
         )

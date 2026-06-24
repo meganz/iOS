@@ -34,13 +34,17 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
         tracker.trackAnalyticsEvent(with: TransfersToolbarWidgetPressedEvent())
 
         let rootVC: UIViewController
+        var rowRouter: TransferRowActionRouter?
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+            let router = TransferRowActionRouter()
+            rowRouter = router
             rootVC = TransfersListViewControllerFactory.make(
                 nodeUseCase: NodeUseCase(
                     nodeDataRepository: NodeDataRepository.newRepo,
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
-                )
+                ),
+                rowRouter: router
             )
         } else {
             let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
@@ -52,6 +56,8 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
         }
 
         let navigationController = MEGANavigationController(rootViewController: rootVC)
+        // Transfers is presented inside this modal nav; row actions push/present from it.
+        rowRouter?.navigationController = navigationController
         navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
         CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers from nav bar indicator")
         UIApplication.mnz_visibleViewController().present(navigationController, animated: true)

@@ -20,13 +20,17 @@ final class TransfersRouter {
     func showTransfers() {
         let transferVC: UIViewController
         if featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+            let rowRouter = TransferRowActionRouter()
             transferVC = TransfersListViewControllerFactory.make(
                 nodeUseCase: NodeUseCase(
                     nodeDataRepository: NodeDataRepository.newRepo,
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
-                )
+                ),
+                rowRouter: rowRouter
             )
+            // Transfers is pushed onto this nav controller; row actions push/present from it.
+            rowRouter.navigationController = navigationController
         } else {
             transferVC = UIStoryboard(name: "Transfers", bundle: nil)
                 .instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")
