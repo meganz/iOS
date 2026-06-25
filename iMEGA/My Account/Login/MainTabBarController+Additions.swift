@@ -296,6 +296,18 @@ extension MainTabBarController: UITabBarControllerDelegate {
         self.delegate = self
     }
 
+    public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        // Tapping the already-selected tab pops its UINavigationController to root automatically.
+        // For exapmle, HomeView additionally hosts a SwiftUI NavigationStack inside its root controller,
+        // which UIKit cannot reach, so reset that inner stack here too.
+        if viewController === selectedViewController,
+           let navigationController = viewController as? MEGANavigationController,
+           let resettable = navigationController.viewControllers.first as? (any RootNavigationResettable) {
+            resettable.resetNavigationToRoot()
+        }
+        return true
+    }
+    
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         showPSAViewIfNeeded()
         

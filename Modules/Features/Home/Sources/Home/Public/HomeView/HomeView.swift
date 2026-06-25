@@ -32,6 +32,7 @@ public struct HomeView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var searchText = ""
     private let quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
+    private let popToRootPublisher: AnyPublisher<Void, Never>
     private let dependency: Dependency
 
     private var isIphoneInLandscape: Bool {
@@ -58,12 +59,14 @@ public struct HomeView: View {
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
         tabBarHidden: Binding<Bool>,
-        quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>
+        quickAccessRoutePublisher: AnyPublisher<QuickAccessRoute?, Never>,
+        popToRootPublisher: AnyPublisher<Void, Never>
     ) {
         self.dependency = dependency
         _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink, featureFlagProvider: dependency.featureFlagProvider))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
         self.quickAccessRoutePublisher = quickAccessRoutePublisher
+        self.popToRootPublisher = popToRootPublisher
     }
 
     public var body: some View {
@@ -77,6 +80,9 @@ public struct HomeView: View {
         .task { await viewModel.monitorNetworkConnection() }
         .task { await viewModel.monitorSearchBarPressed() }
         .task { await viewModel.observeDeepLinkSearch() }
+        .onReceive(popToRootPublisher) { _ in
+            navigator.popToRoot()
+        }
         .onReceive(quickAccessRoutePublisher.compactMap { $0 }) {
             switch $0 {
             case .recents:

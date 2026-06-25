@@ -4,6 +4,16 @@ import MEGAAppPresentation
 import MEGASwiftUI
 import SwiftUI
 
+/// Lets the tab bar reset a tab's SwiftUI navigation to its root when the already-selected tab is tapped again.
+///
+/// UIKit automatically pops the tab's `UINavigationController` to its root on reselect, but Home hosts its
+/// own SwiftUI `NavigationStack` inside the root hosting controller. That inner stack is invisible to UIKit,
+/// so it must be reset explicitly.
+@MainActor
+protocol RootNavigationResettable {
+    func resetNavigationToRoot()
+}
+
 final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, SearchActivatable {
     private var isTabBarHidden: Binding<Bool> {
         Binding(
@@ -17,6 +27,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
     }
 
     @Published var quickAccessRoute: QuickAccessRoute?
+
+    private let popToRootSubject = PassthroughSubject<Void, Never>()
 
     private let dependency: HomeView.Dependency
     private let miniPlayerVisibility: MiniPlayerVisibility = MiniPlayerVisibility()
@@ -92,7 +104,8 @@ final class HomeViewHostingController: UIViewController, AdsSlotDisplayable, Sea
             dependency: dependency,
             homeDeepLink: homeDeepLink,
             tabBarHidden: isTabBarHidden,
-            quickAccessRoutePublisher: $quickAccessRoute.eraseToAnyPublisher()
+            quickAccessRoutePublisher: $quickAccessRoute.eraseToAnyPublisher(),
+            popToRootPublisher: popToRootSubject.eraseToAnyPublisher()
         )
         .environmentObject(miniPlayerVisibility)
         .environmentObject(tabBarSafeAreaInsetCompensation)
@@ -171,6 +184,12 @@ extension HomeViewHostingController: AudioPlayerPresenterProtocol {
             .store(in: &cancelables)
     }
 }
+extension HomeViewHostingController: RootNavigationResettable {
+    func resetNavigationToRoot() {
+        popToRootSubject.send(())
+    }
+}
+
 extension HomeViewHostingController: QuickAccessRouting {
     func handle(quickAccessRoute: QuickAccessRoute) {
         self.quickAccessRoute = quickAccessRoute

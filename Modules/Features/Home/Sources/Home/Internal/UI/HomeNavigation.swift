@@ -20,6 +20,11 @@ final class HomeNavigation: ObservableObject {
         path.removeLast()
     }
 
+    func popToRoot() {
+        guard !path.isEmpty else { return }
+        path = NavigationPath()
+    }
+
     func showSnackBar(_ snackBar: SnackBar) {
         self.snackBar = snackBar
     }
