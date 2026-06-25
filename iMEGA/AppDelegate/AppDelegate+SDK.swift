@@ -49,6 +49,10 @@ extension AppDelegate {
         let useCase = RequestStatusMonitorUseCase(repo: RequestStatusMonitorRepository.newRepo)
         useCase.enableRequestStatusMonitor(true)
     }
+
+    @objc func startMonitoringLastPurgeEvents() {
+        LastPurgeRepository.startMonitoring()
+    }
     
     @objc func addCompletedTransfer(_ sdk: MEGASdk, transfer: MEGATransfer) {
         Task { @MainActor in

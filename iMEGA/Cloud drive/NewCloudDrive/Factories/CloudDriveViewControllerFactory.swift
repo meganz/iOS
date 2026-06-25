@@ -310,11 +310,6 @@ struct CloudDriveViewControllerFactory {
                 nodeSource,
                 config: config
             ),
-            temporaryWarningViewModel: makeOptionalTemporaryWarningViewModel(
-                accountStorageUseCase: accountStorageUseCase,
-                nodeSource,
-                config: config
-            ),
             upgradeEncouragementViewModel: makeUpgradeEncouragementViewModel(
                 config: config,
                 presenter: navigationController
@@ -332,6 +327,7 @@ struct CloudDriveViewControllerFactory {
                 accountUseCase: accountUseCase),
             accountUseCase: accountUseCase,
             accountStorageUseCase: accountStorageUseCase,
+            lastPurgeUseCase: LastPurgeUseCase(repository: LastPurgeRepository.newRepo),
             mediaDiscoverySortHeaderConfig: SortHeaderConfig(
                 title: Strings.Localizable.sortTitle,
                 options: [MEGAUIComponent.SortOrder.Key.lastModified].sortOptions
@@ -835,27 +831,6 @@ struct CloudDriveViewControllerFactory {
         await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
     }
 
-    /// Returns a `WarningBannerViewModel` if the current screen is inside the Cloud Drive section
-    /// and the account's storage status indicates that a storage over-quota banner should be displayed.
-    /// The banner will be shown when the user is nearing or exceeding their storage limit,
-    /// unless the account has unlimited storage or the banner has been recently dismissed.
-    /// Specifically, this method checks if the current view is not displaying shared items,
-    /// and evaluates the account's storage status to determine if a warning is necessary.
-    private func makeOptionalTemporaryWarningViewModel(
-        accountStorageUseCase: AccountStorageUseCase,
-        _ nodeSource: NodeSource,
-        config: NodeBrowserConfig
-    ) -> WarningBannerViewModel? {
-        guard config.displayMode == .cloudDrive,
-              config.isFromSharedItem != true,
-              case .node = nodeSource,
-              accountStorageUseCase.shouldShowStorageBanner else {
-            return nil
-        }
-        MEGALogDebug("[StorageBanner] creating temporary banner view model with \(accountStorageUseCase.currentStorageStatus) storage status.")
-        return makeSOQWarningViewModel(status: accountStorageUseCase.currentStorageStatus)
-    }
-
     private func makeOptionalWarningViewModel(
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -1086,14 +1061,6 @@ struct CloudDriveViewControllerFactory {
 
     private func makeWarningViewModel(warningType: WarningBannerType) -> WarningBannerViewModel {
         WarningBannerViewModel(warningType: warningType)
-    }
-
-    private func makeSOQWarningViewModel(status: StorageStatusEntity) -> WarningBannerViewModel? {
-        switch status {
-        case .almostFull: WarningBannerViewModel(warningType: .almostFullStorageOverQuota)
-        case .full: WarningBannerViewModel(warningType: .fullStorageOverQuota)
-        default: nil
-        }
     }
 
     private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningBannerViewModel {

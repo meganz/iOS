@@ -1,7 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 
-enum WarningBannerType: CustomStringConvertible, Equatable {
+enum WarningBannerType: Equatable {
     case noInternetConnection
     case limitedPhotoAccess
     case contactsNotVerified
@@ -9,7 +9,26 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
     case backupStatusError(String)
     case fullStorageOverQuota
     case almostFullStorageOverQuota
-    
+    case inactivityPurge(inactivityMonths: Int)
+
+    var isStorageBanner: Bool {
+        switch self {
+        case .fullStorageOverQuota, .almostFullStorageOverQuota:
+            true
+        default:
+            false
+        }
+    }
+
+    var isInactivityPurge: Bool {
+        switch self {
+        case .inactivityPurge:
+            true
+        default:
+            false
+        }
+    }
+
     /// The `Severity` enum defines the levels of severity for warnings or alerts displayed in the app.
     ///
     /// This enum is used to categorise different warnings, which influences the different banners' style.
@@ -45,7 +64,7 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         self.onHeightChange = onHeightChange
         self.tracker = tracker
         
-        self.applyNewDesign = warningType == .fullStorageOverQuota || warningType == .almostFullStorageOverQuota
+        self.applyNewDesign = warningType == .fullStorageOverQuota || warningType == .almostFullStorageOverQuota || warningType.isInactivityPurge
     }
     
     func onViewAppear() {
@@ -84,6 +103,8 @@ enum WarningBannerType: CustomStringConvertible, Equatable {
         case .almostFullStorageOverQuota:
             tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerUpgradeButtonPressedEvent())
             router?.presentUpgradeScreen()
+        case .inactivityPurge:
+            if let url = URL(string: "https://help.mega.io/files-folders/restore-delete/data-deleted-by-mega") { router?.openURL(url) }
         default: break
         }
     }

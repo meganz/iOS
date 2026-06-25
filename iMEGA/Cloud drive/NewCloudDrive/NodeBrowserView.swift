@@ -77,6 +77,7 @@ struct NodeBrowserView: View {
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
         .onLoad { await viewModel.onLoadTask() }
+        .task { await viewModel.showInactivityPurgeBannerIfNeeded() }
     }
 
     @ViewBuilder

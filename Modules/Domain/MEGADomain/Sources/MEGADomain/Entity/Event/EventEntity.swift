@@ -7,7 +7,7 @@ public struct EventEntity: Sendable {
     public let storageState: StorageState?
     public let description: String?
     public let number: Int
-    
+
     public init(
         type: EventEntity.EventType? = nil,
         text: String? = nil,
@@ -48,6 +48,7 @@ public struct EventEntity: Sendable {
         case creditCardExpiry
         case networkActivity
         case transfersResumed
+        case lastPurge
     }
 
     public enum ReasonError: Sendable {

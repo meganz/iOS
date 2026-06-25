@@ -14,4 +14,8 @@ struct WarningBannerViewRouter: WarningBannerViewRouting {
             presenter: navigationController)
         .showUpgradeAccount()
     }
+
+    func openURL(_ url: URL) {
+        (url as NSURL).mnz_presentSafariViewController()
+    }
 }

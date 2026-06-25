@@ -171,7 +171,8 @@
     [MEGASdk.shared addMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
     [MEGASdk.shared addMEGAGlobalDelegate:self];
-    
+    [self startMonitoringLastPurgeEvents];
+
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGAChatSdk.shared addChatRequestDelegate:self];
         

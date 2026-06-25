@@ -2700,6 +2700,7 @@
 		C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */; };
 		C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */; };
 		C4CBF0012DBB835B00834EF9 /* PermissionOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */; };
+		C4CDBF6D2FD80010006E127B /* MockLastPurgeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CDBF6C2FD80005006E127B /* MockLastPurgeUseCase.swift */; };
 		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
 		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
 		C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */; };
@@ -5568,6 +5569,7 @@
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCurrentStateEntity.swift; sourceTree = "<group>"; };
 		C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingViewModel.swift; sourceTree = "<group>"; };
+		C4CDBF6C2FD80005006E127B /* MockLastPurgeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLastPurgeUseCase.swift; sourceTree = "<group>"; };
 		C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCase.swift; sourceTree = "<group>"; };
 		C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoRepository.swift; sourceTree = "<group>"; };
 		C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
@@ -12546,6 +12548,7 @@
 			isa = PBXGroup;
 			children = (
 				943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */,
+				C4CDBF6C2FD80005006E127B /* MockLastPurgeUseCase.swift */,
 				24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */,
 				9437CEC32CB0080D0051F947 /* MockOfflineFilesUseCase.swift */,
 				24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */,
@@ -16911,6 +16914,7 @@
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
 				0E51AC3C2E6119F20075E18F /* MockImportLinkRouter.swift in Sources */,
+				C4CDBF6D2FD80010006E127B /* MockLastPurgeUseCase.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				0E80B3212DC4884700582D55 /* MockLoginRouter.swift in Sources */,
 				0E380B2C2EEB7DFB000991B9 /* MockMediaTabSharedResourceProvider.swift in Sources */,

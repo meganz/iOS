@@ -27,6 +27,7 @@ extension EventEntity.EventType {
         case .creditCardExpiry: 20
         case .networkActivity: 22
         case .transfersResumed: 23
+        case .lastPurge: 24
         }
     }
 }
@@ -120,6 +121,7 @@ extension Event {
         case .creditCardExpiry: EventEntity.EventType.creditCardExpiry
         case .networkActivity: EventEntity.EventType.networkActivity
         case .transfersResumed: EventEntity.EventType.transfersResumed
+        case .lastPurge: EventEntity.EventType.lastPurge
         @unknown default:  nil
         }
     }

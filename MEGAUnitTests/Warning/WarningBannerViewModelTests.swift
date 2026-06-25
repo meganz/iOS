@@ -114,6 +114,27 @@ final class WarningBannerViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testWarningType_inactivityPurge_shouldReturnCorrectValues() {
+        let sut = makeSUT(warningType: .inactivityPurge(inactivityMonths: 10))
+
+        XCTAssertEqual(sut.warningType.description, Strings.Localizable.CloudDrive.PurgeBanner.Inactivity.subtitle(10))
+        XCTAssertEqual(sut.warningType.title, Strings.Localizable.CloudDrive.PurgeBanner.Inactivity.title)
+        XCTAssertEqual(sut.warningType.actionText, Strings.Localizable.learnMore)
+        XCTAssertEqual(sut.warningType.severity, .critical)
+        XCTAssertTrue(sut.applyNewDesign)
+    }
+
+    @MainActor
+    func testTapAction_inactivityPurge_shouldOpenLearnMoreURL() {
+        let router = MockWarningViewRouter()
+        let sut = makeSUT(warningType: .inactivityPurge(inactivityMonths: 10), router: router)
+
+        sut.onActionButtonTapped()
+
+        XCTAssertEqual(router.openURL_calledTimes, 1)
+    }
+
+    @MainActor
     func testOnViewAppear_whenWarningTypeIsFullStorageOverQuota_shouldTrackFullStorageOverQuotaBannerDisplayedEvent() {
         let tracker = MockTracker()
         let sut = makeSUT(warningType: .fullStorageOverQuota, tracker: tracker)

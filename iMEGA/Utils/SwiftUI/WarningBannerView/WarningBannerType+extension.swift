@@ -8,6 +8,7 @@ extension WarningBannerType {
         switch self {
         case .fullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.title
         case .almostFullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.title
+        case .inactivityPurge: Strings.Localizable.CloudDrive.PurgeBanner.Inactivity.title
         default: nil
         }
     }
@@ -16,6 +17,7 @@ extension WarningBannerType {
         switch self {
         case .fullStorageOverQuota: MEGAAssets.Image.fullStorageAlert
         case .almostFullStorageOverQuota: MEGAAssets.Image.almostFullStorageAlert
+        case .inactivityPurge: Image(uiImage: MEGAAssets.UIImage.alertTriangle)
         default: nil
         }
     }
@@ -31,13 +33,14 @@ extension WarningBannerType {
         switch self {
         case .fullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.button
         case .almostFullStorageOverQuota: Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.button
+        case .inactivityPurge: Strings.Localizable.learnMore
         default: nil
         }
     }
 
     var severity: Severity {
         switch self {
-        case .fullStorageOverQuota: .critical
+        case .fullStorageOverQuota, .inactivityPurge: .critical
         default: .warning
         }
     }
@@ -58,6 +61,8 @@ extension WarningBannerType {
             return Strings.Localizable.Account.Storage.Banner.FullStorageOverQuotaBanner.description
         case .almostFullStorageOverQuota:
             return Strings.Localizable.Account.Storage.Banner.AlmostFullStorageOverQuotaBanner.description
+        case .inactivityPurge(let inactivityMonths):
+            return Strings.Localizable.CloudDrive.PurgeBanner.Inactivity.subtitle(inactivityMonths)
         }
     }
 }

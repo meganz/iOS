@@ -89,6 +89,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let lastPurgeUseCase: any LastPurgeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let warningBannerViewRouter: any WarningBannerViewRouting
 
@@ -147,7 +148,6 @@ class NodeBrowserViewModel: ObservableObject {
         searchResultsContainerViewModel: SearchResultsContainerViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
         warningViewModel: WarningBannerViewModel?,
-        temporaryWarningViewModel: WarningBannerViewModel?,
         upgradeEncouragementViewModel: UpgradeEncouragementViewModel?,
         adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,
@@ -160,6 +160,7 @@ class NodeBrowserViewModel: ObservableObject {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        lastPurgeUseCase: some LastPurgeUseCaseProtocol,
         mediaDiscoverySortHeaderConfig: SortHeaderConfig,
         nodeActionsBridge: NodeActionsBridge,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -205,6 +206,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.accountUseCase = accountUseCase
         self.accountStorageUseCase = accountStorageUseCase
+        self.lastPurgeUseCase = lastPurgeUseCase
         self.mediaDiscoverySortHeaderConfig = mediaDiscoverySortHeaderConfig
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
@@ -660,7 +662,7 @@ class NodeBrowserViewModel: ObservableObject {
         accountStorageMonitoringTask = Task { [weak self] in
             for await status in onStorageStatusUpdateSequence {
                 MEGALogDebug("[StorageBanner] monitorStorageStatusUpdates - storage status: \(status)")
-                self?.updateTemporaryBanner(status: status)
+                self?.updateTemporaryBanner(storageStatus: status)
             }
         }
     }
@@ -678,16 +680,22 @@ class NodeBrowserViewModel: ObservableObject {
         }
     }
     
-    func updateTemporaryBanner(status: StorageStatusEntity) {
-        MEGALogDebug("[StorageBanner] updateTemporaryBanner, current warning type: \(String(describing: temporaryBannerViewModel?.warningType)), new storage status: \(status)")
-        switch status {
+    func updateTemporaryBanner(storageStatus: StorageStatusEntity) {
+        MEGALogDebug("[StorageBanner] updateTemporaryBanner, current warning type: \(String(describing: temporaryBannerViewModel?.warningType)), new storage status: \(storageStatus)")
+        // In practice SDK will never invoke storage-related banners and purge banner simultaneously, but
+        // we should add the below guard check just in case.
+        guard temporaryBannerViewModel?.warningType.isInactivityPurge != true else { return }
+        switch storageStatus {
         case .full:
             if temporaryBannerViewModel?.warningType != .fullStorageOverQuota {
                 temporaryBannerViewModel = makeSOQBanerViewModel(.fullStorageOverQuota)
             }
         case .almostFull:
             guard accountStorageUseCase.shouldShowStorageBanner else {
-                resetTemporaryBanner()
+                // Only clear the banner if a storage banner was showing — don't wipe a non-storage banner (e.g. inactivity purge)
+                if temporaryBannerViewModel?.warningType.isStorageBanner == true {
+                    resetTemporaryBanner()
+                }
                 return
             }
             temporaryBannerViewModel = makeSOQBanerViewModel(
@@ -700,11 +708,14 @@ class NodeBrowserViewModel: ObservableObject {
                 }
             )
         default:
-            resetTemporaryBanner()
+            // If storage banner was shown before, we reset it when status becomes normal
+            if temporaryBannerViewModel?.warningType.isStorageBanner == true {
+                resetTemporaryBanner()
+            }
         }
         objectWillChange.send()
     }
-    
+
     func refreshStorageBanners() {
         guard config.isFromSharedItem != true,
               let displayMode = config.displayMode,
@@ -715,7 +726,7 @@ class NodeBrowserViewModel: ObservableObject {
         if accountStorageUseCase.shouldRefreshStorageStatus {
             refreshStorageStatus()
         }
-        updateTemporaryBanner(status: accountStorageUseCase.currentStorageStatus)
+        updateTemporaryBanner(storageStatus: accountStorageUseCase.currentStorageStatus)
     }
     
     /// Refreshes the current storage status asynchronously and updates the temporary storage banner if needed.
@@ -727,11 +738,38 @@ class NodeBrowserViewModel: ObservableObject {
     private func refreshStorageStatus() {
         refreshStorageStatusTask = Task { [weak self] in
             if let currentStorageStatus = try? await self?.accountStorageUseCase.refreshCurrentStorageState() {
-                self?.updateTemporaryBanner(status: currentStorageStatus)
+                self?.updateTemporaryBanner(storageStatus: currentStorageStatus)
             }
         }
     }
     
+    func showInactivityPurgeBannerIfNeeded() async {
+        guard config.displayMode == .cloudDrive,
+              nodeSource.parentNode?.nodeType == .root else { return }
+
+        guard let event = await lastPurgeUseCase.inactivityPurgeEvent() else { return }
+        guard !Task.isCancelled else { return }
+        showInactivityPurgeBanner(event: event)
+    }
+
+    private func showInactivityPurgeBanner(event: LastPurgeEventEntity) {
+        temporaryBannerViewModel = WarningBannerViewModel(
+            warningType: .inactivityPurge(inactivityMonths: event.inactivityMonths),
+            router: warningBannerViewRouter,
+            shouldShowCloseButton: true,
+            closeButtonAction: { [weak self] in
+                self?.resetTemporaryBanner()
+                self?.objectWillChange.send()
+                Task {
+                    try? await self?.lastPurgeUseCase.acknowledgeLastPurge(
+                        timestamp: event.purgeTimestamp
+                    )
+                }
+            }
+        )
+        objectWillChange.send()
+    }
+
     private func resetTemporaryBanner() {
         temporaryBannerViewModel = nil
     }
@@ -788,5 +826,12 @@ extension NodeBrowserViewModel {
         case .regular(let leftBarButton):
             leftBarButton != .back
         }
+    }
+}
+
+extension LastPurgeEventEntity {
+    var inactivityMonths: Int {
+        let lastActiveDate = Date(timeIntervalSince1970: TimeInterval(lastActiveTimestamp))
+        return Calendar.current.dateComponents([.month], from: lastActiveDate, to: Date()).month ?? 0
     }
 }

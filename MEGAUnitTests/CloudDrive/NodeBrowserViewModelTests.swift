@@ -51,6 +51,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         let nodeUpdatesContinuation: AsyncStream<[NodeEntity]>.Continuation
         let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
         let nodeUseCase: MockNodeDataUseCase
+        let lastPurgeUseCase: MockLastPurgeUseCase
         let tracker = MockTracker()
         let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel
 
@@ -69,7 +70,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            tempWarningBannerViewModel: WarningBannerViewModel? = nil,
+            lastPurgeUseCase: MockLastPurgeUseCase = MockLastPurgeUseCase(),
             sortOptionsForMD: [SortOption] = [SortOption(key: .name, localizedTitle: "")],
             selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified)
         ) {
@@ -91,6 +92,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdatesStream.eraseToAnyAsyncSequence())
             self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService()
             self.nodeUseCase = MockNodeDataUseCase(nodes: [node])
+            self.lastPurgeUseCase = lastPurgeUseCase
 
             mediaDiscoveryViewModel = .init(
                 contentMode: .library,
@@ -139,11 +141,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
-                temporaryWarningViewModel: tempWarningBannerViewModel,
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
                 config: config,
- // Pass the modified config here
                 nodeSource: nodeSource,
                 noInternetViewModel: LegacyNoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
@@ -162,7 +162,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 accountUseCase: MockAccountUseCase(),
                 accountStorageUseCase: mockAccountStorageUseCase,
- // Inject the mock here
+                lastPurgeUseCase: lastPurgeUseCase,
                 mediaDiscoverySortHeaderConfig: SortHeaderConfig(title: "", options: sortOptionsForMD),
                 nodeActionsBridge: NodeActionsBridge(),
                 tracker: tracker,
@@ -527,21 +527,19 @@ class NodeBrowserViewModelTests: XCTestCase {
             onStorageStatusUpdates: makeAsyncStream(for: []),
             currentStorageStatus: .full
         )
-        let tempWarningBannerVM = WarningBannerViewModel(warningType: .fullStorageOverQuota)
-        
+
         var config = NodeBrowserConfig.default
         config.displayMode = .cloudDrive
-        
+
         let harness = Harness(
             node: .init(),
             config: config,
-            mockAccountStorageUseCase: mockAccountStorageUseCase,
-            tempWarningBannerViewModel: tempWarningBannerVM
+            mockAccountStorageUseCase: mockAccountStorageUseCase
         )
-        
+
         harness.sut.onViewAppear()
-    
-        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, tempWarningBannerVM.warningType)
+
+        XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
     }
     
     @MainActor
@@ -572,16 +570,16 @@ class NodeBrowserViewModelTests: XCTestCase {
     func testUpdateTemporaryBanner_whenStorageStatusTransitions_shouldDisplayCorrectBannersOrRemoveThem() async {
         let (harness, _) = makeHarness()
         
-        harness.sut.updateTemporaryBanner(status: .almostFull)
-        
+        harness.sut.updateTemporaryBanner(storageStatus: .almostFull)
+
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .almostFullStorageOverQuota)
         
-        harness.sut.updateTemporaryBanner(status: .full)
-        
+        harness.sut.updateTemporaryBanner(storageStatus: .full)
+
         XCTAssertEqual(harness.sut.currentBannerViewModel?.warningType, .fullStorageOverQuota)
         
-        harness.sut.updateTemporaryBanner(status: .noStorageProblems)
-        
+        harness.sut.updateTemporaryBanner(storageStatus: .noStorageProblems)
+
         XCTAssertNil(harness.sut.currentBannerViewModel)
     }
     
@@ -868,6 +866,145 @@ class NodeBrowserViewModelTests: XCTestCase {
 
         XCTAssertTrue(harness.sut.editing, "Edit mode should be preserved when view mode doesn't change")
         XCTAssertEqual(harness.sut.viewMode, .list, "View mode should remain list")
+    }
+
+    // MARK: - Inactivity Purge Banner
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenInactivityPurgeEventArrives_shouldShowBanner() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .inactive, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        let harness = Harness(
+            node: NodeEntity(nodeType: .root),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        XCTAssertTrue(harness.sut.currentBannerViewModel?.warningType.isInactivityPurge == true)
+    }
+
+    func testInactivityMonths_isComputedFromLastActiveTimestampToNow() throws {
+        let now = Date()
+        let lastActiveDate = try XCTUnwrap(Calendar.current.date(byAdding: .month, value: -10, to: now))
+        let entity = LastPurgeEventEntity(
+            purgeTimestamp: Int64(now.timeIntervalSince1970),
+            reason: .inactive,
+            lastActiveTimestamp: Int64(lastActiveDate.timeIntervalSince1970)
+        )
+
+        XCTAssertEqual(entity.inactivityMonths, 10)
+    }
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenNonInactivityPurgeEventArrives_shouldNotShowBanner() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .unknown, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        let harness = Harness(
+            node: NodeEntity(nodeType: .root),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+    }
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenDisplayModeIsNotCloudDrive_shouldNotShowBanner() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .inactive, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .rubbishBin
+        let harness = Harness(
+            node: NodeEntity(nodeType: .root),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+    }
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenParentNodeIsNotRoot_shouldNotShowBanner() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .inactive, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        let harness = Harness(
+            node: NodeEntity(nodeType: .folder),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+    }
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenCloseButtonTapped_shouldDismissBannerAndAcknowledge() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .inactive, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        let harness = Harness(
+            node: NodeEntity(nodeType: .root),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        harness.sut.currentBannerViewModel?.closeButtonAction?()
+        try? await Task.sleep(nanoseconds: 200_000_000)
+
+        XCTAssertNil(harness.sut.currentBannerViewModel)
+        XCTAssertEqual(mockLastPurgeUseCase.acknowledgedTimestamps, [123])
+    }
+
+    @MainActor
+    func testShowInactivityPurgeBanner_whenStorageStatusChanges_shouldNotOverwritePurgeBanner() async {
+        let purgeEntity = LastPurgeEventEntity(purgeTimestamp: 123, reason: .inactive, lastActiveTimestamp: 0)
+        let mockLastPurgeUseCase = MockLastPurgeUseCase(
+            lastPurgeSequence: [purgeEntity].async.eraseToAnyAsyncSequence()
+        )
+        var config = NodeBrowserConfig.default
+        config.displayMode = .cloudDrive
+        let harness = Harness(
+            node: NodeEntity(nodeType: .root),
+            config: config,
+            lastPurgeUseCase: mockLastPurgeUseCase
+        )
+
+        await harness.sut.showInactivityPurgeBannerIfNeeded()
+
+        // The purge banner takes precedence over storage banners — no storage status should override it.
+        for storageStatus in [StorageStatusEntity.full, .almostFull, .noStorageProblems] {
+            harness.sut.updateTemporaryBanner(storageStatus: storageStatus)
+            XCTAssertTrue(
+                harness.sut.currentBannerViewModel?.warningType.isInactivityPurge == true,
+                "Storage status \(storageStatus) should not override the inactivity purge banner"
+            )
+        }
     }
 
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
