@@ -28,8 +28,8 @@ protocol PlaybackStateObservable {
 protocol PlaybackControllable {
     func play(source: PlaybackSource)
     func togglePlayPause()
-    func seek(toFraction fraction: Double)
     func setPlaybackSpeed(_ rate: Float)
+    func seek(toSeconds seconds: TimeInterval)
     func stop()
 }
 

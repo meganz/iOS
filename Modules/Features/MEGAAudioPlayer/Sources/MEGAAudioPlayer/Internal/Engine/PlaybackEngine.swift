@@ -13,8 +13,8 @@ protocol PlaybackEngineProtocol: AnyObject {
 
     func play(url: URL)
     func togglePlayPause()
-    func seek(toFraction: Double)
     func setPlaybackSpeed(_ rate: Float)
+    func seek(toSeconds: TimeInterval)
     func stop()
 }
 
@@ -89,14 +89,13 @@ extension PlaybackEngine {
         }
     }
 
-    /// Seek to a 0...1 fraction of the current item's duration. No-op if the
-    /// item hasn't reported a finite duration yet (streaming load still in
-    /// progress, or the source is a live stream).
-    func seek(toFraction fraction: Double) {
+    func seek(toSeconds seconds: TimeInterval) {
         guard let duration = durationSubject.value,
               duration.isFinite,
-              duration > 0 else { return }
-        let target = max(0, min(1, fraction)) * duration
+              duration > 0,
+              seconds.isFinite,
+              seconds >= 0 else { return }
+        let target = max(0, min(seconds, duration))
         player.seek(to: CMTime(seconds: target, preferredTimescale: 600))
     }
 

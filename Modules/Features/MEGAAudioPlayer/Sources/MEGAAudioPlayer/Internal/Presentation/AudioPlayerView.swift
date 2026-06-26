@@ -47,6 +47,8 @@ struct AudioPlayerView: View {
 
             VStack(spacing: 0) {
                 ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, isPlaying: vm.isPlaying)
+                    .frame(maxWidth: .infinity)
+                    .overlay { seekGestureLayer }
                     .padding(.top, TokenSpacing._15)
 
                 Spacer(minLength: TokenSpacing._9)
@@ -108,6 +110,20 @@ struct AudioPlayerView: View {
         .overlayPreferenceValue(PodcastMenuAnchorsKey.self) { anchors in
             podcastMenuOverlay(anchors)
         }
+        .overlay(alignment: .leading) {
+            SeekFeedbackView(direction: .backward, seconds: Int(vm.skipInterval))
+                .opacity(vm.visibleSeekFeedback == .backward ? 1 : 0)
+                .animation(.easeInOut(duration: 0.25), value: vm.visibleSeekFeedback)
+                .allowsHitTesting(false)
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .trailing) {
+            SeekFeedbackView(direction: .forward, seconds: Int(vm.skipInterval))
+                .opacity(vm.visibleSeekFeedback == .forward ? 1 : 0)
+                .animation(.easeInOut(duration: 0.25), value: vm.visibleSeekFeedback)
+                .allowsHitTesting(false)
+                .ignoresSafeArea()
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -130,6 +146,20 @@ struct AudioPlayerView: View {
         .simultaneousGesture(swipeDownToDismiss)
         .task(id: vm.artworkData) {
             await vm.loadArtwork()
+        }
+    }
+
+    private var seekGestureLayer: some View {
+        GeometryReader { proxy in
+            Color.clear
+                .contentShape(Rectangle())
+                .gesture(
+                    SpatialTapGesture(count: 2)
+                        .onEnded { value in
+                            let direction: SeekDirection = value.location.x < proxy.size.width / 2 ? .backward : .forward
+                            vm.handleSeekGesture(direction)
+                        }
+                )
         }
     }
 
@@ -283,6 +313,70 @@ private struct ArtworkSection: View {
             .resizable()
             .scaledToFit()
             .frame(width: placeholderWidth, height: placeholderHeight)
+    }
+}
+
+// MARK: - Seek Feedback
+
+private struct SeekFeedbackView: View {
+    let direction: SeekDirection
+    let seconds: Int
+
+    private let chevronSize: CGFloat = TokenSpacing._7
+    private let arcWidth: CGFloat = 157
+    private let arcColor = TokenColors.Background.surfaceTransparent.swiftUI
+
+    var body: some View {
+        let alignment: Alignment = direction == .backward ? .leading : .trailing
+        ZStack(alignment: alignment) {
+            arc
+
+            label
+                .padding(direction == .backward ? .leading : .trailing, TokenSpacing._7)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
+        .clipped()
+    }
+
+    private var arc: some View {
+        GeometryReader { proxy in
+            let halfHeight = proxy.size.height / 2
+            let radius = (arcWidth * arcWidth + halfHeight * halfHeight) / (2 * arcWidth)
+            let centerX = direction == .backward
+                ? arcWidth - radius
+                : proxy.size.width - (arcWidth - radius)
+            Circle()
+                .fill(arcColor)
+                .frame(width: radius * 2, height: radius * 2)
+                .position(x: centerX, y: halfHeight)
+        }
+    }
+
+    private var label: some View {
+        HStack(spacing: TokenSpacing._5) {
+            if direction == .backward {
+                chevron
+                text
+            } else {
+                text
+                chevron
+            }
+        }
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
+    }
+
+    private var chevron: some View {
+        (direction == .backward
+            ? MEGAAssets.Image.monoChevronsLeftMediumThinOutline
+            : MEGAAssets.Image.monoChevronsRightMediumThinOutline)
+            .resizable()
+            .scaledToFit()
+            .frame(width: chevronSize, height: chevronSize)
+    }
+
+    private var text: some View {
+        Text(direction == .backward ? "-\(seconds)" : "+\(seconds)")
+            .font(.body)
     }
 }
 

@@ -210,8 +210,8 @@ extension AudioPlaybackService: PlaybackControllable {
         engine.togglePlayPause()
     }
 
-    func seek(toFraction fraction: Double) {
-        engine.seek(toFraction: fraction)
+    func seek(toSeconds seconds: TimeInterval) {
+        engine.seek(toSeconds: seconds)
     }
 
     func setPlaybackSpeed(_ rate: Float) {

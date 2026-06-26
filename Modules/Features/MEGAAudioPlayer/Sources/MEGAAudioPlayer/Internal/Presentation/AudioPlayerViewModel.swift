@@ -3,6 +3,11 @@ import Foundation
 import SwiftUI
 import UIKit
 
+enum SeekDirection: Equatable {
+    case backward
+    case forward
+}
+
 @MainActor
 final class AudioPlayerViewModel: ObservableObject {
     // Router-injected callback. Router owns "what dismiss means" (close modal
@@ -60,6 +65,17 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var isSleepTimerActive: Bool = false
 
+    // MARK: - Double-tap seek feedback
+
+    @Published private(set) var visibleSeekFeedback: SeekDirection?
+
+    /// Seek distance for a single skip / double-tap, in seconds.
+    let skipInterval: TimeInterval = 15
+
+    private static let seekFeedbackDuration: TimeInterval = 0.8
+
+    private var seekFeedbackTask: Task<Void, Never>?
+
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
     var isActionsMenuHidden: Bool {
@@ -73,6 +89,10 @@ final class AudioPlayerViewModel: ObservableObject {
     /// Preview / placeholder init. No service binding; intents are no-ops.
     init() {
         self.service = nil
+    }
+
+    deinit {
+        seekFeedbackTask?.cancel()
     }
 
     /// Production init. VM mirrors the service's state publishers into its
@@ -109,6 +129,7 @@ final class AudioPlayerViewModel: ObservableObject {
             .store(in: &cancellables)
 
         service.durationPublisher
+            .map { duration in duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil } }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.duration = $0 }
             .store(in: &cancellables)
@@ -187,7 +208,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.title = title
         self.artist = artist
         self.currentTime = currentTime
-        self.duration = duration
+        self.duration = duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
         self.isPlaying = isPlaying
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode
@@ -218,10 +239,8 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func seek(toFraction fraction: Double) {
-        if let duration {
-            currentTime = max(0, min(fraction, 1)) * duration
-        }
-        service?.seek(toFraction: fraction)
+        guard let duration, fraction.isFinite, fraction >= 0 else { return }
+        seek(toSeconds: max(0, min(fraction, 1)) * duration)
     }
 
     func presentPlaylist() {
@@ -241,14 +260,47 @@ final class AudioPlayerViewModel: ObservableObject {
         service?.setPlaybackSpeed(rate)
     }
 
-    /// Seek backward by the podcast skip interval (15s). Stub until wired to the engine.
     func skipBackward() {
+        seek(byOffset: -skipInterval)
     }
 
-    /// Seek forward by the podcast skip interval (15s). Stub until wired to the engine.
     func skipForward() {
+        seek(byOffset: skipInterval)
     }
 
     func presentSleepTimer() {
+    }
+
+    // MARK: - Double-tap seek
+
+    func handleSeekGesture(_ direction: SeekDirection) {
+        guard duration != nil else { return }
+        switch direction {
+        case .backward: skipBackward()
+        case .forward: skipForward()
+        }
+        showSeekFeedback(direction)
+    }
+
+    /// Seek relative to the current position (negative = backward).
+    private func seek(byOffset offset: TimeInterval) {
+        seek(toSeconds: currentTime + offset)
+    }
+
+    private func seek(toSeconds seconds: TimeInterval) {
+        guard let duration else { return }
+        let target = max(0, min(seconds, duration))
+        currentTime = target
+        service?.seek(toSeconds: target)
+    }
+
+    private func showSeekFeedback(_ direction: SeekDirection) {
+        visibleSeekFeedback = direction
+        seekFeedbackTask?.cancel()
+        seekFeedbackTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(Self.seekFeedbackDuration))
+            guard !Task.isCancelled else { return }
+            self?.visibleSeekFeedback = nil
+        }
     }
 }
