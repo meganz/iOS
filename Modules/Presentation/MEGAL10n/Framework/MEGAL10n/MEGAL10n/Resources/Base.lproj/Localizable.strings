@@ -5024,3 +5024,5 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="Because your account was inactive for over %@ months, your files were removed as per our inactivity policy.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="At least one option must stay on";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Playing from %@";
