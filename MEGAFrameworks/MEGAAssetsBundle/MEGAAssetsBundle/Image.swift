@@ -326,6 +326,7 @@ public struct MEGAImageBundle {
     public static var audioClockStop: Image { Image(.audioClockStop) }
     public static var audioForward15: Image { Image(.audioForward15) }
     public static var monoQueueLineMediumThinOutline: Image { Image(.monoQueueLineMediumThinOutline) }
+    public static var monoWaveformSmallThinOutline: Image { Image(.monoWaveformSmallThinOutline) }
     public static var monoPlayMediumThinOutline: Image { Image(.monoPlayMediumThinOutline) }
     public static var monoEraserMediumThinOutline: Image { Image(.monoEraserMediumThinOutline) }
     public static var monoFileSearchMediumRegularOutline: Image { Image(.monoFileSearchMediumRegularOutline) }

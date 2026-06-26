@@ -343,6 +343,7 @@ extension MEGAAssets {
         public static var audioClockStop: SwiftUI.Image { MEGAImageBundle.audioClockStop }
         public static var audioForward15: SwiftUI.Image { MEGAImageBundle.audioForward15 }
         public static var monoQueueLineMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoQueueLineMediumThinOutline }
+        public static var monoWaveformSmallThinOutline: SwiftUI.Image { MEGAImageBundle.monoWaveformSmallThinOutline }
         public static var monoPlayMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoPlayMediumThinOutline }
         public static var monoEraserMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoEraserMediumThinOutline }
         public static var monoFileSearchMediumRegularOutline: SwiftUI.Image { MEGAImageBundle.monoFileSearchMediumRegularOutline }
@@ -839,6 +840,7 @@ extension MEGAAssets {
         public static var audioClockStop: UIKit.UIImage { MEGAUIImageBundle.audioClockStop }
         public static var audioForward15: UIKit.UIImage { MEGAUIImageBundle.audioForward15 }
         public static var monoQueueLineMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoQueueLineMediumThinOutline }
+        public static var monoWaveformSmallThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoWaveformSmallThinOutline }
         public static var monoPlayMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoPlayMediumThinOutline }
         public static var monoEraserMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoEraserMediumThinOutline }
         public static var monoFileSearchMediumRegularOutline: UIKit.UIImage { MEGAUIImageBundle.monoFileSearchMediumRegularOutline }

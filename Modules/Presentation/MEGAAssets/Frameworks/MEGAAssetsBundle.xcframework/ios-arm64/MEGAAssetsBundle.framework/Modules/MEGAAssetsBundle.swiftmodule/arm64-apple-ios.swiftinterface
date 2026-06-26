@@ -994,6 +994,9 @@ public struct MEGAImageBundle {
   public static var monoQueueLineMediumThinOutline: SwiftUICore.Image {
     get
   }
+  public static var monoWaveformSmallThinOutline: SwiftUICore.Image {
+    get
+  }
   public static var monoPlayMediumThinOutline: SwiftUICore.Image {
     get
   }
@@ -2670,6 +2673,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoQueueLineMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoWaveformSmallThinOutline: UIKit.UIImage {
     get
   }
   public static var monoPlayMediumThinOutline: UIKit.UIImage {

@@ -486,6 +486,7 @@ public struct MEGAUIImageBundle {
     public static var audioClockStop: UIImage { UIImage.audioClockStop }
     public static var audioForward15: UIImage { UIImage.audioForward15 }
     public static var monoQueueLineMediumThinOutline: UIImage { UIImage.monoQueueLineMediumThinOutline }
+    public static var monoWaveformSmallThinOutline: UIImage { UIImage.monoWaveformSmallThinOutline }
     public static var monoPlayMediumThinOutline: UIImage { UIImage.monoPlayMediumThinOutline }
     public static var monoEraserMediumThinOutline: UIImage { UIImage.monoEraserMediumThinOutline }
     public static var monoFileSearchMediumRegularOutline: UIImage { UIImage.monoFileSearchMediumRegularOutline }
