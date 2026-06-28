@@ -569,7 +569,7 @@
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="影片上傳";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="已選取1個";
+"1 selected"="已選擇1個";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已選擇%d個";
 /* Title of the Offline section */
@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料。確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您無法存取您的電子郵件收件匣，請聯繫support@mega.io";
+"ifYouCantAccessYourEmailAccount"="如果您無法存取您的電子郵件收件匣，請前往https://mega.nz/support聯繫客服";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消連結已過期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="您必須等待10分鐘才能提交另一個問題";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="請稍後重試，如果問題仍然存在，請透過support@mega.io聯繫我們的客服團隊";
+"help.reportIssue.fail.too.many.request.message"="請稍後重試，如果問題仍然存在，請前往https://mega.nz/support聯繫客服";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您確定要取消正在上傳的問題回報嗎？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3897,7 +3897,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="您無法移動此資料夾，因為目的地是同一個資料夾。";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已自動以媒體檢視開啟。您可以透過更具沉浸感的佈局來欣賞您的影像內容。您可以在設定中停用此功能。";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已自動以媒體檢視開啟。您可以透過更具沉浸感的版面配置來欣賞您的影像內容。您可以在設定中停用此功能。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen content header for pro plan feature list */
@@ -4645,7 +4645,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro方案的額外好處";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• 連結加入密碼保護\n\n\n• 為連結設定到期日期\n\n\n• 回溯資料夾中最多60天的已刪除資料\n\n\n• 主持群組通話和會議，與會人數不限，沒有時間限制\n\n\n• 垃圾筒清理排程，支援7天到10年設定\n\n\n• 優先支持";
+"subscriptionPurchase.featuresOfProPlan.message"="• 連結加入密碼保護\n\n\n• 為連結設定到期日期\n\n\n• 回溯資料夾中最多60天的已刪除資料\n\n\n• 主持群組通話和會議，與會人數不限，沒有時間限制\n\n\n• 垃圾筒清理排程，支援7天到10年設定\n\n\n• 專屬支援";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="大容量空間";
 /* Description for the first subscription feature: details about available storage */
@@ -4739,7 +4739,7 @@
 /* Subscription benefit for rubbish bin clearing */
 "subscriptionPurchase.benefits.rubbishClearing.title"="可設定垃圾筒清空排程7天至10年";
 /* General label for priority customer support */
-"general.prioritySupport"="優先的支援";
+"general.prioritySupport"="專屬支援";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
 "accountMenu.businessAndProFlexiAccountsStorageUsed.title"="已使用%@";
 /* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
@@ -4985,7 +4985,7 @@
 /* The title of the Continue where you left widget in Customise Home screen */
 "home.customization.widget.continueWhereYouLeftOff"="從上次中斷的地方繼續";
 /* The title of the Do more with MEGA widget in Customise Home screen */
-"home.customization.widget.doMoreWithMega"="使用MEGA做更多事";
+"home.customization.widget.doMoreWithMega"="MEGA助您提升生產力";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="已檢視的連結";
 /* The title of the Account status widget in Customise Home screen */
@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="帳戶閒置時間過長";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="由於您的帳戶已閒置超過%@個月，根據我們的閒置帳戶政策，您的檔案已被移除。";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="必須至少一個區塊維持啟用狀態";

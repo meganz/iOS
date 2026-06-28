@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="Akun Anda terlalu lama tidak aktif";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Karena akun Anda tidak aktif selama lebih dari %@ bulan, file Anda telah dihapus sesuai kebijakan tidak aktif kami.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Setidaknya satu bagian harus tetap ada";

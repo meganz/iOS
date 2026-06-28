@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="このアカウントに関連付けられているデータがすべて失われます。続行してもよろしいですか？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="メール受信箱にアクセスできない場合、support@mega.ioにご連絡ください";
+"ifYouCantAccessYourEmailAccount"="メール受信箱にアクセスできない場合、https://mega.nz/supportにご連絡ください";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="別の問題を送信する前に10分待つ必要があります";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="後でもう一度お試しになるか、問題が解決しない場合はsupport@mega.ioから当社サポートチームにご連絡ください。";
+"help.reportIssue.fail.too.many.request.message"="後でもう一度お試しになるか、問題が解決しない場合はhttps://mega.nz/supportから当社サポートチームにご連絡ください。";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="ご報告された問題のアップロードをキャンセルしてもよろしいですか？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -5028,3 +5028,7 @@
 "cloudDrive.purgeBanner.inactivity.title"="長期間アカウントの利用（ログイン）がありませんでした";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="お客様のアカウントが%@か月以上利用されていなかったため、当社の非アクティブポリシーに基づき、お客様のファイルは削除されました。";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="少なくとも1つのセクションをオンにしておく必要があります";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="%@から再生中";

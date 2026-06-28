@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Você deve esperar 10 minutos antes de notificar outro problema";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Tente novamente mais tarde ou entre em contato com a nossa equipe de suporte em support@mega.io se o problema persistir";
+"help.reportIssue.fail.too.many.request.message"="Tente novamente mais tarde. Se o problema persistir, entre em contato com o Suporte em https://mega.nz/support";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Você tem certeza de que quer cancelar a notificação do problema?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4513,7 +4513,7 @@
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.message"="Adicione senhas e datas de validade para links de arquivos e de pastas.";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
-"ads.adFree.button.viewProPlans"="Conheça os planos Pro";
+"ads.adFree.button.viewProPlans"="Ver os planos Pro";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Pular";
 /* Add to album empty message */
@@ -5028,3 +5028,7 @@
 "cloudDrive.purgeBanner.inactivity.title"="A sua conta ficou inativa por muito tempo";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Como a sua conta ficou inativa por mais de %@ meses, os seus arquivos foram deletados de acordo com a nossa política de inatividade.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Pelo menos uma opção deve estar ativa";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Reproduzindo de %@";

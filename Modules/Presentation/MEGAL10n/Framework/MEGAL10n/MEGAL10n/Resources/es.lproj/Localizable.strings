@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Perderás todos los datos asociados con esta cuenta. ¿Confirmas que quieres continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Si no puedes acceder a tu correo electrónico contacta con support@mega.io";
+"ifYouCantAccessYourEmailAccount"="Si no puedes acceder a tu correo electrónico, contacta con soporte en https://mega.nz/support";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="El enlace de cancelación ha caducado.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -2967,7 +2967,7 @@
 /* Dismiss action of cancelling a transfer */
 "transfers.cancellable.dismiss"="No, continuar";
 /* First step title message for cancellable transfer */
-"transfers.cancellable.scanning"="Examinando…";
+"transfers.cancellable.scanning"="Analizando…";
 /* Second step title message for cancellable transfer */
 "transfers.cancellable.creatingFolders"="Creando carpetas…";
 /* Third step title message for cancellable transfer */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Debes esperar 10 minutos antes de enviar otro problema";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Espera y vuelve a intentarlo más tarde, o contacta con nuestro equipo de soporte a través de support@mega.io si el problema persiste";
+"help.reportIssue.fail.too.many.request.message"="Espera y vuelve a intentarlo más tarde, o contacta con soporte en https://mega.nz/support si el problema persiste";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="¿Confirma que quieres cancelar la subida del informe de error?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3447,7 +3447,7 @@
 /* Device Center backup up to date status */
 "device.center.backup.upToDate.status.message"="Actualizado";
 /* Device Center backup scanning status */
-"device.center.backup.scanning.status.message"="Examinando…";
+"device.center.backup.scanning.status.message"="Analizando…";
 /* Device Center backup initialising status */
 "device.center.backup.initialising.status.message"="Iniciando…";
 /* Device Center backup updating status */
@@ -4821,7 +4821,7 @@
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Solo tú puedes revelar los archivos ocultos, ya sea de forma individual o mostrando temporalmente los elementos ocultos de [A]Ajustes[/A].";
 /* The title displayed in the empty view when Cloud Drive root is empty */
-"cloudDrive.emptyStateTitle.root"="Aún no hay nada en tu bóveda privada";
+"cloudDrive.emptyStateTitle.root"="Aún no hay nada en tu espacio privado";
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
 "cloudDrive.emptyStateTitle.nonRoot"="Esta carpeta está vacía";
 /* The subtitle title displayed in the empty view in Cloud Drive */
@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="Tu cuenta estuvo inactiva durante demasiado tiempo";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Como tu cuenta estuvo inactiva durante más de %@ meses, tus archivos fueron eliminados de acuerdo con nuestra política de inactividad.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Al menos una sección debe permanecer activa";

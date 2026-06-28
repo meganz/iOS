@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Wszystkie dane zostaną utracone. Czy chcesz kontynuować?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Jeśli nie możesz uzyskać dostępu do skrzynki odbiorczej poczty email, kontakt support@mega.io";
+"ifYouCantAccessYourEmailAccount"="Jeśli nie masz dostępu do swojej skrzynki e-mail, skontaktuj się z pomocą techniczną pod adresem https://mega.nz/support";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link nie jest poprawny.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Przed wysłaniem kolejnego zgłoszenia należy odczekać 10 minut";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Poczekaj i spróbuj ponownie później lub skontaktuj kontakt naszym zespołem wsparcie technicznej za pośrednictwem support@mega.io jeśli problem nie ustąpi";
+"help.reportIssue.fail.too.many.request.message"="Poczekaj i spróbuj ponownie później, lub skontaktuj się z pomocą techniczną pod adresem https://mega.nz/support, jeśli problem nadal występuje";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Czy na pewno chcesz zrezygnować z przesyłania zgłoszonego problemu?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -5028,3 +5028,7 @@
 "cloudDrive.purgeBanner.inactivity.title"="Twoje konto było nieaktywne przez zbyt długi czas";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Ponieważ Twoje konto było nieaktywne przez ponad %@ miesięcy, Twoje pliki zostały usunięte zgodnie z naszą polityką nieaktywności.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Przynajmniej jedna sekcja musi pozostać włączona";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Odtwarzanie z %@";

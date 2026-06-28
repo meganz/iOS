@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bu hesapla ilişkili tüm verileri kaybedeceksiniz. Devam etmek istediğinizden emin misiniz?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="E-posta gelen kutunuza erişemiyorsanız support@mega.io ile iletişime geçin";
+"ifYouCantAccessYourEmailAccount"="E-posta gelen kutunuza erişemiyorsanız https://mega.nz/support üzerinden iletişime geçin";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="İptal bağlantısının süresi doldu.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1847,7 +1847,7 @@
 /* There are no notifications to display. */
 "No notifications"="Bildirim yok";
 /* The header of a notification related to payments */
-"Payment info"="Ödeme bilgileri";
+"Payment info"="Ödeme bilgisi";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Pro üyelik planının süresi yakında dolacak";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Başka bir sorun göndermeden önce 10 dakika beklemelisiniz";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Bekleyip daha sonra tekrar deneyin veya sorun devam ederse support@mega.io adresinden destek ekibimizle iletişime geçin";
+"help.reportIssue.fail.too.many.request.message"="Bekleyip daha sonra tekrar deneyin veya sorun devam ederse https://mega.nz/support üzerinden destek ekibimizle iletişime geçin";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Bildirdiğiniz sorunun yüklenmesini iptal etmek istediğinizden emin misiniz?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="Hesabınız çok uzun süredir etkin değil";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Hesabınız %@ aydan uzun süredir etkin olmadığından, dosyalarınız hareketsizlik politikamız gereği kaldırılmıştır.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="En az bir bölüm açık kalmalıdır";

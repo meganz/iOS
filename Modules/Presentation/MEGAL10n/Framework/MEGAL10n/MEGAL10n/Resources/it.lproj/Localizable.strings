@@ -1443,7 +1443,7 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="Connessione in corso…";
+"connecting"="Connessione…";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
 /* Success message shown when the user has successfully shared something */
@@ -1527,7 +1527,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Errore sconosciuto";
 /* Label shown when you call someone (outgoing call), before the call starts. */
-"calling..."="Chiamata in corso…";
+"calling..."="Chiamando…";
 /* notification subtitle of incoming calls */
 "Incoming call"="Chiamata in arrivo";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1795,7 +1795,7 @@
 /* Text shown for switching from preview view to all media view. */
 "All Media"="Tutti i media";
 /* Label for the status of a transfer when is being Downloading - (String as short as possible. */
-"Downloading %@"="Download di %@ in corso";
+"Downloading %@"="Download di %@";
 /* Text shown when a photo or video is saved to Photos app */
 "Saved to Photos"="Salvata nella Galleria";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="Il tuo account è stato inattivo per troppo tempo";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Poiché il tuo account è stato inattivo per oltre %@ mesi, i tuoi file sono stati rimossi in base alla nostra politica di inattività.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Almeno una sezione deve rimanere accesa.";

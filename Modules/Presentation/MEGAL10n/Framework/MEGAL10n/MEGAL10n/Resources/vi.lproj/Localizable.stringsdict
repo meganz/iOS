@@ -391,7 +391,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hình ảnh</string>
+        <string>%d hình ảnh</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -405,7 +405,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d video</string>
+        <string>%d videos</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -419,7 +419,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hình ảnh</string>
+        <string>%d hình ảnh</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -433,7 +433,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>và %d video</string>
+        <string>và %d videos</string>
       </dict>
     </dict>
     <key>recents.section.multipleFile.title</key>
@@ -461,7 +461,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] trong tổng %d tệp</string>
+        <string>[A] trong tổng %d tệp</string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -1119,7 +1119,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
+        <string>Thứ Hai lần thứ nhì của mỗi %d tháng, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -2113,7 +2113,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>có giá trị cho %d ngày</string>
+        <string>có giá trị cho %d ngày</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2869,7 +2869,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>other</key>
-        <string>Tạm dừng: còn %u mục</string>
+        <string>Tạm dừng: còn %u mục</string>
       </dict>
     </dict>
     <key>notification.transfer.download.subtitle</key>
@@ -2883,7 +2883,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d/%[A] đã hoàn tất</string>
+        <string>%d/%[A] đã hoàn tất</string>
       </dict>
     </dict>
     <key>recents.bucketDetails.subtitle</key>
@@ -2911,7 +2911,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Không thể chuẩn bị %d mục để tải lên</string>
+        <string>Đã không thể chuẩn bị %d mục để tải lên</string>
       </dict>
     </dict>
     <key>mediaImport.preparing.progress</key>
@@ -2925,7 +2925,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đã sẵn sàng %d trên [A]</string>
+        <string>Đã xong %d / [A] mục</string>
       </dict>
     </dict>
     <key>achievementDetails.bonusExpiration.days</key>

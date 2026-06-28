@@ -5028,3 +5028,5 @@
 "cloudDrive.purgeBanner.inactivity.title"="Contul tău a fost inactiv pentru prea mult timp";
 /* The subtitle of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.subtitle"="Pentru că contul tău a fost inactiv pentru mai mult de %@ luni, fișierele tale au fost eliminate conform politicii noastre privind inactivitatea.";
+/* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
+"home.customization.disableLastWidget.snackbar.message"="Cel puțin o secțiune trebuie să rămână pornită.";
