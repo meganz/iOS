@@ -37,7 +37,7 @@ scripts/ReleaseScripts/Resources/values.env
 scripts/ReleaseScripts/Resources/cache.json
 
 ## Claude
-.claude/settings.local.json
+.claude/
 
 SwiftPackages/
 derivedData/
