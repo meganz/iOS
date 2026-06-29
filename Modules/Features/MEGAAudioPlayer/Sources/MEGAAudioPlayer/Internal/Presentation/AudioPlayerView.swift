@@ -42,20 +42,12 @@ struct AudioPlayerView: View {
 
     var body: some View {
         ZStack {
-            BackgroundLayer()
+            BackgroundLayer(isFlipped: vm.isPlaylistVisible)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, isPlaying: vm.isPlaying)
-                    .frame(maxWidth: .infinity)
-                    .overlay { seekGestureLayer }
-                    .padding(.top, TokenSpacing._15)
-
-                Spacer(minLength: TokenSpacing._9)
-
-                TrackInfoSection(title: vm.title, artist: vm.artist)
-                    .padding(TokenSpacing._5)
-                    .frame(height: 74)
+                mainContent
+                    .frame(maxHeight: .infinity)
 
                 ScrubberSection(
                     currentTime: vm.currentTime,
@@ -100,7 +92,7 @@ struct AudioPlayerView: View {
                     currentMode: vm.playbackMode,
                     isAirPlayActive: vm.isAirPlayActive,
                     onModeToggle: vm.switchPlaybackMode,
-                    onPlaylist: vm.presentPlaylist
+                    onPlaylist: vm.togglePlaylist
                 )
                 .padding(.horizontal, TokenSpacing._5)
                 .padding(.vertical, TokenSpacing._7)
@@ -180,6 +172,40 @@ struct AudioPlayerView: View {
     }
 
     // MARK: - Podcast popover menus
+    private var mainContent: some View {
+        ZStack {
+            VStack(spacing: 0) {
+                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, isPlaying: vm.isPlaying)
+                    .frame(maxWidth: .infinity)
+                    .overlay { seekGestureLayer }
+                    .padding(.top, TokenSpacing._15)
+                Spacer(minLength: TokenSpacing._9)
+                TrackInfoSection(title: vm.title, artist: vm.artist)
+                    .padding(TokenSpacing._5)
+                    .frame(height: TokenSpacing._15)
+            }
+            .opacity(vm.isPlaylistVisible ? 0 : 1)
+            .allowsHitTesting(!vm.isPlaylistVisible)
+
+            VStack(spacing: 0) {
+                NowPlayingCompactHeader(coverImage: vm.artworkImage, title: vm.title, artist: vm.artist)
+                    .padding(.horizontal, TokenSpacing._5)
+                    .padding(.vertical, TokenSpacing._3)
+                    .frame(height: TokenSpacing._17)
+                PlaylistView(
+                    sourceName: vm.artist,
+                    items: vm.playlistItems,
+                    onSelect: vm.selectPlaylistItem,
+                    onMove: vm.movePlaylistItem
+                )
+                .frame(maxHeight: .infinity)
+            }
+            .padding(.top, TokenSpacing._3)
+            .opacity(vm.isPlaylistVisible ? 1 : 0)
+            .allowsHitTesting(vm.isPlaylistVisible)
+        }
+    }
+
     @ViewBuilder
     private func podcastMenuOverlay(_ anchors: PodcastMenuAnchors) -> some View {
         if let activeMenu {
@@ -230,15 +256,15 @@ struct AudioPlayerView: View {
 // MARK: - Background
 
 private struct BackgroundLayer: View {
+    var isFlipped: Bool = false
+
+    private let warmTint = Color(red: 0.36, green: 0.07, blue: 0.05)
 
     var body: some View {
         LinearGradient(
-            colors: [
-                Color(red: 73 / 255, green: 9 / 255, blue: 0),
-                Color(red: 21 / 255, green: 22 / 255, blue: 22 / 255)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+            colors: [warmTint, TokenColors.Background.page.swiftUI],
+            startPoint: isFlipped ? .bottomLeading : .topLeading,
+            endPoint: isFlipped ? .topTrailing : .bottomTrailing
         )
     }
 }
@@ -293,7 +319,7 @@ private struct ArtworkSection: View {
     private var cover: some View {
         coverContent
             .frame(width: coverMaxSize, height: coverMaxSize)
-            .background(Color.white.opacity(0.05))
+            .background(TokenColors.Text.primary.swiftUI.opacity(0.05))
             .clipShape(RoundedRectangle(cornerRadius: TokenRadius.large))
     }
 
@@ -801,6 +827,29 @@ private struct AirPlayIconButton: View {
 
 #Preview("Music — Empty / idle") {
     AudioPlayerView(vm: AudioPlayerViewModel())
+}
+
+#Preview("Music — Playlist open") {
+    AudioPlayerView(vm: {
+        let vm = AudioPlayerViewModel()
+        vm.setControlState(
+            title: "Orange (Live)",
+            artist: "Arcy Drive",
+            currentTime: 80,
+            duration: 234,
+            isPlaying: true,
+            playbackMode: .music
+        )
+        vm.setPlaylist(items: [
+                .init(id: "1", title: "Orange (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: true),
+                .init(id: "2", title: "Superbloomer (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
+                .init(id: "3", title: "Liquor Lips (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
+                .init(id: "4", title: "Dessert song (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false)
+            ]
+        )
+        vm.togglePlaylist()
+        return vm
+    }())
 }
 
 #Preview("Podcast — Playing") {

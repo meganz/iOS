@@ -76,6 +76,12 @@ final class AudioPlayerViewModel: ObservableObject {
 
     private var seekFeedbackTask: Task<Void, Never>?
 
+    // MARK: - Playlist state
+
+    @Published private(set) var isPlaylistVisible: Bool = false
+
+    @Published private(set) var playlistItems: [AudioPlaylistItem] = []
+
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
     var isActionsMenuHidden: Bool {
@@ -243,7 +249,19 @@ final class AudioPlayerViewModel: ObservableObject {
         seek(toSeconds: max(0, min(fraction, 1)) * duration)
     }
 
-    func presentPlaylist() {
+    func togglePlaylist() {
+        isPlaylistVisible.toggle()
+    }
+
+    func selectPlaylistItem(_ item: AudioPlaylistItem) {
+    }
+
+    func movePlaylistItem(from source: IndexSet, to destination: Int) {
+        playlistItems.move(fromOffsets: source, toOffset: destination)
+    }
+
+    func setPlaylist(items: [AudioPlaylistItem]) {
+        playlistItems = items
     }
 
     func switchPlaybackMode() {
