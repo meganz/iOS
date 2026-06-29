@@ -1,4 +1,5 @@
 @testable import MEGA
+import UIKit
 import XCTest
 
 final class FileAttributeGeneratorTests: XCTestCase {
@@ -47,6 +48,45 @@ final class FileAttributeGeneratorTests: XCTestCase {
         let result = await sut.createPreview(at: previewURL)
         
         XCTAssertFalse(result, "Preview creation should fail")
+    }
+    
+    func testCreateThumbnail_whenQuickLookFailsButSourceIsValidImage_shouldFallBackToImageIOAndSucceed() async throws {
+        let sourceURL = try makeTemporaryImageFile(width: 800, height: 600)
+        defer { try? FileManager.default.removeItem(at: sourceURL) }
+        let destinationURL = FileManager.default.temporaryDirectory.appendingPathComponent("cu860-thumbnail-\(UUID().uuidString).jpg")
+        defer { try? FileManager.default.removeItem(at: destinationURL) }
+
+        let mockGenerator = MockThumbnailGenerator()
+        mockGenerator._error = NSError(domain: "QLThumbnailErrorDomain", code: 102, userInfo: nil)
+        let sut = makeSUT(sourceURL: sourceURL, pixelWidth: 800, pixelHeight: 600, qlThumbnailGenerator: mockGenerator)
+
+        let result = await sut.createThumbnail(at: destinationURL)
+
+        XCTAssertTrue(result, "Thumbnail creation should fall back to ImageIO and succeed")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: destinationURL.path), "Thumbnail file should be written")
+        let image = try XCTUnwrap(UIImage(contentsOfFile: destinationURL.path))
+        XCTAssertEqual(image.size.width, CGFloat(FileAttributeGenerator.Constants.thumbnailSize), accuracy: 1)
+        XCTAssertEqual(image.size.height, CGFloat(FileAttributeGenerator.Constants.thumbnailSize), accuracy: 1)
+    }
+
+    func testCreatePreview_whenQuickLookFailsButSourceIsValidImage_shouldFallBackToImageIOAndSucceed() async throws {
+        let sourceURL = try makeTemporaryImageFile(width: 2400, height: 1800)
+        defer { try? FileManager.default.removeItem(at: sourceURL) }
+        let destinationURL = FileManager.default.temporaryDirectory.appendingPathComponent("cu860-preview-\(UUID().uuidString).jpg")
+        defer { try? FileManager.default.removeItem(at: destinationURL) }
+
+        let mockGenerator = MockThumbnailGenerator()
+        mockGenerator._error = NSError(domain: "QLThumbnailErrorDomain", code: 102, userInfo: nil)
+        let sut = makeSUT(sourceURL: sourceURL, pixelWidth: 2400, pixelHeight: 1800, qlThumbnailGenerator: mockGenerator)
+
+        let result = await sut.createPreview(at: destinationURL)
+
+        XCTAssertTrue(result, "Preview creation should fall back to ImageIO and succeed")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: destinationURL.path), "Preview file should be written")
+        let image = try XCTUnwrap(UIImage(contentsOfFile: destinationURL.path))
+        XCTAssertLessThanOrEqual(max(image.size.width, image.size.height), CGFloat(FileAttributeGenerator.Constants.previewSize),
+                                 "Preview longest side should be capped at previewSize")
+        XCTAssertGreaterThan(image.size.width, 0)
     }
     
     func testFetchThumbnail_whenGenerationSucceeds_shouldReturnImage() async {
@@ -178,6 +218,20 @@ final class FileAttributeGeneratorTests: XCTestCase {
         qlThumbnailGenerator: QLThumbnailGenerator = MockThumbnailGenerator()
     ) -> FileAttributeGenerator {
         FileAttributeGenerator(sourceURL: sourceURL, pixelWidth: pixelWidth, pixelHeight: pixelHeight, qlThumbnailGenerator: qlThumbnailGenerator)
+    }
+    
+    private func makeTemporaryImageFile(width: Int, height: Int) throws -> URL {
+        let format = UIGraphicsImageRendererFormat.default()
+        format.scale = 1
+        let size = CGSize(width: width, height: height)
+        let image = UIGraphicsImageRenderer(size: size, format: format).image { context in
+            UIColor.systemBlue.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        let data = try XCTUnwrap(image.jpegData(compressionQuality: 0.9))
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("cu860-source-\(UUID().uuidString).jpg")
+        try data.write(to: url)
+        return url
     }
     
     // MARK: - Mock Classes

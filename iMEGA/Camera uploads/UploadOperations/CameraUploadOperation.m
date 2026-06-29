@@ -141,28 +141,36 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     [self prepareThumbnailAndPreviewFilesWithCompletionHandler:^(BOOL thumbnailAndPreviewCreated) {
-        if (thumbnailAndPreviewCreated) {
-            MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdk.shared];
-            if (mediaUpload == nil) {
-                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-                return;
-            }
-            
-            self.uploadInfo.mediaUpload = mediaUpload;
-            
-            CLLocation *assetLocation = self.uploadInfo.asset.location;
-            if (assetLocation) {
-                [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
-            }
-            
-            if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
-                MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
-            }
-            
-            [self encryptFile];
-        } else {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        // A NO return on cancellation already finished the operation; don't continue in that case.
+        if (self.isFinished) {
+            return;
         }
+
+        if (!thumbnailAndPreviewCreated) {
+            // Thumbnail/preview generation can fail for some assets (e.g. very large images that
+            // QuickLook cannot decode). This must not block the file backup: continue with the
+            // upload without the generated attributes instead of failing and retrying forever.
+            MEGALogWarning(@"[Camera Upload] %@ thumbnail/preview not created, continuing upload without attributes", self);
+        }
+
+        MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdk.shared];
+        if (mediaUpload == nil) {
+            [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
+            return;
+        }
+
+        self.uploadInfo.mediaUpload = mediaUpload;
+
+        CLLocation *assetLocation = self.uploadInfo.asset.location;
+        if (assetLocation) {
+            [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
+        }
+
+        if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
+            MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
+        }
+
+        [self encryptFile];
     }];
 }
 

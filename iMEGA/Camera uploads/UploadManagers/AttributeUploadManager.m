@@ -97,14 +97,26 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         return nil;
     }
     
-    [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:error];
-    if (error != NULL && *error != nil) {
-        return nil;
+    // Thumbnail/preview generation is best-effort: it can fail for assets QuickLook cannot decode
+    // (e.g. very large images). A missing attribute file must not fail the node creation — the file
+    // backup itself does not depend on it. Only copy when the generated file exists; uploadLocalAttribute
+    // already skips missing attributes gracefully.
+    if ([NSFileManager.defaultManager fileExistsAtPath:uploadInfo.thumbnailURL.path]) {
+        [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:error];
+        if (error != NULL && *error != nil) {
+            return nil;
+        }
+    } else {
+        MEGALogWarning(@"[Camera Upload] no thumbnail generated for %@, uploading node without it", uploadInfo.savedLocalIdentifier);
     }
-    
-    [NSFileManager.defaultManager copyItemAtURL:uploadInfo.previewURL toURL:attribute.previewURL error:error];
-    if (error != NULL && *error != nil) {
-        return nil;
+
+    if ([NSFileManager.defaultManager fileExistsAtPath:uploadInfo.previewURL.path]) {
+        [NSFileManager.defaultManager copyItemAtURL:uploadInfo.previewURL toURL:attribute.previewURL error:error];
+        if (error != NULL && *error != nil) {
+            return nil;
+        }
+    } else {
+        MEGALogWarning(@"[Camera Upload] no preview generated for %@, uploading node without it", uploadInfo.savedLocalIdentifier);
     }
     
     return attribute;

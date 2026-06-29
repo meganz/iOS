@@ -1,4 +1,7 @@
+import ImageIO
 @preconcurrency import QuickLookThumbnailing
+import UIKit
+import UniformTypeIdentifiers
 
 protocol FileAttributeGeneratorProtocol: Sendable {
     /// Create a square (200px x 200px) thumbnail from the original source (cropped in the center of the image)
@@ -43,12 +46,14 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         let size = sizeForThumbnail()
         do {
             let representation = try await generateThumbnail(size: size)
-            guard let newImage = representation.cgImage.cropping(to: tileRect(width: representation.cgImage.width, height: representation.cgImage.height)) else { return false }
+            guard let newImage = representation.cgImage.cropping(to: tileRect(width: representation.cgImage.width, height: representation.cgImage.height)) else {
+                return createThumbnailUsingImageIO(at: destinationURL)
+            }
             let data = UIImage(cgImage: newImage).jpegData(compressionQuality: Constants.compressionQuality)
             try data?.write(to: destinationURL)
         } catch let error {
-            MEGALogError("[File attribute generator] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error)")
-            return false
+            MEGALogError("[File attribute generator] create thumbnail fails for \(sourceURL.lastPathComponent) with error \(error). Falling back to ImageIO downsampling")
+            return createThumbnailUsingImageIO(at: destinationURL)
         }
         MEGALogDebug("[File attribute generator] create thumbnail correctly at \(destinationURL)")
         return true
@@ -64,8 +69,8 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         do {
             try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
         } catch let error {
-            MEGALogError("[File attribute generator] create preview fails for \(sourceURL.lastPathComponent) with error \(error)")
-            return false
+            MEGALogError("[File attribute generator] create preview fails for \(sourceURL.lastPathComponent) with error \(error). Falling back to ImageIO downsampling")
+            return createPreviewUsingImageIO(at: destinationURL)
         }
         MEGALogDebug("[File attribute generator] create preview correctly at \(destinationURL)")
         return true
@@ -94,6 +99,75 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
             MEGALogDebug("[File attribute generator] create thumbnail for local file \(sourceURL.lastPathComponent) fails with error \(error). Retried with result: \(retryResult != nil ? "Success" : "Failure")")
             return retryResult
         }
+    }
+    
+    // MARK: - ImageIO fallback
+
+    // QLThumbnailGenerator can fail (e.g. QLThumbnailErrorDomain 102) for very large images it
+    // cannot decode within the QuickLook daemon's memory budget. ImageIO downsamples directly from
+    // the image source without fully decoding the original, so it handles those files. These are
+    // best-effort fallbacks used only when QuickLook fails.
+
+    private func createThumbnailUsingImageIO(at destinationURL: URL) -> Bool {
+        guard let source = createImageSource() else { return false }
+        // Downsample so the shorter side is at least the thumbnail size, then centre-crop a square.
+        let (width, height) = sourcePixelSize(from: source)
+        let maxPixelSize: Int
+        if width > 0, height > 0 {
+            let scaled = Double(Constants.thumbnailSize) * Double(max(width, height)) / Double(min(width, height))
+            maxPixelSize = Int(scaled.rounded(.up))
+        } else {
+            maxPixelSize = Constants.thumbnailSize
+        }
+        guard let downsampled = downsampledImage(from: source, maxPixelSize: maxPixelSize),
+              let cropped = downsampled.cropping(to: tileRect(width: downsampled.width, height: downsampled.height)) else {
+            return false
+        }
+        return write(cropped, to: destinationURL)
+    }
+
+    private func createPreviewUsingImageIO(at destinationURL: URL) -> Bool {
+        guard let source = createImageSource(),
+              let downsampled = downsampledImage(from: source, maxPixelSize: Constants.previewSize) else {
+            return false
+        }
+        return write(downsampled, to: destinationURL)
+    }
+
+    private func createImageSource() -> CGImageSource? {
+        CGImageSourceCreateWithURL(sourceURL as CFURL, [kCGImageSourceShouldCache: false] as CFDictionary)
+    }
+
+    private func sourcePixelSize(from source: CGImageSource) -> (width: Int, height: Int) {
+        guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] else {
+            return (pixelWidth, pixelHeight)
+        }
+        let width = properties[kCGImagePropertyPixelWidth] as? Int ?? pixelWidth
+        let height = properties[kCGImagePropertyPixelHeight] as? Int ?? pixelHeight
+        return (width, height)
+    }
+
+    private func downsampledImage(from source: CGImageSource, maxPixelSize: Int) -> CGImage? {
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixelSize
+        ]
+        return CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)
+    }
+
+    private func write(_ image: CGImage, to destinationURL: URL) -> Bool {
+        guard let data = UIImage(cgImage: image).jpegData(compressionQuality: Constants.compressionQuality) else {
+            return false
+        }
+        do {
+            try data.write(to: destinationURL)
+        } catch {
+            MEGALogError("[File attribute generator] ImageIO write fails for \(sourceURL.lastPathComponent) with error \(error)")
+            return false
+        }
+        return true
     }
     
     // MARK: - Private

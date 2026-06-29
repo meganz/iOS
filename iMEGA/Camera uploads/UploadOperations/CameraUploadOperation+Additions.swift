@@ -12,17 +12,21 @@ extension CameraUploadOperation {
                                                             pixelWidth: uploadInfo.asset.pixelWidth,
                                                             pixelHeight: uploadInfo.asset.pixelHeight)
         
-        let thumbnailCreated = await fileAttributeGenerator.createThumbnail(at: uploadInfo.thumbnailURL)
+        // Thumbnail and preview are independent and both potentially expensive for large images, so
+        // generate them concurrently. This is best-effort: a failure of one must not skip the other,
+        // and the caller treats a missing attribute as a non-fatal degrade.
+        let thumbnailURL = uploadInfo.thumbnailURL
+        let previewURL = uploadInfo.previewURL
+        async let thumbnailCreated = fileAttributeGenerator.createThumbnail(at: thumbnailURL)
+        async let previewCreated = fileAttributeGenerator.createPreview(at: previewURL)
+        let (createdThumbnail, createdPreview) = await (thumbnailCreated, previewCreated)
+
         if isCancelled {
             finish(with: .cancelled)
             return false
         }
-        if !thumbnailCreated {
-            return false
-        }
-        
-        let previewCreated = await fileAttributeGenerator.createPreview(at: uploadInfo.previewURL)
-        return previewCreated
+
+        return createdThumbnail && createdPreview
     }
     
     /// Creates a task description string for a given photo library asset and its upload chunk.
