@@ -143,7 +143,8 @@ struct SearchResultsListView<Header: View>: View {
             RevampedSearchResultRowView(
                 viewModel: rowViewModel,
                 selected: $viewModel.selectedResultIds,
-                flashRequest: rowHighlighter.flashRequest
+                flashRequest: rowHighlighter.flashRequest,
+                onFlashConsumed: { rowHighlighter.consumeFlash(token: $0) }
             )
             .listRowSeparator(.hidden)
         }

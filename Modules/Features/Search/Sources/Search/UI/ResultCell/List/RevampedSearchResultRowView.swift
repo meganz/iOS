@@ -35,6 +35,10 @@ struct RevampedSearchResultRowView: View {
 
     var flashRequest: RowFlashRequest?
     
+    /// Called with the flash token when this row starts flashing, so the shared
+    /// request is consumed once and doesn't re-fire on later rebuilds.
+    var onFlashConsumed: (Int) -> Void = { _ in }
+    
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
     }
@@ -162,6 +166,7 @@ struct RevampedSearchResultRowView: View {
         let token = flashRequest.token
         lastFlashedToken = token
         showsFlash = true
+        onFlashConsumed(token)
         Task {
             try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
             // Skip if a newer flash has since taken over, so it isn't cleared early.
