@@ -5,7 +5,7 @@ import MEGASwift
 @available(iOS 16.2, *)
 protocol TransferLiveActivityProviding: Sendable {
     /// Starts a new Live Activity and returns its identifier.
-    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) throws -> String
+    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async throws -> String
     /// Pushes an updated content state to an existing Live Activity.
     func update(activityId: String, state: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async
     /// Ends a Live Activity with the given dismissal policy.
@@ -17,6 +17,8 @@ protocol TransferLiveActivityProviding: Sendable {
     func stateUpdates(forActivityId activityId: String) -> AnyAsyncSequence<ActivityState>
     /// Whether the user has granted permission for Live Activities.
     var areActivitiesEnabled: Bool { get }
+    /// Emits the Live Activities authorization value each time it changes.
+    var enablementUpdates: AnyAsyncSequence<Bool> { get }
     /// Whether a transfer Live Activity is currently running.
     var hasActiveActivity: Bool { get }
     /// The identifier of an existing transfer Live Activity, if one is still active from a prior session.
@@ -24,21 +26,31 @@ protocol TransferLiveActivityProviding: Sendable {
 }
 
 @available(iOS 16.2, *)
-struct TransferLiveActivityProvider {}
+struct TransferLiveActivityProvider {
+    private static let requestQueue = DispatchQueue(label: "nz.mega.transfer.liveactivity.request", qos: .userInitiated)
+}
 
 // MARK: - TransferLiveActivityProviding
 
 @available(iOS 16.2, *)
 extension TransferLiveActivityProvider: TransferLiveActivityProviding {
 
-    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) throws -> String {
-        let content = ActivityContent(state: initialState, staleDate: staleDate)
-        let activity = try Activity<TransferLiveActivityAttributes>.request(
-            attributes: TransferLiveActivityAttributes(),
-            content: content,
-            pushType: nil
-        )
-        return activity.id
+    func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            Self.requestQueue.async {
+                do {
+                    let content = ActivityContent(state: initialState, staleDate: staleDate)
+                    let activity = try Activity<TransferLiveActivityAttributes>.request(
+                        attributes: TransferLiveActivityAttributes(),
+                        content: content,
+                        pushType: nil
+                    )
+                    continuation.resume(returning: activity.id)
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 
     func update(activityId: String, state: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async {
@@ -87,6 +99,10 @@ extension TransferLiveActivityProvider: TransferLiveActivityProviding {
 
     var areActivitiesEnabled: Bool {
         ActivityAuthorizationInfo().areActivitiesEnabled
+    }
+
+    var enablementUpdates: AnyAsyncSequence<Bool> {
+        AnyAsyncSequence(ActivityAuthorizationInfo().activityEnablementUpdates)
     }
 
     var hasActiveActivity: Bool {

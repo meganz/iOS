@@ -13,8 +13,9 @@ final class TransferLiveActivityManager {
     private var cancellable: AnyCancellable?
 
     private var activityId: String?
-    private var lastPushedState: TransferLiveActivityState?
+    private var lastPushedStatus: TransferLiveActivityStatus?
     private var lastContentState: TransferLiveActivityAttributes.ContentState?
+    private var latestSnapshot: TransferStatusSnapshot?
 
     private var endActivityTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -25,6 +26,16 @@ final class TransferLiveActivityManager {
     private var stateObservationTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+    private var enablementObservationTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private var startActivityTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+
+    private var isStartBlocked = false
+
+    private var isStartingActivity = false
 
     private var lastUpdateTime: ContinuousClock.Instant?
     private static let minimumUpdateInterval: Duration = .seconds(1)
@@ -38,10 +49,13 @@ final class TransferLiveActivityManager {
         endActivityTask?.cancel()
         updateTask?.cancel()
         stateObservationTask?.cancel()
+        enablementObservationTask?.cancel()
+        startActivityTask?.cancel()
     }
 
     func startMonitoring(snapshotPublisher: AnyPublisher<TransferStatusSnapshot?, Never>) {
         adoptExistingActivity()
+        observeEnablement()
         cancellable = snapshotPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] snapshot in
@@ -55,11 +69,15 @@ final class TransferLiveActivityManager {
         observeActivityState(id: existingId)
     }
 
-    func stopMonitoring() {
-        cancellable?.cancel()
-        cancellable = nil
-        endActivityTask = nil
-        endActivityImmediately()
+    /// Clears `isStartBlocked` whenever Live Activities authorization changes, so a
+    /// start that was denied (`ActivityAuthorizationError.denied`) can be retried once
+    /// the user re-enables Live Activities — without re-attempting on every snapshot.
+    private func observeEnablement() {
+        enablementObservationTask = Task { [weak self, activityProvider] in
+            for await _ in activityProvider.enablementUpdates {
+                self?.isStartBlocked = false
+            }
+        }
     }
 
     // MARK: - Snapshot Handling
@@ -74,6 +92,7 @@ final class TransferLiveActivityManager {
     /// visible on warning/error states so the user has a persistent surface to
     /// resolve the failure from.
     private func handleSnapshot(_ snapshot: TransferStatusSnapshot?) {
+        latestSnapshot = snapshot
         guard let snapshot else {
             if activityId != nil, endActivityTask == nil {
                 scheduleEndActivity()
@@ -86,7 +105,7 @@ final class TransferLiveActivityManager {
 
         if snapshot.isCompleted {
             guard activityId != nil else { return }
-            lastPushedState = contentState.state
+            lastPushedStatus = contentState.status
             pushUpdate(contentState)
             scheduleEndActivity()
             return
@@ -97,10 +116,10 @@ final class TransferLiveActivityManager {
 
         startActivity(with: contentState)
 
-        let isStateChange = contentState.state != lastPushedState
-        lastPushedState = contentState.state
+        let isStatusChange = contentState.status != lastPushedStatus
+        lastPushedStatus = contentState.status
 
-        if isStateChange {
+        if isStatusChange {
             pushUpdate(contentState)
         } else {
             pushUpdateThrottled(contentState)
@@ -109,24 +128,62 @@ final class TransferLiveActivityManager {
 
     // MARK: - Activity Lifecycle
 
-    private func startActivity(with state: TransferLiveActivityAttributes.ContentState) {
+    private func startActivity(with contentState: TransferLiveActivityAttributes.ContentState) {
         guard activityId == nil,
+              !isStartingActivity,
               activityProvider.areActivitiesEnabled,
+              !isStartBlocked,
               !activityProvider.hasActiveActivity else {
             return
         }
+        isStartingActivity = true
+        startActivityTask = Task { [weak self] in
+            await self?.performStartActivity(with: contentState)
+        }
+    }
+
+    private func performStartActivity(with contentState: TransferLiveActivityAttributes.ContentState) async {
+        defer { isStartingActivity = false }
         let newId: String
         do {
-            newId = try activityProvider.request(
-                initialState: state,
-                staleDate: Self.staleDate(for: state.state)
+            newId = try await activityProvider.request(
+                initialState: contentState,
+                staleDate: Self.staleDate(for: contentState.status)
             )
         } catch {
-            MEGALogError("[Transfer Live Activity] Failed to start activity: \(error)")
+            let failureReason = (error as? ActivityAuthorizationError)?.failureReason ?? "n/a"
+            MEGALogError("[Transfer Live Activity] Failed to start activity: \(error) - reason: \(failureReason)")
+            if Self.isAuthorizationDenied(error) {
+                isStartBlocked = true
+            }
             return
         }
+
+        guard !Task.isCancelled, activityId == nil else {
+            let finalState = Self.terminalState(from: contentState)
+            Task { [activityProvider] in
+                await activityProvider.end(
+                    activityId: newId,
+                    state: finalState,
+                    dismissTimeInterval: 0
+                )
+            }
+            return
+        }
+
         activityId = newId
+        lastPushedStatus = contentState.status
+        lastUpdateTime = .now
         observeActivityState(id: newId)
+        handleSnapshot(latestSnapshot)
+    }
+
+    private static func isAuthorizationDenied(_ error: any Error) -> Bool {
+        guard let authorizationError = error as? ActivityAuthorizationError else { return false }
+        switch authorizationError {
+        case .denied, .unentitled, .unsupported: return true
+        default: return false
+        }
     }
 
     /// Subscribes to ActivityKit lifecycle events for `id`. When the activity ends
@@ -134,15 +191,15 @@ final class TransferLiveActivityManager {
     /// called so the next snapshot can start a fresh activity rather than silently
     /// no-op'ing on a stale identifier.
     private func observeActivityState(id: String) {
-        stateObservationTask = Task { [activityProvider] in
+        stateObservationTask = Task { [weak self, activityProvider] in
             for await state in activityProvider.stateUpdates(forActivityId: id) {
                 if state == .dismissed || state == .ended {
-                    self.handleExternalActivityEnd(id: id)
+                    self?.handleExternalActivityEnd(id: id)
                     return
                 }
             }
             if !Task.isCancelled {
-                self.handleExternalActivityEnd(id: id)
+                self?.handleExternalActivityEnd(id: id)
             }
         }
     }
@@ -177,26 +234,16 @@ final class TransferLiveActivityManager {
         reset()
     }
 
-    private func endActivityImmediately() {
-        guard let activityId else { return }
-        let id = activityId
-        let finalState = Self.terminalState(from: lastContentState)
-        reset()
-        Task { [activityProvider] in
-            await activityProvider.end(activityId: id, state: finalState, dismissTimeInterval: 0)
-        }
-    }
-
     // MARK: - Update Helpers
 
-    private func pushUpdate(_ state: TransferLiveActivityAttributes.ContentState) {
+    private func pushUpdate(_ contentState: TransferLiveActivityAttributes.ContentState) {
         guard let activityId else { return }
         lastUpdateTime = .now
-        let staleDate = Self.staleDate(for: state.state)
+        let staleDate = Self.staleDate(for: contentState.status)
         updateTask = Task { [activityProvider] in
             await activityProvider.update(
                 activityId: activityId,
-                state: state,
+                state: contentState,
                 staleDate: staleDate
             )
         }
@@ -206,29 +253,32 @@ final class TransferLiveActivityManager {
     /// `.paused`, `.error`, and `.overquota` describe transfers that are intentionally not
     /// progressing; they must never auto-flip to stale, otherwise the views would falsely
     /// surface "Open MEGA to resume" on a user-paused or terminal state.
-    private static func staleDate(for state: TransferLiveActivityState) -> Date? {
-        switch state {
+    private static func staleDate(for status: TransferLiveActivityStatus) -> Date? {
+        switch status {
         case .active: Date().addingTimeInterval(8)
         case .paused, .error, .overquota, .completed: nil
         }
     }
 
-    private func pushUpdateThrottled(_ state: TransferLiveActivityAttributes.ContentState) {
+    private func pushUpdateThrottled(_ contentState: TransferLiveActivityAttributes.ContentState) {
         if let lastUpdateTime,
            ContinuousClock.now - lastUpdateTime < Self.minimumUpdateInterval {
             return
         }
-        pushUpdate(state)
+        pushUpdate(contentState)
     }
 
     private func reset() {
         activityId = nil
-        lastPushedState = nil
+        lastPushedStatus = nil
         lastContentState = nil
+        latestSnapshot = nil
         lastUpdateTime = nil
         endActivityTask = nil
         updateTask = nil
         stateObservationTask = nil
+        startActivityTask = nil
+        isStartingActivity = false
     }
 
     // MARK: - Mapping
@@ -236,17 +286,17 @@ final class TransferLiveActivityManager {
     private static func makeContentState(
         from snapshot: TransferStatusSnapshot
     ) -> TransferLiveActivityAttributes.ContentState {
-        let state: TransferLiveActivityState
+        let status: TransferLiveActivityStatus
         if snapshot.hasError {
-            state = .error
+            status = .error
         } else if snapshot.hasOverquota {
-            state = .overquota
+            status = .overquota
         } else if snapshot.isPaused {
-            state = .paused
+            status = .paused
         } else if snapshot.isCompleted {
-            state = .completed
+            status = .completed
         } else {
-            state = .active
+            status = .active
         }
 
         let direction = Self.makeDirection(
@@ -256,15 +306,15 @@ final class TransferLiveActivityManager {
         let progressFraction = Double(snapshot.progress)
         return TransferLiveActivityAttributes.ContentState(
             progressFraction: progressFraction,
-            state: state,
+            status: status,
             direction: direction,
-            statusText: Self.makeStatusText(state: state, direction: direction),
+            statusText: Self.makeStatusText(status: status, direction: direction),
             percentageText: Self.makePercentageText(progressFraction: progressFraction),
             fileCountText: Self.makeFileCountText(
                 completed: snapshot.completedFileCount,
                 total: snapshot.totalFileCount
             ),
-            formattedSpeed: Self.makeFormattedSpeed(for: state, bytesPerSecond: snapshot.speedBytesPerSecond)
+            formattedSpeed: Self.makeFormattedSpeed(for: status, bytesPerSecond: snapshot.speedBytesPerSecond)
         )
     }
 
@@ -277,15 +327,15 @@ final class TransferLiveActivityManager {
         from lastState: TransferLiveActivityAttributes.ContentState?
     ) -> TransferLiveActivityAttributes.ContentState {
         let progressFraction = lastState?.progressFraction ?? 1
-        let state = lastState?.state ?? .completed
+        let status = lastState?.status ?? .completed
         return TransferLiveActivityAttributes.ContentState(
             progressFraction: progressFraction,
-            state: state,
+            status: status,
             direction: nil,
-            statusText: Self.makeStatusText(state: state, direction: nil),
+            statusText: Self.makeStatusText(status: status, direction: nil),
             percentageText: Self.makePercentageText(progressFraction: progressFraction),
             fileCountText: lastState?.fileCountText ?? "",
-            formattedSpeed: Self.makeFormattedSpeed(for: state, bytesPerSecond: 0)
+            formattedSpeed: Self.makeFormattedSpeed(for: status, bytesPerSecond: 0)
         )
     }
 
@@ -304,10 +354,10 @@ final class TransferLiveActivityManager {
     }
 
     private static func makeStatusText(
-        state: TransferLiveActivityState,
+        status: TransferLiveActivityStatus,
         direction: TransferLiveActivityDirection?
     ) -> String {
-        switch state {
+        switch status {
         case .paused: Strings.Localizable.paused
         case .error: Strings.Localizable.transferFailed
         case .overquota: Strings.Localizable.Transfer.LiveActivity.requiresAttention
@@ -355,10 +405,10 @@ final class TransferLiveActivityManager {
     /// paused, error, over-quota, and completed states we return an empty
     /// string so the LA hides the speed line entirely (per design).
     private static func makeFormattedSpeed(
-        for state: TransferLiveActivityState,
+        for status: TransferLiveActivityStatus,
         bytesPerSecond: Int64
     ) -> String {
-        guard state == .active else { return "" }
+        guard status == .active else { return "" }
         return "\(speedFormatter.string(fromByteCount: bytesPerSecond))/s"
     }
 }

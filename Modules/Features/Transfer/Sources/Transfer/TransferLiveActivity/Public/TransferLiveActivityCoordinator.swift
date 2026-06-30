@@ -19,9 +19,4 @@ public final class TransferLiveActivityCoordinator {
         manager.startMonitoring(snapshotPublisher: useCase.snapshotPublisher)
         self.manager = manager
     }
-
-    public func stopMonitoring() {
-        manager?.stopMonitoring()
-        manager = nil
-    }
 }

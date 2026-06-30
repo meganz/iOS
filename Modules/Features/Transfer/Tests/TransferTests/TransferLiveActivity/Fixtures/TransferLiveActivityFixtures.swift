@@ -34,7 +34,7 @@ extension TransferStatusSnapshot {
 extension TransferLiveActivityAttributes.ContentState {
     static func fixture(
         progressFraction: Double = 0.5,
-        state: TransferLiveActivityState = .active,
+        status: TransferLiveActivityStatus = .active,
         direction: TransferLiveActivityDirection? = .uploading,
         statusText: String = "Uploading files",
         percentageText: String = "50%",
@@ -43,7 +43,7 @@ extension TransferLiveActivityAttributes.ContentState {
     ) -> TransferLiveActivityAttributes.ContentState {
         TransferLiveActivityAttributes.ContentState(
             progressFraction: progressFraction,
-            state: state,
+            status: status,
             direction: direction,
             statusText: statusText,
             percentageText: percentageText,

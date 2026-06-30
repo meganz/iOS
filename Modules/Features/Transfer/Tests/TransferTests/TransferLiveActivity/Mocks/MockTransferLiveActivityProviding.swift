@@ -33,14 +33,21 @@ final class MockTransferLiveActivityProviding: TransferLiveActivityProviding, @u
     var requestError: Error?
     var requestedActivityId = "test-activity-1"
 
+    var pauseRequest = false
+
     private var stateContinuation: AsyncStream<ActivityState>.Continuation?
+    private var enablementContinuation: AsyncStream<Bool>.Continuation?
+    private var requestContinuation: CheckedContinuation<Void, Never>?
 
     func request(
         initialState: TransferLiveActivityAttributes.ContentState,
         staleDate: Date?
-    ) throws -> String {
+    ) async throws -> String {
         if let error = requestError { throw error }
         requestCalls.append(RequestCall(state: initialState, staleDate: staleDate))
+        if pauseRequest {
+            await withCheckedContinuation { self.requestContinuation = $0 }
+        }
         return requestedActivityId
     }
 
@@ -67,10 +74,26 @@ final class MockTransferLiveActivityProviding: TransferLiveActivityProviding, @u
         return AnyAsyncSequence(stream)
     }
 
+    var enablementUpdates: AnyAsyncSequence<Bool> {
+        let stream = AsyncStream<Bool> { continuation in
+            self.enablementContinuation = continuation
+        }
+        return AnyAsyncSequence(stream)
+    }
+
     // MARK: - Test helpers
 
     func emitActivityState(_ state: ActivityState) {
         stateContinuation?.yield(state)
+    }
+
+    func emitEnablement(_ enabled: Bool) {
+        enablementContinuation?.yield(enabled)
+    }
+
+    func releaseRequest() {
+        requestContinuation?.resume()
+        requestContinuation = nil
     }
 
     func finishStateUpdates() {

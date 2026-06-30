@@ -9,7 +9,7 @@ import SwiftUI
 public extension TransferLiveActivityAttributes.ContentState {
 
     var statusIcon: Image {
-        switch state {
+        switch status {
         case .paused: MEGAAssets.Image.pauseSmallRegularSolid
         case .error: MEGAAssets.Image.alertCircleSmallRegularSolid
         case .overquota: MEGAAssets.Image.alertTriangleSmallRegularSolid
@@ -24,7 +24,7 @@ public extension TransferLiveActivityAttributes.ContentState {
     }
 
     var tintColor: Color {
-        switch state {
+        switch status {
         case .active, .completed: TokenColors.Support.success.swiftUI
         case .paused: TokenColors.Icon.secondary.swiftUI
         case .error: TokenColors.Support.error.swiftUI
@@ -33,7 +33,7 @@ public extension TransferLiveActivityAttributes.ContentState {
     }
 
     var statusIconTint: Color {
-        switch state {
+        switch status {
         case .error:
             TokenColors.Support.error.swiftUI
         case .overquota:

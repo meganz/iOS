@@ -6,7 +6,7 @@ public struct TransferLiveActivityAttributes: ActivityAttributes {
 
     public struct ContentState: Codable, Hashable, Sendable {
         public let progressFraction: Double
-        public let state: TransferLiveActivityState
+        public let status: TransferLiveActivityStatus
         public let direction: TransferLiveActivityDirection?
 
         // Pre-formatted display strings produced on the app side so the widget
@@ -18,7 +18,7 @@ public struct TransferLiveActivityAttributes: ActivityAttributes {
 
         public init(
             progressFraction: Double,
-            state: TransferLiveActivityState,
+            status: TransferLiveActivityStatus,
             direction: TransferLiveActivityDirection?,
             statusText: String,
             percentageText: String,
@@ -26,7 +26,7 @@ public struct TransferLiveActivityAttributes: ActivityAttributes {
             formattedSpeed: String
         ) {
             self.progressFraction = progressFraction
-            self.state = state
+            self.status = status
             self.direction = direction
             self.statusText = statusText
             self.percentageText = percentageText
@@ -45,7 +45,7 @@ public struct TransferLiveActivityAttributes: ActivityAttributes {
 /// payload, and decouples the on-the-wire key from the Swift case name so the
 /// case can be renamed in code without changing the encoded format.
 /// Not a Domain entity, so the no-raw-value rule for Domain enums does not apply.
-public enum TransferLiveActivityState: String, Codable, Hashable, Sendable {
+public enum TransferLiveActivityStatus: String, Codable, Hashable, Sendable {
     case active
     case paused
     case error
@@ -53,7 +53,7 @@ public enum TransferLiveActivityState: String, Codable, Hashable, Sendable {
     case completed
 }
 
-/// IPC payload type. See `TransferLiveActivityState` for the rationale behind
+/// IPC payload type. See `TransferLiveActivityStatus` for the rationale behind
 /// the `String` raw value.
 public enum TransferLiveActivityDirection: String, Codable, Hashable, Sendable {
     case uploading

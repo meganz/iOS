@@ -38,7 +38,7 @@ struct TransferLiveActivityManagerTests {
 
         #expect(env.provider.requestCalls.count == 1)
         #expect(env.provider.requestCalls.first?.staleDate == nil)
-        #expect(env.provider.requestCalls.first?.state.state == .paused)
+        #expect(env.provider.requestCalls.first?.state.status == .paused)
     }
 
     @Test
@@ -51,7 +51,7 @@ struct TransferLiveActivityManagerTests {
         await waitForTasks()
 
         #expect(env.provider.requestCalls.first?.staleDate == nil)
-        #expect(env.provider.requestCalls.first?.state.state == .error)
+        #expect(env.provider.requestCalls.first?.state.status == .error)
     }
 
     @Test
@@ -64,7 +64,7 @@ struct TransferLiveActivityManagerTests {
         await waitForTasks()
 
         #expect(env.provider.requestCalls.first?.staleDate == nil)
-        #expect(env.provider.requestCalls.first?.state.state == .overquota)
+        #expect(env.provider.requestCalls.first?.state.status == .overquota)
     }
 
     @Test
@@ -158,7 +158,7 @@ struct TransferLiveActivityManagerTests {
         await waitForTasks()
 
         #expect(env.provider.updateCalls.count == updatesAfterFirst + 1)
-        #expect(env.provider.updateCalls.last?.state.state == .paused)
+        #expect(env.provider.updateCalls.last?.state.status == .paused)
     }
 
     // MARK: - Ending
@@ -177,23 +177,6 @@ struct TransferLiveActivityManagerTests {
 
         // scheduleEndActivity sleeps 6 s before calling end; within waitForTasks no end fires.
         #expect(env.provider.endCalls.isEmpty)
-    }
-
-    @Test
-    func stopMonitoring_callsEndImmediatelyWithZeroDismissInterval() async throws {
-        guard #available(iOS 16.2, *) else { return }
-        let env = makeSUT()
-        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
-
-        env.subject.send(.fixture())
-        await waitForTasks()
-
-        env.sut.stopMonitoring()
-        await waitForTasks()
-
-        #expect(env.provider.endCalls.count == 1)
-        let call = try #require(env.provider.endCalls.first)
-        #expect(call.dismissTimeInterval == 0)
     }
 
     // MARK: - External end events
@@ -333,43 +316,91 @@ struct TransferLiveActivityManagerTests {
     }
 
     @Test
-    func startMonitoringAfterStop_createsNewActivity() async {
+    func deniedStartFailure_blocksFurtherSnapshotsUntilEnablementChanges() async {
         guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
-        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
-        env.subject.send(.fixture())
-        await waitForTasks()
-
-        env.sut.stopMonitoring()
-        await waitForTasks()
-
-        // `stopMonitoring` cancels the Combine subscription, so a fresh
-        // `startMonitoring` is needed before the next snapshot can reach the manager.
-        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
-        env.subject.send(.fixture())
-        await waitForTasks()
-
-        #expect(env.provider.requestCalls.count == 2)
-    }
-
-    @Test
-    func requestFailure_nextSnapshotRetriesRequest() async {
-        guard #available(iOS 16.2, *) else { return }
-        enum TestError: Error { case failed }
-
-        let env = makeSUT()
-        env.provider.requestError = TestError.failed
+        env.provider.requestError = ActivityAuthorizationError.denied
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
         env.subject.send(.fixture())
         await waitForTasks()
         #expect(env.provider.requestCalls.isEmpty)
 
+        // A denied start must not be retried on every snapshot (the denial storm we're fixing):
+        // even once the underlying error clears, no new request is issued.
         env.provider.requestError = nil
         env.subject.send(.fixture())
         await waitForTasks()
+        #expect(env.provider.requestCalls.isEmpty)
 
+        // An authorization change re-arms the start.
+        env.provider.emitEnablement(true)
+        await waitForTasks()
+        env.subject.send(.fixture())
+        await waitForTasks()
         #expect(env.provider.requestCalls.count == 1)
+    }
+
+    @Test
+    func transientStartFailure_doesNotBlockAndRetriesWithoutEnablementChange() async {
+        guard #available(iOS 16.2, *) else { return }
+        let env = makeSUT()
+        env.provider.requestError = ActivityAuthorizationError.targetMaximumExceeded
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture())
+        await waitForTasks()
+        #expect(env.provider.requestCalls.isEmpty) // threw before recording the call
+
+        // A transient failure must NOT latch: once the condition clears, the next snapshot
+        // retries on its own — no enablement change required.
+        env.provider.requestError = nil
+        env.subject.send(.fixture())
+        await waitForTasks()
+        #expect(env.provider.requestCalls.count == 1)
+    }
+
+    @Test
+    func snapshotChangesWhileRequestPending_reconcilesToLatestState() async {
+        guard #available(iOS 16.2, *) else { return }
+        let env = makeSUT()
+        env.provider.pauseRequest = true
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture())                 // .active → start, request suspends
+        await waitForTasks()
+        #expect(env.provider.requestCalls.count == 1)
+
+        env.subject.send(.fixture(isPaused: true))   // arrives while request pending (dropped: no id yet)
+        await waitForTasks()
+        #expect(env.provider.updateCalls.isEmpty)
+
+        env.provider.releaseRequest()                // request returns → adopt + reconcile latest
+        await waitForTasks()
+
+        #expect(env.provider.updateCalls.last?.state.status == .paused)
+    }
+
+    @Test
+    func completedWhileRequestPending_pushesCompletedAndSchedulesEnd() async {
+        guard #available(iOS 16.2, *) else { return }
+        let env = makeSUT()
+        env.provider.pauseRequest = true
+        env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
+
+        env.subject.send(.fixture())                  // .active → request suspends
+        await waitForTasks()
+
+        env.subject.send(.fixture(isCompleted: true)) // completes while the request is pending
+        await waitForTasks()
+
+        env.provider.releaseRequest()
+        await waitForTasks()
+
+        // Reconciliation pushes the completed frame instead of leaving stale active state.
+        #expect(env.provider.updateCalls.last?.state.status == .completed)
+        // `scheduleEndActivity` sleeps 6 s before calling `end`; no end fires within waitForTasks.
+        #expect(env.provider.endCalls.isEmpty)
     }
 
     @Test
@@ -406,7 +437,7 @@ struct TransferLiveActivityManagerTests {
         await waitForTasks()
 
         #expect(env.provider.updateCalls.count == updatesBeforeCompletion + 1)
-        #expect(env.provider.updateCalls.last?.state.state == .completed)
+        #expect(env.provider.updateCalls.last?.state.status == .completed)
         // `scheduleEndActivity` sleeps 6 s before calling `end`; no end fires within waitForTasks.
         #expect(env.provider.endCalls.isEmpty)
     }
