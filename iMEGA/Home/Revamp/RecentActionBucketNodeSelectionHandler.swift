@@ -46,19 +46,21 @@ struct RecentActionBucketLocationHandler: NodeLocationHandling {
         guard let navigationController = mainTBC.selectedViewController as? UINavigationController else { return }
         navigationController.popToRootViewController(animated: false)
 
-        // A node with no parent is the root itself, the popped-to root screen is
-        // the location, so there is nothing to highlight.
+        let rootHandle = nodeUseCase.rootNode()?.handle
+
+        // A node with no parent is the account root itself — it *is* the popped-to
+        // root screen, not a row in any list, so there is nothing to highlight.
         guard let parent = nodeUseCase.parentForHandle(node.handle) else { return }
 
         let destinationViewController: NewCloudDriveViewController?
-        if nodeUseCase.rootNode()?.handle == parent.handle {
+        if rootHandle == parent.handle {
             // The location is the account root, already shown by the tab's root
             // screen, highlight the node there instead of pushing a duplicate.
             destinationViewController = navigationController.viewControllers.first as? NewCloudDriveViewController
         } else {
             destinationViewController = pushCloudDriveHierarchy(
                 to: parent,
-                stopAtHandle: nodeUseCase.rootNode()?.handle,
+                stopAtHandle: rootHandle,
                 isFromSharedItem: false,
                 in: navigationController
             )

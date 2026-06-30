@@ -18,8 +18,11 @@ final class SearchResultsRowHighlighter: ObservableObject {
     /// it to `nil` once the scroll is performed.
     @Published var scrollToResultId: ResultId?
 
-    /// Latest flash request. The target row flashes once per distinct token, so
-    /// the same row can be re-flashed on repeat taps.
+    /// Pending one-shot flash request. The target row clears it (via
+    /// `consumeFlash(token:)`) the moment it starts flashing, so it never lingers
+    /// to re-fire when rows are torn down and rebuilt (e.g. re-entering the
+    /// screen). A new token is minted per request so the same row can be
+    /// re-flashed on repeat taps.
     @Published var flashRequest: RowFlashRequest?
 
     private var flashToken = 0
@@ -29,5 +32,12 @@ final class SearchResultsRowHighlighter: ObservableObject {
         scrollToResultId = resultId
         flashToken += 1
         flashRequest = RowFlashRequest(resultId: resultId, token: flashToken)
+    }
+    
+    /// Consumes the pending flash once the target row has started it — mirroring
+    /// how the list nils `scrollToResultId` after scrolling.
+    func consumeFlash(token: Int) {
+        guard flashRequest?.token == token else { return }
+        flashRequest = nil
     }
 }

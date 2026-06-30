@@ -43,7 +43,8 @@ struct SearchResultsThumbnailView<Header: View>: View {
                     viewModel: item,
                     selected: $viewModel.selectedResultIds,
                     selectionEnabled: $viewModel.editing,
-                    flashRequest: rowHighlighter.flashRequest
+                    flashRequest: rowHighlighter.flashRequest,
+                    onFlashConsumed: { rowHighlighter.consumeFlash(token: $0) }
                 )
                 .onAppear {
                     // `viewModel.onItemAppear(item)` is meant to trigger `loadMore` logic.

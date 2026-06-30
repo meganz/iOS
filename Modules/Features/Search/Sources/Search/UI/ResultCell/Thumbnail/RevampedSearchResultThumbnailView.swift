@@ -55,6 +55,8 @@ struct RevampedSearchResultThumbnailView: View {
     
     var flashRequest: RowFlashRequest?
     
+    var onFlashConsumed: (Int) -> Void = { _ in }
+
     @State private var highlighted = false
 
     @State private var lastFlashedToken: Int?
@@ -97,6 +99,7 @@ struct RevampedSearchResultThumbnailView: View {
         withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
             highlighted = true
         }
+        onFlashConsumed(token)
         Task {
             try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
             // Skip if a newer flash has since taken over, so it isn't cleared early.
