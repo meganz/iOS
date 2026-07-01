@@ -14,6 +14,10 @@ final class AudioPlaybackService {
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
 
+    private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
+
+    private let artworkResolvedSubject = CurrentValueSubject<Bool, Never>(false)
+
     private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
     private let metadataLoader: any AudioMetadataLoading
@@ -44,6 +48,11 @@ final class AudioPlaybackService {
     }
 
     // MARK: - Private
+
+    private func markArtworkResolved(generation: Int) {
+        guard generation == playGeneration, currentSource != nil else { return }
+        artworkResolvedSubject.send(true)
+    }
 
     private func applyMetadata(_ metadata: AudioMetadata, generation: Int) {
         guard generation == playGeneration, currentSource != nil else { return }
@@ -87,6 +96,7 @@ final class AudioPlaybackService {
     /// cleared session.
     private func applyEngineStatus(_ status: PlaybackStatus) {
         guard currentSource != nil else { return }
+        if status == .playing { hasPlayedOnceBeforeSubject.send(true) }
         self.status = status
     }
 
@@ -134,6 +144,14 @@ extension AudioPlaybackService: PlaybackStateObservable {
         set { statusSubject.send(newValue) }
     }
 
+    var hasPlayedOnceBefore: Bool {
+        hasPlayedOnceBeforeSubject.value
+    }
+
+    var artworkResolved: Bool {
+        artworkResolvedSubject.value
+    }
+
     private(set) var isAirPlayActive: Bool {
         get { isAirPlayActiveSubject.value }
         set { isAirPlayActiveSubject.send(newValue) }
@@ -167,6 +185,14 @@ extension AudioPlaybackService: PlaybackStateObservable {
         statusSubject.eraseToAnyPublisher()
     }
 
+    var hasPlayedOnceBeforePublisher: AnyPublisher<Bool, Never> {
+        hasPlayedOnceBeforeSubject.removeDuplicates().eraseToAnyPublisher()
+    }
+
+    var artworkResolvedPublisher: AnyPublisher<Bool, Never> {
+        artworkResolvedSubject.removeDuplicates().eraseToAnyPublisher()
+    }
+
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> {
         isAirPlayActiveSubject.removeDuplicates().eraseToAnyPublisher()
     }
@@ -189,6 +215,8 @@ extension AudioPlaybackService: PlaybackControllable {
         title = Self.displayName(for: source)
         artist = nil
         artworkData = nil
+        hasPlayedOnceBeforeSubject.send(false)
+        artworkResolvedSubject.send(false)
         status = .loading
 
         startStreamingServerIfNeeded(for: source)
@@ -197,11 +225,12 @@ extension AudioPlaybackService: PlaybackControllable {
             return
         }
         metadataTask = Task { [metadataLoader, weak self] in
-            guard let self else { return }
-            guard let metadata = try? await metadataLoader.loadMetadata(from: url),
-                  !metadata.isEmpty,
-                  !Task.isCancelled else { return }
-            self.applyMetadata(metadata, generation: generation)
+            let metadata = try? await metadataLoader.loadMetadata(from: url)
+            guard let self, !Task.isCancelled else { return }
+            if let metadata, !metadata.isEmpty {
+                self.applyMetadata(metadata, generation: generation)
+            }
+            self.markArtworkResolved(generation: generation)
         }
         engine.play(url: url)
     }
@@ -226,6 +255,8 @@ extension AudioPlaybackService: PlaybackControllable {
         title = ""
         artist = nil
         artworkData = nil
+        hasPlayedOnceBeforeSubject.send(false)
+        artworkResolvedSubject.send(false)
         status = .loading
         engine.stop()
         streamingRepository.stopServer()

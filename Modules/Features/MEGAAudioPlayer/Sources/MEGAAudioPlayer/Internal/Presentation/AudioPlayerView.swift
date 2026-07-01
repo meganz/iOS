@@ -62,7 +62,7 @@ struct AudioPlayerView: View {
                     switch vm.playbackMode {
                     case .music:
                         MusicModeControlsSection(
-                            isPlaying: vm.isPlaying,
+                            loadingState: vm.loadingState,
                             isShuffleOn: vm.isShuffleOn,
                             repeatMode: vm.repeatMode,
                             onShuffle: vm.toggleShuffle,
@@ -73,7 +73,7 @@ struct AudioPlayerView: View {
                         )
                     case .podcast:
                         PodcastModeControlsSection(
-                            isPlaying: vm.isPlaying,
+                            loadingState: vm.loadingState,
                             speed: vm.playbackSpeed,
                             isSleepTimerActive: vm.isSleepTimerActive,
                             onSpeed: { activeMenu = .speed },
@@ -175,7 +175,7 @@ struct AudioPlayerView: View {
     private var mainContent: some View {
         ZStack {
             VStack(spacing: 0) {
-                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, isPlaying: vm.isPlaying)
+                ArtworkSection(coverImage: vm.artworkImage, glowColor: vm.glowColor, loadingState: vm.loadingState)
                     .frame(maxWidth: .infinity)
                     .overlay { seekGestureLayer }
                     .padding(.top, TokenSpacing._15)
@@ -274,7 +274,7 @@ private struct BackgroundLayer: View {
 private struct ArtworkSection: View {
     let coverImage: UIImage?
     let glowColor: Color?
-    let isPlaying: Bool
+    let loadingState: PlayerLoadingState
 
     private let coverMaxSize = 322.0
     private let coverReducedSize = 290.0
@@ -289,11 +289,14 @@ private struct ArtworkSection: View {
             cover
         }
         .scaleEffect(coverScale, anchor: .center)
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isPlaying)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: loadingState)
     }
 
     private var coverScale: CGFloat {
-        isPlaying ? 1 : coverReducedSize / coverMaxSize
+        switch loadingState {
+        case .playing, .paused: 1
+        case .loading, .ready: coverReducedSize / coverMaxSize
+        }
     }
 
     /// color halo behind the artwork . The blur extends rendered pixels ~125pt beyond
@@ -498,11 +501,35 @@ private struct ScrubberSection: View {
     }
 }
 
+// MARK: - Center Control
+
+private struct CenterControlView: View {
+    let loadingState: PlayerLoadingState
+    let onPlayPause: () -> Void
+
+    var body: some View {
+        Group {
+            switch loadingState {
+            case .loading, .ready:
+                LoaderThrobber()
+            case .playing, .paused:
+                (loadingState == .playing ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    .contentShape(Rectangle())
+                    .onTapGesture(perform: onPlayPause)
+            }
+        }
+        .frame(width: TokenSpacing._15, height: TokenSpacing._15)
+    }
+}
+
 // MARK: - Music Mode Controls
 
 /// Transport controls (shuffle / prev / play-pause / next / repeat)
 private struct MusicModeControlsSection: View {
-    let isPlaying: Bool
+    let loadingState: PlayerLoadingState
     let isShuffleOn: Bool
     let repeatMode: RepeatMode
     let onShuffle: () -> Void
@@ -531,13 +558,7 @@ private struct MusicModeControlsSection: View {
                 action: onSkipPrevious
             )
             Spacer()
-            (isPlaying ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .frame(width: TokenSpacing._15, height: TokenSpacing._15)
-                .contentShape(Rectangle())
-                .onTapGesture(perform: onPlayPause)
+            CenterControlView(loadingState: loadingState, onPlayPause: onPlayPause)
             Spacer()
             iconButton(
                 image: MEGAAssets.Image.audioSkipForward,
@@ -577,7 +598,7 @@ private struct MusicModeControlsSection: View {
 
 // MARK: - Podcast Mode Controls
 private struct PodcastModeControlsSection: View {
-    let isPlaying: Bool
+    let loadingState: PlayerLoadingState
     let speed: Float
     let isSleepTimerActive: Bool
     let onSpeed: () -> Void
@@ -600,13 +621,7 @@ private struct PodcastModeControlsSection: View {
                 action: onBackward
             )
             Spacer()
-            (isPlaying ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .frame(width: TokenSpacing._15, height: TokenSpacing._15)
-                .contentShape(Rectangle())
-                .onTapGesture(perform: onPlayPause)
+            CenterControlView(loadingState: loadingState, onPlayPause: onPlayPause)
             Spacer()
             iconButton(
                 image: MEGAAssets.Image.audioForward15,
@@ -818,9 +833,36 @@ private struct AirPlayIconButton: View {
             artist: "Arcy Drive",
             currentTime: 80,
             duration: 234,
-            isPlaying: true,
+            loadingState: .playing,
             playbackMode: .music
         )
+        return vm
+    }())
+}
+
+#Preview("State 1 — Loading") {
+    AudioPlayerView(vm: {
+        let vm = AudioPlayerViewModel()
+        vm.setControlState(
+            title: "Pioneer To The Falls (Live)",
+            artist: "Interpol",
+            loadingState: .loading,
+            playbackMode: .music
+        )
+        return vm
+    }())
+}
+
+#Preview("State 2 — Ready") {
+    AudioPlayerView(vm: {
+        let vm = AudioPlayerViewModel()
+        vm.setControlState(
+            title: "Pioneer To The Falls (Live)",
+            artist: "Interpol",
+            loadingState: .ready,
+            playbackMode: .music
+        )
+        vm.setArtwork(image: MEGAAssets.UIImage.audioIcon, glowColor: nil)
         return vm
     }())
 }
@@ -837,7 +879,7 @@ private struct AirPlayIconButton: View {
             artist: "Arcy Drive",
             currentTime: 80,
             duration: 234,
-            isPlaying: true,
+            loadingState: .playing,
             playbackMode: .music
         )
         vm.setPlaylist(items: [
@@ -860,7 +902,7 @@ private struct AirPlayIconButton: View {
             artist: "Arcy Drive",
             currentTime: 80,
             duration: 234,
-            isPlaying: true,
+            loadingState: .playing,
             playbackMode: .podcast,
             playbackSpeed: 2,
             isSleepTimerActive: true

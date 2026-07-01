@@ -45,8 +45,7 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var playbackMode: PlaybackMode = .music
 
-    /// Drives the center button's play/pause glyph.
-    @Published private(set) var isPlaying: Bool = false
+    @Published private(set) var loadingState: PlayerLoadingState = .loading
 
     @Published private(set) var isAirPlayActive: Bool = false
 
@@ -140,12 +139,24 @@ final class AudioPlayerViewModel: ObservableObject {
             .sink { [weak self] in self?.duration = $0 }
             .store(in: &cancellables)
 
-        service.statusPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] status in
-                self?.isPlaying = status == .playing || status == .buffering
-            }
-            .store(in: &cancellables)
+        let isReadyPublisher = Publishers.CombineLatest(
+            service.artworkResolvedPublisher,
+            service.durationPublisher.map { $0 != nil }
+        )
+        .map { artworkResolved, durationReady in artworkResolved && durationReady }
+
+        Publishers.CombineLatest3(
+            service.statusPublisher,
+            service.hasPlayedOnceBeforePublisher,
+            isReadyPublisher
+        )
+        .map { status, hasPlayedOnceBefore, isReady in
+            PlayerLoadingState(status: status, hasPlayedOnceBefore: hasPlayedOnceBefore, isReady: isReady)
+        }
+        .removeDuplicates()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] in self?.loadingState = $0 }
+        .store(in: &cancellables)
 
         service.isAirPlayActivePublisher
             .receive(on: DispatchQueue.main)
@@ -203,7 +214,7 @@ final class AudioPlayerViewModel: ObservableObject {
         artist: String? = nil,
         currentTime: TimeInterval = 0,
         duration: TimeInterval? = nil,
-        isPlaying: Bool = false,
+        loadingState: PlayerLoadingState = .loading,
         isShuffleOn: Bool = false,
         repeatMode: RepeatMode = .off,
         playbackMode: PlaybackMode = .music,
@@ -215,7 +226,7 @@ final class AudioPlayerViewModel: ObservableObject {
         self.artist = artist
         self.currentTime = currentTime
         self.duration = duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
-        self.isPlaying = isPlaying
+        self.loadingState = loadingState
         self.isShuffleOn = isShuffleOn
         self.repeatMode = repeatMode
         self.playbackMode = playbackMode
