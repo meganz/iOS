@@ -127,6 +127,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModePhotosAlbum:
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
+        case DisplayModeRecents:
+            [self hideBarButtonWithBarButtonItem:self.centerToolbarItem];
+            break;
         case DisplayModeRubbishBin:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
