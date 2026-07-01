@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import MEGASwiftUI
 import Testing
 @testable import Transfer
 
@@ -220,6 +221,37 @@ struct TransfersListViewModelPauseTests {
         #expect(useCase.resumeTransfersCalledTimes == 1)
         #expect(useCase.pauseTransfersCalledTimes == 0)
         #expect(!sut.isAllPaused)
+    }
+
+    @Test func pauseAll_showsSnackBarWithResumeAction() {
+        let sut = makeSUT(useCase: MockTransferListUseCase(paused: false))
+
+        sut.togglePauseAll()
+
+        #expect(sut.snackBar != nil)
+        #expect(sut.snackBar?.action != nil)
+    }
+
+    @Test func snackBarResumeAction_resumesAndDismissesSnackBar() {
+        let useCase = MockTransferListUseCase(paused: false)
+        let sut = makeSUT(useCase: useCase)
+        sut.togglePauseAll()
+
+        // Tapping "Resume all" in the snackbar runs its action.
+        sut.snackBar?.action?.handler()
+
+        #expect(useCase.resumeTransfersCalledTimes == 1)
+        #expect(!sut.isAllPaused)
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func resumeViaTopIcon_dismissesSnackBar() {
+        let sut = makeSUT(useCase: MockTransferListUseCase(paused: false))
+        sut.togglePauseAll() // pause: snackbar shown
+
+        sut.togglePauseAll() // resume via top-bar icon
+
+        #expect(sut.snackBar == nil)
     }
 }
 

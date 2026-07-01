@@ -1,5 +1,7 @@
 import Combine
 import Foundation
+import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
 
@@ -11,6 +13,8 @@ public final class TransfersListViewModel: ObservableObject {
     /// Drives the cancel-all confirmation alert. Cancel is the only destructive action
     /// that prompts (clear-all and retry-all run immediately, per design).
     @Published var isPresentingCancelAllConfirmation = false
+
+    @Published var snackBar: SnackBar?
 
     @Published private(set) var presence: TransferTabPresence = .none
 
@@ -55,11 +59,28 @@ public final class TransfersListViewModel: ObservableObject {
 
     func togglePauseAll() {
         if isAllPaused {
-            transferListUseCase.resumeTransfers()
+            resumeAll()
         } else {
-            transferListUseCase.pauseTransfers()
+            pauseAll()
         }
-        isAllPaused.toggle()
+    }
+
+    private func pauseAll() {
+        transferListUseCase.pauseTransfers()
+        isAllPaused = true
+        snackBar = SnackBar(
+            message: Strings.Localizable.Transfers.Snackbar.allPaused,
+            layout: .horizontal,
+            action: .init(title: Strings.Localizable.resumeAll) { [weak self] in
+                self?.resumeAll()
+            }
+        )
+    }
+
+    private func resumeAll() {
+        transferListUseCase.resumeTransfers()
+        isAllPaused = false
+        snackBar = nil
     }
 
     // MARK: - More menu

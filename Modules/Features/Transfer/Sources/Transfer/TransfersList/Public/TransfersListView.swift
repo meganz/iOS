@@ -26,6 +26,7 @@ public struct TransfersListView: View {
         .background(TokenColors.Background.page.swiftUI)
         .navigationTitle(Strings.Localizable.transfers)
         .navigationBarTitleDisplayMode(.large)
+        .snackBar($viewModel.snackBar)
         .alert(
             Strings.Localizable.Transfers.Confirmation.CancelAll.title,
             isPresented: $viewModel.isPresentingCancelAllConfirmation
