@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2.4 effective-5.10 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
 // swift-module-flags: -target x86_64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAL10n
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.4
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import Foundation
 import Swift
 import _Concurrency
@@ -3345,6 +3345,15 @@ public enum Strings {
           public static let podcastMode: Swift.String
           public enum Playlist {
             public static func playingFrom(_ p1: Any) -> Swift.String
+          }
+          public enum SleepTimer {
+            public static func remaining(_ p1: Any) -> Swift.String
+            public static let title: Swift.String
+            public enum Option {
+              public static let endOfTrack: Swift.String
+              public static func minutes(_ p1: Swift.Int) -> Swift.String
+              public static let turnOff: Swift.String
+            }
           }
         }
         public enum Playlist {
