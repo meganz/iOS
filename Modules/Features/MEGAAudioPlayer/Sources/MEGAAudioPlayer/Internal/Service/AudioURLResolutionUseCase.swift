@@ -18,12 +18,14 @@ struct AudioURLResolutionUseCase: AudioURLResolutionUseCaseProtocol {
 
     func url(for source: PlaybackSource) -> URL? {
         switch source {
-        case .offlineFiles(let paths, let index):
-            return paths.indices.contains(index) ? paths[index] : paths.first
+        case .offlineFiles(let file, _):
+            return file
 
         case .cloudNode(let node, _),
-             .chatMessage(let node, _, _),
-             .searchResult(let node):
+             .searchResult(let node),
+             .allAudios(let node, _),
+             .recents(let node, _),
+             .chatMessage(let node):
             return streamingRepository.streamingURL(for: .account(NodeEntityAdapter(node)))
 
         case .folderLink(let node, _):

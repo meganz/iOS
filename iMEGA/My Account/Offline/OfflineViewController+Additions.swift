@@ -76,13 +76,15 @@ extension OfflineViewController {
             let source: PlaybackSource?
             if let fileLink {
                 let allPaths = filePaths ?? [fileLink]
-                let startIndex = allPaths.firstIndex(of: fileLink) ?? 0
                 source = .offlineFiles(
-                    paths: allPaths.map { URL(fileURLWithPath: $0) },
-                    startIndex: startIndex
+                    file: URL(fileURLWithPath: fileLink),
+                    queue: allPaths.map { URL(fileURLWithPath: $0) }
                 )
-            } else if let filePaths, !filePaths.isEmpty {
-                source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
+            } else if let filePaths, let firstPath = filePaths.first {
+                source = .offlineFiles(
+                    file: URL(fileURLWithPath: firstPath),
+                    queue: filePaths.map { URL(fileURLWithPath: $0) }
+                )
             } else {
                 source = nil
             }

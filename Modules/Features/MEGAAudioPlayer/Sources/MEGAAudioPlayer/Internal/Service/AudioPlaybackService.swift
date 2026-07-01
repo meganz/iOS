@@ -103,15 +103,16 @@ final class AudioPlaybackService {
     private static func displayName(for source: PlaybackSource) -> String {
         switch source {
         case .cloudNode(let node, _),
-             .chatMessage(let node, _, _),
+             .searchResult(let node),
              .folderLink(let node, _),
-             .searchResult(let node):
+             .allAudios(let node, _),
+             .recents(let node, _),
+             .chatMessage(let node):
             return node.name
         case .fileLink(_, let node):
             return node?.name ?? ""
-        case .offlineFiles(let paths, let startIndex):
-            let url = paths.indices.contains(startIndex) ? paths[startIndex] : paths.first
-            return url?.lastPathComponent ?? ""
+        case .offlineFiles(let file, _):
+            return file.lastPathComponent
         }
     }
 }

@@ -208,8 +208,11 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                 source = .folderLink(node: node.toNodeEntity())
             } else if let fileLink, let url = URL(string: fileLink) {
                 source = .fileLink(url: url, node: node)
-            } else if let filePaths, !filePaths.isEmpty {
-                source = .offlineFiles(paths: filePaths.map { URL(fileURLWithPath: $0) })
+            } else if let filePaths, let firstPath = filePaths.first {
+                source = .offlineFiles(
+                    file: URL(fileURLWithPath: firstPath),
+                    queue: filePaths.map { URL(fileURLWithPath: $0) }
+                )
             } else if let node {
                 source = .cloudNode(node: node.toNodeEntity())
             } else {

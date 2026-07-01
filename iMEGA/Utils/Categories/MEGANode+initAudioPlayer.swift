@@ -114,9 +114,7 @@ extension MEGANode {
         if let node,
            let chatHandle = chatId?.uint64Value, chatHandle != .invalid,
            let messageHandle = messageId?.uint64Value, messageHandle != .invalid {
-            return .chatMessage(node: node.toNodeEntity(),
-                                chatId: chatHandle,
-                                messageId: messageHandle)
+            return .chatMessage(node: node.toNodeEntity())
         }
         if let node {
             let queue = (allNodes ?? []).map { $0.toNodeEntity() }

@@ -15,9 +15,11 @@ enum MEGAAudioPlayerActionsHandler {
         { hostVC, source in
             switch source {
             case .cloudNode(let node, _),
+                 .searchResult(let node),
                  .folderLink(let node, _),
-                 .chatMessage(let node, _, _),
-                 .searchResult(let node):
+                 .allAudios(let node, _),
+                 .recents(let node, _),
+                 .chatMessage(let node):
                 presentNodeAction(for: node, on: hostVC)
             case .fileLink(let url, _):
                 presentFileLinkAction(for: url, on: hostVC)
