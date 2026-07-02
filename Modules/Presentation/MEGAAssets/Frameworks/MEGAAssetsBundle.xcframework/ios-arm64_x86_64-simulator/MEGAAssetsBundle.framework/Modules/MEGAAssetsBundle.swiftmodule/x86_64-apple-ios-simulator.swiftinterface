@@ -1033,6 +1033,9 @@ public struct MEGAImageBundle {
   public static var monoChevronsRightMediumThinOutline: SwiftUICore.Image {
     get
   }
+  public static var monoLoaderThrobberMediumRegularOutline: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2703,6 +2706,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoChevronsRightMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoLoaderThrobberMediumRegularOutline: UIKit.UIImage {
     get
   }
 }

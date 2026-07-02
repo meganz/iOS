@@ -339,4 +339,5 @@ public struct MEGAImageBundle {
     public static var monoFileSearch02MediumThinOutline: Image { Image(.monoFileSearch02MediumThinOutline) }
     public static var monoChevronsLeftMediumThinOutline: Image { Image(.monoChevronsLeftMediumThinOutline) }
     public static var monoChevronsRightMediumThinOutline: Image { Image(.monoChevronsRightMediumThinOutline) }
+    public static var monoLoaderThrobberMediumRegularOutline: Image { Image(.monoLoaderThrobberMediumRegularOutline) }
 }
