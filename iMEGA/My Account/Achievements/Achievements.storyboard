@@ -603,6 +603,7 @@
                         <outlet property="achievementImageView" destination="AQS-fQ-dv2" id="2bD-Z7-YLi"/>
                         <outlet property="addPhoneNumberButton" destination="kFj-Kh-Kdm" id="IgJ-Vx-XzF"/>
                         <outlet property="checkImageView" destination="ALI-sf-vOw" id="msh-ou-FYa"/>
+                        <outlet property="contentMinimumHeightConstraint" destination="jtu-Vl-LAe" id="cMH-26-flg"/>
                         <outlet property="howItWorksExplanationLabel" destination="43K-O4-Uzf" id="UCE-JD-6FQ"/>
                         <outlet property="howItWorksLabel" destination="7Tn-FW-Lvd" id="1DE-Fh-4E7"/>
                         <outlet property="howItWorksTopSeparatorView" destination="v7f-bE-ZUC" id="ZGW-cu-4Gw"/>

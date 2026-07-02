@@ -10,7 +10,24 @@ extension AchievementsDetailsViewController {
         if #available(iOS 26.0, *) {
             navigationController?.navigationBar.isTranslucent = true
             AppearanceManager.applyLiquidGlassAppearance(to: navigationItem, backgroundColor: TokenColors.Background.surface1)
+            adjustScrollContentHeightForLiquidGlass()
         }
+    }
+
+    /// With the Liquid Glass (translucent) navigation bar on iOS 26 the scroll view extends
+    /// underneath the bar, so the automatic top content inset shifts the full-frame-height
+    /// content downwards and pushes the bottom-anchored install button off screen. Sizing the
+    /// content to the scroll view's safe-area (visible) height instead keeps the button within
+    /// the visible area, matching the pre-iOS 26 layout.
+    @available(iOS 26.0, *)
+    private func adjustScrollContentHeightForLiquidGlass() {
+        guard let contentMinimumHeightConstraint,
+              let contentView = contentMinimumHeightConstraint.firstItem as? UIView else { return }
+
+        contentMinimumHeightConstraint.isActive = false
+        contentView.heightAnchor
+            .constraint(greaterThanOrEqualTo: scrollView.safeAreaLayoutGuide.heightAnchor)
+            .isActive = true
     }
 
     @objc func showAddPhoneNumber() {

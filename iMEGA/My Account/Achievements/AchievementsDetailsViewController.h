@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *howItWorksTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIStackView *howItWorksView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint * _Nullable contentMinimumHeightConstraint;
 
 @end
