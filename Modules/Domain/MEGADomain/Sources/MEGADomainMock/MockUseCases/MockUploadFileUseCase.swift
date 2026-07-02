@@ -45,7 +45,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
         return duplicate
     }
 
-    public func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) -> String {
+    public func resolvedFileName(_ name: String, inParent parentHandle: HandleEntity) async -> String {
         name
     }
     

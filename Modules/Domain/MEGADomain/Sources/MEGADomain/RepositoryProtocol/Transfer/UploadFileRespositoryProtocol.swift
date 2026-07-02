@@ -25,7 +25,7 @@ public protocol UploadFileRepositoryProtocol: Sendable {
     func resolvedFileName(
         _ name: String,
         inParent parentHandle: HandleEntity
-    ) -> String
+    ) async -> String
     
     /// Uploads a file from a specified URL to a parent folder.
     ///

@@ -92,7 +92,7 @@ final class CloudDriveAssetUploader: AssetUploader {
     // MARK: - Upload
 
     private func enqueueUpload(url: URL, parentNode: NodeEntity) async {
-        let uploadURL = resolveNameCollision(for: url, inParent: parentNode.handle)
+        let uploadURL = await resolveNameCollision(for: url, inParent: parentNode.handle)
 
         var appData: String?
         if let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: uploadURL.path) {
@@ -115,9 +115,9 @@ final class CloudDriveAssetUploader: AssetUploader {
         )
     }
 
-    private func resolveNameCollision(for url: URL, inParent parentHandle: HandleEntity) -> URL {
+    private func resolveNameCollision(for url: URL, inParent parentHandle: HandleEntity) async -> URL {
         let originalName = url.lastPathComponent
-        let resolvedName = uploadFileUseCase.resolvedFileName(originalName, inParent: parentHandle)
+        let resolvedName = await uploadFileUseCase.resolvedFileName(originalName, inParent: parentHandle)
 
         guard resolvedName != originalName else { return url }
 

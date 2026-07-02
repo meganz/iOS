@@ -5,6 +5,9 @@ import MEGASwift
 public struct UploadFileRepository: UploadFileRepositoryProtocol {
     private let sdk: MEGASdk
     private let cancelToken = ThreadSafeCancelToken()
+    /// Caches parent `MEGANode` lookups so a batch import resolves each parent handle
+    /// only once, instead of calling `sdk.node(forHandle:)` per file.
+    @Atomic private var cachedParentNodes: [HandleEntity: MEGANode] = [:]
 
     public init(sdk: MEGASdk) {
         self.sdk = sdk
@@ -19,8 +22,8 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
     public func resolvedFileName(
         _ name: String,
         inParent parentHandle: HandleEntity
-    ) -> String {
-        guard let parent = sdk.node(forHandle: parentHandle) else { return name }
+    ) async -> String {
+        guard let parent = cachedParentNode(forHandle: parentHandle) else { return name }
 
         let url = URL(filePath: name, directoryHint: .notDirectory)
         let base = url.deletingPathExtension().lastPathComponent
@@ -125,5 +128,16 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
     
     public func cancelUploadTransfers() {
         cancelToken.cancel()
+    }
+
+    /// Returns the parent `MEGANode`, fetching it from the SDK only on the first request
+    /// for a given handle and caching it for the rest of the import. 
+    private func cachedParentNode(forHandle handle: HandleEntity) -> MEGANode? {
+        if let cached = cachedParentNodes[handle] { return cached }
+
+        guard let node = sdk.node(forHandle: handle) else { return nil }
+
+        $cachedParentNodes.mutate { $0[handle] = node }
+        return node
     }
 }
