@@ -127,62 +127,6 @@ private enum Sizes {
     static let surfaceOpacity: CGFloat = 0.67
 }
 
-// MARK: - Loader Throbber
-
-/// 8-dash circular spinner matching the `loader-throbber` Figma component
-struct LoaderThrobber: View {
-    private let dashCount = 8
-    private let dashLength: CGFloat = 5
-    private let dashWidth: CGFloat = 2
-
-    /// Tail opacity — the dimmest segment in the ring. Leading dash stays at
-    /// 1.0; intermediate dashes interpolate linearly between the two.
-    private let tailOpacity: CGFloat = 0.2
-
-    /// One full revolution in seconds. Slower than the default Apple spinner
-    /// (~1s) — the dashed look reads as "frantic" at higher speeds.
-    private let revolutionDuration: Double = 1.4
-
-    @State private var angle: Angle = .zero
-
-    var body: some View {
-        GeometryReader { proxy in
-            let size = min(proxy.size.width, proxy.size.height)
-            let radius = size / 2 - dashLength / 2
-
-            ZStack {
-                ForEach(0..<dashCount, id: \.self) { index in
-                    Capsule()
-                        .frame(width: dashWidth, height: dashLength)
-                        .offset(y: -radius)
-                        .rotationEffect(.degrees(Double(index) * (360.0 / Double(dashCount))))
-                        .opacity(opacity(forIndex: index))
-                }
-            }
-            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-            .frame(width: size, height: size)
-            .rotationEffect(angle)
-            // `.linear` repeatForever rotates a full revolution every
-            // `revolutionDuration` seconds; setting the destination angle
-            // inside `.onAppear` is what kicks the animation off — assigning
-            // during init would happen before the view is in the hierarchy
-            // and SwiftUI would skip the tween.
-            .animation(.linear(duration: revolutionDuration).repeatForever(autoreverses: false), value: angle)
-            .onAppear { angle = .degrees(360) }
-        }
-        .aspectRatio(1, contentMode: .fit)
-    }
-
-    /// Linear ramp from `1.0` at the leading dash down to `tailOpacity` at the
-    /// trailing one. Computing it inline (vs hard-coded 8 numbers) keeps the
-    /// ramp coherent if `dashCount` ever changes.
-    private func opacity(forIndex index: Int) -> Double {
-        guard dashCount > 1 else { return 1 }
-        let progress = Double(index) / Double(dashCount - 1)
-        return 1.0 - progress * (1.0 - Double(tailOpacity))
-    }
-}
-
 // MARK: - Previews
 
 #Preview("Loading") {

@@ -512,6 +512,7 @@ private struct CenterControlView: View {
             switch loadingState {
             case .loading, .ready:
                 LoaderThrobber()
+                    .padding(TokenSpacing._3)
             case .playing, .paused:
                 (loadingState == .playing ? MEGAAssets.Image.monoPauseMediumThinSolid : MEGAAssets.Image.monoPlayMediumThinSolid)
                     .resizable()
