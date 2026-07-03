@@ -9,7 +9,10 @@ final class MiniPlayerViewModel: ObservableObject {
 
     @Published private(set) var title: String = ""
     @Published private(set) var artist: String = ""
-    @Published private(set) var status: PlaybackStatus = .loading
+
+    @Published private(set) var loadingState: PlayerLoadingState = .loading
+
+    var isPreparing: Bool { loadingState == .loading || loadingState == .ready }
 
     private let service: (any AudioPlaybackServiceProtocol)?
     private var cancellables: Set<AnyCancellable> = []
@@ -40,16 +43,30 @@ final class MiniPlayerViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        service.statusPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.status = $0 }
-            .store(in: &cancellables)
+        let isReadyPublisher = Publishers.CombineLatest(
+            service.artworkResolvedPublisher,
+            service.durationPublisher.map { $0 != nil }
+        )
+        .map { artworkResolved, durationReady in artworkResolved && durationReady }
+
+        Publishers.CombineLatest3(
+            service.statusPublisher,
+            service.hasPlayedOnceBeforePublisher,
+            isReadyPublisher
+        )
+        .map { status, hasPlayedOnceBefore, isReady in
+            PlayerLoadingState(status: status, hasPlayedOnceBefore: hasPlayedOnceBefore, isReady: isReady)
+        }
+        .removeDuplicates()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] in self?.loadingState = $0 }
+        .store(in: &cancellables)
     }
 
     // MARK: - Intents
 
     func togglePlayPause() {
-        guard status != .loading else { return }
+        guard !isPreparing else { return }
         service?.togglePlayPause()
     }
 
@@ -63,9 +80,9 @@ final class MiniPlayerViewModel: ObservableObject {
 
     // MARK: - Preview / test seeding
 
-    func preview(title: String, artist: String, status: PlaybackStatus) {
+    func preview(title: String, artist: String, loadingState: PlayerLoadingState) {
         self.title = title
         self.artist = artist
-        self.status = status
+        self.loadingState = loadingState
     }
 }

@@ -5,8 +5,7 @@ import UIKit
 /// Coordinates the mini player's presence above the tab bar.
 @MainActor
 public final class MEGAMiniPlayerOverlayCoordinator {
-    /// Height the host should reserve for the pill in its overlay container.
-    public static let preferredHeight: CGFloat = 44
+    public static let preferredHeight: CGFloat = MiniPlayerView.Sizes.reserved
 
     /// Invoked when a playback session becomes active
     public var onAttach: ((UIViewController, CGFloat) -> Void)?

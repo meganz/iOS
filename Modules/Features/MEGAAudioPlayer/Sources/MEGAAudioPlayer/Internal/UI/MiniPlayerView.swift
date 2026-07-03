@@ -13,6 +13,7 @@ struct MiniPlayerView: View {
             .contentShape(Capsule())
             .onTapGesture { vm.expand() }
             .padding(.horizontal, Sizes.horizontalMargin)
+            .padding(.bottom, Sizes.bottomPadding)
     }
 
     @ViewBuilder
@@ -61,20 +62,20 @@ struct MiniPlayerView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(vm.status == .loading)
+        .disabled(vm.isPreparing)
     }
 
     @ViewBuilder
     private var stateIcon: some View {
-        switch vm.status {
-        case .loading:
+        switch vm.loadingState {
+        case .loading, .ready:
             LoaderThrobber()
                 .frame(width: Sizes.iconSize, height: Sizes.iconSize)
-        case .playing, .buffering:
+        case .playing:
             Image(uiImage: MEGAAssets.UIImage.miniplayerPause)
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-        case .paused, .error:
+        case .paused:
             Image(uiImage: MEGAAssets.UIImage.miniplayerPlay)
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -84,11 +85,11 @@ struct MiniPlayerView: View {
     private var details: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(vm.title)
-                .font(.system(size: Sizes.titleFontSize, weight: .semibold))
+                .font(.callout.weight(.semibold))
                 .lineLimit(1)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Text(vm.artist)
-                .font(.system(size: Sizes.artistFontSize, weight: .regular))
+                .font(.caption)
                 .lineLimit(1)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
@@ -110,21 +111,21 @@ struct MiniPlayerView: View {
         }
         .buttonStyle(.plain)
     }
-}
 
-// MARK: - Sizes
+    // MARK: - Sizes
 
-private enum Sizes {
-    static let pillHeight: CGFloat = 44
-    static let iconSize: CGFloat = 24
+    enum Sizes {
+        static let pillHeight: CGFloat = TokenSpacing._12
+        static let iconSize: CGFloat = TokenSpacing._7
 
-    /// Horizontal inset between the pill and its container's edges
-    static let horizontalMargin: CGFloat = 21
+        static let horizontalMargin: CGFloat = 21
 
-    static let titleFontSize: CGFloat = 16
-    static let artistFontSize: CGFloat = 12
+        static let bottomPadding: CGFloat = TokenSpacing._5
 
-    static let surfaceOpacity: CGFloat = 0.67
+        static let surfaceOpacity: CGFloat = 0.67
+
+        static let reserved: CGFloat = pillHeight + bottomPadding
+    }
 }
 
 // MARK: - Previews
@@ -132,7 +133,7 @@ private enum Sizes {
 #Preview("Loading") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", status: .loading)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .loading)
         return vm
     }())
     .padding()
@@ -142,7 +143,7 @@ private enum Sizes {
 #Preview("Playing") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", status: .playing)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .playing)
         return vm
     }())
     .padding()
@@ -152,7 +153,7 @@ private enum Sizes {
 #Preview("Paused") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", status: .paused)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .paused)
         return vm
     }())
     .padding()
@@ -162,7 +163,7 @@ private enum Sizes {
 #Preview("Dark — Playing") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", status: .playing)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .playing)
         return vm
     }())
     .padding()
