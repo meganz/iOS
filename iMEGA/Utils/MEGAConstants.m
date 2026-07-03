@@ -117,6 +117,14 @@ NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
 NSString * const MEGAExtensionCacheFolder = @"Library/Caches";
 NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Caches/NSE";
 
+#pragma mark - Extensions DB Export Analytics Events
+
+NSString * const MEGAExtensionsDBExportApplicationSupportMissingEvent = @"ext_db_export_app_support_missing";
+NSString * const MEGAExtensionsDBExportAppGroupMissingEvent = @"ext_db_export_app_group_missing";
+NSString * const MEGAExtensionsDBExportGroupDirFailedEvent = @"ext_db_export_group_dir_failed";
+NSString * const MEGAExtensionsDBExportEnumerateFailedEvent = @"ext_db_export_enumerate_failed";
+NSString * const MEGAExtensionsDBExportCopyFailedEvent = @"ext_db_export_copy_failed";
+
 #pragma mark - MEGA Activity Types
 
 NSString * const MEGAUIActivityTypeGetLink = @"MEGAUIActivityTypeGetLink";

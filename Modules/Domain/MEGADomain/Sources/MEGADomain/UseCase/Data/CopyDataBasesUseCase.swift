@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Use case protocol -
 public protocol CopyDataBasesUseCaseProtocol {
-    func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void)
+    func copyFromMainApp(completion: @escaping (Result<Void, CopyDataBasesErrorEntity>) -> Void)
 }
 
 // MARK: - Use case implementation -
@@ -14,7 +14,7 @@ public struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyData
         self.repo = repo
     }
     
-    public func copyFromMainApp(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func copyFromMainApp(completion: @escaping (Result<Void, CopyDataBasesErrorEntity>) -> Void) {
         
         repo.applicationSupportDirectoryURL { (result) in
             switch result {
@@ -44,6 +44,10 @@ public struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyData
                                                     completion(.failure(error))
                                                 }
                                             }
+                                        } else {
+                                            // Still report success so callers
+                                            // never hang waiting on a completion that never fires.
+                                            completion(.success(()))
                                         }
                                     case .failure(let error):
                                         completion(.failure(error))

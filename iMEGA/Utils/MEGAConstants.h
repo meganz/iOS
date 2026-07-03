@@ -116,6 +116,14 @@ extern NSString * const MEGAExtensionGroupSupportFolder;
 extern NSString * const MEGAExtensionCacheFolder;
 extern NSString * const MEGANotificationServiceExtensionCacheFolder;
 
+#pragma mark - Extensions DB Export Analytics Events
+
+extern NSString * const MEGAExtensionsDBExportApplicationSupportMissingEvent;
+extern NSString * const MEGAExtensionsDBExportAppGroupMissingEvent;
+extern NSString * const MEGAExtensionsDBExportGroupDirFailedEvent;
+extern NSString * const MEGAExtensionsDBExportEnumerateFailedEvent;
+extern NSString * const MEGAExtensionsDBExportCopyFailedEvent;
+
 #pragma mark - MEGA Activity Types
 
 extern NSString * const MEGAUIActivityTypeGetLink;

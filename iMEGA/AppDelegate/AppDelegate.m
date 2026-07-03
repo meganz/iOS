@@ -43,6 +43,7 @@
 #import <SDWebImage/SDWebImage.h>
 #import "MEGA-Swift.h"
 @import Firebase;
+@import FirebaseAnalytics;
 #import "LocalizationHelper.h"
 @import SDWebImageWebPCoder;
 
@@ -824,29 +825,53 @@
         NSFileManager *fileManager = [NSFileManager defaultManager];
         
         NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
-        if (error) {
+        if (applicationSupportDirectoryURL == nil) {
             MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+            [self logSeedExportEvent:MEGAExtensionsDBExportApplicationSupportMissingEvent];
+            return;
         }
-        
-        NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder] path];
+
+        NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
+        if (groupSupportURL == nil) {
+            MEGALogError(@"Failed to obtain the App Group GroupSupport directory URL");
+            [self logSeedExportEvent:MEGAExtensionsDBExportAppGroupMissingEvent];
+            return;
+        }
+        NSString *groupSupportPath = groupSupportURL.path;
         if (![fileManager fileExistsAtPath:groupSupportPath]) {
-            [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
+            NSError *createDirectoryError;
+            if (![fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:&createDirectoryError]) {
+                MEGALogError(@"Failed to create GroupSupport directory with error: %@", createDirectoryError);
+                [self logSeedExportEvent:MEGAExtensionsDBExportGroupDirFailedEvent];
+                return;
+            }
         }
         
         NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+        if (applicationSupportContent == nil) {
+            MEGALogError(@"Failed to enumerate Application Support directory with error: %@", error);
+            [self logSeedExportEvent:MEGAExtensionsDBExportEnumerateFailedEvent];
+            return;
+        }
         for (NSString *filename in applicationSupportContent) {
             if ([filename containsString:@"megaclient_statecache"] || [filename containsString:@"karere"]) {
                 NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
                 [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
-                if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+                NSError *copyError;
+                if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&copyError]) {
                     MEGALogDebug(@"Copy file %@", filename);
                 } else {
-                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                    MEGALogError(@"Copy item at path failed with error: %@", copyError);
+                    [self logSeedExportEvent:MEGAExtensionsDBExportCopyFailedEvent];
                 }
             }
         }
     });
+}
+
+- (void)logSeedExportEvent:(NSString *)eventName {
+    [FIRAnalytics logEventWithName:eventName parameters:nil];
 }
 
 - (void)presentInviteContactCustomAlertViewController {

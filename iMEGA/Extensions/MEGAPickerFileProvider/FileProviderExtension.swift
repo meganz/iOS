@@ -317,14 +317,14 @@ final class FileProviderExtension: NSFileProviderExtension {
     // MARK: - Private
     
     private func copyDatabasesFromMainApp() {
-        let copyDataBasesUseCase = CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo)
+        let copyDataBasesUseCase = CopyDataBasesUseCase(repo: CopyDataBasesRepository.nodeDatabaseGatedRepo)
         
         copyDataBasesUseCase.copyFromMainApp { (result) in
             switch result {
             case .success:
                 MEGALogDebug("[Picker] Databases from main app copied")
-            case .failure:
-                MEGALogError("[Picker] Error copying databases from main app")
+            case .failure(let error):
+                MEGALogError("[Picker] Error copying databases from main app: \(error)")
             }
         }
     }
