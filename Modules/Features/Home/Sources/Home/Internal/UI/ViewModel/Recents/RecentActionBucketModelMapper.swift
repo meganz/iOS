@@ -59,7 +59,7 @@ struct RecentActionBucketModelMapper {
                 return Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
             }
         case let .multipleMedia(nodes):
-            return Strings.Localizable.Recents.Section.Thumbnail.Count.image(nodes.count)
+            return RecentMediaCountTitleBuilder.make(for: nodes)
         case let .mixedFiles(nodes):
             if let firstNode = nodes.first, firstNode.isNodeKeyDecrypted {
                 return Strings.Localizable.Recents.Section.MultipleFile.title(nodes.count - 1).replacingOccurrences(of: "[A]", with: firstNode.name)

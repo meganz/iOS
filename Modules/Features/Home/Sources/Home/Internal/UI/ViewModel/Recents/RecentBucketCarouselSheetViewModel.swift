@@ -81,7 +81,7 @@ final class RecentBucketCarouselSheetViewModel: ObservableObject {
         case .singleFile, .singleMedia:
             return ""
         case let .multipleMedia(nodes):
-            return Strings.Localizable.Recents.Section.Thumbnail.Count.image(nodes.count)
+            return RecentMediaCountTitleBuilder.make(for: nodes)
         case let .mixedFiles(nodes):
             return Strings.Localizable.General.Format.Count.file(nodes.count)
         }

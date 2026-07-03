@@ -123,6 +123,15 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
 
+    var displayableTitle: String {
+        switch navigationTitle.title {
+        case .all:
+            RecentMediaCountTitleBuilder.make(for: bucket.nodes)
+        case let .selected(count):
+            Strings.Localizable.General.Format.itemsSelected(count)
+        }
+    }
+
     func loadBucketItems() async {
         guard let updatedBucket = await bucketItemsUseCase.fetchBucketContent(forId: bucket.id) else {
             return setupSnackBarAndExit()
@@ -164,15 +173,6 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
 }
 
 extension RecentActionBucketItemsNavigationTitle {
-    var displayableTitle: String {
-        switch title {
-        case let .all(count):
-            Strings.Localizable.Recents.Section.Thumbnail.Count.image(count)
-        case let .selected(count):
-            Strings.Localizable.General.Format.itemsSelected(count)
-        }
-    }
-    
     var displayableSubtitle: String? {
         switch subtitle {
         case let .addedBy(parentName, nodesCount):

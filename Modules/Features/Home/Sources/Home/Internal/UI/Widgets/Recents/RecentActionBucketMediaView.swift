@@ -145,7 +145,7 @@ struct RecentActionBucketMediaView: View {
     
     private var titleView: some View {
         RecentActionBucketNavigationTitleView(
-            title: viewModel.navigationTitle.displayableTitle,
+            title: viewModel.displayableTitle,
             subtitle: viewModel.navigationTitle.displayableSubtitle
         )
     }
