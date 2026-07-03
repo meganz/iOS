@@ -18,6 +18,7 @@ public struct TransfersListView: View {
                 Divider()
             }
             tabContent
+                .modifier(TransfersNoInternetViewModifier())
         }
         .task {
             await viewModel.observeTabPresence()
