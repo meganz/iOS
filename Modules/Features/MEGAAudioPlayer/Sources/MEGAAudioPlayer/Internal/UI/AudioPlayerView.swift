@@ -52,6 +52,7 @@ struct AudioPlayerView: View {
                 ScrubberSection(
                     currentTime: vm.currentTime,
                     duration: vm.duration,
+                    loadingState: vm.loadingState,
                     onSeek: { vm.seek(toFraction: $0) }
                 )
                 .padding(.horizontal, TokenSpacing._5)
@@ -91,6 +92,7 @@ struct AudioPlayerView: View {
                 BottomActionsSection(
                     currentMode: vm.playbackMode,
                     isAirPlayActive: vm.isAirPlayActive,
+                    loadingState: vm.loadingState,
                     onModeToggle: vm.switchPlaybackMode,
                     onPlaylist: vm.togglePlaylist
                 )
@@ -438,7 +440,10 @@ private struct TrackInfoSection: View {
 private struct ScrubberSection: View {
     let currentTime: TimeInterval
     let duration: TimeInterval?
+    let loadingState: PlayerLoadingState
     let onSeek: (Double) -> Void
+
+    private static let timePlaceholder = "--:--"
 
     @State private var dragFraction: Double?
 
@@ -468,13 +473,21 @@ private struct ScrubberSection: View {
 
     private var timeLabels: some View {
         HStack {
-            Text(formatElapsed(displayTime, duration: duration))
+            Text(elapsedLabel)
             Spacer()
-            Text(formatRemaining(currentTime: displayTime, duration: duration))
+            Text(remainingLabel)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
         .font(.caption.monospacedDigit())
         .foregroundStyle(TokenColors.Text.primary.swiftUI)
+    }
+
+    private var elapsedLabel: String {
+        loadingState == .loading ? Self.timePlaceholder : formatElapsed(displayTime, duration: duration)
+    }
+
+    private var remainingLabel: String {
+        loadingState == .loading ? Self.timePlaceholder : formatRemaining(currentTime: displayTime, duration: duration)
     }
 
     private var displayFraction: Double {
@@ -499,6 +512,18 @@ private struct ScrubberSection: View {
         let remaining = max(0, duration - currentTime)
         let total = Int(remaining.rounded())
         return String(format: "-%d:%02d", total / 60, total % 60)
+    }
+}
+
+// MARK: - Loading Helpers
+
+private extension View {
+    func disabledWhileLoading(_ state: PlayerLoadingState) -> some View {
+        let isLoading = state == .loading
+        return self
+            .allowsHitTesting(!isLoading)
+            .disabled(isLoading)
+            .opacity(isLoading ? 0.3 : 1)
     }
 }
 
@@ -587,6 +612,7 @@ private struct MusicModeControlsSection: View {
             .frame(width: size)
             .contentShape(Rectangle())
             .onTapGesture(perform: action)
+            .disabledWhileLoading(loadingState)
     }
 
     private func activeDot(isVisible: Bool) -> some View {
@@ -660,6 +686,7 @@ private struct PodcastModeControlsSection: View {
             .contentShape(Rectangle())
             .onTapGesture(perform: onSpeed)
             .anchorPreference(key: PodcastMenuAnchorsKey.self, value: .bounds) { PodcastMenuAnchors(speed: $0) }
+            .disabledWhileLoading(loadingState)
     }
 
     private func iconButton(image: Image, size: CGFloat, isAccented: Bool = false, action: @escaping () -> Void) -> some View {
@@ -668,6 +695,7 @@ private struct PodcastModeControlsSection: View {
             .frame(width: size)
             .contentShape(Rectangle())
             .onTapGesture(perform: action)
+            .disabledWhileLoading(loadingState)
     }
 
     private func activeDot(isVisible: Bool) -> some View {
@@ -763,12 +791,14 @@ private struct GlassMenu: View {
 private struct BottomActionsSection: View {
     let currentMode: PlaybackMode
     let isAirPlayActive: Bool
+    let loadingState: PlayerLoadingState
     let onModeToggle: () -> Void
     let onPlaylist: () -> Void
 
     var body: some View {
         HStack {
             AirPlayIconButton(isActive: isAirPlayActive)
+                .disabledWhileLoading(loadingState)
 
             Spacer()
 
@@ -783,6 +813,7 @@ private struct BottomActionsSection: View {
             Spacer()
 
             iconButton(image: MEGAAssets.Image.audioPlaylist, action: onPlaylist)
+                .disabledWhileLoading(loadingState)
         }
         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
