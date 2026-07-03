@@ -12,10 +12,11 @@ struct QASettingsView: View {
         static let checkForUpdateText = "Check for updates"
         static let userDataHeaderText = "User Data"
         static let clearStandardUserDefaultsText = "Clear Standard UserDefaults"
+        static let quotaEventSimulatorText = "Storage / Transfer quota simulator"
     }
-    
+
     let viewModel: QASettingsViewModel
-    
+
     var body: some View {
         List {
             Section(
@@ -50,6 +51,12 @@ struct QASettingsView: View {
                 )
             } label: {
                 Text("KM Transfer QA Settings")
+            }
+
+            NavigationLink {
+                QuotaEventSimulatorView()
+            } label: {
+                Text(Constants.quotaEventSimulatorText)
             }
 
             Section(
