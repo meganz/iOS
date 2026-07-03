@@ -4,7 +4,7 @@ import MEGADomain
 // MARK: - Protocol
 
 protocol AudioURLResolutionUseCaseProtocol {
-    func url(for source: PlaybackSource) -> URL?
+    func url(for track: PlaybackTrack) -> URL?
 }
 
 // MARK: - Implementation
@@ -16,24 +16,20 @@ struct AudioURLResolutionUseCase: AudioURLResolutionUseCaseProtocol {
         self.streamingRepository = streamingRepository
     }
 
-    func url(for source: PlaybackSource) -> URL? {
-        switch source {
-        case .offlineFiles(let file, _):
+    func url(for track: PlaybackTrack) -> URL? {
+        switch track {
+        case .offline(let file):
             return file
 
-        case .cloudNode(let node, _),
-             .searchResult(let node),
-             .allAudios(let node, _),
-             .recents(let node, _),
-             .chatMessage(let node):
+        case .account(let node):
             return streamingRepository.streamingURL(for: .account(NodeEntityAdapter(node)))
 
-        case .folderLink(let node, _):
+        case .folderLink(let node):
             return streamingRepository.streamingURL(for: .folderLink(NodeEntityAdapter(node)))
 
         case .fileLink(_, let node):
             guard let node else {
-                assertionFailure("[AudioURLResolutionUseCase] .fileLink source has nil node — caller must resolve the node before calling play(source:)")
+                assertionFailure("[AudioURLResolutionUseCase] .fileLink track has nil node — caller must resolve the node before enqueuing it")
                 return nil
             }
             return streamingRepository.streamingURL(for: .fileLink(node))

@@ -8,6 +8,7 @@ final class AudioPlaybackService {
     static let shared = AudioPlaybackService()
 
     private let currentSourceSubject = CurrentValueSubject<PlaybackSource?, Never>(nil)
+    private let queueSubject = CurrentValueSubject<PlaybackQueue, Never>(.empty)
     private let titleSubject = CurrentValueSubject<String, Never>("")
     private let artistSubject = CurrentValueSubject<String?, Never>(nil)
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
@@ -31,6 +32,11 @@ final class AudioPlaybackService {
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
     
+    private var playbackQueue: PlaybackQueue {
+        get { queueSubject.value }
+        set { queueSubject.send(newValue) }
+    }
+
     private var cancellables: Set<AnyCancellable> = []
 
     init(
@@ -100,21 +106,6 @@ final class AudioPlaybackService {
         self.status = status
     }
 
-    private static func displayName(for source: PlaybackSource) -> String {
-        switch source {
-        case .cloudNode(let node, _),
-             .searchResult(let node),
-             .folderLink(let node, _),
-             .allAudios(let node, _),
-             .recents(let node, _),
-             .chatMessage(let node):
-            return node.name
-        case .fileLink(_, let node):
-            return node?.name ?? ""
-        case .offlineFiles(let file, _):
-            return file.lastPathComponent
-        }
-    }
 }
 
 // MARK: - PlaybackStateObservable
@@ -123,6 +114,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     private(set) var currentSource: PlaybackSource? {
         get { currentSourceSubject.value }
         set { currentSourceSubject.send(newValue) }
+    }
+
+    var currentQueue: PlaybackQueue {
+        queueSubject.value
     }
 
     private(set) var title: String {
@@ -160,6 +155,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
         currentSourceSubject.eraseToAnyPublisher()
+    }
+
+    var currentQueuePublisher: AnyPublisher<PlaybackQueue, Never> {
+        queueSubject.eraseToAnyPublisher()
     }
 
     var titlePublisher: AnyPublisher<String, Never> {
@@ -207,21 +206,36 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
 extension AudioPlaybackService: PlaybackControllable {
     func play(source: PlaybackSource) {
+        if currentSource != nil, source.initialTrack.id == playbackQueue.current?.id {
+            return
+        }
+
+        currentSource = source
+        playbackQueue = PlaybackQueueBuilder.build(from: source)
+
+        startStreamingServerIfNeeded(for: source)
+        playCurrent()
+    }
+
+    private func playCurrent() {
         metadataTask?.cancel()
         metadataTask = nil
         playGeneration += 1
         let generation = playGeneration
 
-        currentSource = source
-        title = Self.displayName(for: source)
+        guard let track = playbackQueue.current else {
+            status = .error("url resolution error")
+            return
+        }
+
+        title = track.displayName
         artist = nil
         artworkData = nil
         hasPlayedOnceBeforeSubject.send(false)
         artworkResolvedSubject.send(false)
         status = .loading
 
-        startStreamingServerIfNeeded(for: source)
-        guard let url = urlResolutionUseCase.url(for: source) else {
+        guard let url = urlResolutionUseCase.url(for: track) else {
             status = .error("url resolution error")
             return
         }
@@ -253,6 +267,7 @@ extension AudioPlaybackService: PlaybackControllable {
         metadataTask = nil
         playGeneration += 1
         currentSource = nil
+        playbackQueue = .empty
         title = ""
         artist = nil
         artworkData = nil

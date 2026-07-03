@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../Presentation/MEGAAssets"),
         .package(path: "../../Presentation/MEGAL10n"),
@@ -28,6 +29,7 @@ let package = Package(
             name: "MEGAAudioPlayer",
             dependencies: [
                 "MEGADomain",
+                "MEGASwift",
                 "MEGAAssets",
                 "MEGAL10n",
                 "MEGAAppSDKRepo",

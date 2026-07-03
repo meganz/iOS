@@ -7,6 +7,7 @@ typealias AudioPlaybackServiceProtocol = PlaybackStateObservable & PlaybackContr
 @MainActor
 protocol PlaybackStateObservable {
     var currentSource: PlaybackSource? { get }
+    var currentQueue: PlaybackQueue { get }
     var title: String { get }
     var artist: String? { get }
     var artworkData: Data? { get }
@@ -16,6 +17,7 @@ protocol PlaybackStateObservable {
     var isAirPlayActive: Bool { get }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> { get }
+    var currentQueuePublisher: AnyPublisher<PlaybackQueue, Never> { get }
     var titlePublisher: AnyPublisher<String, Never> { get }
     var artistPublisher: AnyPublisher<String?, Never> { get }
     var artworkDataPublisher: AnyPublisher<Data?, Never> { get }

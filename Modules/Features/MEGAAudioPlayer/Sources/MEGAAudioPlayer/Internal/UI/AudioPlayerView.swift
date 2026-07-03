@@ -195,6 +195,7 @@ struct AudioPlayerView: View {
                 PlaylistView(
                     sourceName: vm.artist,
                     items: vm.playlistItems,
+                    currentTrackID: vm.currentTrackID,
                     onSelect: vm.selectPlaylistItem,
                     onMove: vm.movePlaylistItem
                 )
@@ -883,12 +884,8 @@ private struct AirPlayIconButton: View {
             loadingState: .playing,
             playbackMode: .music
         )
-        vm.setPlaylist(items: [
-                .init(id: "1", title: "Orange (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: true),
-                .init(id: "2", title: "Superbloomer (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
-                .init(id: "3", title: "Liquor Lips (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
-                .init(id: "4", title: "Dessert song (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false)
-            ]
+        vm.setQueueForPreview(
+            titles: ["Orange (Live)", "Superbloomer (Live)", "Liquor Lips (Live)", "Dessert song (Live)"]
         )
         vm.togglePlaylist()
         return vm

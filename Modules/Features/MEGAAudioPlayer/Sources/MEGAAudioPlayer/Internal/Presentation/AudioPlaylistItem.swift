@@ -9,6 +9,4 @@ struct AudioPlaylistItem: Identifiable {
     let artist: String?
 
     let thumbnail: UIImage?
-
-    let isCurrent: Bool
 }

@@ -81,6 +81,8 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var playlistItems: [AudioPlaylistItem] = []
 
+    @Published private(set) var currentTrackID: String?
+
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
     var isActionsMenuHidden: Bool {
@@ -111,6 +113,23 @@ final class AudioPlayerViewModel: ObservableObject {
         service.currentSourcePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.currentSource = $0 }
+            .store(in: &cancellables)
+
+        service.currentQueuePublisher
+            .map(\.tracks)
+            .removeDuplicates { $0.map(\.id) == $1.map(\.id) }
+            .map { tracks in
+                tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName, artist: nil, thumbnail: nil) }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.playlistItems = $0 }
+            .store(in: &cancellables)
+
+        service.currentQueuePublisher
+            .map { $0.current?.id }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.currentTrackID = $0 }
             .store(in: &cancellables)
 
         service.titlePublisher
@@ -268,11 +287,16 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func movePlaylistItem(from source: IndexSet, to destination: Int) {
-        playlistItems.move(fromOffsets: source, toOffset: destination)
+        // Reordering the live queue is a separate concern (queue-navigation
+        // ticket); the previous cosmetic array-move was lost on the next publish
+        // anyway. No-op until queue mutation lands.
     }
 
-    func setPlaylist(items: [AudioPlaylistItem]) {
-        playlistItems = items
+    func setQueueForPreview(titles: [String], currentIndex: Int = 0) {
+        playlistItems = titles.enumerated().map { index, title in
+            AudioPlaylistItem(id: "\(index)", title: title, artist: nil, thumbnail: nil)
+        }
+        currentTrackID = playlistItems.indices.contains(currentIndex) ? playlistItems[currentIndex].id : nil
     }
 
     func switchPlaybackMode() {

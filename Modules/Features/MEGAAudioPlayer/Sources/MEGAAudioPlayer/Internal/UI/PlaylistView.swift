@@ -8,6 +8,7 @@ import SwiftUI
 struct PlaylistView: View {
     let sourceName: String?
     let items: [AudioPlaylistItem]
+    let currentTrackID: String?
     let onSelect: (AudioPlaylistItem) -> Void
     let onMove: (IndexSet, Int) -> Void
 
@@ -15,14 +16,15 @@ struct PlaylistView: View {
         VStack(spacing: 0) {
             header
             List {
-                ForEach(items) { item in
-                    PlaylistRow(item: item)
+                ForEach(items) { row in
+                    let isCurrent = row.id == currentTrackID
+                    PlaylistRow(item: row, isCurrent: isCurrent)
                         .padding(.horizontal, TokenSpacing._5)
                         .contentShape(Rectangle())
                         .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
-                        .onTapGesture { onSelect(item) }
+                        .onTapGesture { onSelect(row) }
                         .listRowSeparator(.hidden)
-                        .listRowBackground(item.isCurrent ? TokenColors.Button.secondary.swiftUI : Color.clear)
+                        .listRowBackground(isCurrent ? TokenColors.Button.secondary.swiftUI : Color.clear)
                         .listRowInsets(EdgeInsets())
                 }
                 .onMove(perform: onMove)
@@ -61,6 +63,7 @@ struct PlaylistView: View {
 
 private struct PlaylistRow: View {
     let item: AudioPlaylistItem
+    let isCurrent: Bool
 
     private let thumbnailSize: CGFloat = TokenSpacing._11
 
@@ -70,7 +73,7 @@ private struct PlaylistRow: View {
 
             VStack(alignment: .leading, spacing: TokenSpacing._1) {
                 HStack(spacing: TokenSpacing._1) {
-                    if item.isCurrent {
+                    if isCurrent {
                         MEGAAssets.Image.monoWaveformSmallThinOutline
                             .resizable()
                             .scaledToFit()
@@ -180,14 +183,15 @@ struct NowPlayingCompactHeader: View {
             NowPlayingCompactHeader(coverImage: nil, title: "Orange (Live)", artist: "Arcy Drive")
                 .padding(TokenSpacing._4)
 
+            let previewItems = ["Orange (Live)", "Superbloomer (Live)", "Liquor Lips (Live)", "Dessert song (Live)"]
+                .enumerated()
+                .map { index, title in
+                    AudioPlaylistItem(id: "\(index)", title: title, artist: "Arcy Drive", thumbnail: nil)
+                }
             PlaylistView(
                 sourceName: "Arcy Drive",
-                items: [
-                    .init(id: "1", title: "Orange (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: true),
-                    .init(id: "2", title: "Superbloomer (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
-                    .init(id: "3", title: "Liquor Lips (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false),
-                    .init(id: "4", title: "Dessert song (Live)", artist: "Arcy Drive", thumbnail: nil, isCurrent: false)
-                ],
+                items: previewItems,
+                currentTrackID: previewItems.first?.id,
                 onSelect: { _ in },
                 onMove: { _, _ in }
             )
