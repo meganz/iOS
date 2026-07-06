@@ -231,7 +231,9 @@ public struct HomeView: View {
         case .recents:
             recentActionBucketsListView
         case .widgetsCustomization:
-            HomeWidgetsCustomizationView()
+            HomeWidgetsCustomizationView(dependency:
+                    .init(defaultLaunchDestinationUseCase: dependency.defaultLaunchDestinationUseCase)
+            )
         }
     }
 

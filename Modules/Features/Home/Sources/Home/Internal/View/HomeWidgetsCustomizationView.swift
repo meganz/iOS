@@ -1,13 +1,20 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
 struct HomeWidgetsCustomizationView: View {
+    struct Dependency {
+        let defaultLaunchDestinationUseCase: any DefaultLaunchDestinationUseCaseProtocol
+    }
+
     enum Route: Hashable {
         case chooseDefaultLaunchTab
     }
+
+    let dependency: Dependency
 
     @StateObject private var viewModel = HomeWidgetsCustomizationViewModel()
 
@@ -79,8 +86,11 @@ struct HomeWidgetsCustomizationView: View {
             }
         }
         .navigationDestination(for: Route.self) { _ in
-            // IOS-11797: Handle new Choose Default Launch tab
-            Text("To be implemented later")
+            DefaultLaunchDestinationView(
+                dependency: .init(
+                    defaultLaunchDestinationUseCase: dependency.defaultLaunchDestinationUseCase
+                )
+            )
         }
     }
 }

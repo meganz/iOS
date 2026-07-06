@@ -5038,3 +5038,5 @@
 "transfers.snackbar.allPaused"="All transfers paused";
 /* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
 "cloudDrive.navigationBar.updating"="Updating…";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="Default launch tab";

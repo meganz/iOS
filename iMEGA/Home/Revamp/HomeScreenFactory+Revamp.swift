@@ -112,6 +112,7 @@ extension HomeScreenFactory {
             downloadedNodesListener: downloadedNodesListener,
             nodeUseCase: nodeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            defaultLaunchDestinationUseCase: defaultLaunchDestinationUseCase,
             favouritesNodesActionHandler: favouritesNodesActionHandler,
             favouritesMoreActionsPresenter: favouritesNodesActionHandler,
             favouritesSelectActionPublisher: favouritesSelectActionSubject.eraseToAnyPublisher(),
@@ -263,6 +264,13 @@ extension HomeScreenFactory {
         SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,
             sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+        )
+    }
+
+    private var defaultLaunchDestinationUseCase: some DefaultLaunchDestinationUseCaseProtocol {
+        DefaultLaunchDestinationUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            repository: DefaultLaunchDestinationRepository.newRepo
         )
     }
 

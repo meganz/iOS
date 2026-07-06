@@ -31,6 +31,7 @@ extension HomeView {
         let downloadedNodesListener: any DownloadedNodesListening
         let nodeUseCase: any NodeUseCaseProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+        let defaultLaunchDestinationUseCase: any DefaultLaunchDestinationUseCaseProtocol
         let favouritesNodesActionHandler: any NodesActionHandling
         let favouritesMoreActionsPresenter: any MoreNodeActionsPresenting
         let favouritesSelectActionPublisher: AnyPublisher<HandleEntity, Never>
@@ -63,6 +64,7 @@ extension HomeView {
             downloadedNodesListener: some DownloadedNodesListening,
             nodeUseCase: some NodeUseCaseProtocol,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            defaultLaunchDestinationUseCase: some DefaultLaunchDestinationUseCaseProtocol,
             favouritesNodesActionHandler: some NodesActionHandling,
             favouritesMoreActionsPresenter: some MoreNodeActionsPresenting,
             favouritesSelectActionPublisher: AnyPublisher<HandleEntity, Never>,
@@ -91,6 +93,7 @@ extension HomeView {
             self.nodeUseCase = nodeUseCase
             self.avatarFetcher = avatarFetcher
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+            self.defaultLaunchDestinationUseCase = defaultLaunchDestinationUseCase
             self.favouritesNodesActionHandler = favouritesNodesActionHandler
             self.favouritesMoreActionsPresenter = favouritesMoreActionsPresenter
             self.favouritesSelectActionPublisher = favouritesSelectActionPublisher
