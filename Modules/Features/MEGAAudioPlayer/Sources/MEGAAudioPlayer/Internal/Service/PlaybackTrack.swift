@@ -60,4 +60,19 @@ struct PlaybackQueue: Sendable {
     var current: PlaybackTrack? {
         tracks.indices.contains(currentIndex) ? tracks[currentIndex] : nil
     }
+    
+    func moving(from source: Int, toOffset destination: Int) -> PlaybackQueue {
+        guard tracks.indices.contains(source),
+              (0...tracks.count).contains(destination) else { return self }
+
+        let currentID = current?.id
+        var reordered = tracks
+        let track = reordered.remove(at: source)
+        reordered.insert(track, at: destination > source ? destination - 1 : destination)
+
+        let newIndex = currentID
+            .flatMap { id in reordered.firstIndex { $0.id == id } }
+            ?? currentIndex
+        return PlaybackQueue(tracks: reordered, currentIndex: newIndex)
+    }
 }

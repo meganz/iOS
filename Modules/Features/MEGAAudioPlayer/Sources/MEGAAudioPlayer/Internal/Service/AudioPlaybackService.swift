@@ -262,6 +262,10 @@ extension AudioPlaybackService: PlaybackControllable {
         engine.setPlaybackSpeed(rate)
     }
 
+    func move(from source: Int, toOffset destination: Int) {
+        playbackQueue = playbackQueue.moving(from: source, toOffset: destination)
+    }
+
     func stop() {
         metadataTask?.cancel()
         metadataTask = nil

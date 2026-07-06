@@ -36,6 +36,7 @@ protocol PlaybackControllable {
     func togglePlayPause()
     func setPlaybackSpeed(_ rate: Float)
     func seek(toSeconds seconds: TimeInterval)
+    func move(from source: Int, toOffset destination: Int)
     func stop()
 }
 

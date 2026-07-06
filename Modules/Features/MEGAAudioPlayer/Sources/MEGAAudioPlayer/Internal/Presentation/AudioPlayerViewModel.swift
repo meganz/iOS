@@ -131,7 +131,10 @@ final class AudioPlayerViewModel: ObservableObject {
                 tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName, artist: nil, thumbnail: nil) }
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.playlistItems = $0 }
+            .sink { [weak self] items in
+                guard let self, self.playlistItems.map(\.id) != items.map(\.id) else { return }
+                self.playlistItems = items
+            }
             .store(in: &cancellables)
 
         service.currentQueuePublisher
@@ -296,9 +299,9 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func movePlaylistItem(from source: IndexSet, to destination: Int) {
-        // Reordering the live queue is a separate concern (queue-navigation
-        // ticket); the previous cosmetic array-move was lost on the next publish
-        // anyway. No-op until queue mutation lands.
+        guard let from = source.first else { return }
+        playlistItems.move(fromOffsets: source, toOffset: destination)
+        service?.move(from: from, toOffset: destination)
     }
 
     func setQueueForPreview(titles: [String], currentIndex: Int = 0) {
