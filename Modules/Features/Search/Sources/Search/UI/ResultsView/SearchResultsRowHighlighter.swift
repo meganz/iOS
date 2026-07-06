@@ -1,43 +1,49 @@
 import SwiftUI
 
-/// A one-shot request to flash a row. `token` makes every request distinct, so
-/// re-requesting the *same* `resultId` still registers as a change for the row's
-/// `onChange` observer (repeat "Show location" taps on the same item).
-struct RowFlashRequest: Equatable {
-    let resultId: ResultId
-    let token: Int
-}
-
 /// Holds the row scroll-and-highlight state for a results list, kept separate
 /// from `SearchResultsViewModel` so that view model stays focused on search.
 ///
 /// Owned by `SearchResultsContainerViewModel` and observed by the list view.
+///
+/// The flash lifetime lives here, not in the row view's `@State`, so its
+/// duration is consistent and survives the row being torn down and rebuilt (e.g.
+/// while scrolling) — the row's highlight is just a function of `flashingResultId`.
 @MainActor
 final class SearchResultsRowHighlighter: ObservableObject {
-    /// One-shot request for the list to scroll a row into view. The list resets
-    /// it to `nil` once the scroll is performed.
+    /// One-shot request for the list to scroll a row into view. The list clears
+    /// it once the target row has been scrolled to.
     @Published var scrollToResultId: ResultId?
 
-    /// Pending one-shot flash request. The target row clears it (via
-    /// `consumeFlash(token:)`) the moment it starts flashing, so it never lingers
-    /// to re-fire when rows are torn down and rebuilt (e.g. re-entering the
-    /// screen). A new token is minted per request so the same row can be
-    /// re-flashed on repeat taps.
-    @Published var flashRequest: RowFlashRequest?
+    /// A row that should start flashing once it's on screen. Consumed (set to
+    /// `nil`) by the target row the moment it begins its flash, so it fires
+    /// exactly once and never lingers to re-trigger on a later rebuild.
+    @Published private(set) var pendingFlashResultId: ResultId?
 
-    private var flashToken = 0
+    /// The row currently flashing. Drives the row's highlight background; cleared
+    /// centrally after the hold duration.
+    @Published private(set) var flashingResultId: ResultId?
 
-    /// Scrolls the row with `resultId` into view and flashes it once.
+    private var flashTask: Task<Void, Never>?
+    private static let flashHoldNanoseconds: UInt64 = 1_500_000_000
+
+    /// Scrolls the row with `resultId` into view and flashes it once it appears.
     func scrollToAndHighlight(resultId: ResultId) {
         scrollToResultId = resultId
-        flashToken += 1
-        flashRequest = RowFlashRequest(resultId: resultId, token: flashToken)
+        pendingFlashResultId = resultId
     }
-    
-    /// Consumes the pending flash once the target row has started it — mirroring
-    /// how the list nils `scrollToResultId` after scrolling.
-    func consumeFlash(token: Int) {
-        guard flashRequest?.token == token else { return }
-        flashRequest = nil
+
+    /// Called by the target row once it's on screen and ready to flash. Runs the
+    /// centrally-timed flash so its duration doesn't depend on the row view's
+    /// lifetime, and consumes the pending request so it flashes exactly once.
+    func beginFlashIfPending(for resultId: ResultId) {
+        guard pendingFlashResultId == resultId else { return }
+        pendingFlashResultId = nil
+        flashTask?.cancel()
+        flashingResultId = resultId
+        flashTask = Task {
+            try? await Task.sleep(nanoseconds: Self.flashHoldNanoseconds)
+            guard !Task.isCancelled else { return }
+            flashingResultId = nil
+        }
     }
 }

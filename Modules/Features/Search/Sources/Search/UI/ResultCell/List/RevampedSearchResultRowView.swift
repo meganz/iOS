@@ -21,7 +21,6 @@ struct RevampedSearchResultRowView: View {
         static let flashHighlightFadeOutDuration = 0.3
         static let longPressMininumDuration = 0.5
         static let tapHighlightDurationNs: UInt64 = 100_000_000
-        static let flashHighlightDurationNs: UInt64 = 1_500_000_000
         static let defaultThumbnailSize: Double = 32
         static let moreButtonWidth: CGFloat = 40
         static let moreButtonTrailingInset: CGFloat = 16
@@ -33,21 +32,19 @@ struct RevampedSearchResultRowView: View {
 
     @Binding var selected: Set<ResultId>
 
-    var flashRequest: RowFlashRequest?
+    var isFlashing: Bool = false
     
-    /// Called with the flash token when this row starts flashing, so the shared
-    /// request is consumed once and doesn't re-fire on later rebuilds.
-    var onFlashConsumed: (Int) -> Void = { _ in }
+    /// Whether this row is the pending flash target, waiting to appear on screen.
+    var isPendingFlash: Bool = false
+    
+    /// Tells the highlighter this row is on screen and ready to begin its flash.
+    var onReadyToFlash: () -> Void = {}
     
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
     }
 
     @State private var highlighted = false
-
-    @State private var showsFlash = false
-
-    @State private var lastFlashedToken: Int?
     
     var body: some View {
         contentWithInsetsAndSwipeActions
@@ -100,13 +97,13 @@ struct RevampedSearchResultRowView: View {
                     .padding(.trailing, Constants.moreButtonTrailingInset)
             }
             .listRowBackground(rowBackground)
-            .onChange(of: flashRequest) { _ in
-                flashHighlightIfNeeded()
+            .onChange(of: isPendingFlash) { pending in
+                if pending { onReadyToFlash() }
             }
             .onAppear {
-                // Covers the case where the target was set before the row appeared
-                // (e.g. it had to be scrolled into view first).
-                flashHighlightIfNeeded()
+                // Covers the case where this row was already the pending target
+                // before it appeared (e.g. it had to be scrolled into view first).
+                if isPendingFlash { onReadyToFlash() }
             }
     }
 
@@ -133,8 +130,8 @@ struct RevampedSearchResultRowView: View {
                 .opacity(isSelected || highlighted ? 1 : 0)
             // One-shot flash — fades in/out via its own value animation.
             TokenColors.Background.surface1.swiftUI
-                .opacity(showsFlash ? 1 : 0)
-                .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: showsFlash)
+                .opacity(isFlashing ? 1 : 0)
+                .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: isFlashing)
         }
     }
 
@@ -154,25 +151,6 @@ struct RevampedSearchResultRowView: View {
             }
         }
         viewModel.actions.selectionAction()
-    }
-
-    /// Runs a one-shot flash when this row is the flash target. Fades a tint in,
-    /// holds, then fades it out so it reads as "look here". Each request token
-    /// flashes at most once, so the same row can be re-flashed on repeat taps.
-    private func flashHighlightIfNeeded() {
-        guard let flashRequest,
-              flashRequest.resultId == viewModel.result.id,
-              flashRequest.token != lastFlashedToken else { return }
-        let token = flashRequest.token
-        lastFlashedToken = token
-        showsFlash = true
-        onFlashConsumed(token)
-        Task {
-            try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
-            // Skip if a newer flash has since taken over, so it isn't cleared early.
-            guard lastFlashedToken == token else { return }
-            showsFlash = false
-        }
     }
 
     // optional overlay property in placement .previewOverlay

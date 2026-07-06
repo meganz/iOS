@@ -20,9 +20,9 @@ struct SearchResultsListView<Header: View>: View {
         ScrollViewReader { proxy in
             Group {
                 if viewModel.isSelectionEnabled {
-                    selectableListContent
+                    selectableListContent(proxy: proxy)
                 } else {
-                    nonselectableListContent
+                    nonselectableListContent(proxy: proxy)
                 }
             }
             .onChange(of: rowHighlighter.scrollToResultId) { resultId in
@@ -43,31 +43,33 @@ struct SearchResultsListView<Header: View>: View {
     private func scrollToHighlightedRow(resultId: ResultId?, proxy: ScrollViewProxy) {
         guard let resultId else { return }
         if viewModel.listItems.contains(where: { $0.result.id == resultId }) {
-            scroll(to: resultId, proxy: proxy)
+            scroll(to: resultId, proxy: proxy, consume: true)
         } else {
             // The target may live on a page that hasn't been mapped yet (the list
             // is paginated). Load up to it first, then scroll.
             Task {
                 await viewModel.loadResults(untilResultIdLoaded: resultId)
-                scroll(to: resultId, proxy: proxy)
+                scroll(to: resultId, proxy: proxy, consume: false)
             }
         }
     }
 
-    private func scroll(to resultId: ResultId, proxy: ScrollViewProxy) {
+    private func scroll(to resultId: ResultId, proxy: ScrollViewProxy, consume: Bool) {
         guard let row = viewModel.listItems.first(where: { $0.result.id == resultId }) else { return }
         withAnimation {
             proxy.scrollTo(row.id, anchor: .center)
         }
         // Consume the one-shot request so the same row isn't re-scrolled on
         // unrelated state changes.
-        rowHighlighter.scrollToResultId = nil
+        if consume {
+            rowHighlighter.scrollToResultId = nil
+        }
     }
     
     @ViewBuilder
-    private var selectableListContent: some View {
+    private func selectableListContent(proxy: ScrollViewProxy) -> some View {
         let list = List(selection: $viewModel.selectedRowIds) {
-            listSectionContent
+            listSectionContent(proxy: proxy)
         }
         .onChange(of: editMode?.wrappedValue) { newMode in
             if newMode == .active {
@@ -98,9 +100,9 @@ struct SearchResultsListView<Header: View>: View {
     }
 
     @ViewBuilder
-    private var nonselectableListContent: some View {
+    private func nonselectableListContent(proxy: ScrollViewProxy) -> some View {
         let list = List {
-            listSectionContent
+            listSectionContent(proxy: proxy)
         }
 
         if #available(iOS 17.0, *) {
@@ -112,7 +114,7 @@ struct SearchResultsListView<Header: View>: View {
     }
 
     @ViewBuilder
-    private var listSectionContent: some View {
+    private func listSectionContent(proxy: ScrollViewProxy) -> some View {
         header()
             .listRowInsets(.init())
             .listRowSeparator(.hidden)
@@ -125,6 +127,11 @@ struct SearchResultsListView<Header: View>: View {
                         // We need to use `.onAppear` instead of `.task` so `loadMore` cannot be cancelled and cause a bug.
                         Task {
                             await viewModel.onItemAppear(item)
+                        }
+                        // The pending scroll target is now laid out with its real
+                        // height — re-center on it accurately, then consume.
+                        if item.result.id == rowHighlighter.scrollToResultId {
+                            scroll(to: item.result.id, proxy: proxy, consume: true)
                         }
                     }
             }
@@ -143,8 +150,9 @@ struct SearchResultsListView<Header: View>: View {
             RevampedSearchResultRowView(
                 viewModel: rowViewModel,
                 selected: $viewModel.selectedResultIds,
-                flashRequest: rowHighlighter.flashRequest,
-                onFlashConsumed: { rowHighlighter.consumeFlash(token: $0) }
+                isFlashing: rowHighlighter.flashingResultId == rowViewModel.result.id,
+                isPendingFlash: rowHighlighter.pendingFlashResultId == rowViewModel.result.id,
+                onReadyToFlash: { rowHighlighter.beginFlashIfPending(for: rowViewModel.result.id) }
             )
             .listRowSeparator(.hidden)
         }

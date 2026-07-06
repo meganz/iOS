@@ -41,9 +41,7 @@ struct RevampedSearchResultThumbnailView: View {
         static let topViewHeight = 148.0
         static let standardIconSize = 24.0
         static let bottomTrailingPropertyImageSize = 16.0
-        static let highlightFadeInDuration = 0.05
         static let flashHighlightFadeOutDuration = 0.3
-        static let flashHighlightDurationNs: UInt64 = 1_500_000_000
         static let highlightBorderWidth: CGFloat = 2
         static let backgroundSurface1 = TokenColors.Background.surface1.swiftUI
         static let highlightTint = TokenColors.Background.surface2.swiftUI
@@ -53,14 +51,17 @@ struct RevampedSearchResultThumbnailView: View {
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
     
-    var flashRequest: RowFlashRequest?
+    var isFlashing: Bool = false
     
-    var onFlashConsumed: (Int) -> Void = { _ in }
-
+    /// Whether this row is the pending flash target, waiting to appear on screen.
+    var isPendingFlash: Bool = false
+    
+    /// Tells the highlighter this row is on screen and ready to begin its flash.
+    var onReadyToFlash: () -> Void = {}
+    
+    /// Tap / long-press highlight, driven by `applyTapAndLongPressFromRowViewModel`.
     @State private var highlighted = false
 
-    @State private var lastFlashedToken: Int?
-    
     private let layout: ResultCellLayout = .thumbnail
 
     var body: some View {
@@ -69,7 +70,7 @@ struct RevampedSearchResultThumbnailView: View {
             bottomInfoView
         }
         .frame(height: Constants.cellHeight)
-        .background(Constants.highlightTint.opacity(highlighted ? 1 : 0))
+        .background(Constants.highlightTint.opacity(highlighted || isFlashing ? 1 : 0))
         .clipped()
         .overlay(
             RoundedRectangle(cornerRadius: TokenRadius.small)
@@ -77,39 +78,20 @@ struct RevampedSearchResultThumbnailView: View {
                     Constants.highlightTint,
                     lineWidth: Constants.highlightBorderWidth
                 )
-                .opacity(highlighted ? 1 : 0)
+                .opacity(highlighted || isFlashing ? 1 : 0)
         )
-        .onChange(of: flashRequest) { _ in
-            flashHighlightIfNeeded()
+        .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: isFlashing)
+        .onChange(of: isPendingFlash) { pending in
+            if pending { onReadyToFlash() }
         }
         .onAppear {
-            flashHighlightIfNeeded()
+            if isPendingFlash { onReadyToFlash() }
         }
         .task {
             await viewModel.loadThumbnail()
         }
     }
 
-    private func flashHighlightIfNeeded() {
-        guard let flashRequest,
-              flashRequest.resultId == viewModel.result.id,
-              flashRequest.token != lastFlashedToken else { return }
-        let token = flashRequest.token
-        lastFlashedToken = token
-        withAnimation(.easeInOut(duration: Constants.highlightFadeInDuration)) {
-            highlighted = true
-        }
-        onFlashConsumed(token)
-        Task {
-            try await Task.sleep(nanoseconds: Constants.flashHighlightDurationNs)
-            // Skip if a newer flash has since taken over, so it isn't cleared early.
-            guard lastFlashedToken == token else { return }
-            withAnimation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration)) {
-                highlighted = false
-            }
-        }
-    }
-    
     private var isSelected: Bool {
         selected.contains(viewModel.result.id)
     }
