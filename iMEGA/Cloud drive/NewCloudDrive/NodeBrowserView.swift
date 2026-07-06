@@ -136,12 +136,31 @@ struct NodeBrowserView: View {
         }
     }
 
+    // Only surface the syncing subtitle in regular browsing — never over the
+    // "N selected" title while the user is mid-selection.
+    private var showsSyncSubtitle: Bool {
+        guard case .regular = viewModel.viewState else { return false }
+        return viewModel.isSyncing
+    }
+
     @ToolbarContentBuilder
     private var toolbarNavigationTitle: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text(viewModel.title)
-                .font(.headline)
-                .lineLimit(1)
+            VStack(spacing: 0) {
+                Text(viewModel.title)
+                    .font(showsSyncSubtitle ? Font.subheadline.bold() : .headline)
+                    .lineLimit(1)
+                
+                if showsSyncSubtitle {
+                    HStack(spacing: 4) {
+                        ProgressView()
+                            .controlSize(.mini)
+                        Text(Strings.Localizable.CloudDrive.NavigationBar.updating)
+                            .font(.caption)
+                    }
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                }
+            }
         }
     }
     

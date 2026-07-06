@@ -5036,3 +5036,5 @@
 "media.audio.player.sleepTimer.remaining"="Sleep timer %@";
 /* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
 "transfers.snackbar.allPaused"="All transfers paused";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="Updating…";

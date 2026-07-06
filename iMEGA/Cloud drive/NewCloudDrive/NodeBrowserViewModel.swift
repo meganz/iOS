@@ -10,7 +10,7 @@ import Search
 import SwiftUI
 
 @MainActor
-class NodeBrowserViewModel: ObservableObject {
+final class NodeBrowserViewModel: ObservableObject {
 
     // Here, we retain for example context menu delegate handlers, that need to leave as long as this view model.
     // See ContextMenuManager usage inside CloudDriveViewController that uses weakly linked delegates, those objects
@@ -76,7 +76,10 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var title = ""
     @Published var viewState: ViewState = .regular(leftBarButton: .back)
     @Published var editMode: EditMode = .inactive
-    var isSelectionHidden = false
+    // Drives the navigation-bar "Updating…" subtitle while a burst of node updates is being applied.
+    @Published private(set) var isSyncing = false
+    private let syncActivityTracker = SyncActivityTracker()
+    private var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let noInternetViewModel: LegacyNoInternetViewModel
     private let storageFullModalAlertViewRouter: any StorageFullModalAlertViewRouting
@@ -463,8 +466,16 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     private func startMonitoringNodeUpdates() {
+        // Republish the tracker's state so the view keeps observing this view model only.
+        // removeDuplicates keeps redundant emissions from invalidating the whole view body.
+        syncActivityTracker.$isSyncing
+            .removeDuplicates()
+            .assign(to: &$isSyncing)
+
+        monitorNodeUpdatesTask?.cancel()
         monitorNodeUpdatesTask = Task { [weak self, nodeUpdatesProvider] in
             for await nodeEntities in nodeUpdatesProvider.nodeUpdates {
+                self?.syncActivityTracker.trackActivity(count: nodeEntities.count)
                 self?.handleNodeUpdates(with: nodeEntities)
             }
         }

@@ -2350,6 +2350,9 @@ public enum Strings {
           public static let title: Swift.String
         }
       }
+      public enum NavigationBar {
+        public static let updating: Swift.String
+      }
       public enum NodeInfo {
         public static func owner(_ p1: Any) -> Swift.String
         public enum NodeDescription {
