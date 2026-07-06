@@ -152,6 +152,18 @@ struct RecentActionBucketItemsView: View {
             Button(Strings.Localizable.cancel) {
                 viewModel.editMode = .inactive
             }
+        } else {
+            Button {
+                viewModel.editMode = .active
+            } label: {
+                Label {
+                    Text(Strings.Localizable.select)
+                } icon: {
+                    MEGAAssets.Image.checkCircle
+                        .renderingMode(.template)
+                        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                }
+            }
         }
     }
     
