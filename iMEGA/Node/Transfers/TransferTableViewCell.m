@@ -61,15 +61,7 @@
         }
             
         case MEGATransferTypeUpload: {
-            if (transfer.appData && [transfer.appData containsString:@"localIdentifier"]) {
-                if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:transfer.fileName]) {
-                    [self setImageForTransfer:transfer];
-                } else {
-                    [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
-                }
-            } else {
-                [self configureUploadTransfer:transfer];
-            }
+            [self configureUploadTransfer:transfer];
             break;
         }
             
@@ -88,56 +80,6 @@
     self.transfer = transfer;
     
     [self configureCellWithTransferState:MEGATransferStateActive];
-}
-
-- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate {
-    self.delegate = delegate;
-    self.transfer = nil;
-    self.uploadTransferLocalIdentifier = uploadTransferLocalIdentifier;
-    
-    if (!uploadTransferLocalIdentifier) {
-        return;
-    }
-    
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransferLocalIdentifier] options:nil];
-    if (fetchResult == nil) {
-        return;
-    }
-    
-    PHAsset *asset = fetchResult.firstObject;
-    if (asset == nil) {
-        return;
-    }
-    
-    NSString *extension;
-    
-    if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
-        PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
-        if (assetResource.originalFilename) {
-            extension = [FileExtensionOCWrapper lowercasedLastExtensionIn:assetResource.originalFilename];
-        }
-    }
-    
-    NSString *name = asset.creationDate.mnz_formattedDefaultNameForMedia;
-    if (extension) {
-        name = [name stringByAppendingPathExtension:extension];
-    }
-    
-    self.nameLabel.text = name;
-    
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.version = PHImageRequestOptionsVersionCurrent;
-    options.networkAccessAllowed = YES;
-    
-    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        if (result) {
-            self.iconImageView.image = result;
-        } else {
-            [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
-        }
-    }];
-    self.backgroundColor = [UIColor pageBackgroundColor];
-    [self queuedStateLayout];
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
@@ -327,15 +269,6 @@
     [self updatePauseButtonTintColor];
 }
 
-- (void)queuedStateLayout {
-    [self setTransferStateIcon:UIImage.mnz_uploadQueuedTransferImage color:[self transferTypeColorFor:MEGATransferTypeUpload]];
-    
-    self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
-    self.infoLabel.text = LocalizedString(@"pending", @"Label shown when a contact request is pending");
-    self.pauseButton.hidden = YES;
-    self.progressView.progress = 0;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancelTransfer:(id)sender {
@@ -347,8 +280,6 @@
                 [MEGASdk.sharedFolderLink cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.uploadTransferLocalIdentifier) {
-        [self.delegate cancelQueuedUploadTransfer:self.uploadTransferLocalIdentifier];
     }
 }
 

@@ -8,8 +8,7 @@ import Testing
 struct TransferInventoryUseCaseHelperTests {
     private static func makeSUT(
         transfers: [TransferEntity] = [],
-        completed: [TransferEntity] = [],
-        queuedUploads: [TransferRecordDTO]? = nil
+        completed: [TransferEntity] = []
     ) -> TransferInventoryUseCaseHelper {
         let inventory = MockTransferInventoryUseCase(
             transfers: transfers,
@@ -18,8 +17,7 @@ struct TransferInventoryUseCaseHelperTests {
         let fs = MockFileSystemRepository()
         let store = MockMEGAStore(
             fetchOfflineNodes: nil,
-            offlineNode: nil,
-            uploads: queuedUploads
+            offlineNode: nil
         )
         return TransferInventoryUseCaseHelper(
             transferInventoryUseCase: inventory,
@@ -87,27 +85,6 @@ struct TransferInventoryUseCaseHelperTests {
         }
     }
     
-    @Suite("queuedUploadTransfers mapping")
-    struct QueuedUploads {
-        @Suite("queuedUploadTransfers mapping")
-        struct QueuedUploads {
-            @Test("returns all non-nil localIdentifiers")
-            func mapsLocalIdentifiers() {
-                let dtoOne = TransferRecordDTO(localIdentifier: "one", parentNodeHandle: 0)
-                let dtoTwo = TransferRecordDTO(localIdentifier: "two", parentNodeHandle: 0)
-                
-                let sut = makeSUT(queuedUploads: [dtoOne, dtoTwo])
-                #expect(sut.queuedUploadTransfers() == ["one", "two"])
-            }
-            
-            @Test("returns empty when store returns nil")
-            func emptyWhenNil() {
-                let sut = makeSUT(queuedUploads: nil)
-                #expect(sut.queuedUploadTransfers().isEmpty)
-            }
-        }
-    }
-    
     @Suite("documentsDirectory forwarding")
     struct DocumentsDirectory {
         @Test("forwards to the inventory use-case")
@@ -122,22 +99,6 @@ struct TransferInventoryUseCaseHelperTests {
             
             let actual = sut.documentsDirectory()
             #expect(actual.path == customPath)
-        }
-    }
-    
-    @Suite("removeAllUploadTransfers effect")
-    struct RemoveAll {
-        @Test("invokes the store to remove all upload transfers")
-        func callsStore() {
-            let store = MockMEGAStore(uploads: [])
-            let sut = TransferInventoryUseCaseHelper(
-                transferInventoryUseCase: MockTransferInventoryUseCase(),
-                fileSystem: MockFileSystemRepository(),
-                store: store
-            )
-            
-            sut.removeAllUploadTransfers()
-            #expect(store.removeAllUploadTransfers_calledTimes == 1)
         }
     }
 }

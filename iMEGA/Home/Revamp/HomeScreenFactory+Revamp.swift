@@ -155,9 +155,6 @@ extension HomeScreenFactory {
             tracker: DIContainer.tracker,
             newChatRouter: newChatRouter,
             navigationController: navigationController,
-            uploadPhotoAssetsUseCase: UploadPhotoAssetsUseCase(
-                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: megaStore)
-            ),
             permissionHandler: permissionHandler,
             permissionRouter: permissionRouter
         )

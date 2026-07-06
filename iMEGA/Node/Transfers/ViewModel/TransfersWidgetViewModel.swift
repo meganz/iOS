@@ -25,8 +25,6 @@ final class TransfersWidgetViewModel: NSObject {
     
     func resumeQueuedTransfers() {
         transfersListenerUseCase.resumeQueuedTransfers()
-        
-        startPendingUploadTransferIfNeeded()
     }
     
     func navigateToParentNode(_ node: NodeEntity) {
@@ -39,18 +37,6 @@ final class TransfersWidgetViewModel: NSObject {
                 isOwnNode: nodeAccess == .owner,
                 isInRubbishBin: node.nodeType == .rubbish
             )
-        }
-    }
-    
-    private func startPendingUploadTransferIfNeeded() {
-        guard !areQueuedTransfersPaused() else {
-            return
-        }
-        
-        let transfers = transferInventoryUseCase.uploadTransfers(filteringUserTransfers: false)
-        
-        if !transfers.contains(where: { $0.state == .active }) {
-            Helper.startFirstPendingUploadTransfer()
         }
     }
     

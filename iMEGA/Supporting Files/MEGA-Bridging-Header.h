@@ -136,7 +136,6 @@
 #import "RTCAudioSession.h"
 #import "RTCDispatcher.h"
 #import "RTCAudioSessionConfiguration.h"
-#import "MOUploadTransfer+CoreDataProperties.h"
 #import "ContactsViewController.h"
 #import "AchievementsViewController.h"
 #import "OfflineCollectionViewController.h"

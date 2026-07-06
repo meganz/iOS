@@ -1219,8 +1219,6 @@
         [self postNodeUpdatesNotificationsFor:nodeList];
         [self removeCachedFilesIfNeededFor:nodeList];
         [self validateCameraUploadsRootFolderIfNeeded:nodeList];
-    } else {
-        [Helper startPendingUploadTransferIfNeeded];
     }
 }
 
@@ -1616,12 +1614,6 @@
 
 #pragma mark - MEGATransferDelegate
 
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.state == MEGATransferStatePaused) {
-        [Helper startPendingUploadTransferIfNeeded];
-    }
-}
-
 - (void)onTransferTemporaryError:(MEGASdk *)sdk transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     MEGALogDebug(@"onTransferTemporaryError %td", error.type)
     if (!transfer.isForeignOverquota) {
@@ -1650,18 +1642,11 @@
                 return;
             }
         }
-                
-        if ([transfer.appData containsString:@">localIdentifier"]) {
-            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@">"];
-            [[Helper uploadingNodes] removeObject:localIdentifier];
-        }
         
         if ([transfer.appData containsString:@">setCoordinates="]) {
             NSString *coordinates = [transfer.appData mnz_stringBetweenString:@">setCoordinates=" andString:@">"];
             [transfer mnz_setCoordinates:coordinates];
         }
-        
-        [Helper startPendingUploadTransferIfNeeded];
     }
     
     if (error.type) {

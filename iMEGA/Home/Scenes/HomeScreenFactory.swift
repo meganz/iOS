@@ -71,9 +71,6 @@ final class HomeScreenFactory: NSObject {
         let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
         
         let uploadViewModel = HomeUploadingViewModel(
-            uploadFilesUseCase: UploadPhotoAssetsUseCase(
-                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: megaStore)
-            ),
             permissionHandler: permissionHandler,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),

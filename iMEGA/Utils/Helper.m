@@ -140,103 +140,6 @@
     }
 }
 
-+ (void)moveNode:(MEGANode *)node from:(NSString *)itemPath to:(NSString *)relativeFilePath api:(MEGASdk *)api {
-    NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
-    if (replaceRange.location != NSNotFound) {
-        NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
-        NSError *error;
-        if ([[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:&error]) {
-            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:result.decomposedStringWithCanonicalMapping];
-        } else {
-            MEGALogError(@"Failed to move from %@ to %@ with error: %@", itemPath, relativeFilePath, error);
-        }
-    }
-}
-
-+ (NSMutableArray *)uploadingNodes {
-    static NSMutableArray *uploadingNodes = nil;
-    if (!uploadingNodes) {
-        uploadingNodes = [[NSMutableArray alloc] init];
-    }
-    
-    return uploadingNodes;
-}
-
-+ (void)startUploadTransferWithTransferRecordDTO:(TransferRecordDTO *)transferRecordDTO {
-    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
-                                                      options:nil].firstObject;
-    
-    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
-    
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset
-                                                                   presenter: nil
-                                                                    filePath:^(NSString *filePath) {
-        NSString *name = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:filePath.lastPathComponent];
-        NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
-        
-        NSString *appData = [NSString new];
-        
-        if (asset.location) {
-            NSString *coordinates = [NSString stringWithFormat:@"%f&%f", asset.location.coordinate.latitude, asset.location.coordinate.longitude];
-            appData = [appData mnz_appDataToSaveCoordinates:coordinates];
-        }
-        
-        appData = [appData mnz_appDataToLocalIdentifier:transferRecordDTO.localIdentifier];
-        
-        MEGAPitagTarget pitagTarget = parentNode.isInShare ? MEGAPitagTargetIncomingShare : MEGAPitagTargetCloudDrive;
-        MEGAUploadOptions *uploadOptions = [[MEGAUploadOptions alloc] initWithFileName:nil
-                                                                                 mtime:-1
-                                                                               appData:appData
-                                                                     isSourceTemporary:YES
-                                                                            startFirst:NO
-                                                                          pitagTrigger:MEGAPitagTriggerPicker
-                                                                          isChatUpload:NO
-                                                                           pitagTarget:pitagTarget];
-        
-        if (![name isEqualToString:newName]) {
-            NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
-            
-            NSError *error = nil;
-            NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:filePath];
-            if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
-                MEGALogError(@"Move item at path failed with error: %@", error);
-            }
-            [MEGASdk.shared startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath
-                                              parent:parentNode
-                                         cancelToken:nil
-                                             options:uploadOptions];
-        } else {
-            [MEGASdk.shared startUploadWithLocalPath:filePath.mnz_relativeLocalPath
-                                              parent:parentNode
-                                         cancelToken:nil
-                                             options:uploadOptions];
-        }
-        
-        if (transferRecordDTO.localIdentifier) {
-            [[Helper uploadingNodes] addObject:transferRecordDTO.localIdentifier];
-        }
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-    } error:^(NSError *error) {
-        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", LocalizedString(@"Transfer failed:", @""), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
-        [Helper startPendingUploadTransferIfNeeded];
-    }];
-    
-    [processAsset prepare];
-}
-
-+ (void)startPendingUploadTransferIfNeeded {
-    if ([Helper areQueuedTransfersPaused]) { return; }
-    [self startFirstPendingUploadTransfer];
-}
-
-+ (void)startFirstPendingUploadTransfer {
-    TransferRecordDTO *transferRecordDTO = [MEGAStore.shareInstance fetchUploadTransfers].firstObject;
-    if (transferRecordDTO != nil) {
-        [self startUploadTransferWithTransferRecordDTO:transferRecordDTO];
-    }
-}
-
 #pragma mark - Utils
 
 + (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object {
@@ -550,8 +453,6 @@
 }
 
 + (void)resetUserData {
-    [[Helper uploadingNodes] removeAllObjects];
-    
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
     
     #if defined(DEBUG) || defined(QA_CONFIG)

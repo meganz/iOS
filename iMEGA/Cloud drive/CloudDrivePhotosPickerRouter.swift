@@ -8,7 +8,6 @@ import PhotosUI
 
 @MainActor
 protocol AssetUploader {
-    func upload(assets: [PHAsset], to handle: MEGAHandle)
     func importFromPhotos(results: [PHPickerResult], to parentNode: NodeEntity) async
 }
 
@@ -44,54 +43,10 @@ struct CloudDrivePhotosPickerRouter {
     }
 
     func start() {
-        if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosManualUploadPhotos) {
-            startNewFlow()
-        } else {
-            startLegacyFlow()
-        }
-    }
-
-    // MARK: - New Flow
-
-    private func startNewFlow() {
         photoPicker.pickResults { [assetUploader, parentNode] results in
             guard !results.isEmpty else { return }
             Task {
                 await assetUploader.importFromPhotos(results: results, to: parentNode)
-            }
-        }
-    }
-
-    // MARK: - Legacy Flow
-
-    private func startLegacyFlow() {
-        permissionHandler.photosPermissionWithCompletionHandler { [weak presenter] granted in
-            guard let presenter else { return }
-
-            if granted {
-                photoPicker.pickAssets { [weak presenter, assetUploader, parentNode] assets, selectedCount in
-                    guard let presenter else { return }
-
-                    if assets.count < selectedCount, PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
-                        let alert = UIAlertController(
-                            title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.title,
-                            message: Strings.Localizable.Photo.Picker.Alert.LimitAccess.message,
-                            preferredStyle: .alert
-                        )
-                        alert.addAction(UIAlertAction(title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.selectMore, style: .default) { [weak presenter] _ in
-                            guard let presenter else { return }
-                            PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: presenter)
-                        })
-                        alert.addAction(UIAlertAction(title: Strings.Localizable.Photo.Picker.Alert.LimitAccess.availableOnly, style: .default) { _ in
-                            assetUploader.upload(assets: assets, to: parentNode.handle)
-                        })
-                        presenter.present(alert, animated: true)
-                    } else {
-                        assetUploader.upload(assets: assets, to: parentNode.handle)
-                    }
-                }
-            } else {
-                permissionRouter.alertPhotosPermission()
             }
         }
     }

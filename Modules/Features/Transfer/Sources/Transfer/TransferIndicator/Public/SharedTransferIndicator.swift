@@ -59,7 +59,7 @@ public enum SharedTransferIndicator {
     /// still need app-side knowledge while keeping the rest of the setup in-package.
     ///
     /// Safe to call even if an early fallback was created — will replace it.
-    public static func configure(hasPendingUploads: @escaping @Sendable () -> Bool) {
+    public static func configure() {
         guard !isConfigured else { return }
 
         let useCase = TransferIndicatorUseCase(
@@ -76,8 +76,7 @@ public enum SharedTransferIndicator {
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: PreferenceUseCase.default
             ),
-            preferenceUseCase: PreferenceUseCase.default,
-            hasPendingUploads: hasPendingUploads
+            preferenceUseCase: PreferenceUseCase.default
         )
         configuredUseCase = useCase
 

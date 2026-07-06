@@ -12,7 +12,6 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
     private let tracker: any AnalyticsTracking
     private let newChatRouter: NewChatRouter
     private unowned let navigationController: UINavigationController
-    private let uploadPhotoAssetsUseCase: any UploadPhotoAssetsUseCaseProtocol
 
     private let permissionHandler: any DevicePermissionsHandling
 
@@ -25,7 +24,6 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
         tracker: any AnalyticsTracking,
         newChatRouter: NewChatRouter,
         navigationController: UINavigationController,
-        uploadPhotoAssetsUseCase: some UploadPhotoAssetsUseCaseProtocol,
         permissionHandler: some DevicePermissionsHandling,
         permissionRouter: PermissionAlertRouter
     ) {
@@ -33,7 +31,6 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
         self.newChatRouter = newChatRouter
         self.navigationController = navigationController
         self.fileUploadingRouter = fileUploadingRouter
-        self.uploadPhotoAssetsUseCase = uploadPhotoAssetsUseCase
         self.permissionHandler = permissionHandler
         self.permissionRouter = permissionRouter
     }
@@ -63,22 +60,7 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
     }
 
     private func uploadFromPhotos() {
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosManualUploadPhotos) {
-            fileUploadingRouter.upload(from: .albumNew)
-        } else {
-            permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-                guard let self else { return }
-                if granted {
-                    let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
-                        guard let self else { return }
-                        self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
-                    }
-                    self.fileUploadingRouter.upload(from: .album(selectionHandler))
-                } else {
-                    permissionRouter.alertPhotosPermission()
-                }
-            }
-        }
+        fileUploadingRouter.upload(from: .albumNew)
     }
 
     private func uploadFromCamera() {
@@ -105,10 +87,6 @@ final class HomeAddMenuActionHandler: HomeAddMenuActionHandling {
 
     private func trackOpenLinkEvent() {
         tracker.trackAnalyticsEvent(with: OpenLinkMenuItemEvent())
-    }
-
-    private func uploadFiles(fromPhotoAssets assets: [PHAsset], to parentNode: MEGANode) {
-        uploadPhotoAssetsUseCase.upload(photoIdentifiers: assets.map(\.localIdentifier), to: parentNode.handle)
     }
 
     private func trackChooseFromPhotosEvent() {

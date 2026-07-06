@@ -16,8 +16,6 @@ final class ProgressIndicatorViewModel {
     private let transferCounterUseCase: any TransferCounterUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
-    
-    private var queuedUploadTransfers = [String]()
     private var isWidgetForbidden = false
     
     // MARK: - Tasks
@@ -112,9 +110,6 @@ final class ProgressIndicatorViewModel {
             return
         }
         
-        queuedUploadTransfers.removeAll()
-        queuedUploadTransfers = transferInventoryUseCaseHelper.queuedUploadTransfers()
-        
         if let lastFailedTransfer {
             updateStateBadge(for: lastFailedTransfer)
         } else {
@@ -122,7 +117,7 @@ final class ProgressIndicatorViewModel {
             shouldShowPauseBadge = false
         }
         
-        if completedBytes >= totalBytes && queuedUploadTransfers.isEmpty {
+        if completedBytes >= totalBytes {
             updateForCompletedTransfers()
         } else {
             updateForActiveTransfers()
@@ -184,7 +179,7 @@ final class ProgressIndicatorViewModel {
         dismissTask?.cancel()
         progressStrokeColor = TokenColors.Support.success.cgColor
         
-        let hasUploadTransfer = uploadTransfers > 0 || !queuedUploadTransfers.isEmpty
+        let hasUploadTransfer = uploadTransfers > 0
         shouldShowUploadImage = hasUploadTransfer
         
         if shouldShowOverquotaBadge {

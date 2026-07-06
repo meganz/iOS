@@ -16,7 +16,6 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
     private let transferInventoryUseCase: any TransferInventoryUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let preferenceUseCase: any PreferenceUseCaseProtocol
-    private let hasPendingUploads: @Sendable () -> Bool
     private let tracker = TransferProgressTracker()
     private let stateSubject = CurrentValueSubject<TransferIndicatorEntity, Never>(.hidden)
     private let snapshotSubject = CurrentValueSubject<TransferStatusSnapshot?, Never>(nil)
@@ -40,14 +39,12 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
         transferCounterUseCase: some TransferCounterUseCaseProtocol,
         transferInventoryUseCase: some TransferInventoryUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        preferenceUseCase: some PreferenceUseCaseProtocol,
-        hasPendingUploads: @escaping @Sendable () -> Bool = { false }
+        preferenceUseCase: some PreferenceUseCaseProtocol
     ) {
         self.transferCounterUseCase = transferCounterUseCase
         self.transferInventoryUseCase = transferInventoryUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.preferenceUseCase = preferenceUseCase
-        self.hasPendingUploads = hasPendingUploads
     }
     /// Runs the long-lived monitoring flow that keeps the latest transfer indicator
     /// state in sync with transfer, storage, and pause updates.
@@ -59,7 +56,6 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
         let transferInventoryUseCase = transferInventoryUseCase
         let accountStorageUseCase = accountStorageUseCase
         let preferenceUseCase = preferenceUseCase
-        let hasPendingUploads = hasPendingUploads
         let tracker = tracker
         let stateSubject = stateSubject
         let snapshotSubject = snapshotSubject
@@ -69,8 +65,7 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
             await tracker.initializeIfNeeded(with: transfers)
             let isPaused: Bool = preferenceUseCase[PreferenceKeyEntity.transfersPaused.rawValue] ?? false
             let snapshot = await tracker.snapshot(
-                isGloballyPaused: isPaused,
-                hasPendingUploads: hasPendingUploads()
+                isGloballyPaused: isPaused
             )
             snapshotSubject.send(snapshot)
             stateSubject.send(Self.makeEntity(from: snapshot))
@@ -150,8 +145,7 @@ final class TransferIndicatorUseCase: TransferIndicatorUseCaseProtocol {
         await tracker.initializeIfNeeded(with: transfers)
         let isPaused: Bool = preferenceUseCase[PreferenceKeyEntity.transfersPaused.rawValue] ?? false
         let snapshot = await tracker.snapshot(
-            isGloballyPaused: isPaused,
-            hasPendingUploads: hasPendingUploads()
+            isGloballyPaused: isPaused
         )
         snapshotSubject.send(snapshot)
         stateSubject.send(Self.makeEntity(from: snapshot))

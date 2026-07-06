@@ -276,13 +276,9 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             nodeDataRepository: NodeDataRepository.newRepo
         )
 
-        let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
-
         do {
             try await transferUseCase.cancelDownloadTransfers()
             try await transferUseCase.cancelUploadTransfers()
-
-            transferInventoryUseCaseHelper.removeAllUploadTransfers()
         } catch {
             MEGALogError("[CancelTransfers] Failed to cancel transfers: \(error)")
         }

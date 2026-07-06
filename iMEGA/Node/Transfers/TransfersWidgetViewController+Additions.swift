@@ -185,12 +185,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         transferInventoryUseCaseHelper.completedTransfers()
     }
     
-    @objc
-    func fetchQueuedUploadTransfers() -> [String] {
-        transferInventoryUseCaseHelper
-            .queuedUploadTransfers()
-    }
-    
     // MARK: - Private
     
     @objc
@@ -261,8 +255,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func hasActiveTransfers() -> Bool {
-        // Active transfers include ongoing transfers and queued uploads
-        transfers.count > 0 || queuedUploadTransfers.count > 0
+        transfers.count > 0
     }
     
     @objc

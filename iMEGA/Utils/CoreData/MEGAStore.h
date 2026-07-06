@@ -4,14 +4,11 @@
 #import "MOUser.h"
 #import "MOChatDraft+CoreDataProperties.h"
 #import "MOMediaDestination+CoreDataProperties.h"
-#import "MOUploadTransfer+CoreDataProperties.h"
 #import "MOFolderLayout+CoreDataProperties.h"
 #import "MOMessage+CoreDataProperties.h"
 #import "MOOfflineFolderLayout+CoreDataProperties.h"
 #import "MEGACoreDataStack.h"
 #import "MEGASdk.h"
-
-@class TransferRecordDTO;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,14 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)insertOrUpdateMediaDestinationWithFingerprint:(NSString *)fingerprint destination:(NSNumber *)destination timescale:(nullable NSNumber *)timescale;
 - (void)deleteMediaDestinationWithFingerprint:(NSString *)fingerprint;
 - (nullable MOMediaDestination *)fetchMediaDestinationWithFingerprint:(NSString *)fingerprint;
-
-#pragma mark - MOUploadTransfer entity
-
-- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
-- (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
-- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
-- (nullable NSArray<TransferRecordDTO *> *)fetchUploadTransfers;
-- (void)removeAllUploadTransfers;
 
 #pragma mark - MOMessage entity
 

@@ -22,10 +22,7 @@ extension MainTabBarController {
     }
 
     @objc func loadTabViewControllers() {
-        let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
-        SharedTransferIndicator.configure {
-            !transferInventoryUseCaseHelper.queuedUploadTransfers().isEmpty
-        }
+        SharedTransferIndicator.configure()
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
             SharedTransferFinishRecorder.shared.configure()
         }

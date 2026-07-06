@@ -41,21 +41,6 @@ final class CloudDriveAssetUploader: AssetUploader {
         self.uploadFileUseCase = uploadFileUseCase
     }
 
-    // MARK: - Legacy Upload Flow
-
-    func upload(assets: [PHAsset], to handle: MEGAHandle) {
-        guard !assets.isEmpty else { return }
-
-        assets.forEach { asset in
-            store.insertUploadTransfer(
-                withLocalIdentifier: asset.localIdentifier,
-                parentNodeHandle: handle
-            )
-        }
-
-        Helper.startPendingUploadTransferIfNeeded()
-    }
-
     // MARK: - New Upload Flow
 
     func importFromPhotos(

@@ -311,7 +311,7 @@ extension ChatViewController {
         }
     }
     
-    private func buildUploadAppData(filePath: String, chatRoomId: HandleEntity, localIdentifier: String) async -> String {
+    private func buildUploadAppData(filePath: String, chatRoomId: HandleEntity) async -> String {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.sharedRepo,
@@ -321,7 +321,7 @@ extension ChatViewController {
         
         let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: filePath)
         
-        return buildUploadAppData(chatRoomId: chatRoomId, localIdentifier: localIdentifier, formatedCoordinate: formattedCoordinate)
+        return buildUploadAppData(chatRoomId: chatRoomId, formatedCoordinate: formattedCoordinate)
     }
     
     private nonisolated func buildAssetUploadAppData(asset: PHAsset, chatRoomId: HandleEntity) -> String {
@@ -338,15 +338,12 @@ extension ChatViewController {
             nil
         }
         
-        return buildUploadAppData(chatRoomId: chatRoomId, localIdentifier: nil, formatedCoordinate: formattedCoordinate)
+        return buildUploadAppData(chatRoomId: chatRoomId, formatedCoordinate: formattedCoordinate)
     }
     
-    private nonisolated func buildUploadAppData(chatRoomId: HandleEntity, localIdentifier: String?, formatedCoordinate: String?) -> String {
+    private nonisolated func buildUploadAppData(chatRoomId: HandleEntity, formatedCoordinate: String?) -> String {
         var appData = ""
         appData = appData.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
-        if let localIdentifier {
-            appData = appData.mnz_appData(toLocalIdentifier: localIdentifier)
-        }
         if let formatedCoordinate {
             appData += formatedCoordinate
         }
@@ -380,7 +377,7 @@ extension ChatViewController {
         delegate: MEGAStartUploadTransferDelegate
     ) {
         Task { @MainActor in
-            let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId, localIdentifier: "")
+            let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId)
             let pitagTarget: PitagTargetEntity = chatRoom.pitagTarget
             let options = UploadOptionsEntity(
                 appData: appData,

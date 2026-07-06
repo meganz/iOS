@@ -165,9 +165,6 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     func didSelect(action: UploadAddActionEntity) {
         if uploadViewModel == nil, let navigationController {
             let uploadViewModel = HomeUploadingViewModel(
-                uploadFilesUseCase: UploadPhotoAssetsUseCase(
-                    uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
-                ),
                 permissionHandler: DevicePermissionsHandler.makeHandler(),
                 networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),

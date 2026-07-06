@@ -14,9 +14,6 @@ final class HomeUploadingViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(tracker: some AnalyticsTracking = MockTracker()) -> HomeUploadingViewModel {
         HomeUploadingViewModel(
-            uploadFilesUseCase: UploadPhotoAssetsUseCase(
-                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: .shareInstance())
-            ),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             createContextMenuUseCase: MockCreateContextMenuUseCase(),

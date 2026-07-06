@@ -6,13 +6,11 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     private(set) var remove_calledTimes = 0
     private(set) var removeAllOfflineNodes_calledTimes = 0
     private(set) var insertOfflineNode_calledTimes = 0
-    private(set) var removeAllUploadTransfers_calledTimes = 0
     
     var insertOfflineNode_lastPath: String?
     
     private let fetchOfflineNodes: [MOOfflineNode]?
     private let offlineNode: MOOfflineNode?
-    private var uploads: [TransferRecordDTO]?
     
     lazy var inMemoryContainer: NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
@@ -32,12 +30,10 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     
     init(
         fetchOfflineNodes: [MOOfflineNode]? = nil,
-        offlineNode: MOOfflineNode? = nil,
-        uploads: [TransferRecordDTO]? = nil
+        offlineNode: MOOfflineNode? = nil
     ) {
         self.fetchOfflineNodes = fetchOfflineNodes
         self.offlineNode = offlineNode
-        self.uploads = uploads
     }
     
     @objc override func fetchCloudAppearancePreference(handle: UInt64) -> CloudAppearancePreference? {
@@ -100,13 +96,5 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     override func insertOfflineNode(_ node: MEGANode, api: MEGASdk, path: String) {
         insertOfflineNode_calledTimes += 1
         insertOfflineNode_lastPath = path
-    }
-    
-    @objc override func fetchUploadTransfers() -> [TransferRecordDTO]? {
-        uploads
-    }
-    
-    @objc override func removeAllUploadTransfers() {
-        removeAllUploadTransfers_calledTimes += 1
     }
 }

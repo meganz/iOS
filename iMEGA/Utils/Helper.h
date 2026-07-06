@@ -32,9 +32,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 #pragma mark - Utils for transfers
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
-+ (NSMutableArray *)uploadingNodes;
-+ (void)startPendingUploadTransferIfNeeded;
-+ (void)startFirstPendingUploadTransfer;
 
 #pragma mark - Utils
 /// DEPRECATED: Migrate to the usage of SortOrderPreferenceUseCase to determine the desired sort order model.

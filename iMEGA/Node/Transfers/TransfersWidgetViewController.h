@@ -9,7 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic, nullable) ProgressIndicatorView *progressView;
 @property (weak, nonatomic, nullable) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray<NSString *> *queuedUploadTransfers;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *completedTransfers;
 @property (assign, nonatomic) BOOL showProgressIndicatorViewFromLeft;

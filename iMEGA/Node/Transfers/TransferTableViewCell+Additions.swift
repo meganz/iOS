@@ -6,7 +6,6 @@ import MEGADomain
 extension TransferTableViewCell {
     open override func prepareForReuse() {
         super.prepareForReuse()
-        cancelImageRequest()
         viewModel.cancelThumbnailLoading()
     }
     
@@ -43,49 +42,6 @@ extension TransferTableViewCell {
     @objc func setTransferStateIcon(_ image: UIImage, color: UIColor) {
         arrowImageView.image = image.withRenderingMode(.alwaysTemplate)
         arrowImageView.tintColor = color
-    }
-    
-    @objc func setImageFor(transfer: MEGATransfer) {
-        guard let appData = transfer.appData,
-              let localIdentifier = extractLocalIdentifier(from: appData) else {
-            iconImageView.image = NodeAssetsManager.shared.image(for: transfer.path?.pathExtension ?? "jpg")
-            return
-        }
-        
-        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
-        
-        guard let asset = fetchResult.firstObject else {
-            return
-        }
-        
-        let options = PHImageRequestOptions()
-        options.version = .current
-        options.isNetworkAccessAllowed = true
-        
-        imageRequestID = PHImageManager.default().requestImage(for: asset, targetSize: iconImageView.frame.size, contentMode: .aspectFit, options: options) { [weak self] image, _ in
-            guard let self else {
-                return
-            }
-            guard let image else {
-                iconImageView.image = NodeAssetsManager.shared.image(for: transfer.path?.pathExtension ?? "jpg")
-                return
-            }
-            
-            iconImageView.image = image
-        }
-    }
-    
-    func cancelImageRequest() {
-        PHImageManager.default().cancelImageRequest(imageRequestID)
-    }
-    
-    private func extractLocalIdentifier(from input: String) -> String? {
-        let pattern = />localIdentifier=([^>]+)/
-        if let match = input.firstMatch(of: pattern) {
-            let localIdentifier = match.output.1
-            return String(localIdentifier)
-        }
-        return nil
     }
     
     static var areTransfersPaused: Bool {

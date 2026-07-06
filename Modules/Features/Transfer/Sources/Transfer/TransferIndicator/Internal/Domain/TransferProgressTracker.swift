@@ -151,9 +151,8 @@ actor TransferProgressTracker {
     /// Produces the aggregate snapshot for the current batch.
     ///
     /// Active transfers take priority over terminal rendering. Once active transfers are
-    /// gone, the tracker resolves to the last batch outcome unless completed should be
-    /// suppressed because more uploads are still queued to start.
-    func snapshot(isGloballyPaused: Bool, hasPendingUploads: Bool) -> TransferStatusSnapshot? {
+    /// gone, the tracker resolves to the last batch outcome
+    func snapshot(isGloballyPaused: Bool) -> TransferStatusSnapshot? {
         let transfers = Array(activeTransfers.values)
 
         guard !transfers.isEmpty || hasError || hasOverquota || hasCompleted else {
@@ -188,20 +187,6 @@ actor TransferProgressTracker {
                     speedBytesPerSecond: 0
                 )
             } else if hasCompleted {
-                if hasPendingUploads {
-                    return TransferStatusSnapshot(
-                        progress: 1,
-                        hasError: false,
-                        hasOverquota: false,
-                        isPaused: false,
-                        isCompleted: false,
-                        activeUploadCount: 0,
-                        activeDownloadCount: 0,
-                        completedFileCount: completedFileCount,
-                        totalFileCount: totalFileCount,
-                        speedBytesPerSecond: 0
-                    )
-                }
                 return TransferStatusSnapshot(
                     progress: 1,
                     hasError: false,

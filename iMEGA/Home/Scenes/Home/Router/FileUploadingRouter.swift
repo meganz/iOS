@@ -36,8 +36,6 @@ final class FileUploadingRouter {
     
     func upload(from source: FileUploadSource) {
         switch source {
-        case .album(let completion):
-            presentPhotoAlbumSelection(completion: completion)
         case .albumNew:
             presentPhotoAlbumSelectionNewFlow()
         case .textFile:
@@ -48,17 +46,6 @@ final class FileUploadingRouter {
             presentImportSelection()
         case .documentScan:
             presentDocumentScanViewController()
-        }
-    }
-
-    // MARK: - Display PhotoAlbum Selection View Controller
-
-    private func presentPhotoAlbumSelection(completion: @escaping (([PHAsset], MEGANode) -> Void)) {
-        photoPicker.pickAssets { [weak self] assets, _ in
-            guard !assets.isEmpty else { return }
-            self?.presentDestinationFolderBrowser { targetNode in
-                completion(assets, targetNode)
-            }
         }
     }
 
@@ -237,9 +224,6 @@ final class FileUploadingRouter {
     // MARK: - Event Source
 
     enum FileUploadSource {
-        // Upload from photo album (legacy flow)
-        case album(_ completion: ([PHAsset], MEGANode) -> Void)
-
         // Upload from photo album (new flow)
         case albumNew
 

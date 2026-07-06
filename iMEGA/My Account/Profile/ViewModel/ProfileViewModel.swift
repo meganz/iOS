@@ -282,8 +282,6 @@ extension ProfileViewModel {
         do {
             try await transferUseCase.cancelDownloadTransfers()
             try await transferUseCase.cancelUploadTransfers()
-            
-            transferInventoryUseCaseHelper.removeAllUploadTransfers()
         } catch {
             MEGALogError("[CancelTransfers] Failed to cancel transfers: \(error)")
         }

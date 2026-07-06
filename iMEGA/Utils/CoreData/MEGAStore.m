@@ -451,78 +451,6 @@
     return array.firstObject;
 }
 
-#pragma mark - MOUploadTransfer entity
-
-- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle {
-    if (self.managedObjectContext == nil) return;
-    
-    MOUploadTransfer *mOUploadTransfer = [NSEntityDescription insertNewObjectForEntityForName:@"MOUploadTransfer" inManagedObjectContext:self.managedObjectContext];
-    mOUploadTransfer.localIdentifier = localIdentifier;
-    mOUploadTransfer.parentNodeHandle = [NSNumber numberWithUnsignedLongLong:parentNodeHandle];
-    
-    MEGALogDebug(@"Save context - insert MOUploadTransfer with local identifier %@", localIdentifier);
-    
-    [self saveContext:self.managedObjectContext];
-}
-
-- (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
-    if (uploadTransfer) {
-        [self.managedObjectContext performBlockAndWait:^{
-            [self deleteUploadTransfer:uploadTransfer withContext:self.managedObjectContext];
-            MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
-        }];
-    }
-}
-
-- (void)deleteUploadTransfer:(nonnull MOUploadTransfer *)uploadTransfer withContext:(nonnull NSManagedObjectContext *)context {
-    [context deleteObject:uploadTransfer];
-    [self saveContext:context];
-}
-
-
-- (void)deleteUploadTransferWithLocalIdentifier:(nonnull NSString *)localIdentifier {
-    NSManagedObjectContext *context = self.stack.newBackgroundContext;
-    [context performBlockAndWait:^{
-        NSFetchRequest *request = [MOUploadTransfer fetchRequest];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
-        request.predicate = predicate;
-        
-        NSError *error;
-        NSArray *array = [context executeFetchRequest:request error:&error];
-                
-        if (array.firstObject) {
-            [self deleteUploadTransfer:array.firstObject withContext:context];
-        }
-    }];
-}
-
-- (NSArray<TransferRecordDTO *> *)fetchUploadTransfers {
-    NSManagedObjectContext *context = self.stack.newBackgroundContext;
-    
-    NSMutableArray<TransferRecordDTO *> *uploadTransfers = NSMutableArray.array;
-    [context performBlockAndWait:^{
-        NSError *error;
-        NSArray<MOUploadTransfer *> *result = [context executeFetchRequest:MOUploadTransfer.fetchRequest error:&error];
-        for (MOUploadTransfer *transfer in result) {
-            TransferRecordDTO *transferRecordDTO = [transfer toUploadTransferEntity];
-            if (transferRecordDTO) {
-                [uploadTransfers addObject:transferRecordDTO];
-            }
-        }
-    }];
-    
-    return uploadTransfers;
-}
-
-- (void)removeAllUploadTransfers {
-    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:MOUploadTransfer.fetchRequest];
-
-    NSError *deleteError = nil;
-    [self.managedObjectContext executeRequest:delete error:&deleteError];
-    [self saveContext:self.managedObjectContext];
-}
-
 #pragma mark - MOMessage entity
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
@@ -552,7 +480,7 @@
 - (void)deleteAllMessagesWithContext:(NSManagedObjectContext *)context {
     NSArray<MOMessage *> *messages = [self fetchMessagesWithContext:context];
     if (messages.count) {
-        for (MOUploadTransfer *message in messages) {
+        for (MOMessage *message in messages) {
             [context deleteObject:message];
         }
         

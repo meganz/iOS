@@ -76,7 +76,6 @@ static TransfersWidgetViewController* instance = nil;
     [self configureLiquidGlassNavigationBar];
     
     self.title = LocalizedString(@"transfers", @"Transfers");
-    self.queuedUploadTransfers = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.transferInventoryUseCaseHelper = [self makeTransferInventoryUseCaseHelper];
     
@@ -91,7 +90,6 @@ static TransfersWidgetViewController* instance = nil;
     [self.clearAllButton setTitle:self.tableView.isEditing ? LocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : LocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
     
     [self handleTransferSelectionForTag:self.inProgressButton.tag];
@@ -289,20 +287,8 @@ static TransfersWidgetViewController* instance = nil;
     if (self.inProgressButton.selected) {
         
         TransferTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
-        
-        switch (indexPath.section) {
-            case 0: {
-                MEGATransfer *transfer = [self.transfers objectOrNilAtIndex:indexPath.row];
-                [cell configureCellForTransfer:transfer overquota:([MEGASdk.shared bandwidthOverquotaDelay] > 0) delegate:self];
-                break;
-            }
-                
-            case 1: {
-                NSString *uploadTransferLocalIdentifier = [self.queuedUploadTransfers objectOrNilAtIndex:indexPath.row];
-                [cell configureCellForQueuedTransfer:uploadTransferLocalIdentifier delegate:self];
-                break;
-            }
-        }
+        MEGATransfer *transfer = [self.transfers objectOrNilAtIndex:indexPath.row];
+        [cell configureCellForTransfer:transfer overquota:([MEGASdk.shared bandwidthOverquotaDelay] > 0) delegate:self];
         
         return cell;
         
@@ -338,23 +324,11 @@ static TransfersWidgetViewController* instance = nil;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if (MEGAReachabilityManager.isReachable) {
-        switch (section) {
-            case 0:
-                if (self.inProgressButton.selected) {
-                    numberOfRows = self.transfers.count;
-                } else {
-                    numberOfRows = self.completedTransfers.count;
-                }
-                break;
-                
-            case 1:
-                numberOfRows = self.queuedUploadTransfers.count;
-                
-                break;
-            default:
-                break;
+        if (self.inProgressButton.selected) {
+            numberOfRows = self.transfers.count;
+        } else {
+            numberOfRows = self.completedTransfers.count;
         }
-        
     }
     
     return numberOfRows;
@@ -482,15 +456,7 @@ static TransfersWidgetViewController* instance = nil;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (MEGAReachabilityManager.isReachable) {
-        switch (self.transfersSelected) {
-            case TransfersWidgetSelectedAll:
-                numberOfSections = 2;
-                break;
-                
-            case TransfersWidgetSelectedCompleted:
-                numberOfSections = 1;
-                break;
-        }
+        numberOfSections = 1;
     }
     
     return numberOfSections;
@@ -517,13 +483,11 @@ static TransfersWidgetViewController* instance = nil;
 - (void)getAllTransfers {
     self.transfers = [[NSMutableArray alloc] initWithArray:[self fetchTransfers]];
     
-    self.queuedUploadTransfers = [NSMutableArray arrayWithArray:[self fetchQueuedUploadTransfers]];
     self.completedTransfers = [[NSMutableArray alloc] initWithArray:[self fetchCompletedTransfers]];
 }
 
 - (void)cleanTransfersList {
     [self.transfers removeAllObjects];
-    [self.queuedUploadTransfers removeAllObjects];
 }
 
 - (void)cancelTransfersForDirection:(NSInteger)direction {
@@ -535,10 +499,6 @@ static TransfersWidgetViewController* instance = nil;
     transferList = [MEGASdk.sharedFolderLink transfers];
     if (transferList.size > 0) {
         [MEGASdk.sharedFolderLink cancelTransfersForDirection:direction delegate:self];
-    }
-    
-    if (direction == 1) {
-        [[MEGAStore shareInstance] removeAllUploadTransfers];
     }
 }
 
@@ -569,17 +529,6 @@ static TransfersWidgetViewController* instance = nil;
     return nil;
 }
 
-- (NSIndexPath *)indexPathForUploadTransferQueuedWithLocalIdentifier:(NSString *)localIdentifier {
-    for (int i = 0; i < self.queuedUploadTransfers.count; i++) {
-        NSString *tempLocalIndentifier = [self.queuedUploadTransfers objectOrNilAtIndex:i];
-        if ([localIdentifier isEqualToString:tempLocalIndentifier]) {
-            return [NSIndexPath indexPathForRow:i inSection:1];
-        }
-    }
-    
-    return nil;
-}
-
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
@@ -590,59 +539,6 @@ static TransfersWidgetViewController* instance = nil;
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     self.pauseBarButtonItem.enabled = boolValue;
     self.cancelBarButtonItem.enabled = boolValue;
-}
-
-- (void)handleCoreDataChangeNotification:(NSNotification *)notification {
-    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedAllObjectsKey]) {
-        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self reloadView];
-            });
-            return;
-        }
-    }
-    
-    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedObjectsKey]) {
-        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
-            MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
-            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
-        }
-    }
-    
-    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
-        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
-            MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
-            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
-        }
-    }
-}
-
-- (void)manageCoreDataNotificationForLocalIdentifier:(NSString *)localIdentifier {
-    BOOL ignoreCoreDataNotification = NO;
-    for (NSString *tempLocalIdentifier in [Helper uploadingNodes]) {
-        if ([localIdentifier isEqualToString:tempLocalIdentifier]) {
-            ignoreCoreDataNotification = YES;
-            break;
-        }
-    }
-    
-    if (ignoreCoreDataNotification) {
-        [[Helper uploadingNodes] removeObject:localIdentifier];
-    } else {
-        [self deleteUploadQueuedTransferWithLocalIdentifier:localIdentifier];
-    }
-}
-
-- (void)deleteUploadQueuedTransferWithLocalIdentifier:(NSString *)localIdentifier {
-    NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
-    if (indexPath) {
-        [self.queuedUploadTransfers removeObjectAtIndex:indexPath.row];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-    }
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
@@ -824,7 +720,7 @@ static TransfersWidgetViewController* instance = nil;
     
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
-            hasData = (self.transfers.count > 0 || self.queuedUploadTransfers.count > 0);
+            hasData = self.transfers.count > 0;
             break;
             
         case TransfersWidgetSelectedCompleted:
@@ -994,17 +890,6 @@ static TransfersWidgetViewController* instance = nil;
     [self.transfers replaceObjectAtIndex:oldIndexPath.row withObject:transfer];
     
     [self.tableView reloadData];
-}
-
-- (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier {
-    NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
-    if (localIdentifier && indexPath) {
-        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
-        
-        [self.queuedUploadTransfers removeObjectAtIndex:indexPath.row];
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
-        [self.tableView reloadData];
-    }
 }
 
 #pragma mark - TransferActionViewController

@@ -39,19 +39,11 @@ final class TransferInventoryUseCaseHelper: NSObject, Sendable {
         await transferInventoryUseCase.transfers(filteringUserTransfers: true)
     }
     
-    func queuedUploadTransfers() -> [String] {
-        store.fetchUploadTransfers()?.compactMap { $0.localIdentifier } ?? []
-    }
-    
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
         transferInventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
     }
     
     func documentsDirectory() -> URL {
         transferInventoryUseCase.documentsDirectory()
-    }
-    
-    func removeAllUploadTransfers() {
-        store.removeAllUploadTransfers()
     }
 }

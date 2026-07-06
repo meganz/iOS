@@ -63,23 +63,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     func didTapUploadFromPhotoAlbum() {
         tracker.trackAnalyticsEvent(with: HomeChooseFromPhotosMenuToolbarEvent())
-        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosManualUploadPhotos) {
-            router.upload(from: .albumNew)
-        } else {
-            permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-                guard let self else { return }
-                if granted {
-                    let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
-                        guard let self else { return }
-                        self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
-                    }
-                    self.router.upload(from: .album(selectionHandler))
-                } else {
-                    self.error = .photos
-                    self.notifyUpdate?(self.outputs)
-                }
-            }
-        }
+        router.upload(from: .albumNew)
     }
     
     func didTapUploadFromNewTextFile() {
@@ -115,10 +99,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
             }
         
         }
-    }
-
-    private func uploadFiles(fromPhotoAssets assets: [PHAsset], to parentNode: MEGANode) {
-        uploadPhotoAssetsUseCase.upload(photoIdentifiers: assets.map(\.localIdentifier), to: parentNode.handle)
     }
 
     private func notifyView(of error: DevicePermissionDeniedError) {
@@ -159,8 +139,6 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - Use Cases
 
-    private let uploadPhotoAssetsUseCase: any UploadPhotoAssetsUseCaseProtocol
-
     private let permissionHandler: any DevicePermissionsHandling
 
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
@@ -172,14 +150,12 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     private var contextMenuManager: ContextMenuManager?
 
     init(
-        uploadFilesUseCase: any UploadPhotoAssetsUseCaseProtocol,
         permissionHandler: some DevicePermissionsHandling,
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
         tracker: some AnalyticsTracking,
         router: FileUploadingRouter
     ) {
-        self.uploadPhotoAssetsUseCase = uploadFilesUseCase
         self.permissionHandler = permissionHandler
         self.networkMonitorUseCase = networkMonitorUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
