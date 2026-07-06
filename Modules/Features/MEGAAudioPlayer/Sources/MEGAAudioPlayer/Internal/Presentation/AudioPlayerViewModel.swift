@@ -83,6 +83,15 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var currentTrackID: String?
 
+    var isQueueButtonEnabled: Bool {
+        switch currentSource {
+        case .fileLink, .searchResult, .chatMessage, .none:
+            false
+        case .allAudios, .cloudNode, .folderLink, .offlineFiles, .recents:
+            true
+        }
+    }
+
     /// `true` when the three-dot menu should be hidden — matches the legacy
     /// player which hides `moreButton` for offline playback.
     var isActionsMenuHidden: Bool {

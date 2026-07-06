@@ -93,6 +93,8 @@ struct AudioPlayerView: View {
                     currentMode: vm.playbackMode,
                     isAirPlayActive: vm.isAirPlayActive,
                     loadingState: vm.loadingState,
+                    isQueueEnabled: vm.isQueueButtonEnabled,
+                    isPlaylistActive: vm.isPlaylistVisible,
                     onModeToggle: vm.switchPlaybackMode,
                     onPlaylist: vm.togglePlaylist
                 )
@@ -792,6 +794,8 @@ private struct BottomActionsSection: View {
     let currentMode: PlaybackMode
     let isAirPlayActive: Bool
     let loadingState: PlayerLoadingState
+    let isQueueEnabled: Bool
+    let isPlaylistActive: Bool
     let onModeToggle: () -> Void
     let onPlaylist: () -> Void
 
@@ -812,19 +816,21 @@ private struct BottomActionsSection: View {
 
             Spacer()
 
-            iconButton(image: MEGAAssets.Image.audioPlaylist, action: onPlaylist)
-                .disabledWhileLoading(loadingState)
+            Button(action: onPlaylist) {
+                MEGAAssets.Image.audioPlaylist
+                    .padding(.horizontal, TokenSpacing._5)
+                    .padding(.vertical, TokenSpacing._4)
+                    .background {
+                        RoundedRectangle(cornerRadius: TokenRadius.medium)
+                            .fill(TokenColors.Button.secondary.swiftUI)
+                            .opacity(isPlaylistActive ? 1 : 0)
+                    }
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled((loadingState == .loading) || !isQueueEnabled)
         }
         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-    }
-
-    private func iconButton(image: Image, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            image
-                .padding(TokenSpacing._3)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
     }
 
     private var oppositeModeLabel: String {
