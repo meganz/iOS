@@ -16,6 +16,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
     case iosHomeRevampPhaseTwo = "iOS Home Revamp Phase Two"
     case newTransfers = "New Transfers"
+    case quotaWarningsRevamp = "Quota Warnings Revamp"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

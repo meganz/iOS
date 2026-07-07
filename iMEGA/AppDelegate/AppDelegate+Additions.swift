@@ -717,31 +717,7 @@ extension AppDelegate {
     }
     
     private func showTransferQuotaModalAlert(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
-        CustomModalAlertRouter(
-            .transferDownloadQuotaError,
-            presenter: UIApplication.mnz_presentingViewController(),
-            transferQuotaDisplayMode: mode,
-            actionHandler: { completion in
-                if AudioPlayerManager.shared.isPlayerAlive() {
-                    Task {
-                        await AudioPlayerManager.shared.dismissFullScreenPlayer()
-                        AudioPlayerManager.shared.closePlayer()
-                        completion()
-                    }
-                } else {
-                    completion()
-                }
-            },
-            dismissHandler: {
-                if AudioPlayerManager.shared.isPlayerAlive() {
-                    Task {
-                        await AudioPlayerManager.shared.dismissFullScreenPlayer()
-                        AudioPlayerManager.shared.closePlayer()
-                    }
-                }
-            }
-        ).start()
-        
+        QuotaWarningsRouter().presentTransferQuotaWarning(mode: mode)
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
     }
     

@@ -239,6 +239,7 @@
 		140ADEC42F3DA18C00392C1F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */; };
 		141C6BA52FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141C6BA42FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift */; };
 		141C714A2FBEE71E000CCFBB /* MEGAAudioPlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141C71492FBEE71E000CCFBB /* MEGAAudioPlayerNavigationController.swift */; };
+		14770A74F52C5392A976C340 /* QuotaWarningsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
 		14C0336E2FBAD9C200BC12C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */; };
 		14C131092FAF21640021D501 /* MEGAAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 14C131082FAF21640021D501 /* MEGAAudioPlayer */; };
@@ -2740,6 +2741,7 @@
 		E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
+		F384F2FCE2B1DA7696C727C1 /* QuotaWarnings in Frameworks */ = {isa = PBXBuildFile; productRef = 58D0A8B972414DDC063C14F1 /* QuotaWarnings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4498,6 +4500,7 @@
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingsViewModel.swift; sourceTree = "<group>"; };
+		A51380962FFCC50F00C73D0F /* QuotaWarnings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = QuotaWarnings; sourceTree = "<group>"; };
 		A5171F722DC9FD7700A9419F /* UIImage+MEGAAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MEGAAssets.swift"; sourceTree = "<group>"; };
 		A51ECDA62F234BA300DE16AD /* FolderLinkMediaDiscoveryContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMediaDiscoveryContentViewModel.swift; sourceTree = "<group>"; };
 		A51ECDAB2F234BBC00DE16AD /* FolderLinkMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
@@ -5092,6 +5095,7 @@
 		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
 		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
+		B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaWarningsRouter.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
 		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
@@ -5719,6 +5723,7 @@
 				6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
+				F384F2FCE2B1DA7696C727C1 /* QuotaWarnings in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				945928F52AA23C1B0037694C /* Search in Frameworks */,
@@ -6456,6 +6461,7 @@
 				B6B1A27728A1DC660057E75B /* Node */,
 				8326E6842BE503E400481711 /* Passcode */,
 				14F2EFB62EDD45FF00C37318 /* PerformanceMonitoring */,
+				71A0BCC8CCB9DCD286243D27 /* QuotaWarnings */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
@@ -8892,6 +8898,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		71A0BCC8CCB9DCD286243D27 /* QuotaWarnings */ = {
+			isa = PBXGroup;
+			children = (
+				B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */,
+			);
+			path = QuotaWarnings;
+			sourceTree = "<group>";
+		};
 		72A2216927F1DCF500F49BCB /* ContextMenus */ = {
 			isa = PBXGroup;
 			children = (
@@ -10999,6 +11013,7 @@
 				A8D552F82EDF11BD00B05C12 /* NodeBackgroundDownloader */,
 				A52F1E382EBCE55800D3A2E9 /* Notifications */,
 				A52F1E392EBCE55800D3A2E9 /* PhotosBrowser */,
+				A51380962FFCC50F00C73D0F /* QuotaWarnings */,
 				A52F1E3A2EBCE55800D3A2E9 /* Search */,
 				A52F1E3B2EBCE55800D3A2E9 /* Settings */,
 				A52F1E312EBCE55800D3A2E9 /* Shared */,
@@ -13835,6 +13850,7 @@
 				A83E525F2F8508F8002A37C3 /* MediaImport */,
 				14C131082FAF21640021D501 /* MEGAAudioPlayer */,
 				14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */,
+				58D0A8B972414DDC063C14F1 /* QuotaWarnings */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -14239,6 +14255,7 @@
 				A5EA941F2EB5EEE4009778D3 /* XCLocalSwiftPackageReference "Modules/Features/PhotosBrowser" */,
 				A8531BDC2EDF0FAB000B267A /* XCLocalSwiftPackageReference "Modules/Features/NodeBackgroundDownloader" */,
 				A8B1C3722F7D610100772DE0 /* XCLocalSwiftPackageReference "Modules/Features/Transfer" */,
+				3F9A0B6F7F1AA6911707790B /* XCLocalSwiftPackageReference "Modules/Features/QuotaWarnings" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -15920,6 +15937,7 @@
 				83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */,
 				94B09E652B84CC87007D6B84 /* QuickActionsMenuDelegateHandler.swift in Sources */,
 				6188A4F4B124B405CB4D00D7 /* QuotaEventSimulatorView.swift in Sources */,
+				14770A74F52C5392A976C340 /* QuotaWarningsRouter.swift in Sources */,
 				C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */,
 				B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */,
 				B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */,
@@ -18893,6 +18911,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		3F9A0B6F7F1AA6911707790B /* XCLocalSwiftPackageReference "Modules/Features/QuotaWarnings" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Features/QuotaWarnings;
+		};
 		995403F62E3CD0F500468F84 /* XCLocalSwiftPackageReference "Modules/Infrastracture/KMTransferUtils" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Infrastracture/KMTransferUtils;
@@ -19246,6 +19268,10 @@
 		256428542CC7927D005DA9B1 /* ContentLibraries */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ContentLibraries;
+		};
+		58D0A8B972414DDC063C14F1 /* QuotaWarnings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QuotaWarnings;
 		};
 		6D004FE82D0A46360039ADF9 /* MEGAConnectivity */ = {
 			isa = XCSwiftPackageProductDependency;

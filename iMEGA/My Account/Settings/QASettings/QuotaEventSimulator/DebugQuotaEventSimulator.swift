@@ -119,13 +119,7 @@ final class DebugQuotaEventSimulator {
     }
 
     private func fireTransferOverQuota(_ scenario: TransferScenario) {
-        CustomModalAlertRouter(
-            .transferDownloadQuotaError,
-            presenter: UIApplication.mnz_presentingViewController(),
-            transferQuotaDisplayMode: scenario.displayMode,
-            actionHandler: { completion in completion() },
-            dismissHandler: {}
-        ).start()
+        QuotaWarningsRouter().presentTransferQuotaWarning(mode: scenario.displayMode)
 
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: nil)
     }
