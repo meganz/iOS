@@ -14,6 +14,7 @@ final class AudioPlaybackService {
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
+    private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
 
     private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
 
@@ -78,6 +79,10 @@ final class AudioPlaybackService {
     private func bindEngineToState() {
         engine.playbackStatusPublisher
             .sink { [weak self] in self?.applyEngineStatus($0) }
+            .store(in: &cancellables)
+
+        engine.didPlayToEndPublisher
+            .sink { [weak self] in self?.handleTrackFinished() }
             .store(in: &cancellables)
     }
 
@@ -153,6 +158,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
         set { isAirPlayActiveSubject.send(newValue) }
     }
 
+    var repeatMode: RepeatMode {
+        repeatModeSubject.value
+    }
+
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
         currentSourceSubject.eraseToAnyPublisher()
     }
@@ -199,6 +208,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     
     var playbackSpeedPublisher: AnyPublisher<Float, Never> {
         engine.playbackSpeedPublisher
+    }
+
+    var repeatModePublisher: AnyPublisher<RepeatMode, Never> {
+        repeatModeSubject.removeDuplicates().eraseToAnyPublisher()
     }
 }
 
@@ -266,6 +279,34 @@ extension AudioPlaybackService: PlaybackControllable {
         playbackQueue = playbackQueue.moving(from: source, toOffset: destination)
     }
 
+    func cycleRepeat() {
+        repeatModeSubject.send(repeatModeSubject.value.next)
+    }
+
+    private func handleTrackFinished() {
+        guard currentSource != nil else { return }
+        switch repeatModeSubject.value {
+        case .one:
+            engine.replay()
+        case .all:
+            advanceToNextTrack(wrapAround: true)
+        case .off:
+            advanceToNextTrack(wrapAround: false)
+        }
+    }
+
+    private func advanceToNextTrack(wrapAround: Bool) {
+        let queue = playbackQueue
+        let nextIndex = queue.currentIndex + 1
+        if queue.tracks.indices.contains(nextIndex) {
+            playbackQueue = PlaybackQueue(tracks: queue.tracks, currentIndex: nextIndex)
+            playCurrent()
+        } else if wrapAround, !queue.tracks.isEmpty {
+            playbackQueue = PlaybackQueue(tracks: queue.tracks, currentIndex: 0)
+            playCurrent()
+        }
+    }
+
     func stop() {
         metadataTask?.cancel()
         metadataTask = nil
@@ -277,6 +318,7 @@ extension AudioPlaybackService: PlaybackControllable {
         artworkData = nil
         hasPlayedOnceBeforeSubject.send(false)
         artworkResolvedSubject.send(false)
+        repeatModeSubject.send(.off)
         status = .loading
         engine.stop()
         streamingRepository.stopServer()

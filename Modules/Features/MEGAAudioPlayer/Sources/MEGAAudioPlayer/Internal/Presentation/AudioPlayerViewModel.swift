@@ -197,6 +197,10 @@ final class AudioPlayerViewModel: ObservableObject {
         service.playbackSpeedPublisher
             .sink { [weak self] in self?.playbackSpeed = $0 }
             .store(in: &cancellables)
+
+        service.repeatModePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$repeatMode)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -283,7 +287,7 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func cycleRepeat() {
-        repeatMode = repeatMode.next
+        service?.cycleRepeat()
     }
 
     func seek(toFraction fraction: Double) {

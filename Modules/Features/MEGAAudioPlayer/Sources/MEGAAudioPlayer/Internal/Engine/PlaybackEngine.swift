@@ -10,11 +10,14 @@ protocol PlaybackEngineProtocol: AnyObject {
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
+    var didPlayToEndPublisher: AnyPublisher<Void, Never> { get }
 
     func play(url: URL)
     func togglePlayPause()
     func setPlaybackSpeed(_ rate: Float)
     func seek(toSeconds: TimeInterval)
+    /// Restart the current item from the beginning (used for repeat-one).
+    func replay()
     func stop()
 }
 
@@ -29,11 +32,13 @@ final class PlaybackEngine {
     private let durationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
     private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
     private let playbackSpeedSubject = CurrentValueSubject<Float, Never>(1)
+    private let didPlayToEndSubject = PassthroughSubject<Void, Never>()
 
     private let player = AVPlayer()
     private var timeObserverToken: Any?
     private var rateObservation: NSKeyValueObservation?
     private var durationObservation: NSKeyValueObservation?
+    private var endObservation: AnyCancellable?
 
     init() {
         observeTimeControlStatus()
@@ -65,6 +70,10 @@ extension PlaybackEngine: PlaybackEngineProtocol {
     var playbackSpeedPublisher: AnyPublisher<Float, Never> {
         playbackSpeedSubject.eraseToAnyPublisher()
     }
+
+    var didPlayToEndPublisher: AnyPublisher<Void, Never> {
+        didPlayToEndSubject.eraseToAnyPublisher()
+    }
 }
 
 // MARK: - Playback Control
@@ -74,10 +83,17 @@ extension PlaybackEngine {
         configureAudioSession()
         let item = AVPlayerItem(url: url)
         observeDuration(of: item)
+        observeEnd(of: item)
         player.replaceCurrentItem(with: item)
         playbackStatusSubject.send(.buffering)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
+        player.play()
+    }
+
+    func replay() {
+        player.seek(to: .zero)
+        currentTimeSubject.send(0)
         player.play()
     }
 
@@ -108,6 +124,7 @@ extension PlaybackEngine {
     }
 
     func stop() {
+        endObservation = nil
         player.pause()
         player.replaceCurrentItem(with: nil)
         setPlaybackSpeed(1)
@@ -161,6 +178,14 @@ extension PlaybackEngine {
         case .playing: .playing
         @unknown default: .paused
         }
+    }
+
+    private func observeEnd(of item: AVPlayerItem) {
+        let subject = didPlayToEndSubject
+        endObservation = NotificationCenter.default
+            .publisher(for: AVPlayerItem.didPlayToEndTimeNotification, object: item)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in subject.send(()) }
     }
 
     private func observeDuration(of item: AVPlayerItem) {
