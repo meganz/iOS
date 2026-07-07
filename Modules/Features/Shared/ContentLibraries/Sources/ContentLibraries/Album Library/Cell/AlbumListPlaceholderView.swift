@@ -38,6 +38,7 @@ public struct AlbumListPlaceholderView: View {
         .background(TokenColors.Background.page.swiftUI)
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
+        .allowsHitTesting(isActive)
     }
     
     private var placeholderCell: some View {

@@ -73,6 +73,7 @@ public extension PhotoLibraryProvider {
             
             host.view.isHidden = hideHostOnEmpty && photoLibrary.isEmpty
             photoLibraryContentViewModel.library = photoLibrary
+            photoLibraryContentViewModel.isLoading = false
             
             hideNavigationEditBarButton(photoLibrary.isEmpty)
         }

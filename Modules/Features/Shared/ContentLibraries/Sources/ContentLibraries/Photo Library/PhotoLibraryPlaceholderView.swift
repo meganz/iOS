@@ -25,6 +25,7 @@ struct PhotoLibraryPlaceholderView: View {
         .background(TokenColors.Background.page.swiftUI)
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
+        .allowsHitTesting(isActive)
     }
     
     var sectionHeader: some View {
