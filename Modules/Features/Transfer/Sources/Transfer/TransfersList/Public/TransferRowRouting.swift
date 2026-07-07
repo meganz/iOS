@@ -34,4 +34,7 @@ public protocol TransferRowRouting: Sendable {
     func presentActions(for transfer: TransferEntity, context: TransferRowActionContext, onClear: @MainActor @escaping () -> Void)
     /// Completed only. Opens or previews the finished file (row-body tap).
     func openFile(for transfer: TransferEntity)
+    /// Opens the existing upgrade flow, invoked from the over-quota banner's `Upgrade now`
+    /// link. The upgrade screen lives in the app target, so the composition root presents it.
+    func showUpgrade()
 }

@@ -295,6 +295,109 @@ struct TransfersListViewModelDerivedStateTests {
     }
 }
 
+@Suite("TransfersListViewModel over-quota banner")
+@MainActor
+struct TransfersListViewModelOverQuotaTests {
+
+    // MARK: - Initial variant resolution
+
+    @Test func noOverquota_showsNoBanner() {
+        let sut = makeSUT()
+        #expect(sut.overQuotaBanner == nil)
+        #expect(!sut.isTransferOverquota)
+    }
+
+    @Test func transferOverquota_showsYellowTransferBanner() {
+        let sut = makeSUT(transferQuotaUseCase: MockTransferQuotaUseCase(isOverquota: true))
+        #expect(sut.overQuotaBanner == .transfer)
+        #expect(sut.isTransferOverquota)
+    }
+
+    @Test func storageFull_showsPinkStorageBanner() {
+        let sut = makeSUT(accountStorageUseCase: MockAccountStorageUseCase(currentStorageStatus: .full))
+        #expect(sut.overQuotaBanner == .storage)
+    }
+
+    @Test func storagePaywall_showsPinkStorageBanner() {
+        let sut = makeSUT(accountStorageUseCase: MockAccountStorageUseCase(isPaywalled: true))
+        #expect(sut.overQuotaBanner == .storage)
+    }
+
+    @Test func bothOverquota_showsSingleCombinedBanner() {
+        let sut = makeSUT(
+            accountStorageUseCase: MockAccountStorageUseCase(currentStorageStatus: .full),
+            transferQuotaUseCase: MockTransferQuotaUseCase(isOverquota: true)
+        )
+        #expect(sut.overQuotaBanner == .both)
+    }
+
+    // MARK: - Dismiss
+
+    @Test func dismiss_hidesTransferBanner() {
+        let sut = makeSUT(transferQuotaUseCase: MockTransferQuotaUseCase(isOverquota: true))
+
+        sut.dismissOverQuotaBanner()
+
+        #expect(sut.overQuotaBanner == nil)
+    }
+
+    @Test func dismiss_whenBoth_fallsBackToNonDismissibleStorageBanner() {
+        let sut = makeSUT(
+            accountStorageUseCase: MockAccountStorageUseCase(currentStorageStatus: .full),
+            transferQuotaUseCase: MockTransferQuotaUseCase(isOverquota: true)
+        )
+
+        sut.dismissOverQuotaBanner()
+
+        #expect(sut.overQuotaBanner == .storage)
+    }
+
+    @Test func dismiss_doesNotClearTransferOverquotaFlag() {
+        let sut = makeSUT(transferQuotaUseCase: MockTransferQuotaUseCase(isOverquota: true))
+
+        sut.dismissOverQuotaBanner()
+
+        // Pause/resume stays disabled even though the banner is hidden.
+        #expect(sut.isTransferOverquota)
+    }
+
+    // MARK: - Reactive updates
+
+    @Test func observeTransferQuota_showsBannerWhenQuotaHit() async {
+        let useCase = MockTransferQuotaUseCase(overquotaUpdates: [true].async.eraseToAnyAsyncSequence())
+        let sut = makeSUT(transferQuotaUseCase: useCase)
+        #expect(sut.overQuotaBanner == nil)
+
+        await sut.observeTransferQuota()
+
+        #expect(sut.overQuotaBanner == .transfer)
+        #expect(sut.isTransferOverquota)
+    }
+
+    @Test func observeStorageQuota_reflectsUpdatedStorageStatus() async {
+        let useCase = MockAccountStorageUseCase(
+            onStorageStatusUpdates: [.full].async.eraseToAnyAsyncSequence(),
+            currentStorageStatus: .full
+        )
+        let sut = makeSUT(accountStorageUseCase: useCase)
+
+        await sut.observeStorageQuota()
+
+        #expect(sut.overQuotaBanner == .storage)
+    }
+
+    // MARK: - Upgrade
+
+    @Test func showUpgrade_routesToUpgradeFlow() {
+        let router = MockTransferRowRouting()
+        let sut = makeSUT(rowRouter: router)
+
+        sut.showUpgrade()
+
+        #expect(router.showUpgradeCallCount == 1)
+    }
+}
+
 // MARK: - Helpers
 
 @MainActor
@@ -304,7 +407,10 @@ private func makeSUT(
     hasFailedTransfers: Bool = false,
     useCase: MockTransferListUseCase = MockTransferListUseCase(),
     presenceUpdates: AnyAsyncSequence<TransferTabPresence>? = nil,
-    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
+    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
+    accountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
+    transferQuotaUseCase: MockTransferQuotaUseCase = MockTransferQuotaUseCase(),
+    rowRouter: MockTransferRowRouting = MockTransferRowRouting()
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
         hasActive: hasActiveTransfers,
@@ -312,17 +418,20 @@ private func makeSUT(
         hasFailed: hasFailedTransfers
     )
     return TransfersListViewModel(
-        dependency: makeDependency(clearTransfersUseCase: clearTransfersUseCase),
+        dependency: makeDependency(clearTransfersUseCase: clearTransfersUseCase, rowRouter: rowRouter),
         transferListUseCase: useCase,
         monitorPresenceUseCase: MockMonitorTransferTabPresenceUseCase(
             presenceUpdates: presenceUpdates ?? [seed].async.eraseToAnyAsyncSequence()
-        )
+        ),
+        accountStorageUseCase: accountStorageUseCase,
+        transferQuotaUseCase: transferQuotaUseCase
     )
 }
 
 @MainActor
 private func makeDependency(
-    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
+    clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
+    rowRouter: MockTransferRowRouting = MockTransferRowRouting()
 ) -> TransferTabDependency {
     TransferTabDependency(
         inventoryUseCase: MockTransferInventoryUseCase(),
@@ -330,7 +439,7 @@ private func makeDependency(
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),
-        rowRouter: MockTransferRowRouting(),
+        rowRouter: rowRouter,
         filteringUserTransfers: true,
         clearTransfersUseCase: clearTransfersUseCase
     )

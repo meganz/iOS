@@ -68,6 +68,14 @@ public enum TransfersListViewControllerFactory {
                 counterUseCase: counterUseCase,
                 clearTransfersUseCase: clearTransfersUseCase,
                 filteringUserTransfers: true
+            ),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            transferQuotaUseCase: TransferQuotaUseCase(
+                accountRepository: AccountRepository.newRepo,
+                nodeTransferRepository: NodeTransferRepository.newRepo
             )
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))

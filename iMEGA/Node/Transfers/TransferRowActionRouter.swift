@@ -51,6 +51,10 @@ final class TransferRowActionRouter: TransferRowRouting {
             .openNode(nodeHandle: transfer.nodeHandle, config: .withOptionalDisplayMode(.transfers))
     }
 
+    func showUpgrade() {
+        UpgradeSubscriptionRouter(presenter: navigationController).showUpgradeAccount()
+    }
+
     // MARK: - Action sheet
 
     /// Completed rows offer View in folder (when allowed), Open with, Share link and

@@ -7,6 +7,7 @@ final class MockTransferRowRouting: TransferRowRouting {
     private(set) var presentActionsContexts: [TransferRowActionContext] = []
     private(set) var openFileTags: [Int] = []
     private(set) var lastOnClear: (@MainActor () -> Void)?
+    private(set) var showUpgradeCallCount = 0
 
     nonisolated init() {}
 
@@ -18,5 +19,9 @@ final class MockTransferRowRouting: TransferRowRouting {
 
     func openFile(for transfer: TransferEntity) {
         openFileTags.append(transfer.tag)
+    }
+
+    func showUpgrade() {
+        showUpgradeCallCount += 1
     }
 }

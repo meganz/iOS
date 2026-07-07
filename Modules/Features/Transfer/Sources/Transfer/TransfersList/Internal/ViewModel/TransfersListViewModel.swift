@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
@@ -18,19 +19,44 @@ public final class TransfersListViewModel: ObservableObject {
 
     @Published private(set) var presence: TransferTabPresence = .none
 
+    /// The over-quota banner shown above the list, or `nil` when neither quota is
+    /// exhausted (or the transfer banner has been dismissed and storage is fine).
+    @Published private(set) var overQuotaBanner: OverQuotaBannerType?
+
+    /// Whether transfer quota is currently exhausted. Drives per-row pause/resume
+    /// disabling; unaffected by the banner being dismissed.
+    @Published private(set) var isTransferOverquota: Bool
+
     let dependency: TransferTabDependency
     private let transferListUseCase: any TransferListUseCaseProtocol
     private let monitorPresenceUseCase: any MonitorTransferTabPresenceUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
+    private let transferQuotaUseCase: any TransferQuotaUseCaseProtocol
+
+    private var isStorageOverquota: Bool
+    /// Session-only: the transfer banner reappears on next launch if still over quota.
+    private var isTransferBannerDismissed = false
 
     init(
         dependency: TransferTabDependency,
         transferListUseCase: some TransferListUseCaseProtocol,
-        monitorPresenceUseCase: some MonitorTransferTabPresenceUseCaseProtocol
+        monitorPresenceUseCase: some MonitorTransferTabPresenceUseCaseProtocol,
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        transferQuotaUseCase: some TransferQuotaUseCaseProtocol
     ) {
         self.dependency = dependency
         self.transferListUseCase = transferListUseCase
         self.monitorPresenceUseCase = monitorPresenceUseCase
+        self.accountStorageUseCase = accountStorageUseCase
+        self.transferQuotaUseCase = transferQuotaUseCase
         self.isAllPaused = transferListUseCase.areTransfersPaused()
+        self.isTransferOverquota = transferQuotaUseCase.isOverquota
+        self.isStorageOverquota = Self.isOverStorageQuota(accountStorageUseCase)
+        self.overQuotaBanner = Self.banner(
+            isTransferOverquota: transferQuotaUseCase.isOverquota,
+            isStorageOverquota: isStorageOverquota,
+            isTransferBannerDismissed: false
+        )
     }
 
     // MARK: - Tab-bar presence
@@ -38,6 +64,59 @@ public final class TransfersListViewModel: ObservableObject {
     func observeTabPresence() async {
         for await presence in monitorPresenceUseCase.presenceUpdates {
             self.presence = presence
+        }
+    }
+
+    // MARK: - Over-quota banner
+
+    func observeStorageQuota() async {
+        for await _ in accountStorageUseCase.onStorageStatusUpdates {
+            isStorageOverquota = Self.isOverStorageQuota(accountStorageUseCase)
+            recomputeBanner()
+        }
+    }
+
+    func observeTransferQuota() async {
+        for await isOverquota in transferQuotaUseCase.overquotaUpdates {
+            isTransferOverquota = isOverquota
+            recomputeBanner()
+        }
+    }
+
+    /// Hides the transfer/combined banner for the current session. The storage banner is
+    /// never dismissible, so a lingering storage over-quota falls back to its pink banner.
+    func dismissOverQuotaBanner() {
+        isTransferBannerDismissed = true
+        recomputeBanner()
+    }
+
+    func showUpgrade() {
+        dependency.rowRouter.showUpgrade()
+    }
+
+    private func recomputeBanner() {
+        overQuotaBanner = Self.banner(
+            isTransferOverquota: isTransferOverquota,
+            isStorageOverquota: isStorageOverquota,
+            isTransferBannerDismissed: isTransferBannerDismissed
+        )
+    }
+
+    private static func isOverStorageQuota(_ useCase: some AccountStorageUseCaseProtocol) -> Bool {
+        useCase.currentStorageStatus == .full || useCase.isPaywalled
+    }
+
+    private static func banner(
+        isTransferOverquota: Bool,
+        isStorageOverquota: Bool,
+        isTransferBannerDismissed: Bool
+    ) -> OverQuotaBannerType? {
+        let transfer = isTransferOverquota && !isTransferBannerDismissed
+        switch (transfer, isStorageOverquota) {
+        case (true, true): return .both
+        case (true, false): return .transfer
+        case (false, true): return .storage
+        case (false, false): return nil
         }
     }
 

@@ -20,6 +20,13 @@ import SwiftUI
 struct TransferResultRowView: View {
     @ObservedObject var viewModel: TransferRowViewModel
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
+    @Environment(\.isTransferOverquota) private var isTransferOverquota
+
+    /// Pause/resume is disabled while all transfers are paused or transfer quota is
+    /// exhausted (nothing can progress until the user upgrades).
+    private var isPauseResumeDisabled: Bool {
+        isAllTransfersPaused || isTransferOverquota
+    }
 
     private var isCompleted: Bool {
         viewModel.state.status == .completed
@@ -95,13 +102,13 @@ struct TransferResultRowView: View {
                 Task { await viewModel.togglePauseResume() }
             } label: {
                 trailingImage
-                    .foregroundStyle(isAllTransfersPaused
+                    .foregroundStyle(isPauseResumeDisabled
                         ? TokenColors.Icon.disabled.swiftUI
                         : TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 24, height: 24)
             }
             .buttonStyle(.plain)
-            .disabled(isAllTransfersPaused)
+            .disabled(isPauseResumeDisabled)
         }
     }
 
@@ -135,9 +142,18 @@ private struct IsAllTransfersPausedKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct IsTransferOverquotaKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     var isAllTransfersPaused: Bool {
         get { self[IsAllTransfersPausedKey.self] }
         set { self[IsAllTransfersPausedKey.self] = newValue }
+    }
+
+    var isTransferOverquota: Bool {
+        get { self[IsTransferOverquotaKey.self] }
+        set { self[IsTransferOverquotaKey.self] = newValue }
     }
 }

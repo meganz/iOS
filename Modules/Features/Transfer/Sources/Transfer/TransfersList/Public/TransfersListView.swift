@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 public struct TransfersListView: View {
@@ -17,11 +18,27 @@ public struct TransfersListView: View {
                 tabBar
                 Divider()
             }
+            if let banner = viewModel.overQuotaBanner {
+                MEGABanner(
+                    title: banner.title,
+                    subtitle: String?.none,
+                    buttonText: banner.actionTitle,
+                    state: banner.bannerState,
+                    buttonAction: { viewModel.showUpgrade() },
+                    closeButtonAction: banner.showsDismiss ? { viewModel.dismissOverQuotaBanner() } : nil
+                )
+            }
             tabContent
                 .modifier(TransfersNoInternetViewModifier())
         }
         .task {
             await viewModel.observeTabPresence()
+        }
+        .task {
+            await viewModel.observeStorageQuota()
+        }
+        .task {
+            await viewModel.observeTransferQuota()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
@@ -118,7 +135,11 @@ public struct TransfersListView: View {
     private var tabContainer: some View {
         switch viewModel.selectedTab {
         case .active:
-            ActiveTransfersTab(dependency: viewModel.dependency, isAllPaused: viewModel.isAllPaused)
+            ActiveTransfersTab(
+                dependency: viewModel.dependency,
+                isAllPaused: viewModel.isAllPaused,
+                isTransferOverquota: viewModel.isTransferOverquota
+            )
         case .completed:
             CompletedTransfersTab(dependency: viewModel.dependency)
         case .failed:
