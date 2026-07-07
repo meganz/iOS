@@ -40,34 +40,20 @@ public struct MediaImportRepository: MediaImportRepositoryProtocol, Sendable {
     ) async throws -> URL {
         let contentType = contentTypeResolver.preferredContentType(for: itemProvider)
 
-        var stagedURL: URL?
-        for try await event in loadEvents(provider: itemProvider, contentType: contentType) {
-            switch event {
-            case .progress(let fraction):
-                progressHandler(fraction)
-            case .completed(let url):
-                stagedURL = url
-            }
+        for try await url in stagedFileURL(provider: itemProvider, contentType: contentType, progressHandler: progressHandler) {
+            return url
         }
-
-        guard let stagedURL else {
-            throw MediaImportRepositoryError.noFileURLProvided
-        }
-        return stagedURL
+        throw MediaImportRepositoryError.noFileURLProvided
     }
 
     // MARK: - Private
 
-    private enum LoadEvent: Sendable {
-        case progress(Double)
-        case completed(URL)
-    }
-
-    private func loadEvents(
+    private func stagedFileURL(
         provider: NSItemProvider,
-        contentType: UTType
-    ) -> AsyncThrowingStream<LoadEvent, any Error> {
-        AsyncThrowingStream { continuation in
+        contentType: UTType,
+        progressHandler: @escaping @Sendable (Double) -> Void
+    ) -> AsyncThrowingStream<URL, any Error> {
+        AsyncThrowingStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
             let progress = provider.loadFileRepresentation(
                 for: contentType
             ) { [destinationDirectory, fileStagingService] url, _, error in
@@ -86,7 +72,10 @@ public struct MediaImportRepository: MediaImportRepositoryProtocol, Sendable {
                         from: url,
                         to: destinationDirectory
                     )
-                    continuation.yield(.completed(stagedURL))
+                    if case .terminated = continuation.yield(stagedURL) {
+                        // Consumer already cancelled, remove staged file
+                        try? FileManager.default.removeItem(at: stagedURL)
+                    }
                     continuation.finish()
                 } catch {
                     continuation.finish(throwing: error)
@@ -97,11 +86,13 @@ public struct MediaImportRepository: MediaImportRepositoryProtocol, Sendable {
                 \.fractionCompleted,
                 options: [.new]
             ) { progress, _ in
-                continuation.yield(.progress(progress.fractionCompleted))
+                progressHandler(progress.fractionCompleted)
             }
 
+            // Deliberately no progress.cancel() here: cancelling the PhotosUI-owned
+            // progress races its in-flight completion, which double-removes an internal
+            // KVO observer and crashes with NSRangeException.
             continuation.onTermination = { @Sendable _ in
-                progress.cancel()
                 observation.invalidate()
             }
         }
