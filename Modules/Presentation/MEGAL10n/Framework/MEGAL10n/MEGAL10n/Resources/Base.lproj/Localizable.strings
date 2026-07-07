@@ -5040,3 +5040,9 @@
 "cloudDrive.navigationBar.updating"="Updating…";
 /* Navigation bar title for Choose Default Launch Tab screen */
 "home.customization.defaultLaunchTab.title"="Default launch tab";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="Get more transfer quota";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="Get more storage quota";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="Get more storage and transfer quota";
