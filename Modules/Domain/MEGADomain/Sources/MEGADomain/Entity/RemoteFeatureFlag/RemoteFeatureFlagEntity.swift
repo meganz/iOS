@@ -14,4 +14,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosPlatformDiskSpaceQuery = "ipdsq"
     case iosTransferLiveActivity = "itla"
     case iosUploadOnlyNewPhotos = "iuonp"
+    case iosSkipSdkTeardownOnTermination = "istd"
 }

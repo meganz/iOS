@@ -104,7 +104,6 @@
 #endif
     
     [UncaughtExceptionHandler registerHandler];
-    [self registerAppExitHandlers];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
@@ -121,6 +120,8 @@
 
     [self importKMTransferFile];
     [self injectSDKRepoDependencies];
+    // Must stay after injectSDKRepoDependencies: reads the remote flag via DependencyInjection.sharedSdk
+    [self registerAppExitHandlers];
     [self injectAuthenticationDependencies];
     [self injectSearchDependencies];
 
@@ -409,7 +410,7 @@
 
     [CameraUploadManager appWillTerminate];
     [self notifyPlaybackStoppedForCurrentItem];
-    [MEGASdkCleanUp localLogoutAndCleanUp];
+    [MEGASdkCleanUp localLogoutAndCleanUpWithSkipTeardown:self.shouldSkipSdkTeardownOnTermination];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {

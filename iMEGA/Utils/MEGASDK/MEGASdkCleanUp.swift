@@ -20,7 +20,12 @@ import MEGASdk
         _ = semaphore.wait(timeout: .now() + DispatchTimeInterval.seconds(4))
     }
     
-    @objc static func localLogoutAndCleanUp() {
+    @objc static func localLogoutAndCleanUp(skipTeardown: Bool) {
+        guard !skipTeardown else {
+            MEGALogDebug("[Teardown] Skipped SDK teardown on terminate (remote flag on)")
+            return
+        }
+
         localLogout()
         deleteSharedSdks()
     }

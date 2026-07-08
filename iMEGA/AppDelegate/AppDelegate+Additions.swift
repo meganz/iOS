@@ -774,11 +774,28 @@ extension AppDelegate {
 
 // MARK: - Handlers for app exit event
 extension AppDelegate {
+    /// Remote flags are only readable once login + fetchnodes complete (RemoteFeatureFlagReadySource),
+    /// so the value is resolved asynchronously and cached here for the exit paths.
+    /// nonisolated(unsafe): written from the main actor only; read by the exit handler at process exit.
+    nonisolated(unsafe) static var skipSdkTeardownOnTermination = false
+
+    @objc var shouldSkipSdkTeardownOnTermination: Bool {
+        AppDelegate.skipSdkTeardownOnTermination
+    }
+
     /// Perform custom clean up actions upon app termination by exit()
     @objc func registerAppExitHandlers() {
         AppExitHandlerManager().registerExitHandler {
+            guard !AppDelegate.skipSdkTeardownOnTermination else { return }
             MEGAChatSdk.shared.deleteMegaChatApi()
             MEGASdk.shared.deleteMegaApi()
+        }
+        
+        Task { @MainActor in
+            let skipTeardown = await DIContainer.remoteFeatureFlagUseCase
+                .isFeatureFlagEnabledAfterReady(for: .iosSkipSdkTeardownOnTermination)
+            AppDelegate.skipSdkTeardownOnTermination = skipTeardown
+            Crashlytics.crashlytics().setCustomValue(skipTeardown, forKey: "sdk_teardown_skipped")
         }
     }
 }
