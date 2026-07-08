@@ -7,6 +7,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
+import MEGARepo
 import MEGASdk
 import SwiftUI
 import UserNotifications

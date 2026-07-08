@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
+import MEGARepo
 
 enum MediaTabTimelineFactory {
     @MainActor

@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
 import MEGAPreference
+import MEGARepo
 import MEGASwift
 import SwiftUI
 import UIKit

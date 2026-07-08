@@ -1,4 +1,4 @@
-import MEGAAppSDKRepo
+import MEGARepo
 import Network
 
 final public class MockNetworkPath: NetworkPath, Equatable {

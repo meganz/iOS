@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 
 extension AccountMenuViewRouter {
     private struct DeviceCenterActionIconAssets {

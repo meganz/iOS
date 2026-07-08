@@ -1,5 +1,6 @@
-import MEGAAppSDKRepo
-import MEGAAppSDKRepoMock
+import MEGARepo
+import MEGARepoMock
+import MEGATest
 import Network
 import XCTest
 

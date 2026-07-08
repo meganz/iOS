@@ -2,6 +2,7 @@
 import MEGAAppSDKRepo
 import MEGAConnectivity
 import MEGADomain
+import MEGARepo
 import SwiftUI
 
 // NOTE: Duplicated verbatim from Home's `NetworkPathConnectionUseCase`. Bridges the domain

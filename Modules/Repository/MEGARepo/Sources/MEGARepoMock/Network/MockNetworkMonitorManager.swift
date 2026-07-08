@@ -1,4 +1,4 @@
-import MEGAAppSDKRepo
+import MEGARepo
 import MEGASwift
 import Network
 

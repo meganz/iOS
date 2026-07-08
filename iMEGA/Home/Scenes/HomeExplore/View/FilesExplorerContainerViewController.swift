@@ -4,6 +4,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGARepo
 import MEGAUI
 import MEGAUIKit
 

@@ -5,6 +5,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import MEGASwiftUI
 import SwiftUI
 import UIKit

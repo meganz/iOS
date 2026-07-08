@@ -25,6 +25,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0")
         
     ],
@@ -40,11 +41,11 @@ let package = Package(
         ),
         .target(
             name: "MEGARepoMock",
-            dependencies: ["MEGARepo"]
+            dependencies: ["MEGARepo", "MEGASwift"]
         ),
         .testTarget(
             name: "MEGARepoTests",
-            dependencies: ["MEGARepo", "MEGARepoMock", "MEGASwift"],
+            dependencies: ["MEGARepo", "MEGARepoMock", "MEGASwift", "MEGATest"],
             resources: [.process("Resources")],
             swiftSettings: settings
         )

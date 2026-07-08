@@ -1,6 +1,7 @@
 import MEGAAppSDKRepo
 import MEGAConnectivity
 import MEGADomain
+import MEGARepo
 import SwiftUI
 
 // Applies noInternetViewModifier only when iPhone is in portrait mode (verticalSizeClass != .compact).

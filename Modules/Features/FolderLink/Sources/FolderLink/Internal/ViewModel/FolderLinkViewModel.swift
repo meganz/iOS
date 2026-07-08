@@ -3,6 +3,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 
 @MainActor
 package final class FolderLinkViewModel: ObservableObject {

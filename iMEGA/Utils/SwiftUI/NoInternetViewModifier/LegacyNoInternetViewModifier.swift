@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import SwiftUI
 
 struct LegacyNoInternetViewModifier: ViewModifier {

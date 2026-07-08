@@ -29,6 +29,7 @@ let package = Package(
         
         // Repository
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Repository/MEGARepo"),
         
         // DataSource
         .package(path: "../../DataSource/MEGASDK"),
@@ -49,6 +50,7 @@ let package = Package(
                 "MEGADomain",
                 "MEGAAppPresentation",
                 "MEGAAppSDKRepo",
+                "MEGARepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 "MEGADesignToken",

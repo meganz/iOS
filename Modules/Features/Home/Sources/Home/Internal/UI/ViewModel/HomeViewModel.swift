@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 
 @MainActor
 final class HomeViewModel: ObservableObject {
