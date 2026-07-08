@@ -7,6 +7,8 @@ import SwiftUI
 struct MiniPlayerView: View {
     @ObservedObject var vm: MiniPlayerViewModel
 
+    @State private var displayIndex = 0
+
     var body: some View {
         pillBody
             .frame(height: Sizes.pillHeight)
@@ -83,17 +85,50 @@ struct MiniPlayerView: View {
     }
 
     private var details: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(vm.title)
+        TabView(selection: $displayIndex) {
+            ForEach(Array(vm.tracks.enumerated()), id: \.element.id) { index, track in
+                trackLabel(track, index: index)
+                    .tag(index)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .frame(maxWidth: .infinity)
+        .onAppear { displayIndex = vm.currentIndex }
+        .onChange(of: displayIndex) { requestSwitch(to: $0) }
+        .onChange(of: vm.currentIndex) { reconcile(to: $0) }
+    }
+
+    private func trackLabel(_ track: MiniPlayerTrack, index: Int) -> some View {
+        let isPlaying = index == vm.currentIndex
+        return VStack(alignment: .leading, spacing: 0) {
+            Text(isPlaying ? vm.title : track.title)
                 .font(.callout.weight(.semibold))
                 .lineLimit(1)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            Text(vm.artist)
-                .font(.caption)
-                .lineLimit(1)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            if isPlaying {
+                Text(vm.artist)
+                    .font(.caption)
+                    .lineLimit(1)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: - Switching tracks
+
+    private func requestSwitch(to newIndex: Int) {
+        guard newIndex != vm.currentIndex else { return }
+        if newIndex > vm.currentIndex {
+            vm.skipToNext()
+        } else {
+            vm.skipToPrevious()
+        }
+    }
+
+    private func reconcile(to newIndex: Int) {
+        guard displayIndex != newIndex else { return }
+        displayIndex = newIndex
     }
 
     private var closeButton: some View {
@@ -133,17 +168,23 @@ struct MiniPlayerView: View {
 #Preview("Loading") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .loading)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .loading, queueTitles: ["Novacane"])
         return vm
     }())
     .padding()
     .background(Color.orange)
 }
 
-#Preview("Playing") {
+#Preview("Playing — swipeable") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .playing)
+        vm.preview(
+            title: "Novacane",
+            artist: "Frank Ocean",
+            loadingState: .playing,
+            queueTitles: ["Thinkin Bout You", "Novacane", "Aud.2314"],
+            currentIndex: 1
+        )
         return vm
     }())
     .padding()
@@ -153,7 +194,7 @@ struct MiniPlayerView: View {
 #Preview("Paused") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .paused)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .paused, queueTitles: ["Novacane"])
         return vm
     }())
     .padding()
@@ -163,7 +204,7 @@ struct MiniPlayerView: View {
 #Preview("Dark — Playing") {
     MiniPlayerView(vm: {
         let vm = MiniPlayerViewModel()
-        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .playing)
+        vm.preview(title: "Novacane", artist: "Frank Ocean", loadingState: .playing, queueTitles: ["Novacane"])
         return vm
     }())
     .padding()

@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import MEGAL10n
-import SwiftUI
 
 @MainActor
 final class MiniPlayerViewModel: ObservableObject {
@@ -9,6 +8,10 @@ final class MiniPlayerViewModel: ObservableObject {
 
     @Published private(set) var title: String = ""
     @Published private(set) var artist: String = ""
+
+    /// The whole queue as identity + title, and the index the service is playing
+    @Published private(set) var tracks: [MiniPlayerTrack] = []
+    @Published private(set) var currentIndex: Int = 0
 
     @Published private(set) var loadingState: PlayerLoadingState = .loading
 
@@ -61,6 +64,15 @@ final class MiniPlayerViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] in self?.loadingState = $0 }
         .store(in: &cancellables)
+
+        service.currentQueuePublisher
+            .sink { [weak self] queue in self?.updateQueue(from: queue) }
+            .store(in: &cancellables)
+    }
+
+    private func updateQueue(from queue: PlaybackQueue) {
+        tracks = queue.tracks.map { MiniPlayerTrack(id: $0.id, title: $0.displayName) }
+        currentIndex = queue.currentIndex
     }
 
     // MARK: - Intents
@@ -78,11 +90,32 @@ final class MiniPlayerViewModel: ObservableObject {
         onExpand?()
     }
 
+    func skipToNext() {
+    }
+
+    func skipToPrevious() {
+    }
+
     // MARK: - Preview / test seeding
 
-    func preview(title: String, artist: String, loadingState: PlayerLoadingState) {
+    func preview(
+        title: String,
+        artist: String,
+        loadingState: PlayerLoadingState,
+        queueTitles: [String] = [],
+        currentIndex: Int = 0
+    ) {
         self.title = title
         self.artist = artist
         self.loadingState = loadingState
+        self.tracks = queueTitles.enumerated().map { MiniPlayerTrack(id: "\($0.offset)", title: $0.element) }
+        self.currentIndex = currentIndex
     }
+}
+
+/// A queue entry as the mini player needs it: a stable identity for paging and
+/// the track's display title.
+struct MiniPlayerTrack {
+    let id: String
+    let title: String
 }
