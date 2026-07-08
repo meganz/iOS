@@ -129,6 +129,7 @@ class NodeActionViewController: ActionSheetViewController {
         isIncoming: Bool = false,
         containsABackupNode: Bool = false,
         isFromSharedItem: Bool = false,
+        showsFavouriteAction: Bool = false,
         sender: Any
     ) {
         self.nodes = nodes
@@ -162,7 +163,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
                 .setLinkedNodeCount(linkedNodeCount)
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
-                .setIsFavourite(displayMode == .photosFavouriteAlbum)
+                .setIsFavourite(displayMode == .photosFavouriteAlbum || nodes.allSatisfy { $0.isFavourite })
                 .setIsBackupNode(containsABackupNode)
                 .setAreMediaFiles(areMediaFiles)
                 .setIsHiddenNodesFeatureEnabled(true)
@@ -176,6 +177,7 @@ class NodeActionViewController: ActionSheetViewController {
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
                 .setIsNodeKeyDecrypted(nodes.first(where: { !$0.isNodeKeyDecrypted() }) == nil)
+                .setShowsBulkFavouriteAction(showsFavouriteAction)
                 .multiselectBuild()
             
             update(actions: actions, sender: sender)

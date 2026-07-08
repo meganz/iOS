@@ -14,4 +14,14 @@ public struct MockNodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol
     public func unFavourite(node: NodeEntity) async throws {
         $unFavoriteCalledCount.mutate { $0 += 1 }
     }
+    
+    public func favourite(nodes: [NodeEntity], isFavourite: Bool) async throws {
+        for _ in nodes {
+            if isFavourite {
+                $favoriteCalledCount.mutate { $0 += 1 }
+            } else {
+                $unFavoriteCalledCount.mutate { $0 += 1 }
+            }
+        }
+    }
 }

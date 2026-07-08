@@ -959,6 +959,7 @@ extension NodeActions {
             showNodeInfo: { _ in },
             assignLabel: { _ in },
             toggleNodeFavourite: { _ in },
+            favouriteNodes: { _ in },
             sendToChat: { _ in },
             saveToPhotos: { _ in },
             exportFiles: { _, _ in },

@@ -154,17 +154,14 @@ extension AlbumContentViewController: AlbumToolbarProvider {
             return
         }
         
+        let nodeEntities = selectedNodes.toNodeEntities()
         let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
-        
-        selectedNodes.forEach { node in
-            if node.isFavourite {
-                Task {
-                    try await favoriteUseCase.unFavourite(node: node.toNodeEntity())
-                }
-            } else {
-                Task {
-                    try await favoriteUseCase.favourite(node: node.toNodeEntity())
-                }
+        let shouldFavourite = !nodeEntities.allSatisfy { $0.isFavourite }
+        Task {
+            do {
+                try await favoriteUseCase.favourite(nodes: nodeEntities, isFavourite: shouldFavourite)
+            } catch {
+                MEGALogError("[Favourite] Bulk favourite of \(nodeEntities.count) album nodes failed: \(error)")
             }
         }
         

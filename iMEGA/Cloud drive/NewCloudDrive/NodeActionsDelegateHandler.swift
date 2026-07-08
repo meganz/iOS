@@ -14,6 +14,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var saveToPhotos: ([NodeEntity]) -> Void
     var showNodeInfo: (NodeEntity) -> Void
     var toggleNodeFavourite: (NodeEntity) -> Void
+    var favouriteNodes: ([NodeEntity]) -> Void
     var assignLabel: (NodeEntity) -> Void
     var leaveSharing: (NodeEntity) -> Void
     var rename: (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void
@@ -46,6 +47,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         saveToPhotos: @escaping ([NodeEntity]) -> Void,
         showNodeInfo: @escaping (NodeEntity) -> Void,
         toggleNodeFavourite: @escaping (NodeEntity) -> Void,
+        favouriteNodes: @escaping ([NodeEntity]) -> Void,
         assignLabel: @escaping (NodeEntity) -> Void,
         leaveSharing: @escaping (NodeEntity) -> Void,
         rename: @escaping (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void,
@@ -74,6 +76,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         self.saveToPhotos = saveToPhotos
         self.showNodeInfo = showNodeInfo
         self.toggleNodeFavourite = toggleNodeFavourite
+        self.favouriteNodes = favouriteNodes
         self.assignLabel = assignLabel
         self.leaveSharing = leaveSharing
         self.rename = rename
@@ -129,6 +132,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             addToAlbum(nodeEntities)
         case .addTo:
             addTo(nodeEntities)
+        case .favourite:
+            favouriteNodes(nodeEntities)
         default:
             break
         }

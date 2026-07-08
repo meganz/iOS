@@ -1598,7 +1598,7 @@ class NodeActionBuilderTests {
             .setDisplayMode(.photosAlbum)
             .multiselectBuild()
 
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .remove]) == true)
+        #expect(isEqual(nodeActionTypes: [.favourite, .download, .shareLink, .exportFile, .sendToChat, .remove]) == true)
     }
 
     @Test
@@ -1819,8 +1819,9 @@ class NodeActionBuilderTests {
         actions = NodeActionBuilder()
             .setDisplayMode(.videoPlaylistContent)
             .build()
-        
+
         #expect(isEqual(nodeActionTypes: [
+            .favourite,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1828,7 +1829,7 @@ class NodeActionBuilderTests {
             .exportFile,
             .moveVideoInVideoPlaylistContentToRubbishBin]) == true)
     }
-    
+
     @Test
     func testBuild_displayModeVideoPlaylistContentAndSetIsHiddenTrue_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
@@ -1839,6 +1840,7 @@ class NodeActionBuilderTests {
             .build()
         
         #expect(isEqual(nodeActionTypes: [
+            .favourite,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1859,6 +1861,7 @@ class NodeActionBuilderTests {
             .build()
         
         #expect(isEqual(nodeActionTypes: [
+            .favourite,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1874,8 +1877,9 @@ class NodeActionBuilderTests {
         actions = NodeActionBuilder()
             .setDisplayMode(.videoPlaylistContent)
             .multiselectBuild()
-        
+
         #expect(isEqual(nodeActionTypes: [
+            .favourite,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,

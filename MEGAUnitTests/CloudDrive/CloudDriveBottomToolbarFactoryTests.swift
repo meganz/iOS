@@ -24,6 +24,7 @@ extension NodeActionsDelegateHandler {
             saveToPhotos: { _ in },
             showNodeInfo: { _ in },
             toggleNodeFavourite: { _ in },
+            favouriteNodes: { _ in },
             assignLabel: { _ in },
             leaveSharing: { _ in },
             rename: { _, _ in },

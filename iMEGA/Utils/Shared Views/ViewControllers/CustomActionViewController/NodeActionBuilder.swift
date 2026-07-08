@@ -41,6 +41,7 @@ final class NodeActionBuilder {
     private var isSelectionEnabled: Bool = false
     private var isFolderEmpty = false
     private var isNodeKeyDecrypted = true
+    private var showsBulkFavouriteAction = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -224,6 +225,11 @@ final class NodeActionBuilder {
 
     func setIsNodeKeyDecrypted(_ isNodeKeyDecrypted: Bool) -> NodeActionBuilder {
         self.isNodeKeyDecrypted = isNodeKeyDecrypted
+        return self
+    }
+
+    func setShowsBulkFavouriteAction(_ showsBulkFavouriteAction: Bool) -> NodeActionBuilder {
+        self.showsBulkFavouriteAction = showsBulkFavouriteAction
         return self
     }
 
@@ -831,6 +837,7 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectFavouriteAction(to: &actions)
         return actions
     }
     
@@ -858,6 +865,7 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectFavouriteAction(to: &actions)
         return actions
     }
     
@@ -877,7 +885,16 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectFavouriteAction(to: &actions)
         return actions
+    }
+    
+    // Only added when the presenting surface opts in via setShowsBulkFavouriteAction(_:), because its
+    // delegate must be able to handle a multi-node .favourite action. isFavourite is true only when every
+    // selected node is already favourited, so a partial selection shows the positive "Favourite" action.
+    private func prependMultiselectFavouriteAction(to actions: inout [NodeAction]) {
+        guard showsBulkFavouriteAction, [.cloudDrive, .photosTimeline].contains(displayMode), !isBackupNode else { return }
+        actions.insert(.favouriteAction(isFavourite: isFavourite), at: 0)
     }
     
     private func favouriteAlbumActions() -> [NodeAction] {
@@ -893,7 +910,8 @@ final class NodeActionBuilder {
     }
     
     private func normalAlbumActions() -> [NodeAction] {
-        var actions: [NodeAction] = [.downloadAction(),
+        var actions: [NodeAction] = [.favouriteAction(isFavourite: isFavourite),
+                                     .downloadAction(),
                                      .shareLinkAction(nodeCount: selectedNodeCount),
                                      .exportFileAction(nodeCount: selectedNodeCount),
                                      .sendToChatAction()]
@@ -957,6 +975,7 @@ final class NodeActionBuilder {
     
     private func videoPlaylistContentActions() -> [NodeAction] {
         [
+            .favouriteAction(isFavourite: isFavourite),
             .shareLinkAction(),
             .saveToPhotosAction(),
             .removeVideoFromVideoPlaylistAction(),

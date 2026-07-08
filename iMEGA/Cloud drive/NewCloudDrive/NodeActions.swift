@@ -20,6 +20,7 @@ struct NodeActions {
     var showNodeInfo: (NodeEntity) -> Void
     var assignLabel: (NodeEntity) -> Void
     var toggleNodeFavourite: (NodeEntity) -> Void
+    var favouriteNodes: ([NodeEntity]) -> Void
     var sendToChat: ([NodeEntity]) -> Void
     var saveToPhotos: ([NodeEntity]) -> Void
     var exportFiles: (_ nodes: [NodeEntity], _ sender: Any) -> Void
@@ -135,6 +136,21 @@ extension NodeActions {
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }
                 trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
                 sdk.setNodeFavourite(megaNode, favourite: !megaNode.isFavourite)
+            },
+            favouriteNodes: { nodes in
+                guard nodes.isNotEmpty else { return }
+                trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
+                let favouriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
+                // When every selected node is already favourited the action is presented as
+                // "Remove favourite", so unfavourite all; otherwise favourite all of them.
+                let shouldFavourite = !nodes.allSatisfy { $0.isFavourite }
+                Task {
+                    do {
+                        try await favouriteUseCase.favourite(nodes: nodes, isFavourite: shouldFavourite)
+                    } catch {
+                        MEGALogError("[Favourite] Bulk favourite of \(nodes.count) nodes failed: \(error)")
+                    }
+                }
             },
             sendToChat: { [weak navigationController] nodes in
                 guard let navigationController else { return }

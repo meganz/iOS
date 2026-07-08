@@ -89,6 +89,10 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
             nodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) },
             delegate: viewController,
             displayMode: displayMode,
+            // Timeline reports .photosTimeline; the Videos tab falls back to .cloudDrive. Both present
+            // file nodes and route .favourite through the generic delegate. The Albums tab has no .more
+            // action, so it never reaches here.
+            showsFavouriteAction: [.photosTimeline, .cloudDrive].contains(displayMode),
             sender: viewController.toolbar
         )
         nodeActionVC.accessoryActionDelegate = nodeAccessoryActionDelegate

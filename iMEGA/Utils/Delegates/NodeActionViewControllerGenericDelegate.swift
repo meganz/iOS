@@ -77,6 +77,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             addTo(mode: .album, nodes: nodes.toNodeEntities())
         case .addTo:
             addTo(mode: .collection, nodes: nodes.toNodeEntities())
+        case .favourite:
+            trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
+            favourite(nodes)
         default:
             break
         }
@@ -337,6 +340,22 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         } else {
             Task {
                 try await nodefavouriteActionUseCase.favourite(node: node.toNodeEntity())
+            }
+        }
+    }
+
+    private func favourite(_ nodes: [MEGANode]) {
+        guard nodes.isNotEmpty else { return }
+        let nodeEntities = nodes.toNodeEntities()
+        let nodefavouriteActionUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
+        // When every selected node is already favourited the action is presented as "Remove favourite",
+        // so unfavourite all; otherwise favourite all of them.
+        let shouldFavourite = !nodeEntities.allSatisfy { $0.isFavourite }
+        Task {
+            do {
+                try await nodefavouriteActionUseCase.favourite(nodes: nodeEntities, isFavourite: shouldFavourite)
+            } catch {
+                MEGALogError("[Favourite] Bulk favourite of \(nodeEntities.count) nodes failed: \(error)")
             }
         }
     }

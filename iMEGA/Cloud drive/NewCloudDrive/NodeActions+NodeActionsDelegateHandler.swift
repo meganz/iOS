@@ -20,6 +20,7 @@ extension NodeActions {
             saveToPhotos: saveToPhotos,
             showNodeInfo: showNodeInfo,
             toggleNodeFavourite: toggleNodeFavourite,
+            favouriteNodes: favouriteNodes,
             assignLabel: assignLabel,
             leaveSharing: leaveSharing,
             rename: rename,
