@@ -28,6 +28,20 @@ import MEGASwift
     @PreferenceWrapper(key: PreferenceKeyEntity.launchTabSuggested, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var launchTabDialogAlreadySuggested: Bool
 
+    // MARK: - Default launch destination in Home revamp
+    //
+    // In the past TabManager's launchTabPreference is the source of truth for storing the default launch tab,
+    // After Home Revamp, the source of truth is launchDestinationUseCase which can handle non-tab-based destination.
+    private static let launchDestinationUseCase: any DefaultLaunchDestinationUseCaseProtocol =
+    DefaultLaunchDestinationUseCase(
+        preferenceUseCase: PreferenceUseCase.default,
+        repository: DefaultLaunchDestinationRepository.newRepo
+    )
+
+    private static var isHomeRevampPhaseTwoEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+    }
+
     private(set) static var designatedTab: Tab?
 
     @objc static func setDesignatedTab(tab: Tab?) {
@@ -35,12 +49,51 @@ import MEGASwift
     }
 
     static func setPreferenceTab(_ tab: Tab) {
-        launchTabPreference = tab.tabType.rawValue
-        launchTabSelected = true
+        guard isHomeRevampPhaseTwoEnabled else {
+            launchTabPreference = tab.tabType.rawValue
+            launchTabSelected = true
+            return
+        }
+        launchDestinationUseCase.setDestination(destination(for: tab))
     }
 
     static func getPreferenceTab() -> Tab {
-        appTabs.first(where: { $0.tabType.rawValue == launchTabPreference }) ?? .home
+        guard isHomeRevampPhaseTwoEnabled else {
+            return appTabs.first(where: { $0.tabType.rawValue == launchTabPreference }) ?? .home
+        }
+        return tab(for: launchDestinationUseCase.selectedDestination)
+    }
+
+    // We need to migrate existing/legacy source of truth for launch destination
+    // from TabManager to launchDestinationUseCase
+    @objc static func migrateLegacyLaunchTabIfNeeded() {
+        guard isHomeRevampPhaseTwoEnabled,
+              !launchDestinationUseCase.hasSelectedDestination,
+              launchTabSelected else { return }
+        let legacyTab = appTabs.first(where: { $0.tabType.rawValue == launchTabPreference }) ?? .home
+        launchDestinationUseCase.setDestination(destination(for: legacyTab))
+    }
+
+    private static func tab(for destination: LaunchDestinationEntity) -> Tab {
+        switch destination {
+        case .home: return .home
+        case .drive: return .cloudDrive
+        case .media: return .cameraUploads
+        case .chat: return .chat
+        case .sharedItems, .favourites, .offline:
+            // Non-tab destinations default to .home; AppDelegate routes them after launch.
+            return .home
+        }
+    }
+
+    private static func destination(for tab: Tab) -> LaunchDestinationEntity {
+        return switch tab.tabType {
+        case .cloudDrive: .drive
+        case .cameraUploads: .media
+        case .home: .home
+        case .chat: .chat
+        case .menu: .home
+        }
     }
     
     static func isLaunchTabSelected() -> Bool {

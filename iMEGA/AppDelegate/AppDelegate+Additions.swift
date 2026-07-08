@@ -161,8 +161,12 @@ extension AppDelegate {
     }
 
     @objc func showLaunchTabDialogIfNeeded() {
-        
-        if TabManager.isLaunchTabSelected() || TabManager.isLaunchTabDialogAlreadySuggested() {
+
+        let hasSelectedLaunchDestination = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+            ? defaultLaunchDestinationUseCase.hasSelectedDestination
+            : TabManager.isLaunchTabSelected()
+
+        if hasSelectedLaunchDestination || TabManager.isLaunchTabDialogAlreadySuggested() {
             return
         }
         
@@ -182,6 +186,32 @@ extension AppDelegate {
 
         UIApplication.mnz_presentingViewController().present(launchTabDialogCustomModalAlert, animated: true) {
             TabManager.setLaunchTabDialogAlreadyAsSuggested()
+        }
+    }
+
+    private var defaultLaunchDestinationUseCase: some DefaultLaunchDestinationUseCaseProtocol {
+        DefaultLaunchDestinationUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            repository: DefaultLaunchDestinationRepository.newRepo
+        )
+    }
+
+    /// Handle the cold-launch routing for user's chosen non-tab launch destination (Offline / Favourites / Shared items).
+    /// No-ops when the phase-two flag is off, a launch action is already pending (launch action is prioritized over default destination).
+    @objc func dispatchDefaultLaunchDestinationIfNeeded() {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo) else { return }
+
+        guard !didDispatchDefaultLaunchDestination else { return }
+
+        didDispatchDefaultLaunchDestination = true
+        // `designatedTab` takes precedence over all cold-launch options.
+        guard TabManager.designatedTab == nil else { return }
+
+        switch defaultLaunchDestinationUseCase.selectedDestination {
+        case .offline: mainTBC?.showOfflineAndPresentFile(handle: nil)
+        case .favourites: mainTBC?.showFavourites(nodeHandle: nil)
+        case .sharedItems: break // [IOS-12160] - Navigate to Shared Items as default destination
+        case .home, .drive, .media, .chat: break
         }
     }
     

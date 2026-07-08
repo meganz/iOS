@@ -2,6 +2,7 @@ import MEGAPreference
 
 public protocol DefaultLaunchDestinationUseCaseProtocol {
     var selectedDestination: LaunchDestinationEntity { get }
+    var hasSelectedDestination: Bool { get }
     func setDestination(_ destination: LaunchDestinationEntity)
 }
 
@@ -30,6 +31,10 @@ public struct DefaultLaunchDestinationUseCase: DefaultLaunchDestinationUseCasePr
             return .home
         }
         return destination
+    }
+
+    public var hasSelectedDestination: Bool {
+        storedRawValue != nil
     }
 
     public func setDestination(_ destination: LaunchDestinationEntity) {

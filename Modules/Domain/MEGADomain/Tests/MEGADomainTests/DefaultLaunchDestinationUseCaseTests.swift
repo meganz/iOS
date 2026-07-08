@@ -31,6 +31,31 @@ struct DefaultLaunchDestinationUseCaseTests {
         #expect(sut.selectedDestination == .home)
     }
 
+    // MARK: - hasSelectedDestination
+
+    @Test("hasSelectedDestination is false when no value is stored")
+    func hasSelectedDestination_whenNoStoredValue_isFalse() {
+        let sut = makeSUT()
+        #expect(sut.hasSelectedDestination == false)
+    }
+
+    @Test("hasSelectedDestination is true when a value is stored")
+    func hasSelectedDestination_whenStoredValue_isTrue() {
+        let preferenceUseCase = MockPreferenceUseCase(dict: ["defaultLaunchDestination": "stored-offline"])
+        let sut = makeSUT(preferenceUseCase: preferenceUseCase)
+        #expect(sut.hasSelectedDestination)
+    }
+
+    @Test("hasSelectedDestination is true after a destination is set")
+    func hasSelectedDestination_afterSetDestination_isTrue() {
+        let repository = MockDefaultLaunchDestinationRepository(storedValues: [.offline: "stored-offline"])
+        let sut = makeSUT(repository: repository)
+
+        sut.setDestination(.offline)
+
+        #expect(sut.hasSelectedDestination)
+    }
+
     // MARK: - setDestination
 
     @Test("Persists the repository raw value under the launch destination key")

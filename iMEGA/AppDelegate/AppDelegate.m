@@ -148,6 +148,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self migrateLocalCachesLocation];
     [self registerCameraUploadBackgroundRefresh];
+    [TabManager migrateLegacyLaunchTabIfNeeded];
 
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         NSDictionary *remoteNotificationData = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
@@ -728,23 +729,34 @@
 }
 
 - (void)processActionsAfterSetRootVC {
+    // Captured before the handlers below consume and clear these values, so the default launch
+    // destination only dispatches when no prioritized action (deeplink/node/quick action/notification) claimed this launch.
+    BOOL hadPendingAction = (MEGALinkManager.linkURL != nil
+        || MEGALinkManager.nodeToPresentBase64Handle != nil
+        || self.quickActionType != nil
+        || self.megatype != 0);
+
     [self showLink:MEGALinkManager.linkURL];
-    
+
     if (MEGALinkManager.nodeToPresentBase64Handle) {
         [MEGALinkManager presentNode];
     }
-    
+
     [self manageQuickActionType:self.quickActionType];
-    
+
     [self showCookieDialogIfNeeded];
-    
+
     [self showEnableTwoFactorAuthenticationIfNeeded];
-    
+
     [self showLaunchTabDialogIfNeeded];
-    
+
     [self processGenericAppPushNotificationTapIfNeeded];
-    
+
     [self showTemporaryTransferErrorDialogIfNeeded];
+
+    if (!hadPendingAction) {
+        [self dispatchDefaultLaunchDestinationIfNeeded];
+    }
 }
 
 - (void)showTemporaryTransferErrorDialogIfNeeded {
