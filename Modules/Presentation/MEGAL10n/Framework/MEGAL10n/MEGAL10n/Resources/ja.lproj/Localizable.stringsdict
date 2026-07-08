@@ -2942,5 +2942,19 @@
         <string>ボーナスは%d日後に失効します。</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d分</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -3782,5 +3782,21 @@
         <string>Срок действия бонуса истекает через %d дней.</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>few</key>
+        <string>%d минута</string>
+        <key>many</key>
+        <string>%d минуты</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

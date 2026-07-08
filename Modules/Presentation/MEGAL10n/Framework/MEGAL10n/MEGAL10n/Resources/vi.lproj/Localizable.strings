@@ -1055,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Mời người tham gia MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Cài app MEGA cho máy tính";
+"account.achievement.desktopApp.title"="Cài app cho máy tính";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ bổ sung vì đã cài app cho máy tính của chúng tôi";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Máy Tính, bạn sẽ nhận được thêm %1$@ cho lưu trữ, %2$@. App MEGA cho Máy Tính còn có cho Windows, macOS và đa số các bản phân phối Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Cài app MEGA cho di động";
+"account.achievement.mobileApp.title"="Cài app cho di động";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ bổ sung vì đã cài app cho di động của chúng tôi";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -3339,7 +3339,7 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="Thứ7";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="Mỗi %1$d ngày";
+"meetings.scheduled.recurring.daily"="hằng ngày";
 /* Text description for a meeting showing that is a weekly recurring meeting */
 "meetings.scheduled.recurring.weekly"="hằng tuần";
 /* Text description for a meeting showing that is a monthly recurring meeting */
@@ -3427,7 +3427,7 @@
 /* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Không bao giờ";
 /* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
-"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Mỗi %1$d ngày";
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Mỗi ngày";
 /* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hằng tuần";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
@@ -3583,7 +3583,7 @@
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="Đổi tên cuộc họp";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
-"meetings.scheduleMeeting.create.daily.optionTitle"="Mỗi %1$d ngày";
+"meetings.scheduleMeeting.create.daily.optionTitle"="Mỗi ngày";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.weekly.optionTitle"="Hằng tuần";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3617,7 +3617,7 @@
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="Cuộc họp sẽ diễn ra mỗi ngày.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Mỗi %1$d ngày";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Mỗi ngày";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Khôi phục hàng đã mua";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
@@ -4619,7 +4619,7 @@
 /* Onboarding Camera Backups CTA description */
 "onboarding.cta.cameraBackups.explanation"="Ký ức là thứ quan trọng. Đăng tải camêra sẽ tự động sao lưu ảnh và video lên Ổ Mây MEGA của bạn, không còn bao giờ phải lo lắng về mất đi những kỷ niệm quý giá";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Đăng tải camêra yêu cầu [B]toàn quyền truy cập[/B] vào thư viện ảnh của thiết bị";
+"onboarding.cta.cameraBackups.note"="Đăng tải camêra cần có quyền [B]truy cập toàn diện[/B] vào thư viện ảnh của thiết bị";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Bật Đăng Tải Camêra";
 /* Onboarding Camera Backups CTA *Skip* button */
@@ -4707,7 +4707,7 @@
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Hãy kết nối với WiFi hoặc dùng mạng dữ liệu di động [S]Chạm để cho phép dùng mạng di động[/S]";
 /* Camera uploads status banner title paused due to low battery */
-"cameraUploads.banner.status.paused.lowBattery.title"="Đăng tải camêra tạm dừng do pin yếu";
+"cameraUploads.banner.status.paused.lowBattery.title"="Đăng tải camêra tạm dừng do pin yếu";
 /* Camera uploads status banner sub title paused due to low battery */
 "cameraUploads.banner.status.paused.lowBattery.subheading"="Sạc thiết bị để tiếp tục đăng tải camêra";
 /* Camera uploads status banner title paused due to device heat */
@@ -4797,7 +4797,7 @@
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Nâng cấp ngay";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="Để đảm bảo không bỏ lỡ bất kỳ kỷ niệm nào của bạn, MEGA cần có quyền truy cập đầy đủ vào thư viện ảnh của bạn";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Để đảm bảo không bị bỏ lỡ tất cả những kỷ niệm của bạn, MEGA cần có truy cập toàn diện vào thư viện ảnh của bạn";
 /* Camera Uploads Banner Limited Access Button Title */
 "cameraUploads.progress.banner.limitedAccess.button.title"="Cập nhật quyền truy cập";
 /* Camera Uploads Progress Uploads Complete Title */
@@ -5007,13 +5007,13 @@
 /* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
 "cameraUploads.settings.uploadOnlyNewPhotos.title"="Chỉ tải lên chỉ những ảnh mới";
 /* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
-"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Chỉ những ảnh và video được thêm sau khi tùy chọn này được bật mới được tải lên.";
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Chỉ có những ảnh và video được thêm sau khi tùy chọn này được bật mới được tải lên.";
 /* Title of the confirmation dialog shown before cancelling the selected transfers */
 "transfers.confirmation.cancelSelected.title"="Hủy các phiên truyền?";
 /* Body of the confirmation dialog shown before cancelling the selected transfers */
 "transfers.confirmation.cancelSelected.message"="Các phiên truyền được chọn sẽ bị hủy.";
 /* Title of the confirmation dialog shown before cancelling every active transfer */
-"transfers.confirmation.cancelAll.title"="Hủy tất cả các phiên truyền?";
+"transfers.confirmation.cancelAll.title"="Muốn hủy tất cả các phiên truyền?";
 /* Confirm button on the dialog shown before cancelling every active transfer */
 "transfers.confirmation.cancelAll.confirm"="Hủy tất cả";
 /* Header of the What's new promotional dialog in Home screen */
@@ -5027,6 +5027,28 @@
 /* The title of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.title"="Tài khoản của bạn đã không hoạt động quá lâu";
 /* The subtitle of the purge banner caused by account inactivity */
-"cloudDrive.purgeBanner.inactivity.subtitle"="Vì tài khoản của bạn đã không hoạt động trong hơn %@ tháng, các tệp của bạn đã bị xóa theo chính sách không hoạt động của chúng tôi.";
+"cloudDrive.purgeBanner.inactivity.subtitle"="Vì tài khoản của quý khách đã không hoạt động trong hơn %@ tháng, các tệp của quý khách đã bị xóa theo chính sách không hoạt động của chúng tôi.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="Phải có ít nhất một mục được bật";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="Tắt đi";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="Hẹn giờ tắt";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="Hẹn tắt lúc %@";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="Cuối bài nhạc";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="Tất cả các phiên truyền tải đã tạm dừng";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Đang phát từ %@";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="Đang cập nhật…";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="Tăng hạn mức truyền tải";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="Nhận thêm hạn mức lưu trữ";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="Nhận thêm không gian lưu trữ và băng thông truyền tải";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="Tab khởi động mặc định";

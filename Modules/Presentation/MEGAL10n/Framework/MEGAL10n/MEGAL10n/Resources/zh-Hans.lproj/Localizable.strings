@@ -5030,3 +5030,25 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="由于您的账户已超过 %@ 个月未使用，根据我们的账户活跃政策，您的文件已被删除。";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="至少有一个选项必须开启";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="所有传输均已暂停";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="正在更新…";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="获取更多流量";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="获得更多存储容量";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="获得更多存储和传输配额";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="正在从 %@ 播放";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="睡眠定时器";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="曲目结束";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="关闭";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="睡眠定时器 %@";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="默认启动标签页";

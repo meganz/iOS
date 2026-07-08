@@ -5030,3 +5030,25 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="لأن حسابك كان غير نشط لأكثر من %@ شهور، تمت إزالة ملفاتك وفقًا لسياسة عدم النشاط لدينا.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="يجب أن يبقى قسم واحد على الأقل قيد التشغيل";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="جارٍ التحديث…";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="تم إيقاف عمليات التراسل مؤقتاً";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="الحصول على المزيد من حصة النقل";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="احصل على المزيد من مساحة التخزين";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="احصل على المزيد من مساحة التخزين وحجم تراسل المعطيات";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="تشغيل من %@";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="موقت النوم";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="نهاية المسار";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="إيقاف التشغيل";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="موقت النوم %@";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="علامة التبويب الافتراضية عند الإطلاق";

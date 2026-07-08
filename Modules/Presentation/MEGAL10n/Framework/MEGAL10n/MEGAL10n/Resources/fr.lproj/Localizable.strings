@@ -945,13 +945,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Envoyer";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Remiser le compte";
+"parkAccount"="Archiver le compte";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="Je reconnais que je commence un nouveau compte vide et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une Clé de récupération exportée.";
 /* Caption of the button to proceed */
 "startNewAccount"="Commencer un nouveau compte";
 /*  */
-"yourAccounHasBeenParked"="Votre ancien compte a été remisé. Vous pouvez maintenant vous connecter à votre nouveau compte.";
+"yourAccounHasBeenParked"="Votre ancien compte a été archivé. Vous pouvez maintenant vous connecter à votre nouveau compte.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nouvelle adresse courriel";
 /* Button text for the user to confirm their change of email address. */
@@ -5030,3 +5030,25 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="Comme votre compte a été inactif pendant plus de %@ mois, vos fichiers ont été supprimés conformément à notre politique d'inactivité.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="Au moins une section doit rester activée";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Lecture depuis %@";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="Mise à jour…";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="Minuteur de veille";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="Fin de la piste";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="Désactiver";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="Minuteur de veille %@";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="Tous les transferts sont suspendus";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="Onglet de lancement par défaut";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="Obtenir plus de quota de transfert";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="Obtenez plus d'espace de stockage";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="Obtenez plus d'espace de stockage et de quota de transfert";

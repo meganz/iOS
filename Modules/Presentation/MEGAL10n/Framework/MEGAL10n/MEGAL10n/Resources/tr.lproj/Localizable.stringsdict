@@ -3362,5 +3362,21 @@
         <string>Bonus %d gün içinde sona eriyor.</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dakika</string>
+        <key>other</key>
+        <string>%d dakika</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -189,7 +189,7 @@
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="사진첩을 저장할 수 없습니다";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
-"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="클라우드 드라이브에 이 사진첩을 저장할 충분한 공간이 없습니다. 더 많은 저장소를 받으려면 지금 업그레이드 하세요.";
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="클라우드 드라이브에 이 사진첩을 저장할 충분한 공간이 없습니다. 저장소를 늘리려면 지금 업그레이드 하세요.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="다운로드";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="이 계정과 연결된 모든 데이터를 잃게 됩니다. 진행하시겠습니까?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="당신의 이메일 수신함에 접근할 수 없다면, https://mega.nz/support에서 지원 부서에 연락주세요";
+"ifYouCantAccessYourEmailAccount"="당신의 이메일 수신함에 접근할 수 없다면, https://mega.nz/support에서 지원 부서에 연락하세요";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -949,7 +949,7 @@
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="나는 비어있는 새로운 계정을 시작하고, 내가 암호를 다시 떠올리거나 저장한 복구 키의 위치를 찾아내지 못한다면 현재 계정의 모든 데이터를 잃어버린다는 것을 알고 있습니다.";
 /* Caption of the button to proceed */
-"startNewAccount"="새 계정을 시작";
+"startNewAccount"="새 계정 시작";
 /*  */
 "yourAccounHasBeenParked"="당신의 이전 계정이 보류되었습니다. 이제 새 계정으로 로그인할 수 있습니다.";
 /* Hint text to suggest that the user have to write the new email on it */
@@ -1165,7 +1165,7 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="연간 구독이 12개월 결제보다 16% 저렴합니다";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, 고객 지원에 [A]맞춤 요금제[/A]를 요청하세요.";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="현재 구독을 업그레이드하려면, [A]맞춤 요금제[/A]를 위해 지원 부서에 연락하세요.";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "inAppPurchase.upgrade.label.currentPlan"="현재 요금제:";
 /* A label which shows the user's current PRO plan. */
@@ -2289,7 +2289,7 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 <b>%@</b>로 업그레이드가 필요합니다.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 개인화된 요금제를 위해 고객지원에 연락하는 것을 필요로 합니다.</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>우리는 <b>%@</b>에 <b>%@</b>로 이메일을 발송하여 연락을 하였지만 여전히 당신의 MEGA 계정에 <b>%@</b>를 차지하는 %@개의 파일이 존재하며, 이는 개인화된 요금제를 위해 지원 부서에 연락하는 것을 필요로 합니다.</paragraph>";
 /* Over Disk Quota of number of days */
 "%d days"="%d일";
 /* Over Disk Quota of must act immediately to save your data */
@@ -2337,11 +2337,11 @@
 /* Context menu item. Allows user to delete file/folder from favourites */
 "Remove Favourite"="즐겨찾기 제거";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
-"cloudDrive.sort.label"="라벨";
+"cloudDrive.sort.label"="레이블";
 /* Context menu item which allows to mark folders with own color label */
-"general.chooseLabel.title"="라벨…";
+"general.chooseLabel.title"="레이블…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="라벨 제거";
+"Remove Label"="레이블 제거";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="빨강";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="다른 문제를 접수하기 전에 10분을 기다려야 합니다";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="문제가 계속되면, 기다렸다가 다시 시도하거나 https://mega.nz/support에서 지원 부서에 연락주세요";
+"help.reportIssue.fail.too.many.request.message"="문제가 계속되면, 기다렸다가 다시 시도하거나 https://mega.nz/support에서 지원 부서에 연락하세요";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="문제 보고 업로드를 취소하시겠습니까?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3509,13 +3509,13 @@
 /* Device Center backup error: Account blocked */
 "device.center.backup.error.accountBlocked"="계정이 차단되었기 때문에 이 폴더를 동기화 또는 백업할 수 없습니다.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 나중에 다시 시도하세요. 만약 문제가 계속되면, 지원에 연락주세요.";
+"device.center.backup.error.problemSyncingContactSupport"="이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 나중에 다시 시도하세요. 만약 문제가 계속되면, 지원 부서에 연락하세요.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="계정을 다시 불러왔습니다. 백업 또는 동기화에 누락된 변경사항이 적용되지 않습니다.";
 /* Device Center backup error: Logged out of Desktop app */
 "device.center.backup.error.loggedOut"="데스크톱 앱에서 로그아웃한 것으로 나타나서 동기화 또는 백업이 멈추었습니다. 데스크톱 앱에서 다시 로그인하고, 동기화 또는 백업을 재개하세요.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="이 폴더를 동기화 또는 백업하던 중 MEGA 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 데스크톱 앱에서 다시 설정하세요, 또는 지원에 연락주세요.";
+"device.center.backup.error.changesToMegaFolder"="이 폴더를 동기화 또는 백업하던 중 MEGA 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 데스크톱 앱에서 다시 설정하세요, 또는 지원 부서에 연락하세요.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="외부 드라이브에 있는 폴더를 찾을 수 없습니다.";
 /* Device Center backup error: Synced folder at same path */
@@ -3531,7 +3531,7 @@
 /* Device Center backup error: Invalid scan interval */
 "device.center.backup.error.invalidScanInterval"="잘못된 탐색 간격. 탐색 간격 설정을 확인하고 다시 시도하세요.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 데스크톱 앱에서 다시 설정하세요, 또는 지원에 연락주세요.";
+"device.center.backup.error.syncOrBackupSetupAgain"="이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 데스크톱 앱에서 다시 설정하세요, 또는 지원 부서에 연락하세요.";
 /* Device Center backup error: Can't read sync location */
 "device.center.backup.error.cantReadSyncLocation"="동기화 위치를 읽을 수 없습니다. 위치에 접근 가능한지 여부와 폴더 위치에 대한 권한이 승인 되었는지 확인하세요.";
 /* Device Center backup error: Insufficient space for download */
@@ -4323,7 +4323,7 @@
 /* Cancel subscription confirmation alert button title */
 "accounts.cancelSubscriptionConfirmationAlert.button.title"="알겠습니다";
 /* Error message displayed in the cancel subscription error alert */
-"accounts.cancelSubscriptionErrorAlert.message"="지금 취소를 진행할 수 없습니다. 연결을 확인하고 다시 시도하세요. 만약 문제가 계속 되면, 지원에 연락하세요.";
+"accounts.cancelSubscriptionErrorAlert.message"="지금 취소를 진행할 수 없습니다. 연결을 확인하고 다시 시도하세요. 만약 문제가 계속 되면, 지원 부서에 연락하세요.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
 "accounts.cancelSubscriptionErrorAlert.button.ok"="알겠습니다";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
@@ -4951,7 +4951,7 @@
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="전송에 주의가 필요함";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA 모바일 앱 중 하나를 설치하고 무료 추가 저장 공간 %1$@를 얻으세요, %2$@.\n모바일 앱은 iOS와 안드로이드에서 이용 가능합니다.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="MEGA 모바일 앱 중 하나를 설치하고 무료 추가 저장 공간 %1$@를 얻으세요, %2$@.\n모바일 앱은 iOS와 Android에서 이용 가능합니다.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN 앱 중 하나를 설치하고 무료 체험을 시작하면, 무료 추가 저장 공간 %1$@를 얻고, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -5032,3 +5032,23 @@
 "home.customization.disableLastWidget.snackbar.message"="최소 하나의 섹션은 켜져있어야 합니다";
 /* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
 "media.audio.player.playlist.playingFrom"="%@ 재생 중";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="잠자기 타이머";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="곡이 끝나면";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="끄기";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="잠자기 타이머 %@";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="모든 동기화 일시정지됨";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="업데이트 중…";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="기본 실행 탭";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="전송 할당량 늘리기";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="저장소 할당량 늘리기";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="저장소와 전송 할당량 늘리기";

@@ -3782,5 +3782,21 @@
         <string>El bono caduca en %d días.</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%#@ignore@</string>
+        <key>other</key>
+        <string>%d minutos</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

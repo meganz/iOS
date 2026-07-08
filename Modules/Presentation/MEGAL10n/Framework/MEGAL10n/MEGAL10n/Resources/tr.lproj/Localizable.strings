@@ -217,7 +217,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Klasör boş";
+"emptyFolder"="Boş klasör";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Bulut depolamanızda dosya yok";
 /* Button title shown in empty views when you can 'Add files' */
@@ -407,7 +407,7 @@
 /* An alert dialog for the Get Link feature */
 "proOnly"="(Sadece Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
-"setExpiryDate"="Son kullanma tarihi belirle";
+"setExpiryDate"="Son kullanma tarihi ayarla";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
 "setPasswordProtection"="Şifre koruması ayarla";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -949,7 +949,7 @@
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="Yeni, boş bir hesap açtığımı ve şifremi hatırlamadığım veya dışa aktarılan bir kurtarma anahtarı bulamadığım sürece mevcut hesabımdaki tüm verileri kaybedeceğimi onaylıyorum.";
 /* Caption of the button to proceed */
-"startNewAccount"="Yeni hesabı başlat";
+"startNewAccount"="Yeni bir hesap başlat";
 /*  */
 "yourAccounHasBeenParked"="Eski hesabınız park edildi. Artık yeni hesabınıza giriş yapabilirsiniz.";
 /* Hint text to suggest that the user have to write the new email on it */
@@ -5030,3 +5030,25 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="Hesabınız %@ aydan uzun süredir etkin olmadığından, dosyalarınız hareketsizlik politikamız gereği kaldırılmıştır.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="En az bir bölüm açık kalmalıdır";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="Çalınıyor: %@";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="Uyku zamanlayıcısı";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="Parça sonu";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="Kapat";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="Uyku zamanlayıcısı %@";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="Tüm aktarımlar duraklatıldı";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="Güncelleniyor…";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="Daha fazla aktarım kotası alın";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="Daha fazla depolama alanı kotası alın";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="Daha fazla depolama alanı ve aktarım kotası elde edin";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="Varsayılan Açılış Sekmesi";

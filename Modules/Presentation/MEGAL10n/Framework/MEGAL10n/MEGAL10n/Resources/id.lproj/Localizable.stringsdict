@@ -2942,5 +2942,19 @@
         <string>Bonus akan kedaluwarsa dalam %d hari.</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d menit</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

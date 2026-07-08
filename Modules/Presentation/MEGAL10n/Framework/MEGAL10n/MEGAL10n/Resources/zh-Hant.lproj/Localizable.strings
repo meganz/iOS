@@ -217,7 +217,7 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="無網路連線";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="空白資料夾";
+"emptyFolder"="空資料夾";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="您的雲端硬碟沒有檔案";
 /* Button title shown in empty views when you can 'Add files' */
@@ -2345,17 +2345,17 @@
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="玫紅";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
-"Orange"="橘橙";
+"Orange"="橘色";
 /* A user can mark a folder or file with its own colour, in this case “Yellow”. */
-"Yellow"="金黃";
+"Yellow"="黃色";
 /* A user can mark a folder or file with its own colour, in this case “Green”. */
-"Green"="草綠";
+"Green"="綠色";
 /* A user can mark a folder or file with its own colour, in this case “Blue”. */
-"Blue"="天藍";
+"Blue"="藍色";
 /* A user can mark a folder or file with its own colour, in this case “Purple”. */
-"Purple"="蘭紫";
+"Purple"="紫色";
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
-"Grey"="銀灰";
+"Grey"="灰色";
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="金鑰";
 /* Text for options in Get Link View to separate the key from the link */
@@ -4115,13 +4115,13 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100位與會者。請召集人移除此限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100位與會者。請會議召集人移除此限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="此通話僅支援100位與會者。請求召集人升級到Pro版以移除這些限制。";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="此通話僅支援100位與會者。請會議召集人升級到Pro版以移除此限制。";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
 "meetings.inCall.banner.limit100Participants.organizer-host"="此通話僅支援100位與會者。任何其他與會者只能發送和閱讀對話記錄。需要更多與會者嗎？[A]立即升級[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
@@ -4479,7 +4479,7 @@
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="媒體";
 /* Meetings: Warning banner show in various places about 100 participant limit */
-"meetings.warning.overParticipantLimit"="只有100位與會者可以加入通話。任何其他與會者只能發送和接收對話記錄。召集人可以升級到Pro方案以移除這些限制。";
+"meetings.warning.overParticipantLimit"="僅支援100位與會者加入通話。任何其他與會者只能發送和接收對話記錄。會議召集人可以升級到Pro版以移除這些限制。";
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="立即升級";
 /* Over Disk Quota paywall Make some space button title */
@@ -5030,3 +5030,25 @@
 "cloudDrive.purgeBanner.inactivity.subtitle"="由於您的帳戶已閒置超過%@個月，根據我們的閒置帳戶政策，您的檔案已被移除。";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="必須至少一個區塊維持啟用狀態";
+/* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
+"media.audio.player.playlist.playingFrom"="正在從%@播放";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="所有傳輸已暫停";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="正在更新⋯";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="獲取更多傳輸配額";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="取得更多儲存配額";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="獲得更多儲存和傳輸配額";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="睡眠定時器";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="曲目結束";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="關閉";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="睡眠定時器 %@";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="預設啟動分頁";

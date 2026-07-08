@@ -3782,5 +3782,23 @@
         <string>Bonus wygasa za %d dni.</string>
       </dict>
     </dict>
+    <key>media.audio.player.sleepTimer.option.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%#@ignore@</string>
+        <key>few</key>
+        <string>%d minuta</string>
+        <key>many</key>
+        <string>%d minuty</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

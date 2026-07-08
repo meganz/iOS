@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você perderá todos os dados associados a esta conta. Tem certeza de que deseja continuar?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Se você não puder acessar o seu email, entre em contato com support@mega.io";
+"ifYouCantAccessYourEmailAccount"="Se você não puder acessar o seu email, entre em contato com o Suporte em https://mega.nz/support";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link de cancelamento expirado.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -5032,3 +5032,23 @@
 "home.customization.disableLastWidget.snackbar.message"="Pelo menos uma opção deve estar ativa";
 /* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
 "media.audio.player.playlist.playingFrom"="Reproduzindo de %@";
+/* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
+"media.audio.player.sleepTimer.title"="Temporizador";
+/* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
+"media.audio.player.sleepTimer.option.endOfTrack"="Fim da faixa";
+/* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
+"media.audio.player.sleepTimer.option.turnOff"="Desligar";
+/* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
+"media.audio.player.sleepTimer.remaining"="Temporizador %@";
+/* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
+"transfers.snackbar.allPaused"="Todas as transferências foram pausadas";
+/* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
+"cloudDrive.navigationBar.updating"="Atualizando…";
+/* Navigation bar title for Choose Default Launch Tab screen */
+"home.customization.defaultLaunchTab.title"="Seção inicial";
+/* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.transfer.title"="Obtenha mais cota de transferência";
+/* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.storage.title"="Obtenha mais espaço de armazenamento";
+/* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
+"transfers.overQuotaBanner.both.title"="Obtenha mais espaço de armazenamento e cota de transferência";
