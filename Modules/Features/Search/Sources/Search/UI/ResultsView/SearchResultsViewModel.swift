@@ -33,10 +33,6 @@ public final class SearchResultsViewModel: ObservableObject {
         config.colorAssets
     }
 
-    var rowBuilder: ((SearchResult) -> AnyView?)? {
-        config.rowBuilder
-    }
-
     var containsSwipeActions: Bool {
         listItems.first?.swipeActions.isNotEmpty ?? false
     }

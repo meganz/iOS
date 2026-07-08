@@ -6,7 +6,7 @@ import MEGADomain
 /// transform of `TransferEntity`: uploads need an SDK lookup of the destination
 /// folder's cloud path, while downloads use the local destination folder already
 /// carried by the entity. This protocol confines the SDK-backed path to the Data
-/// adapter and keeps the provider testable.
+/// adapter and keeps the list view model testable.
 protocol TransferLocationResolving: Sendable {
     func location(for entity: TransferEntity) async -> String?
 }

@@ -434,13 +434,11 @@ private func makeDependency(
     rowRouter: MockTransferRowRouting = MockTransferRowRouting()
 ) -> TransferTabDependency {
     TransferTabDependency(
-        inventoryUseCase: MockTransferInventoryUseCase(),
-        counterUseCase: MockTransferCounterUseCase(),
+        itemsUseCase: MockMonitorTransferTabItemsUseCase(),
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),
         rowRouter: rowRouter,
-        filteringUserTransfers: true,
         clearTransfersUseCase: clearTransfersUseCase
     )
 }

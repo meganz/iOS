@@ -4,9 +4,7 @@ import MEGADomain
 ///
 /// These predicates encode UI semantics (which transfers render on each tab),
 /// not intrinsic domain truths, so they live in the feature module rather than
-/// alongside `TransferEntity` in `MEGADomain`. Sharing them here keeps the
-/// rendered list and the tab-bar presence flags from disagreeing: both
-/// `TransferSearchResultsProvider` and `TransfersListViewModel` rely on them.
+/// alongside `TransferEntity` in `MEGADomain`.
 extension TransferEntity {
 
     /// Folder and streaming transfers are excluded so the snapshot stays in sync

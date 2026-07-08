@@ -1,17 +1,15 @@
 import Foundation
 import MEGADomain
-import Search
 
-/// Side-channel store of per-row view models keyed by `ResultId`.
+/// Store of per-row view models keyed by transfer tag, shared across the three
+/// tab list view models.
 ///
-/// `SearchResult` is a value type with no slot for transfer state, and
-/// `SearchResultRowViewModel.result` is not `@Published`. The registry is the
-/// load-bearing piece that makes per-row live updates O(1): `rowBuilder` resolves
-/// the per-row VM by id, and mutations to that VM trigger a re-render of only
-/// the observing row.
+/// The registry is the load-bearing piece that makes per-row live updates O(1):
+/// the tab's list view model resolves the per-row VM by tag, and mutations to
+/// that VM trigger a re-render of only the observing row.
 @MainActor
 final class TransferRegistry {
-    private var rowViewModelsById: [ResultId: TransferRowViewModel] = [:]
+    private var rowViewModelsById: [Int: TransferRowViewModel] = [:]
     private let controlUseCase: any TransferControlUseCaseProtocol
     private let rowRouter: any TransferRowRouting
     private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
@@ -26,7 +24,7 @@ final class TransferRegistry {
         self.clearTransfersUseCase = clearTransfersUseCase
     }
 
-    func rowViewModel(for id: ResultId) -> TransferRowViewModel? {
+    func rowViewModel(for id: Int) -> TransferRowViewModel? {
         rowViewModelsById[id]
     }
 
@@ -45,7 +43,7 @@ final class TransferRegistry {
     }
 
     @discardableResult
-    func remove(id: ResultId) -> TransferRowViewModel? {
+    func remove(id: Int) -> TransferRowViewModel? {
         rowViewModelsById.removeValue(forKey: id)
     }
 
@@ -53,7 +51,7 @@ final class TransferRegistry {
         rowViewModelsById.removeAll()
     }
 
-    var ids: [ResultId] {
+    var ids: [Int] {
         Array(rowViewModelsById.keys)
     }
 }

@@ -1,41 +1,11 @@
 import Foundation
 import MEGADomain
-import MEGAFoundation
-import MEGAL10n
-import Search
 
-/// Maps `TransferEntity` from the Domain layer into the dual representations
-/// used by the new Transfers screen:
-///
-/// - `SearchResult` (carried through the Search list pipeline; identifies the row
-///   and routes it to the transfer row dispatch via `ResultType.transfer`).
-/// - `TransferRowState` (the rich UI payload stored in the per-row VM inside
-///   `TransferRegistry`; carries the fields the row view actually renders).
+/// Maps `TransferEntity` from the Domain layer into `TransferRowState`, the UI
+/// payload stored in the per-row VM inside `TransferRegistry`; it carries the
+/// fields the row view actually renders. Carries raw values only — the subtitle
+/// is composed lazily by `TransferRowState` at render time.
 public enum TransferEntityMapper {
-
-    public static func resultId(for entity: TransferEntity) -> ResultId {
-        ResultId(bitPattern: Int64(entity.tag))
-    }
-
-    public static func searchResult(for entity: TransferEntity) -> SearchResult {
-        let id = resultId(for: entity)
-        let name = entity.fileName ?? "Transfer #\(entity.tag)"
-        return SearchResult(
-            id: id,
-            isFolder: entity.isFolderTransfer,
-            backgroundDisplayMode: .icon,
-            title: name,
-            note: nil,
-            tags: [],
-            isSensitive: false,
-            hasThumbnail: false,
-            description: { _ in "" },
-            type: .transfer,
-            properties: [],
-            thumbnailImageData: { Data() },
-            swipeActions: { _ in [] }
-        )
-    }
 
     /// - Parameter location: file system path for the Completed row's second line,
     ///   resolved by the Data adapter (upload destination cloud path or download
@@ -44,101 +14,27 @@ public enum TransferEntityMapper {
     ///   captured live by `SharedTransferFinishRecorder`. Do not derive it from
     ///   `TransferEntity.updateTime`; SDK transfer update time has no defined epoch.
     /// - Parameter canViewInFolder: whether the Completed row should offer
-    ///   `View in folder`. 
+    ///   `View in folder`.
     public static func rowState(
         for entity: TransferEntity,
         location: String? = nil,
         finishDate: Date? = nil,
         canViewInFolder: Bool = true
     ) -> TransferRowState {
-        let direction = direction(for: entity.type)
-        let status = status(for: entity.state)
-        let progress = progress(for: entity)
-        let transferredBytes = Int64(entity.transferredBytes)
-        let totalBytes = Int64(entity.totalBytes)
-        let speed = Int64(entity.speed)
-        return TransferRowState(
-            id: resultId(for: entity),
+        TransferRowState(
+            id: entity.tag,
             fileName: entity.fileName ?? "Transfer #\(entity.tag)",
-            direction: direction,
-            status: status,
-            progress: progress,
-            transferredBytes: transferredBytes,
-            totalBytes: totalBytes,
-            speed: speed,
-            subtitle: subtitle(
-                direction: direction,
-                status: status,
-                progress: progress,
-                transferredBytes: transferredBytes,
-                totalBytes: totalBytes,
-                speed: speed,
-                finishDate: finishDateString(from: finishDate)
-            ),
+            direction: direction(for: entity.type),
+            status: status(for: entity.state),
+            progress: progress(for: entity),
+            transferredBytes: Int64(entity.transferredBytes),
+            totalBytes: Int64(entity.totalBytes),
+            speed: Int64(entity.speed),
+            finishDate: finishDate,
             errorDescription: entity.lastErrorExtended.map { String(describing: $0) },
             location: location,
             canViewInFolder: canViewInFolder
         )
-    }
-
-    /// Returns a copy of `state` flipped to `status`, recomputing the subtitle so the
-    /// row reads consistently. Used to reflect a confirmed per-row pause/resume; the
-    /// live SDK stream later overwrites it with the real state.
-    static func rowState(_ state: TransferRowState, status: TransferRowState.Status) -> TransferRowState {
-        var newState = state
-        newState.status = status
-        newState.subtitle = subtitle(
-            direction: state.direction,
-            status: status,
-            progress: state.progress,
-            transferredBytes: state.transferredBytes,
-            totalBytes: state.totalBytes,
-            speed: state.speed,
-            finishDate: nil
-        )
-        return newState
-    }
-
-    private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
-
-    private static func finishDateString(from date: Date?) -> String? {
-        guard let date else { return nil }
-        return DateFormatter.dateMediumTimeShort().localisedString(from: date)
-    }
-
-    private static func subtitle(
-        direction: TransferRowState.Direction,
-        status: TransferRowState.Status,
-        progress: Double,
-        transferredBytes: Int64,
-        totalBytes: Int64,
-        speed: Int64,
-        finishDate: String?
-    ) -> String {
-        let arrow = direction == .upload ? "↑" : "↓"
-        let percent = Int((progress * 100).rounded())
-        let done = byteFormatStyle.format(transferredBytes)
-        let total = byteFormatStyle.format(totalBytes)
-        switch status {
-        case .active:
-            let speedText = byteFormatStyle.format(speed)
-            return "\(arrow) \(percent)% · \(done) of \(total) · \(speedText)/s"
-        case .paused:
-            return "\(arrow) \(percent)% · \(done) of \(total) · Paused"
-        case .queued:
-            return "\(arrow) Queued"
-        case .failed:
-            return "\(arrow) \(Strings.Localizable.Transfers.Tab.failed)"
-        case .cancelled:
-            return "\(arrow) \(Strings.Localizable.cancelled)"
-        case .completed:
-            return appending(finishDate, to: "\(arrow) \(total)")
-        }
-    }
-
-    private static func appending(_ finishDate: String?, to base: String) -> String {
-        guard let finishDate else { return base }
-        return "\(base) · \(finishDate)"
     }
 
     private static func direction(for type: TransferTypeEntity) -> TransferRowState.Direction {

@@ -47,8 +47,12 @@ public enum TransfersListViewControllerFactory {
         )
 
         let dependency = TransferTabDependency(
-            inventoryUseCase: inventoryUseCase,
-            counterUseCase: counterUseCase,
+            itemsUseCase: MonitorTransferTabItemsUseCase(
+                inventoryUseCase: inventoryUseCase,
+                counterUseCase: counterUseCase,
+                clearTransfersUseCase: clearTransfersUseCase,
+                filteringUserTransfers: true
+            ),
             registry: registry,
             locationResolver: TransferLocationResolver(
                 nodeUseCase: nodeUseCase,
@@ -56,7 +60,6 @@ public enum TransfersListViewControllerFactory {
             ),
             finishDateProvider: completionRecorder,
             rowRouter: rowRouter,
-            filteringUserTransfers: true,
             clearTransfersUseCase: clearTransfersUseCase
         )
 

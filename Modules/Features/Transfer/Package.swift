@@ -28,7 +28,6 @@ let package = Package(
         .package(path: "../../UI/MEGAUIKit"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
-        .package(path: "../Search"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
@@ -49,7 +48,6 @@ let package = Package(
                 "MEGAUIKit",
                 "MEGAUIComponent",
                 "MEGAConnectivity",
-                "Search",
                 "MEGADesignToken",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]

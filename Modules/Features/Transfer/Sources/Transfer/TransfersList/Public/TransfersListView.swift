@@ -128,23 +128,15 @@ public struct TransfersListView: View {
             }
     }
 
-    // Each tab is its own view type, so switching tabs tears down the previous tab and
-    // builds the next: the dismissed tab's Search container is released and only the
-    // selected tab observes the SDK delegate streams.
-    @ViewBuilder
+    // Re-keyed by tab via `.id`, so switching tabs tears down the previous tab's
+    // list view model and its event-stream task: only the selected tab observes
+    // the SDK delegate streams. The environment values only affect Active rows;
+    // read-only Completed/Failed rows ignore them.
     private var tabContainer: some View {
-        switch viewModel.selectedTab {
-        case .active:
-            ActiveTransfersTab(
-                dependency: viewModel.dependency,
-                isAllPaused: viewModel.isAllPaused,
-                isTransferOverquota: viewModel.isTransferOverquota
-            )
-        case .completed:
-            CompletedTransfersTab(dependency: viewModel.dependency)
-        case .failed:
-            FailedTransfersTab(dependency: viewModel.dependency)
-        }
+        TransferTabListView(tab: viewModel.selectedTab, dependency: viewModel.dependency)
+            .id(viewModel.selectedTab)
+            .environment(\.isAllTransfersPaused, viewModel.isAllPaused)
+            .environment(\.isTransferOverquota, viewModel.isTransferOverquota)
     }
 
     private var tabBar: some View {

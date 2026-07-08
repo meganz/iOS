@@ -1,13 +1,16 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
-import Search
 
 /// Per-row observable holding the UI state for one transfer. Lives in the
-/// `TransferRegistry` keyed by `ResultId`. Live updates mutate a single instance,
+/// `TransferRegistry` keyed by transfer tag. Live updates mutate a single instance,
 /// so SwiftUI re-renders only the observing row view, not the whole list.
 @MainActor
-public final class TransferRowViewModel: ObservableObject {
+public final class TransferRowViewModel: ObservableObject, Identifiable {
+    /// The SDK transfer tag; stable for the row's lifetime, so it doubles as the
+    /// list identity.
+    public nonisolated let id: Int
+
     @Published public private(set) var state: TransferRowState
 
     private var transfer: TransferEntity
@@ -22,6 +25,7 @@ public final class TransferRowViewModel: ObservableObject {
         rowRouter: some TransferRowRouting,
         clearTransfersUseCase: some ClearTransfersUseCaseProtocol
     ) {
+        self.id = state.id
         self.state = state
         self.transfer = transfer
         self.controlUseCase = controlUseCase
@@ -62,10 +66,10 @@ public final class TransferRowViewModel: ObservableObject {
             switch state.status {
             case .active, .queued:
                 try await controlUseCase.pauseTransfer(transfer)
-                state = TransferEntityMapper.rowState(state, status: .paused)
+                state.status = .paused
             case .paused:
                 try await controlUseCase.resumeTransfer(transfer)
-                state = TransferEntityMapper.rowState(state, status: .active)
+                state.status = .active
             case .completed, .failed, .cancelled:
                 break
             }

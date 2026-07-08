@@ -6,7 +6,11 @@ final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked
     private(set) var clearFailedTransfersCalledTimes = 0
     private(set) var clearedTransferTags: [Int] = []
 
-    init() {}
+    let clearedSignals: AnyAsyncSequence<Void>
+
+    init(clearedSignals: [Void] = []) {
+        self.clearedSignals = clearedSignals.async.eraseToAnyAsyncSequence()
+    }
 
     func clearCompletedTransfers() {
         clearCompletedTransfersCalledTimes += 1
@@ -18,9 +22,5 @@ final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked
 
     func clearTransfer(tag: Int) {
         clearedTransferTags.append(tag)
-    }
-
-    var clearedSignals: AnyAsyncSequence<Void> {
-        AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
     }
 }

@@ -142,19 +142,13 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private func rowContent(rowViewModel: SearchResultRowViewModel) -> some View {
-        if let custom = viewModel.rowBuilder?(rowViewModel.result) {
-            custom
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-        } else {
-            RevampedSearchResultRowView(
-                viewModel: rowViewModel,
-                selected: $viewModel.selectedResultIds,
-                isFlashing: rowHighlighter.flashingResultId == rowViewModel.result.id,
-                isPendingFlash: rowHighlighter.pendingFlashResultId == rowViewModel.result.id,
-                onReadyToFlash: { rowHighlighter.beginFlashIfPending(for: rowViewModel.result.id) }
-            )
-            .listRowSeparator(.hidden)
-        }
+        RevampedSearchResultRowView(
+            viewModel: rowViewModel,
+            selected: $viewModel.selectedResultIds,
+            isFlashing: rowHighlighter.flashingResultId == rowViewModel.result.id,
+            isPendingFlash: rowHighlighter.pendingFlashResultId == rowViewModel.result.id,
+            onReadyToFlash: { rowHighlighter.beginFlashIfPending(for: rowViewModel.result.id) }
+        )
+        .listRowSeparator(.hidden)
     }
 }

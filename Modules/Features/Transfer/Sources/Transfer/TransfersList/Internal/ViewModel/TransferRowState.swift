@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
-import Search
+import MEGAFoundation
+import MEGAL10n
 
 /// UI-shape snapshot of a single transfer for the new Transfers screen.
 ///
@@ -22,7 +23,8 @@ public struct TransferRowState: Sendable, Equatable {
         case cancelled
     }
 
-    public let id: ResultId
+    /// The SDK transfer tag, unique per transfer for the app session.
+    public let id: Int
     public let fileName: String
     public let direction: Direction
     public var status: Status
@@ -30,7 +32,7 @@ public struct TransferRowState: Sendable, Equatable {
     public var transferredBytes: Int64
     public var totalBytes: Int64
     public var speed: Int64
-    public var subtitle: String
+    public var finishDate: Date?
     public var errorDescription: String?
 
     /// File system path shown on the Completed row's second line: the destination
@@ -42,4 +44,33 @@ public struct TransferRowState: Sendable, Equatable {
     /// to Photos, which have no deep-linkable folder. Only meaningful on the Completed
     /// tab; defaults to `true` everywhere else.
     public var canViewInFolder: Bool = true
+
+    public var subtitle: String {
+        let arrow = direction == .upload ? "↑" : "↓"
+        switch status {
+        case .active:
+            let percent = Int((progress * 100).rounded())
+            let done = Self.byteFormatStyle.format(transferredBytes)
+            let total = Self.byteFormatStyle.format(totalBytes)
+            let speedText = Self.byteFormatStyle.format(speed)
+            return "\(arrow) \(percent)% · \(done) of \(total) · \(speedText)/s"
+        case .paused:
+            let percent = Int((progress * 100).rounded())
+            let done = Self.byteFormatStyle.format(transferredBytes)
+            let total = Self.byteFormatStyle.format(totalBytes)
+            return "\(arrow) \(percent)% · \(done) of \(total) · Paused"
+        case .queued:
+            return "\(arrow) Queued"
+        case .failed:
+            return "\(arrow) \(Strings.Localizable.Transfers.Tab.failed)"
+        case .cancelled:
+            return "\(arrow) \(Strings.Localizable.cancelled)"
+        case .completed:
+            let total = "\(arrow) \(Self.byteFormatStyle.format(totalBytes))"
+            guard let finishDate else { return total }
+            return "\(total) · \(DateFormatter.dateMediumTimeShort().localisedString(from: finishDate))"
+        }
+    }
+
+    private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
 }

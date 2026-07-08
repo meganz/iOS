@@ -5,9 +5,8 @@ import SwiftUI
 
 // Shared MEGA-branded asset bundles for `SearchConfig`. `chipAssets`, `rowAssets`,
 // and `colorAssets` are identical across every consumer (Favourites, Home, FolderLink,
-// Recents, Transfers), so they default to these via `SearchConfig.init`. Callers supply
-// only what actually varies per screen: the `emptyViewAssetFactory`, and optionally a
-// `rowBuilder` for non-node result types.
+// Recents), so they default to these via `SearchConfig.init`. Callers supply
+// only what actually varies per screen: the `emptyViewAssetFactory`.
 
 public extension SearchConfig.ChipAssets {
     static var `default`: SearchConfig.ChipAssets {

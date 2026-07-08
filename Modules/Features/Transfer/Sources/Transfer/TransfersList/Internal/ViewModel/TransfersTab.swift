@@ -18,4 +18,12 @@ public enum TransfersTab: CaseIterable, Sendable, Identifiable {
         case .failed: Strings.Localizable.Transfers.Tab.failed
         }
     }
+
+    var emptyStateTitle: String {
+        switch self {
+        case .active: Strings.Localizable.Transfers.EmptyState.noActiveTransfers
+        case .completed: Strings.Localizable.Transfers.EmptyState.noCompletedTransfers
+        case .failed: Strings.Localizable.Transfers.EmptyState.noFailedTransfers
+        }
+    }
 }

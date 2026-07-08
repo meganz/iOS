@@ -12,25 +12,16 @@ public struct SearchConfig {
     // [SAO-3133]: Refactor ColorAssets to remove unnecessary color properties
     public let colorAssets: ColorAssets
 
-    /// Optional dispatch hook for custom row rendering. When non-nil, `SearchResultsListView`
-    /// short-circuits to the returned view before falling through to the built-in node row;
-    /// returning `nil` from the closure preserves the default node-row paths exactly. Used by
-    /// non-node `ResultType`s (e.g. `.transfer`) to host their own SwiftUI row without `Search`
-    /// taking a dependency on the consumer module.
-    public var rowBuilder: ((SearchResult) -> AnyView?)?
-    
     public init(
         chipAssets: ChipAssets = .default,
         emptyViewAssetFactory: @escaping (SearchChipEntity?, SearchQuery) -> EmptyViewAssets,
         rowAssets: RowAssets = .default,
-        colorAssets: ColorAssets = .default,
-        rowBuilder: ((SearchResult) -> AnyView?)? = nil
+        colorAssets: ColorAssets = .default
     ) {
         self.chipAssets = chipAssets
         self.emptyViewAssetFactory = emptyViewAssetFactory
         self.rowAssets = rowAssets
         self.colorAssets = colorAssets
-        self.rowBuilder = rowBuilder
     }
 
     public struct ChipAssets {

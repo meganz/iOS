@@ -2,7 +2,6 @@ import Foundation
 import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
-import Search
 import SwiftUI
 
 /// Row layout for the new Transfers screen, with two variants driven by status:
