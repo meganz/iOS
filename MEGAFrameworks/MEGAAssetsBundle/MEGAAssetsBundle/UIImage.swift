@@ -498,4 +498,5 @@ public struct MEGAUIImageBundle {
     public static var monoChevronsRightMediumThinOutline: UIImage { UIImage.monoChevronsRightMediumThinOutline }
     public static var monoCloudOffMediumThinOutline: UIImage { UIImage.monoCloudOffMediumThinOutline }
     public static var monoLoaderThrobberMediumRegularOutline: UIImage { UIImage.monoLoaderThrobberMediumRegularOutline }
+    public static var monoCalendar01SmallThinOutline: UIImage { UIImage.monoCalendar01SmallThinOutline }
 }

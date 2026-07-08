@@ -14419,6 +14419,48 @@
                 "accessorKind": "get"
               }
             ]
+          },
+          {
+            "kind": "Var",
+            "name": "monoCalendar01SmallThinOutline",
+            "printedName": "monoCalendar01SmallThinOutline",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Image",
+                "printedName": "SwiftUI.Image",
+                "usr": "s:7SwiftUI5ImageV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAImageB0V30monoCalendar01SmallThinOutline7SwiftUI5ImageVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V30monoCalendar01SmallThinOutline7SwiftUI5ImageVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Image",
+                    "printedName": "SwiftUI.Image",
+                    "usr": "s:7SwiftUI5ImageV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAImageB0V30monoCalendar01SmallThinOutline7SwiftUI5ImageVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAImageB0V30monoCalendar01SmallThinOutline7SwiftUI5ImageVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
           }
         ],
         "declKind": "Struct",
@@ -37901,6 +37943,48 @@
                 "accessorKind": "get"
               }
             ]
+          },
+          {
+            "kind": "Var",
+            "name": "monoCalendar01SmallThinOutline",
+            "printedName": "monoCalendar01SmallThinOutline",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UIImage",
+                "printedName": "UIKit.UIImage",
+                "usr": "c:objc(cs)UIImage"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle011MEGAUIImageB0V30monoCalendar01SmallThinOutlineSo7UIImageCvpZ",
+            "mangledName": "$s16MEGAAssetsBundle011MEGAUIImageB0V30monoCalendar01SmallThinOutlineSo7UIImageCvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UIImage",
+                    "printedName": "UIKit.UIImage",
+                    "usr": "c:objc(cs)UIImage"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle011MEGAUIImageB0V30monoCalendar01SmallThinOutlineSo7UIImageCvgZ",
+                "mangledName": "$s16MEGAAssetsBundle011MEGAUIImageB0V30monoCalendar01SmallThinOutlineSo7UIImageCvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
           }
         ],
         "declKind": "Struct",
@@ -43327,2667 +43411,2674 @@
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 118848,
+      "offset": 118842,
+      "length": 32,
+      "value": "\"monoCalendar01SmallThinOutline\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
+      "kind": "StringLiteral",
+      "offset": 119050,
       "length": 35,
       "value": "\"monoChevronsLeftMediumThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 119061,
+      "offset": 119263,
       "length": 36,
       "value": "\"monoChevronsRightMediumThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 119265,
+      "offset": 119467,
       "length": 31,
       "value": "\"monoCloudOffMediumThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 119474,
+      "offset": 119676,
       "length": 36,
       "value": "\"monoCornerUpRightMediumThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 119696,
+      "offset": 119898,
       "length": 40,
       "value": "\"monoLoaderThrobberMediumRegularOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 119894,
+      "offset": 120096,
       "length": 26,
       "value": "\"monoPauseMediumThinSolid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 120076,
+      "offset": 120278,
       "length": 25,
       "value": "\"monoPlayMediumThinSolid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 120271,
+      "offset": 120473,
       "length": 32,
       "value": "\"monoQueueLineMediumThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 120469,
+      "offset": 120671,
       "length": 30,
       "value": "\"monoWaveformSmallThinOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 120671,
+      "offset": 120873,
       "length": 35,
       "value": "\"more-vertical-medium-thin-outline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 120874,
+      "offset": 121076,
       "length": 31,
       "value": "\"moreActionActiveNavigationBar\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121031,
+      "offset": 121233,
       "length": 10,
       "value": "\"moreGrid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121179,
+      "offset": 121381,
       "length": 16,
       "value": "\"moreHorizontal\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121321,
+      "offset": 121523,
       "length": 10,
       "value": "\"moreList\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121499,
+      "offset": 121701,
       "length": 31,
       "value": "\"moreListChatSwipeActionButton\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121674,
+      "offset": 121876,
       "length": 19,
       "value": "\"moreNavigationBar\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121827,
+      "offset": 122029,
       "length": 14,
       "value": "\"moreVertical\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 121959,
+      "offset": 122161,
       "length": 6,
       "value": "\"move\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122091,
+      "offset": 122293,
       "length": 10,
       "value": "\"moveMono\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122245,
+      "offset": 122447,
       "length": 19,
       "value": "\"muteMeetingAction\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122404,
+      "offset": 122606,
       "length": 17,
       "value": "\"muteParticipant\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122549,
+      "offset": 122751,
       "length": 11,
       "value": "\"mutedChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122697,
+      "offset": 122899,
       "length": 16,
       "value": "\"mutedChat_menu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122841,
+      "offset": 123043,
       "length": 11,
       "value": "\"myAccount\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 122970,
+      "offset": 123172,
       "length": 6,
       "value": "\"name\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123119,
+      "offset": 123321,
       "length": 19,
       "value": "\"navigationbar_add\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123288,
+      "offset": 123490,
       "length": 22,
       "value": "\"newChatEmptyContacts\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123438,
+      "offset": 123640,
       "length": 11,
       "value": "\"newFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123579,
+      "offset": 123781,
       "length": 12,
       "value": "\"newMeeting\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123732,
+      "offset": 123934,
       "length": 18,
       "value": "\"newMeeting_token\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 123904,
+      "offset": 124106,
       "length": 24,
       "value": "\"newTransfersEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124050,
+      "offset": 124252,
       "length": 8,
       "value": "\"newest\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124198,
+      "offset": 124400,
       "length": 17,
       "value": "\"noCameraUploads\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124335,
+      "offset": 124537,
       "length": 7,
       "value": "\"noGIF\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124492,
+      "offset": 124694,
       "length": 22,
       "value": "\"noInternetEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124658,
+      "offset": 124860,
       "length": 19,
       "value": "\"noResultsArchives\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124815,
+      "offset": 125017,
       "length": 16,
       "value": "\"noResultsAudio\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 124977,
+      "offset": 125179,
       "length": 20,
       "value": "\"noResultsDocuments\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125139,
+      "offset": 125341,
       "length": 18,
       "value": "\"noResultsFolders\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125297,
+      "offset": 125499,
       "length": 17,
       "value": "\"noResultsImages\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125468,
+      "offset": 125670,
       "length": 24,
       "value": "\"noResultsPresentations\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125630,
+      "offset": 125832,
       "length": 16,
       "value": "\"noResultsVideo\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125788,
+      "offset": 125990,
       "length": 18,
       "value": "\"noResultsVideoV2\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 125928,
+      "offset": 126130,
       "length": 8,
       "value": "\"normal\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126066,
+      "offset": 126268,
       "length": 12,
       "value": "\"noteToSelf\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126216,
+      "offset": 126418,
       "length": 16,
       "value": "\"noteToSelfBlue\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126372,
+      "offset": 126574,
       "length": 17,
       "value": "\"noteToSelfSmall\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126555,
+      "offset": 126757,
       "length": 30,
       "value": "\"notificationDevicePermission\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126726,
+      "offset": 126928,
       "length": 18,
       "value": "\"notification_cta\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 126900,
+      "offset": 127102,
       "length": 25,
       "value": "\"notificationsEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127073,
+      "offset": 127275,
       "length": 21,
       "value": "\"notificationsInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127226,
+      "offset": 127428,
       "length": 13,
       "value": "\"occurrences\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127363,
+      "offset": 127565,
       "length": 9,
       "value": "\"offline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127516,
+      "offset": 127718,
       "length": 19,
       "value": "\"offlineEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127681,
+      "offset": 127883,
       "length": 20,
       "value": "\"offlineFilesInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127841,
+      "offset": 128043,
       "length": 17,
       "value": "\"offlineHomeChip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 127994,
+      "offset": 128196,
       "length": 15,
       "value": "\"offlineRevamp\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128131,
+      "offset": 128333,
       "length": 8,
       "value": "\"oldest\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128263,
+      "offset": 128465,
       "length": 9,
       "value": "\"onACall\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128425,
+      "offset": 128627,
       "length": 24,
       "value": "\"onboarding1_encryption\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128590,
+      "offset": 128792,
       "length": 18,
       "value": "\"onboarding2_chat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128757,
+      "offset": 128959,
       "length": 22,
       "value": "\"onboarding3_contacts\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 128939,
+      "offset": 129141,
       "length": 28,
       "value": "\"onboarding4_camera_uploads\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129115,
+      "offset": 129317,
       "length": 21,
       "value": "\"onboardingCarousel1\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129284,
+      "offset": 129486,
       "length": 21,
       "value": "\"onboardingCarousel2\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129453,
+      "offset": 129655,
       "length": 21,
       "value": "\"onboardingCarousel3\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129622,
+      "offset": 129824,
       "length": 21,
       "value": "\"onboardingCarousel4\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129785,
+      "offset": 129987,
       "length": 18,
       "value": "\"onboardingHeader\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 129941,
+      "offset": 130143,
       "length": 16,
       "value": "\"onboardingLock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130089,
+      "offset": 130291,
       "length": 13,
       "value": "\"oneAndAHalf\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130236,
+      "offset": 130438,
       "length": 14,
       "value": "\"openSettings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130376,
+      "offset": 130578,
       "length": 10,
       "value": "\"openWith\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130520,
+      "offset": 130722,
       "length": 14,
       "value": "\"orangeFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130676,
+      "offset": 130878,
       "length": 18,
       "value": "\"otherPlansInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130824,
+      "offset": 131026,
       "length": 12,
       "value": "\"outOfQuota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 130982,
+      "offset": 131184,
       "length": 20,
       "value": "\"outgoingEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131160,
+      "offset": 131362,
       "length": 26,
       "value": "\"outgoingSegmentControler\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131341,
+      "offset": 131543,
       "length": 25,
       "value": "\"outgoing_pauseVoiceClip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131519,
+      "offset": 131721,
       "length": 24,
       "value": "\"outgoing_playVoiceClip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131671,
+      "offset": 131873,
       "length": 11,
       "value": "\"overquota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131832,
+      "offset": 132034,
       "length": 22,
       "value": "\"overquotaDesignToken\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 131978,
+      "offset": 132180,
       "length": 9,
       "value": "\"padlock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132113,
+      "offset": 132315,
       "length": 10,
       "value": "\"pageView\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132259,
+      "offset": 132461,
       "length": 15,
       "value": "\"passAppInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132412,
+      "offset": 132614,
       "length": 16,
       "value": "\"pathCloudDrive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132562,
+      "offset": 132764,
       "length": 14,
       "value": "\"pathInShares\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132696,
+      "offset": 132898,
       "length": 7,
       "value": "\"pause\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 132860,
+      "offset": 133062,
       "length": 27,
       "value": "\"pause-medium-thin-outline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133044,
+      "offset": 133246,
       "length": 27,
       "value": "\"pause-small-regular-solid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133213,
+      "offset": 133415,
       "length": 18,
       "value": "\"pauseDesignToken\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133369,
+      "offset": 133571,
       "length": 16,
       "value": "\"pauseTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133523,
+      "offset": 133725,
       "length": 16,
       "value": "\"pauseVoiceClip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133661,
+      "offset": 133863,
       "length": 8,
       "value": "\"paused\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133829,
+      "offset": 134031,
       "length": 27,
       "value": "\"pausedTransfersEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 133970,
+      "offset": 134172,
       "length": 4,
       "value": "\"pc\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134098,
+      "offset": 134300,
       "length": 9,
       "value": "\"pcLinux\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134227,
+      "offset": 134429,
       "length": 7,
       "value": "\"pcMac\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134362,
+      "offset": 134564,
       "length": 11,
       "value": "\"pcWindows\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134491,
+      "offset": 134693,
       "length": 6,
       "value": "\"pen2\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134633,
+      "offset": 134835,
       "length": 16,
       "value": "\"phone-call-all\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134781,
+      "offset": 134983,
       "length": 13,
       "value": "\"phoneNumber\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 134944,
+      "offset": 135146,
       "length": 22,
       "value": "\"photoCardPlaceholder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135116,
+      "offset": 135318,
       "length": 22,
       "value": "\"photoPickerCheckmark\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135266,
+      "offset": 135468,
       "length": 11,
       "value": "\"photosApp\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135419,
+      "offset": 135621,
       "length": 18,
       "value": "\"photosPermission\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135563,
+      "offset": 135765,
       "length": 10,
       "value": "\"pieChart\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135705,
+      "offset": 135907,
       "length": 13,
       "value": "\"placeholder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135836,
+      "offset": 136038,
       "length": 6,
       "value": "\"plan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 135960,
+      "offset": 136162,
       "length": 6,
       "value": "\"play\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136096,
+      "offset": 136298,
       "length": 12,
       "value": "\"playButton\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136244,
+      "offset": 136446,
       "length": 15,
       "value": "\"playVoiceClip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136407,
+      "offset": 136609,
       "length": 21,
       "value": "\"playVoiceClipButton\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136554,
+      "offset": 136756,
       "length": 10,
       "value": "\"playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136682,
+      "offset": 136884,
       "length": 6,
       "value": "\"plus\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136826,
+      "offset": 137028,
       "length": 16,
       "value": "\"poweredByGIPHY\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 136988,
+      "offset": 137190,
       "length": 21,
       "value": "\"privacy_warning_ico\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137141,
+      "offset": 137343,
       "length": 13,
       "value": "\"privateChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137280,
+      "offset": 137482,
       "length": 10,
       "value": "\"proLabel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137434,
+      "offset": 137636,
       "length": 19,
       "value": "\"proLitePlanInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137595,
+      "offset": 137797,
       "length": 18,
       "value": "\"proOnePlanInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137759,
+      "offset": 137961,
       "length": 20,
       "value": "\"proThreePlanInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 137921,
+      "offset": 138123,
       "length": 18,
       "value": "\"proTwoPlanInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138073,
+      "offset": 138275,
       "length": 14,
       "value": "\"purpleFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138209,
+      "offset": 138411,
       "length": 8,
       "value": "\"qrCode\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138363,
+      "offset": 138565,
       "length": 20,
       "value": "\"quickActionOffline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138527,
+      "offset": 138729,
       "length": 19,
       "value": "\"quickActionSearch\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138690,
+      "offset": 138892,
       "length": 19,
       "value": "\"quickActionUpload\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138839,
+      "offset": 139041,
       "length": 12,
       "value": "\"raisedHand\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 138986,
+      "offset": 139188,
       "length": 15,
       "value": "\"readOnly_chat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139141,
+      "offset": 139343,
       "length": 17,
       "value": "\"readPermissions\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139308,
+      "offset": 139510,
       "length": 22,
       "value": "\"readWritePermissions\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139464,
+      "offset": 139666,
       "length": 14,
       "value": "\"recentUpload\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139650,
+      "offset": 139852,
       "length": 33,
       "value": "\"recentlyWatchedVideosEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139817,
+      "offset": 140019,
       "length": 14,
       "value": "\"recentsClock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 139975,
+      "offset": 140177,
       "length": 19,
       "value": "\"recentsEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140142,
+      "offset": 140344,
       "length": 21,
       "value": "\"rectangleImageStack\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140309,
+      "offset": 140511,
       "length": 20,
       "value": "\"rectangleStackPlus\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140477,
+      "offset": 140679,
       "length": 21,
       "value": "\"rectangleVideoStack\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140660,
+      "offset": 140862,
       "length": 28,
       "value": "\"rectangleVideoStackOutline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140830,
+      "offset": 141032,
       "length": 18,
       "value": "\"recurringMeeting\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 140976,
+      "offset": 141178,
       "length": 11,
       "value": "\"redFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141127,
+      "offset": 141329,
       "length": 17,
       "value": "\"removeFavourite\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141274,
+      "offset": 141476,
       "length": 12,
       "value": "\"removeLink\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141426,
+      "offset": 141628,
       "length": 17,
       "value": "\"removeModerator\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141575,
+      "offset": 141777,
       "length": 13,
       "value": "\"removeShare\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141728,
+      "offset": 141930,
       "length": 17,
       "value": "\"removeShareMono\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 141878,
+      "offset": 142080,
       "length": 14,
       "value": "\"remove_media\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142014,
+      "offset": 142216,
       "length": 8,
       "value": "\"rename\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142154,
+      "offset": 142356,
       "length": 13,
       "value": "\"repeatAudio\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142305,
+      "offset": 142507,
       "length": 16,
       "value": "\"repeatOneAudio\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142445,
+      "offset": 142647,
       "length": 9,
       "value": "\"restore\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142594,
+      "offset": 142796,
       "length": 17,
       "value": "\"resumeTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142764,
+      "offset": 142966,
       "length": 24,
       "value": "\"retention_illustration\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 142916,
+      "offset": 143118,
       "length": 11,
       "value": "\"rotateCcw\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143057,
+      "offset": 143259,
       "length": 12,
       "value": "\"rubbishBin\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143211,
+      "offset": 143413,
       "length": 18,
       "value": "\"rubbishBinInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143371,
+      "offset": 143573,
       "length": 18,
       "value": "\"rubbishBinRevamp\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143533,
+      "offset": 143735,
       "length": 19,
       "value": "\"rubbishEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143686,
+      "offset": 143888,
       "length": 14,
       "value": "\"saveToPhotos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143846,
+      "offset": 144048,
       "length": 20,
       "value": "\"saveToPhotosRevamp\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 143998,
+      "offset": 144200,
       "length": 14,
       "value": "\"scan QR code\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144146,
+      "offset": 144348,
       "length": 14,
       "value": "\"scanDocument\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144310,
+      "offset": 144512,
       "length": 22,
       "value": "\"scanDocumentWidgetXL\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144470,
+      "offset": 144672,
       "length": 16,
       "value": "\"scanUserQRCode\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144626,
+      "offset": 144828,
       "length": 17,
       "value": "\"scheduleMeeting\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144765,
+      "offset": 144967,
       "length": 8,
       "value": "\"search\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 144923,
+      "offset": 145125,
       "length": 22,
       "value": "\"searchBarCloseCircle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145081,
+      "offset": 145283,
       "length": 15,
       "value": "\"searchBarIcon\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145248,
+      "offset": 145450,
       "length": 23,
       "value": "\"searchBarIconSemantic\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145413,
+      "offset": 145615,
       "length": 18,
       "value": "\"searchEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145563,
+      "offset": 145765,
       "length": 13,
       "value": "\"searchSmall\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145710,
+      "offset": 145912,
       "length": 14,
       "value": "\"securityLock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 145866,
+      "offset": 146068,
       "length": 18,
       "value": "\"securitySettings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146050,
+      "offset": 146252,
       "length": 30,
       "value": "\"seeMoreWaitingRoomDisclosure\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146222,
+      "offset": 146424,
       "length": 18,
       "value": "\"selectAlbumCover\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146378,
+      "offset": 146580,
       "length": 16,
       "value": "\"selectAllItems\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146524,
+      "offset": 146726,
       "length": 12,
       "value": "\"selectItem\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146662,
+      "offset": 146864,
       "length": 10,
       "value": "\"selected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146802,
+      "offset": 147004,
       "length": 12,
       "value": "\"sendButton\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 146956,
+      "offset": 147158,
       "length": 18,
       "value": "\"sendChatDisabled\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147106,
+      "offset": 147308,
       "length": 13,
       "value": "\"sendContact\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147253,
+      "offset": 147455,
       "length": 14,
       "value": "\"sendLocation\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147415,
+      "offset": 147617,
       "length": 21,
       "value": "\"sendMessageMeetings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147578,
+      "offset": 147780,
       "length": 18,
       "value": "\"sendMessageRound\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147756,
+      "offset": 147958,
       "length": 28,
       "value": "\"sendMessageRound, disabled\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 147937,
+      "offset": 148139,
       "length": 24,
       "value": "\"sendMessageRound_token\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148103,
+      "offset": 148305,
       "length": 18,
       "value": "\"sendThisLocation\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148251,
+      "offset": 148453,
       "length": 12,
       "value": "\"sendToChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148405,
+      "offset": 148607,
       "length": 18,
       "value": "\"sendToChatRevamp\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148571,
+      "offset": 148773,
       "length": 21,
       "value": "\"sendVoiceClipActive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148742,
+      "offset": 148944,
       "length": 22,
       "value": "\"sendVoiceClipDefault\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 148917,
+      "offset": 149119,
       "length": 24,
       "value": "\"sendVoiceClipDefault-1\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149093,
+      "offset": 149295,
       "length": 23,
       "value": "\"sendVoiceClipInactive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149253,
+      "offset": 149455,
       "length": 16,
       "value": "\"sending_manual\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149407,
+      "offset": 149609,
       "length": 16,
       "value": "\"settingsInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149543,
+      "offset": 149745,
       "length": 7,
       "value": "\"share\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149686,
+      "offset": 149888,
       "length": 15,
       "value": "\"shareCallLink\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149833,
+      "offset": 150035,
       "length": 13,
       "value": "\"shareFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 149974,
+      "offset": 150176,
       "length": 11,
       "value": "\"shareLink\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150117,
+      "offset": 150319,
       "length": 13,
       "value": "\"sharedFiles\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150282,
+      "offset": 150484,
       "length": 23,
       "value": "\"sharedFilesEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150445,
+      "offset": 150647,
       "length": 17,
       "value": "\"sharedFilesInfo\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150602,
+      "offset": 150804,
       "length": 17,
       "value": "\"sharedItemsIcon\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150763,
+      "offset": 150965,
       "length": 19,
       "value": "\"sharedItemsInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 150924,
+      "offset": 151126,
       "length": 18,
       "value": "\"showHidePassword\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151097,
+      "offset": 151299,
       "length": 25,
       "value": "\"showHidePassword_active\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151275,
+      "offset": 151477,
       "length": 24,
       "value": "\"showHidePassword_white\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151433,
+      "offset": 151635,
       "length": 14,
       "value": "\"shuffleAudio\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151587,
+      "offset": 151789,
       "length": 17,
       "value": "\"slidersVertical\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151732,
+      "offset": 151934,
       "length": 11,
       "value": "\"slideshow\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151869,
+      "offset": 152071,
       "length": 10,
       "value": "\"smallest\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 151997,
+      "offset": 152199,
       "length": 6,
       "value": "\"sort\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152139,
+      "offset": 152341,
       "length": 15,
       "value": "\"sortFavourite\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152282,
+      "offset": 152484,
       "length": 11,
       "value": "\"sortLabel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152443,
+      "offset": 152645,
       "length": 22,
       "value": "\"speakerMeetingAction\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152611,
+      "offset": 152813,
       "length": 20,
       "value": "\"speakerOnBluetooth\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152763,
+      "offset": 152965,
       "length": 13,
       "value": "\"speakerView\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 152926,
+      "offset": 153128,
       "length": 22,
       "value": "\"splashScreenMEGALogo\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153074,
+      "offset": 153276,
       "length": 10,
       "value": "\"squares4\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153210,
+      "offset": 153412,
       "length": 10,
       "value": "\"standard\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153384,
+      "offset": 153586,
       "length": 29,
       "value": "\"standardDisclosureIndicator\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153600,
+      "offset": 153802,
       "length": 41,
       "value": "\"standardDisclosureIndicator_designToken\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153769,
+      "offset": 153971,
       "length": 11,
       "value": "\"startChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 153924,
+      "offset": 154126,
       "length": 19,
       "value": "\"startConversation\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154103,
+      "offset": 154305,
       "length": 27,
       "value": "\"startConversationWidgetXL\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154264,
+      "offset": 154466,
       "length": 14,
       "value": "\"startMeeting\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154414,
+      "offset": 154616,
       "length": 15,
       "value": "\"startMeeting2\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154553,
+      "offset": 154755,
       "length": 9,
       "value": "\"storage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154698,
+      "offset": 154900,
       "length": 15,
       "value": "\"storageInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 154859,
+      "offset": 155061,
       "length": 21,
       "value": "\"storage_almost_full\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155010,
+      "offset": 155212,
       "length": 12,
       "value": "\"syncFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155152,
+      "offset": 155354,
       "length": 12,
       "value": "\"tabBarChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155310,
+      "offset": 155512,
       "length": 20,
       "value": "\"tabBarChatSelected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155462,
+      "offset": 155664,
       "length": 13,
       "value": "\"tabBarDrive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155623,
+      "offset": 155825,
       "length": 21,
       "value": "\"tabBarDriveSelected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155774,
+      "offset": 155976,
       "length": 12,
       "value": "\"tabBarHome\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 155932,
+      "offset": 156134,
       "length": 20,
       "value": "\"tabBarHomeSelected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156082,
+      "offset": 156284,
       "length": 12,
       "value": "\"tabBarMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156240,
+      "offset": 156442,
       "length": 20,
       "value": "\"tabBarMenuSelected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156394,
+      "offset": 156596,
       "length": 14,
       "value": "\"tabBarPhotos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156558,
+      "offset": 156760,
       "length": 22,
       "value": "\"tabBarPhotosSelected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156708,
+      "offset": 156910,
       "length": 11,
       "value": "\"tagSimple\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156843,
+      "offset": 157045,
       "length": 9,
       "value": "\"tapMega\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 156994,
+      "offset": 157196,
       "length": 18,
       "value": "\"tapNotifications\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157170,
+      "offset": 157372,
       "length": 26,
       "value": "\"termsAndPoliciesSettings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157322,
+      "offset": 157524,
       "length": 10,
       "value": "\"textfile\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157474,
+      "offset": 157676,
       "length": 18,
       "value": "\"thumbSliderGreen\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157634,
+      "offset": 157836,
       "length": 18,
       "value": "\"thumbSliderWhite\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157797,
+      "offset": 157999,
       "length": 20,
       "value": "\"thumbnail_selected\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 157955,
+      "offset": 158157,
       "length": 16,
       "value": "\"thumbnailsThin\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158097,
+      "offset": 158299,
       "length": 10,
       "value": "\"timeline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158255,
+      "offset": 158457,
       "length": 22,
       "value": "\"transfer-quota-empty\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158434,
+      "offset": 158636,
       "length": 27,
       "value": "\"transfer-quota-semi-empty\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158613,
+      "offset": 158815,
       "length": 23,
       "value": "\"transferExceededQuota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158780,
+      "offset": 158982,
       "length": 19,
       "value": "\"transferIndicator\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 158947,
+      "offset": 159149,
       "length": 21,
       "value": "\"transferItAppInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159118,
+      "offset": 159320,
       "length": 22,
       "value": "\"transferLimitedQuota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159284,
+      "offset": 159486,
       "length": 19,
       "value": "\"transfersDownload\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159469,
+      "offset": 159671,
       "length": 30,
       "value": "\"transfersDownloadDesignToken\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159647,
+      "offset": 159849,
       "length": 21,
       "value": "\"transfersEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159808,
+      "offset": 160010,
       "length": 17,
       "value": "\"transfersInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 159969,
+      "offset": 160171,
       "length": 19,
       "value": "\"transfersSettings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160128,
+      "offset": 160330,
       "length": 17,
       "value": "\"transfersUpload\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160307,
+      "offset": 160509,
       "length": 28,
       "value": "\"transfersUploadDesignToken\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160455,
+      "offset": 160657,
       "length": 7,
       "value": "\"trash\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160588,
+      "offset": 160790,
       "length": 10,
       "value": "\"triangle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160745,
+      "offset": 160947,
       "length": 21,
       "value": "\"turquoise_checkmark\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 160902,
+      "offset": 161104,
       "length": 15,
       "value": "\"unArchiveChat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161049,
+      "offset": 161251,
       "length": 13,
       "value": "\"unavailable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161188,
+      "offset": 161390,
       "length": 10,
       "value": "\"upToDate\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161324,
+      "offset": 161526,
       "length": 10,
       "value": "\"updating\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161464,
+      "offset": 161666,
       "length": 12,
       "value": "\"upgradePro\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161626,
+      "offset": 161828,
       "length": 22,
       "value": "\"upgradeSecurityClose\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161793,
+      "offset": 161995,
       "length": 21,
       "value": "\"upgrade_to_pro_plan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 161936,
+      "offset": 162138,
       "length": 8,
       "value": "\"upload\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162076,
+      "offset": 162278,
       "length": 13,
       "value": "\"uploadBadge\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162219,
+      "offset": 162421,
       "length": 12,
       "value": "\"uploadFile\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162377,
+      "offset": 162579,
       "length": 20,
       "value": "\"uploadFileWidgetXL\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162531,
+      "offset": 162733,
       "length": 14,
       "value": "\"uploadQueued\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162673,
+      "offset": 162875,
       "length": 11,
       "value": "\"uploading\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 162830,
+      "offset": 163032,
       "length": 20,
       "value": "\"uploadingOverquota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163002,
+      "offset": 163204,
       "length": 23,
       "value": "\"userInterfaceSettings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163163,
+      "offset": 163365,
       "length": 16,
       "value": "\"userManagement\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163307,
+      "offset": 163509,
       "length": 11,
       "value": "\"userMicOn\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163459,
+      "offset": 163661,
       "length": 18,
       "value": "\"userMuted-banner\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163621,
+      "offset": 163823,
       "length": 19,
       "value": "\"userMutedMeetings\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163788,
+      "offset": 163990,
       "length": 21,
       "value": "\"verificationCountry\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 163955,
+      "offset": 164157,
       "length": 20,
       "value": "\"verificationHeader\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164111,
+      "offset": 164313,
       "length": 15,
       "value": "\"verifyContact\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164270,
+      "offset": 164472,
       "length": 19,
       "value": "\"verifyCredentials\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164451,
+      "offset": 164653,
       "length": 28,
       "value": "\"verifyPendingOutshareEmail\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164607,
+      "offset": 164809,
       "length": 11,
       "value": "\"versioned\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164764,
+      "offset": 164966,
       "length": 20,
       "value": "\"versionedThumbnail\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 164910,
+      "offset": 165112,
       "length": 10,
       "value": "\"versions\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165048,
+      "offset": 165250,
       "length": 11,
       "value": "\"videoCall\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165187,
+      "offset": 165389,
       "length": 11,
       "value": "\"videoCard\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165338,
+      "offset": 165540,
       "length": 17,
       "value": "\"videoEmptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165481,
+      "offset": 165683,
       "length": 10,
       "value": "\"videoOff\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165666,
+      "offset": 165868,
       "length": 37,
       "value": "\"videoPlaylistThumbnailFallbackImage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165832,
+      "offset": 166034,
       "length": 12,
       "value": "\"video_list\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 165982,
+      "offset": 166184,
       "length": 16,
       "value": "\"videosHomeChip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166132,
+      "offset": 166334,
       "length": 14,
       "value": "\"viewPlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166280,
+      "offset": 166482,
       "length": 14,
       "value": "\"voiceMessage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166436,
+      "offset": 166638,
       "length": 18,
       "value": "\"voiceMessageGrey\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166580,
+      "offset": 166782,
       "length": 10,
       "value": "\"voiceTip\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166718,
+      "offset": 166920,
       "length": 11,
       "value": "\"voiceWave\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 166863,
+      "offset": 167065,
       "length": 14,
       "value": "\"vpnAppInMenu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167021,
+      "offset": 167223,
       "length": 20,
       "value": "\"waiting_room_admit\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167183,
+      "offset": 167385,
       "length": 19,
       "value": "\"waiting_room_deny\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167326,
+      "offset": 167528,
       "length": 9,
       "value": "\"warning\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167479,
+      "offset": 167681,
       "length": 19,
       "value": "\"warningPermission\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167646,
+      "offset": 167848,
       "length": 22,
       "value": "\"warning_storage_full\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167803,
+      "offset": 168005,
       "length": 15,
       "value": "\"waveform_0000\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 167953,
+      "offset": 168155,
       "length": 15,
       "value": "\"waveform_0001\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168105,
+      "offset": 168307,
       "length": 16,
       "value": "\"waveform_00010\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168258,
+      "offset": 168460,
       "length": 16,
       "value": "\"waveform_00011\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168411,
+      "offset": 168613,
       "length": 16,
       "value": "\"waveform_00012\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168564,
+      "offset": 168766,
       "length": 16,
       "value": "\"waveform_00013\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168717,
+      "offset": 168919,
       "length": 16,
       "value": "\"waveform_00014\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 168870,
+      "offset": 169072,
       "length": 16,
       "value": "\"waveform_00015\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169023,
+      "offset": 169225,
       "length": 16,
       "value": "\"waveform_00016\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169176,
+      "offset": 169378,
       "length": 16,
       "value": "\"waveform_00017\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169329,
+      "offset": 169531,
       "length": 16,
       "value": "\"waveform_00018\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169482,
+      "offset": 169684,
       "length": 16,
       "value": "\"waveform_00019\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169633,
+      "offset": 169835,
       "length": 15,
       "value": "\"waveform_0002\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169785,
+      "offset": 169987,
       "length": 16,
       "value": "\"waveform_00020\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 169938,
+      "offset": 170140,
       "length": 16,
       "value": "\"waveform_00021\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170091,
+      "offset": 170293,
       "length": 16,
       "value": "\"waveform_00022\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170244,
+      "offset": 170446,
       "length": 16,
       "value": "\"waveform_00023\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170397,
+      "offset": 170599,
       "length": 16,
       "value": "\"waveform_00024\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170550,
+      "offset": 170752,
       "length": 16,
       "value": "\"waveform_00025\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170703,
+      "offset": 170905,
       "length": 16,
       "value": "\"waveform_00026\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 170856,
+      "offset": 171058,
       "length": 16,
       "value": "\"waveform_00027\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171009,
+      "offset": 171211,
       "length": 16,
       "value": "\"waveform_00028\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171162,
+      "offset": 171364,
       "length": 16,
       "value": "\"waveform_00029\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171313,
+      "offset": 171515,
       "length": 15,
       "value": "\"waveform_0003\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171465,
+      "offset": 171667,
       "length": 16,
       "value": "\"waveform_00030\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171618,
+      "offset": 171820,
       "length": 16,
       "value": "\"waveform_00031\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171771,
+      "offset": 171973,
       "length": 16,
       "value": "\"waveform_00032\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 171924,
+      "offset": 172126,
       "length": 16,
       "value": "\"waveform_00033\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172077,
+      "offset": 172279,
       "length": 16,
       "value": "\"waveform_00034\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172230,
+      "offset": 172432,
       "length": 16,
       "value": "\"waveform_00035\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172383,
+      "offset": 172585,
       "length": 16,
       "value": "\"waveform_00036\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172536,
+      "offset": 172738,
       "length": 16,
       "value": "\"waveform_00037\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172689,
+      "offset": 172891,
       "length": 16,
       "value": "\"waveform_00038\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172842,
+      "offset": 173044,
       "length": 16,
       "value": "\"waveform_00039\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 172993,
+      "offset": 173195,
       "length": 15,
       "value": "\"waveform_0004\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173145,
+      "offset": 173347,
       "length": 16,
       "value": "\"waveform_00040\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173298,
+      "offset": 173500,
       "length": 16,
       "value": "\"waveform_00041\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173451,
+      "offset": 173653,
       "length": 16,
       "value": "\"waveform_00042\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173604,
+      "offset": 173806,
       "length": 16,
       "value": "\"waveform_00043\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173757,
+      "offset": 173959,
       "length": 16,
       "value": "\"waveform_00044\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 173910,
+      "offset": 174112,
       "length": 16,
       "value": "\"waveform_00045\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174063,
+      "offset": 174265,
       "length": 16,
       "value": "\"waveform_00046\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174216,
+      "offset": 174418,
       "length": 16,
       "value": "\"waveform_00047\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174369,
+      "offset": 174571,
       "length": 16,
       "value": "\"waveform_00048\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174522,
+      "offset": 174724,
       "length": 16,
       "value": "\"waveform_00049\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174673,
+      "offset": 174875,
       "length": 15,
       "value": "\"waveform_0005\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174825,
+      "offset": 175027,
       "length": 16,
       "value": "\"waveform_00050\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 174978,
+      "offset": 175180,
       "length": 16,
       "value": "\"waveform_00051\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175131,
+      "offset": 175333,
       "length": 16,
       "value": "\"waveform_00052\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175284,
+      "offset": 175486,
       "length": 16,
       "value": "\"waveform_00053\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175437,
+      "offset": 175639,
       "length": 16,
       "value": "\"waveform_00054\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175590,
+      "offset": 175792,
       "length": 16,
       "value": "\"waveform_00055\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175743,
+      "offset": 175945,
       "length": 16,
       "value": "\"waveform_00056\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 175896,
+      "offset": 176098,
       "length": 16,
       "value": "\"waveform_00057\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176049,
+      "offset": 176251,
       "length": 16,
       "value": "\"waveform_00058\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176202,
+      "offset": 176404,
       "length": 16,
       "value": "\"waveform_00059\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176353,
+      "offset": 176555,
       "length": 15,
       "value": "\"waveform_0006\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176503,
+      "offset": 176705,
       "length": 15,
       "value": "\"waveform_0007\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176653,
+      "offset": 176855,
       "length": 15,
       "value": "\"waveform_0008\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176803,
+      "offset": 177005,
       "length": 15,
       "value": "\"waveform_0009\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 176958,
+      "offset": 177160,
       "length": 18,
       "value": "\"white_crest_LITE\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177116,
+      "offset": 177318,
       "length": 18,
       "value": "\"white_crest_PROI\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177276,
+      "offset": 177478,
       "length": 19,
       "value": "\"white_crest_PROII\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177439,
+      "offset": 177641,
       "length": 20,
       "value": "\"white_crest_PROIII\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177571,
+      "offset": 177773,
       "length": 3,
       "value": "\"x\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177708,
+      "offset": 177910,
       "length": 14,
       "value": "\"yellowFolder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177848,
+      "offset": 178050,
       "length": 10,
       "value": "\"zoomGrid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 177992,
+      "offset": 178194,
       "length": 14,
       "value": "\"zoomNineGrid\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAAssetsBundle-dgiuugujdqpwvpevyuathbtmfmez\/Build\/Intermediates.noindex\/ArchiveIntermediates\/MEGAAssetsBundle\/IntermediateBuildFilesPath\/MEGAAssetsBundle.build\/Release-iphoneos\/MEGAAssetsBundle.build\/DerivedSources\/GeneratedAssetSymbols.swift",
       "kind": "StringLiteral",
-      "offset": 178136,
+      "offset": 178338,
       "length": 12,
       "value": "\"zoomSquare\""
     }
