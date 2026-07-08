@@ -102,19 +102,34 @@ final class AudioPlayerViewModel: ObservableObject {
     private let service: (any AudioPlaybackServiceProtocol)?
     private var cancellables: Set<AnyCancellable> = []
 
+    // MARK: - Skip-back double-tap detection
+
+    /// A second skip-back tap within this window of the previous one goes to the
+    /// previous track; otherwise a tap restarts the current track.
+    private static let skipPreviousDoubleTapWindow: Duration = .seconds(0.3)
+
+    private let now: () -> ContinuousClock.Instant
+
+    /// Timestamp of the last skip-back tap, or `nil` once a tap has been paired
+    /// into a "previous track" action (so the next tap starts fresh).
+    private var lastSkipPreviousTap: ContinuousClock.Instant?
+
     /// Preview / placeholder init. No service binding; intents are no-ops.
     init() {
         self.service = nil
+        self.now = { ContinuousClock().now }
     }
 
     deinit {
         seekFeedbackTask?.cancel()
     }
 
-    /// Production init. VM mirrors the service's state publishers into its
-    /// `@Published` fields and forwards all user intents back to the service.
-    init(service: any AudioPlaybackServiceProtocol) {
+    init(
+        service: any AudioPlaybackServiceProtocol,
+        now: @escaping () -> ContinuousClock.Instant = { ContinuousClock().now }
+    ) {
         self.service = service
+        self.now = now
         bindService(service)
     }
 
@@ -277,9 +292,22 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func skipPrevious() {
+        guard let service else { return }
+        let tap = now()
+        let isFollowUpTap = lastSkipPreviousTap
+            .map { tap - $0 <= Self.skipPreviousDoubleTapWindow } ?? false
+
+        if isFollowUpTap {
+            lastSkipPreviousTap = nil
+            service.playPrevious()
+        } else {
+            lastSkipPreviousTap = tap
+            service.seek(toSeconds: 0)
+        }
     }
 
     func skipNext() {
+        service?.playNext()
     }
 
     func toggleShuffle() {
