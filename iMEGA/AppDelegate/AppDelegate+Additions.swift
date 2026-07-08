@@ -480,12 +480,22 @@ extension AppDelegate {
 // MARK: - Logger
 extension AppDelegate {
     @objc func enableLogsIfNeeded() {
+        // Unconditional, unlike enableLogs(): MEGALog* is always callable and the SDK
+        // filters by level, so the hooks must forward regardless of the logs setting to
+        // preserve the behaviour MEGARepo code had when it called MEGALog* directly.
+        setupRepoLogging()
         let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appEnvironment: AppEnvironmentUseCase.shared)
         if logUseCase.shouldEnableLogs() {
             enableLogs()
         }
     }
-    
+
+    private func setupRepoLogging() {
+        MEGARepoLogger.logError = { MEGALogError($0, $1, $2) }
+        MEGARepoLogger.logWarning = { MEGALogWarning($0, $1, $2) }
+        MEGARepoLogger.logDebug = { MEGALogDebug($0, $1, $2) }
+    }
+
     private func enableLogs() {
         MEGASdk.setLogLevel(.max)
         MEGAChatSdk.setLogLevel(.max)

@@ -2,6 +2,7 @@ import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGARepo
 import MEGASdk
 import UIKit
 

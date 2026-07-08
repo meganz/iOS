@@ -1799,7 +1799,6 @@
 		A873E85B26E2228400CBB174 /* LegacyFileVersioningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E85A26E2228400CBB174 /* LegacyFileVersioningViewModel.swift */; };
 		A873E85D26E2248E00CBB174 /* FileVersioningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */; };
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
-		A8754A292A331B39007475C2 /* FileAttributeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8754A282A331B39007475C2 /* FileAttributeGenerator.swift */; };
 		A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87BDB342B8CD3BC0074EE4C /* UserAvatarHandler.swift */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
@@ -1895,7 +1894,6 @@
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F662322DE7048D00D70F4A /* MEGAQLPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F662312DE7048D00D70F4A /* MEGAQLPreviewController.swift */; };
 		A8F6624E2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */; };
-		A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
@@ -4649,7 +4647,6 @@
 		A873E85A26E2228400CBB174 /* LegacyFileVersioningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFileVersioningViewModel.swift; sourceTree = "<group>"; };
 		A873E85C26E2248E00CBB174 /* FileVersioningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewRouter.swift; sourceTree = "<group>"; };
 		A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnOnNotificationsViewModelTests.swift; sourceTree = "<group>"; };
-		A8754A282A331B39007475C2 /* FileAttributeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttributeGenerator.swift; sourceTree = "<group>"; };
 		A87BDB342B8CD3BC0074EE4C /* UserAvatarHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserAvatarHandler.swift; path = Chat/UserAvatarHandler.swift; sourceTree = "<group>"; };
 		A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTimeDurationTableViewController.swift; sourceTree = "<group>"; };
@@ -4770,7 +4767,6 @@
 		A8F662312DE7048D00D70F4A /* MEGAQLPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAQLPreviewController.swift; sourceTree = "<group>"; };
 		A8F6624D2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAQLPreviewControllerTests.swift; sourceTree = "<group>"; };
 		A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
-		A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttributeGeneratorTests.swift; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
@@ -7921,7 +7917,6 @@
 				021468315180776D7E2E4CB0 /* CameraUploadRecordCleanupTests.swift */,
 				0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */,
 				0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */,
-				A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */,
 				0E3A916F2E7CF51700C46AAE /* OptionalStringCameraUploadTaskIdentifierTests.swift */,
 				160711532A558DED00970A19 /* PagerTabViewModelTests.swift */,
 				160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */,
@@ -11864,7 +11859,6 @@
 				B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
-				A8754A282A331B39007475C2 /* FileAttributeGenerator.swift */,
 				B65AC8B821F6A91A0094FF4F /* ImageExportOperation.h */,
 				B65AC8B921F6A91A0094FF4F /* ImageExportOperation.m */,
 				B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */,
@@ -15231,7 +15225,6 @@
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
 				B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */,
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,
-				A8754A292A331B39007475C2 /* FileAttributeGenerator.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
@@ -16826,7 +16819,6 @@
 				B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */,
 				943DBBC62CB93AF900B8B14C /* ExportFileViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
-				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
 				835EBCD12DCA0B7C00AD1E57 /* FileLinkViewModelTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,

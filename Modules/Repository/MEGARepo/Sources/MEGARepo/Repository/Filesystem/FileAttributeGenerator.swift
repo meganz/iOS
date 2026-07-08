@@ -1,9 +1,11 @@
+#if canImport(UIKit)
+
 import ImageIO
 @preconcurrency import QuickLookThumbnailing
 import UIKit
 import UniformTypeIdentifiers
 
-protocol FileAttributeGeneratorProtocol: Sendable {
+public protocol FileAttributeGeneratorProtocol: Sendable {
     /// Create a square (200px x 200px) thumbnail from the original source (cropped in the center of the image)
     /// - Parameter destinationURL: url where the thumbnail will be saved
     /// - Returns: true if the thumbnail is created, otherwise false
@@ -16,33 +18,33 @@ protocol FileAttributeGeneratorProtocol: Sendable {
     /// - Parameter destinationURL: url where the preview will be saved
     /// - Returns: true if the preview is created, otherwise false
     func createPreview(at destinationURL: URL) async -> Bool
-    
+
     /// Thumbnail representation for a file
     /// - Returns: return thumbnail image for a file
     func requestThumbnail() async -> UIImage?
 }
 
-final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
+public final class FileAttributeGenerator: FileAttributeGeneratorProtocol {
 
     private let sourceURL: URL
     private let pixelWidth: Int
     private let pixelHeight: Int
     private let qlThumbnailGenerator: QLThumbnailGenerator
-    
+
     enum Constants {
         static let thumbnailSize = 200
         static let previewSize = 1000
         static let compressionQuality = 0.8
     }
-    
-    init(sourceURL: URL, pixelWidth: Int = 0, pixelHeight: Int = 0, qlThumbnailGenerator: QLThumbnailGenerator = QLThumbnailGenerator.shared) {
+
+    public init(sourceURL: URL, pixelWidth: Int = 0, pixelHeight: Int = 0, qlThumbnailGenerator: QLThumbnailGenerator = QLThumbnailGenerator.shared) {
         self.sourceURL = sourceURL
         self.pixelWidth = pixelWidth
         self.pixelHeight = pixelHeight
         self.qlThumbnailGenerator = qlThumbnailGenerator
     }
-    
-    func createThumbnail(at destinationURL: URL) async -> Bool {
+
+    public func createThumbnail(at destinationURL: URL) async -> Bool {
         let size = sizeForThumbnail()
         do {
             let representation = try await generateThumbnail(size: size)
@@ -58,14 +60,14 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         MEGALogDebug("[File attribute generator] create thumbnail correctly at \(destinationURL)")
         return true
     }
-    
-    func createPreview(at destinationURL: URL) async -> Bool {
+
+    public func createPreview(at destinationURL: URL) async -> Bool {
         let size = CGSize(width: Constants.previewSize, height: Constants.previewSize)
         let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
                                                    size: size,
                                                    scale: 1.0,
                                                    representationTypes: .thumbnail)
-        
+
         do {
             try await qlThumbnailGenerator.saveBestRepresentation(for: request, to: destinationURL, contentType: UTType.jpeg.identifier)
         } catch let error {
@@ -75,10 +77,10 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         MEGALogDebug("[File attribute generator] create preview correctly at \(destinationURL)")
         return true
     }
-    
-    func requestThumbnail() async -> UIImage? {
+
+    public func requestThumbnail() async -> UIImage? {
         let size = CGSize(width: Constants.thumbnailSize, height: Constants.thumbnailSize)
-        
+
         do {
             try Task.checkCancellation()
             let representation = try await generateThumbnail(size: size)
@@ -100,7 +102,7 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
             return retryResult
         }
     }
-    
+
     // MARK: - ImageIO fallback
 
     // QLThumbnailGenerator can fail (e.g. QLThumbnailErrorDomain 102) for very large images it
@@ -169,9 +171,9 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         }
         return true
     }
-    
+
     // MARK: - Private
-    
+
     private func generateThumbnail(size: CGSize, presentationType: QLThumbnailGenerator.Request.RepresentationTypes = .thumbnail) async throws -> QLThumbnailRepresentation {
         let request = QLThumbnailGenerator.Request(fileAt: sourceURL,
                                                    size: size,
@@ -179,7 +181,7 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
                                                    representationTypes: presentationType)
         return try await qlThumbnailGenerator.generateBestRepresentation(for: request)
     }
-    
+
     /// Size for scaled thumbnail
     /// - Returns: return size for the scaled thumbnail (min side is 200px)
     private func sizeForThumbnail() -> CGSize {
@@ -197,12 +199,12 @@ final class FileAttributeGenerator: NSObject, FileAttributeGeneratorProtocol {
         }
         return CGSize(width: w, height: h)
     }
-    
+
     private func tileRect(width: Int, height: Int) -> CGRect {
         var rect: CGRect = CGRect()
         rect.size.width = CGFloat(min(width, height))
         rect.size.height = CGFloat(min(width, height))
-        
+
         if width < height {
             rect.origin.x = 0
             rect.origin.y = CGFloat((height - width) / 2)
@@ -219,9 +221,11 @@ extension FileAttributeGenerator {
     func functionToTest_sizeForThumbnail() -> CGSize {
         sizeForThumbnail()
     }
-    
+
     func functionToTest_tileRect(width: Int, height: Int) -> CGRect {
         tileRect(width: width, height: height)
     }
 }
+#endif
+
 #endif

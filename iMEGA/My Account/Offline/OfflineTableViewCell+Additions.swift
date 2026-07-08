@@ -1,5 +1,6 @@
 import Foundation
 import MEGADesignToken
+import MEGARepo
 
 @MainActor private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
 

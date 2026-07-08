@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
+import MEGARepo
 import MEGASwift
 import UIKit
 
