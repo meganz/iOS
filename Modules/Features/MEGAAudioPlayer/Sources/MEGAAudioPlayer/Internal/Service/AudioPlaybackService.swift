@@ -16,6 +16,7 @@ final class AudioPlaybackService {
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
     private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
     private let sleepTimerStateSubject = CurrentValueSubject<SleepTimerState, Never>(.inactive)
+    private let isShuffleOnSubject = CurrentValueSubject<Bool, Never>(false)
 
     private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
 
@@ -36,6 +37,9 @@ final class AudioPlaybackService {
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
+    
+    /// Snapshot of the queue in its pre-shuffle order, kept while shuffle is on
+    private var unshuffledQueue: PlaybackQueue?
     
     private var playbackQueue: PlaybackQueue {
         get { queueSubject.value }
@@ -178,6 +182,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
         get { sleepTimerStateSubject.value }
         set { sleepTimerStateSubject.send(newValue) }
     }
+    
+    var isShuffleOn: Bool {
+        isShuffleOnSubject.value
+    }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
         currentSourceSubject.eraseToAnyPublisher()
@@ -234,6 +242,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> {
         sleepTimerStateSubject.removeDuplicates().eraseToAnyPublisher()
     }
+    
+    var isShuffleOnPublisher: AnyPublisher<Bool, Never> {
+        isShuffleOnSubject.removeDuplicates().eraseToAnyPublisher()
+    }
 }
 
 // MARK: - PlaybackControllable
@@ -245,6 +257,8 @@ extension AudioPlaybackService: PlaybackControllable {
         }
 
         currentSource = source
+        unshuffledQueue = nil
+        isShuffleOnSubject.send(false)
         playbackQueue = PlaybackQueueBuilder.build(from: source)
 
         startStreamingServerIfNeeded(for: source)
@@ -372,11 +386,45 @@ extension AudioPlaybackService: PlaybackControllable {
         sleepTimerState = .inactive
     }
 
+    func toggleShuffle() {
+        if isShuffleOnSubject.value {
+            restoreOriginalOrder()
+            isShuffleOnSubject.send(false)
+        } else {
+            guard playbackQueue.current != nil else { return }
+            shuffleUpcoming()
+            isShuffleOnSubject.send(true)
+        }
+    }
+
+    private func shuffleUpcoming() {
+        let queue = playbackQueue
+        guard queue.current != nil else { return }
+        unshuffledQueue = queue
+
+        let played = queue.tracks[...queue.currentIndex]
+        let upcoming = queue.tracks[(queue.currentIndex + 1)...].shuffled()
+        playbackQueue = PlaybackQueue(
+            tracks: Array(played) + upcoming,
+            currentIndex: queue.currentIndex
+        )
+    }
+
+    private func restoreOriginalOrder() {
+        guard let original = unshuffledQueue else { return }
+        unshuffledQueue = nil
+        let currentID = playbackQueue.current?.id
+        let restoredIndex = original.tracks.firstIndex { $0.id == currentID } ?? original.currentIndex
+        playbackQueue = PlaybackQueue(tracks: original.tracks, currentIndex: restoredIndex)
+    }
+
     func stop() {
         metadataTask?.cancel()
         metadataTask = nil
         playGeneration += 1
         currentSource = nil
+        unshuffledQueue = nil
+        isShuffleOnSubject.send(false)
         playbackQueue = .empty
         title = ""
         artist = nil

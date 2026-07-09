@@ -138,8 +138,7 @@ final class AudioPlayerViewModel: ObservableObject {
     private func bindService(_ service: any AudioPlaybackServiceProtocol) {
         service.currentSourcePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.currentSource = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$currentSource)
 
         service.currentQueuePublisher
             .map(\.tracks)
@@ -158,8 +157,7 @@ final class AudioPlayerViewModel: ObservableObject {
             .map { $0.current?.id }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.currentTrackID = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$currentTrackID)
 
         service.titlePublisher
             .receive(on: DispatchQueue.main)
@@ -168,24 +166,20 @@ final class AudioPlayerViewModel: ObservableObject {
 
         service.artistPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.artist = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$artist)
 
         service.artworkDataPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.artworkData = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$artworkData)
 
         service.currentTimePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.currentTime = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$currentTime)
 
         service.durationPublisher
             .map { duration in duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil } }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.duration = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$duration)
 
         let isReadyPublisher = Publishers.CombineLatest(
             service.artworkResolvedPublisher,
@@ -203,17 +197,18 @@ final class AudioPlayerViewModel: ObservableObject {
         }
         .removeDuplicates()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] in self?.loadingState = $0 }
-        .store(in: &cancellables)
+        .assign(to: &$loadingState)
 
         service.isAirPlayActivePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.isAirPlayActive = $0 }
-            .store(in: &cancellables)
-        
+            .assign(to: &$isAirPlayActive)
+
+        service.isShuffleOnPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isShuffleOn)
+
         service.playbackSpeedPublisher
-            .sink { [weak self] in self?.playbackSpeed = $0 }
-            .store(in: &cancellables)
+            .assign(to: &$playbackSpeed)
 
         service.repeatModePublisher
             .receive(on: DispatchQueue.main)
@@ -317,7 +312,7 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func toggleShuffle() {
-        isShuffleOn.toggle()
+        service?.toggleShuffle()
     }
 
     func cycleRepeat() {

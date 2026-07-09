@@ -17,6 +17,7 @@ protocol PlaybackStateObservable {
     var isAirPlayActive: Bool { get }
     var repeatMode: RepeatMode { get }
     var sleepTimerState: SleepTimerState { get }
+    var isShuffleOn: Bool { get }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> { get }
     var currentQueuePublisher: AnyPublisher<PlaybackQueue, Never> { get }
@@ -32,6 +33,7 @@ protocol PlaybackStateObservable {
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> { get }
     var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> { get }
+    var isShuffleOnPublisher: AnyPublisher<Bool, Never> { get }
 }
 
 @MainActor
@@ -47,6 +49,7 @@ protocol PlaybackControllable {
     func startSleepTimer(after interval: TimeInterval)
     func startSleepTimerAtEndOfTrack()
     func cancelSleepTimer()
+    func toggleShuffle()
     func stop()
 }
 
