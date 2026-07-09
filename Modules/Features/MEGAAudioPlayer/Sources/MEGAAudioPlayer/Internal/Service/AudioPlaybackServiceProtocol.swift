@@ -39,6 +39,7 @@ protocol PlaybackStateObservable {
 @MainActor
 protocol PlaybackControllable {
     func play(source: PlaybackSource)
+    func play(atIndex index: Int)
     func togglePlayPause()
     func setPlaybackSpeed(_ rate: Float)
     func seek(toSeconds seconds: TimeInterval)

@@ -91,9 +91,11 @@ final class MiniPlayerViewModel: ObservableObject {
     }
 
     func skipToNext() {
+        service?.playNext()
     }
 
     func skipToPrevious() {
+        service?.playPrevious()
     }
 
     // MARK: - Preview / test seeding

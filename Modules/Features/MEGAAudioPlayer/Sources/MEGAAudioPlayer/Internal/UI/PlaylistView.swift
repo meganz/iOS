@@ -9,20 +9,20 @@ struct PlaylistView: View {
     let sourceName: String?
     let items: [AudioPlaylistItem]
     let currentTrackID: String?
-    let onSelect: (AudioPlaylistItem) -> Void
+    let onSelect: (Int) -> Void
     let onMove: (IndexSet, Int) -> Void
 
     var body: some View {
         VStack(spacing: 0) {
             header
             List {
-                ForEach(items) { row in
+                ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
                     let isCurrent = row.id == currentTrackID
                     PlaylistRow(item: row, isCurrent: isCurrent)
                         .padding(.horizontal, TokenSpacing._5)
                         .contentShape(Rectangle())
                         .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
-                        .onTapGesture { onSelect(row) }
+                        .onTapGesture { onSelect(index) }
                         .listRowSeparator(.hidden)
                         .listRowBackground(isCurrent ? TokenColors.Button.secondary.swiftUI : Color.clear)
                         .listRowInsets(EdgeInsets())
@@ -37,13 +37,11 @@ struct PlaylistView: View {
 
     @ViewBuilder
     private var header: some View {
-        if let sourceName, !sourceName.isEmpty {
-            Text(headerText(sourceName: sourceName))
-                .font(.subheadline)
-                .padding(.horizontal, TokenSpacing._5)
-                .padding(.vertical, TokenSpacing._3)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
+        Text(headerText(sourceName: sourceName ?? ""))
+            .font(.subheadline)
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.vertical, TokenSpacing._3)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func headerText(sourceName: String) -> AttributedString {

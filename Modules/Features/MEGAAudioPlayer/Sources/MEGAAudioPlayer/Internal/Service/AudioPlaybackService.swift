@@ -322,6 +322,16 @@ extension AudioPlaybackService: PlaybackControllable {
         advanceToNextTrack(wrapAround: repeatModeSubject.value == .all)
     }
 
+    func play(atIndex index: Int) {
+        guard playbackQueue.tracks.indices.contains(index),
+              index != playbackQueue.currentIndex else { return }
+        playbackQueue = PlaybackQueue(
+            tracks: playbackQueue.tracks,
+            currentIndex: index
+        )
+        playCurrent()
+    }
+
     func setPlaybackSpeed(_ rate: Float) {
         engine.setPlaybackSpeed(rate)
     }

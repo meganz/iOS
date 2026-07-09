@@ -328,7 +328,8 @@ final class AudioPlayerViewModel: ObservableObject {
         isPlaylistVisible.toggle()
     }
 
-    func selectPlaylistItem(_ item: AudioPlaylistItem) {
+    func selectPlaylistItem(at index: Int) {
+        service?.play(atIndex: index)
     }
 
     func movePlaylistItem(from source: IndexSet, to destination: Int) {
