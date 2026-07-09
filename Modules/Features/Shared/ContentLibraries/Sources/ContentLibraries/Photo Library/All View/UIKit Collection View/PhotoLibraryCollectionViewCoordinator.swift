@@ -526,6 +526,7 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
+        guard !photo.isTimelinePlaceholder else { return }
         
         if photo.isTakenDown {
             router.showTakenDownNodeAlert()

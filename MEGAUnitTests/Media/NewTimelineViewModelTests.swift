@@ -111,6 +111,66 @@ struct NewTimelineViewModelTests {
     }
     
     @MainActor
+    @Suite("Skeleton Path")
+    struct SkeletonPath {
+        /// Two UTC day buckets, counts 2 and 1.
+        private static func makeSections() -> [MediaDateSectionEntity] {
+            let day1 = Date(timeIntervalSince1970: 1_660_780_800) // 2022-08-18T00:00:00Z
+            let day2 = Date(timeIntervalSince1970: 1_658_102_400) // 2022-07-18T00:00:00Z
+            return [
+                MediaDateSectionEntity(groupId: "2022-08-18", startDate: day1, endDate: day1, count: 2),
+                MediaDateSectionEntity(groupId: "2022-07-18", startDate: day2, endDate: day2, count: 1)
+            ]
+        }
+
+        @Test("Builds a placeholder skeleton from date-section counts without touching the eager use case")
+        func buildsSkeletonFromDateSections() async throws {
+            let photoLibraryUseCase = MockPhotoLibraryUseCase(allPhotos: [
+                NodeEntity(name: "real.jpg", handle: 1, hasThumbnail: true)
+            ])
+            let sut = makeSUT(
+                photoLibraryUseCase: photoLibraryUseCase,
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections())))
+
+            await sut.loadPhotos()
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            let allArePlaceholders = photos.allSatisfy(\.isTimelinePlaceholder)
+            #expect(photos.count == 3) // 2 + 1
+            #expect(allArePlaceholders)
+            #expect(!sut.showEmptyStateView)
+            // The eager media(...) path must not run when the skeleton use case is present.
+            await #expect(photoLibraryUseCase.messages == [])
+        }
+
+        @Test("Empty date sections show the empty state and an empty library")
+        func emptySectionsShowEmptyState() async throws {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success([])))
+
+            await sut.loadPhotos()
+
+            #expect(sut.showEmptyStateView)
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
+        }
+
+        @Test("Changing sort order reloads (re-fetches sections) instead of locally re-sorting placeholders")
+        func sortOrderChangeReloads() async throws {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections())))
+            let taskId = sut.loadPhotosTaskId
+
+            sut.updateSortOrder(.modificationAsc)
+
+            #expect(sut.loadPhotosTaskId != taskId)
+            #expect(sut.sortPhotoLibraryTask == nil) // no local re-sort task spawned
+        }
+    }
+
+    @MainActor
     @Suite("Empty View")
     struct EmptyView {
         @Test("Camera upload enabled ensure correct no media found empty type returned")
@@ -264,6 +324,7 @@ struct NewTimelineViewModelTests {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
         tracker: some AnalyticsTracking = MockTracker()
     ) -> NewTimelineViewModel {
         .init(
@@ -274,6 +335,7 @@ struct NewTimelineViewModelTests {
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            mediaTimelineUseCase: mediaTimelineUseCase,
             tracker: tracker
         )
     }

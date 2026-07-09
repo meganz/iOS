@@ -83,6 +83,7 @@ public final class PhotoSelection: ObservableObject {
     }
     
     public func selectPhoto(_ photo: NodeEntity) {
+        guard !photo.isTimelinePlaceholder else { return }
         if let selectLimit = selectLimit, photos.count >= selectLimit {
             isItemSelectedAfterLimitReached = true
             return

@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
 import MEGARepo
+import MEGASdk
 
 enum MediaTabTimelineFactory {
     @MainActor
@@ -25,10 +26,12 @@ enum MediaTabTimelineFactory {
         let contentConsumptionUserAttributeUseCase = ContentConsumptionUserAttributeUseCase(
             repo: UserAttributeRepository.newRepo)
         
+        let sensitiveNodeUseCase = SensitiveNodeUseCase(
+            nodeRepository: NodeRepository.newRepo,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+
         let sensitiveDisplayPreferenceUseCase = SensitiveDisplayPreferenceUseCase(
-            sensitiveNodeUseCase: SensitiveNodeUseCase(
-                nodeRepository: NodeRepository.newRepo,
-                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+            sensitiveNodeUseCase: sensitiveNodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
         
         let photoLibraryUseCase =  PhotoLibraryUseCase(
@@ -48,13 +51,29 @@ enum MediaTabTimelineFactory {
             preferenceUseCase: PreferenceUseCase.default
         )
         
+        // The `Paginated Media Timeline` flag is read here, at the composition root, and
+        // nowhere else: when on we inject the use case, whose presence switches the view
+        // model to the skeleton path. Off = the use case is nil = unchanged eager path.
+        let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? =
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .paginatedMediaTimeline)
+            ? MediaTimelineUseCase(
+                repository: MediaTimelineRepository(
+                    sdk: .shared,
+                    cameraUploadNodeAccess: .shared,
+                    mediaUploadNodeAccess: .shared,
+                    nodeUpdatesProvider: NodeUpdatesProvider()),
+                sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
+                sensitiveNodeUseCase: sensitiveNodeUseCase)
+            : nil
+
         let timelineViewModel = NewTimelineViewModel(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
             photoLibraryContentViewRouter: photoLibraryContentViewRouter,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
-            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase)
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            mediaTimelineUseCase: mediaTimelineUseCase)
         
         return MediaTimelineTabContentViewModel(
             timelineViewModel: timelineViewModel,

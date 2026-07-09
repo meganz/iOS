@@ -21,6 +21,8 @@ final class NewTimelineViewModel: ObservableObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let tracker: any AnalyticsTracking
+
+    private let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)?
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -45,6 +47,7 @@ final class NewTimelineViewModel: ObservableObject {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
+        mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.photoLibraryContentViewModel = photoLibraryContentViewModel
@@ -53,6 +56,7 @@ final class NewTimelineViewModel: ObservableObject {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.nodeUseCase = nodeUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
+        self.mediaTimelineUseCase = mediaTimelineUseCase
         self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
@@ -69,7 +73,7 @@ final class NewTimelineViewModel: ObservableObject {
             if !isInitialLoadComplete {
                 try await loadSavedFilters()
             }
-            photoLibraryContentViewModel.library = try await timelinePhotoLibrary()
+            photoLibraryContentViewModel.library = try await loadTimelineLibrary()
         } catch is CancellationError {
             MEGALogError("[\(type(of: self))] loadPhotos cancelled")
         } catch {
@@ -114,6 +118,15 @@ final class NewTimelineViewModel: ObservableObject {
     func updateSortOrder(_ newSortOrder: SortOrderEntity) {
         guard sortOrder != newSortOrder else { return }
         sortOrder = newSortOrder
+
+        // The skeleton is built from date sections fetched in the requested order;
+        // locally re-sorting synthetic placeholder nodes would scramble the grid, so
+        // trigger a reload instead (the eager path can re-sort its real nodes in place).
+        guard mediaTimelineUseCase == nil else {
+            loadPhotosTaskId = UUID()
+            return
+        }
+
         let photos = photoLibraryContentViewModel.library.allPhotos
         
         sortPhotoLibraryTask = Task { @MainActor in
@@ -178,6 +191,31 @@ final class NewTimelineViewModel: ObservableObject {
         return filterLocation == .cloudDrive
     }
     
+    private func loadTimelineLibrary() async throws -> PhotoLibrary {
+        if let mediaTimelineUseCase {
+            try await skeletonPhotoLibrary(using: mediaTimelineUseCase)
+        } else {
+            try await timelinePhotoLibrary()
+        }
+    }
+
+    /// Builds the placeholder skeleton purely from date-bucket counts — no node is
+    /// fetched here. Real thumbnails are hydrated lazily per visible window in a later
+    /// change; until then the grid stays a correctly-sized skeleton.
+    private func skeletonPhotoLibrary(
+        using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
+    ) async throws -> PhotoLibrary {
+        let sections = try await mediaTimelineUseCase.dateSections(
+            filter: photoFilterOptions.toMediaTimelineFilterEntity(),
+            granularity: .day,
+            sortOrder: sortOrder.toMediaTimelineSortOrderEntity())
+
+        try Task.checkCancellation()
+
+        showEmptyStateView = sections.isEmpty
+        return PhotoLibrary.skeleton(from: sections)
+    }
+
     private func timelinePhotoLibrary() async throws -> PhotoLibrary {
         let photos = try await photoLibraryUseCase.media(
             for: photoFilterOptions,

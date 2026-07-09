@@ -2,6 +2,7 @@ import AsyncAlgorithms
 @preconcurrency import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGASwift
 import MEGASwiftUI
@@ -18,6 +19,7 @@ open class PhotoCellViewModel: ObservableObject {
     @Published public var thumbnailContainer: any ImageContaining
     @Published public var isSelected: Bool = false {
         didSet {
+            guard !isPlaceholder else { return }
             if isSelected != oldValue && selection.isPhotoSelected(photo) != isSelected {
                 selection.photos[photo.handle] = isSelected ? photo : nil
             }
@@ -72,7 +74,11 @@ open class PhotoCellViewModel: ObservableObject {
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
         
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
-        thumbnailContainer = thumbnailLoader.initialImage(for: photo, type: type)
+        if photo.isTimelinePlaceholder {
+            thumbnailContainer = ImageContainer(image: MEGAAssets.Image.filetypeImages, type: .placeholder)
+        } else {
+            thumbnailContainer = thumbnailLoader.initialImage(for: photo, type: type)
+        }
         
         configZoomState(with: viewModel.$zoomState)
         configSelection()
@@ -84,7 +90,7 @@ open class PhotoCellViewModel: ObservableObject {
     // MARK: Internal
                 
     func select() {
-        guard !selection.isSelectionDisabled else { return }
+        guard !isPlaceholder, !selection.isSelectionDisabled else { return }
         if editMode.isEditing && (isSelected || !isSelectionLimitReached) {
             isSelected.toggle()
         } else {
@@ -93,7 +99,7 @@ open class PhotoCellViewModel: ObservableObject {
     }
 
     func handleLongPress() {
-        guard !selection.isSelectionDisabled, !editMode.isEditing else { return }
+        guard !isPlaceholder, !selection.isSelectionDisabled, !editMode.isEditing else { return }
         selection.editMode = .active
         selection.selectPhoto(photo)
         selection.markRecentlyLongPressed(photo.handle)

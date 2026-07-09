@@ -1198,6 +1198,46 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
 
     @MainActor
+    func testInit_placeholderNode_buildsPlaceholderContainerWithoutUsingLoader() {
+        // The loader is primed with a real thumbnail. If the placeholder short-circuit
+        // works, the cell must ignore it and build a `.placeholder` container directly —
+        // never probing the on-disk thumbnail cache with the synthetic handle (which is
+        // what logs the ImageIO "can't open thumbnailsV3" error).
+        let loaderImage = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            thumbnailLoader: MockThumbnailLoader(initialImage: loaderImage))
+
+        XCTAssertEqual(sut.thumbnailContainer.type, .placeholder)
+        XCTAssertFalse(sut.thumbnailContainer.isEqual(loaderImage))
+    }
+
+    @MainActor
+    func testSelect_placeholderNode_doesNotChangeSelection() {
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel)
+        allViewModel.libraryViewModel.selection.editMode = .active
+
+        sut.select()
+
+        XCTAssertFalse(sut.isSelected)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.photos.isEmpty)
+    }
+
+    @MainActor
+    func testHandleLongPress_placeholderNode_doesNotEnterEditModeOrSelect() {
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel)
+
+        sut.handleLongPress()
+
+        XCTAssertFalse(allViewModel.libraryViewModel.selection.editMode.isEditing)
+        XCTAssertTrue(allViewModel.libraryViewModel.selection.photos.isEmpty)
+    }
+
+    @MainActor
     private func makeSUT(
         photo: NodeEntity,
         viewModel: PhotoLibraryModeAllViewModel? = nil,

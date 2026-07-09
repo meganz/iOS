@@ -22,4 +22,20 @@ struct PhotosFilterOptionsEntityMapperTests {
     func location(for filterOption: PhotosFilterOptionsEntity, expected: TimelineUserAttributeEntity.MediaLocation?) {
         #expect(filterOption.toTimelineUserAttributeMediaLocationEntity() == expected)
     }
+
+    @Test(arguments: [
+        // Independent media/location parts, including combined sets and fallbacks.
+        (PhotosFilterOptionsEntity([.allMedia, .allLocations]),
+         MediaTimelineFilterEntity(mediaType: .allMedia, location: .allLocations)),
+        (PhotosFilterOptionsEntity([.images, .cloudDrive]),
+         MediaTimelineFilterEntity(mediaType: .images, location: .cloudDrive)),
+        (PhotosFilterOptionsEntity([.videos, .cameraUploads]),
+         MediaTimelineFilterEntity(mediaType: .videos, location: .cameraUploads)),
+        // Empty selection falls back to all-media / all-locations.
+        (PhotosFilterOptionsEntity([]),
+         MediaTimelineFilterEntity(mediaType: .allMedia, location: .allLocations))
+    ])
+    func mediaTimelineFilter(for filterOption: PhotosFilterOptionsEntity, expected: MediaTimelineFilterEntity) {
+        #expect(filterOption.toMediaTimelineFilterEntity() == expected)
+    }
 }
