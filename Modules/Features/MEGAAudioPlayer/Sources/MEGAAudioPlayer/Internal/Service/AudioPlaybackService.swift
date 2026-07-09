@@ -15,6 +15,7 @@ final class AudioPlaybackService {
     private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
     private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
+    private let sleepTimerStateSubject = CurrentValueSubject<SleepTimerState, Never>(.inactive)
 
     private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
 
@@ -24,10 +25,13 @@ final class AudioPlaybackService {
     private let streamingRepository: any AudioStreamingRepositoryProtocol
     private let metadataLoader: any AudioMetadataLoading
     private let engine: any PlaybackEngineProtocol
+    private let notificationCenter: NotificationCenter
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
     private var metadataTask: Task<Void, Never>?
+    
+    private var sleepTimerTask: Task<Void, Never>?
 
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
     /// superseded track can detect it lost the race and drop its result.
@@ -44,12 +48,14 @@ final class AudioPlaybackService {
         urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
         metadataLoader: some AudioMetadataLoading = AudioMetadataLoader(),
-        engine: some PlaybackEngineProtocol = PlaybackEngine()
+        engine: some PlaybackEngineProtocol = PlaybackEngine(),
+        notificationCenter: NotificationCenter = .default
     ) {
         self.urlResolutionUseCase = urlResolutionUseCase
         self.streamingRepository = streamingRepository
         self.metadataLoader = metadataLoader
         self.engine = engine
+        self.notificationCenter = notificationCenter
         bindEngineToState()
         observeAirPlayRouteChanges()
     }
@@ -86,9 +92,15 @@ final class AudioPlaybackService {
             .store(in: &cancellables)
     }
 
+    /// Pause playback and tear down the active sleep timer.
+    private func fireSleepTimer() {
+        engine.pause()
+        cancelSleepTimer()
+    }
+
     private func observeAirPlayRouteChanges() {
         updateAirPlayState()
-        NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)
+        notificationCenter.publisher(for: AVAudioSession.routeChangeNotification)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.updateAirPlayState() }
             .store(in: &cancellables)
@@ -161,6 +173,11 @@ extension AudioPlaybackService: PlaybackStateObservable {
     var repeatMode: RepeatMode {
         repeatModeSubject.value
     }
+    
+    private(set) var sleepTimerState: SleepTimerState {
+        get { sleepTimerStateSubject.value }
+        set { sleepTimerStateSubject.send(newValue) }
+    }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> {
         currentSourceSubject.eraseToAnyPublisher()
@@ -212,6 +229,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> {
         repeatModeSubject.removeDuplicates().eraseToAnyPublisher()
+    }
+
+    var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> {
+        sleepTimerStateSubject.removeDuplicates().eraseToAnyPublisher()
     }
 }
 
@@ -301,6 +322,12 @@ extension AudioPlaybackService: PlaybackControllable {
 
     private func handleTrackFinished() {
         guard currentSource != nil else { return }
+
+        if sleepTimerState == .endOfTrack {
+            fireSleepTimer()
+            return
+        }
+
         switch repeatModeSubject.value {
         case .one:
             engine.replay()
@@ -323,6 +350,28 @@ extension AudioPlaybackService: PlaybackControllable {
         }
     }
 
+    func startSleepTimer(after interval: TimeInterval) {
+        sleepTimerState = .countdown(deadline: Date().addingTimeInterval(interval))
+        sleepTimerTask?.cancel()
+        sleepTimerTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(interval))
+            guard !Task.isCancelled else { return }
+            self?.fireSleepTimer()
+        }
+    }
+
+    func startSleepTimerAtEndOfTrack() {
+        sleepTimerTask?.cancel()
+        sleepTimerTask = nil
+        sleepTimerState = .endOfTrack
+    }
+
+    func cancelSleepTimer() {
+        sleepTimerTask?.cancel()
+        sleepTimerTask = nil
+        sleepTimerState = .inactive
+    }
+
     func stop() {
         metadataTask?.cancel()
         metadataTask = nil
@@ -336,6 +385,7 @@ extension AudioPlaybackService: PlaybackControllable {
         artworkResolvedSubject.send(false)
         repeatModeSubject.send(.off)
         status = .loading
+        cancelSleepTimer()
         engine.stop()
         streamingRepository.stopServer()
     }

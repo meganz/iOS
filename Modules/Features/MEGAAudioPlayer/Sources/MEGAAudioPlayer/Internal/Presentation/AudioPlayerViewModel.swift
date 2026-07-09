@@ -58,11 +58,13 @@ final class AudioPlayerViewModel: ObservableObject {
     // MARK: - Podcast Mode state
 
     /// Available podcast playback speeds, in display order.
-    let playbackSpeedOptions: [Float] = [2, 1.5, 1, 0.5]
+    let playbackSpeedOptions: [Float] = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25]
 
     @Published private(set) var playbackSpeed: Float = 1
 
-    @Published private(set) var isSleepTimerActive: Bool = false
+    @Published private(set) var sleepTimerState: SleepTimerState = .inactive
+
+    var isSleepTimerActive: Bool { sleepTimerState.isActive }
 
     // MARK: - Double-tap seek feedback
 
@@ -216,6 +218,10 @@ final class AudioPlayerViewModel: ObservableObject {
         service.repeatModePublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$repeatMode)
+
+        service.sleepTimerStatePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$sleepTimerState)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -269,8 +275,8 @@ final class AudioPlayerViewModel: ObservableObject {
         repeatMode: RepeatMode = .off,
         playbackMode: PlaybackMode = .music,
         playbackSpeed: Float = 1,
-        isSleepTimerActive: Bool = false,
-        isAirPlayActive: Bool = false
+        isAirPlayActive: Bool = false,
+        sleepTimerState: SleepTimerState = .inactive
     ) {
         self.title = title
         self.artist = artist
@@ -281,8 +287,8 @@ final class AudioPlayerViewModel: ObservableObject {
         self.repeatMode = repeatMode
         self.playbackMode = playbackMode
         self.playbackSpeed = playbackSpeed
-        self.isSleepTimerActive = isSleepTimerActive
         self.isAirPlayActive = isAirPlayActive
+        self.sleepTimerState = sleepTimerState
     }
 
     // MARK: - Music Mode intents
@@ -365,7 +371,16 @@ final class AudioPlayerViewModel: ObservableObject {
         seek(byOffset: skipInterval)
     }
 
-    func presentSleepTimer() {
+    func startSleepTimer(_ option: SleepTimerOption) {
+        if let interval = option.countdownDuration {
+            service?.startSleepTimer(after: interval)
+        } else {
+            service?.startSleepTimerAtEndOfTrack()
+        }
+    }
+
+    func cancelSleepTimer() {
+        service?.cancelSleepTimer()
     }
 
     // MARK: - Double-tap seek

@@ -9,14 +9,18 @@ import UIKit
 
 private enum PodcastMenu {
     case speed
+    case sleepOptions
+    case turnOff
 }
 
 /// Bounds of the podcast controls that anchor a popover menu
 private struct PodcastMenuAnchors {
     var speed: Anchor<CGRect>?
+    var clock: Anchor<CGRect>?
 
-    init(speed: Anchor<CGRect>? = nil) {
+    init(speed: Anchor<CGRect>? = nil, clock: Anchor<CGRect>? = nil) {
         self.speed = speed
+        self.clock = clock
     }
 }
 
@@ -25,6 +29,7 @@ private struct PodcastMenuAnchorsKey: PreferenceKey {
     static func reduce(value: inout PodcastMenuAnchors, nextValue: () -> PodcastMenuAnchors) {
         let next = nextValue()
         if let speed = next.speed { value.speed = speed }
+        if let clock = next.clock { value.clock = clock }
     }
 }
 
@@ -53,6 +58,7 @@ struct AudioPlayerView: View {
                     currentTime: vm.currentTime,
                     duration: vm.duration,
                     loadingState: vm.loadingState,
+                    sleepTimerState: vm.sleepTimerState,
                     onSeek: { vm.seek(toFraction: $0) }
                 )
                 .padding(.horizontal, TokenSpacing._5)
@@ -81,7 +87,7 @@ struct AudioPlayerView: View {
                             onBackward: vm.skipBackward,
                             onPlayPause: vm.togglePlayPause,
                             onForward: vm.skipForward,
-                            onSleepTimer: vm.presentSleepTimer
+                            onSleepTimer: { activeMenu = vm.isSleepTimerActive ? .turnOff : .sleepOptions }
                         )
                     }
                 }
@@ -238,6 +244,22 @@ struct AudioPlayerView: View {
                     y: rect.maxY + TokenSpacing._3 - GlassMenu.height(rowCount: vm.playbackSpeedOptions.count)
                 )
             }
+        case .sleepOptions:
+            if let anchor = anchors.clock {
+                let rect = proxy[anchor]
+                sleepOptionsMenu.offset(
+                    x: proxy.size.width - TokenSpacing._4 - GlassMenu.sleepWidth,
+                    y: rect.maxY - TokenSpacing._3 - GlassMenu.height(rowCount: SleepTimerOption.allCases.count + 1)
+                )
+            }
+        case .turnOff:
+            if let anchor = anchors.clock {
+                let rect = proxy[anchor]
+                turnOffMenu.offset(
+                    x: proxy.size.width - TokenSpacing._5 - GlassMenu.turnOffWidth,
+                    y: rect.maxY + TokenSpacing._3 - GlassMenu.height(rowCount: 1)
+                )
+            }
         }
     }
 
@@ -255,6 +277,40 @@ struct AudioPlayerView: View {
                 )
             }
         )
+    }
+
+    private var sleepOptionsMenu: some View {
+        var rows = [GlassMenu.Row(title: Strings.Localizable.Media.Audio.Player.SleepTimer.title, isHeader: true)]
+        rows += SleepTimerOption.allCases.map { option in
+            GlassMenu.Row(
+                title: sleepOptionTitle(option),
+                action: {
+                    vm.startSleepTimer(option)
+                    activeMenu = nil
+                }
+            )
+        }
+        return GlassMenu(width: GlassMenu.sleepWidth, rows: rows)
+    }
+
+    private var turnOffMenu: some View {
+        GlassMenu(
+            width: GlassMenu.turnOffWidth,
+            rows: [GlassMenu.Row(title: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.turnOff, action: {
+                vm.cancelSleepTimer()
+                activeMenu = nil
+            })]
+        )
+    }
+
+    private func sleepOptionTitle(_ option: SleepTimerOption) -> String {
+        switch option {
+        case .fiveMinutes: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.minutes(5)
+        case .fifteenMinutes: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.minutes(15)
+        case .thirtyMinutes: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.minutes(30)
+        case .sixtyMinutes: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.minutes(60)
+        case .endOfTrack: Strings.Localizable.Media.Audio.Player.SleepTimer.Option.endOfTrack
+        }
     }
 }
 
@@ -443,6 +499,7 @@ private struct ScrubberSection: View {
     let currentTime: TimeInterval
     let duration: TimeInterval?
     let loadingState: PlayerLoadingState
+    let sleepTimerState: SleepTimerState
     let onSeek: (Double) -> Void
 
     private static let timePlaceholder = "--:--"
@@ -477,6 +534,10 @@ private struct ScrubberSection: View {
         HStack {
             Text(elapsedLabel)
             Spacer()
+            if sleepTimerState.isActive {
+                sleepTimerLabel
+                Spacer()
+            }
             Text(remainingLabel)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
@@ -490,6 +551,33 @@ private struct ScrubberSection: View {
 
     private var remainingLabel: String {
         loadingState == .loading ? Self.timePlaceholder : formatRemaining(currentTime: displayTime, duration: duration)
+    }
+
+    @ViewBuilder
+    private var sleepTimerLabel: some View {
+        switch sleepTimerState {
+        case .inactive:
+            EmptyView()
+        case .countdown(let deadline):
+            TimelineView(.periodic(from: .now, by: 1)) { context in
+                Text(Strings.Localizable.Media.Audio.Player.SleepTimer.remaining(
+                    formatSleepRemaining(deadline.timeIntervalSince(context.date))
+                ))
+            }
+        case .endOfTrack:
+            Text(Strings.Localizable.Media.Audio.Player.SleepTimer.remaining(formatSleepRemaining(endOfTrackRemaining)))
+        }
+    }
+
+    /// Seconds left in the current track, for the end-of-track sleep timer label.
+    private var endOfTrackRemaining: TimeInterval {
+        guard let duration else { return 0 }
+        return max(0, duration - currentTime)
+    }
+
+    private func formatSleepRemaining(_ seconds: TimeInterval) -> String {
+        let total = max(0, Int(seconds.rounded()))
+        return "\(total / 60):\(String(format: "%02d", total % 60))"
     }
 
     private var displayFraction: Double {
@@ -665,6 +753,7 @@ private struct PodcastModeControlsSection: View {
                 isAccented: isSleepTimerActive,
                 action: onSleepTimer
             )
+            .anchorPreference(key: PodcastMenuAnchorsKey.self, value: .bounds) { PodcastMenuAnchors(clock: $0) }
             .overlay(alignment: .bottom) { activeDot(isVisible: isSleepTimerActive) }
             .padding(TokenSpacing._5)
         }
@@ -715,11 +804,13 @@ private struct GlassMenu: View {
         var id: String { title }
         let title: String
         let isChecked: Bool
+        let isHeader: Bool
         let action: (() -> Void)?
 
-        init(title: String, isChecked: Bool = false, action: (() -> Void)? = nil) {
+        init(title: String, isChecked: Bool = false, isHeader: Bool = false, action: (() -> Void)? = nil) {
             self.title = title
             self.isChecked = isChecked
+            self.isHeader = isHeader
             self.action = action
         }
     }
@@ -728,6 +819,8 @@ private struct GlassMenu: View {
     let rows: [Row]
 
     static let defaultWidth: CGFloat = 160
+    static let sleepWidth: CGFloat = 204
+    static let turnOffWidth: CGFloat = 169
     static let rowContentHeight: CGFloat = TokenSpacing._6
     static let rowSpacing: CGFloat = TokenSpacing._4
     static func height(rowCount: Int) -> CGFloat {
@@ -780,7 +873,7 @@ private struct GlassMenu: View {
                 .font(.caption2.weight(.medium))
             Spacer(minLength: 0)
         }
-        .foregroundStyle(TokenColors.Text.onColor.swiftUI)
+        .foregroundStyle(row.isHeader ? TokenColors.Text.secondary.swiftUI : TokenColors.Text.onColor.swiftUI)
         .frame(height: Self.rowContentHeight)
         .padding(.horizontal, TokenSpacing._3)
         .contentShape(Rectangle())
@@ -940,7 +1033,7 @@ private struct AirPlayIconButton: View {
             loadingState: .playing,
             playbackMode: .podcast,
             playbackSpeed: 2,
-            isSleepTimerActive: true
+            sleepTimerState: .countdown(deadline: Date(timeIntervalSinceNow: 299))
         )
         return vm
     }())

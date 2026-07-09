@@ -14,6 +14,7 @@ protocol PlaybackEngineProtocol: AnyObject {
 
     func play(url: URL)
     func togglePlayPause()
+    func pause()
     func setPlaybackSpeed(_ rate: Float)
     func seek(toSeconds: TimeInterval)
     /// Restart the current item from the beginning (used for repeat-one).
@@ -35,12 +36,14 @@ final class PlaybackEngine {
     private let didPlayToEndSubject = PassthroughSubject<Void, Never>()
 
     private let player = AVPlayer()
+    private let notificationCenter: NotificationCenter
     private var timeObserverToken: Any?
     private var rateObservation: NSKeyValueObservation?
     private var durationObservation: NSKeyValueObservation?
     private var endObservation: AnyCancellable?
 
-    init() {
+    init(notificationCenter: NotificationCenter = .default) {
+        self.notificationCenter = notificationCenter
         observeTimeControlStatus()
         startPeriodicTimeObserver()
     }
@@ -103,6 +106,10 @@ extension PlaybackEngine {
         } else {
             player.play()
         }
+    }
+
+    func pause() {
+        player.pause()
     }
 
     func seek(toSeconds seconds: TimeInterval) {
@@ -182,7 +189,7 @@ extension PlaybackEngine {
 
     private func observeEnd(of item: AVPlayerItem) {
         let subject = didPlayToEndSubject
-        endObservation = NotificationCenter.default
+        endObservation = notificationCenter
             .publisher(for: AVPlayerItem.didPlayToEndTimeNotification, object: item)
             .receive(on: DispatchQueue.main)
             .sink { _ in subject.send(()) }

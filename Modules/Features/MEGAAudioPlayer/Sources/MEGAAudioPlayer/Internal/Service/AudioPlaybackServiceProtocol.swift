@@ -16,6 +16,7 @@ protocol PlaybackStateObservable {
     var artworkResolved: Bool { get }
     var isAirPlayActive: Bool { get }
     var repeatMode: RepeatMode { get }
+    var sleepTimerState: SleepTimerState { get }
 
     var currentSourcePublisher: AnyPublisher<PlaybackSource?, Never> { get }
     var currentQueuePublisher: AnyPublisher<PlaybackQueue, Never> { get }
@@ -30,6 +31,7 @@ protocol PlaybackStateObservable {
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> { get }
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> { get }
+    var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> { get }
 }
 
 @MainActor
@@ -42,6 +44,9 @@ protocol PlaybackControllable {
     func playNext()
     func move(from source: Int, toOffset destination: Int)
     func cycleRepeat()
+    func startSleepTimer(after interval: TimeInterval)
+    func startSleepTimerAtEndOfTrack()
+    func cancelSleepTimer()
     func stop()
 }
 
