@@ -1,22 +1,12 @@
 import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 struct SubscriptionCountdownTimerView: View {
     private let deadline: Date
-    private let daysLabel: String
-    private let hoursLabel: String
-    private let minutesLabel: String
 
-    init(
-        deadline: Date,
-        daysLabel: String,
-        hoursLabel: String,
-        minutesLabel: String
-    ) {
+    init(deadline: Date) {
         self.deadline = deadline
-        self.daysLabel = daysLabel
-        self.hoursLabel = hoursLabel
-        self.minutesLabel = minutesLabel
     }
 
     var body: some View {
@@ -24,11 +14,11 @@ struct SubscriptionCountdownTimerView: View {
             let countdown = SubscriptionCountdown.remaining(until: deadline, from: context.date)
 
             HStack(spacing: 0) {
-                unit(value: countdown.days, label: daysLabel)
+                unit(value: countdown.days, label: Strings.Localizable.SubscriptionPurchase.Revamp.Countdown.days(countdown.days))
                 divider
-                unit(value: countdown.hours, label: hoursLabel)
+                unit(value: countdown.hours, label: Strings.Localizable.SubscriptionPurchase.Revamp.Countdown.hours(countdown.hours))
                 divider
-                unit(value: countdown.minutes, label: minutesLabel)
+                unit(value: countdown.minutes, label: Strings.Localizable.SubscriptionPurchase.Revamp.Countdown.minutes(countdown.minutes))
             }
             .padding(.vertical, TokenSpacing._4)
             .frame(maxWidth: .infinity)
@@ -58,11 +48,6 @@ struct SubscriptionCountdownTimerView: View {
 }
 
 #Preview {
-    SubscriptionCountdownTimerView(
-        deadline: .now.addingTimeInterval(60 * 60 * 24 * 28),
-        daysLabel: "Days",
-        hoursLabel: "Hours",
-        minutesLabel: "Minutes"
-    )
-    .padding()
+    SubscriptionCountdownTimerView(deadline: .now.addingTimeInterval(60 * 60 * 24 * 28))
+        .padding()
 }

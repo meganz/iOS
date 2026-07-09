@@ -44,10 +44,10 @@ private struct BulletListView: View {
 #Preview {
     SubscriptionBenefitsListView(
         benefits: [
-            "Password-protected links",
-            "Links with expiry dates",
-            "Rewind up to 180 days of deleted data",
-            "Priority support"
+            Strings.Localizable.Password.Protected.Links.title,
+            Strings.Localizable.Links.With.Expiry.Dates.title,
+            Strings.Localizable.SubscriptionPurchase.Benefits.Rewind.title,
+            Strings.Localizable.General.prioritySupport
         ]
     )
     .padding()

@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 struct SubscriptionProFeaturesView: View {
@@ -11,7 +12,7 @@ struct SubscriptionProFeaturesView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._5) {
-            Text("Why go Pro?") // To be localized later
+            Text(Strings.Localizable.SubscriptionPurchase.Revamp.Features.title)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)

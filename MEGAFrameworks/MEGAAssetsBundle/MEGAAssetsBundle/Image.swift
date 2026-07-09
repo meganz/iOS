@@ -342,4 +342,5 @@ public struct MEGAImageBundle {
     public static var monoCloudOffMediumThinOutline: Image { Image(.monoCloudOffMediumThinOutline) }
     public static var monoLoaderThrobberMediumRegularOutline: Image { Image(.monoLoaderThrobberMediumRegularOutline) }
     public static var monoCalendar01SmallThinOutline: Image { Image(.monoCalendar01SmallThinOutline) }
+    public static var promoBanner: Image { Image(.promoBanner) }
 }

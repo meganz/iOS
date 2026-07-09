@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 struct SubscriptionCurrentPlanViewModel: Equatable {
     enum Status: Equatable {
@@ -26,8 +27,8 @@ struct SubscriptionCurrentPlanViewModel: Equatable {
 
     var cycleText: String? {
         switch plan.subscriptionCycle {
-        case .yearly: "Yearly subscription" // to be localized later
-        case .monthly: "Monthly subscription" // to be localized later
+        case .yearly: Strings.Localizable.SubscriptionPurchase.Revamp.Cycle.yearly
+        case .monthly: Strings.Localizable.SubscriptionPurchase.Revamp.Cycle.monthly
         case .none: nil
         }
     }
@@ -35,8 +36,12 @@ struct SubscriptionCurrentPlanViewModel: Equatable {
     var statusText: String? {
         guard let status else { return nil }
         switch status {
-        case .renews: return "Renews on 8 July 2027" // to be localized later
-        case .expires: return "Expires on 8 July 2027" // to be localized later
+        case .renews: return Strings.Localizable.Account.Profile.Renewal.future(endOfCycleText)
+        case .expires: return Strings.Localizable.Account.Profile.Expiry.future(endOfCycleText)
         }
+    }
+
+    private var endOfCycleText: String {
+        "8 July 2027" // [IOS-12185]: Compute the actual end of cycle
     }
 }

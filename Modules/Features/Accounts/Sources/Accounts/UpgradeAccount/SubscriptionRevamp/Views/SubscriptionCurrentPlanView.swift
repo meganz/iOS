@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -30,7 +31,7 @@ struct SubscriptionCurrentPlanView: View {
     private var card: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
             HStack(spacing: TokenSpacing._3) {
-                Text("Current plan") // To be localized later
+                Text(Strings.Localizable.UpgradeAccountPlan.Plan.Tag.currentPlan)
                     .font(.footnote)
                     .fontWeight(.semibold)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)

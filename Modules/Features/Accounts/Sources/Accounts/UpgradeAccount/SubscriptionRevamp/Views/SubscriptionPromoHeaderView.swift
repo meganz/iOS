@@ -4,20 +4,9 @@ import SwiftUI
 
 struct SubscriptionPromoHeaderView: View {
     private let model: SubscriptionPromoHeaderModel
-    private let daysLabel: String
-    private let hoursLabel: String
-    private let minutesLabel: String
 
-    init(
-        model: SubscriptionPromoHeaderModel,
-        daysLabel: String,
-        hoursLabel: String,
-        minutesLabel: String
-    ) {
+    init(model: SubscriptionPromoHeaderModel) {
         self.model = model
-        self.daysLabel = daysLabel
-        self.hoursLabel = hoursLabel
-        self.minutesLabel = minutesLabel
     }
 
     var body: some View {
@@ -36,13 +25,8 @@ struct SubscriptionPromoHeaderView: View {
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
 
-            SubscriptionCountdownTimerView(
-                deadline: model.deadline,
-                daysLabel: daysLabel,
-                hoursLabel: hoursLabel,
-                minutesLabel: minutesLabel
-            )
-            .padding(.top, TokenSpacing._2)
+            SubscriptionCountdownTimerView(deadline: model.deadline)
+                .padding(.top, TokenSpacing._2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -56,10 +40,7 @@ struct SubscriptionPromoHeaderView: View {
             subtitle: "€119.88 for the first year",
             validUntil: "valid until July 11, 2026",
             deadline: .now.addingTimeInterval(60 * 60 * 24 * 28)
-        ),
-        daysLabel: "Days",
-        hoursLabel: "Hours",
-        minutesLabel: "Minutes"
+        )
     )
     .padding()
 }
@@ -72,10 +53,7 @@ struct SubscriptionPromoHeaderView: View {
             subtitle: "€29.94 of Pro I for 6 months",
             validUntil: "valid until July 11, 2026",
             deadline: .now.addingTimeInterval(60 * 60 * 24 * 28)
-        ),
-        daysLabel: "Days",
-        hoursLabel: "Hours",
-        minutesLabel: "Minutes"
+        )
     )
     .padding()
 }

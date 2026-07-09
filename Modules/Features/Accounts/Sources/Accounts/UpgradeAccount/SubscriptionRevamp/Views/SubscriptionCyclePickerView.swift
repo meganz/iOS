@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import SwiftUI
 
 public struct SubscriptionCyclePickerView: View {
@@ -63,8 +64,8 @@ private struct SubscriptionCyclePickerPreview: View {
     var body: some View {
         SubscriptionCyclePickerView(
             selection: $selection,
-            title: { $0 == .monthly ? "Monthly" : "Yearly" },
-            savingText: "Save up to 16%"
+            title: { $0 == .monthly ? Strings.Localizable.monthly : Strings.Localizable.yearly },
+            savingText: Strings.Localizable.SubscriptionPurchase.Revamp.Cycle.saving("16%")
         )
         .padding()
     }
