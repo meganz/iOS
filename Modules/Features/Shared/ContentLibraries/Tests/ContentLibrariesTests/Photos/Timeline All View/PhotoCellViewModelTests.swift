@@ -1100,6 +1100,103 @@ final class PhotoCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
+    // MARK: - Skeleton placeholder short-circuit
+
+    @MainActor
+    func testStartLoadingThumbnail_placeholderNode_returnsImmediatelyWithoutLoading() async {
+        let placeholder = ImageContainer(image: MEGAAssets.Image.filetypeImages, type: .placeholder)
+        let loadedThumbnail = ImageContainer(image: Image("folder"), type: .thumbnail)
+        let loadImageAsyncSequence = SingleItemAsyncSequence<any ImageContaining>(item: loadedThumbnail)
+            .eraseToAnyAsyncSequence()
+
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            viewModel: allViewModel,
+            thumbnailLoader: MockThumbnailLoader(initialImage: placeholder,
+                                                 loadImage: loadImageAsyncSequence)
+        )
+
+        let noUpdateExp = expectation(description: "thumbnail should not be changed")
+        noUpdateExp.isInverted = true
+        sut.$thumbnailContainer
+            .dropFirst()
+            .sink { _ in noUpdateExp.fulfill() }
+            .store(in: &subscriptions)
+
+        // The guard must let the call return on its own — without it, the method loops
+        // over `$currentZoomScaleFactor.values` forever and only ends on cancellation.
+        let finishedExp = expectation(description: "startLoadingThumbnail returns without cancellation")
+        Task {
+            await sut.startLoadingThumbnail()
+            finishedExp.fulfill()
+        }
+
+        await fulfillment(of: [finishedExp], timeout: 1.0)
+        await fulfillment(of: [noUpdateExp], timeout: 0.5)
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(placeholder))
+    }
+
+    @MainActor
+    func testMonitorInheritedSensitivityChanges_placeholderNode_returnsImmediatelyWithoutUpdating() async {
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isInheritingSensitivityResult: .success(true),
+            monitorInheritedSensitivityForNode: SingleItemAsyncSequence(item: true)
+                .eraseToAnyAsyncThrowingSequence())
+
+        let sut = makeSUT(
+            photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),
+            thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image("folder"), type: .thumbnail)),
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
+
+        let noUpdateExp = expectation(description: "Should not update image container")
+        noUpdateExp.isInverted = true
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in noUpdateExp.fulfill() }
+
+        // Without the guard this awaits a non-placeholder thumbnail that never arrives.
+        let finishedExp = expectation(description: "returns without cancellation")
+        Task {
+            await sut.monitorInheritedSensitivityChanges()
+            finishedExp.fulfill()
+        }
+
+        await fulfillment(of: [finishedExp], timeout: 1.0)
+        await fulfillment(of: [noUpdateExp], timeout: 0.5)
+        subscription.cancel()
+    }
+
+    @MainActor
+    func testMonitorPhotoSensitivityChanges_placeholderNode_returnsImmediatelyWithoutUpdating() async {
+        let photo = NodeEntity.timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0))
+        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
+        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
+            isInheritingSensitivityResult: .success(true),
+            monitorInheritedSensitivityForNode: SingleItemAsyncSequence(item: true)
+                .eraseToAnyAsyncThrowingSequence(),
+            sensitivityChangesForNode: SingleItemAsyncSequence(item: true)
+                .eraseToAnyAsyncSequence())
+
+        let sut = makeSUT(
+            photo: photo,
+            thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image("folder"), type: .thumbnail)),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: sensitiveNodeUseCase)
+
+        let noUpdateExp = expectation(description: "Should not update image container")
+        noUpdateExp.isInverted = true
+        let subscription = thumbnailContainerUpdates(on: sut) { _ in noUpdateExp.fulfill() }
+
+        // Both use cases are non-nil, so the placeholder guard is what short-circuits here.
+        let finishedExp = expectation(description: "returns without cancellation")
+        Task {
+            await sut.monitorPhotoSensitivityChanges()
+            finishedExp.fulfill()
+        }
+
+        await fulfillment(of: [finishedExp], timeout: 1.0)
+        await fulfillment(of: [noUpdateExp], timeout: 0.5)
+        subscription.cancel()
+    }
+
     @MainActor
     private func makeSUT(
         photo: NodeEntity,

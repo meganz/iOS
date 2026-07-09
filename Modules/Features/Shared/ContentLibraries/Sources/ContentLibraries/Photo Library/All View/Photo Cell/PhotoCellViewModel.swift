@@ -42,6 +42,8 @@ open class PhotoCellViewModel: ObservableObject {
         editMode.isEditing && isSelectionLimitReached && !isSelected
     }
     
+    private var isPlaceholder: Bool { photo.isTimelinePlaceholder }
+
     // MARK: private state
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -99,6 +101,7 @@ open class PhotoCellViewModel: ObservableObject {
     
     // MARK: Thumbnail/Preview Loading
     public func startLoadingThumbnail() async {
+        guard !isPlaceholder else { return }
         let thumbnailTypeSequence = $currentZoomScaleFactor
             .values
             .map { zoomScaleFactor -> ThumbnailTypeEntity in
@@ -122,7 +125,8 @@ open class PhotoCellViewModel: ObservableObject {
     }
     
     func monitorInheritedSensitivityChanges() async {
-        guard sensitiveNodeUseCase != nil,
+        guard !isPlaceholder,
+              sensitiveNodeUseCase != nil,
               !photo.isMarkedSensitive,
               await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder }) else { return }
         
@@ -138,7 +142,8 @@ open class PhotoCellViewModel: ObservableObject {
     /// Monitor photo node and inherited sensitivity changes
     /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
     func monitorPhotoSensitivityChanges() async {
-        guard nodeUseCase != nil,
+        guard !isPlaceholder,
+              nodeUseCase != nil,
               sensitiveNodeUseCase != nil else { return }
         // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
         _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
