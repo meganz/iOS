@@ -159,8 +159,17 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
 
     private func updateRevampedMiniPlayerInset(for viewController: UIViewController) -> Bool {
+        let presenter = viewController as? (any BottomOverlayPresenterProtocol)
+        let shouldHide = presenter == nil
+        if bottomOverlayManager?.contains(.audioPlayer) == true,
+           isMiniPlayerHidden() != shouldHide {
+            updateOverlayLayout { [weak self] in
+                self?.bottomOverlayManager?.setItemVisibility(for: .audioPlayer, hidden: shouldHide)
+            }
+        }
+
         let miniPlayerVisible = bottomOverlayManager?.contains(.audioPlayer) == true && !isMiniPlayerHidden()
-        guard let presenter = viewController as? (any BottomOverlayPresenterProtocol) else { return miniPlayerVisible }
+        guard let presenter else { return miniPlayerVisible }
         if miniPlayerVisible {
             presenter.updateContentView(bottomOverlayContainer?.frame.height ?? 0)
         } else if presenter.hasUpdatedContentView() {
