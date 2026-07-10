@@ -294,13 +294,15 @@ extension MainTabBarController: UITabBarControllerDelegate {
     }
 
     public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        // Tapping the already-selected tab pops its UINavigationController to root automatically.
-        // For exapmle, HomeView additionally hosts a SwiftUI NavigationStack inside its root controller,
-        // which UIKit cannot reach, so reset that inner stack here too.
+        // Home nests a SwiftUI NavigationStack inside its UIKit stack. On reselect, reset both to
+        // root ourselves in one non-animated step. Popping the UIKit stack here leaves it already at
+        // root, so UITabBarController's built-in reselect pop becomes a no-op and no longer reveals
+        // the intermediate page — while returning true still lets didSelect run as before.
         if viewController === selectedViewController,
            let navigationController = viewController as? MEGANavigationController,
            let resettable = navigationController.viewControllers.first as? (any RootNavigationResettable) {
             resettable.resetNavigationToRoot()
+            navigationController.popToRootViewController(animated: false)
         }
         return true
     }
