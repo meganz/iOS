@@ -5056,3 +5056,5 @@
 "subscriptionPurchase.revamp.cycle.saving"="Save up to %@";
 /* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
 "account.profile.expiry.future"="Expires on %@";
+/* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
+"general.undo"="Undo";
