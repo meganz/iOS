@@ -37,6 +37,8 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             moveToRubbishBin(nodeHandles: handles)
         case .toggleFavourites(let handles):
             toggleFavourites(for: handles)
+        case .sendToChat(let handles):
+            sendToChat(for: handles)
         default:
             break
         }
@@ -132,6 +134,17 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             }
     }
 
+    private func sendToChat(for nodeHandles: Set<HandleEntity>) {
+        guard let navigationController, let nodes = nodes(from: nodeHandles) else { return }
+        guard let sendToNavigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
+              let sendToViewController = sendToNavigationController.viewControllers.first as? SendToViewController else {
+            return
+        }
+        sendToViewController.nodes = nodes.compactMap { $0.toMEGANode(in: sdk) }
+        sendToViewController.sendMode = .cloud
+        navigationController.present(sendToNavigationController, animated: true)
+    }
+
     func presentActions(for nodeHandles: Set<HandleEntity>, completion: @escaping () -> Void) {
         showMore(for: nodeHandles, completion: completion)
     }
@@ -151,6 +164,9 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             delegate: delegate,
             displayMode: .cloudDrive,
             containsABackupNode: backupsUseCase.hasBackupNode(in: nodes),
+            showsFavouriteAction: true,
+            showsLabelAction: true,
+            showsSendToChatAction: false,
             sender: navigationController.view as Any
         )
         navigationController.present(nodeActionsViewController, animated: true)

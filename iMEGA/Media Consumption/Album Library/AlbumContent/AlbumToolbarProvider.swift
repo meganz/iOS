@@ -246,6 +246,8 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
             didPressedSendToChat(sender)
         case .favourite:
             favouriteButtonPressed(sender)
+        case .label:
+            presentLabelActionSheet(for: nodes)
         case .saveToPhotos:
             saveToPhotosButtonPressed(sender)
         case .hide:
@@ -255,6 +257,13 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
         default:
             break
         }
+    }
+
+    private func presentLabelActionSheet(for nodes: [MEGANode]) {
+        guard !nodes.isEmpty else { return }
+        let actionSheet = ActionSheetFactory().nodeLabelColorView(forNodes: nodes.map { $0.handle })
+        present(actionSheet, animated: true)
+        endEditingMode()
     }
     
     private func hide(nodes: [NodeEntity]) {

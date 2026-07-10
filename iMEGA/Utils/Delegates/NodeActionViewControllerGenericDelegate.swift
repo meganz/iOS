@@ -80,11 +80,20 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         case .favourite:
             trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
             favourite(nodes)
+        case .label:
+            trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
+            presentLabelActionSheet(for: nodes)
         default:
             break
         }
     }
     
+    private func presentLabelActionSheet(for nodes: [MEGANode]) {
+        guard let viewController else { return }
+        let actionSheet = ActionSheetFactory().nodeLabelColorView(forNodes: nodes.map { $0.handle })
+        viewController.present(actionSheet, animated: true)
+    }
+
     private func handleSendToChat(for nodes: [MEGANode], from viewController: UIViewController) {
         let storyboard = UIStoryboard(name: "Chat", bundle: nil)
         guard

@@ -31,7 +31,7 @@ extension MediaTabViewController: NodeActionViewControllerDelegate {
             nodeActionListener: nodeActionListener()
         )
         switch action {
-        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum, .favourite:
+        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum, .favourite, .label:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetAfterNodeAction()
         default:

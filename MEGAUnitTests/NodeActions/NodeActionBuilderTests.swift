@@ -1586,7 +1586,7 @@ class NodeActionBuilderTests {
             .setDisplayMode(.photosFavouriteAlbum)
             .multiselectBuild()
         
-        #expect(isEqual(nodeActionTypes: [.favourite, .download, .shareLink, .exportFile, .sendToChat]) == true)
+        #expect(isEqual(nodeActionTypes: [.favourite, .label, .download, .shareLink, .exportFile, .sendToChat]) == true)
     }
 
     @Test
@@ -1598,7 +1598,7 @@ class NodeActionBuilderTests {
             .setDisplayMode(.photosAlbum)
             .multiselectBuild()
 
-        #expect(isEqual(nodeActionTypes: [.favourite, .download, .shareLink, .exportFile, .sendToChat, .remove]) == true)
+        #expect(isEqual(nodeActionTypes: [.favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .remove]) == true)
     }
 
     @Test
@@ -1620,7 +1620,7 @@ class NodeActionBuilderTests {
                 .setIsHidden(isHidden)
                 .multiselectBuild()
             
-            let expectedActionTypes = [.favourite, .download, .shareLink,
+            let expectedActionTypes = [.favourite, .label, .download, .shareLink,
                                        .exportFile, .sendToChat, hiddenNodeActionType]
                 .compactMap { $0 }
             
@@ -1822,6 +1822,7 @@ class NodeActionBuilderTests {
 
         #expect(isEqual(nodeActionTypes: [
             .favourite,
+            .label,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1841,6 +1842,7 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [
             .favourite,
+            .label,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1862,6 +1864,7 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [
             .favourite,
+            .label,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,
@@ -1880,6 +1883,7 @@ class NodeActionBuilderTests {
 
         #expect(isEqual(nodeActionTypes: [
             .favourite,
+            .label,
             .shareLink,
             .saveToPhotos,
             .removeVideoFromVideoPlaylist,

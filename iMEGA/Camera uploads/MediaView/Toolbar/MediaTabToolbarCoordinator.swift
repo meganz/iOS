@@ -93,6 +93,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
             // file nodes and route .favourite through the generic delegate. The Albums tab has no .more
             // action, so it never reaches here.
             showsFavouriteAction: [.photosTimeline, .cloudDrive].contains(displayMode),
+            showsLabelAction: [.photosTimeline, .cloudDrive].contains(displayMode),
             sender: viewController.toolbar
         )
         nodeActionVC.accessoryActionDelegate = nodeAccessoryActionDelegate

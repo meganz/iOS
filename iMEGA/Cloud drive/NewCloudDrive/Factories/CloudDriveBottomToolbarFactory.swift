@@ -158,6 +158,7 @@ struct CloudDriveBottomToolbarItemsFactory {
             containsABackupNode: displayMode == .backup,
             isFromSharedItem: isFromSharedItem,
             showsFavouriteAction: true,
+            showsLabelAction: true,
             sender: sender
         )
         nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate

@@ -21,12 +21,12 @@ private extension BottomBarAction {
         switch self {
         case .download:
             Strings.Localizable.General.downloadToOffline
-        case .removeFavourite:
-            Strings.Localizable.removeFavourite
         case .shareLink:
             Strings.Localizable.Meetings.Panel.shareLink
         case .moveToRubbishBin:
             Strings.Localizable.General.MenuAction.moveToRubbishBin
+        case .sendToChat:
+            Strings.Localizable.General.sendToChat
         }
     }
 
@@ -34,12 +34,12 @@ private extension BottomBarAction {
         switch self {
         case .download:
             Image(uiImage: MEGAAssets.UIImage.cloudDownload)
-        case .removeFavourite:
-            Image(uiImage: MEGAAssets.UIImage.heartBroken)
         case .shareLink:
             Image(uiImage: MEGAAssets.UIImage.link01)
         case .moveToRubbishBin:
             Image(uiImage: MEGAAssets.UIImage.trash)
+        case .sendToChat:
+            Image(uiImage: MEGAAssets.UIImage.sendToChat)
         }
     }
 }

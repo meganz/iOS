@@ -26,6 +26,7 @@ extension NodeActionsDelegateHandler {
             toggleNodeFavourite: { _ in },
             favouriteNodes: { _ in },
             assignLabel: { _ in },
+            assignLabelToNodes: { _ in },
             leaveSharing: { _ in },
             rename: { _, _ in },
             removeSharing: { _ in },

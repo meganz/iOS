@@ -109,6 +109,22 @@ class ExplorerBaseViewController: UIViewController {
         endEditingMode()
     }
     
+    private func favourite(nodes: [MEGANode]) {
+        let nodeEntities = nodes.toNodeEntities()
+        let favouriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
+        // When every selected node is already favourited the action reads "Remove favourite", so
+        // unfavourite all; otherwise favourite all of them.
+        let shouldFavourite = !nodeEntities.allSatisfy { $0.isFavourite }
+        Task {
+            do {
+                try await favouriteUseCase.favourite(nodes: nodeEntities, isFavourite: shouldFavourite)
+            } catch {
+                MEGALogError("[Favourite] Bulk favourite of \(nodeEntities.count) nodes failed: \(error)")
+            }
+        }
+        endEditingMode()
+    }
+    
     fileprivate func downloadBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
@@ -195,7 +211,7 @@ class ExplorerBaseViewController: UIViewController {
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let containsABackupNode = backupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
-        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: displayMode, containsABackupNode: containsABackupNode, sender: button)
+        let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: displayMode, containsABackupNode: containsABackupNode, showsFavouriteAction: true, showsLabelAction: true, sender: button)
         nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         present(nodeActionsViewController, animated: true, completion: nil)
     }
@@ -372,8 +388,18 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
             addTo(mode: .album)
         case .addTo:
             addTo(mode: .collection)
+        case .label:
+            presentLabelActionSheet(for: nodes)
+        case .favourite:
+            favourite(nodes: nodes)
         default:
             break
         }
+    }
+
+    private func presentLabelActionSheet(for nodes: [MEGANode]) {
+        let actionSheet = ActionSheetFactory().nodeLabelColorView(forNodes: nodes.map { $0.handle })
+        present(actionSheet, animated: true)
+        endEditingMode()
     }
 }

@@ -181,12 +181,12 @@ package final class FavouritesViewModel: ObservableObject {
                 return switch action {
                 case .download:
                     NodesAction.download(selectedNodeHandles)
-                case .removeFavourite:
-                    NodesAction.toggleFavourites(selectedNodeHandles)
                 case .shareLink:
                     NodesAction.shareLink(selectedNodeHandles)
                 case .moveToRubbishBin:
                     NodesAction.moveToRubbishBin(selectedNodeHandles)
+                case .sendToChat:
+                    NodesAction.sendToChat(selectedNodeHandles)
                 }
             }
             .assign(to: &$nodesAction)

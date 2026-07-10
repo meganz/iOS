@@ -958,6 +958,7 @@ extension NodeActions {
             shareOrManageLink: { _ in },
             showNodeInfo: { _ in },
             assignLabel: { _ in },
+            assignLabelToNodes: { _ in },
             toggleNodeFavourite: { _ in },
             favouriteNodes: { _ in },
             sendToChat: { _ in },
