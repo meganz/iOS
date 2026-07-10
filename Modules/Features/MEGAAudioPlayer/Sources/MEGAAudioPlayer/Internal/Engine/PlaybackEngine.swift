@@ -10,6 +10,7 @@ protocol PlaybackEngineProtocol: AnyObject {
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
+    var playbackRatePublisher: AnyPublisher<Float, Never> { get }
     var didPlayToEndPublisher: AnyPublisher<Void, Never> { get }
 
     func play(url: URL)
@@ -72,6 +73,12 @@ extension PlaybackEngine: PlaybackEngineProtocol {
 
     var playbackSpeedPublisher: AnyPublisher<Float, Never> {
         playbackSpeedSubject.eraseToAnyPublisher()
+    }
+
+    var playbackRatePublisher: AnyPublisher<Float, Never> {
+        player.publisher(for: \.rate, options: [.initial, .new])
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 
     var didPlayToEndPublisher: AnyPublisher<Void, Never> {

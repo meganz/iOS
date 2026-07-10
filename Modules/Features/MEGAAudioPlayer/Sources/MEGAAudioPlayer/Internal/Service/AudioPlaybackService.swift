@@ -48,6 +48,10 @@ final class AudioPlaybackService {
 
     private var cancellables: Set<AnyCancellable> = []
 
+    /// Bridges playback state to the Control Center / lock screen Now Playing UI
+    /// and routes its remote commands back into this service.
+    private var nowPlayingController: NowPlayingInfoController?
+
     init(
         urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
@@ -62,10 +66,24 @@ final class AudioPlaybackService {
         self.notificationCenter = notificationCenter
         bindEngineToState()
         observeAirPlayRouteChanges()
+        setUpNowPlaying()
     }
 
     // MARK: - Private
 
+    private func setUpNowPlaying() {
+        let controller = NowPlayingInfoController(
+            commands: .init(
+                togglePlayPause: { [weak self] in self?.togglePlayPause() },
+                next: { [weak self] in self?.playNext() },
+                previous: { [weak self] in self?.playPrevious() },
+                seek: { [weak self] in self?.seek(toSeconds: $0) }
+            )
+        )
+        controller.observe(self)
+        nowPlayingController = controller
+    }
+    
     private func markArtworkResolved(generation: Int) {
         guard generation == playGeneration, currentSource != nil else { return }
         artworkResolvedSubject.send(true)
@@ -233,6 +251,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     
     var playbackSpeedPublisher: AnyPublisher<Float, Never> {
         engine.playbackSpeedPublisher
+    }
+
+    var playbackRatePublisher: AnyPublisher<Float, Never> {
+        engine.playbackRatePublisher
     }
 
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> {

@@ -31,6 +31,7 @@ protocol PlaybackStateObservable {
     var artworkResolvedPublisher: AnyPublisher<Bool, Never> { get }
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> { get }
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
+    var playbackRatePublisher: AnyPublisher<Float, Never> { get }
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> { get }
     var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> { get }
     var isShuffleOnPublisher: AnyPublisher<Bool, Never> { get }
