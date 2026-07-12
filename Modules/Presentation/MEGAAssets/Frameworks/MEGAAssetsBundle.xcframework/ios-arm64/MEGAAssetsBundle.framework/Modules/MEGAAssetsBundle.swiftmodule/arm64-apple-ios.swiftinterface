@@ -1045,6 +1045,9 @@ public struct MEGAImageBundle {
   public static var promoBanner: SwiftUICore.Image {
     get
   }
+  public static var promoBannerCentered: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2727,6 +2730,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var promoBanner: UIKit.UIImage {
+    get
+  }
+  public static var promoBannerCentered: UIKit.UIImage {
     get
   }
 }

@@ -360,6 +360,7 @@ extension MEGAAssets {
         public static var monoLoaderThrobberMediumRegularOutline: SwiftUI.Image { MEGAImageBundle.monoLoaderThrobberMediumRegularOutline }
         public static var monoCalendar01SmallThinOutline: SwiftUI.Image { MEGAImageBundle.monoCalendar01SmallThinOutline }
         public static var promoBanner: SwiftUI.Image { MEGAImageBundle.promoBanner }
+        public static var promoBannerCentered: SwiftUI.Image { MEGAImageBundle.promoBannerCentered }
     }
 }
 
@@ -858,5 +859,6 @@ extension MEGAAssets {
         public static var monoLoaderThrobberMediumRegularOutline: UIKit.UIImage { MEGAUIImageBundle.monoLoaderThrobberMediumRegularOutline }
         public static var monoCalendar01SmallThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCalendar01SmallThinOutline }
         public static var promoBanner: UIKit.UIImage { MEGAUIImageBundle.promoBanner }
+        public static var promoBannerCentered: UIKit.UIImage { MEGAUIImageBundle.promoBannerCentered }
     }
 }
