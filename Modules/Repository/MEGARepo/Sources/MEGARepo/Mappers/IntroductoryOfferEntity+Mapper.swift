@@ -15,13 +15,21 @@ extension IntroductoryOfferEntity {
         @unknown default: nil
         }
         guard let unit else { return nil }
-        
+
         let subscriptionPeriod = SubscriptionPeriod(unit: unit, value: period.value)
+
+        let paymentMode: PaymentMode = switch storeKitOffer.paymentMode {
+        case .payAsYouGo: .payAsYouGo
+        case .payUpFront: .payUpFront
+        case .freeTrial: .freeTrial
+        default: .payAsYouGo
+        }
 
         return IntroductoryOfferEntity(
             price: price,
             period: subscriptionPeriod,
-            periodCount: periodCount
+            periodCount: periodCount,
+            paymentMode: paymentMode
         )
     }
 }

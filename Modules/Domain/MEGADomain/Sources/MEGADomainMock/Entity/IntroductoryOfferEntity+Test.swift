@@ -6,12 +6,14 @@ public extension IntroductoryOfferEntity {
         price: Decimal = 100,
         period: IntroductoryOfferEntity.SubscriptionPeriod = .init(unit: .month, value: 1),
         periodCount: Int = 1,
+        paymentMode: IntroductoryOfferEntity.PaymentMode = .payAsYouGo,
         isTesting: Bool = true
     ) {
         self.init(
             price: price,
             period: period,
-            periodCount: periodCount
+            periodCount: periodCount,
+            paymentMode: paymentMode
         )
     }
 }
