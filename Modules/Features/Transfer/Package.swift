@@ -58,6 +58,7 @@ let package = Package(
                 "Transfer",
                 "MEGADomain",
                 "MEGAL10n",
+                "MEGARepo",
                 "MEGASwift",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")

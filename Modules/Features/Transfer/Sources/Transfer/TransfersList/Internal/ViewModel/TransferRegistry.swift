@@ -13,15 +13,18 @@ final class TransferRegistry {
     private let controlUseCase: any TransferControlUseCaseProtocol
     private let rowRouter: any TransferRowRouting
     private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
+    private let thumbnailLoader: TransferThumbnailLoader
 
     init(
         controlUseCase: some TransferControlUseCaseProtocol,
         rowRouter: some TransferRowRouting,
-        clearTransfersUseCase: some ClearTransfersUseCaseProtocol
+        clearTransfersUseCase: some ClearTransfersUseCaseProtocol,
+        thumbnailLoader: TransferThumbnailLoader
     ) {
         self.controlUseCase = controlUseCase
         self.rowRouter = rowRouter
         self.clearTransfersUseCase = clearTransfersUseCase
+        self.thumbnailLoader = thumbnailLoader
     }
 
     func rowViewModel(for id: Int) -> TransferRowViewModel? {
@@ -37,7 +40,8 @@ final class TransferRegistry {
                 transfer: transfer,
                 controlUseCase: controlUseCase,
                 rowRouter: rowRouter,
-                clearTransfersUseCase: clearTransfersUseCase
+                clearTransfersUseCase: clearTransfersUseCase,
+                thumbnailLoader: thumbnailLoader
             )
         }
     }

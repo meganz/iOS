@@ -1,7 +1,10 @@
+import Foundation
 import MEGADomain
 import MEGADomainMock
+import MEGARepo
 import Testing
 @testable import Transfer
+import UIKit
 
 @Suite("TransferRowViewModel per-row pause/resume")
 @MainActor
@@ -13,14 +16,16 @@ struct TransferRowViewModelTests {
         state: TransferRowState? = nil,
         controlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
         rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
-        clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase()
+        clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
+        thumbnailLoader: TransferThumbnailLoader? = nil
     ) -> (sut: TransferRowViewModel, useCase: MockTransferControlUseCase) {
         let sut = TransferRowViewModel(
             state: state ?? TransferEntityMapper.rowState(for: entity),
             transfer: entity,
             controlUseCase: controlUseCase,
             rowRouter: rowRouter,
-            clearTransfersUseCase: clearTransfersUseCase
+            clearTransfersUseCase: clearTransfersUseCase,
+            thumbnailLoader: thumbnailLoader ?? TransferThumbnailLoader(thumbnailUseCase: MockThumbnailUseCase())
         )
         return (sut, controlUseCase)
     }
@@ -180,4 +185,58 @@ struct TransferRowViewModelTests {
 
         #expect(cancelled == nil)
     }
+    
+    // MARK: - Thumbnail retry on upload completion
+
+    @Test("Upload completion re-arms a missed thumbnail load and bumps the retry trigger")
+    func uploadCompletionRearmsThumbnailRetry() async throws {
+        // Staged-file generation always fails; the node's thumbnail is locally cached,
+        // so only the post-completion node lookup can produce an image.
+        let thumbnailURL = try Self.writeTempImage()
+        let loader = TransferThumbnailLoader(
+            thumbnailUseCase: MockThumbnailUseCase(
+                cachedThumbnails: [ThumbnailEntity(url: thumbnailURL, type: .thumbnail)]
+            ),
+            makeUploadThumbnailGenerator: { _ in StubFailingAttributeGenerator() }
+        )
+        let inFlight = TransferEntity(type: .upload, path: "/staged/doc.pdf", tag: 21, state: .active)
+        let (sut, _) = Self.makeSUT(entity: inFlight, thumbnailLoader: loader)
+
+        await sut.loadThumbnail()
+        #expect(sut.thumbnail == nil)
+        let triggerBefore = sut.thumbnailRetryTrigger
+
+        // A resolved miss stays resolved while the upload is in flight.
+        await sut.loadThumbnail()
+        #expect(sut.thumbnail == nil)
+        #expect(sut.thumbnailRetryTrigger == triggerBefore)
+
+        let completed = TransferEntity(type: .upload, path: "/staged/doc.pdf", nodeHandle: 7, tag: 21, state: .complete)
+        sut.update(state: TransferEntityMapper.rowState(for: completed), transfer: completed)
+        #expect(sut.thumbnailRetryTrigger == triggerBefore + 1)
+
+        // The bumped trigger restarts the row's `.task`, which retries via the node.
+        await sut.loadThumbnail()
+        #expect(sut.thumbnail != nil)
+    }
+
+    private static func writeTempImage() throws -> URL {
+        let image = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { context in
+            UIColor.red.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("\(UUID().uuidString).png")
+        let data = try #require(image.pngData())
+        try data.write(to: url)
+        return url
+    }
+}
+
+private struct StubFailingAttributeGenerator: FileAttributeGeneratorProtocol {
+    func createThumbnail(at destinationURL: URL) async -> Bool { false }
+
+    func createPreview(at destinationURL: URL) async -> Bool { false }
+
+    func requestThumbnail() async -> UIImage? { nil }
 }

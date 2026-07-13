@@ -43,7 +43,10 @@ public enum TransfersListViewControllerFactory {
         let registry = TransferRegistry(
             controlUseCase: DependencyInjection.transferControlUseCase,
             rowRouter: rowRouter,
-            clearTransfersUseCase: clearTransfersUseCase
+            clearTransfersUseCase: clearTransfersUseCase,
+            thumbnailLoader: TransferThumbnailLoader(
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            )
         )
 
         let dependency = TransferTabDependency(

@@ -1,3 +1,4 @@
+import MEGADomainMock
 @testable import Transfer
 
 extension TransferRegistry {
@@ -7,7 +8,8 @@ extension TransferRegistry {
         self.init(
             controlUseCase: MockTransferControlUseCase(),
             rowRouter: MockTransferRowRouting(),
-            clearTransfersUseCase: MockClearTransfersUseCase()
+            clearTransfersUseCase: MockClearTransfersUseCase(),
+            thumbnailLoader: TransferThumbnailLoader(thumbnailUseCase: MockThumbnailUseCase())
         )
     }
 }

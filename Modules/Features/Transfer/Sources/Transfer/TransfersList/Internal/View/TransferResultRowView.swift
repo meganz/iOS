@@ -46,10 +46,7 @@ struct TransferResultRowView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: TokenSpacing._4) {
-                MEGAAssets.Image.image(forFileName: viewModel.state.fileName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 32, height: 32)
+                leadingThumbnail
 
                 VStack(alignment: .leading, spacing: TokenSpacing._2) {
                     Text(viewModel.state.fileName)
@@ -88,6 +85,9 @@ struct TransferResultRowView: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             swipeAction
         }
+        .task(id: viewModel.thumbnailRetryTrigger) {
+            await viewModel.loadThumbnail()
+        }
     }
 
     /// Right-to-left swipe: cancel on in-flight rows (trash), clear on terminal rows
@@ -111,6 +111,24 @@ struct TransferResultRowView: View {
             } else {
                 MEGAAssets.Image.rubbishBinInMenu
             }
+        }
+    }
+
+    /// Real thumbnail when the loader produced one (cached SDK thumbnail for
+    /// downloads, QuickLook-generated for uploads); file-type icon otherwise.
+    @ViewBuilder
+    private var leadingThumbnail: some View {
+        if let thumbnail = viewModel.thumbnail {
+            Image(uiImage: thumbnail)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 32, height: 32)
+                .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+        } else {
+            MEGAAssets.Image.image(forFileName: viewModel.state.fileName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
         }
     }
 

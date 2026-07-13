@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import UIKit
 
 /// Per-row observable holding the UI state for one transfer. Lives in the
 /// `TransferRegistry` keyed by transfer tag. Live updates mutate a single instance,
@@ -12,18 +13,24 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
     public nonisolated let id: Int
 
     @Published public private(set) var state: TransferRowState
+    @Published public private(set) var thumbnail: UIImage?
+    @Published private(set) var thumbnailRetryTrigger = 0
 
     private var transfer: TransferEntity
     private let controlUseCase: any TransferControlUseCaseProtocol
     private let rowRouter: any TransferRowRouting
     private let clearTransfersUseCase: any ClearTransfersUseCaseProtocol
+    private let thumbnailLoader: TransferThumbnailLoader
+    
+    private var hasResolvedThumbnail = false
 
     init(
         state: TransferRowState,
         transfer: TransferEntity,
         controlUseCase: some TransferControlUseCaseProtocol,
         rowRouter: some TransferRowRouting,
-        clearTransfersUseCase: some ClearTransfersUseCaseProtocol
+        clearTransfersUseCase: some ClearTransfersUseCaseProtocol,
+        thumbnailLoader: TransferThumbnailLoader
     ) {
         self.id = state.id
         self.state = state
@@ -31,11 +38,52 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
         self.controlUseCase = controlUseCase
         self.rowRouter = rowRouter
         self.clearTransfersUseCase = clearTransfersUseCase
+        self.thumbnailLoader = thumbnailLoader
     }
 
     func update(state: TransferRowState, transfer: TransferEntity) {
+        let wasInFlight = !isTerminal(self.state.status)
         self.state = state
         self.transfer = transfer
+        // Completed only: the staged file is deleted on success, so the entry is
+        // re-keyed to the created node's handle. Failed/cancelled uploads keep
+        // theirs — the staged file typically still exists and a retry can re-hit.
+        if wasInFlight, state.status == .completed, transfer.type == .upload, let path = transfer.path {
+            thumbnailLoader.migrateUploadThumbnail(fromPath: path, toNodeHandle: transfer.nodeHandle)
+            // Completion creates the node, so a miss while in-flight (e.g. QuickLook
+            // couldn't represent the file) is no longer definitive: allow one retry
+            // against the node's thumbnail and restart the row's load task.
+            if thumbnail == nil {
+                hasResolvedThumbnail = false
+                thumbnailRetryTrigger += 1
+            }
+        }
+    }
+
+    // MARK: - Thumbnail
+
+    func loadThumbnail() async {
+        guard !hasResolvedThumbnail else { return }
+        do {
+            let image = try await thumbnailLoader.image(for: transfer)
+            guard !Task.isCancelled else { return }
+            hasResolvedThumbnail = true
+            thumbnail = image
+        } catch is CancellationError {
+            return
+        } catch {
+            // Transient failure (e.g. fetch while offline): stay unresolved so the
+            // next row appearance retries. Definitive misses return nil above and
+            // they never re-fetch.
+            MEGALogWarning("[Transfer] thumbnail load failed for tag \(transfer.tag), will retry on next appearance: \(error)")
+        }
+    }
+
+    private func isTerminal(_ status: TransferRowState.Status) -> Bool {
+        switch status {
+        case .completed, .failed, .cancelled: true
+        case .queued, .active, .paused: false
+        }
     }
 
     // MARK: - Context actions
