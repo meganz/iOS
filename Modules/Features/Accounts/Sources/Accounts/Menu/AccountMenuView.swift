@@ -1,4 +1,5 @@
 import MEGAAssets
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
 import MEGASwift
@@ -20,7 +21,14 @@ public struct AccountMenuView: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
-            contentView
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: headerHeight)
+                // The no-internet / back-online prompt shows below the header and
+                // pushes the list down instead of overlapping it
+                contentView
+                    .noInternetViewModifier()
+            }
             AccountMenuHeaderView(
                 hideHeaderBackground: viewModel.isAtTop,
                 notificationCount: viewModel.appNotificationsCount,
@@ -48,10 +56,12 @@ public struct AccountMenuView: View {
         .coordinateSpace(name: AccountMenuViewModel.Constants.coordinateSpaceName)
     }
 
+    /// Zero-height probe that only tracks whether the list is scrolled near the top;
+    /// the space below the floating header is reserved outside the scroll view.
     private var emptySpaceView: some View {
         Color
             .clear
-            .frame(height: headerHeight)
+            .frame(height: 0)
             .onScrollNearTop(
                 coordinateSpaceName: AccountMenuViewModel.Constants.coordinateSpaceName,
                 topInset: 0,

@@ -45,6 +45,10 @@ public protocol AccountMenuViewRouting {
 @MainActor
 public final class AccountMenuViewModel: ObservableObject {
     enum Constants {
+        /// Subtitle shown instead of a loading spinner when the data is unavailable and the device is offline
+        static let offlinePlaceholder = "--"
+        static let offlineStoragePlaceholder = "-- / --"
+
         /// How far the scroll view can move from the top before it's no longer considered "at the top".
         ///
         /// If the scroll position (after adjusting for any top inset) is less than this value,
@@ -171,7 +175,7 @@ public final class AccountMenuViewModel: ObservableObject {
             rowType: .disclosure { [weak self] in self?.showDeviceCentre() }
         )
         accountSection[Constants.AccountSectionIndex.transfers.rawValue] = AccountMenuOption(
-            iconConfiguration: .init(icon: MEGAAssets.Image.transfersInMenu),
+            iconConfiguration: .init(icon: MEGAAssets.Image.arrowUpDownSmallRegularOutline),
             title: Strings.Localizable.transfers,
             rowType: .disclosure { [weak self] in self?.showTransfers() }
         )
@@ -249,6 +253,7 @@ public final class AccountMenuViewModel: ObservableObject {
         self.notificationsUseCase = notificationsUseCase
 
         isAccountUpdating = accountUseCase.isMonitoringRefreshAccount || purchaseUseCase.isSubmittingReceiptAfterPurchase
+        isConnected = networkMonitorUseCase.isConnected()
         sections = sectionData
         $offlineLogOutWarningDismissed.useCase = preferenceUseCase
         Task { await updateUI() }
@@ -364,8 +369,10 @@ public final class AccountMenuViewModel: ObservableObject {
     private func accountDetailsMenuOption(iconConfiguration: AccountMenuOption.IconConfiguration) -> AccountMenuOption {
         let subtitleState: AccountMenuOption.TextLoadState = if let email = accountUseCase.myEmail {
             .value(email)
-        } else {
+        } else if isConnected {
             .loading
+        } else {
+            .value(Constants.offlinePlaceholder)
         }
 
         return .init(
@@ -457,12 +464,14 @@ public final class AccountMenuViewModel: ObservableObject {
                 self?.upgradeAccount()
             }
 
-        let subtitleState: AccountMenuOption.TextLoadState = if isAccountUpdating {
+        let subtitleState: AccountMenuOption.TextLoadState = if isAccountUpdating, isConnected {
             .loading
         } else if let name = accountDetails?.proLevel.toAccountTypeDisplayName() {
             .value(name)
-        } else {
+        } else if isConnected {
             .loading
+        } else {
+            .value(Constants.offlinePlaceholder)
         }
 
         return .init(
@@ -495,7 +504,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private func storageUsedMenuOption(isAccountUpdating: Bool, accountDetails: AccountDetailsEntity?) -> AccountMenuOption {
         let subtitleState: AccountMenuOption.TextLoadState
 
-        if isAccountUpdating {
+        if isAccountUpdating, isConnected {
             subtitleState = .loading
         } else if let accountDetails {
             let storageUsed = String.memoryStyleString(fromByteCount: accountDetails.storageUsed).formattedByteCountString()
@@ -503,8 +512,10 @@ public final class AccountMenuViewModel: ObservableObject {
             subtitleState = isBusinessAccount || isProFlexiAccount
             ? .value(Strings.Localizable.AccountMenu.BusinessAndProFlexiAccountsStorageUsed.title(storageUsed))
             : .value("\(storageUsed) / \(totalStorage)")
-        } else {
+        } else if isConnected {
             subtitleState = nil
+        } else {
+            subtitleState = .value(Constants.offlineStoragePlaceholder)
         }
 
         return .init(
@@ -547,13 +558,41 @@ public final class AccountMenuViewModel: ObservableObject {
     }
 
     private func monitorConnectionState() {
-        isConnected = networkMonitorUseCase.isConnected()
         monitorConnectionTask = Task { [weak self, networkMonitorUseCase] in
             for await connected in networkMonitorUseCase.connectionSequence {
                 guard let self else { return }
-                self.isConnected = connected
+                guard connected != isConnected else { continue }
+                isConnected = connected
+                rebuildAccountInfoRows()
+                if connected {
+                    await refreshAccountData()
+                }
             }
         }
+    }
+
+    /// Rebuilds the rows whose subtitle depends on connectivity (account details, plan and storage),
+    /// so placeholders and loading indicators stay in sync with the connection state.
+    private func rebuildAccountInfoRows() {
+        var updatedSections = sections
+
+        if let iconConfiguration = updatedSections[.account]?[Constants.AccountSectionIndex.accountDetails.rawValue]?.iconConfiguration {
+            updatedSections[.account]?[Constants.AccountSectionIndex.accountDetails.rawValue] = accountDetailsMenuOption(
+                iconConfiguration: iconConfiguration
+            )
+        }
+
+        updatedSections[.account]?[Constants.AccountSectionIndex.currentPlan.rawValue] = currentPlanMenuOption(
+            accountDetails: accountUseCase.currentAccountDetails,
+            isAccountUpdating: isAccountUpdating
+        )
+
+        updatedSections[.account]?[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
+            isAccountUpdating: isAccountUpdating,
+            accountDetails: accountUseCase.currentAccountDetails
+        )
+
+        sections = updatedSections
     }
 
     private func monitorAccountRefresh() {

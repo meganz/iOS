@@ -35,7 +35,8 @@ let package = Package(
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
-        .package(path: "../../MEGASharedRepo/MEGAPreference")
+        .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(path: "../../MEGASharedRepo/MEGAConnectivity")
     ],
     targets: [
         .target(
@@ -48,7 +49,8 @@ let package = Package(
                            "MEGAUI",
                            "MEGAUIKit",
                            "Settings",
-                           "MEGAUIComponent"],
+                           "MEGAUIComponent",
+                           "MEGAConnectivity"],
             swiftSettings: settings
         ),
         .target(

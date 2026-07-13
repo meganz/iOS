@@ -612,6 +612,58 @@ struct AccountMenuViewModelTests {
         #expect(sut.isConnected == true)
     }
 
+    @Test("Offline with no cached data should show placeholders instead of loading spinners")
+    func testSubtitles_whenDataUnavailableAndOffline_shouldShowPlaceholders() throws {
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)
+        )
+        let accountSection = sut.sections[.account]
+        let accountRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue])
+        let planRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue])
+        let storageRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue])
+        #expect(accountRow.subtitleState == .value(SUT.Constants.offlinePlaceholder))
+        #expect(planRow.subtitleState == .value(SUT.Constants.offlinePlaceholder))
+        #expect(storageRow.subtitleState == .value(SUT.Constants.offlineStoragePlaceholder))
+    }
+
+    @Test("Online with no cached data should keep the loading state")
+    func testSubtitles_whenDataUnavailableAndOnline_shouldShowLoading() throws {
+        let sut = makeSUT(
+            accountUseCase: MockAccountUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true)
+        )
+        let accountSection = sut.sections[.account]
+        let accountRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue])
+        let planRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue])
+        let storageRow = try #require(accountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue])
+        #expect(accountRow.subtitleState == .loading)
+        #expect(planRow.subtitleState == .loading)
+        #expect(storageRow.subtitleState == nil)
+    }
+
+    @Test("Regaining connectivity should trigger an account data refresh")
+    func testReconnect_shouldRefreshAccountData() async throws {
+        let accountUseCase = MockAccountUseCase(
+            accountDetailsResult: .success(MockMEGAAccountDetails(type: .free).toAccountDetailsEntity())
+        )
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        let sut = makeSUT(
+            accountUseCase: accountUseCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(
+                connected: false,
+                connectionSequence: stream.eraseToAnyAsyncSequence()
+            )
+        )
+        #expect(sut.isConnected == false)
+
+        // The refresh triggered by init is the first call; reconnecting must trigger a second one.
+        continuation.yield(true)
+        try await waitUntil(await MainActor.run { sut.isConnected != true })
+        try await waitUntil(accountUseCase.refreshAccountDetails_calledCount < 2)
+        #expect(accountUseCase.refreshAccountDetails_calledCount >= 2)
+    }
+
     @Test(arguments: [
         true,
         false
