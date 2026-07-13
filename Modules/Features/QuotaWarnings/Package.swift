@@ -10,7 +10,7 @@ private let settings: [SwiftSetting] = [
 let package = Package(
     name: "QuotaWarnings",
     platforms: [
-        .macOS(.v10_15), .iOS(.v16)
+        .macOS(.v12), .iOS(.v16)
     ],
     products: [
         .library(
@@ -20,9 +20,29 @@ let package = Package(
             name: "QuotaWarningsMock",
             targets: ["QuotaWarningsMock"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure")
+    ],
     targets: [
         .target(
             name: "QuotaWarnings",
+            dependencies: ["MEGADesignToken",
+                           "MEGASwiftUI",
+                           "MEGAAssets",
+                           "MEGAL10n",
+                           "MEGADomain",
+                           "MEGAAppSDKRepo",
+                           "MEGAUIComponent",
+                           "MEGASwift",
+                           "MEGAInfrastructure"],
             swiftSettings: settings
         ),
         .target(

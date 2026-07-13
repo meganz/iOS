@@ -33,8 +33,8 @@ extension MEGAPricing {
             productIdentifier: id,
             type: proLevel(atProductIndex: index).toAccountTypeEntity(),
             subscriptionCycle: SubscriptionCycleEntity(productIdentifier: id),
-            storage: storageGB(atProductIndex: index).toGBString(),
-            transfer: transferGB(atProductIndex: index).toGBString()
+            storageLimit: storageGB(atProductIndex: index),
+            transferLimit: transferGB(atProductIndex: index)
         )
     }
 }
@@ -83,8 +83,9 @@ fileprivate extension PlanEntity {
         )
 
         self.storageLimit = storageLimit
-        storage = displayStringForGBValue(gbValue: storageLimit)
-        transfer = displayStringForGBValue(gbValue: transferLimit)
+        self.transferLimit = transferLimit
+        storage = storageLimit.toGBString()
+        transfer = transferLimit.toGBString()
 
         guard useAPIPrice, let apiPrice, apiPrice > 0, let apiCurrencyCode else { return }
 
@@ -110,11 +111,5 @@ fileprivate extension PlanEntity {
         } else {
             return .lite
         }
-    }
-    
-    private func displayStringForGBValue(gbValue: Int) -> String {
-        // 1 GB = 1024 * 1024 * 1024 Bytes
-        let valueIntBytes: Int64 = Int64(gbValue * 1024 * 1024 * 1024)
-        return ByteCountFormatter.string(fromByteCount: valueIntBytes, countStyle: .binary)
     }
 }

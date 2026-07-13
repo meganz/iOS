@@ -18,6 +18,7 @@ public struct PlanEntity: Sendable {
     public var name: String
     public var subscriptionCycle: SubscriptionCycleEntity
     public var storageLimit: Int
+    public var transferLimit: Int
     public var storage: String
     public var transfer: String
 
@@ -88,6 +89,7 @@ public struct PlanEntity: Sendable {
         currency: String = "",
         subscriptionCycle: SubscriptionCycleEntity = .none,
         storageLimit: Int = 0,
+        transferLimit: Int = 0,
         storage: String = "",
         transfer: String = "",
         price: Decimal = 0,
@@ -100,6 +102,7 @@ public struct PlanEntity: Sendable {
         self.name = name
         self.subscriptionCycle = subscriptionCycle
         self.storageLimit =  storageLimit
+        self.transferLimit = transferLimit
         self.storage = storage
         self.transfer = transfer
         self.appStorePrice = PlanPriceEntity(
@@ -117,8 +120,7 @@ public struct PlanEntity: Sendable {
         name: String = "",
         subscriptionCycle: SubscriptionCycleEntity = .none,
         storageLimit: Int = 0,
-        storage: String = "",
-        transfer: String = "",
+        transferLimit: Int = 0,
         apiPrice: PlanPriceEntity? = nil,
         appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
         introductoryOffer: IntroductoryOfferEntity? = nil,
@@ -129,8 +131,9 @@ public struct PlanEntity: Sendable {
         self.name = name
         self.subscriptionCycle = subscriptionCycle
         self.storageLimit = storageLimit
-        self.storage = storage
-        self.transfer = transfer
+        self.transferLimit = transferLimit
+        self.storage = storageLimit.toGBString()
+        self.transfer = transferLimit.toGBString()
         self.apiPrice = apiPrice
         self.appStorePrice = appStorePrice
         self.introductoryOffer = introductoryOffer
