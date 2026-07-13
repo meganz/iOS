@@ -25,7 +25,7 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
                 return
             }
             fallthrough
-        case .sendToChat, .hide, .unhide, .favourite:
+        case .sendToChat, .hide, .unhide, .favourite, .label:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetNavigationBar()
         case .removeVideoFromVideoPlaylist where !viewModel.showOverDiskQuotaIfNeeded():

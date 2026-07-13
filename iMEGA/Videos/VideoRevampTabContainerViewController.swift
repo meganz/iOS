@@ -518,7 +518,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private func nodeActionViewController(with selectedVideos: [MEGANode], from sender: UIBarButtonItem) -> NodeActionViewController {
         let viewController = NodeActionViewController(
-            nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, showsFavouriteAction: true, sender: sender)
+            nodes: selectedVideos, delegate: self, displayMode: .cloudDrive, showsFavouriteAction: true, showsLabelAction: true, sender: sender)
         viewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         return viewController
     }

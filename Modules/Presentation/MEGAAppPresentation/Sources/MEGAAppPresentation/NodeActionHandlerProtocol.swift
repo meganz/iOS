@@ -8,6 +8,7 @@ public enum NodesAction: Sendable {
     case copy(Set<HandleEntity>)
     case move(Set<HandleEntity>)
     case moveToRubbishBin(Set<HandleEntity>)
+    case sendToChat(Set<HandleEntity>)
 }
 
 public struct NodeAction {

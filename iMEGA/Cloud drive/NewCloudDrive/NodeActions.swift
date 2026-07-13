@@ -19,6 +19,7 @@ struct NodeActions {
     var shareOrManageLink: ([NodeEntity]) -> Void
     var showNodeInfo: (NodeEntity) -> Void
     var assignLabel: (NodeEntity) -> Void
+    var assignLabelToNodes: ([NodeEntity]) -> Void
     var toggleNodeFavourite: (NodeEntity) -> Void
     var favouriteNodes: ([NodeEntity]) -> Void
     var sendToChat: ([NodeEntity]) -> Void
@@ -131,6 +132,12 @@ extension NodeActions {
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }
                 trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
                 megaNode.mnz_labelActionSheet(in: navigationController)
+            },
+            assignLabelToNodes: { [weak navigationController] nodes in
+                guard let navigationController, nodes.isNotEmpty else { return }
+                trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
+                let actionSheet = ActionSheetFactory().nodeLabelColorView(forNodes: nodes.map(\.handle))
+                navigationController.present(actionSheet, animated: true)
             },
             toggleNodeFavourite: { node in
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }

@@ -38,6 +38,8 @@ final class RecentActionBucketMoreActionsPresenter: MoreNodeActionsPresenting {
             delegate: delegate,
             displayMode: .recents,
             containsABackupNode: backupsUseCase.hasBackupNode(in: nodes),
+            showsFavouriteAction: true,
+            showsLabelAction: true,
             sender: navigationController.view as Any
         )
         navigationController.present(nodeActionsViewController, animated: true)

@@ -156,11 +156,11 @@ public struct FavouritesView: View {
     private var bottomBar: some View {
         BottomBarActionButton(action: .download, selection: $viewModel.bottomBarAction)
         Spacer()
-        BottomBarActionButton(action: .removeFavourite, selection: $viewModel.bottomBarAction)
-        Spacer()
         BottomBarActionButton(action: .shareLink, selection: $viewModel.bottomBarAction)
         Spacer()
         BottomBarActionButton(action: .moveToRubbishBin, selection: $viewModel.bottomBarAction)
+        Spacer()
+        BottomBarActionButton(action: .sendToChat, selection: $viewModel.bottomBarAction)
         Spacer()
         Button {
             dependency.moreActionsPresenter.presentActions(for: viewModel.selectedNodeHandles) {

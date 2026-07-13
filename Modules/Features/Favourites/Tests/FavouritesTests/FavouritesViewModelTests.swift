@@ -202,18 +202,18 @@ struct FavouritesViewModelTests {
     }
 
     @Test
-    func removeFavouriteActionCreatesToggleFavouritesNodesAction() async throws {
+    func sendToChatActionCreatesSendToChatNodesAction() async throws {
         let sut = makeSUT()
         sut.selectedNodeHandles = [4, 5]
 
-        sut.bottomBarAction = .removeFavourite
+        sut.bottomBarAction = .sendToChat
 
         try await waitForCondition {
-            if case .toggleFavourites = sut.nodesAction { return true }
+            if case .sendToChat = sut.nodesAction { return true }
             return false
         }
-        guard case .toggleFavourites(let handles) = sut.nodesAction else {
-            #expect(Bool(false), "Expected toggleFavourites action")
+        guard case .sendToChat(let handles) = sut.nodesAction else {
+            #expect(Bool(false), "Expected sendToChat action")
             return
         }
         #expect(handles == [4, 5])
@@ -257,7 +257,7 @@ struct FavouritesViewModelTests {
 
     // MARK: - Nodes action auto-exits edit mode
 
-    @Test(arguments: [BottomBarAction.download, .removeFavourite, .shareLink, .moveToRubbishBin])
+    @Test(arguments: [BottomBarAction.download, .shareLink, .moveToRubbishBin, .sendToChat])
     func bottomBarActionsExitEditMode(_ action: BottomBarAction) async throws {
         let sut = makeSUT()
         sut.editMode = .active

@@ -28,7 +28,7 @@ extension VideoRevampTabContainerViewController: NodeActionViewControllerDelegat
             nodeActionListener: nodeActionListener(tracker: tracker)
         )
         switch action {
-        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum, .favourite:
+        case .copy, .move, .shareLink, .manageLink, .exportFile, .sendToChat, .removeLink, .moveToRubbishBin, .download, .saveToPhotos, .hide, .unhide, .addTo, .addToAlbum, .favourite, .label:
             nodeActionViewControllerDelegate.nodeAction?(nodeAction, didSelect: action, forNodes: nodes, from: sender)
             resetNavigationBar()
         default:

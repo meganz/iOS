@@ -42,6 +42,8 @@ final class NodeActionBuilder {
     private var isFolderEmpty = false
     private var isNodeKeyDecrypted = true
     private var showsBulkFavouriteAction = false
+    private var showsBulkLabelAction = false
+    private var showsSendToChatAction = true
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -230,6 +232,16 @@ final class NodeActionBuilder {
 
     func setShowsBulkFavouriteAction(_ showsBulkFavouriteAction: Bool) -> NodeActionBuilder {
         self.showsBulkFavouriteAction = showsBulkFavouriteAction
+        return self
+    }
+
+    func setShowsBulkLabelAction(_ showsBulkLabelAction: Bool) -> NodeActionBuilder {
+        self.showsBulkLabelAction = showsBulkLabelAction
+        return self
+    }
+
+    func setShowsSendToChatAction(_ showsSendToChatAction: Bool) -> NodeActionBuilder {
+        self.showsSendToChatAction = showsSendToChatAction
         return self
     }
 
@@ -837,6 +849,7 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectLabelAction(to: &actions)
         prependMultiselectFavouriteAction(to: &actions)
         return actions
     }
@@ -844,9 +857,12 @@ final class NodeActionBuilder {
     private func multiselectFilesActions() -> [NodeAction] {
         var actions = [.downloadAction(),
                        multiselectedLinkNodesAction(),
-                       .exportFileAction(nodeCount: selectedNodeCount),
-                       .sendToChatAction()]
-        
+                       .exportFileAction(nodeCount: selectedNodeCount)]
+
+        if showsSendToChatAction {
+            actions.append(.sendToChatAction())
+        }
+
         if areMediaFiles {
             actions.append(.saveToPhotosAction())
         }
@@ -865,6 +881,7 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectLabelAction(to: &actions)
         prependMultiselectFavouriteAction(to: &actions)
         return actions
     }
@@ -885,6 +902,7 @@ final class NodeActionBuilder {
         if linkedNodeCount > 0 {
             actions.insert(.removeLinkAction(nodeCount: linkedNodeCount), at: 2)
         }
+        prependMultiselectLabelAction(to: &actions)
         prependMultiselectFavouriteAction(to: &actions)
         return actions
     }
@@ -893,12 +911,21 @@ final class NodeActionBuilder {
     // delegate must be able to handle a multi-node .favourite action. isFavourite is true only when every
     // selected node is already favourited, so a partial selection shows the positive "Favourite" action.
     private func prependMultiselectFavouriteAction(to actions: inout [NodeAction]) {
-        guard showsBulkFavouriteAction, [.cloudDrive, .photosTimeline].contains(displayMode), !isBackupNode else { return }
+        guard showsBulkFavouriteAction, [.cloudDrive, .photosTimeline, .recents].contains(displayMode), !isBackupNode else { return }
         actions.insert(.favouriteAction(isFavourite: isFavourite), at: 0)
+    }
+
+    // Only added when the presenting surface opts in via setShowsBulkLabelAction(_:), because its delegate
+    // must be able to handle a multi-node .label action. `label` is the node's current label for a single
+    // selection (shows the colour detail) and .unknown for a multi selection (no detail, as labels may differ).
+    private func prependMultiselectLabelAction(to actions: inout [NodeAction]) {
+        guard showsBulkLabelAction, [.cloudDrive, .recents, .photosTimeline].contains(displayMode), !isBackupNode else { return }
+        actions.insert(.labelAction(label: label), at: 0)
     }
     
     private func favouriteAlbumActions() -> [NodeAction] {
         var actions: [NodeAction] = [.favouriteAction(isFavourite: isFavourite),
+                                     .labelAction(label: label),
                                      .downloadAction(),
                                      .shareLinkAction(nodeCount: selectedNodeCount),
                                      .exportFileAction(nodeCount: selectedNodeCount),
@@ -911,6 +938,7 @@ final class NodeActionBuilder {
     
     private func normalAlbumActions() -> [NodeAction] {
         var actions: [NodeAction] = [.favouriteAction(isFavourite: isFavourite),
+                                     .labelAction(label: label),
                                      .downloadAction(),
                                      .shareLinkAction(nodeCount: selectedNodeCount),
                                      .exportFileAction(nodeCount: selectedNodeCount),
@@ -976,6 +1004,7 @@ final class NodeActionBuilder {
     private func videoPlaylistContentActions() -> [NodeAction] {
         [
             .favouriteAction(isFavourite: isFavourite),
+            .labelAction(label: label),
             .shareLinkAction(),
             .saveToPhotosAction(),
             .removeVideoFromVideoPlaylistAction(),

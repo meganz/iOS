@@ -16,6 +16,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var toggleNodeFavourite: (NodeEntity) -> Void
     var favouriteNodes: ([NodeEntity]) -> Void
     var assignLabel: (NodeEntity) -> Void
+    var assignLabelToNodes: ([NodeEntity]) -> Void
     var leaveSharing: (NodeEntity) -> Void
     var rename: (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void
     var removeSharing: (NodeEntity) -> Void
@@ -49,6 +50,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         toggleNodeFavourite: @escaping (NodeEntity) -> Void,
         favouriteNodes: @escaping ([NodeEntity]) -> Void,
         assignLabel: @escaping (NodeEntity) -> Void,
+        assignLabelToNodes: @escaping ([NodeEntity]) -> Void,
         leaveSharing: @escaping (NodeEntity) -> Void,
         rename: @escaping (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void,
         removeSharing: @escaping (NodeEntity) -> Void,
@@ -78,6 +80,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         self.toggleNodeFavourite = toggleNodeFavourite
         self.favouriteNodes = favouriteNodes
         self.assignLabel = assignLabel
+        self.assignLabelToNodes = assignLabelToNodes
         self.leaveSharing = leaveSharing
         self.rename = rename
         self.removeSharing = removeSharing
@@ -134,6 +137,8 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
             addTo(nodeEntities)
         case .favourite:
             favouriteNodes(nodeEntities)
+        case .label:
+            assignLabelToNodes(nodeEntities)
         default:
             break
         }

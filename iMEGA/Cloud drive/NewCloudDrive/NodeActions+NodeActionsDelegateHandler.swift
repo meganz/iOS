@@ -22,6 +22,7 @@ extension NodeActions {
             toggleNodeFavourite: toggleNodeFavourite,
             favouriteNodes: favouriteNodes,
             assignLabel: assignLabel,
+            assignLabelToNodes: assignLabelToNodes,
             leaveSharing: leaveSharing,
             rename: rename,
             removeSharing: removeSharing,

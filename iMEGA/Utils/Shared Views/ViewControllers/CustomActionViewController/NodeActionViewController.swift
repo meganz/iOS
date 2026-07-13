@@ -130,6 +130,8 @@ class NodeActionViewController: ActionSheetViewController {
         containsABackupNode: Bool = false,
         isFromSharedItem: Bool = false,
         showsFavouriteAction: Bool = false,
+        showsLabelAction: Bool = false,
+        showsSendToChatAction: Bool = true,
         sender: Any
     ) {
         self.nodes = nodes
@@ -161,6 +163,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setDisplayMode(displayMode)
                 .setIsTakedown(containsDisputedFiles)
                 .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
+                .setLabel(nodesCount == 1 ? (nodes.first?.label ?? .unknown) : .unknown)
                 .setLinkedNodeCount(linkedNodeCount)
                 .setIsAllLinkedNode(linkedNodeCount == nodesCount)
                 .setIsFavourite(displayMode == .photosFavouriteAlbum || nodes.allSatisfy { $0.isFavourite })
@@ -178,6 +181,8 @@ class NodeActionViewController: ActionSheetViewController {
                     isFromSharedItem: isFromSharedItem))
                 .setIsNodeKeyDecrypted(nodes.first(where: { !$0.isNodeKeyDecrypted() }) == nil)
                 .setShowsBulkFavouriteAction(showsFavouriteAction)
+                .setShowsBulkLabelAction(showsLabelAction)
+                .setShowsSendToChatAction(showsSendToChatAction)
                 .multiselectBuild()
             
             update(actions: actions, sender: sender)
