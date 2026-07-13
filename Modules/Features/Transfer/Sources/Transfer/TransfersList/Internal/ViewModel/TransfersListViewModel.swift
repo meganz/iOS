@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -32,6 +33,7 @@ public final class TransfersListViewModel: ObservableObject {
     private let monitorPresenceUseCase: any MonitorTransferTabPresenceUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let transferQuotaUseCase: any TransferQuotaUseCaseProtocol
+    private let transferControlUseCase: any TransferControlUseCaseProtocol
 
     private var isStorageOverquota: Bool
     /// Session-only: the transfer banner reappears on next launch if still over quota.
@@ -42,13 +44,15 @@ public final class TransfersListViewModel: ObservableObject {
         transferListUseCase: some TransferListUseCaseProtocol,
         monitorPresenceUseCase: some MonitorTransferTabPresenceUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        transferQuotaUseCase: some TransferQuotaUseCaseProtocol
+        transferQuotaUseCase: some TransferQuotaUseCaseProtocol,
+        transferControlUseCase: some TransferControlUseCaseProtocol
     ) {
         self.dependency = dependency
         self.transferListUseCase = transferListUseCase
         self.monitorPresenceUseCase = monitorPresenceUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.transferQuotaUseCase = transferQuotaUseCase
+        self.transferControlUseCase = transferControlUseCase
         self.isAllPaused = transferListUseCase.areTransfersPaused()
         self.isTransferOverquota = transferQuotaUseCase.isOverquota
         self.isStorageOverquota = Self.isOverStorageQuota(accountStorageUseCase)
@@ -160,6 +164,31 @@ public final class TransfersListViewModel: ObservableObject {
         transferListUseCase.resumeTransfers()
         isAllPaused = false
         snackBar = nil
+    }
+
+    // MARK: - Swipe-cancel undo
+
+    /// Shows the undo snackbar after a row swipe-cancel. The SDK cannot resurrect a
+    /// cancelled transfer, so Undo re-queues it as a fresh transfer (retry) and clears
+    /// the Cancelled entry the cancel left on the Failed tab.
+    func didCancelTransfer(_ transfer: TransferEntity) {
+        snackBar = SnackBar(
+            message: Strings.Localizable.transferCancelled,
+            layout: .horizontal,
+            action: .init(title: Strings.Localizable.General.undo) { [weak self] in
+                Task { await self?.undoCancel(transfer) }
+            }
+        )
+    }
+
+    func undoCancel(_ transfer: TransferEntity) async {
+        snackBar = nil
+        do {
+            try await transferControlUseCase.retryTransfer(transfer)
+            dependency.clearTransfersUseCase.clearTransfer(tag: transfer.tag)
+        } catch {
+            MEGALogError("[Transfer] undo cancel failed for tag \(transfer.tag): \(error)")
+        }
     }
 
     // MARK: - More menu

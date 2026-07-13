@@ -11,6 +11,9 @@ package protocol TransferControlRepositoryProtocol: RepositoryProtocol, Sendable
     /// Re-queues a finished (failed or cancelled) transfer. The SDK implements retry as
     /// creating a fresh transfer with the same parameters; the retried transfer runs on the Active tab.
     func retryTransfer(_ transfer: TransferEntity) async throws
+    /// Cancels a single in-flight transfer in the transfer engine. The transfer finishes
+    /// as Cancelled and moves to the completed-transfers cache (rendered by the Failed tab).
+    func cancelTransfer(_ transfer: TransferEntity) async throws
 }
 
 package enum TransferControlRepositoryError: Error {
@@ -43,6 +46,19 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
         sdk.retryTransfer(megaTransfer)
     }
 
+    package func cancelTransfer(_ transfer: TransferEntity) async throws {
+        try await withAsyncThrowingVoidValue { completion in
+            sdk.cancelTransfer(byTag: transfer.tag, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
+    }
+
     /// Finished transfers are no longer addressable by tag in the transfer engine
     /// (`transferByTag:` only returns active transfers), so the original `MEGATransfer`
     /// must be recovered from the completed-transfers list, which retains failed and
@@ -54,7 +70,7 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
     /// Pause and resume share a single SDK entry point (`pauseTransferByTag:pause:`),
     /// addressing the transfer by its tag since the engine is keyed by tag, not handle.
     private func setTransfer(_ transfer: TransferEntity, paused: Bool) async throws {
-        try await withAsyncThrowingValue { completion in
+        try await withAsyncThrowingVoidValue { completion in
             sdk.pauseTransfer(byTag: transfer.tag, pause: paused, delegate: RequestDelegate { result in
                 switch result {
                 case .success:

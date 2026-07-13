@@ -133,7 +133,11 @@ public struct TransfersListView: View {
     // the SDK delegate streams. The environment values only affect Active rows;
     // read-only Completed/Failed rows ignore them.
     private var tabContainer: some View {
-        TransferTabListView(tab: viewModel.selectedTab, dependency: viewModel.dependency)
+        TransferTabListView(
+            tab: viewModel.selectedTab,
+            dependency: viewModel.dependency,
+            onTransferCancelled: { viewModel.didCancelTransfer($0) }
+        )
             .id(viewModel.selectedTab)
             .environment(\.isAllTransfersPaused, viewModel.isAllPaused)
             .environment(\.isTransferOverquota, viewModel.isTransferOverquota)

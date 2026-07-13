@@ -5,9 +5,11 @@ final class MockTransferControlUseCase: TransferControlUseCaseProtocol, @uncheck
     private(set) var pausedTransfers: [TransferEntity] = []
     private(set) var resumedTransfers: [TransferEntity] = []
     private(set) var retriedTransfers: [TransferEntity] = []
+    private(set) var cancelledTransfers: [TransferEntity] = []
     var pauseError: (any Error)?
     var resumeError: (any Error)?
     var retryError: (any Error)?
+    var cancelError: (any Error)?
 
     init() {}
 
@@ -24,5 +26,10 @@ final class MockTransferControlUseCase: TransferControlUseCaseProtocol, @uncheck
     func retryTransfer(_ transfer: TransferEntity) async throws {
         retriedTransfers.append(transfer)
         if let retryError { throw retryError }
+    }
+
+    func cancelTransfer(_ transfer: TransferEntity) async throws {
+        cancelledTransfers.append(transfer)
+        if let cancelError { throw cancelError }
     }
 }

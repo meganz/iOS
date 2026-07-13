@@ -79,7 +79,8 @@ public enum TransfersListViewControllerFactory {
             transferQuotaUseCase: TransferQuotaUseCase(
                 accountRepository: AccountRepository.newRepo,
                 nodeTransferRepository: NodeTransferRepository.newRepo
-            )
+            ),
+            transferControlUseCase: DependencyInjection.transferControlUseCase
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
         host.hidesBottomBarWhenPushed = true

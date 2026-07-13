@@ -152,4 +152,32 @@ struct TransferRowViewModelTests {
 
         #expect(router.openFileTags == [42])
     }
+
+    // MARK: - Swipe cancel
+
+    @Test("Swipe-cancelling an active row routes the cancel and returns the entity for undo")
+    func cancelRoutesToUseCaseAndReturnsEntity() async {
+        let (sut, useCase) = Self.makeSUT(
+            entity: TransferEntity(tag: 13, state: .active)
+        )
+
+        let cancelled = await sut.cancel()
+
+        #expect(useCase.cancelledTransfers.map(\.tag) == [13])
+        #expect(cancelled?.tag == 13)
+    }
+
+    @Test("A failed cancel is swallowed and returns nil so the row stays")
+    func cancelFailureReturnsNil() async {
+        let useCase = MockTransferControlUseCase()
+        useCase.cancelError = TestError.failure
+        let (sut, _) = Self.makeSUT(
+            entity: TransferEntity(tag: 14, state: .active),
+            controlUseCase: useCase
+        )
+
+        let cancelled = await sut.cancel()
+
+        #expect(cancelled == nil)
+    }
 }

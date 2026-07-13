@@ -55,8 +55,22 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
         rowRouter.openFile(for: transfer)
     }
 
-    private func clear() {
+    /// Removes this terminal row's entry from the completed-transfers cache.
+    /// Reached from the row action sheet and the swipe-to-clear gesture.
+    func clear() {
         clearTransfersUseCase.clearTransfer(tag: transfer.tag)
+    }
+
+    /// Cancels this in-flight transfer. Returns the entity for undo orchestration,
+    /// or `nil` when the engine rejected the cancel (the row stays as is).
+    func cancel() async -> TransferEntity? {
+        do {
+            try await controlUseCase.cancelTransfer(transfer)
+            return transfer
+        } catch {
+            MEGALogError("[Transfer] cancel failed for tag \(transfer.tag): \(error)")
+            return nil
+        }
     }
 
     // MARK: - Pause / resume

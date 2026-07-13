@@ -255,6 +255,46 @@ struct TransfersListViewModelPauseTests {
     }
 }
 
+@Suite("TransfersListViewModel swipe-cancel undo")
+@MainActor
+struct TransfersListViewModelSwipeCancelTests {
+
+    @Test func didCancelTransfer_showsSnackBarWithUndoAction() {
+        let sut = makeSUT()
+
+        sut.didCancelTransfer(TransferEntity(tag: 7))
+
+        #expect(sut.snackBar != nil)
+        #expect(sut.snackBar?.action?.title == "Undo")
+    }
+
+    @Test func undoCancel_retriesTransferClearsCancelledEntryAndDismissesSnackBar() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(clearTransfersUseCase: clearUseCase, transferControlUseCase: transferControlUseCase)
+        let transfer = TransferEntity(tag: 7)
+        sut.didCancelTransfer(transfer)
+
+        await sut.undoCancel(transfer)
+
+        #expect(transferControlUseCase.retriedTransfers.map(\.tag) == [7])
+        #expect(clearUseCase.clearedTransferTags == [7])
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func undoCancel_retryFailureIsSwallowedAndDoesNotClear() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        transferControlUseCase.retryError = CancellationError()
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(clearTransfersUseCase: clearUseCase, transferControlUseCase: transferControlUseCase)
+        let transfer = TransferEntity(tag: 7)
+
+        await sut.undoCancel(transfer)
+
+        #expect(clearUseCase.clearedTransferTags.isEmpty)
+    }
+}
+
 @Suite("TransfersListViewModel derived state")
 @MainActor
 struct TransfersListViewModelDerivedStateTests {
@@ -410,7 +450,8 @@ private func makeSUT(
     clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
     accountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
     transferQuotaUseCase: MockTransferQuotaUseCase = MockTransferQuotaUseCase(),
-    rowRouter: MockTransferRowRouting = MockTransferRowRouting()
+    rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
+    transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase()
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
         hasActive: hasActiveTransfers,
@@ -424,7 +465,8 @@ private func makeSUT(
             presenceUpdates: presenceUpdates ?? [seed].async.eraseToAnyAsyncSequence()
         ),
         accountStorageUseCase: accountStorageUseCase,
-        transferQuotaUseCase: transferQuotaUseCase
+        transferQuotaUseCase: transferQuotaUseCase,
+        transferControlUseCase: transferControlUseCase
     )
 }
 

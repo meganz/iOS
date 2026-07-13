@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAssets
 import MEGADesignToken
+import MEGADomain
 import MEGASwiftUI
 import SwiftUI
 
@@ -18,6 +19,9 @@ import SwiftUI
 /// row.
 struct TransferResultRowView: View {
     @ObservedObject var viewModel: TransferRowViewModel
+    /// Invoked after a swipe-cancel lands in the engine, with the cancelled entity;
+    /// the screen shows the undo snackbar.
+    let onCancelled: (TransferEntity) -> Void
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
 
@@ -80,6 +84,33 @@ struct TransferResultRowView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             if isCompleted { viewModel.openFile() }
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            swipeAction
+        }
+    }
+
+    /// Right-to-left swipe: cancel on in-flight rows (trash), clear on terminal rows
+    /// (eraser). `.destructive` renders the design's pinned red button; row removal
+    /// is driven by the resulting membership event, and cancels bubble up through
+    /// `onCancelled` for the undo snackbar.
+    private var swipeAction: some View {
+        Button(role: .destructive) {
+            if isReadOnly {
+                viewModel.clear()
+            } else {
+                Task {
+                    if let cancelled = await viewModel.cancel() {
+                        onCancelled(cancelled)
+                    }
+                }
+            }
+        } label: {
+            if isReadOnly {
+                MEGAAssets.Image.monoEraserMediumThinOutline
+            } else {
+                MEGAAssets.Image.rubbishBinInMenu
+            }
         }
     }
 

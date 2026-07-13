@@ -8,6 +8,8 @@ package protocol TransferControlUseCaseProtocol: Sendable {
     /// Retries a finished (failed or cancelled) transfer. Retry re-queues a fresh transfer with the
     /// same parameters and it runs on the Active tab; callers need not distinguish it from a new transfer.
     func retryTransfer(_ transfer: TransferEntity) async throws
+    /// Cancels a single in-flight transfer. The transfer finishes as Cancelled.
+    func cancelTransfer(_ transfer: TransferEntity) async throws
 }
 
 package struct TransferControlUseCase: TransferControlUseCaseProtocol {
@@ -27,5 +29,9 @@ package struct TransferControlUseCase: TransferControlUseCaseProtocol {
 
     package func retryTransfer(_ transfer: TransferEntity) async throws {
         try await repo.retryTransfer(transfer)
+    }
+
+    package func cancelTransfer(_ transfer: TransferEntity) async throws {
+        try await repo.cancelTransfer(transfer)
     }
 }

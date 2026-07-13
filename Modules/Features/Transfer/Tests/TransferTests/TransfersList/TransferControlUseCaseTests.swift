@@ -9,6 +9,7 @@ struct TransferControlUseCaseTests {
         case pause
         case resume
         case retry
+        case cancel
     }
 
     private static func makeSUT(
@@ -89,5 +90,29 @@ struct TransferControlUseCaseTests {
         #expect(repo.retriedTransfers.map(\.tag) == [6])
         #expect(repo.pausedTransfers.isEmpty)
         #expect(repo.resumedTransfers.isEmpty)
+    }
+
+    @Test("Cancelling a transfer forwards the transfer to the repository")
+    func cancelTransfer() async throws {
+        let (sut, repo) = Self.makeSUT()
+        let transfer = TransferEntity(tag: 7)
+
+        try await sut.cancelTransfer(transfer)
+
+        #expect(repo.cancelledTransfers.map(\.tag) == [7])
+        #expect(repo.pausedTransfers.isEmpty)
+        #expect(repo.retriedTransfers.isEmpty)
+    }
+
+    @Test("Cancel errors are rethrown")
+    func cancelTransferRethrowsRepositoryError() async {
+        let repo = MockTransferControlRepository.newRepo
+        repo.cancelError = TestError.cancel
+        let (sut, _) = Self.makeSUT(repo: repo)
+
+        await #expect(throws: TestError.cancel) {
+            try await sut.cancelTransfer(TransferEntity(tag: 8))
+        }
+        #expect(repo.cancelledTransfers.map(\.tag) == [8])
     }
 }
