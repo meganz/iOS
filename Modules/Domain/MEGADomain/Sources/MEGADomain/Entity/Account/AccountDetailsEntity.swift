@@ -73,6 +73,10 @@ public struct AccountDetailsEntity: Sendable {
     public let plans: [AccountPlanEntity]
     public let storageUsedForHandle: @Sendable (_ handle: HandleEntity) -> Int64
     
+    public var isFree: Bool {
+        proLevel == .free
+    }
+    
     public init(
         storageUsed: Int64,
         versionsStorageUsed: Int64,

@@ -35,8 +35,18 @@ import UIKit
         let presenter = UIApplication.mnz_presentingViewController()
 
         if isRedesignEnabled {
-            let hostingController = UIHostingController(rootView: TransferQuotaDialogView())
-            presenter.present(hostingController, animated: true)
+            let severity: TransferQuotaSeverity = switch mode {
+            case .limitedDownload: .limitedDownload
+            case .downloadExceeded: .downloadExceeded
+            case .streamingExceeded: .streamingExceeded
+            }
+            let hostingController = UIHostingController(
+                rootView: TransferQuotaDialogView(severity: severity, onClose: { [weak presenter] in
+                    presenter?.dismiss(animated: true)
+                })
+            )
+            let nvc = MEGANavigationController(rootViewController: hostingController)
+            presenter.present(nvc, animated: true)
         } else {
             // Old logic, copied over
             CustomModalAlertRouter(
