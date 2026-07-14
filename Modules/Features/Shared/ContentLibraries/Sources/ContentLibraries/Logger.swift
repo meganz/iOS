@@ -1,31 +1,32 @@
 import Foundation
+import MEGAAppSDKRepo
+
+// These module-internal wrappers shadow the public `MEGALog*` functions from
+// MEGAAppSDKRepo so call sites across ContentLibraries don't each need to import
+// it. They forward to the real implementation (which routes to `MEGASdk.log`) via
+// the `MEGAAppSDKRepo.` module qualifier — without it the calls would resolve back
+// to these same functions and recurse.
 
 func MEGALogFatal(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[fatal] [iOS] \(message)")
-//    MEGASdk.log(with: .fatal, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogFatal(message, file, line)
 }
 
 func MEGALogError(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[error] [iOS] \(message)")
-//    MEGASdk.log(with: .error, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogError(message, file, line)
 }
 
 func MEGALogWarning(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[warn] [iOS] \(message)")
-//    MEGASdk.log(with: .warning, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogWarning(message, file, line)
 }
 
 func MEGALogInfo(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[info] [iOS] \(message)")
-//    MEGASdk.log(with: .info, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogInfo(message, file, line)
 }
 
 func MEGALogDebug(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[debug] [iOS] \(message)")
-//    MEGASdk.log(with: .debug, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogDebug(message, file, line)
 }
 
 func MEGALogMax(_ message: String, _ file: String = #file, _ line: Int = #line) {
-    print("[max] [iOS] \(message)")
-//    MEGASdk.log(with: .max, message: "[iOS] \(message)", filename: file, line: line)
+    MEGAAppSDKRepo.MEGALogMax(message, file, line)
 }
