@@ -788,6 +788,7 @@ extension MEGAPhotoBrowserViewController {
         self.saveToolbarItem.image = MEGAAssets.UIImage.photosApp
         self.importToolbarItem.image = MEGAAssets.UIImage.folderArrow
         self.forwardToolbarItem.image = MEGAAssets.UIImage.cornerUpLeft
+        self.exportFileToolbarItem.image = MEGAAssets.UIImage.export
     }
 
     @objc class func photoBrowserDataProvider(currentPhoto: MEGANode, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider {
