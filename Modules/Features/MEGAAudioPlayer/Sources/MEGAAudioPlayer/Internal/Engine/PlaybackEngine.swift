@@ -6,6 +6,8 @@ import Foundation
 
 @MainActor
 protocol PlaybackEngineProtocol: AnyObject {
+    var currentTime: TimeInterval { get }
+    var duration: TimeInterval? { get }
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var playbackStatusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
@@ -59,6 +61,14 @@ final class PlaybackEngine {
 // MARK: - PlaybackEngineProtocol
 
 extension PlaybackEngine: PlaybackEngineProtocol {
+    var currentTime: TimeInterval {
+        currentTimeSubject.value
+    }
+
+    var duration: TimeInterval? {
+        durationSubject.value
+    }
+
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> {
         currentTimeSubject.eraseToAnyPublisher()
     }

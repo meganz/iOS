@@ -9,4 +9,11 @@ enum DependencyInjection {
     static var urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol {
         AudioURLResolutionUseCase(streamingRepository: streamingRepository)
     }
+
+    static var playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol {
+        PlaybackContinuationUseCase(
+            previousSessionRepo: PreviousPlaybackSessionRepository.newRepo,
+            minimumPlaybackTime: PlaybackContinuationUseCase<PreviousPlaybackSessionRepository>.Constants.minimumContinuationPlaybackTimeRevamp
+        )
+    }
 }

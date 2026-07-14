@@ -40,6 +40,10 @@ extension AppDelegate {
         MEGAAudioPlayerSession.stop()
     }
 
+    @objc func audioPlayerAppWillTerminate() {
+        MEGAAudioPlayerSession.appWillTerminate()
+    }
+
     @objc func listenToDomainUpdates() {
         Task {
             for await _ in MEGAAccountManagement.DependencyInjection.appDomainUpdatesUseCase.events {

@@ -27,6 +27,7 @@ final class AudioPlaybackService {
     private let metadataLoader: any AudioMetadataLoading
     private let engine: any PlaybackEngineProtocol
     private let notificationCenter: NotificationCenter
+    private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
 
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
@@ -52,21 +53,31 @@ final class AudioPlaybackService {
     /// and routes its remote commands back into this service.
     private var nowPlayingController: NowPlayingInfoController?
 
+    private enum Constants {
+        static let minimumResumableDuration: TimeInterval = 6 * 60
+    }
+
     init(
         urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
         metadataLoader: some AudioMetadataLoading = AudioMetadataLoader(),
         engine: some PlaybackEngineProtocol = PlaybackEngine(),
-        notificationCenter: NotificationCenter = .default
+        notificationCenter: NotificationCenter = .default,
+        playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase
     ) {
         self.urlResolutionUseCase = urlResolutionUseCase
         self.streamingRepository = streamingRepository
         self.metadataLoader = metadataLoader
         self.engine = engine
         self.notificationCenter = notificationCenter
+        self.playbackContinuationUseCase = playbackContinuationUseCase
         bindEngineToState()
         observeAirPlayRouteChanges()
         setUpNowPlaying()
+    }
+    
+    func appWillTerminate() {
+        saveCurrentPlaybackPositionIfNeeded()
     }
 
     // MARK: - Private
@@ -143,6 +154,28 @@ final class AudioPlaybackService {
         guard currentSource != nil else { return }
         if status == .playing { hasPlayedOnceBeforeSubject.send(true) }
         self.status = status
+    }
+
+    private func saveCurrentPlaybackPositionIfNeeded() {
+        guard let fingerprint = currentTrackFingerprint,
+              let duration = engine.duration,
+              duration > Constants.minimumResumableDuration else {
+            return
+        }
+        playbackContinuationUseCase.playbackStopped(
+            for: fingerprint,
+            on: engine.currentTime,
+            outOf: duration
+        )
+    }
+
+    private var currentTrackFingerprint: FingerprintEntity? {
+        guard let track = playbackQueue.current else { return nil }
+        switch track {
+        case let .account(node), let .folderLink(node): return node.fingerprint
+        case let .fileLink(_, node): return node?.fingerprint
+        case .offline: return nil
+        }
     }
 
 }
@@ -278,6 +311,7 @@ extension AudioPlaybackService: PlaybackControllable {
             return
         }
 
+        saveCurrentPlaybackPositionIfNeeded()
         currentSource = source
         unshuffledQueue = nil
         isShuffleOnSubject.send(false)
@@ -333,6 +367,7 @@ extension AudioPlaybackService: PlaybackControllable {
             engine.seek(toSeconds: 0)
             return
         }
+        saveCurrentPlaybackPositionIfNeeded()
         playbackQueue = PlaybackQueue(
             tracks: playbackQueue.tracks,
             currentIndex: playbackQueue.currentIndex - 1
@@ -341,12 +376,14 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func playNext() {
+        saveCurrentPlaybackPositionIfNeeded()
         advanceToNextTrack(wrapAround: repeatModeSubject.value == .all)
     }
 
     func play(atIndex index: Int) {
         guard playbackQueue.tracks.indices.contains(index),
               index != playbackQueue.currentIndex else { return }
+        saveCurrentPlaybackPositionIfNeeded()
         playbackQueue = PlaybackQueue(
             tracks: playbackQueue.tracks,
             currentIndex: index
@@ -368,6 +405,8 @@ extension AudioPlaybackService: PlaybackControllable {
 
     private func handleTrackFinished() {
         guard currentSource != nil else { return }
+
+        saveCurrentPlaybackPositionIfNeeded()
 
         if sleepTimerState == .endOfTrack {
             fireSleepTimer()
@@ -451,6 +490,7 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func stop() {
+        saveCurrentPlaybackPositionIfNeeded()
         metadataTask?.cancel()
         metadataTask = nil
         playGeneration += 1

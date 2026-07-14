@@ -411,6 +411,7 @@
 
     [CameraUploadManager appWillTerminate];
     [self notifyPlaybackStoppedForCurrentItem];
+    [self audioPlayerAppWillTerminate];
     [MEGASdkCleanUp localLogoutAndCleanUpWithSkipTeardown:self.shouldSkipSdkTeardownOnTermination];
 }
 
