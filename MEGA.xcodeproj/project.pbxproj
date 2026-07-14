@@ -1501,6 +1501,7 @@
 		94B09E572B84CC87007D6B84 /* NodeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E3F2B84CC86007D6B84 /* NodeActions.swift */; };
 		94B09E582B84CC87007D6B84 /* DisplayMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */; };
 		94B09E592B84CC87007D6B84 /* NodeBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */; };
+		CD0FF1E5C0DD12225BA88A01 /* CloudDriveOfflineModeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */; };
 		94B09E5A2B84CC87007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */; };
 		94B09E5B2B84CC87007D6B84 /* CloudDriveBottomToolbarFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */; };
 		94B09E5C2B84CC87007D6B84 /* ContextMenuManager+ActionHandlersArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */; };
@@ -4354,6 +4355,7 @@
 		94B09E3F2B84CC86007D6B84 /* NodeActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActions.swift; sourceTree = "<group>"; };
 		94B09E402B84CC86007D6B84 /* DisplayMenuDelegateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayMenuDelegateHandler.swift; sourceTree = "<group>"; };
 		94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeBrowserView.swift; sourceTree = "<group>"; };
+		CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveOfflineModeGate.swift; sourceTree = "<group>"; };
 		94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerMediaCheckerMode.swift; sourceTree = "<group>"; };
 		94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveBottomToolbarFactory.swift; sourceTree = "<group>"; };
 		94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContextMenuManager+ActionHandlersArray.swift"; sourceTree = "<group>"; };
@@ -10755,6 +10757,7 @@
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E4B2B84CC86007D6B84 /* CloudDriveNavigationTitleBuilder.swift */,
 				94B09E462B84CC86007D6B84 /* CloudDriveNodeInsertionRouter.swift */,
+				CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */,
 				94B09E422B84CC86007D6B84 /* CloudDriveViewControllerMediaCheckerMode.swift */,
 				BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */,
 				94B09E442B84CC86007D6B84 /* ContextMenuManager+ActionHandlersArray.swift */,
@@ -15037,6 +15040,7 @@
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
+				CD0FF1E5C0DD12225BA88A01 /* CloudDriveOfflineModeGate.swift in Sources */,
 				BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */,
 				C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */,
 				94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */,
