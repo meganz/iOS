@@ -10,8 +10,13 @@ struct PreviewQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
     )
     var plan: PlanEntity? = .mockEssentialYearly
 
-    func accountDetails() async throws -> AccountDetailsEntity { account }
-    func recommendedPlan() async throws -> PlanEntity? { plan }
+    func upgradeOption() async throws -> QuotaUpgradeOption {
+        if let plan {
+            .available(accountDetails: account, plan: plan)
+        } else {
+            .unavailable(accountDetails: account)
+        }
+    }
 }
 
 extension PlanEntity {

@@ -27,7 +27,7 @@ struct TransferQuotaHeaderView: View {
                 "Your transfer quota is running low"
             } else {
                 // IOS-12210
-                "You've used \(quotaProgress.usedPercentage) of your transfer quota"
+                "You've used \(quotaProgress.usedPercentage)% of your transfer quota"
             }
         case .downloadExceeded, .streamingExceeded:
             // IOS-12210
@@ -52,7 +52,7 @@ struct TransferQuotaHeaderView: View {
     // IOS-12210
     private let learnMoreTitle = "Learn more."
     
-    private let learnMoreURL = URL(string: "https://help.mega.io/plans-storage/space-storage/transfer-quota")
+    private let learnMoreURL = URL(string: "https://help.mega.io/plans-storage/space-storage/transfer-quota")!
     
     var body: some View {
         VStack(spacing: TokenSpacing._5) {
@@ -72,31 +72,28 @@ struct TransferQuotaHeaderView: View {
         .frame(maxWidth: .infinity)
     }
     
-    @ViewBuilder private var subtitleView: some View {
-            if let learnMoreURL {
-                AttributedTextView(
-                    stringAttribute: .init(
-                        text: subtitle,
-                        font: .callout.weight(.regular),
-                        foregroundColor: TokenColors.Text.primary.swiftUI
-                    ),
-                    substringAttributeList: [
-                        .init(
-                            text: learnMoreTitle,
-                            attributes: AttributeContainer()
-                                .font(.callout.weight(.regular))
-                                .foregroundColor(TokenColors.Link.primary.swiftUI),
-                            action: { DependencyInjection.externalLinkOpener.openExternalLink(with: learnMoreURL) }
-                        )
-                    ],
-                    textAlignment: .center
+    private var subtitleView: some View {
+        var container = AttributeContainer()
+        container.underlineStyle = .single
+        container.font = .callout.weight(.regular)
+        container.foregroundColor = TokenColors.Text.primary.swiftUI
+        
+        return AttributedTextView(
+            stringAttribute: .init(
+                text: subtitle,
+                font: .callout.weight(.regular),
+                foregroundColor: TokenColors.Text.primary.swiftUI
+            ),
+            substringAttributeList: [
+                .init(
+                    text: learnMoreTitle,
+                    attributes: container,
+                    action: { DependencyInjection.externalLinkOpener.openExternalLink(with: learnMoreURL) }
                 )
-            } else {
-                Text(subtitle)
-                    .font(.callout.weight(.regular))
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            }
-        }
+            ],
+            textAlignment: .center
+        )
+    }
 }
 
 #Preview {

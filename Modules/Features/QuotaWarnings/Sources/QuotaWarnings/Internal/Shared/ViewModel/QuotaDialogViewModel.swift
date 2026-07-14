@@ -20,18 +20,14 @@ final class QuotaDialogViewModel: ObservableObject {
 
     func load() async {
         do {
-            async let account = useCase.accountDetails()
-            async let plan = useCase.recommendedPlan()
-
-            let (accountDetailsEntity, planEntity) = try await (account, plan)
-
-            if let planEntity {
+            switch try await useCase.upgradeOption() {
+            case let .available(accountDetails, plan):
                 viewState = .upgradeAvailable(
-                    accountDetailsEntity: accountDetailsEntity,
-                    planEntity: planEntity
+                    accountDetailsEntity: accountDetails,
+                    planEntity: plan
                 )
-            } else {
-                viewState = .noUpgradeAvailable(accountDetailsEntity: accountDetailsEntity)
+            case let .unavailable(accountDetails):
+                viewState = .noUpgradeAvailable(accountDetailsEntity: accountDetails)
             }
         } catch {
             viewState = .error

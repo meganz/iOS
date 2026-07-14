@@ -18,7 +18,7 @@ public struct StorageQuotaDialogView: View {
     ) {
         self.severity = severity
         self.onClose = onClose
-        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: PreviewQuotaDialogUseCase()))
+        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: Dependency.quotaDialogUseCase))
     }
 
     /// For Preview only
