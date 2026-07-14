@@ -40,8 +40,10 @@ struct SubscriptionCurrentPlanView: View {
                     MEGABadge(text: badgeTitle, type: .error, size: .regular, icon: nil)
                 }
             }
+            .padding(.vertical, TokenSpacing._1)
 
             planLine
+                .padding(.vertical, TokenSpacing._1)
 
             if let status = viewModel.status, let statusText = viewModel.statusText {
                 statusLine(for: status, text: statusText)
@@ -49,10 +51,10 @@ struct SubscriptionCurrentPlanView: View {
         }
         .padding(TokenSpacing._5)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(TokenColors.Background.surface1.swiftUI, in: RoundedRectangle(cornerRadius: TokenRadius.medium))
+        .background(TokenColors.Background.surface1.swiftUI, in: RoundedRectangle(cornerRadius: TokenRadius.large))
         .overlay(
-            RoundedRectangle(cornerRadius: TokenRadius.medium)
-                .stroke(TokenColors.Border.subtle.swiftUI, lineWidth: 1)
+            RoundedRectangle(cornerRadius: TokenRadius.large)
+                .stroke(TokenColors.Border.strong.swiftUI, lineWidth: 1)
         )
     }
 

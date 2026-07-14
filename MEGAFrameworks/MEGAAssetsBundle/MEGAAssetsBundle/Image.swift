@@ -51,6 +51,7 @@ public struct MEGAImageBundle {
     public static var subscriptionFeatureTransfersPWM: Image { Image(.subscriptionFeatureTransfersPWM) }
     public static var subscriptionImageHeader: Image { Image(.subscriptionImageHeader) }
     public static var subscriptionImageHeaderLandscape: Image { Image(.subscriptionImageHeaderLandscape) }
+    public static var subscriptionImageHeaderRevamp: Image { Image(.subscriptionImageHeaderRevamp) }
     public static var eyeOff: Image { Image(.eyeOff) }
     public static var eyeOffRegular: Image { Image(.eyeOffRegular) }
     public static var imagesRegular: Image { Image(.imagesRegular) }
@@ -337,8 +338,11 @@ public struct MEGAImageBundle {
     public static var monoPlayMediumThinSolid: Image { Image(.monoPlayMediumThinSolid) }
     public static var monoCornerUpRightMediumThinOutline: Image { Image(.monoCornerUpRightMediumThinOutline) }
     public static var monoFileSearch02MediumThinOutline: Image { Image(.monoFileSearch02MediumThinOutline) }
+    public static var monoArrowUpDownMediumThinOutline: Image { Image(.monoArrowUpDownMediumThinOutline) }
+    public static var monoChevronLeftMediumThinOutline: Image { Image(.monoChevronLeftMediumThinOutline) }
     public static var monoChevronsLeftMediumThinOutline: Image { Image(.monoChevronsLeftMediumThinOutline) }
     public static var monoChevronsRightMediumThinOutline: Image { Image(.monoChevronsRightMediumThinOutline) }
+    public static var monoCloudMediumThinOutline: Image { Image(.monoCloudMediumThinOutline) }
     public static var monoCloudOffMediumThinOutline: Image { Image(.monoCloudOffMediumThinOutline) }
     public static var monoLoaderThrobberMediumRegularOutline: Image { Image(.monoLoaderThrobberMediumRegularOutline) }
     public static var monoCalendar01SmallThinOutline: Image { Image(.monoCalendar01SmallThinOutline) }

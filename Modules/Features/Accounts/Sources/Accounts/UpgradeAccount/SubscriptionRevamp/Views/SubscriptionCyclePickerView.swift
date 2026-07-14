@@ -40,17 +40,17 @@ public struct SubscriptionCyclePickerView: View {
         } label: {
             HStack(spacing: TokenSpacing._2) {
                 Text(title(option))
-                    .font(.subheadline)
+                    .font(isSelected ? .caption.weight(.semibold) : .caption)
                     .foregroundStyle(isSelected ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI)
 
                 if option == .yearly, let savingText {
                     Text(savingText)
                         .font(.caption)
-                        .foregroundStyle(TokenColors.Text.error.swiftUI)
+                        .foregroundStyle(TokenColors.Text.brand.swiftUI)
                 }
             }
             .padding(.horizontal, TokenSpacing._5)
-            .padding(.vertical, TokenSpacing._2)
+            .padding(.vertical, TokenSpacing._3)
             .background(isSelected ? TokenColors.Background.page.swiftUI : .clear)
             .clipShape(Capsule())
         }

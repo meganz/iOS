@@ -108,6 +108,7 @@ extension MEGAAssets {
         public static var subscriptionFeatureTransfersPWM: SwiftUI.Image { MEGAImageBundle.subscriptionFeatureTransfersPWM }
         public static var subscriptionImageHeader: SwiftUI.Image { MEGAImageBundle.subscriptionImageHeader }
         public static var subscriptionImageHeaderLandscape: SwiftUI.Image { MEGAImageBundle.subscriptionImageHeaderLandscape }
+        public static var subscriptionImageHeaderRevamp: SwiftUI.Image { MEGAImageBundle.subscriptionImageHeaderRevamp }
         public static var eyeOff: SwiftUI.Image { MEGAImageBundle.eyeOff }
         public static var eyeOffRegular: SwiftUI.Image { MEGAImageBundle.eyeOffRegular }
         public static var imagesRegular: SwiftUI.Image { MEGAImageBundle.imagesRegular }
@@ -354,8 +355,11 @@ extension MEGAAssets {
         public static var monoPlayMediumThinSolid: SwiftUI.Image { MEGAImageBundle.monoPlayMediumThinSolid }
         public static var monoCornerUpRightMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCornerUpRightMediumThinOutline }
         public static var monoFileSearch02MediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoFileSearch02MediumThinOutline }
+        public static var monoArrowUpDownMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoArrowUpDownMediumThinOutline }
+        public static var monoChevronLeftMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoChevronLeftMediumThinOutline }
         public static var monoChevronsLeftMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoChevronsLeftMediumThinOutline }
         public static var monoChevronsRightMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoChevronsRightMediumThinOutline }
+        public static var monoCloudMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCloudMediumThinOutline }
         public static var monoCloudOffMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCloudOffMediumThinOutline }
         public static var monoLoaderThrobberMediumRegularOutline: SwiftUI.Image { MEGAImageBundle.monoLoaderThrobberMediumRegularOutline }
         public static var monoCalendar01SmallThinOutline: SwiftUI.Image { MEGAImageBundle.monoCalendar01SmallThinOutline }
@@ -853,8 +857,11 @@ extension MEGAAssets {
         public static var monoPlayMediumThinSolid: UIKit.UIImage { MEGAUIImageBundle.monoPlayMediumThinSolid }
         public static var monoCornerUpRightMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCornerUpRightMediumThinOutline }
         public static var monoFileSearch02MediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoFileSearch02MediumThinOutline }
+        public static var monoArrowUpDownMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoArrowUpDownMediumThinOutline }
+        public static var monoChevronLeftMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoChevronLeftMediumThinOutline }
         public static var monoChevronsLeftMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoChevronsLeftMediumThinOutline }
         public static var monoChevronsRightMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoChevronsRightMediumThinOutline }
+        public static var monoCloudMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCloudMediumThinOutline }
         public static var monoCloudOffMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCloudOffMediumThinOutline }
         public static var monoLoaderThrobberMediumRegularOutline: UIKit.UIImage { MEGAUIImageBundle.monoLoaderThrobberMediumRegularOutline }
         public static var monoCalendar01SmallThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCalendar01SmallThinOutline }

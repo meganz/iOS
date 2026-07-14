@@ -184,6 +184,9 @@ public struct MEGAImageBundle {
   public static var subscriptionImageHeaderLandscape: SwiftUICore.Image {
     get
   }
+  public static var subscriptionImageHeaderRevamp: SwiftUICore.Image {
+    get
+  }
   public static var eyeOff: SwiftUICore.Image {
     get
   }
@@ -1027,10 +1030,19 @@ public struct MEGAImageBundle {
   public static var monoFileSearch02MediumThinOutline: SwiftUICore.Image {
     get
   }
+  public static var monoArrowUpDownMediumThinOutline: SwiftUICore.Image {
+    get
+  }
+  public static var monoChevronLeftMediumThinOutline: SwiftUICore.Image {
+    get
+  }
   public static var monoChevronsLeftMediumThinOutline: SwiftUICore.Image {
     get
   }
   public static var monoChevronsRightMediumThinOutline: SwiftUICore.Image {
+    get
+  }
+  public static var monoCloudMediumThinOutline: SwiftUICore.Image {
     get
   }
   public static var monoCloudOffMediumThinOutline: SwiftUICore.Image {
@@ -2714,10 +2726,19 @@ public struct MEGAUIImageBundle {
   public static var monoFileSearch02MediumThinOutline: UIKit.UIImage {
     get
   }
+  public static var monoArrowUpDownMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoChevronLeftMediumThinOutline: UIKit.UIImage {
+    get
+  }
   public static var monoChevronsLeftMediumThinOutline: UIKit.UIImage {
     get
   }
   public static var monoChevronsRightMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var monoCloudMediumThinOutline: UIKit.UIImage {
     get
   }
   public static var monoCloudOffMediumThinOutline: UIKit.UIImage {

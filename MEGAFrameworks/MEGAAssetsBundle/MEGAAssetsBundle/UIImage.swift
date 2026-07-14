@@ -494,8 +494,11 @@ public struct MEGAUIImageBundle {
     public static var monoPlayMediumThinSolid: UIImage { UIImage.monoPlayMediumThinSolid }
     public static var monoCornerUpRightMediumThinOutline: UIImage { UIImage.monoCornerUpRightMediumThinOutline }
     public static var monoFileSearch02MediumThinOutline: UIImage { UIImage.monoFileSearch02MediumThinOutline }
+    public static var monoArrowUpDownMediumThinOutline: UIImage { UIImage.monoArrowUpDownMediumThinOutline }
+    public static var monoChevronLeftMediumThinOutline: UIImage { UIImage.monoChevronLeftMediumThinOutline }
     public static var monoChevronsLeftMediumThinOutline: UIImage { UIImage.monoChevronsLeftMediumThinOutline }
     public static var monoChevronsRightMediumThinOutline: UIImage { UIImage.monoChevronsRightMediumThinOutline }
+    public static var monoCloudMediumThinOutline: UIImage { UIImage.monoCloudMediumThinOutline }
     public static var monoCloudOffMediumThinOutline: UIImage { UIImage.monoCloudOffMediumThinOutline }
     public static var monoLoaderThrobberMediumRegularOutline: UIImage { UIImage.monoLoaderThrobberMediumRegularOutline }
     public static var monoCalendar01SmallThinOutline: UIImage { UIImage.monoCalendar01SmallThinOutline }
