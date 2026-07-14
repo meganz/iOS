@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAFoundation
 import MEGAInfrastructure
 import MEGAL10n
 import MEGASwiftUI
@@ -148,6 +149,23 @@ struct AudioPlayerView: View {
         .simultaneousGesture(swipeDownToDismiss)
         .task(id: vm.artworkData) {
             await vm.loadArtwork()
+        }
+        .alert(
+            Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.title,
+            isPresented: Binding(
+                get: { vm.resumePrompt != nil },
+                set: { _ in }
+            ),
+            presenting: vm.resumePrompt
+        ) { _ in
+            Button(Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.restart) {
+                vm.restartPlayback()
+            }
+            Button(Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.resume) {
+                vm.resumePlayback()
+            }
+        } message: { prompt in
+            Text(Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.description(prompt.fileName, prompt.playbackTime.timeString))
         }
     }
 

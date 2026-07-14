@@ -85,6 +85,10 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var currentTrackID: String?
 
+    // MARK: - Resume prompt
+
+    @Published private(set) var resumePrompt: ResumePrompt?
+
     var isQueueButtonEnabled: Bool {
         switch currentSource {
         case .fileLink, .searchResult, .chatMessage, .none:
@@ -135,8 +139,8 @@ final class AudioPlayerViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
-                guard let self, self.playlistItems.map(\.id) != items.map(\.id) else { return }
-                self.playlistItems = items
+                guard let self, playlistItems.map(\.id) != items.map(\.id) else { return }
+                playlistItems = items
             }
             .store(in: &cancellables)
 
@@ -204,6 +208,9 @@ final class AudioPlayerViewModel: ObservableObject {
         service.sleepTimerStatePublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$sleepTimerState)
+
+        service.resumePromptPublisher
+            .assign(to: &$resumePrompt)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -277,6 +284,16 @@ final class AudioPlayerViewModel: ObservableObject {
 
     func togglePlayPause() {
         service?.togglePlayPause()
+    }
+
+    // MARK: - Resume prompt intents
+
+    func resumePlayback() {
+        service?.resumeFromPrompt()
+    }
+
+    func restartPlayback() {
+        service?.restartFromPrompt()
     }
 
     func skipPrevious() {

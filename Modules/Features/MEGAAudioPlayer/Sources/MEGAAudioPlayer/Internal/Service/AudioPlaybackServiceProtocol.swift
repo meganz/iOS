@@ -35,6 +35,7 @@ protocol PlaybackStateObservable {
     var repeatModePublisher: AnyPublisher<RepeatMode, Never> { get }
     var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> { get }
     var isShuffleOnPublisher: AnyPublisher<Bool, Never> { get }
+    var resumePromptPublisher: AnyPublisher<ResumePrompt?, Never> { get }
 }
 
 @MainActor
@@ -53,6 +54,16 @@ protocol PlaybackControllable {
     func cancelSleepTimer()
     func toggleShuffle()
     func stop()
+
+    func resumeFromPrompt()
+    func restartFromPrompt()
+}
+
+// MARK: - Resume prompt
+
+struct ResumePrompt: Equatable {
+    let fileName: String
+    let playbackTime: TimeInterval
 }
 
 // MARK: - Status

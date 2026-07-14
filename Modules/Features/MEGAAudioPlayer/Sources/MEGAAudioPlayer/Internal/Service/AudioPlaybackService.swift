@@ -17,6 +17,7 @@ final class AudioPlaybackService {
     private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
     private let sleepTimerStateSubject = CurrentValueSubject<SleepTimerState, Never>(.inactive)
     private let isShuffleOnSubject = CurrentValueSubject<Bool, Never>(false)
+    private let resumePromptSubject = CurrentValueSubject<ResumePrompt?, Never>(nil)
 
     private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
 
@@ -41,6 +42,8 @@ final class AudioPlaybackService {
     
     /// Snapshot of the queue in its pre-shuffle order, kept while shuffle is on
     private var unshuffledQueue: PlaybackQueue?
+
+    private var resumeEvaluationCancellable: AnyCancellable?
     
     private var playbackQueue: PlaybackQueue {
         get { queueSubject.value }
@@ -178,6 +181,39 @@ final class AudioPlaybackService {
         }
     }
 
+    // MARK: - Resume prompt
+
+    private func evaluateResumeWhenReady() {
+        clearResumeState()
+        if case .error = status { return }
+        guard let fingerprint = currentTrackFingerprint,
+              let fileName = playbackQueue.current?.displayName else { return }
+        let generation = playGeneration
+
+        resumeEvaluationCancellable = engine.durationPublisher
+            .compactMap { $0 }
+            .first()
+            .sink { [weak self] _ in
+                guard let self, playGeneration == generation else { return }
+                switch playbackContinuationUseCase.status(for: fingerprint) {
+                case .startFromBeginning:
+                    break
+                case .resumeSession(let playbackTime):
+                    engine.seek(toSeconds: playbackTime)
+                case .displayDialog(let playbackTime):
+                    engine.pause()
+                    resumePromptSubject.send(
+                        ResumePrompt(fileName: fileName, playbackTime: playbackTime)
+                    )
+                }
+            }
+    }
+
+    private func clearResumeState() {
+        resumeEvaluationCancellable = nil
+        resumePromptSubject.send(nil)
+    }
+
 }
 
 // MARK: - PlaybackStateObservable
@@ -301,6 +337,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     var isShuffleOnPublisher: AnyPublisher<Bool, Never> {
         isShuffleOnSubject.removeDuplicates().eraseToAnyPublisher()
     }
+
+    var resumePromptPublisher: AnyPublisher<ResumePrompt?, Never> {
+        resumePromptSubject.removeDuplicates().eraseToAnyPublisher()
+    }
 }
 
 // MARK: - PlaybackControllable
@@ -319,6 +359,7 @@ extension AudioPlaybackService: PlaybackControllable {
 
         startStreamingServerIfNeeded(for: source)
         playCurrent()
+        evaluateResumeWhenReady()
     }
 
     private func playCurrent() {
@@ -489,8 +530,25 @@ extension AudioPlaybackService: PlaybackControllable {
         playbackQueue = PlaybackQueue(tracks: original.tracks, currentIndex: restoredIndex)
     }
 
+    func resumeFromPrompt() {
+        guard let prompt = resumePromptSubject.value else { return }
+        playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+        engine.seek(toSeconds: prompt.playbackTime)
+        engine.togglePlayPause()
+        resumePromptSubject.send(nil)
+    }
+
+    func restartFromPrompt() {
+        guard resumePromptSubject.value != nil else { return }
+        playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
+        engine.seek(toSeconds: 0)
+        engine.togglePlayPause()
+        resumePromptSubject.send(nil)
+    }
+
     func stop() {
         saveCurrentPlaybackPositionIfNeeded()
+        clearResumeState()
         metadataTask?.cancel()
         metadataTask = nil
         playGeneration += 1
