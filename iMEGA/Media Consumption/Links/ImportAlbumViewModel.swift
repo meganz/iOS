@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGASwift
 import MEGASwiftUI
+import QuotaWarnings
 import SwiftUI
 
 @MainActor
@@ -53,6 +54,10 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
     @Published var showStorageQuotaWillExceed = false
+
+    private var isQuotaWarningsRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp)
+    }
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
     @Published var showPhotoPermissionAlert = false
@@ -190,7 +195,15 @@ final class ImportAlbumViewModel: ObservableObject {
         }
         
         guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.photosToAction) else {
-            showStorageQuotaWillExceed.toggle()
+            if isQuotaWarningsRevampEnabled {
+                // By right, the ImportAlbumView is SwiftUI view so StorageQuotaDiaglogView can be used with .sheet modifier directly in ImportAlbumView.
+                // However, since the the dialog is used in different places with UIKit via QuotaWarningsRouter.
+                // QuotaWarningsRouter has a critical logic that skips another dialog presentation when a quota dialog is already visible
+                // As a result, QuotaWarningsRouter is used here for that reason.
+                QuotaWarningsRouter().presentStorageDialog(severity: .almostFull)
+            } else {
+                showStorageQuotaWillExceed = true
+            }
             return
         }
         

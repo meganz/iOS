@@ -941,7 +941,7 @@
     if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
         [SVProgressHUD dismiss];
         if (error.value == 0) {
-            [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageUploadQuotaError presenter:UIApplication.mnz_presentingViewController] start];
+            [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithError:error legacyMode:CustomModalAlertModeStorageUploadQuotaError];
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
         }
     }
@@ -1381,7 +1381,7 @@
                     }
                 } else {
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
-                    [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageQuotaError presenter:UIApplication.mnz_presentingViewController] start];
+                    [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithError:error legacyMode:CustomModalAlertModeStorageQuotaError];
                 }
                 break;
             }

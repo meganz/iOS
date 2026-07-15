@@ -1,6 +1,9 @@
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
+#if MAIN_APP_TARGET
+import QuotaWarnings
+#endif
 
 protocol NameCollisionViewRouting: Routing, Sendable {
     func showNameCollisionsView()
@@ -373,7 +376,11 @@ final class NameCollisionViewModel: ObservableObject {
 #if MAIN_APP_TARGET
     @MainActor
     private func showOverQuotaPopup() {
-        CustomModalAlertRouter(.storageQuotaError, presenter: UIApplication.mnz_presentingViewController()).start()
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp) { 
+            QuotaWarningsRouter().presentStorageDialog(severity: .full)
+        } else {
+            CustomModalAlertRouter(.storageQuotaError, presenter: UIApplication.mnz_presentingViewController()).start()
+        }
     }
 #endif
 }

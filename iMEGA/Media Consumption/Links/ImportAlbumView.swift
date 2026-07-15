@@ -188,6 +188,8 @@ struct ImportAlbumView: View {
                            action: {
             Task { await viewModel.importAlbum() }
         })
+        // Legacy dialog: a dimmed-card overlay, must stay full-screen.
+        // (The redesigned dialog is presented via QuotaWarningsRouter from the view model.)
         .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
             CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
         }
