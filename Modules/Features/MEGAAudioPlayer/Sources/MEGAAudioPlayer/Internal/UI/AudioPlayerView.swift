@@ -34,17 +34,18 @@ private struct PodcastMenuAnchorsKey: PreferenceKey {
     }
 }
 
+/// Carries the global-space Y of the scrollable playlist's top up to the view
+private struct PlaylistListTopPreferenceKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
 struct AudioPlayerView: View {
     @ObservedObject var vm: AudioPlayerViewModel
 
     @State private var activeMenu: PodcastMenu?
-
-    /// Distance the user must drag down before a swipe is treated as a
-    /// dismiss intent. Below this, treat as accidental motion.
-    private let dismissDragThreshold: CGFloat = 100
-    /// Predicted end-position threshold, used so a quick flick dismisses
-    /// even when the absolute drag distance is short.
-    private let dismissFlickThreshold: CGFloat = 250
 
     var body: some View {
         ZStack {
@@ -127,26 +128,10 @@ struct AudioPlayerView: View {
                 .allowsHitTesting(false)
                 .ignoresSafeArea()
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    vm.dismiss()
-                } label: {
-                    Image(systemName: "chevron.down")
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                if !vm.isActionsMenuHidden {
-                    Button {
-                        vm.didTapMore()
-                    } label: {
-                        Image(systemName: "ellipsis")
-                    }
-                }
-            }
+        .safeAreaInset(edge: .top, spacing: 0) {
+            playerHeader
         }
         .preferredColorScheme(.dark)
-        .simultaneousGesture(swipeDownToDismiss)
         .task(id: vm.artworkData) {
             await vm.loadArtwork()
         }
@@ -183,20 +168,33 @@ struct AudioPlayerView: View {
         }
     }
 
-    /// Dismiss the player on a downward swipe. Uses `simultaneousGesture` so
-    /// the scrubber and button taps still receive their touches; the gesture only acts on release with
-    /// sufficient vertical drag distance or flick velocity.
-    private var swipeDownToDismiss: some Gesture {
-        DragGesture(minimumDistance: 30)
-            .onEnded { value in
-                let dy = value.translation.height
-                let predictedDy = value.predictedEndTranslation.height
-                // Reject mostly-horizontal motion
-                guard abs(value.translation.width) < dy else { return }
-                if dy > dismissDragThreshold || predictedDy > dismissFlickThreshold {
-                    vm.dismiss()
+    private var playerHeader: some View {
+        HStack {
+            Button {
+                vm.dismiss()
+            } label: {
+                Image(systemName: "chevron.down")
+                    .frame(width: TokenSpacing._12, height: TokenSpacing._12)
+                    .glassCircleIfAvailable()
+            }
+
+            Spacer()
+
+            if !vm.isActionsMenuHidden {
+                Button {
+                    vm.didTapMore()
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .frame(width: TokenSpacing._12, height: TokenSpacing._12)
+                        .glassCircleIfAvailable()
                 }
             }
+        }
+        .buttonStyle(.plain)
+        .font(.title3)
+        .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+        .padding(.horizontal, TokenSpacing._5)
+        .padding(.vertical, TokenSpacing._3)
     }
 
     // MARK: - Podcast popover menus
@@ -228,6 +226,18 @@ struct AudioPlayerView: View {
                     onMove: vm.movePlaylistItem
                 )
                 .frame(maxHeight: .infinity)
+                .overlay(alignment: .top) {
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: PlaylistListTopPreferenceKey.self,
+                            value: proxy.frame(in: .global).minY
+                        )
+                    }
+                    .frame(height: 0)
+                }
+                .onPreferenceChange(PlaylistListTopPreferenceKey.self) { [vm] value in
+                    Task { @MainActor in vm.updatePlaylistListTopY(value) }
+                }
             }
             .padding(.top, TokenSpacing._3)
             .opacity(vm.isPlaylistVisible ? 1 : 0)
@@ -334,6 +344,17 @@ struct AudioPlayerView: View {
 
 // MARK: - Background
 
+private extension View {
+    @ViewBuilder
+    func glassCircleIfAvailable() -> some View {
+        if #available(iOS 26.0, *) {
+            glassEffect(.regular, in: .circle)
+        } else {
+            self
+        }
+    }
+}
+
 private struct BackgroundLayer: View {
     var isFlipped: Bool = false
 
@@ -373,8 +394,8 @@ private struct ArtworkSection: View {
 
     private var coverScale: CGFloat {
         switch loadingState {
-        case .playing, .paused: 1
-        case .loading, .ready: coverReducedSize / coverMaxSize
+        case .playing: 1
+        case .paused, .loading, .ready: coverReducedSize / coverMaxSize
         }
     }
 

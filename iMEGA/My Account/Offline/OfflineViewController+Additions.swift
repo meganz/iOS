@@ -91,8 +91,7 @@ extension OfflineViewController {
             if let source {
                 MEGAAudioPlayerViewRouter(
                     presenter: self,
-                    actionsHandler: MEGAAudioPlayerActionsHandler.make(),
-                    navigationFactory: MEGAAudioPlayerNavigationController.make()
+                    actionsHandler: MEGAAudioPlayerActionsHandler.make()
                 )
                 .start(source: source)
             }

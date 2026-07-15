@@ -220,8 +220,7 @@ extension MainTabBarController {
             guard let self else { return }
             MEGAAudioPlayerViewRouter(
                 presenter: self,
-                actionsHandler: MEGAAudioPlayerActionsHandler.make(),
-                navigationFactory: MEGAAudioPlayerNavigationController.make()
+                actionsHandler: MEGAAudioPlayerActionsHandler.make()
             ).showCurrent()
         }
 

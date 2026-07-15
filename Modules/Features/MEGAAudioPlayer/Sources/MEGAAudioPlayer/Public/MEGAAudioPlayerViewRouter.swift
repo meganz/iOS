@@ -7,8 +7,7 @@ import UIKit
 /// ```swift
 /// let router = MEGAAudioPlayerViewRouter(
 ///     presenter: self,
-///     actionsHandler: handler,
-///     navigationFactory: { MEGAAudioPlayerNavigationController(rootViewController: $0) }
+///     actionsHandler: handler
 /// )
 /// router.start(source: .cloudNode(node: node, queue: queue))     // start new playback
 /// router.showCurrent()                                            // expand mini → full
@@ -25,28 +24,21 @@ public final class MEGAAudioPlayerViewRouter {
     ///   for offline playback, matching legacy behaviour).
     public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ source: PlaybackSource) -> Void
 
-    /// Wraps the SwiftUI hosting controller in a `UINavigationController` of the
-    /// host app's choosing.
-    public typealias NavigationFactory = @MainActor (_ rootViewController: UIViewController) -> UINavigationController
-
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
     private let actionsHandler: ActionsHandler?
-    private let navigationFactory: NavigationFactory
 
     /// Public entry point. Constructs the router with the shared
     /// `AudioPlaybackService` (singleton). Callers from outside the module use
     /// only this initialiser.
     public convenience init(
         presenter: UIViewController?,
-        actionsHandler: ActionsHandler? = nil,
-        navigationFactory: @escaping NavigationFactory
+        actionsHandler: ActionsHandler? = nil
     ) {
         self.init(
             presenter: presenter,
             service: AudioPlaybackService.shared,
-            actionsHandler: actionsHandler,
-            navigationFactory: navigationFactory
+            actionsHandler: actionsHandler
         )
     }
 
@@ -56,13 +48,11 @@ public final class MEGAAudioPlayerViewRouter {
     init(
         presenter: UIViewController?,
         service: any AudioPlaybackServiceProtocol,
-        actionsHandler: ActionsHandler? = nil,
-        navigationFactory: @escaping NavigationFactory
+        actionsHandler: ActionsHandler? = nil
     ) {
         self.presenter = presenter
         self.service = service
         self.actionsHandler = actionsHandler
-        self.navigationFactory = navigationFactory
     }
 
     /// Start (or replace) playback with the given source and present the
@@ -86,18 +76,16 @@ public final class MEGAAudioPlayerViewRouter {
         // twice before the first presentation lands.
         guard let presenter, presenter.presentedViewController == nil else { return }
         let host = build()
-        host.modalPresentationStyle = .fullScreen
+        host.modalPresentationStyle = .overFullScreen
         presenter.present(host, animated: true)
     }
 
     private func build() -> UIViewController {
         let vm = AudioPlayerViewModel(service: service)
-        let host = UIHostingController(rootView: AudioPlayerView(vm: vm))
+        let host = AudioPlayerHostingController(rootView: AudioPlayerView(vm: vm))
+        host.isPlaylistVisible = { [weak vm] in vm?.isPlaylistVisible == true }
+        host.playlistListTopY = { [weak vm] in vm?.playlistListTopY ?? 0 }
 
-        // Inject the UIKit dismiss into the VM so the chevron-down button can
-        // actually close this modal. SwiftUI's `@Environment(\.dismiss)` doesn't
-        // bridge to UIKit's `present(_:animated:)`, so the VM-driven callback is
-        // the reliable path.
         vm.onDismiss = { [weak host] in
             host?.dismiss(animated: true)
         }
@@ -108,25 +96,8 @@ public final class MEGAAudioPlayerViewRouter {
             actionsHandler(host, source)
         }
 
-        // Wrap in a UIKit UINavigationController so SwiftUI's `ToolbarItem(placement:)`
-        // declared inside the View propagates onto an actual UINavigationBar.
-        // iOS 26 then applies its default Liquid Glass treatment to the bar buttons
-        // automatically. We configure the bar's appearance to fully transparent so the
-        // gradient background underneath bleeds through — relying on SwiftUI's
-        // `.toolbarBackground(.hidden, ...)` is flaky under modal + dark override and
-        // can leave a solid dark bar on top of the content.
-        let nav = navigationFactory(host)
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        nav.navigationBar.standardAppearance = appearance
-        nav.navigationBar.scrollEdgeAppearance = appearance
-        nav.navigationBar.compactAppearance = appearance
-        host.extendedLayoutIncludesOpaqueBars = true
-
-        // Force dark mode for the entire trait collection so MEGADesignToken
-        // colours (resolved via UITraitCollection) match the design's dark-only
-        // palette regardless of the system / presenter theme.
-        nav.overrideUserInterfaceStyle = .dark
-        return nav
+        host.view.backgroundColor = .clear
+        host.overrideUserInterfaceStyle = .dark
+        return host
     }
 }

@@ -52,8 +52,7 @@ extension RecentsViewController {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
             MEGAAudioPlayerViewRouter(
                 presenter: self,
-                actionsHandler: MEGAAudioPlayerActionsHandler.make(),
-                navigationFactory: MEGAAudioPlayerNavigationController.make()
+                actionsHandler: MEGAAudioPlayerActionsHandler.make()
             )
             .start(source: .cloudNode(node: node.toNodeEntity()))
             return

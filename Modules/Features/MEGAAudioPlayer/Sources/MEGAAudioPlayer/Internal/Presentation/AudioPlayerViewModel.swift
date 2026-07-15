@@ -89,6 +89,8 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var resumePrompt: ResumePrompt?
 
+    private(set) var playlistListTopY: CGFloat = 0
+
     var isQueueButtonEnabled: Bool {
         switch currentSource {
         case .fileLink, .searchResult, .chatMessage, .none:
@@ -124,6 +126,10 @@ final class AudioPlayerViewModel: ObservableObject {
     init(service: any AudioPlaybackServiceProtocol) {
         self.service = service
         bindService(service)
+    }
+    
+    func updatePlaylistListTopY(_ y: CGFloat) {
+        playlistListTopY = y
     }
 
     private func bindService(_ service: any AudioPlaybackServiceProtocol) {

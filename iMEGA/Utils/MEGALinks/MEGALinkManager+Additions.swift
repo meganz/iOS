@@ -222,8 +222,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             if let source {
                 MEGAAudioPlayerViewRouter(
                     presenter: presenter,
-                    actionsHandler: MEGAAudioPlayerActionsHandler.make(),
-                    navigationFactory: MEGAAudioPlayerNavigationController.make()
+                    actionsHandler: MEGAAudioPlayerActionsHandler.make()
                 )
                 .start(source: source)
             }
