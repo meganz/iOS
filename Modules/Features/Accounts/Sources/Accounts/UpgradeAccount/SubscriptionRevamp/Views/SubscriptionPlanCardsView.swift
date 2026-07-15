@@ -54,11 +54,15 @@ struct SubscriptionPlanCardsView: View {
     private func planPrice(_ price: SubscriptionPlanCardModel.Price) -> PlanPrice {
         switch price {
         case let .monthly(price):
-            .monthly(price: price)
+            .monthly(.init(pricePerMonth: price))
         case let .yearly(price, billing):
-            .yearly(price: price, billing: billing)
+            .yearly(.init(pricePerMonth: price, billingCaption: billing))
         case let .discount(originalPrice, discountedPrice, description):
-            .discount(originalPrice: originalPrice, discountedPrice: discountedPrice, description: description)
+            .discountMonthly(.init(
+                originalPrice: originalPrice,
+                discountedPrice: discountedPrice,
+                billingCaption: description
+            ))
         }
     }
 }

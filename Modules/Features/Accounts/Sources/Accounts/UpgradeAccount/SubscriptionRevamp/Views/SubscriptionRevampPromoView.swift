@@ -84,11 +84,11 @@ public struct SubscriptionRevampPromoView: View {
         } content: {
             VStack(alignment: .leading, spacing: TokenSpacing._4) {
                 PlanTitleView(card.title)
-                PlanPriceView(.discount(
+                PlanPriceView(.discountMonthly(.init(
                     originalPrice: card.originalPrice,
                     discountedPrice: card.discountedPrice,
-                    description: card.priceDescription
-                ))
+                    billingCaption: card.priceDescription
+                )))
                 PlanFeatureListView {
                     PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                     PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)

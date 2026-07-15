@@ -11,15 +11,26 @@ extension PlanEntity {
 
     var price: PlanPrice {
         // Discount price will handled in separate ticket
-        if subscriptionCycle == .yearly {
-            return .yearly(
-                price: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedMonthlyPriceForYearlyPlan ?? formattedPrice),
-                billing: Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(formattedPriceForYearlyPlan ?? formattedPrice)
+        switch subscriptionCycle {
+        case .monthly:
+            PlanPrice.monthly(
+                PlanPriceModel.Monthly(
+                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedPrice)
+                )
+            )
+        case .yearly:
+            PlanPrice.yearly(
+                PlanPriceModel.Yearly(
+                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedMonthlyPriceForYearlyPlan ?? formattedPrice),
+                    billingCaption: Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(formattedPriceForYearlyPlan ?? formattedPrice)
+                )
+            )
+        case .none:
+            PlanPrice.monthly(
+                PlanPriceModel.Monthly(
+                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedPrice)
+                )
             )
         }
-
-        return .monthly(
-            price: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedPrice)
-        )
     }
 }
