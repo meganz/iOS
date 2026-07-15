@@ -156,6 +156,93 @@ struct NewTimelineViewModelTests {
             #expect(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
         }
 
+        @Test("Hydrating a visible window splices fetched real nodes into the skeleton in place")
+        func hydrateVisibleWindowSplicesRealNodes() async {
+            let reals = [
+                NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+            ]
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
+                    mediaWindowResult: .success(reals)))
+            await sut.loadPhotos() // builds the 3-slot skeleton and stores the sections
+
+            await sut.hydrateVisibleWindow(0..<2)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos.count == 3) // total preserved
+            #expect(photos[0].handle == 10)
+            #expect(photos[1].handle == 11)
+            #expect(photos[2].isTimelinePlaceholder) // untouched slot stays a placeholder
+        }
+
+        @Test("Hydration fetches only the still-empty sub-range, leaving already-hydrated slots untouched")
+        func hydrateVisibleWindowFetchesOnlyPlaceholderSubRange() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "gap.jpg", handle: 99, hasThumbnail: true)
+                    ])))
+            await sut.loadPhotos() // 3-slot skeleton
+
+            // Pre-hydrate slot 0 so the next visible window overlaps an already-real slot.
+            let library = sut.photoLibraryContentViewModel.library
+            sut.photoLibraryContentViewModel.library = library.replacingPhotos(
+                from: 0, with: [NodeEntity(name: "first.jpg", handle: 10, hasThumbnail: true)])
+
+            // Window 0..<2 spans the real slot 0 and the placeholder slot 1; only slot 1 should be fetched.
+            await sut.hydrateVisibleWindow(0..<2)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].handle == 10) // untouched — not re-fetched or overwritten
+            #expect(photos[1].handle == 99) // only the gap was filled
+            #expect(photos[2].isTimelinePlaceholder)
+        }
+
+        @Test("A shape-neutral reload preserves hydrated nodes instead of flashing back to placeholders")
+        func reloadWithUnchangedShapePreservesHydration() async {
+            let reals = [
+                NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+            ]
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1
+                    mediaWindowResult: .success(reals)))
+            await sut.loadPhotos()
+            await sut.hydrateVisibleWindow(0..<2) // slots 0, 1 now real
+
+            // A node-update-style reload fetches the same sections (same shape, same filter).
+            await sut.loadPhotos()
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].handle == 10) // hydrated content preserved, not wiped
+            #expect(photos[1].handle == 11)
+            #expect(photos[2].isTimelinePlaceholder)
+        }
+
+        @Test("Changing the filter rebuilds the skeleton, dropping hydration that no longer applies")
+        func filterChangeRebuildsSkeletonDiscardingHydration() async {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()),
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                        NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+                    ])))
+            await sut.loadPhotos()
+            await sut.hydrateVisibleWindow(0..<2) // hydrate under the initial filter
+
+            await sut.updatePhotoFilter(option: .images) // a different dataset
+            await sut.loadPhotos()
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            let allArePlaceholders = photos.allSatisfy(\.isTimelinePlaceholder)
+            #expect(allArePlaceholders) // stale hydration dropped; grid is a fresh skeleton
+        }
+
         @Test("Changing sort order reloads (re-fetches sections) instead of locally re-sorting placeholders")
         func sortOrderChangeReloads() async throws {
             let sut = makeSUT(

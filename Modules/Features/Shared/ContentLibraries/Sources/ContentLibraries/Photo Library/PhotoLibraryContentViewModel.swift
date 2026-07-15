@@ -10,6 +10,8 @@ import SwiftUI
 @objc public final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published public var library: PhotoLibrary
     @Published public var isLoading = true
+    
+    public let visiblePhotoIndexRange = CurrentValueSubject<Range<Int>?, Never>(nil)
     @Published public var selectedMode: PhotoLibraryViewMode = .all {
         didSet {
             guard selectedMode != oldValue else { return }

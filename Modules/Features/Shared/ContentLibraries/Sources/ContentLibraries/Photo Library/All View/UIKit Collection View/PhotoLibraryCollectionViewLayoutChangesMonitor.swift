@@ -39,15 +39,20 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
                 return
             }
             let (photoDateSections, zoomState) = sectionDataChanges
-            
-            // Build Sections
-            let shouldRefresh = shouldRefresh(to: photoDateSections)
-            
-            // Update our local datasource
+
+            // Decide reload vs. in-place reconfigure vs. no-op
+            let refresh = refreshPlan(to: photoDateSections)
+
+            // Update our local datasource before applying, so cell providers read fresh data
             photoLibraryDataSource = photoDateSections
 
             // Update Sections and Cells
-            if shouldRefresh {
+            switch refresh {
+            case .none:
+                break
+            case .reconfigure(let indexPaths):
+                collectionView?.reconfigureItems(at: indexPaths)
+            case .reload:
                 collectionView?.reloadData()
             }
             
@@ -56,9 +61,42 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
                 zoomState: zoomState,
                 bannerType: bannerType,
                 previousLayoutBuilder: currentLayoutBuilder,
-                didReloadData: shouldRefresh)
+                didReloadData: refresh.didReloadData)
         }
         .store(in: &subscriptions)
+    }
+    
+    private enum RefreshPlan {
+        case none
+        case reconfigure([IndexPath])
+        case reload
+
+        /// A reconfigure updates items only, not supplementary views, so — like the no-op case —
+        /// it counts as "not reloaded" for the header-refresh decision in `invalidateLayoutIfNeeded`.
+        var didReloadData: Bool {
+            if case .reload = self { true } else { false }
+        }
+    }
+
+    private func refreshPlan(to sections: [PhotoDateSection]) -> RefreshPlan {
+        guard let collectionView else { return .none }
+        let visiblePositions = Dictionary(
+            uniqueKeysWithValues:
+                collectionView.indexPathsForVisibleItems.compactMap {
+                    self.photoLibraryDataSource.position(at: $0)
+                }.map {
+                    ($0, true)
+                }
+        )
+
+        // A structural change (section add/remove, header/date change, or item-count change) needs
+        // a full reload; a content-only change (placeholder → real node, thumbnail/favourite/
+        // sensitive flips) reconfigures just the affected cells in place.
+        guard let changed = photoLibraryDataSource.changedItemIndexPaths(
+            to: sections, visiblePositions: visiblePositions) else {
+            return .reload
+        }
+        return changed.isEmpty ? .none : .reconfigure(changed)
     }
         
     private func invalidateLayoutIfNeeded(
@@ -88,19 +126,5 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
         if !didReloadData {
             onLayoutChange?()
         }
-    }
-    
-    private func shouldRefresh(to sections: [PhotoDateSection]) -> Bool {
-        guard let collectionView else { return false }
-        let visiblePositions = Dictionary(
-            uniqueKeysWithValues:
-                collectionView.indexPathsForVisibleItems.compactMap {
-                    self.photoLibraryDataSource.position(at: $0)
-                }.map {
-                    ($0, true)
-                }
-        )
-        
-        return photoLibraryDataSource.shouldRefresh(to: sections, visiblePositions: visiblePositions)
     }
 }

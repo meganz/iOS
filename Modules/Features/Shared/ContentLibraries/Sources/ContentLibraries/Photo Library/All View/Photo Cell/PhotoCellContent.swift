@@ -36,8 +36,11 @@ struct PhotoCellContent: View {
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .gesture(viewModel.editMode.isEditing ? nil : longPress)
-        .task { await viewModel.startLoadingThumbnail() }
-        .task {
+        // Keyed on the node identity so an in-place hydration (placeholder → real node via
+        // `reconfigureItems`, which reuses the view identity) restarts the load against the real
+        // node instead of keeping the placeholder's no-op task. See `nodeLoadIdentity`.
+        .task(id: viewModel.nodeLoadIdentity) { await viewModel.startLoadingThumbnail() }
+        .task(id: viewModel.nodeLoadIdentity) {
             if #available(iOS 16, *) {
                 await viewModel.monitorInheritedSensitivityChanges()
             } else {

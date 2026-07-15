@@ -17,6 +17,9 @@ struct NewTimelineView: View {
         .task {
             await viewModel.monitorUpdates()
         }
+        .task {
+            await viewModel.monitorVisibleWindowHydration()
+        }
         .onDisappear(perform: viewModel.onViewDisappear)
         .if(viewModel.showEmptyStateView) {
             $0.overlay(emptyView)

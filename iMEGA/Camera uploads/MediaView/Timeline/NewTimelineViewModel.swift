@@ -1,3 +1,4 @@
+import Combine
 import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -26,6 +27,22 @@ final class NewTimelineViewModel: ObservableObject {
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
+
+    /// The count-based sections backing the current skeleton, kept so a visible flat-index
+    /// window can be mapped to a `section + local offset` fetch. Only populated on the
+    /// skeleton path.
+    private var dateSections: [MediaDateSectionEntity] = []
+
+    private var skeletonFilterOptions: PhotosFilterOptionsEntity?
+    private var skeletonSortOrder: SortOrderEntity?
+
+    /// Bumped only when the skeleton is genuinely rebuilt — its shape changed, or the
+    /// filter/sort changed. An in-flight window hydration captures it and discards its result
+    /// if a rebuild happened underneath it, so stale (offset-positioned) nodes never splice
+    /// into a fresh skeleton. A shape-neutral reload does NOT bump it, so hydration in flight
+    /// during such a reload survives. Identity-based reconciliation across shape changes
+    /// (preserving hydration when counts move) is the cursor work.
+    private var skeletonGeneration = 0
     
     private(set) var photoFilterOptions: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
     private(set) var sortOrder: SortOrderEntity = .modificationDesc
@@ -36,6 +53,12 @@ final class NewTimelineViewModel: ObservableObject {
         didSet { oldValue?.cancel() }
     }
     private(set) var saveFiltersTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    /// The in-flight window hydration. Latest-only: a newer visible range cancels the previous
+    /// fetch (via the SDK cancel token) so a slow request for an area the user scrolled past
+    /// doesn't hold up — or waste work on — the region now on screen.
+    private(set) var hydrationTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
     
@@ -65,6 +88,7 @@ final class NewTimelineViewModel: ObservableObject {
         currentNodeUpdateTask = nil
         sortPhotoLibraryTask = nil
         saveFiltersTask = nil
+        hydrationTask = nil
     }
     
     func loadPhotos() async {
@@ -213,7 +237,124 @@ final class NewTimelineViewModel: ObservableObject {
         try Task.checkCancellation()
 
         showEmptyStateView = sections.isEmpty
+        return reconcileSkeleton(with: sections)
+    }
+
+    /// Fold freshly-fetched date sections into the on-screen library.
+    ///
+    /// - Same filter/sort AND structurally-identical section shape → the placeholder/real
+    ///   layout is still valid at every position, so keep the current (possibly hydrated)
+    ///   library as-is. This is the safe subset of a merge: a node update that didn't change
+    ///   the timeline shape must not wipe hydrated cells back to placeholders.
+    /// - Otherwise (filter/sort changed, or the shape changed) the old positions no longer
+    ///   hold, so build a fresh placeholder skeleton and bump the generation to drop any
+    ///   in-flight window hydration.
+    private func reconcileSkeleton(with sections: [MediaDateSectionEntity]) -> PhotoLibrary {
+        let filterUnchanged = skeletonFilterOptions == photoFilterOptions
+            && skeletonSortOrder == sortOrder
+        if filterUnchanged, sameShape(dateSections, sections) {
+            dateSections = sections
+            return photoLibraryContentViewModel.library
+        }
+
+        dateSections = sections
+        skeletonFilterOptions = photoFilterOptions
+        skeletonSortOrder = sortOrder
+        skeletonGeneration += 1
         return PhotoLibrary.skeleton(from: sections)
+    }
+
+    /// Two section lists describe the same skeleton shape when their buckets and per-bucket
+    /// counts line up — i.e. every flat position maps to the same bucket, so hydrated nodes
+    /// stay valid in place.
+    private func sameShape(_ lhs: [MediaDateSectionEntity], _ rhs: [MediaDateSectionEntity]) -> Bool {
+        guard lhs.count == rhs.count else { return false }
+        return zip(lhs, rhs).allSatisfy { $0.groupId == $1.groupId && $0.count == $1.count }
+    }
+
+    /// Drives lazy hydration: as the grid scrolls, the collection-view coordinator publishes the
+    /// visible flat-index range; each settled range is fetched and spliced into the skeleton. The
+    /// View owns this task, so it is cancelled on disappear. No-op unless the skeleton path is active.
+    func monitorVisibleWindowHydration() async {
+        guard mediaTimelineUseCase != nil else { return }
+        let visibleRanges = photoLibraryContentViewModel.visiblePhotoIndexRange
+            .compactMap { $0 }
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .values
+
+        for await range in visibleRanges {
+            // Latest-only: assigning a new task cancels the previous in-flight hydration.
+            hydrationTask = Task { [weak self] in
+                await self?.hydrateVisibleWindow(range)
+            }
+        }
+    }
+
+    func hydrateVisibleWindow(_ range: Range<Int>) async {
+        guard let mediaTimelineUseCase else { return }
+
+        let photos = photoLibraryContentViewModel.library.allPhotos
+        let clampedUpper = min(range.upperBound, photos.count)
+        guard range.lowerBound < clampedUpper else { return }
+        let visible = range.lowerBound..<clampedUpper
+
+        // Fetch only the still-empty sub-range. Scrolling emits heavily overlapping windows
+        // (…10..<30, 11..<31…); trimming to the placeholder span skips slots already hydrated at
+        // the edges instead of re-requesting them, and returns early when nothing is left to fill.
+        guard let firstGap = visible.first(where: { photos[$0].isTimelinePlaceholder }),
+              let lastGap = visible.last(where: { photos[$0].isTimelinePlaceholder }),
+              let anchor = sectionAnchor(forFlatIndex: firstGap) else { return }
+        let window = firstGap..<(lastGap + 1)
+
+        let generation = skeletonGeneration
+
+        do {
+            let nodes = try await mediaTimelineUseCase.mediaWindow(
+                filter: photoFilterOptions.toMediaTimelineFilterEntity(),
+                section: anchor.section,
+                sortOrder: sortOrder.toMediaTimelineSortOrderEntity(),
+                offset: anchor.localOffset,
+                limit: window.count)
+
+            try Task.checkCancellation()
+            // The skeleton was rebuilt (filter/sort change) while fetching — these nodes belong
+            // to the old sections/positions, so drop them rather than splice into a fresh grid.
+            guard nodes.isNotEmpty, generation == skeletonGeneration else { return }
+
+            // Splice off the main actor: rebuilding the (value-type) tree is O(total photos).
+            // The reassignment below leaves the section structure unchanged, so the layout
+            // monitor reconfigures just the swapped cells in place (no full reload, no jump).
+            let current = photoLibraryContentViewModel.library
+            let hydrated = await splicing(current, from: window.lowerBound, with: nodes)
+
+            try Task.checkCancellation()
+            guard generation == skeletonGeneration else { return }
+            photoLibraryContentViewModel.library = hydrated
+        } catch is CancellationError {
+            MEGALogDebug("[\(type(of: self))] window hydration cancelled")
+        } catch {
+            MEGALogError("[\(type(of: self))] window hydration failed: \(error)")
+        }
+    }
+
+    private nonisolated func splicing(
+        _ library: PhotoLibrary, from index: Int, with nodes: [NodeEntity]) async -> PhotoLibrary {
+        library.replacingPhotos(from: index, with: nodes)
+    }
+
+    /// Maps a flat index in `allPhotos` to the date section that contains it (by cumulative
+    /// count, matching the skeleton) and the local offset within that section.
+    private func sectionAnchor(forFlatIndex index: Int) -> (section: MediaDateSectionEntity, localOffset: Int)? {
+        var cumulative = 0
+        for section in dateSections {
+            let next = cumulative + section.count
+            if index < next {
+                return (section, index - cumulative)
+            }
+            cumulative = next
+        }
+        return nil
     }
 
     private func timelinePhotoLibrary() async throws -> PhotoLibrary {

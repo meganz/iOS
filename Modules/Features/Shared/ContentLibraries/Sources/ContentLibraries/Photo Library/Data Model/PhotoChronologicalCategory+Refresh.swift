@@ -38,6 +38,40 @@ extension Array where Element: PhotoChronologicalCategory {
 }
 
 extension Array where Element: PhotoSection {
+    /// A precise refresh plan for moving from the receiver to `sections`, valid only while the
+    /// section *structure* is unchanged (same section count, titles, dates and per-section item
+    /// counts). Returns the item index paths whose content changed — so the caller can
+    /// `reconfigureItems(at:)` exactly those cells in place instead of reloading the whole grid.
+    /// Returns `nil` when the structure differs, signalling the caller to fall back to a full
+    /// reload. Mirrors `shouldRefresh(to:visiblePositions:)`: thumbnail-aware comparison for
+    /// on-screen items, the lighter comparison elsewhere.
+    ///
+    /// - Note: The `nil` → full-reload branch is an interim fallback — any structural change (e.g.
+    ///   a Camera-Upload insert growing the top day bucket) reloads the whole grid and can jump the
+    ///   scroll position. The reactive-updates work replaces it with an identity-keyed incremental
+    ///   applier (`performBatchUpdates` + `contentOffset` preservation).
+    func changedItemIndexPaths(to sections: [Element], visiblePositions: [PhotoScrollPosition?: Bool] = [:]) -> [IndexPath]? {
+        guard count == sections.count else { return nil }
+        var changed = [IndexPath]()
+        for (sectionIndex, pair) in zip(self, sections).enumerated() {
+            let (old, new) = pair
+            guard old.title == new.title,
+                  old.categoryDate == new.categoryDate,
+                  old.contentList.count == new.contentList.count else {
+                return nil
+            }
+            for (itemIndex, items) in zip(old.contentList, new.contentList).enumerated() {
+                let didChange = visiblePositions[items.0.position] == true
+                    ? items.0 ↻↻⏿ items.1
+                    : items.0 ↻↻ items.1
+                if didChange {
+                    changed.append(IndexPath(item: itemIndex, section: sectionIndex))
+                }
+            }
+        }
+        return changed
+    }
+    
     func shouldRefresh(to categories: [Element], visiblePositions: [PhotoScrollPosition?: Bool] = [:]) -> Bool {
         guard count == categories.count else { return true }
         for zip in zip(self, categories) {

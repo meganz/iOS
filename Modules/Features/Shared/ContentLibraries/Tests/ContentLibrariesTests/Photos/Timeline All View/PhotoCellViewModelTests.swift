@@ -1213,6 +1213,28 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
 
     @MainActor
+    func testNodeLoadIdentity_placeholderVsRealNode_differsSoInPlaceHydrationRestartsLoad() {
+        // `PhotoCellContent` keys its thumbnail/sensitivity `.task(id:)` on this. When a
+        // placeholder is hydrated into its real node in place (via `reconfigureItems`, which
+        // reuses the SwiftUI view identity), the identity MUST change or the load never restarts
+        // and the real thumbnail only appears after the cell is scrolled off-screen and back.
+        let placeholder = makeSUT(photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)))
+        let realNode = makeSUT(photo: NodeEntity(handle: 42))
+
+        XCTAssertNotEqual(placeholder.nodeLoadIdentity, realNode.nodeLoadIdentity)
+    }
+
+    @MainActor
+    func testNodeLoadIdentity_sameHandle_isStableSoMetadataChangesDoNotReloadThumbnail() {
+        // A metadata-only change (e.g. favourite toggle) reconfigures the cell with a new VM but
+        // the same underlying node; the identity must stay equal so the thumbnail isn't reloaded.
+        let first = makeSUT(photo: NodeEntity(handle: 42))
+        let second = makeSUT(photo: NodeEntity(handle: 42))
+
+        XCTAssertEqual(first.nodeLoadIdentity, second.nodeLoadIdentity)
+    }
+
+    @MainActor
     func testSelect_placeholderNode_doesNotChangeSelection() {
         let sut = makeSUT(
             photo: .timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0)),

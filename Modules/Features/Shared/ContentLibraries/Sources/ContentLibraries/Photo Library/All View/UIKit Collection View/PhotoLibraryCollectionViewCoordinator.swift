@@ -524,6 +524,21 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        updateVisiblePhotoIndexRange(including: indexPath)
+    }
+
+    /// Publish the flat index range of the currently on-screen photos so a paginated-timeline
+    /// consumer can lazily hydrate that window. No-op for content modes that don't observe it.
+    private func updateVisiblePhotoIndexRange(including indexPath: IndexPath? = nil) {
+        guard let collectionView else { return }
+        var indexPaths = collectionView.indexPathsForVisibleItems
+        if let indexPath { indexPaths.append(indexPath) }
+        let flatIndices = indexPaths.compactMap { photoLibraryDataSource.flatIndex(of: $0) }
+        guard let lowerBound = flatIndices.min(), let upperBound = flatIndices.max() else { return }
+        viewModel.libraryViewModel.visiblePhotoIndexRange.send(lowerBound..<(upperBound + 1))
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
         guard !photo.isTimelinePlaceholder else { return }

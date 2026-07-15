@@ -26,6 +26,15 @@ extension Array where Element: PhotoDateSection {
     func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
         photo(at: indexPath)?.position
     }
+
+    /// Flat position of an index path within the flattened `allPhotos` order: the sum of all
+    /// prior sections' item counts plus the item. Zoom-independent (grouping changes the
+    /// section split but not the flat order). Returns nil for an out-of-bounds section.
+    func flatIndex(of indexPath: IndexPath) -> Int? {
+        guard indices.contains(indexPath.section) else { return nil }
+        let itemsBeforeSection = self[..<indexPath.section].reduce(0) { $0 + $1.contentList.count }
+        return itemsBeforeSection + indexPath.item
+    }
     
     func indexPaths(from start: IndexPath, to end: IndexPath) -> [IndexPath] {
         let isStartBeforeEnd = start.section < end.section || (start.section == end.section && start.item <= end.item)

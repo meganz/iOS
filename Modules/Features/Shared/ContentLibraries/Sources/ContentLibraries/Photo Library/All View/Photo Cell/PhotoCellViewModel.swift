@@ -46,6 +46,14 @@ open class PhotoCellViewModel: ObservableObject {
     
     private var isPlaceholder: Bool { photo.isTimelinePlaceholder }
 
+    /// Identity for the view's load `.task(id:)` hooks (thumbnail + sensitivity monitoring).
+    /// It changes when the cell's underlying node changes — most importantly when a timeline
+    /// placeholder is hydrated into its real node *in place* via `reconfigureItems`, which reuses
+    /// the cell and its SwiftUI view identity, so a plain `.task` would keep the placeholder's
+    /// no-op load and never start the real one. Keying the tasks on this restarts them against the
+    /// real node; a metadata-only change (same handle) keeps the same identity and does not restart.
+    var nodeLoadIdentity: HandleEntity { photo.handle }
+
     // MARK: private state
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
