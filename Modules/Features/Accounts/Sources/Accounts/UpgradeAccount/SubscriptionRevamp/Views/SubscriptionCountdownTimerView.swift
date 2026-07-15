@@ -20,7 +20,7 @@ struct SubscriptionCountdownTimerView: View {
                 divider
                 unit(value: countdown.minutes, label: Strings.Localizable.SubscriptionPurchase.Revamp.Countdown.minutes(countdown.minutes))
             }
-            .padding(.vertical, TokenSpacing._4)
+            .padding(.vertical, TokenSpacing._5)
             .frame(maxWidth: .infinity)
             .background(TokenColors.Brand.containerDefault.swiftUI, in: RoundedRectangle(cornerRadius: TokenRadius.medium))
         }

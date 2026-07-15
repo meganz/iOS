@@ -10,20 +10,23 @@ struct SubscriptionPromoHeaderView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: TokenSpacing._4) {
+        VStack(alignment: .leading, spacing: 0) {
             MEGABadge(text: model.tag, type: .megaPrimary, size: .small, icon: nil)
 
             Text(model.title)
                 .font(.title.bold())
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .padding(.vertical, TokenSpacing._4)
 
             Text(model.subtitle)
                 .font(.title2.bold())
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .padding(.bottom, TokenSpacing._4)
 
             Text(model.validUntil)
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .padding(.bottom, TokenSpacing._2)
 
             SubscriptionCountdownTimerView(deadline: model.deadline)
                 .padding(.top, TokenSpacing._2)

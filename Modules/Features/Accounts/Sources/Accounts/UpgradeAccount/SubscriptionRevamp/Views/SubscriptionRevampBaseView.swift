@@ -35,6 +35,10 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
 
     private var isRegularHeight: Bool { verticalSizeClass != .compact }
 
+    private var compactTopInset: CGFloat {
+        isRegularHeight ? 0 : TokenSpacing._11
+    }
+
     var body: some View {
         ZStack(alignment: .top) {
             layoutView
@@ -78,7 +82,6 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
             VStack(alignment: .leading, spacing: 0) {
                 if isRegularHeight {
                     regularHeader
-                        .padding(.top, -TokenSpacing._11)
                 }
 
                 VStack(alignment: .leading, spacing: 0) {
@@ -86,7 +89,7 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
                 }
                 .padding(.horizontal, TokenSpacing._5)
             }
-            .padding(.top, TokenSpacing._3)
+            .padding(.top, compactTopInset)
             .padding(.bottom, TokenSpacing._2)
             .maxWidthForWideScreen()
             .onScrollNearTop(
@@ -162,11 +165,11 @@ private struct SubscriptionRevampCompactHeightLayout<
     let scrollContent: ScrollContent
 
     var body: some View {
-        ZStack(alignment: .top) {
-            headerBackground
-            scrollContent
-                .padding(.leading, leadingPadding)
-        }
+        scrollContent
+            .padding(.leading, leadingPadding)
+            .background(alignment: .topLeading) {
+                headerBackground
+            }
     }
 }
 
