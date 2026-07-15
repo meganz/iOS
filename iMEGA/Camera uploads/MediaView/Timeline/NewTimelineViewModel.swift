@@ -297,50 +297,155 @@ final class NewTimelineViewModel: ObservableObject {
         let photos = photoLibraryContentViewModel.library.allPhotos
         let clampedUpper = min(range.upperBound, photos.count)
         guard range.lowerBound < clampedUpper else { return }
-        let visible = range.lowerBound..<clampedUpper
 
-        // Fetch only the still-empty sub-range. Scrolling emits heavily overlapping windows
-        // (…10..<30, 11..<31…); trimming to the placeholder span skips slots already hydrated at
-        // the edges instead of re-requesting them, and returns early when nothing is left to fill.
-        guard let firstGap = visible.first(where: { photos[$0].isTimelinePlaceholder }),
-              let lastGap = visible.last(where: { photos[$0].isTimelinePlaceholder }),
-              let anchor = sectionAnchor(forFlatIndex: firstGap) else { return }
-        let window = firstGap..<(lastGap + 1)
+        // Split the visible window into contiguous placeholder runs rather than fetching it as a
+        // whole: a run flanked by an already-hydrated real node is grown from that anchor by cursor
+        // (drift-safe), while an isolated cold run teleports in by absolute offset. A window mixing
+        // both is handled per-run.
+        let runs = placeholderRuns(in: range.lowerBound..<clampedUpper, photos: photos)
+        guard runs.isNotEmpty else { return }
 
         let generation = skeletonGeneration
+        var results: [RunFetchResult] = []
+        for run in runs {
+            guard !Task.isCancelled, generation == skeletonGeneration else { return }
+            if let result = await fetchRun(run, using: mediaTimelineUseCase) {
+                results.append(result)
+            }
+        }
+        await applyFills(results, generation: generation)
+    }
 
+    /// Maximal runs of consecutive placeholder slots inside `visible`, each tagged with the real
+    /// node (if any) immediately above and below it — the anchors that decide cursor vs offset.
+    /// Neighbours are read from the full `photos` list, so a real node just outside the visible
+    /// window still seeds a cursor fetch.
+    private func placeholderRuns(in visible: Range<Int>, photos: [NodeEntity]) -> [PlaceholderRun] {
+        var runs: [PlaceholderRun] = []
+        var index = visible.lowerBound
+        while index < visible.upperBound {
+            guard photos[index].isTimelinePlaceholder else {
+                index += 1
+                continue
+            }
+            var end = index
+            while end < visible.upperBound, photos[end].isTimelinePlaceholder { end += 1 }
+            let above = index - 1
+            let below = end
+            runs.append(PlaceholderRun(
+                range: index..<end,
+                upperNeighbour: above >= 0 && !photos[above].isTimelinePlaceholder ? photos[above] : nil,
+                lowerNeighbour: below < photos.count && !photos[below].isTimelinePlaceholder ? photos[below] : nil))
+            index = end
+        }
+        return runs
+    }
+
+    /// Dispatch one run to the correct fetch. An adjacent real node is preferred as a cursor anchor
+    /// (upper by convention when both sides are real); with no real neighbour the run is an isolated
+    /// cold region, filled by an absolute-offset window from its date-bucket anchor.
+    private func fetchRun(
+        _ run: PlaceholderRun,
+        using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
+    ) async -> RunFetchResult? {
+        let filter = photoFilterOptions.toMediaTimelineFilterEntity()
+        let order = sortOrder.toMediaTimelineSortOrderEntity()
         do {
-            let nodes = try await mediaTimelineUseCase.mediaWindow(
-                filter: photoFilterOptions.toMediaTimelineFilterEntity(),
-                section: anchor.section,
-                sortOrder: sortOrder.toMediaTimelineSortOrderEntity(),
-                offset: anchor.localOffset,
-                limit: window.count)
-
-            try Task.checkCancellation()
-            // The skeleton was rebuilt (filter/sort change) while fetching — these nodes belong
-            // to the old sections/positions, so drop them rather than splice into a fresh grid.
-            guard nodes.isNotEmpty, generation == skeletonGeneration else { return }
-
-            // Splice off the main actor: rebuilding the (value-type) tree is O(total photos).
-            // The reassignment below leaves the section structure unchanged, so the layout
-            // monitor reconfigures just the swapped cells in place (no full reload, no jump).
-            let current = photoLibraryContentViewModel.library
-            let hydrated = await splicing(current, from: window.lowerBound, with: nodes)
-
-            try Task.checkCancellation()
-            guard generation == skeletonGeneration else { return }
-            photoLibraryContentViewModel.library = hydrated
+            if let upper = run.upperNeighbour {
+                let nodes = try await mediaTimelineUseCase.mediaPage(
+                    filter: filter, sortOrder: order, after: upper, limit: run.range.count)
+                try Task.checkCancellation()
+                return nodes.isEmpty ? nil : RunFetchResult(run: run, kind: .pageAfter(upper), nodes: nodes)
+            } else if let lower = run.lowerNeighbour {
+                let nodes = try await mediaTimelineUseCase.mediaPage(
+                    filter: filter, sortOrder: order, before: lower, limit: run.range.count)
+                try Task.checkCancellation()
+                return nodes.isEmpty ? nil : RunFetchResult(run: run, kind: .pageBefore(lower), nodes: nodes)
+            } else {
+                guard let anchor = sectionAnchor(forFlatIndex: run.range.lowerBound) else { return nil }
+                let nodes = try await mediaTimelineUseCase.mediaWindow(
+                    filter: filter, section: anchor.section, sortOrder: order,
+                    offset: anchor.localOffset, limit: run.range.count)
+                try Task.checkCancellation()
+                return nodes.isEmpty ? nil : RunFetchResult(run: run, kind: .offset, nodes: nodes)
+            }
         } catch is CancellationError {
-            MEGALogDebug("[\(type(of: self))] window hydration cancelled")
+            return nil
         } catch {
-            MEGALogError("[\(type(of: self))] window hydration failed: \(error)")
+            MEGALogError("[\(type(of: self))] run hydration failed: \(error)")
+            return nil
+        }
+    }
+
+    /// Fold every run's fetched nodes into one combined splice. Positions are resolved against a
+    /// single snapshot: cursor runs re-locate their anchor by handle (immune to reshape), offset
+    /// runs land at their captured flat position. `replacingPhotos(at:)` keeps the section shape,
+    /// so the layout monitor reconfigures just the swapped cells in place — no full reload, no jump.
+    /// The splice itself runs off the main actor (O(total photos) tree rebuild).
+    private func applyFills(_ results: [RunFetchResult], generation: Int) async {
+        guard results.isNotEmpty, generation == skeletonGeneration else { return }
+        let current = photoLibraryContentViewModel.library
+        let photos = current.allPhotos
+
+        var replacements: [Int: NodeEntity] = [:]
+        for result in results {
+            guard let start = spliceStart(for: result, in: photos) else { continue }
+            for (offset, node) in result.nodes.enumerated() where offset < result.run.range.count {
+                let index = start + offset
+                // Only fill placeholder slots — never overwrite an already-hydrated real node or
+                // overflow past the tree, whatever the SDK returned.
+                guard photos.indices.contains(index), photos[index].isTimelinePlaceholder else { continue }
+                replacements[index] = node
+            }
+        }
+        guard replacements.isNotEmpty else { return }
+
+        let hydrated = await splicing(current, replacing: replacements)
+        guard generation == skeletonGeneration else { return }
+        photoLibraryContentViewModel.library = hydrated
+    }
+
+    /// The flat index the first fetched node lands at. Cursor runs page outward from an anchor
+    /// re-located by handle (`after` fills below it; `before` fills the run's tail ending just
+    /// above the lower anchor); offset runs start at the run's captured lower bound.
+    private func spliceStart(for result: RunFetchResult, in photos: [NodeEntity]) -> Int? {
+        switch result.kind {
+        case .offset:
+            return result.run.range.lowerBound
+        case .pageAfter(let anchor):
+            guard let index = photos.firstIndex(where: { $0.handle == anchor.handle }) else { return nil }
+            return index + 1
+        case .pageBefore(let anchor):
+            guard let index = photos.firstIndex(where: { $0.handle == anchor.handle }) else { return nil }
+            return max(0, index - result.nodes.count)
         }
     }
 
     private nonisolated func splicing(
-        _ library: PhotoLibrary, from index: Int, with nodes: [NodeEntity]) async -> PhotoLibrary {
-        library.replacingPhotos(from: index, with: nodes)
+        _ library: PhotoLibrary, replacing replacements: [Int: NodeEntity]) async -> PhotoLibrary {
+        library.replacingPhotos(at: replacements)
+    }
+
+    /// A contiguous span of placeholder slots in the visible window, plus the real nodes (if any)
+    /// bordering it — the anchors that decide how the run is fetched.
+    private struct PlaceholderRun {
+        let range: Range<Int>
+        let upperNeighbour: NodeEntity?
+        let lowerNeighbour: NodeEntity?
+    }
+
+    /// How a run was fetched — carries the anchor so its splice position can be re-derived by
+    /// identity at apply time (cursor) rather than by the position captured when the run was built.
+    private enum RunFetchKind {
+        case pageAfter(NodeEntity)
+        case pageBefore(NodeEntity)
+        case offset
+    }
+
+    private struct RunFetchResult {
+        let run: PlaceholderRun
+        let kind: RunFetchKind
+        let nodes: [NodeEntity]
     }
 
     /// Maps a flat index in `allPhotos` to the date section that contains it (by cumulative

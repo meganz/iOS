@@ -177,28 +177,116 @@ struct NewTimelineViewModelTests {
             #expect(photos[2].isTimelinePlaceholder) // untouched slot stays a placeholder
         }
 
-        @Test("Hydration fetches only the still-empty sub-range, leaving already-hydrated slots untouched")
-        func hydrateVisibleWindowFetchesOnlyPlaceholderSubRange() async {
+        @Test("A gap next to a real slot fills only the gap, by cursor forward from that real node")
+        func hydrateVisibleWindowFillsGapNextToRealSlotByCursor() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let realSlot0 = NodeEntity(name: "first.jpg", handle: 10, hasThumbnail: true)
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
                     dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
-                    mediaWindowResult: .success([
-                        NodeEntity(name: "gap.jpg", handle: 99, hasThumbnail: true)
-                    ])))
+                    // The gap borders a real node, so it must page forward from it (cursor),
+                    // not teleport by offset — the offset result must stay unused.
+                    mediaPageResult: .success([NodeEntity(name: "gap.jpg", handle: 99, hasThumbnail: true)]),
+                    mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
+                    recorder: recorder))
             await sut.loadPhotos() // 3-slot skeleton
 
             // Pre-hydrate slot 0 so the next visible window overlaps an already-real slot.
             let library = sut.photoLibraryContentViewModel.library
-            sut.photoLibraryContentViewModel.library = library.replacingPhotos(
-                from: 0, with: [NodeEntity(name: "first.jpg", handle: 10, hasThumbnail: true)])
+            sut.photoLibraryContentViewModel.library = library.replacingPhotos(from: 0, with: [realSlot0])
 
             // Window 0..<2 spans the real slot 0 and the placeholder slot 1; only slot 1 should be fetched.
             await sut.hydrateVisibleWindow(0..<2)
 
             let photos = sut.photoLibraryContentViewModel.library.allPhotos
             #expect(photos[0].handle == 10) // untouched — not re-fetched or overwritten
-            #expect(photos[1].handle == 99) // only the gap was filled
+            #expect(photos[1].handle == 99) // gap filled from the cursor page, not the offset window
             #expect(photos[2].isTimelinePlaceholder)
+            // One forward page anchored at the real slot, sized to the 1-slot gap; no offset window.
+            #expect(await recorder.pageAfterCalls == [.init(after: realSlot0, limit: 1)])
+            #expect(await recorder.windowCalls.isEmpty)
+            #expect(await recorder.pageBeforeCalls.isEmpty)
+        }
+
+        @Test("A gap sitting above a real slot pages backward (before) into the gap's tail")
+        func hydrateVisibleWindowFillsGapAboveRealSlotByBackwardCursor() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let realSlot2 = NodeEntity(name: "last.jpg", handle: 20, hasThumbnail: true)
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
+                    mediaPageBeforeResult: .success([NodeEntity(name: "up.jpg", handle: 77, hasThumbnail: true)]),
+                    mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
+                    recorder: recorder))
+            await sut.loadPhotos() // 3-slot skeleton
+
+            // Pre-hydrate the LAST slot so the gap above it has a real lower neighbour and no real
+            // upper neighbour → backward paging.
+            let library = sut.photoLibraryContentViewModel.library
+            sut.photoLibraryContentViewModel.library = library.replacingPhotos(from: 2, with: [realSlot2])
+
+            await sut.hydrateVisibleWindow(1..<3) // gap at slot 1, real at slot 2
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[1].handle == 77) // filled from the backward page, adjacent to slot 2
+            #expect(photos[2].handle == 20) // untouched
+            // One backward page anchored at the lower real slot, sized to the 1-slot gap; no offset window.
+            #expect(await recorder.pageBeforeCalls == [.init(before: realSlot2, limit: 1)])
+            #expect(await recorder.windowCalls.isEmpty)
+            #expect(await recorder.pageAfterCalls.isEmpty)
+        }
+
+        @Test("An isolated cold run with no real neighbour teleports in by a single offset window")
+        func hydrateVisibleWindowIsolatedRunUsesOffset() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let sections = Self.makeSections()
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(sections), // counts 2 + 1 = 3
+                    mediaPageResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                        NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+                    ]),
+                    recorder: recorder))
+            await sut.loadPhotos()
+
+            await sut.hydrateVisibleWindow(0..<2) // both neighbours are placeholders → offset
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos[0].handle == 10) // from the offset window, not the cursor page
+            #expect(photos[1].handle == 11)
+            #expect(photos[2].isTimelinePlaceholder)
+            // Anchored at the first section, local offset 0, sized to the 2-slot run; no cursor page.
+            #expect(await recorder.windowCalls == [.init(section: sections[0], offset: 0, limit: 2)])
+            #expect(await recorder.pageAfterCalls.isEmpty)
+            #expect(await recorder.pageBeforeCalls.isEmpty)
+        }
+
+        @Test("A cold run spanning two sections is filled by ONE offset window across the boundary")
+        func hydrateVisibleWindowCrossSectionRunUsesSingleWindow() async {
+            // The SDK's timestamp anchor is half-bounded and pages across adjacent sections, so a
+            // window spanning a section boundary is a single fetch sized to the whole run — not one
+            // request per section (see byTimestampAnchor: "Pagination continues into adjacent sections").
+            let recorder = MediaTimelineUseCaseRecorder()
+            let sections = Self.makeSections()
+            let reals = [
+                NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true), // section 0, slot 0
+                NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true), // section 0, slot 1
+                NodeEntity(name: "c.jpg", handle: 12, hasThumbnail: true)  // section 1, slot 0
+            ]
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(sections), // counts 2 + 1 = 3
+                    mediaWindowResult: .success(reals),
+                    recorder: recorder))
+            await sut.loadPhotos()
+
+            await sut.hydrateVisibleWindow(0..<3) // one isolated run spanning both sections
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos.map(\.handle) == [10, 11, 12]) // spliced across the boundary
+            #expect(await recorder.windowCalls == [.init(section: sections[0], offset: 0, limit: 3)])
         }
 
         @Test("A shape-neutral reload preserves hydrated nodes instead of flashing back to placeholders")

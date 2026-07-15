@@ -46,6 +46,33 @@ struct PhotoLibraryHydrationTests {
     }
 
     @Test
+    func testReplacingPhotosAt_swapsDisjointSlotsInOneTraversal() {
+        let skeleton = makeSkeleton() // 5 placeholder slots (2 + 3)
+        // Two disjoint runs at once: slot 1 and slots 3..4.
+        let hydrated = skeleton.replacingPhotos(at: [
+            1: NodeEntity(handle: 10),
+            3: NodeEntity(handle: 30),
+            4: NodeEntity(handle: 31)
+        ])
+
+        let photos = hydrated.allPhotos
+        #expect(photos.count == 5)
+        #expect(photos[0].isTimelinePlaceholder)
+        #expect(photos[1].handle == 10)
+        #expect(photos[2].isTimelinePlaceholder)
+        #expect(photos[3].handle == 30)
+        #expect(photos[4].handle == 31)
+        #expect(dayBucketCounts(hydrated) == [2, 3]) // shape preserved
+    }
+
+    @Test
+    func testReplacingPhotosAt_ignoresOutOfRangeIndices() {
+        let skeleton = makeSkeleton()
+        let hydrated = skeleton.replacingPhotos(at: [99: NodeEntity(handle: 10)])
+        #expect(hydrated == skeleton)
+    }
+
+    @Test
     func testReplacingPhotos_windowLongerThanTree_ignoresOverflow() {
         let skeleton = makeSkeleton()
         let reals = (0..<10).map { NodeEntity(handle: HandleEntity(100 + $0)) }
