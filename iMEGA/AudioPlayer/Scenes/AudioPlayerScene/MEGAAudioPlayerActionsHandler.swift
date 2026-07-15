@@ -42,7 +42,7 @@ enum MEGAAudioPlayerActionsHandler {
             viewController: hostVC,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: hostVC)
         )
-        let vc = NodeActionViewController(
+        let vc = PortraitNodeActionViewController(
             node: node,
             delegate: delegate,
             displayMode: displayMode,
@@ -69,7 +69,7 @@ enum MEGAAudioPlayerActionsHandler {
             guard let node, let hostVC else { return }
             let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
             let delegate = FileLinkActionViewControllerDelegate(link: link, viewController: hostVC)
-            let vc = NodeActionViewController(
+            let vc = PortraitNodeActionViewController(
                 node: node,
                 delegate: delegate,
                 displayMode: displayMode,
