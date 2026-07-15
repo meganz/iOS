@@ -533,6 +533,7 @@ extension AudioPlaybackService: PlaybackControllable {
     func resumeFromPrompt() {
         guard let prompt = resumePromptSubject.value else { return }
         playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+        removeSavedPositionForCurrentTrack()
         engine.seek(toSeconds: prompt.playbackTime)
         engine.togglePlayPause()
         resumePromptSubject.send(nil)
@@ -541,9 +542,15 @@ extension AudioPlaybackService: PlaybackControllable {
     func restartFromPrompt() {
         guard resumePromptSubject.value != nil else { return }
         playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
+        removeSavedPositionForCurrentTrack()
         engine.seek(toSeconds: 0)
         engine.togglePlayPause()
         resumePromptSubject.send(nil)
+    }
+
+    private func removeSavedPositionForCurrentTrack() {
+        guard let fingerprint = currentTrackFingerprint else { return }
+        playbackContinuationUseCase.removeSavedPlaybackPosition(for: fingerprint)
     }
 
     func stop() {

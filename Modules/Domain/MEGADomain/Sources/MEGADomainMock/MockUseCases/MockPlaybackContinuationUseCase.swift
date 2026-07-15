@@ -4,6 +4,7 @@ import MEGADomain
 public final class MockPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol, @unchecked Sendable {
     public var _status: PlaybackContinuationStatusEntity
     public private(set) var setPreference_Calls = [PlaybackContinuationPreferenceStatusEntity]()
+    public private(set) var removeSavedPlaybackPosition_Calls = [FingerprintEntity]()
     
     public init(status: PlaybackContinuationStatusEntity = .startFromBeginning) {
         _status = status
@@ -18,6 +19,10 @@ public final class MockPlaybackContinuationUseCase: PlaybackContinuationUseCaseP
     }
     
     public func playbackStopped(for fingerprint: FingerprintEntity, on timeInterval: TimeInterval, outOf fullTimeInterval: TimeInterval) {
-        
+
+    }
+
+    public func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {
+        removeSavedPlaybackPosition_Calls.append(fingerprint)
     }
 }

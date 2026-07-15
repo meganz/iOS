@@ -9,6 +9,7 @@ public protocol PlaybackContinuationUseCaseProtocol: Sendable {
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
     )
+    func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity)
 }
 
 public final class PlaybackContinuationUseCase<
@@ -69,5 +70,9 @@ public final class PlaybackContinuationUseCase<
         }
         
         previousSessionRepo.saveTimeInterval(timeInterval, for: fingerprint)
+    }
+
+    public func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {
+        previousSessionRepo.removeSavedTimeInterval(for: fingerprint)
     }
 }
