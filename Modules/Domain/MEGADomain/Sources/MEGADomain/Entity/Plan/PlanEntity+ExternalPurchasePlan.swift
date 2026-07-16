@@ -1,6 +1,4 @@
-import MEGADomain
-
-extension PlanEntity {
+public extension PlanEntity {
     var externalPurchasePath: String {
         switch type {
         case .proI: "propay_1"

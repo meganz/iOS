@@ -19,6 +19,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case quotaWarningsRevamp = "Quota Warnings Revamp"
     case paginatedMediaTimeline = "Paginated Media Timeline"
     case offlineMode = "Offline Mode"
+    case upgradeAccountPlanRevamp = "Upgrade Account Plan Revamp"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

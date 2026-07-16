@@ -36,7 +36,8 @@ let package = Package(
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
-        .package(path: "../../MEGASharedRepo/MEGAConnectivity")
+        .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
+        .package(path: "../../MEGASharedRepo/MEGAStoreKit")
     ],
     targets: [
         .target(
@@ -50,7 +51,9 @@ let package = Package(
                            "MEGAUIKit",
                            "Settings",
                            "MEGAUIComponent",
-                           "MEGAConnectivity"],
+                           "MEGAConnectivity",
+                           "MEGAStoreKit",
+                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")],
             swiftSettings: settings
         ),
         .target(
@@ -67,11 +70,13 @@ let package = Package(
                            "MEGAAppPresentation",
                            "MEGATest",
                            "MEGASwift",
+                           "MEGAStoreKit",
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
                            .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads"),
-                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")],
+                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
+                           .product(name: "MEGAStoreKitMocks", package: "MEGAStoreKit")],
             swiftSettings: settings
         )
     ],

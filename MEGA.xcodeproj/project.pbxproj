@@ -264,7 +264,6 @@
 		1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		165421D02DC4D5B0000A229C /* AccountPlanPurchaseUseCase+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */; };
 		1654221B2DC8AA82000A229C /* MockExternalPurchaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */; };
-		1654223C2DC8B498000A229C /* PlanEntity+ExternalPurchasePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */; };
 		165487ED2DDF093200170EF8 /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = 165487EC2DDF093200170EF8 /* MEGASdk */; };
 		1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
@@ -2239,6 +2238,7 @@
 		BF0FE76B2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */; };
 		BF0FE7BE2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */; };
 		BF0FE7DC2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */; };
+		FE0000000000000000000002 /* RevampUpgradePlansRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0000000000000000000001 /* RevampUpgradePlansRouter.swift */; };
 		BF0FE7E62DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */; };
 		BF0FE7FC2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7FB2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift */; };
 		BF0FE7FF2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7FE2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift */; };
@@ -3101,7 +3101,6 @@
 		1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+Additions.swift"; sourceTree = "<group>"; };
 		165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlanPurchaseUseCase+Init.swift"; sourceTree = "<group>"; };
 		1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExternalPurchaseUseCase.swift; sourceTree = "<group>"; };
-		1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlanEntity+ExternalPurchasePlan.swift"; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+CheckCancellation.swift"; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
@@ -5156,6 +5155,7 @@
 		BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePageHeaderView.swift; sourceTree = "<group>"; };
 		BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanView.swift; sourceTree = "<group>"; };
 		BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseRouter.swift; sourceTree = "<group>"; };
+		FE0000000000000000000001 /* RevampUpgradePlansRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevampUpgradePlansRouter.swift; sourceTree = "<group>"; };
 		BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseChipsSelectorView.swift; sourceTree = "<group>"; };
 		BF0FE7FB2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlanCardView.swift; sourceTree = "<group>"; };
 		BF0FE7FE2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlanCardsView.swift; sourceTree = "<group>"; };
@@ -11587,7 +11587,6 @@
 		B59580A42A1478C300E5FC1C /* Upgrade Plan View */ = {
 			isa = PBXGroup;
 			children = (
-				1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */,
 				B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */,
 			);
 			path = "Upgrade Plan View";
@@ -12833,6 +12832,7 @@
 		BFA2A2192DAC9E3400E8673D /* SubscriptionsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FE0000000000000000000001 /* RevampUpgradePlansRouter.swift */,
 				BFA6C8D82DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift */,
 				BFA6C8D42DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift */,
 				BF0FE7602DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift */,
@@ -15880,7 +15880,6 @@
 				B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */,
-				1654223C2DC8B498000A229C /* PlanEntity+ExternalPurchasePlan.swift in Sources */,
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
@@ -15991,6 +15990,7 @@
 				9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */,
 				9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
+				FE0000000000000000000002 /* RevampUpgradePlansRouter.swift in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */,
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,

@@ -6,7 +6,7 @@ import MEGAL10n
 /// The standard and promo pages use the same type; promo-only content
 /// (`promoHeader`, `highlightedPlanCard`) is `nil` on the standard page.
 @MainActor
-final class RevampUpgradePlansViewModel { // [IOS-12185]: Wire actual data to view model
+public final class RevampUpgradePlansViewModel { // [IOS-12185]: Wire actual data to view model
     private let isPromo: Bool
 
     init(isPromo: Bool = false) {

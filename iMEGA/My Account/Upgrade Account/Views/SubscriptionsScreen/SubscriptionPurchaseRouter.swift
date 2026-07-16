@@ -38,6 +38,18 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     }
 
     func build() -> UIViewController {
+        if isRevampUpgradePlansEnabled {
+            let controller = RevampUpgradePlansRouter(
+                presenter: presenter,
+                currentAccountDetails: accountDetails,
+                viewType: viewType,
+                accountUseCase: accountUseCase,
+                isFromAds: isFromAds
+            ).build()
+            baseViewController = controller
+            return controller
+        }
+
         let viewModel = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,
             accountUseCase: accountUseCase,
@@ -73,5 +85,9 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     
     private func dismiss() {
         baseViewController?.dismiss(animated: true)
+    }
+
+    private var isRevampUpgradePlansEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .upgradeAccountPlanRevamp)
     }
 }
