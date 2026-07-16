@@ -1,6 +1,5 @@
 import MEGAAssets
 import MEGADesignToken
-import MEGADomain
 import MEGAUIComponent
 import SwiftUI
 
@@ -10,14 +9,14 @@ import SwiftUI
 /// shared plan/feature/benefit sections. Driven by mock data.
 public struct SubscriptionRevampPromoView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    private let viewModel: SubscriptionRevampPromoViewModel
+    private let viewModel: RevampUpgradePlansViewModel
 
-    init(viewModel: SubscriptionRevampPromoViewModel) {
+    init(viewModel: RevampUpgradePlansViewModel) {
         self.viewModel = viewModel
     }
 
     public init() {
-        self.init(viewModel: SubscriptionRevampPromoViewModel())
+        self.init(viewModel: .promo)
     }
 
     public var body: some View {
@@ -29,16 +28,7 @@ public struct SubscriptionRevampPromoView: View {
                 promoHero
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
-                SubscriptionProFeaturesView(features: viewModel.features)
-                    .padding(.top, TokenSpacing._3)
-                SubscriptionCurrentPlanView(viewModel: viewModel.currentPlan)
-                    .padding(.top, TokenSpacing._3)
-                SubscriptionPlanCardsView()
-                    .padding(.top, TokenSpacing._3)
-                SubscriptionBenefitsListView(benefits: viewModel.benefits)
-                    .padding(.top, TokenSpacing._3)
-                SubscriptionLegalFooterView()
-                    .padding(.bottom, TokenSpacing._13)
+                SubscriptionRevampContentSectionsView(viewModel: viewModel)
             }
         )
     }
@@ -54,51 +44,47 @@ public struct SubscriptionRevampPromoView: View {
                     .frame(maxWidth: .infinity)
             }
             .clipped()
-            .overlay(alignment: .bottom) {
-                LinearGradient(
-                    stops: [
-                        .init(color: .clear, location: 0),
-                        .init(color: TokenColors.Background.page.swiftUI, location: 0.6),
-                        .init(color: TokenColors.Background.page.swiftUI, location: 1.0)
-                    ],
-                    startPoint: UnitPoint(x: 0.5, y: 0),
-                    endPoint: UnitPoint(x: 0.5, y: 1)
-                )
-                .frame(height: 120)
-            }
+            .subscriptionHeaderBottomFade()
     }
 
+    @ViewBuilder
     private var promoHero: some View {
-        SubscriptionPromoHeaderView(model: viewModel.promoHeader)
-            .padding(.top, verticalSizeClass != .compact ? -TokenSpacing._16 : 0) // In non-compact mode, the title needs to blend into the header to achieve the designated UI
+        if let promoHeader = viewModel.promoHeader {
+            SubscriptionPromoHeaderView(model: promoHeader)
+                .blendIntoHeader(offset: TokenSpacing._16, isCompact: verticalSizeClass == .compact)
+        }
     }
 
+    @ViewBuilder
     private var highlightedPlanCard: some View {
-        let card = viewModel.highlightedPlanCard
-        return PlanCardContainer(cardBackgroundColor: .highlightedPlanCardColor) {
-            PlanCardRibbon(
-                text: card.ribbonText,
-                fill: TokenColors.Button.brand.swiftUI,
-                foreground: TokenColors.Text.onColor.swiftUI
-            )
-        } content: {
-            VStack(alignment: .leading, spacing: TokenSpacing._4) {
-                PlanTitleView(card.title)
-                PlanPriceView(.discountMonthly(.init(
-                    originalPrice: card.originalPrice,
-                    discountedPrice: card.discountedPrice,
-                    billingCaption: card.priceDescription
-                )))
-                PlanFeatureListView {
-                    PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
-                    PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
+        if let card = viewModel.highlightedPlanCard {
+            PlanCardContainer(cardBackgroundColor: .highlightedPlanCardColor) {
+                PlanCardRibbon(
+                    text: card.ribbonText,
+                    fill: TokenColors.Button.brand.swiftUI,
+                    foreground: TokenColors.Text.onColor.swiftUI
+                )
+            } content: {
+                VStack(alignment: .leading, spacing: TokenSpacing._4) {
+                    PlanTitleView(card.title)
+                    PlanPriceView(.discountMonthly(.init( // [IOS-12185]: Feed the correct PlanPrice to the higlighed plan
+                        originalPrice: card.originalPrice,
+                        discountedPrice: card.discountedPrice,
+                        billingCaption: card.priceDescription
+                    )))
+                    PlanFeatureListView {
+                        PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
+                        PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
+                    }
+                    Button(card.buttonTitle, action: {
+                        // [IOS-12185]: Handle buy action
+                    })
+                        .buttonStyle(BrandButtonStyle())
                 }
-                Button(card.buttonTitle, action: {})
-                    .buttonStyle(BrandButtonStyle())
             }
+            .frame(maxWidth: .infinity)
+            .padding(.top, TokenSpacing._2)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, TokenSpacing._2)
     }
 }
 

@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -150,7 +151,7 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
                 .contentShape(Circle())
         }
         .glassCircle()
-        .accessibilityLabel("Close") // To be localized later
+        .accessibilityLabel(Strings.Localizable.close)
     }
 }
 
@@ -170,18 +171,5 @@ private struct SubscriptionRevampCompactHeightLayout<
             .background(alignment: .topLeading) {
                 headerBackground
             }
-    }
-}
-
-// MARK: - Glass helper
-
-private extension View {
-    @ViewBuilder
-    func glassCircle() -> some View {
-        if #available(iOS 26.0, *) {
-            glassEffect(.regular.interactive(), in: Circle())
-        } else {
-            background(TokenColors.Background.surface1.swiftUI, in: Circle())
-        }
     }
 }

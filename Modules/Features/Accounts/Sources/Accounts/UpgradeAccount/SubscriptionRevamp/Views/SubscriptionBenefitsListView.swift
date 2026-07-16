@@ -3,17 +3,19 @@ import MEGAL10n
 import SwiftUI
 
 struct SubscriptionBenefitsListView: View {
-    private let benefits: [String]
-
-    init(benefits: [String]) {
-        self.benefits = benefits
-    }
+    private let benefits: [String] = [
+        Strings.Localizable.Password.Protected.Links.title,
+        Strings.Localizable.Links.With.Expiry.Dates.title,
+        Strings.Localizable.SubscriptionPurchase.Benefits.Rewind.title,
+        Strings.Localizable.SubscriptionPurchase.Benefits.CallsAndMeetings.title,
+        Strings.Localizable.SubscriptionPurchase.Benefits.RubbishClearing.title,
+        Strings.Localizable.General.prioritySupport
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._5) {
             Text(Strings.Localizable.SubscriptionPurchase.FeaturesOfProPlan.title)
                 .font(.subheadline.bold())
-
             BulletListView(items: benefits)
         }
     }
@@ -42,13 +44,6 @@ private struct BulletListView: View {
 }
 
 #Preview {
-    SubscriptionBenefitsListView(
-        benefits: [
-            Strings.Localizable.Password.Protected.Links.title,
-            Strings.Localizable.Links.With.Expiry.Dates.title,
-            Strings.Localizable.SubscriptionPurchase.Benefits.Rewind.title,
-            Strings.Localizable.General.prioritySupport
-        ]
-    )
+    SubscriptionBenefitsListView()
     .padding()
 }

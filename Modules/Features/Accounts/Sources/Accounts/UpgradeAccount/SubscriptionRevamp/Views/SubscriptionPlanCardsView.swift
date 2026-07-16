@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -47,7 +48,13 @@ struct SubscriptionPlanCardsView: View {
                 PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                 PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
             }
-            MEGAButton("Get \(card.title)", type: card.isPrimaryAction ? .primary : .secondary, action: {}) // To be localized later
+            MEGAButton(
+                Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title),
+                type: card.isPrimaryAction ? .primary : .secondary,
+                action: {
+                    // [IOS-12185]: Handle buy action
+                }
+            )
         }
     }
 

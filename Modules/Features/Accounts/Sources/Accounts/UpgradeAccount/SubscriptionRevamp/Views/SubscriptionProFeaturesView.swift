@@ -4,10 +4,35 @@ import MEGAL10n
 import SwiftUI
 
 struct SubscriptionProFeaturesView: View {
-    private let features: [SubscriptionProFeature]
 
-    init(features: [SubscriptionProFeature]) {
-        self.features = features
+    private let maxPlanStorage: String
+    private let maxPlanTransfer: String
+
+    // [IOS-12185]: compute actual maxPlanStorage and maxPlanTransfer
+    init(maxPlanStorage: String = "20 TB", maxPlanTransfer: String = "240 TB") {
+        self.maxPlanStorage = maxPlanStorage
+        self.maxPlanTransfer = maxPlanTransfer
+    }
+
+    private var features: [SubscriptionProFeature] {
+        [
+            SubscriptionProFeature(
+                icon: MEGAAssets.Image.subscriptionFeatureCloud,
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Storage.description(maxPlanStorage)
+            ),
+            SubscriptionProFeature(
+                icon: MEGAAssets.Image.subscriptionFeatureTransfers,
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Transfer.description(maxPlanTransfer)
+            ),
+            SubscriptionProFeature(
+                icon: MEGAAssets.Image.subscriptionFeatureVPN,
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Vpn.description
+            ),
+            SubscriptionProFeature(
+                icon: MEGAAssets.Image.subscriptionFeatureTransfersPWM,
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Pass.description
+            )
+        ]
     }
 
     var body: some View {
@@ -26,7 +51,7 @@ struct SubscriptionProFeaturesView: View {
     }
 }
 
-struct SubscriptionProFeatureRow: View {
+private struct SubscriptionProFeatureRow: View {
     let feature: SubscriptionProFeature
 
     var body: some View {
@@ -46,13 +71,6 @@ struct SubscriptionProFeatureRow: View {
 }
 
 #Preview {
-    SubscriptionProFeaturesView(
-        features: [
-            SubscriptionProFeature(icon: MEGAAssets.Image.subscriptionFeatureCloud, title: "Store up to 20 TB of data"),
-            SubscriptionProFeature(icon: MEGAAssets.Image.subscriptionFeatureTransfers, title: "Enjoy up to 240 TB transfer quota"),
-            SubscriptionProFeature(icon: MEGAAssets.Image.subscriptionFeatureVPN, title: "Stay safe online with MEGA VPN"),
-            SubscriptionProFeature(icon: MEGAAssets.Image.subscriptionFeatureTransfersPWM, title: "Keep passwords safe with MEGA Pass")
-        ]
-    )
+    SubscriptionProFeaturesView()
     .padding()
 }
