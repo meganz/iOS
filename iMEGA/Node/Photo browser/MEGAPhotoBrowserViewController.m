@@ -116,8 +116,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            self.leftToolbarItem.image = [UIImage megaImageWithNamed:@"import"];
-            self.rightToolbarItem.image = [UIImage megaImageWithNamed:@"share"];
             self.centerToolbarItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
             break;
             

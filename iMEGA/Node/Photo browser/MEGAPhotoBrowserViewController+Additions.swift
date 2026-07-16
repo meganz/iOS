@@ -783,8 +783,16 @@ extension MEGAPhotoBrowserViewController {
 
     @objc func configureBarButtonImages() {
         self.customActionsButton?.image = MEGAAssets.UIImage.moreHorizontal
-        self.leftToolbarItem?.image = MEGAAssets.UIImage.thumbnailsThin
-        self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
+        
+        switch displayMode {
+        case .fileLink:
+            self.leftToolbarItem?.image = MEGAAssets.UIImage.import
+            self.rightToolbarItem?.image = MEGAAssets.UIImage.share
+        default:
+            self.leftToolbarItem?.image = MEGAAssets.UIImage.thumbnailsThin
+            self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
+        }
+        
         self.saveToolbarItem.image = MEGAAssets.UIImage.photosApp
         self.importToolbarItem.image = MEGAAssets.UIImage.folderArrow
         self.forwardToolbarItem.image = MEGAAssets.UIImage.cornerUpLeft
