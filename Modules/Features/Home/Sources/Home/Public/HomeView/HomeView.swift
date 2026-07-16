@@ -3,6 +3,7 @@ import Favourites
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGAConnectivity
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -132,7 +133,11 @@ public struct HomeView: View {
             .noNetworkConnection {
                 noInternetView
             }
-            .modifier(HomeLandscapeNoInternetViewModifier())
+            .noInternetViewModifier(
+                layout: .onTop,
+                hiddenInVerticalCompact: true,
+                viewModel: MEGAConnectivity.DependencyInjection.networkPathNoInternetViewModel
+            )
             .background(TokenColors.Background.page.swiftUI)
             .searchableTransitionWorkaround()
             .snackBar($navigator.snackBar)

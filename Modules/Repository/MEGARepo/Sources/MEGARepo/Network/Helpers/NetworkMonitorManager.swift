@@ -55,7 +55,6 @@ public class NetworkMonitorManager: NetworkMonitorManaging, @unchecked Sendable 
     }
 
     private init() {
-
         self.monitor = .init()
         monitor.start(queue: DispatchQueue(label: "NetworkMonitor"))
         monitor.pathUpdateHandler = { [weak self] path in

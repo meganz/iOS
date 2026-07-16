@@ -12,6 +12,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAudioPlayer
+import MEGAConnectivity
 import MEGADomain
 import MEGAFoundation
 import MEGAInfrastructure
@@ -384,7 +385,14 @@ extension AppDelegate {
     }
     
     @objc func configureNetworkManager() {
+        // Two independent NWPathMonitor stacks by design, so both must be started here:
+        // NetworkMonitorManager serves the domain layer (MEGADomain/MEGARepo), while
+        // MEGAConnectivity's path monitor feeds the shared no-internet banner. They cannot
+        // share one monitor: MEGAConnectivity is a shared package that cannot depend on this
+        // repo, and MEGARepo (Data layer, macOS 10.15) cannot depend on MEGAConnectivity
+        // (UI-bearing, macOS 12). NWPathMonitor is lightweight, so the duplication is cheap.
         NetworkMonitorManager.configure()
+        MEGAConnectivity.DependencyInjection.startNetworkPathMonitoring()
     }
 }
 

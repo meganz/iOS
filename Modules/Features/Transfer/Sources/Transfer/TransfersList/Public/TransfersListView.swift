@@ -1,4 +1,5 @@
 import MEGAAssets
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -29,7 +30,7 @@ public struct TransfersListView: View {
                 )
             }
             tabContent
-                .modifier(TransfersNoInternetViewModifier())
+                .noInternetViewModifier(viewModel: MEGAConnectivity.DependencyInjection.networkPathNoInternetViewModel)
         }
         .task {
             await viewModel.observeTabPresence()
