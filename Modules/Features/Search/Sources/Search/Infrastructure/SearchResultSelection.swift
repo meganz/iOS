@@ -11,12 +11,16 @@ public struct SearchResultSelection {
     public var result: SearchResult
     private var siblingsProvider: () -> [ResultId]
     
+    public var isSearchActive: Bool
+
     public init(
         result: SearchResult,
-        siblingsProvider: @escaping () -> [ResultId]
+        siblingsProvider: @escaping () -> [ResultId],
+        isSearchActive: Bool = false
     ) {
         self.result = result
         self.siblingsProvider = siblingsProvider
+        self.isSearchActive = isSearchActive
     }
     
     public func siblings() -> [ResultId] {

@@ -203,7 +203,7 @@ final class HomeScreenFactory: NSObject {
                 // currently, home search results (legacy and new) page does not support
                 // image gallery browsing, to enable this , allNodes need to be supplied to router
                 // see CloudDriveViewControllerFactory.swift for an example
-                router.didTapNode(nodeHandle: resultId)
+                router.didTapNode(nodeHandle: resultId, sourcePage: selection.isSearchActive ? .search : .unknown)
                 // map from result id to a node to check if this is folder or a file
                 if let node = sdk?.node(forHandle: resultId) {
                     let event = SearchItemSelectedEvent(

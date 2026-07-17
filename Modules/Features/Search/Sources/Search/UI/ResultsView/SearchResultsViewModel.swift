@@ -509,7 +509,8 @@ public final class SearchResultsViewModel: ObservableObject {
             result: result,
             siblingsProvider: { [weak self] in
                 self?.resultsProvider.currentResultIds() ?? []
-            }
+            },
+            isSearchActive: currentQuery.isSearchActive
         )
     }
     

@@ -24,10 +24,12 @@ public struct NodeAction {
 public struct NodeSelection {
     public let handle: HandleEntity
     public let siblings: [HandleEntity]
-    
-    public init(handle: HandleEntity, siblings: [HandleEntity]) {
+    public let isSearchActive: Bool
+
+    public init(handle: HandleEntity, siblings: [HandleEntity], isSearchActive: Bool = false) {
         self.handle = handle
         self.siblings = siblings
+        self.isSearchActive = isSearchActive
     }
 }
 

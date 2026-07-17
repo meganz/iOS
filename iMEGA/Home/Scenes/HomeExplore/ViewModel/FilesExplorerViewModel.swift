@@ -44,6 +44,7 @@ final class FilesExplorerViewModel: ViewModelType {
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
+    private var searchText: String?
     private var contextMenuManager: ContextMenuManager?
     private let nodeProvider: any MEGANodeProviderProtocol
     private var nodeDownloadCompletionMonitoringTask: Task<Void, Never>? {
@@ -182,6 +183,7 @@ final class FilesExplorerViewModel: ViewModelType {
             monitorTask = Task { await monitorNodeUpdates() }
             subscribeToSortingPreferenceNotification()
         case .startSearching(let text):
+            searchText = text
             searchTask = Task { await startSearching(text) }
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
@@ -247,7 +249,11 @@ final class FilesExplorerViewModel: ViewModelType {
 	}
     
     private func didSelect(node: MEGANode, allNodes: [MEGANode]) {
-        router.didSelect(node: node, allNodes: allNodes)
+        let isSearching = !(searchText ?? "").isEmpty
+        let sourcePage: NodeSourcePage = isSearching
+            ? .search
+            : (explorerType == .audio ? .allAudios : .unknown)
+        router.didSelect(node: node, allNodes: allNodes, sourcePage: sourcePage)
     }
     
     private func updateListenerForFilesDownload(withNodes nodes: [NodeEntity]) {

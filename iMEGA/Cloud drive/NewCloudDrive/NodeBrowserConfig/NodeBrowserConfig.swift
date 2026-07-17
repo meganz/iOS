@@ -3,6 +3,7 @@ import MEGADomain
 @MainActor
 struct NodeBrowserConfig {
     var displayMode: DisplayMode?
+    var sourcePage: NodeSourcePage = .unknown
     var isFromViewInFolder: Bool?
     var isFromUnverifiedContactSharedFolder: Bool?
     var isFromSharedItem: Bool?

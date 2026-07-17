@@ -65,9 +65,11 @@ struct FilesExplorerRouter {
         navController.pushViewController(vc, animated: true)
     }
     
-    func didSelect(node: MEGANode, allNodes: [MEGANode]) {
+    func didSelect(node: MEGANode, allNodes: [MEGANode], sourcePage: NodeSourcePage) {
+        var config = NodeBrowserConfig.default
+        config.sourcePage = sourcePage
         NodeOpener(navigationController: navigationController)
-            .openNode(node: node, allNodes: allNodes)
+            .openNode(node: node, allNodes: allNodes, config: config)
     }
     
     func showDownloadTransfer(node: MEGANode) {

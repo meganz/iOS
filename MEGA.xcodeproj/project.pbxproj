@@ -4311,6 +4311,7 @@
 		948B29492CA1671D00428787 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
 		948D92672B2373CE0020E894 /* DisplayMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayMode.h; sourceTree = "<group>"; };
+		AA119033CCCCCCCCCCCCCC03 /* NodeSourcePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeSourcePage.h; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
 		9495DBB02A4086BF00FA22EE /* PermissionModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionModalModel.swift; sourceTree = "<group>"; };
@@ -7948,6 +7949,7 @@
 				245570632CCF4492006B4F82 /* MegaNodeActionType+NodeActionTypeEntityMapper.swift */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 				83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */,
+				AA119033CCCCCCCCCCCCCC03 /* NodeSourcePage.h */,
 				773DF39A20EE1470004C3418 /* SendMode.h */,
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
 				5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */,

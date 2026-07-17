@@ -493,9 +493,9 @@ struct CloudDriveViewControllerFactory {
         Task { @MainActor in
             if node.isFolder {
                 /// Note: When we process [SAO-189], the value for `dipslayMode` when opening nodes from `recentActionBucket`  might be different than `.cloudDrive`.
-                router.didTapNode(nodeHandle: node.handle, allNodeHandles: nil, displayMode: .cloudDrive, isFromSharedItem: false, warningViewModel: nil)
+                router.didTapNode(nodeHandle: node.handle, allNodeHandles: nil, displayMode: .cloudDrive, sourcePage: .cloudDrive, isFromSharedItem: false, warningViewModel: nil)
             } else {
-                router.didTapNode(nodeHandle: node.handle)
+                router.didTapNode(nodeHandle: node.handle, sourcePage: .cloudDrive)
             }
         }
     }
@@ -898,6 +898,7 @@ struct CloudDriveViewControllerFactory {
                     // for more details inspect NodeOpener.swift and it's openNode method
                     allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
                     displayMode: config.displayMode?.carriedOverDisplayMode,
+                    sourcePage: $0.isSearchActive ? .search : config.sourcePage,
                     isFromSharedItem: config.isFromSharedItem ?? false,
                     warningViewModel: config.warningViewModel
                 )

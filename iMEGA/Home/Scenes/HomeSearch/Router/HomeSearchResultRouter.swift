@@ -23,11 +23,11 @@ protocol NodeRouting {
         isFromSharedItem: Bool
     )
 
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?)
 
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?)
-    
-    func didTapNode(nodeHandle: HandleEntity)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, sourcePage: NodeSourcePage)
+
+    func didTapNode(nodeHandle: HandleEntity, sourcePage: NodeSourcePage)
 }
 
 final class HomeSearchResultRouter: NodeRouting {
@@ -89,7 +89,7 @@ final class HomeSearchResultRouter: NodeRouting {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
         Task {
             guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
             if node.isFile, node.isTakenDown {
@@ -103,19 +103,20 @@ final class HomeSearchResultRouter: NodeRouting {
                     allNodes: allNodeHandles,
                     config: .init(
                         displayMode: displayMode,
+                        sourcePage: sourcePage,
                         isFromSharedItem: isFromSharedItem,
                         warningViewModel: warningViewModel)
                 )
             }
         }
     }
-    
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?) {
-        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil, isFromSharedItem: false)
+
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, sourcePage: NodeSourcePage) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil, sourcePage: sourcePage, isFromSharedItem: false)
     }
-    
-    func didTapNode(nodeHandle: HandleEntity) {
-        didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil, isFromSharedItem: false)
+
+    func didTapNode(nodeHandle: HandleEntity, sourcePage: NodeSourcePage) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil, sourcePage: sourcePage, isFromSharedItem: false)
     }
     
     func showTakenDownAlert() {

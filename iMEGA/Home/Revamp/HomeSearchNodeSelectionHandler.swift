@@ -12,6 +12,7 @@ struct HomeSearchNodeSelectionHandler: NodeSelectionHandling {
             nodeHandle: selection.handle,
             allNodeHandles: selection.siblings.isEmpty ? nil : selection.siblings,
             displayMode: .cloudDrive,
+            sourcePage: selection.isSearchActive ? .search : .unknown,
             isFromSharedItem: false,
             warningViewModel: nil
         )

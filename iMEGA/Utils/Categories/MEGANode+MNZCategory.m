@@ -36,12 +36,16 @@
 @implementation MEGANode (MNZCategory)
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes {
+    [self mnz_openNodeInNavigationController:navigationController folderLink:isFolderLink fileLink:fileLink messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes sourcePage:NodeSourcePageUnknown];
+}
+
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes sourcePage:(NodeSourcePage)sourcePage {
     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
-            [self presentAudioPlayerWithNode:self fileLink:fileLink isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes];
+            [self presentAudioPlayerWithNode:self fileLink:fileLink isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes sourcePage:sourcePage];
         } else {
             UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {

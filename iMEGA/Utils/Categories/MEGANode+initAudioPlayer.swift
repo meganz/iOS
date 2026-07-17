@@ -43,7 +43,7 @@ extension MEGANode {
     }
     
     @MainActor
-    @objc func presentAudioPlayer(node: MEGANode?, fileLink: String?, isFolderLink: Bool, presenter: UIViewController?, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
+    @objc func presentAudioPlayer(node: MEGANode?, fileLink: String?, isFolderLink: Bool, presenter: UIViewController?, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?, sourcePage: NodeSourcePage = .unknown) {
         guard let presenter else {
             MEGALogError("[AudioPlayer] Unable to present player, presenter is nil")
             return
@@ -55,7 +55,8 @@ extension MEGANode {
                                                        isFolderLink: isFolderLink,
                                                        chatId: chatId,
                                                        messageId: messageId,
-                                                       allNodes: allNodes) {
+                                                       allNodes: allNodes,
+                                                       sourcePage: sourcePage) {
                 MEGAAudioPlayerViewRouter(
                     presenter: presenter,
                     actionsHandler: MEGAAudioPlayerActionsHandler.make()
@@ -97,7 +98,8 @@ extension MEGANode {
                                             isFolderLink: Bool,
                                             chatId: NSNumber?,
                                             messageId: NSNumber?,
-                                            allNodes: [MEGANode]?) -> PlaybackSource? {
+                                            allNodes: [MEGANode]?,
+                                            sourcePage: NodeSourcePage) -> PlaybackSource? {
         if isFolderLink, let node {
             let queue = (allNodes ?? []).map { $0.toNodeEntity() }
             return .folderLink(node: node.toNodeEntity(), queue: queue)
@@ -117,7 +119,16 @@ extension MEGANode {
         }
         if let node {
             let queue = (allNodes ?? []).map { $0.toNodeEntity() }
-            return .cloudNode(node: node.toNodeEntity(), queue: queue)
+            switch sourcePage {
+            case .recents:
+                return .recents(node: node.toNodeEntity(), queue: queue)
+            case .allAudios:
+                return .allAudios(node: node.toNodeEntity(), queue: queue)
+            case .search:
+                return .searchResult(node: node.toNodeEntity())
+            default:
+                return .cloudNode(node: node.toNodeEntity(), queue: queue)
+            }
         }
         return nil
     }

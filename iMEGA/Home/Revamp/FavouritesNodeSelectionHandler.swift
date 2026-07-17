@@ -12,6 +12,7 @@ struct FavouritesNodeSelectionHandler: NodeSelectionHandling {
             nodeHandle: selection.handle,
             allNodeHandles: selection.siblings.isEmpty ? nil : selection.siblings,
             displayMode: .cloudDrive,
+            sourcePage: .unknown,
             isFromSharedItem: false,
             warningViewModel: nil
         )

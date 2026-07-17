@@ -54,7 +54,7 @@ extension RecentsViewController {
                 presenter: self,
                 actionsHandler: MEGAAudioPlayerActionsHandler.make()
             )
-            .start(source: .cloudNode(node: node.toNodeEntity()))
+            .start(source: .recents(node: node.toNodeEntity(), queue: []))
             return
         }
         if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {

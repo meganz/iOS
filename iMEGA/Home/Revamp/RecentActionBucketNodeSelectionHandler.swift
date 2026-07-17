@@ -14,6 +14,7 @@ struct RecentActionBucketNodeSelectionHandler: NodeSelectionHandling {
             nodeHandle: selection.handle,
             allNodeHandles: selection.siblings.isEmpty ? nil : selection.siblings,
             displayMode: .recents,
+            sourcePage: .recents,
             isFromSharedItem: false,
             warningViewModel: nil
         )

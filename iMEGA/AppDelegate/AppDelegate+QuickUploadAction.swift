@@ -30,7 +30,7 @@ extension AppDelegate {
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         let nodeInsertionRouter = CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: { node in
             Task { @MainActor in
-                nodeRouter.didTapNode(nodeHandle: node.handle)
+                nodeRouter.didTapNode(nodeHandle: node.handle, sourcePage: .unknown)
             }
         })
         
