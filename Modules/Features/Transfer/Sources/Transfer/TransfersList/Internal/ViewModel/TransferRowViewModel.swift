@@ -88,15 +88,30 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
 
     // MARK: - Context actions
 
-    func presentActions() {
+    /// Presents the per-row action sheet. `onRetried` is invoked after the sheet's
+    /// Retry action lands in the engine, so the screen can show the retry snackbar.
+    func presentActions(onRetried: @MainActor @escaping () -> Void) {
         let context = TransferRowActionContext(
             name: state.fileName,
             detail: state.subtitle,
-            canViewInFolder: state.canViewInFolder
+            canViewInFolder: state.canViewInFolder,
+            canRetry: state.isRetryable
         )
-        rowRouter.presentActions(for: transfer, context: context) { [weak self] in
-            self?.clear()
-        }
+        rowRouter.presentActions(
+            for: transfer,
+            context: context,
+            onRetry: { [weak self] in
+                // A deallocated VM means the row is gone; don't retry on its behalf.
+                guard let self else { return }
+                Task {
+                    guard await self.retry() else { return }
+                    onRetried()
+                }
+            },
+            onClear: { [weak self] in
+                self?.clear()
+            }
+        )
     }
 
     func openFile() {
@@ -107,6 +122,21 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
     /// Reached from the row action sheet and the swipe-to-clear gesture.
     func clear() {
         clearTransfersUseCase.clearTransfer(tag: transfer.tag)
+    }
+
+    /// Re-queues this failed/cancelled transfer, then clears its Failed-tab entry —
+    /// in that order, because retry resolves the transfer from the completed-transfers
+    /// cache. Returns whether the retry landed, so the caller can show the snackbar;
+    /// on failure nothing is cleared and the row stays.
+    func retry() async -> Bool {
+        do {
+            try await controlUseCase.retryTransfer(transfer)
+            clearTransfersUseCase.clearTransfer(tag: transfer.tag)
+            return true
+        } catch {
+            MEGALogError("[Transfer] retry failed for tag \(transfer.tag): \(error)")
+            return false
+        }
     }
 
     /// Cancels this in-flight transfer. Returns the entity for undo orchestration,

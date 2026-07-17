@@ -15,17 +15,23 @@ public enum TransferEntityMapper {
     ///   `TransferEntity.updateTime`; SDK transfer update time has no defined epoch.
     /// - Parameter canViewInFolder: whether the Completed row should offer
     ///   `View in folder`.
+    /// - Parameter isRetryable: whether the row should offer Retry, decided by
+    ///   `TransferRetryPolicy` at the call site. No default on purpose: every
+    ///   caller must decide explicitly.
     public static func rowState(
         for entity: TransferEntity,
         location: String? = nil,
         finishDate: Date? = nil,
-        canViewInFolder: Bool = true
+        canViewInFolder: Bool = true,
+        isRetryable: Bool
     ) -> TransferRowState {
-        TransferRowState(
+        let status = status(for: entity.state)
+        let direction = direction(for: entity.type)
+        var state = TransferRowState(
             id: entity.tag,
             fileName: entity.fileName ?? "Transfer #\(entity.tag)",
-            direction: direction(for: entity.type),
-            status: status(for: entity.state),
+            direction: direction,
+            status: status,
             progress: progress(for: entity),
             transferredBytes: Int64(entity.transferredBytes),
             totalBytes: Int64(entity.totalBytes),
@@ -35,6 +41,8 @@ public enum TransferEntityMapper {
             location: location,
             canViewInFolder: canViewInFolder
         )
+        state.isRetryable = isRetryable
+        return state
     }
 
     private static func direction(for type: TransferTypeEntity) -> TransferRowState.Direction {

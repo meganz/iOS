@@ -76,12 +76,14 @@ final class TransferTabListViewModel: ObservableObject {
         switch event {
         case .started(let entity):
             guard !finishedIds.contains(entity.tag) else { return }
-            upsertRow(TransferEntityMapper.rowState(for: entity), entity: entity)
+            // Started/updated events only carry non-terminal states; terminal rows
+            // are rebuilt by the finish/snapshot paths with the real policy result.
+            upsertRow(TransferEntityMapper.rowState(for: entity, isRetryable: false), entity: entity)
         case .updated(let entity):
             // Mutate-only: an update never inserts, so a stale 100% progress
             // update delivered after the finish cannot resurrect the row.
             guard presentIds.contains(entity.tag) else { return }
-            upsertRow(TransferEntityMapper.rowState(for: entity), entity: entity)
+            upsertRow(TransferEntityMapper.rowState(for: entity, isRetryable: false), entity: entity)
         case .finished(let entity):
             await applyFinish(entity)
         case .cleared:

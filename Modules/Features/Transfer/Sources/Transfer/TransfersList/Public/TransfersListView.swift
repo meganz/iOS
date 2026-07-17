@@ -103,7 +103,7 @@ public struct TransfersListView: View {
         case .select: viewModel.enterSelectMode()
         case .cancelAll: viewModel.requestCancelAllConfirmation()
         case .clearAll: viewModel.clearAllTransfers()
-        case .retryAll: viewModel.retryAllTransfers()
+        case .retryAll: Task { await viewModel.retryAllTransfers() }
         }
     }
 
@@ -137,7 +137,8 @@ public struct TransfersListView: View {
         TransferTabListView(
             tab: viewModel.selectedTab,
             dependency: viewModel.dependency,
-            onTransferCancelled: { viewModel.didCancelTransfer($0) }
+            onTransferCancelled: { viewModel.didCancelTransfer($0) },
+            onTransferRetried: { viewModel.didRetryTransfers() }
         )
             .id(viewModel.selectedTab)
             .environment(\.isAllTransfersPaused, viewModel.isAllPaused)

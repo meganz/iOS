@@ -115,4 +115,16 @@ struct TransferControlUseCaseTests {
         }
         #expect(repo.cancelledTransfers.map(\.tag) == [8])
     }
+
+    @Test("Retry forwards the requested tags to the repository and returns the re-queued tags")
+    func retryTransfersForwardsTagsAndReturnsRequeuedTags() {
+        let repo = MockTransferControlRepository.newRepo
+        repo.retryTransfersResult = [9, 10]
+        let (sut, _) = Self.makeSUT(repo: repo)
+
+        let tags = sut.retryTransfers(tags: [9, 10, 11])
+
+        #expect(repo.retryTransfersReceivedTagSets == [[9, 10, 11]])
+        #expect(tags == [9, 10])
+    }
 }

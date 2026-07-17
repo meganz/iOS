@@ -5,6 +5,7 @@ final class MockClearTransfersRepository: ClearTransfersRepositoryProtocol, @unc
     private(set) var clearCompletedTransfers_calledTimes = 0
     private(set) var clearFailedTransfers_calledTimes = 0
     private(set) var clearTransfer_tags: [Int] = []
+    private(set) var clearTransfers_tagSets: [Set<Int>] = []
     var clearCompletedTransfersTags: Set<Int> = []
     var clearFailedTransfersTags: Set<Int> = []
     var clearTransferTags: Set<Int> = []
@@ -28,5 +29,10 @@ final class MockClearTransfersRepository: ClearTransfersRepositoryProtocol, @unc
     func clearTransfer(tag: Int) -> Set<Int> {
         clearTransfer_tags.append(tag)
         return clearTransferTags
+    }
+
+    func clearTransfers(tags: Set<Int>) -> Set<Int> {
+        clearTransfers_tagSets.append(tags)
+        return tags
     }
 }

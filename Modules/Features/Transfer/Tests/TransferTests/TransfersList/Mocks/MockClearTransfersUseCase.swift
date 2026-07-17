@@ -5,6 +5,7 @@ final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked
     private(set) var clearCompletedTransfersCalledTimes = 0
     private(set) var clearFailedTransfersCalledTimes = 0
     private(set) var clearedTransferTags: [Int] = []
+    private(set) var clearedTransferTagSets: [Set<Int>] = []
 
     let clearedSignals: AnyAsyncSequence<Void>
 
@@ -22,5 +23,9 @@ final class MockClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unchecked
 
     func clearTransfer(tag: Int) {
         clearedTransferTags.append(tag)
+    }
+
+    func clearTransfers(tags: Set<Int>) {
+        clearedTransferTagSets.append(tags)
     }
 }

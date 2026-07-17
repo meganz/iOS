@@ -45,6 +45,13 @@ public struct TransferRowState: Sendable, Equatable {
     /// tab; defaults to `true` everywhere else.
     public var canViewInFolder: Bool = true
 
+    /// Whether the row can be re-queued: a Failed-tab substate whose source is still
+    /// readable. Uploads staged with a temporary source (e.g. Photos picker, share
+    /// extension) lose their file when the transfer finishes — even cancelled or
+    /// failed — so retrying them can only fail again; such rows offer no retry.
+    /// Drives the leading retry swipe and the sheet's Retry item.
+    public var isRetryable: Bool = false
+
     public var subtitle: String {
         let arrow = direction == .upload ? "↑" : "↓"
         switch status {

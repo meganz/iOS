@@ -10,6 +10,10 @@ package protocol TransferControlUseCaseProtocol: Sendable {
     func retryTransfer(_ transfer: TransferEntity) async throws
     /// Cancels a single in-flight transfer. The transfer finishes as Cancelled.
     func cancelTransfer(_ transfer: TransferEntity) async throws
+    /// Re-queues the retryable transfers among the given tags (uploads whose staged
+    /// source is gone are skipped). The caller scopes `tags` to the Failed tab's
+    /// rows. Returns the re-queued tags, so the caller can clear their entries.
+    func retryTransfers(tags: Set<Int>) -> Set<Int>
 }
 
 package struct TransferControlUseCase: TransferControlUseCaseProtocol {
@@ -33,5 +37,9 @@ package struct TransferControlUseCase: TransferControlUseCaseProtocol {
 
     package func cancelTransfer(_ transfer: TransferEntity) async throws {
         try await repo.cancelTransfer(transfer)
+    }
+
+    package func retryTransfers(tags: Set<Int>) -> Set<Int> {
+        repo.retryTransfers(tags: tags)
     }
 }

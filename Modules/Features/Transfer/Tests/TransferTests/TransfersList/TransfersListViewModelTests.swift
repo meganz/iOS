@@ -295,6 +295,70 @@ struct TransfersListViewModelSwipeCancelTests {
     }
 }
 
+@Suite("TransfersListViewModel retry all")
+@MainActor
+struct TransfersListViewModelRetryAllTests {
+
+    @Test func retryAll_requeuesTheFailedTabRowsClearsTheRequeuedEntriesAndShowsSnackBar() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        // Tag 8's upload source is gone: requested but not re-queued, so not cleared.
+        transferControlUseCase.retryTransfersResult = [3, 5]
+        let clearUseCase = MockClearTransfersUseCase()
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(
+            snapshot: [TransferEntity(tag: 3), TransferEntity(tag: 5), TransferEntity(tag: 8)]
+        )
+        let sut = makeSUT(
+            clearTransfersUseCase: clearUseCase,
+            transferControlUseCase: transferControlUseCase,
+            itemsUseCase: itemsUseCase
+        )
+
+        await sut.retryAllTransfers()
+
+        #expect(transferControlUseCase.retryTransfersReceivedTagSets == [[3, 5, 8]])
+        #expect(clearUseCase.clearedTransferTagSets == [[3, 5]])
+        #expect(sut.snackBar != nil)
+        #expect(sut.snackBar?.action == nil)
+    }
+
+    @Test func retryAll_withNoRowsOnTheFailedTab_retriesNothing() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(clearTransfersUseCase: clearUseCase, transferControlUseCase: transferControlUseCase)
+
+        await sut.retryAllTransfers()
+
+        #expect(transferControlUseCase.retryTransfersReceivedTagSets.isEmpty)
+        #expect(clearUseCase.clearedTransferTagSets.isEmpty)
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func retryAll_whenNoRowIsRetryable_clearsNothingAndShowsNoSnackBar() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let clearUseCase = MockClearTransfersUseCase()
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(snapshot: [TransferEntity(tag: 8)])
+        let sut = makeSUT(
+            clearTransfersUseCase: clearUseCase,
+            transferControlUseCase: transferControlUseCase,
+            itemsUseCase: itemsUseCase
+        )
+
+        await sut.retryAllTransfers()
+
+        #expect(clearUseCase.clearedTransferTagSets.isEmpty)
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func didRetryTransfers_showsPlainSnackBar() {
+        let sut = makeSUT()
+
+        sut.didRetryTransfers()
+
+        #expect(sut.snackBar != nil)
+        #expect(sut.snackBar?.action == nil)
+    }
+}
+
 @Suite("TransfersListViewModel derived state")
 @MainActor
 struct TransfersListViewModelDerivedStateTests {
@@ -451,7 +515,8 @@ private func makeSUT(
     accountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
     transferQuotaUseCase: MockTransferQuotaUseCase = MockTransferQuotaUseCase(),
     rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
-    transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase()
+    transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
+    itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase()
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
         hasActive: hasActiveTransfers,
@@ -459,7 +524,11 @@ private func makeSUT(
         hasFailed: hasFailedTransfers
     )
     return TransfersListViewModel(
-        dependency: makeDependency(clearTransfersUseCase: clearTransfersUseCase, rowRouter: rowRouter),
+        dependency: makeDependency(
+            clearTransfersUseCase: clearTransfersUseCase,
+            rowRouter: rowRouter,
+            itemsUseCase: itemsUseCase
+        ),
         transferListUseCase: useCase,
         monitorPresenceUseCase: MockMonitorTransferTabPresenceUseCase(
             presenceUpdates: presenceUpdates ?? [seed].async.eraseToAnyAsyncSequence()
@@ -473,10 +542,11 @@ private func makeSUT(
 @MainActor
 private func makeDependency(
     clearTransfersUseCase: MockClearTransfersUseCase = MockClearTransfersUseCase(),
-    rowRouter: MockTransferRowRouting = MockTransferRowRouting()
+    rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
+    itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase()
 ) -> TransferTabDependency {
     TransferTabDependency(
-        itemsUseCase: MockMonitorTransferTabItemsUseCase(),
+        itemsUseCase: itemsUseCase,
         registry: TransferRegistry(),
         locationResolver: StubTransferLocationResolver(),
         finishDateProvider: StubTransferFinishDateProvider(),

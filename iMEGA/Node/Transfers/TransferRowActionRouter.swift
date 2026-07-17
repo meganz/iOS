@@ -34,10 +34,15 @@ final class TransferRowActionRouter: TransferRowRouting {
         self.nodeNavigationRouter = nodeNavigationRouter
     }
 
-    func presentActions(for transfer: TransferEntity, context: TransferRowActionContext, onClear: @MainActor @escaping () -> Void) {
+    func presentActions(
+        for transfer: TransferEntity,
+        context: TransferRowActionContext,
+        onRetry: @MainActor @escaping () -> Void,
+        onClear: @MainActor @escaping () -> Void
+    ) {
         guard let presenter = navigationController, let presenterView = presenter.view else { return }
         let sheet = TransferActionsSheetViewController(
-            actions: sheetActions(for: transfer, canViewInFolder: context.canViewInFolder, onClear: onClear),
+            actions: sheetActions(for: transfer, context: context, onRetry: onRetry, onClear: onClear),
             icon: MEGAAssets.UIImage.image(forFileName: context.name),
             name: context.name,
             detail: context.detail,
@@ -58,11 +63,13 @@ final class TransferRowActionRouter: TransferRowRouting {
     // MARK: - Action sheet
 
     /// Completed rows offer View in folder (when allowed), Open with, Share link and
-    /// Clear; failed/cancelled rows offer Retry and Clear. Mirrors the legacy widget's
-    /// `DisplayModeTransfers` / `DisplayModeTransfersFailed` action sets.
+    /// Clear; failed/cancelled rows offer Retry (when the source is still retryable)
+    /// and Clear. Mirrors the legacy widget's `DisplayModeTransfers` /
+    /// `DisplayModeTransfersFailed` action sets.
     private func sheetActions(
         for transfer: TransferEntity,
-        canViewInFolder: Bool,
+        context: TransferRowActionContext,
+        onRetry: @MainActor @escaping () -> Void,
         onClear: @MainActor @escaping () -> Void
     ) -> [ActionSheetAction] {
         let clear = action(Strings.Localizable.clear, MEGAAssets.UIImage.monoEraserMediumThinOutline, handler: onClear)
@@ -70,7 +77,7 @@ final class TransferRowActionRouter: TransferRowRouting {
         switch transfer.state {
         case .complete:
             var actions: [ActionSheetAction] = []
-            if canViewInFolder {
+            if context.canViewInFolder {
                 actions.append(action(Strings.Localizable.viewInFolder, MEGAAssets.UIImage.monoFileSearch02MediumThinOutline) { [weak self] in
                     self?.viewInFolder(for: transfer)
                 })
@@ -84,11 +91,12 @@ final class TransferRowActionRouter: TransferRowRouting {
             actions.append(clear)
             return actions
         default:
-            // Retry wiring lands in IOS-11943; the item shows now but does nothing yet.
-            return [
-                action(Strings.Localizable.retry, MEGAAssets.UIImage.rotateCcw) {},
-                clear
-            ]
+            var actions: [ActionSheetAction] = []
+            if context.canRetry {
+                actions.append(action(Strings.Localizable.retry, MEGAAssets.UIImage.rotateCcw, handler: onRetry))
+            }
+            actions.append(clear)
+            return actions
         }
     }
 

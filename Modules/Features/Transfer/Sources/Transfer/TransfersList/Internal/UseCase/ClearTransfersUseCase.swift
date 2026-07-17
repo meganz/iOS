@@ -9,6 +9,9 @@ package protocol ClearTransfersUseCaseProtocol: Sendable {
     func clearFailedTransfers()
     /// Clears a single completed or failed transfer by tag (per-row Clear action).
     func clearTransfer(tag: Int)
+    /// Clears the transfers with the given tags in one pass (single cleared signal),
+    /// e.g. the entries Retry all just re-queued.
+    func clearTransfers(tags: Set<Int>)
     /// Emits once each time a clear runs. Clearing is a silent SDK cache removal that
     /// fires no transfer delegate event, so the mounted tab observes this to re-query
     /// the now-changed cache. Multicast: the emitter outlives the tabs, while each tab
@@ -47,6 +50,12 @@ package final class ClearTransfersUseCase: ClearTransfersUseCaseProtocol, @unche
 
     package func clearTransfer(tag: Int) {
         let removedTags = repo.clearTransfer(tag: tag)
+        finishDateProvider?.removeDates(forTags: removedTags)
+        clearedSubject.send()
+    }
+
+    package func clearTransfers(tags: Set<Int>) {
+        let removedTags = repo.clearTransfers(tags: tags)
         finishDateProvider?.removeDates(forTags: removedTags)
         clearedSubject.send()
     }

@@ -251,7 +251,24 @@ public final class TransfersListViewModel: ObservableObject {
         }
     }
 
-    func retryAllTransfers() {
-        // Retry-all: IOS-11943
+    /// Re-queues every retryable transfer the Failed tab shows (uploads whose staged
+    /// source is gone are skipped and their rows stay), clears the re-queued entries
+    /// in one pass, and confirms with the retry snackbar. Runs immediately with no
+    /// confirmation, like clear-all. Scoped to the tab's own snapshot: the
+    /// completed-transfers cache also holds transfers the tab hides (app-internal
+    /// downloads, folder and streaming transfers), which must not be retried.
+    func retryAllTransfers() async {
+        let visibleTags = Set(await dependency.itemsUseCase.snapshot(for: .failed).map(\.tag))
+        guard !visibleTags.isEmpty else { return }
+        let retriedTags = transferControlUseCase.retryTransfers(tags: visibleTags)
+        guard !retriedTags.isEmpty else { return }
+        dependency.clearTransfersUseCase.clearTransfers(tags: retriedTags)
+        didRetryTransfers()
+    }
+
+    /// Shows the retry snackbar. Fired by every retry entry point: the per-row sheet
+    /// and leading swipe (via `onTransferRetried`) and Retry all.
+    func didRetryTransfers() {
+        snackBar = SnackBar(message: Strings.Localizable.retrying)
     }
 }

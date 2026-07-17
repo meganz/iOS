@@ -6,10 +6,12 @@ final class MockTransferControlRepository: TransferControlRepositoryProtocol, @u
     private(set) var resumedTransfers: [TransferEntity] = []
     private(set) var retriedTransfers: [TransferEntity] = []
     private(set) var cancelledTransfers: [TransferEntity] = []
+    private(set) var retryTransfersReceivedTagSets: [Set<Int>] = []
     var pauseError: (any Error)?
     var resumeError: (any Error)?
     var retryError: (any Error)?
     var cancelError: (any Error)?
+    var retryTransfersResult: Set<Int> = []
 
     static var newRepo: MockTransferControlRepository {
         MockTransferControlRepository()
@@ -35,5 +37,10 @@ final class MockTransferControlRepository: TransferControlRepositoryProtocol, @u
     func cancelTransfer(_ transfer: TransferEntity) async throws {
         cancelledTransfers.append(transfer)
         if let cancelError { throw cancelError }
+    }
+
+    func retryTransfers(tags: Set<Int>) -> Set<Int> {
+        retryTransfersReceivedTagSets.append(tags)
+        return retryTransfersResult
     }
 }

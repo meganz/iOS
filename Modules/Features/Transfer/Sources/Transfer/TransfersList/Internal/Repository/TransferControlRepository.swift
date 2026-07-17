@@ -14,10 +14,20 @@ package protocol TransferControlRepositoryProtocol: RepositoryProtocol, Sendable
     /// Cancels a single in-flight transfer in the transfer engine. The transfer finishes
     /// as Cancelled and moves to the completed-transfers cache (rendered by the Failed tab).
     func cancelTransfer(_ transfer: TransferEntity) async throws
+    /// Re-queues the retryable transfers among the given tags: all downloads, and
+    /// uploads whose staged source file still exists on disk. The caller scopes
+    /// `tags` to the rows the Failed tab renders; the completed-transfers cache also
+    /// holds transfers the tab hides (app-internal downloads, folder and streaming
+    /// transfers), which must not be retried behind the user's back. State and
+    /// retryability are re-checked here because the cache may have changed since
+    /// the caller snapshotted it.
+    /// - Returns: tags of the re-queued transfers, so the caller can clear their entries.
+    func retryTransfers(tags: Set<Int>) -> Set<Int>
 }
 
 package enum TransferControlRepositoryError: Error {
     case transferNotFound
+    case transferNotRetryable
 }
 
 package struct TransferControlRepository: TransferControlRepositoryProtocol {
@@ -26,9 +36,11 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
     }
 
     private let sdk: MEGASdk
+    private let fileManager: FileManager
 
-    package init(sdk: MEGASdk) {
+    package init(sdk: MEGASdk, fileManager: FileManager = .default) {
         self.sdk = sdk
+        self.fileManager = fileManager
     }
 
     package func pauseTransfer(_ transfer: TransferEntity) async throws {
@@ -42,6 +54,14 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
     package func retryTransfer(_ transfer: TransferEntity) async throws {
         guard let megaTransfer = completedMEGATransfer(for: transfer) else {
             throw TransferControlRepositoryError.transferNotFound
+        }
+        // Re-checked at action time: the row was rendered from an earlier snapshot
+        // and the staged source file may have disappeared since.
+        guard TransferRetryPolicy.isRetryable(
+            megaTransfer.toTransferEntity(),
+            sourceExists: fileManager.fileExists(atPath:)
+        ) else {
+            throw TransferControlRepositoryError.transferNotRetryable
         }
         sdk.retryTransfer(megaTransfer)
     }
@@ -57,6 +77,18 @@ package struct TransferControlRepository: TransferControlRepositoryProtocol {
                 }
             })
         }
+    }
+
+    package func retryTransfers(tags: Set<Int>) -> Set<Int> {
+        guard let completedTransfers = sdk.completedTransfers as? [MEGATransfer] else { return [] }
+        let retryableTransfers = completedTransfers.filter { transfer in
+            tags.contains(transfer.tag) && TransferRetryPolicy.isRetryable(
+                transfer.toTransferEntity(),
+                sourceExists: fileManager.fileExists(atPath:)
+            )
+        }
+        retryableTransfers.forEach { sdk.retryTransfer($0) }
+        return Set(retryableTransfers.map(\.tag))
     }
 
     /// Finished transfers are no longer addressable by tag in the transfer engine

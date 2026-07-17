@@ -20,7 +20,7 @@ struct TransferRowViewModelTests {
         thumbnailLoader: TransferThumbnailLoader? = nil
     ) -> (sut: TransferRowViewModel, useCase: MockTransferControlUseCase) {
         let sut = TransferRowViewModel(
-            state: state ?? TransferEntityMapper.rowState(for: entity),
+            state: state ?? TransferEntityMapper.rowState(for: entity, isRetryable: false),
             transfer: entity,
             controlUseCase: controlUseCase,
             rowRouter: rowRouter,
@@ -118,11 +118,11 @@ struct TransferRowViewModelTests {
     func presentActionsForwardsToRouter() {
         let router = MockTransferRowRouting()
         let entity = TransferEntity(fileName: "clip.mov", tag: 42, state: .complete)
-        var state = TransferEntityMapper.rowState(for: entity)
+        var state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
         state.canViewInFolder = false
         let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
 
-        sut.presentActions()
+        sut.presentActions(onRetried: {})
 
         #expect(router.presentActionsTags == [42])
         #expect(router.presentActionsContexts.first?.canViewInFolder == false)
@@ -139,10 +139,24 @@ struct TransferRowViewModelTests {
             clearTransfersUseCase: clearUseCase
         )
 
-        sut.presentActions()
+        sut.presentActions(onRetried: {})
         router.lastOnClear?()
 
         #expect(clearUseCase.clearedTransferTags == [7])
+    }
+
+    @Test("The presented sheet receives a Retry handler alongside Clear")
+    func presentActionsForwardsRetryHandler() {
+        let router = MockTransferRowRouting()
+        let (sut, _) = Self.makeSUT(
+            entity: TransferEntity(tag: 8, state: .failed),
+            rowRouter: router
+        )
+
+        sut.presentActions(onRetried: {})
+
+        #expect(router.lastOnRetry != nil)
+        #expect(router.lastOnClear != nil)
     }
 
     @Test("Tapping a completed row opens the file via the row router")
@@ -156,6 +170,40 @@ struct TransferRowViewModelTests {
         sut.openFile()
 
         #expect(router.openFileTags == [42])
+    }
+
+    // MARK: - Retry
+
+    @Test("Retrying a failed row re-queues the transfer, then clears its old entry")
+    func retryRoutesRetryThenClear() async {
+        let clearUseCase = MockClearTransfersUseCase()
+        let (sut, useCase) = Self.makeSUT(
+            entity: TransferEntity(tag: 21, state: .failed),
+            clearTransfersUseCase: clearUseCase
+        )
+
+        let retried = await sut.retry()
+
+        #expect(retried)
+        #expect(useCase.retriedTransfers.map(\.tag) == [21])
+        #expect(clearUseCase.clearedTransferTags == [21])
+    }
+
+    @Test("A failed retry is swallowed, clears nothing, and reports false so no snackbar shows")
+    func retryFailureClearsNothing() async {
+        let useCase = MockTransferControlUseCase()
+        useCase.retryError = TestError.failure
+        let clearUseCase = MockClearTransfersUseCase()
+        let (sut, _) = Self.makeSUT(
+            entity: TransferEntity(tag: 22, state: .failed),
+            controlUseCase: useCase,
+            clearTransfersUseCase: clearUseCase
+        )
+
+        let retried = await sut.retry()
+
+        #expect(!retried)
+        #expect(clearUseCase.clearedTransferTags.isEmpty)
     }
 
     // MARK: - Swipe cancel
@@ -212,7 +260,7 @@ struct TransferRowViewModelTests {
         #expect(sut.thumbnailRetryTrigger == triggerBefore)
 
         let completed = TransferEntity(type: .upload, path: "/staged/doc.pdf", nodeHandle: 7, tag: 21, state: .complete)
-        sut.update(state: TransferEntityMapper.rowState(for: completed), transfer: completed)
+        sut.update(state: TransferEntityMapper.rowState(for: completed, isRetryable: false), transfer: completed)
         #expect(sut.thumbnailRetryTrigger == triggerBefore + 1)
 
         // The bumped trigger restarts the row's `.task`, which retries via the node.

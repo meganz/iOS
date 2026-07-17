@@ -113,14 +113,63 @@ struct TransferRowStateBuilderTests {
         #expect(!state.canViewInFolder)
     }
 
+    // MARK: - Retryability source gate
+
+    @Test func failedUploadIsRetryableOnlyWhileItsSourceFileExists() async {
+        var checkedPaths: [String] = []
+        let sut = makeSUT(tab: .failed, sourceExists: { checkedPaths.append($0); return $0 == "/staging/kept.mov" })
+
+        let states = await sut.snapshotStates(for: [
+            .init(type: .upload, path: "/staging/kept.mov", tag: 1, state: .failed),
+            .init(type: .upload, path: "/staging/deleted.mov", tag: 2, state: .cancelled)
+        ])
+
+        #expect(states.map(\.isRetryable) == [true, false])
+        #expect(checkedPaths == ["/staging/kept.mov", "/staging/deleted.mov"])
+    }
+
+    @Test func failedDownloadIsRetryableWithoutTouchingDisk() async {
+        var checkedPaths: [String] = []
+        let sut = makeSUT(tab: .failed, sourceExists: { checkedPaths.append($0); return false })
+
+        let states = await sut.snapshotStates(for: [.init(type: .download, path: "/downloads/a.pdf", tag: 3, state: .failed)])
+
+        #expect(states[0].isRetryable)
+        #expect(checkedPaths.isEmpty)
+    }
+
+    @Test func failedUploadWithoutAPathIsNotRetryable() async {
+        let sut = makeSUT(tab: .failed)
+
+        let states = await sut.snapshotStates(for: [.init(type: .upload, tag: 4, state: .failed)])
+
+        #expect(!states[0].isRetryable)
+    }
+
+    @Test func activeRowsSkipTheDiskCheck() async {
+        var checkedPaths: [String] = []
+        let sut = makeSUT(tab: .active, sourceExists: { checkedPaths.append($0); return true })
+
+        let states = await sut.snapshotStates(for: [.init(type: .upload, path: "/staging/live.mov", tag: 5, state: .active)])
+
+        #expect(!states[0].isRetryable)
+        #expect(checkedPaths.isEmpty)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
         tab: TransfersTab,
         resolver: SpyLocationResolver = SpyLocationResolver(),
-        provider: SpyFinishDateProvider = SpyFinishDateProvider()
+        provider: SpyFinishDateProvider = SpyFinishDateProvider(),
+        sourceExists: @escaping (String) -> Bool = { _ in true }
     ) -> TransferRowStateBuilder {
-        TransferRowStateBuilder(tab: tab, locationResolver: resolver, finishDateProvider: provider)
+        TransferRowStateBuilder(
+            tab: tab,
+            locationResolver: resolver,
+            finishDateProvider: provider,
+            sourceExists: sourceExists
+        )
     }
 }
 

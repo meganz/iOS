@@ -21,7 +21,8 @@ struct TransferEntityMapperTests {
         let state = TransferEntityMapper.rowState(
             for: entity,
             location: "/Downloads/MEGA",
-            finishDate: finishDate
+            finishDate: finishDate,
+            isRetryable: false
         )
 
         #expect(state.status == .completed)
@@ -45,7 +46,8 @@ struct TransferEntityMapperTests {
         let state = TransferEntityMapper.rowState(
             for: entity,
             location: "/Cloud drive/Documents",
-            finishDate: finishDate
+            finishDate: finishDate,
+            isRetryable: false
         )
 
         #expect(state.direction == .upload)
@@ -63,7 +65,7 @@ struct TransferEntityMapperTests {
             state: .complete
         )
 
-        let state = TransferEntityMapper.rowState(for: entity)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
 
         #expect(state.status == .completed)
         #expect(state.location == nil)
@@ -79,7 +81,7 @@ struct TransferEntityMapperTests {
             state: .active
         )
 
-        let state = TransferEntityMapper.rowState(for: entity)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
 
         #expect(state.status == .active)
         #expect(state.location == nil)
@@ -92,7 +94,7 @@ struct TransferEntityMapperFailedRowsTests {
     @Test func failedDownload_withoutDate_usesFailedLabelOnly() {
         let entity = TransferEntity(type: .download, fileName: "a.txt", state: .failed)
 
-        let state = TransferEntityMapper.rowState(for: entity)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
 
         #expect(state.status == .failed)
         #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Tab.failed)")
@@ -102,7 +104,7 @@ struct TransferEntityMapperFailedRowsTests {
     @Test func cancelledUpload_withoutDate_usesCancelledLabelOnly() {
         let entity = TransferEntity(type: .upload, fileName: "b.txt", state: .cancelled)
 
-        let state = TransferEntityMapper.rowState(for: entity)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
 
         #expect(state.status == .cancelled)
         #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
@@ -113,7 +115,7 @@ struct TransferEntityMapperFailedRowsTests {
         let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
         let entity = TransferEntity(type: .download, fileName: "a.txt", state: .failed)
 
-        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate)
+        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate, isRetryable: false)
 
         #expect(state.subtitle == "↓ \(Strings.Localizable.Transfers.Tab.failed)")
     }
@@ -122,8 +124,16 @@ struct TransferEntityMapperFailedRowsTests {
         let finishDate = Date(timeIntervalSince1970: 1_723_316_940)
         let entity = TransferEntity(type: .upload, fileName: "b.txt", state: .cancelled)
 
-        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate)
+        let state = TransferEntityMapper.rowState(for: entity, finishDate: finishDate, isRetryable: false)
 
         #expect(state.subtitle == "↑ \(Strings.Localizable.cancelled)")
+    }
+
+    @Test("isRetryable is passed through verbatim — the decision belongs to TransferRetryPolicy")
+    func isRetryableIsPassedThrough() {
+        let entity = TransferEntity(type: .upload, state: .failed)
+
+        #expect(TransferEntityMapper.rowState(for: entity, isRetryable: true).isRetryable)
+        #expect(!TransferEntityMapper.rowState(for: entity, isRetryable: false).isRetryable)
     }
 }

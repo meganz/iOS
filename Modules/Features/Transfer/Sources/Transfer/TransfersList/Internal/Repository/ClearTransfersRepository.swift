@@ -13,6 +13,9 @@ package protocol ClearTransfersRepositoryProtocol: RepositoryProtocol, Sendable 
     /// Removes the single completed/failed transfer with the given tag.
     /// - Returns: tags removed from the SDK completed-transfers cache (empty if no match).
     func clearTransfer(tag: Int) -> Set<Int>
+    /// Removes the completed/failed transfers with the given tags in one pass.
+    /// - Returns: tags removed from the SDK completed-transfers cache.
+    func clearTransfers(tags: Set<Int>) -> Set<Int>
 }
 
 package struct ClearTransfersRepository: ClearTransfersRepositoryProtocol {
@@ -36,6 +39,10 @@ package struct ClearTransfersRepository: ClearTransfersRepositoryProtocol {
 
     package func clearTransfer(tag: Int) -> Set<Int> {
         removeCompletedTransfers { $0.tag == tag }
+    }
+
+    package func clearTransfers(tags: Set<Int>) -> Set<Int> {
+        removeCompletedTransfers { tags.contains($0.tag) }
     }
 
     /// Removes the matching entries from the app-maintained completed-transfers

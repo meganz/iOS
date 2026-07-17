@@ -6,15 +6,18 @@ struct TransferTabListView: View {
     @StateObject private var viewModel: TransferTabListViewModel
     private let emptyStateTitle: String
     private let onTransferCancelled: (TransferEntity) -> Void
+    private let onTransferRetried: @MainActor () -> Void
 
     init(
         tab: TransfersTab,
         dependency: TransferTabDependency,
-        onTransferCancelled: @escaping (TransferEntity) -> Void
+        onTransferCancelled: @escaping (TransferEntity) -> Void,
+        onTransferRetried: @MainActor @escaping () -> Void
     ) {
         _viewModel = StateObject(wrappedValue: TransferTabListViewModel(tab: tab, dependency: dependency))
         emptyStateTitle = tab.emptyStateTitle
         self.onTransferCancelled = onTransferCancelled
+        self.onTransferRetried = onTransferRetried
     }
 
     var body: some View {
@@ -42,7 +45,7 @@ struct TransferTabListView: View {
     private var listContent: some View {
         let list = List {
             ForEach(viewModel.rows) { row in
-                TransferResultRowView(viewModel: row, onCancelled: onTransferCancelled)
+                TransferResultRowView(viewModel: row, onCancelled: onTransferCancelled, onRetried: onTransferRetried)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)

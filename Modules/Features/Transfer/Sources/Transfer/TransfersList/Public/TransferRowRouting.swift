@@ -8,11 +8,15 @@ public struct TransferRowActionContext: Sendable {
     public let name: String
     public let detail: String
     public let canViewInFolder: Bool
+    /// Whether the sheet offers Retry on a failed/cancelled row. `false` for uploads
+    /// whose staged source file no longer exists — retrying them can only fail.
+    public let canRetry: Bool
 
-    public init(name: String, detail: String, canViewInFolder: Bool) {
+    public init(name: String, detail: String, canViewInFolder: Bool, canRetry: Bool = false) {
         self.name = name
         self.detail = detail
         self.canViewInFolder = canViewInFolder
+        self.canRetry = canRetry
     }
 }
 
@@ -29,9 +33,16 @@ public protocol TransferRowRouting: Sendable {
     /// transfer's state: Completed offers View in folder (only when `canViewInFolder`),
     /// Open with, Share link and Clear; Failed/Cancelled offer Retry and Clear.
     /// - Parameter context: header display data and view-in-folder eligibility.
+    /// - Parameter onRetry: invoked when the user taps Retry, so the list owner can
+    ///   re-queue the transfer (retrying lives in the Transfer package, not the app router).
     /// - Parameter onClear: invoked when the user taps Clear, so the list owner can
     ///   remove the entry (clearing lives in the Transfer package, not the app router).
-    func presentActions(for transfer: TransferEntity, context: TransferRowActionContext, onClear: @MainActor @escaping () -> Void)
+    func presentActions(
+        for transfer: TransferEntity,
+        context: TransferRowActionContext,
+        onRetry: @MainActor @escaping () -> Void,
+        onClear: @MainActor @escaping () -> Void
+    )
     /// Completed only. Opens or previews the finished file (row-body tap).
     func openFile(for transfer: TransferEntity)
     /// Opens the existing upgrade flow, invoked from the over-quota banner's `Upgrade now`

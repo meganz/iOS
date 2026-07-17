@@ -22,6 +22,9 @@ struct TransferResultRowView: View {
     /// Invoked after a swipe-cancel lands in the engine, with the cancelled entity;
     /// the screen shows the undo snackbar.
     let onCancelled: (TransferEntity) -> Void
+    /// Invoked after a retry (leading swipe or sheet action) lands in the engine;
+    /// the screen shows the retry snackbar.
+    let onRetried: @MainActor () -> Void
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
 
@@ -85,6 +88,11 @@ struct TransferResultRowView: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             swipeAction
         }
+        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+            if viewModel.state.isRetryable {
+                retrySwipeAction
+            }
+        }
         .task(id: viewModel.thumbnailRetryTrigger) {
             await viewModel.loadThumbnail()
         }
@@ -131,6 +139,22 @@ struct TransferResultRowView: View {
                 .frame(width: 32, height: 32)
         }
     }
+        
+    /// Left-to-right swipe on Failed-tab rows: the design's blue retry affordance.
+    /// Re-queues the transfer (row removal is driven by the cleared signal) and
+    /// bubbles up through `onRetried` for the retry snackbar.
+    private var retrySwipeAction: some View {
+        Button {
+            Task {
+                if await viewModel.retry() {
+                    onRetried()
+                }
+            }
+        } label: {
+            MEGAAssets.Image.rotateCcw
+        }
+        .tint(TokenColors.Support.info.swiftUI)
+    }
 
     /// In-flight rows show a pause/play toggle; terminal rows show the `…` button that
     /// presents the per-row action sheet.
@@ -138,7 +162,7 @@ struct TransferResultRowView: View {
     private var trailingAction: some View {
         if isReadOnly {
             Button {
-                viewModel.presentActions()
+                viewModel.presentActions(onRetried: onRetried)
             } label: {
                 MEGAAssets.Image.moreVerticalMediumThinOutline
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)

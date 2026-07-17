@@ -11,6 +11,7 @@ final class TransferRowStateBuilder {
     private let tab: TransfersTab
     private let locationResolver: any TransferLocationResolving
     private let finishDateProvider: any TransferFinishDateProviding
+    private let sourceExists: (String) -> Bool
     /// Values are `String?` on purpose: a destination that resolves to `nil` is
     /// cached as a negative result and not looked up again for every row.
     private var uploadLocationsByParentHandle: [HandleEntity: String?] = [:]
@@ -18,11 +19,13 @@ final class TransferRowStateBuilder {
     init(
         tab: TransfersTab,
         locationResolver: some TransferLocationResolving,
-        finishDateProvider: some TransferFinishDateProviding
+        finishDateProvider: some TransferFinishDateProviding,
+        sourceExists: @escaping (String) -> Bool = { FileManager.default.fileExists(atPath: $0) }
     ) {
         self.tab = tab
         self.locationResolver = locationResolver
         self.finishDateProvider = finishDateProvider
+        self.sourceExists = sourceExists
     }
 
     /// Row states for the tab's snapshot. The Completed tab reads the finish date
@@ -30,7 +33,7 @@ final class TransferRowStateBuilder {
     func snapshotStates(for entities: [TransferEntity]) async -> [TransferRowState] {
         switch tab {
         case .active, .failed:
-            return entities.map { TransferEntityMapper.rowState(for: $0) }
+            return entities.map { TransferEntityMapper.rowState(for: $0, isRetryable: isRetryable(for: $0)) }
         case .completed:
             var states: [TransferRowState] = []
             states.reserveCapacity(entities.count)
@@ -48,7 +51,7 @@ final class TransferRowStateBuilder {
     func finishState(for entity: TransferEntity) async -> TransferRowState {
         switch tab {
         case .active, .failed:
-            return TransferEntityMapper.rowState(for: entity)
+            return TransferEntityMapper.rowState(for: entity, isRetryable: isRetryable(for: entity))
         case .completed:
             // `recordIfAbsent`, not a plain read: the finish is happening now,
             // so stamping the current instant is correct, and set-if-absent
@@ -65,8 +68,13 @@ final class TransferRowStateBuilder {
             for: entity,
             location: await location(for: entity),
             finishDate: finishDate,
-            canViewInFolder: !entity.isSavedToPhotos
+            canViewInFolder: !entity.isSavedToPhotos,
+            isRetryable: isRetryable(for: entity)
         )
+    }
+
+    private func isRetryable(for entity: TransferEntity) -> Bool {
+        TransferRetryPolicy.isRetryable(entity, sourceExists: sourceExists)
     }
 
     private func location(for entity: TransferEntity) async -> String? {
