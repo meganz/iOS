@@ -16,4 +16,8 @@ enum DependencyInjection {
             minimumPlaybackTime: PlaybackContinuationUseCase<PreviousPlaybackSessionRepository>.Constants.minimumContinuationPlaybackTimeRevamp
         )
     }
+
+    static var accountUseCase: some AccountUseCaseProtocol {
+        AccountUseCase(repository: AccountRepository.newRepo)
+    }
 }

@@ -1,3 +1,4 @@
+import MEGADomain
 import SwiftUI
 import UIKit
 
@@ -27,6 +28,7 @@ public final class MEGAAudioPlayerViewRouter {
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
     private let actionsHandler: ActionsHandler?
+    private let accountUseCase: any AccountUseCaseProtocol
 
     /// Public entry point. Constructs the router with the shared
     /// `AudioPlaybackService` (singleton). Callers from outside the module use
@@ -48,11 +50,13 @@ public final class MEGAAudioPlayerViewRouter {
     init(
         presenter: UIViewController?,
         service: any AudioPlaybackServiceProtocol,
-        actionsHandler: ActionsHandler? = nil
+        actionsHandler: ActionsHandler? = nil,
+        accountUseCase: any AccountUseCaseProtocol = DependencyInjection.accountUseCase
     ) {
         self.presenter = presenter
         self.service = service
         self.actionsHandler = actionsHandler
+        self.accountUseCase = accountUseCase
     }
 
     /// Start (or replace) playback with the given source and present the
@@ -86,9 +90,20 @@ public final class MEGAAudioPlayerViewRouter {
         host.isPlaylistVisible = { [weak vm] in vm?.isPlaylistVisible == true }
         host.playlistListTopY = { [weak vm] in vm?.playlistListTopY ?? 0 }
 
+        let service = service
+        let accountUseCase = accountUseCase
+        let stopPlaybackIfLoggedOut = {
+            if !accountUseCase.isLoggedIn() {
+                service.stop()
+            }
+        }
+
         vm.onDismiss = { [weak host] in
             host?.dismiss(animated: true)
+            stopPlaybackIfLoggedOut()
         }
+
+        host.onDismiss = stopPlaybackIfLoggedOut
 
         let actionsHandler = self.actionsHandler
         vm.onMoreTap = { [weak host] source in
