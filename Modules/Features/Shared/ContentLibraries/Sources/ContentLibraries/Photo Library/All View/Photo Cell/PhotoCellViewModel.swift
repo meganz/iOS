@@ -8,6 +8,14 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+/// Identity used to key a photo cell's load `.task(id:)` hooks. Includes thumbnail readiness so the
+/// load restarts when a node's thumbnail/preview becomes available after an initial `noThumbnail`.
+struct NodeLoadIdentity: Hashable {
+    let handle: HandleEntity
+    let hasThumbnail: Bool
+    let hasPreview: Bool
+}
+
 @MainActor
 open class PhotoCellViewModel: ObservableObject {
 
@@ -51,8 +59,17 @@ open class PhotoCellViewModel: ObservableObject {
     /// placeholder is hydrated into its real node *in place* via `reconfigureItems`, which reuses
     /// the cell and its SwiftUI view identity, so a plain `.task` would keep the placeholder's
     /// no-op load and never start the real one. Keying the tasks on this restarts them against the
-    /// real node; a metadata-only change (same handle) keeps the same identity and does not restart.
-    var nodeLoadIdentity: HandleEntity { photo.handle }
+    /// real node.
+    ///
+    /// Thumbnail *readiness* is part of the identity on purpose: a just-uploaded node arrives with
+    /// `hasThumbnail == false` and its first load throws `noThumbnail`; when the thumbnail later
+    /// becomes available the node is patched in place (same handle) and reconfigured — but that
+    /// reuses the SwiftUI view, so a handle-only identity would NOT restart the (already-finished)
+    /// load and the cell would stay a placeholder until scrolled off and back. Folding
+    /// `hasThumbnail`/`hasPreview` in restarts the load exactly when readiness flips.
+    var nodeLoadIdentity: NodeLoadIdentity {
+        NodeLoadIdentity(handle: photo.handle, hasThumbnail: photo.hasThumbnail, hasPreview: photo.hasPreview)
+    }
 
     // MARK: private state
     private let photo: NodeEntity

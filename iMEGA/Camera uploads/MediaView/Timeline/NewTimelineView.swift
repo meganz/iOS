@@ -17,8 +17,14 @@ struct NewTimelineView: View {
         .task {
             await viewModel.monitorUpdates()
         }
+        .task(id: viewModel.loadPhotosTaskId) {
+            await viewModel.monitorTimelineSections()
+        }
         .task {
             await viewModel.monitorVisibleWindowHydration()
+        }
+        .task {
+            await viewModel.monitorNodeMetadataUpdates()
         }
         .onDisappear(perform: viewModel.onViewDisappear)
         .if(viewModel.showEmptyStateView) {

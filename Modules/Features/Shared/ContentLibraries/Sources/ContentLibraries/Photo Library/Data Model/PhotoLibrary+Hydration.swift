@@ -29,4 +29,29 @@ public extension PhotoLibrary {
         let indexed = replacements.enumerated().map { (startIndex + $0.offset, $0.element) }
         return replacingPhotos(at: Dictionary(uniqueKeysWithValues: indexed))
     }
+
+    /// Overlay per-node metadata from `other` onto the receiver, matched by handle and keeping the
+    /// receiver's positions. For each real (non-placeholder) node here, if `other` holds a real node
+    /// with the same handle and `preferOther(mine, other)` says so, swap in `other`'s node. Used to
+    /// reconcile a shape result built from a stale snapshot with a metadata patch that landed
+    /// concurrently, so the patch isn't reverted. Placeholders never match (synthetic handles), so a
+    /// node freshly hydrated by this pass — still a placeholder in `other` — is never overridden. The
+    /// `preferOther` predicate owns the field policy (see the caller). One `replacingPhotos(at:)`
+    /// rebuild; a no-op when nothing is preferred.
+    func mergingMetadata(
+        from other: PhotoLibrary,
+        preferringOtherWhen preferOther: (_ mine: NodeEntity, _ other: NodeEntity) -> Bool
+    ) -> PhotoLibrary {
+        let otherByHandle = Dictionary(
+            other.allPhotos.lazy.filter { !$0.isTimelinePlaceholder }.map { ($0.handle, $0) },
+            uniquingKeysWith: { first, _ in first })
+        guard !otherByHandle.isEmpty else { return self }
+
+        var replacements: [Int: NodeEntity] = [:]
+        for (index, node) in allPhotos.enumerated() where !node.isTimelinePlaceholder {
+            guard let other = otherByHandle[node.handle], preferOther(node, other) else { continue }
+            replacements[index] = other
+        }
+        return replacingPhotos(at: replacements)
+    }
 }

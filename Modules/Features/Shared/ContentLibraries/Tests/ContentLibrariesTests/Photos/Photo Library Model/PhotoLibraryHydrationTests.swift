@@ -86,4 +86,55 @@ struct PhotoLibraryHydrationTests {
         #expect(photos[3].handle == 100)
         #expect(photos[4].handle == 101) // overflow (102...) dropped
     }
+
+    @Test
+    func testMergingMetadata_adoptsOtherNodeWhenPreferred_keepingPosition() {
+        let base = makeSkeleton().replacingPhotos(from: 0, with: [
+            NodeEntity(handle: 10, isFavourite: false),
+            NodeEntity(handle: 11, isFavourite: false)
+        ])
+        let other = makeSkeleton().replacingPhotos(from: 0, with: [
+            NodeEntity(handle: 10, isFavourite: true), // favourited concurrently
+            NodeEntity(handle: 11, isFavourite: false)
+        ])
+
+        let merged = base.mergingMetadata(from: other) { mine, other in mine.isFavourite != other.isFavourite }
+
+        #expect(merged.allPhotos[0].isFavourite) // adopted other's fresher node at the same slot
+        #expect(!merged.allPhotos[1].isFavourite)
+        #expect(dayBucketCounts(merged) == [2, 3]) // shape preserved
+    }
+
+    @Test
+    func testMergingMetadata_neverOverridesNodeAbsentFromOther() {
+        // A node freshly hydrated by this pass is still a placeholder in `other`, so it must survive.
+        let base = makeSkeleton().replacingPhotos(from: 0, with: [NodeEntity(handle: 10, hasThumbnail: true)])
+        let other = makeSkeleton() // all placeholders — no real node for handle 10
+
+        let merged = base.mergingMetadata(from: other) { _, _ in true } // would adopt if matched
+
+        #expect(merged.allPhotos[0].handle == 10)
+        #expect(merged.allPhotos[0].hasThumbnail) // kept
+    }
+
+    @Test
+    func testMergingMetadata_readinessSafePolicy_keepsTheMoreReadyNode() {
+        // Mirrors the reactive path's policy: never let a staler `other` drop readiness `mine` has.
+        let base = makeSkeleton().replacingPhotos(from: 0, with: [NodeEntity(handle: 10, hasThumbnail: true)])
+        let other = makeSkeleton().replacingPhotos(from: 0, with: [NodeEntity(handle: 10, hasThumbnail: false)])
+
+        let merged = base.mergingMetadata(from: other) { mine, other in
+            guard mine.hasThumbnail != other.hasThumbnail else { return false }
+            if mine.hasThumbnail && !other.hasThumbnail { return false }
+            return true
+        }
+
+        #expect(merged.allPhotos[0].hasThumbnail) // the more-ready node wins; readiness never regresses
+    }
+
+    @Test
+    func testMergingMetadata_noMatchingRealHandles_returnsUnchanged() {
+        let base = makeSkeleton().replacingPhotos(from: 0, with: [NodeEntity(handle: 10)])
+        #expect(base.mergingMetadata(from: makeSkeleton()) { _, _ in true } == base)
+    }
 }

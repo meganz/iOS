@@ -1225,13 +1225,26 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testNodeLoadIdentity_sameHandle_isStableSoMetadataChangesDoNotReloadThumbnail() {
-        // A metadata-only change (e.g. favourite toggle) reconfigures the cell with a new VM but
-        // the same underlying node; the identity must stay equal so the thumbnail isn't reloaded.
-        let first = makeSUT(photo: NodeEntity(handle: 42))
-        let second = makeSUT(photo: NodeEntity(handle: 42))
+    func testNodeLoadIdentity_sameHandleAndReadiness_isStableSoFavouriteToggleDoesNotReloadThumbnail() {
+        // A non-readiness metadata change (e.g. favourite toggle) reconfigures the cell with a new
+        // VM but the same node and same thumbnail readiness; the identity must stay equal so the
+        // already-loaded thumbnail isn't needlessly reloaded.
+        let first = makeSUT(photo: NodeEntity(handle: 42, hasThumbnail: true, isFavourite: false))
+        let second = makeSUT(photo: NodeEntity(handle: 42, hasThumbnail: true, isFavourite: true))
 
         XCTAssertEqual(first.nodeLoadIdentity, second.nodeLoadIdentity)
+    }
+
+    @MainActor
+    func testNodeLoadIdentity_thumbnailReadinessFlip_changesSoLoadRestarts() {
+        // A just-uploaded node arrives with `hasThumbnail == false`; its first load throws
+        // `noThumbnail`. When the thumbnail becomes available the node is patched in place (same
+        // handle) and reconfigured — reusing the SwiftUI view — so the identity MUST change on the
+        // readiness flip or the finished load never restarts and the cell stays a placeholder.
+        let notReady = makeSUT(photo: NodeEntity(handle: 42, hasThumbnail: false))
+        let ready = makeSUT(photo: NodeEntity(handle: 42, hasThumbnail: true))
+
+        XCTAssertNotEqual(notReady.nodeLoadIdentity, ready.nodeLoadIdentity)
     }
 
     @MainActor
