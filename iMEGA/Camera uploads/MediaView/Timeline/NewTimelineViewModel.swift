@@ -37,6 +37,8 @@ final class NewTimelineViewModel: ObservableObject {
     private var skeletonFilterOptions: PhotosFilterOptionsEntity?
     private var skeletonSortOrder: SortOrderEntity?
 
+    private let initialHydrationWindowSize = 60
+
     /// Bumped only when the query changes (filter/sort) and the skeleton is rebuilt from scratch.
     /// Every in-flight hydration captures it and is discarded if it changed — a different query
     /// invalidates even a handle-anchored page. (The design doc calls this `timelineGeneration`.)
@@ -383,21 +385,37 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
 
-    /// Builds the placeholder skeleton purely from date-bucket counts — no node is
-    /// fetched here. Real thumbnails are hydrated lazily per visible window in a later
-    /// change; until then the grid stays a correctly-sized skeleton.
+    /// Builds the count-sized skeleton *and* hydrates its first window in one step, so the initial
+    /// commit already shows real thumbnails for the top screen rather than a wall of placeholders
+    /// that fills in a moment later.
     private func skeletonPhotoLibrary(
         using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
     ) async throws -> PhotoLibrary {
+        let filter = photoFilterOptions.toMediaTimelineFilterEntity()
+        let order = sortOrder.toMediaTimelineSortOrderEntity()
+
+        async let firstPageTask = mediaTimelineUseCase.mediaPage(
+            filter: filter, sortOrder: order, after: nil, limit: initialHydrationWindowSize)
         let sections = try await mediaTimelineUseCase.dateSections(
-            filter: photoFilterOptions.toMediaTimelineFilterEntity(),
-            granularity: .day,
-            sortOrder: sortOrder.toMediaTimelineSortOrderEntity())
+            filter: filter, granularity: .day, sortOrder: order)
 
         try Task.checkCancellation()
 
         showEmptyStateView = sections.isEmpty
-        return await resolveSkeletonLibrary(for: sections) ?? photoLibraryContentViewModel.library
+        guard let skeleton = await resolveSkeletonLibrary(for: sections) else {
+            // Shape unchanged (a no-op reload): keep the current — possibly already hydrated —
+            // library rather than dropping it back to a placeholder skeleton.
+            return photoLibraryContentViewModel.library
+        }
+
+        // A failed / cancelled first page just means the top screen hydrates on scroll instead —
+        // never block the skeleton on it. `try?` swallows the first-page error, so re-check
+        // cancellation afterwards: a filter/sort switch cancels this `.task`, and without this a
+        // stale skeleton could fall through and be committed over the newer query's result.
+        let firstPage = (try? await firstPageTask) ?? []
+        try Task.checkCancellation()
+        guard firstPage.isNotEmpty else { return skeleton }
+        return skeleton.replacingPhotos(from: 0, with: firstPage)
     }
 
     /// Fold freshly-fetched date sections into a rebuilt library, or return `nil` when nothing needs

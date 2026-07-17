@@ -41,6 +41,15 @@ public actor MediaTimelineUseCaseRecorder {
     func record(_ call: PageAfterCall) { pageAfterCalls.append(call) }
     func record(_ call: PageBeforeCall) { pageBeforeCalls.append(call) }
     func record(_ call: WindowCall) { windowCalls.append(call) }
+
+    /// Drop everything recorded so far. The initial load eagerly fetches the first window
+    /// (`mediaPage(after: nil)`); call this after it to assert on a later, scroll-driven
+    /// hydration in isolation.
+    public func reset() {
+        pageAfterCalls.removeAll()
+        pageBeforeCalls.removeAll()
+        windowCalls.removeAll()
+    }
 }
 
 public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {

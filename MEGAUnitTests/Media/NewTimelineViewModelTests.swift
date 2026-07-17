@@ -172,6 +172,32 @@ struct NewTimelineViewModelTests {
             #expect(sut.photoLibraryContentViewModel.library.allPhotos.isEmpty)
         }
 
+        @Test("The initial load hydrates the first window up front, so the top screen shows real nodes without a scroll")
+        func initialLoadEagerlyHydratesFirstWindow() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let firstPage = [
+                NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
+                NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
+            ]
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()), // counts 2 + 1 = 3
+                    mediaPageResult: .success(firstPage),
+                    recorder: recorder))
+
+            await sut.loadPhotos()
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            #expect(photos.count == 3) // total sized from the counts
+            #expect(photos[0].handle == 10) // first page spliced at the top *before* the initial commit
+            #expect(photos[1].handle == 11)
+            #expect(photos[2].isTimelinePlaceholder) // beyond the fetched page → still a placeholder
+            // The first window is fetched once, as a forward page from the very top (after: nil).
+            let pageAfterCalls = await recorder.pageAfterCalls
+            #expect(pageAfterCalls.count == 1)
+            #expect(pageAfterCalls.first?.after == nil)
+        }
+
         @Test("Hydrating a visible window splices fetched real nodes into the skeleton in place")
         func hydrateVisibleWindowSplicesRealNodes() async {
             let reals = [
@@ -205,7 +231,8 @@ struct NewTimelineViewModelTests {
                     mediaPageResult: .success([NodeEntity(name: "gap.jpg", handle: 99, hasThumbnail: true)]),
                     mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
                     recorder: recorder))
-            await sut.loadPhotos() // 3-slot skeleton
+            await sut.loadPhotos() // 3-slot skeleton (eagerly hydrates the first window)
+            await recorder.reset() // ignore the initial eager fetch; assert only the scroll hydration below
 
             // Pre-hydrate slot 0 so the next visible window overlaps an already-real slot.
             let library = sut.photoLibraryContentViewModel.library
@@ -234,7 +261,8 @@ struct NewTimelineViewModelTests {
                     mediaPageBeforeResult: .success([NodeEntity(name: "up.jpg", handle: 77, hasThumbnail: true)]),
                     mediaWindowResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
                     recorder: recorder))
-            await sut.loadPhotos() // 3-slot skeleton
+            await sut.loadPhotos() // 3-slot skeleton (eagerly hydrates the first window)
+            await recorder.reset() // ignore the initial eager fetch; assert only the scroll hydration below
 
             // Pre-hydrate the LAST slot so the gap above it has a real lower neighbour and no real
             // upper neighbour → backward paging.
@@ -259,13 +287,14 @@ struct NewTimelineViewModelTests {
             let sut = makeSUT(
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
                     dateSectionsResult: .success(sections), // counts 2 + 1 = 3
-                    mediaPageResult: .success([NodeEntity(name: "wrong.jpg", handle: 500, hasThumbnail: true)]),
                     mediaWindowResult: .success([
                         NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true),
                         NodeEntity(name: "b.jpg", handle: 11, hasThumbnail: true)
                     ]),
                     recorder: recorder))
-            await sut.loadPhotos()
+            await sut.loadPhotos() // eagerly hydrates the first window
+            await recorder.reset() // ignore the eager fetch; the empty pageAfterCalls below proves
+                                   // the isolated run teleported by offset, not by a cursor page
 
             await sut.hydrateVisibleWindow(0..<2) // both neighbours are placeholders → offset
 
