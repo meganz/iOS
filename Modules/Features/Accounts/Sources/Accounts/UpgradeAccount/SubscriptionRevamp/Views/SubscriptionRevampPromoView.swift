@@ -8,15 +8,22 @@ import SwiftUI
 /// A promo banner with a fade-out gradient, the promo hero card, then the
 /// shared plan/feature/benefit sections. Driven by mock data.
 public struct SubscriptionRevampPromoView: View {
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    private let dependency: RevampUpgradePlansDependency
     private let viewModel: RevampUpgradePlansViewModel
 
-    init(viewModel: RevampUpgradePlansViewModel) {
+    init(
+        dependency: RevampUpgradePlansDependency,
+        viewModel: RevampUpgradePlansViewModel
+    ) {
         self.viewModel = viewModel
+        self.dependency = dependency
     }
 
-    public init() {
-        self.init(viewModel: .promo)
+    public init(dependency: RevampUpgradePlansDependency) {
+        self.init(dependency: dependency, viewModel: .promo)
     }
 
     public var body: some View {
@@ -28,7 +35,7 @@ public struct SubscriptionRevampPromoView: View {
                 promoHero
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
-                SubscriptionRevampContentSectionsView(viewModel: viewModel)
+                SubscriptionRevampContentSectionsView(dependency: dependency, viewModel: viewModel)
             }
         )
     }
@@ -86,10 +93,6 @@ public struct SubscriptionRevampPromoView: View {
             .padding(.top, TokenSpacing._2)
         }
     }
-}
-
-#Preview {
-    SubscriptionRevampPromoView()
 }
 
 private extension Color {

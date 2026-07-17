@@ -9,14 +9,23 @@ import SwiftUI
 /// shared plan/feature/benefit sections. Driven by mock data.
 public struct SubscriptionRevampStandardView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    private let dependency: RevampUpgradePlansDependency
     private let viewModel: RevampUpgradePlansViewModel
 
-    init(viewModel: RevampUpgradePlansViewModel) {
+    init(
+        dependency: RevampUpgradePlansDependency,
+        viewModel: RevampUpgradePlansViewModel
+    ) {
         self.viewModel = viewModel
+        self.dependency = dependency
     }
 
-    public init() { // To be removed, temporarily used for testing purpose
-        self.init(viewModel: .standard)
+    public init(dependency: RevampUpgradePlansDependency) { // To be removed, temporarily used for testing purpose
+        self.init(
+            dependency: dependency,
+            viewModel: .standard
+        )
     }
 
     public var body: some View {
@@ -26,7 +35,7 @@ public struct SubscriptionRevampStandardView: View {
             headerImage
         } content: {
             titleHeader
-            SubscriptionRevampContentSectionsView(viewModel: viewModel)
+            SubscriptionRevampContentSectionsView(dependency: dependency, viewModel: viewModel)
         }
     }
 
@@ -50,8 +59,4 @@ public struct SubscriptionRevampStandardView: View {
             .foregroundStyle(TokenColors.Text.primary.swiftUI)
             .blendIntoHeader(offset: TokenSpacing._11, isCompact: verticalSizeClass == .compact)
     }
-}
-
-#Preview {
-    SubscriptionRevampStandardView()
 }

@@ -5,17 +5,19 @@ import SwiftUI
 /// error dialog, and the promo-vs-standard swap. Each loaded content view model
 /// carries its own purchase alerts / snackbar via `revampContentPresentation`.
 public struct UpgradePlansContainerView: View {
-    @StateObject private var viewModel: RevampUpgradePlansContainerViewModel
+    @StateObject private var viewModel: UpgradePlansContainerViewModel
     @Environment(\.dismiss) private var dismiss
 
-    public init(viewModel: RevampUpgradePlansContainerViewModel) {
+    public init(viewModel: UpgradePlansContainerViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     public var body: some View {
         content
-            .task { await viewModel.loadData() }
-            .onAppear { viewModel.onLoad() }
+            .onLoad {
+                await viewModel.loadData()
+            }
+            .onAppear { viewModel.onAppear() }
             .onReceive(viewModel.$isDismiss) { isDismiss in
                 if isDismiss { dismiss() }
             }
@@ -41,9 +43,9 @@ public struct UpgradePlansContainerView: View {
         case .loading:
             SubscriptionRevampLoadingView()
         case .standard(let contentViewModel):
-            SubscriptionRevampStandardView(viewModel: contentViewModel)
+            SubscriptionRevampStandardView(dependency: viewModel.dependency, viewModel: contentViewModel)
         case .promo(let contentViewModel):
-            SubscriptionRevampPromoView(viewModel: contentViewModel)
+            SubscriptionRevampPromoView(dependency: viewModel.dependency, viewModel: contentViewModel)
         }
     }
 }

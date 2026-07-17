@@ -39,7 +39,7 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
 
     func build() -> UIViewController {
         if isRevampUpgradePlansEnabled {
-            let controller = RevampUpgradePlansRouter(
+            let controller = UpgradePlansRouter(
                 presenter: presenter,
                 currentAccountDetails: accountDetails,
                 viewType: viewType,

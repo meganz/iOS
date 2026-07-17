@@ -8,7 +8,7 @@ import Settings
 import SwiftUI
 
 @MainActor
-final class RevampUpgradePlansRouter {
+final class UpgradePlansRouter {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
     private let accountUseCase: any AccountUseCaseProtocol
@@ -57,7 +57,7 @@ final class RevampUpgradePlansRouter {
                 NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
             }
         )
-        let viewModel = RevampUpgradePlansContainerViewModel(dependency: dependency)
+        let viewModel = UpgradePlansContainerViewModel(dependency: dependency)
         let view = UpgradePlansContainerView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
         hostingController.modalPresentationStyle = .fullScreen

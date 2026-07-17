@@ -9,6 +9,7 @@ import SwiftUI
 /// The standard and promo pages differ only in their header and intro; everything
 /// from the features list downward lives here.
 struct SubscriptionRevampContentSectionsView: View {
+    let dependency: RevampUpgradePlansDependency
     let viewModel: RevampUpgradePlansViewModel
 
     @State private var selectedCycle: SubscriptionCycleEntity = .yearly
@@ -29,11 +30,10 @@ struct SubscriptionRevampContentSectionsView: View {
             if let freePlanCard = viewModel.freePlanCard {
                 SubscriptionFreePlanCardView(model: freePlanCard)
                     .padding(.vertical, TokenSpacing._5)
-
             }
             SubscriptionDetailsView()
                 .padding(.top, TokenSpacing._5)
-            SubscriptionLegalFooterView()
+            SubscriptionLegalFooterView(dependency: dependency)
                 .padding(.top, TokenSpacing._5)
                 .padding(.bottom, TokenSpacing._13)
         }

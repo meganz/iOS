@@ -4,7 +4,7 @@ import MEGADomain
 import MEGAStoreKit
 import UIKit
 
-public struct RevampUpgradePlansDependency {
+public struct RevampUpgradePlansDependency: Sendable {
     let fetchUseCase: any RevampUpgradePlansUseCaseProtocol
     let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
