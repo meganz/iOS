@@ -7,16 +7,17 @@ extension IntroductoryOfferEntity {
         let period = storeKitOffer.period
         let periodCount = storeKitOffer.periodCount
 
-        let unit: SubscriptionPeriod.Unit? = switch period.unit {
-        case .day: .day
-        case .week: .week
+        // MEGA only ships monthly / yearly products. Day- and week-based offers are not supported, so
+        // they (and any future unit) are dropped — the plan is then treated as having no offer.
+        let unit: BillingPeriodUnit? = switch period.unit {
         case .month: .month
-        case .year:  .year
+        case .year: .year
+        case .day, .week: nil
         @unknown default: nil
         }
         guard let unit else { return nil }
 
-        let subscriptionPeriod = SubscriptionPeriod(unit: unit, value: period.value)
+        let billingPeriod = BillingPeriod(unit: unit, value: period.value)
 
         let paymentMode: PaymentMode = switch storeKitOffer.paymentMode {
         case .payAsYouGo: .payAsYouGo
@@ -27,7 +28,7 @@ extension IntroductoryOfferEntity {
 
         return IntroductoryOfferEntity(
             price: price,
-            period: subscriptionPeriod,
+            period: billingPeriod,
             periodCount: periodCount,
             paymentMode: paymentMode
         )

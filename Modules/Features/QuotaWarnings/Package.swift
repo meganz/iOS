@@ -24,6 +24,7 @@ let package = Package(
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
@@ -37,6 +38,7 @@ let package = Package(
             dependencies: ["MEGADesignToken",
                            "MEGASwiftUI",
                            "MEGAAssets",
+                           "MEGAAppPresentation",
                            "MEGAL10n",
                            "MEGADomain",
                            "MEGAAppSDKRepo",
@@ -53,7 +55,9 @@ let package = Package(
         .testTarget(
             name: "QuotaWarningsTests",
             dependencies: ["QuotaWarnings",
-                           "QuotaWarningsMock"],
+                           "QuotaWarningsMock",
+                           "MEGADomain",
+                           "MEGAUIComponent"],
             swiftSettings: settings
         )
     ],

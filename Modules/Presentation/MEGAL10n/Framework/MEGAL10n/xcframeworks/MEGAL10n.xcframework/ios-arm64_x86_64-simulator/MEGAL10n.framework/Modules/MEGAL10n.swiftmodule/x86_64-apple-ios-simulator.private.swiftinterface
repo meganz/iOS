@@ -5122,6 +5122,13 @@ public enum Strings {
           public static func storage(_ p1: Any) -> Swift.String
           public static func transfer(_ p1: Any) -> Swift.String
           public enum Pricing {
+            public static func introBilledMonthlyRecurringMonths(_ p1: Swift.Int) -> Swift.String
+            public static func introBilledMonthlyTotalMonths(_ p1: Swift.Int) -> Swift.String
+            public static func introBilledMonthlyTotalYears(_ p1: Swift.Int) -> Swift.String
+            public static func introBilledYearlyMonths(_ p1: Swift.Int) -> Swift.String
+            public static func introBilledYearlyYears(_ p1: Swift.Int) -> Swift.String
+            public static func localCurrencyForMonths(_ p1: Swift.Int) -> Swift.String
+            public static func localCurrencyForYears(_ p1: Swift.Int) -> Swift.String
             public static func localCurrencyPerMonth(_ p1: Any) -> Swift.String
             public static func localCurrencyPerYear(_ p1: Any) -> Swift.String
           }

@@ -7,5 +7,5 @@ public struct IntroductoryOfferInfo {
     public let introPrice: Decimal
     public let formattedIntroPrice: String
     public let formattedIntroPricePerMonth: String
-    public let period: IntroductoryOfferEntity.SubscriptionPeriod
+    public let period: BillingPeriod
 }

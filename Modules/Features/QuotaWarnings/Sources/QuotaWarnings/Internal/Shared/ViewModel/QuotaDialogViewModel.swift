@@ -13,9 +13,14 @@ final class QuotaDialogViewModel: ObservableObject {
     @Published var viewState: ViewState = .loading
 
     private let useCase: any QuotaDialogUseCaseProtocol
+    let subscriptionPlanPriceUseCase: any SubscriptionPlanPriceUseCaseProtocol
 
-    init(useCase: some QuotaDialogUseCaseProtocol) {
+    init(
+        useCase: some QuotaDialogUseCaseProtocol,
+        subscriptionPlanPriceUseCase: some SubscriptionPlanPriceUseCaseProtocol = SubscriptionPlanPriceUseCase()
+    ) {
         self.useCase = useCase
+        self.subscriptionPlanPriceUseCase = subscriptionPlanPriceUseCase
     }
 
     func load() async {

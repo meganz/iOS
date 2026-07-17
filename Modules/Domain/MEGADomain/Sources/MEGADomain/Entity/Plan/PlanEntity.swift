@@ -68,12 +68,11 @@ public struct PlanEntity: Sendable {
 
     /// The discount percentage offered by the introductory offer compared to the full price.
     /// If there is no introductory offer, or if the full price is zero, this property returns `nil
-    /// - Warning: This is deprecated, please  use introOfferDiscountPercentage instead,
-    ///   which compares intro vs full price over the same billing span and supports all introductory offer shapes.
-    ///   This only produces the right value when the introductory offer is a 1-year pay-up-front offer on a yearly plan.
-    ///   It compares the raw intro price against the raw full price, so it is incorrect
-    ///   for any offer whose span differs from the billing cycle (multi-period, pay-as-you-go, multi-unit).
-    ///   New code must use ``introOfferDiscountPercentage``.
+    /// - Warning: This only produces the right value when the introductory offer is a 1-year pay-up-front
+    ///   offer on a yearly plan. It compares the raw intro price against the raw full price, so it is
+    ///   incorrect for any offer whose span differs from the billing cycle (multi-period, pay-as-you-go,
+    ///   multi-unit). It survives only for the legacy Accounts upgrade screen. New code should resolve the
+    ///   plan through `SubscriptionPlanPriceUseCase` and read `SubscriptionPlanPrice.discountPercentage`.
     public var introDiscountPercentage: Int? {
         guard let introductoryOffer else { return nil}
         let fullPrice = price
@@ -82,41 +81,6 @@ public struct PlanEntity: Sendable {
         let discountPercentage = ((fullPrice - introPrice) / fullPrice) * 100
         let discountPercentageRounded = NSDecimalNumber(decimal: discountPercentage).rounding(accordingToBehavior: nil).intValue
         return discountPercentageRounded
-    }
-
-    /// The introductory-offer discount percentage, computed over the same billing span as the plan so
-    /// it is correct for any offer shape (pay-as-you-go, pay-up-front, free trial, multi-unit / multi-period).
-    ///
-    /// Returns `nil` when there is no offer, the full price is zero, or the offer has no duration.
-    public var introOfferDiscountPercentage: Int? {
-        guard let introductoryOffer,
-              price > 0,
-              introductoryOffer.totalMonths > 0 else { return nil }
-
-        // Discount = 1 - introPricePerMonth / fullPricePerMonth.
-        //
-        // We divide only once, at the end to avoid issue caused by Repeating-decimal rounding.
-        // Notice the yearly case multiplies the intro price by 12
-        // rather than dividing the full price by 12 — same result, but it avoids an early divide.
-        // Why it matters: `Decimal` holds a limited number of digits, so dividing by 12 early gives a
-        // repeating value (e.g. 8.3333…) that gets cut off, and that rounding error can bump the final
-        // percentage to the wrong whole number.
-        //
-        // Example — yearly plan, full 100/yr, intro 90.5/yr (1-year offer, so totalMonths = 12):
-        //   Dividing first: fullPerMonth = 100/12 = 8.3333…, introPerMonth = 90.5/12 = 7.5416…
-        //                   (1 - 7.5416…/8.3333…) * 100 = 9.4999… → rounds DOWN to 9 ❌
-        //   This form:      (1 - (12 * 90.5) / (12 * 100)) * 100 = (1 - 1086/1200) * 100
-        //                   = 9.5 exactly → rounds to 10 ✅
-        let discountPercentage: Decimal
-        switch subscriptionCycle {
-        case .none:
-            return nil
-        case .monthly:
-            discountPercentage = (1 - introductoryOffer.totalPrice / (introductoryOffer.totalMonths * price)) * 100
-        case .yearly:
-            discountPercentage = (1 - (12 * introductoryOffer.totalPrice) / (introductoryOffer.totalMonths * price)) * 100
-        }
-        return NSDecimalNumber(decimal: discountPercentage).rounding(accordingToBehavior: nil).intValue
     }
 
     public init(

@@ -53,12 +53,9 @@ public final class AccountPlanViewModel {
         }
 
         // Convert the intro price to a monthly equivalent
-        // The weekly and daily period are not used in production. They are only here for completeness.
         let introPricePerMonth: Decimal = switch period.unit {
         case .year: introPrice / 12
         case .month: introPrice
-        case .week: introPrice * 4
-        case .day: introPrice * 30
         }
 
         guard let formattedIntroPricePerMonth = formattedPrice(introPricePerMonth) else {

@@ -24,6 +24,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(path: "../MEGAL10n"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
@@ -36,6 +37,7 @@ let package = Package(
         .target(
             name: "MEGAAppPresentation",
             dependencies: [
+                "MEGAL10n",
                 "MEGAAnalyticsDomain",
                 "MEGADomain",
                 "MEGAAppSDKRepo",
@@ -57,6 +59,7 @@ let package = Package(
                            "MEGATest",
                            "MEGAAnalyticsDomain",
                            "MEGADomain",
+                           "MEGAUIComponent",
                            "MEGAAppSDKRepo",
                            .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                            .product(name: "MEGADomainMock", package: "MEGADomain")

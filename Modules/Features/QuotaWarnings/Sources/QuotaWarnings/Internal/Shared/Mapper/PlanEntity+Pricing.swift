@@ -1,36 +1,16 @@
-import Foundation
 import MEGADomain
 import MEGAL10n
-import MEGAUIComponent
 
 extension PlanEntity {
-    var ribbonText: String {
-        // IOS-12210
-        return "Best for you"
-    }
-
-    var price: PlanPrice {
-        // Discount price will handled in separate ticket
-        switch subscriptionCycle {
-        case .monthly:
-            PlanPrice.monthly(
-                PlanPriceModel.Monthly(
-                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedPrice)
-                )
-            )
-        case .yearly:
-            PlanPrice.yearly(
-                PlanPriceModel.Yearly(
-                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedMonthlyPriceForYearlyPlan ?? formattedPrice),
-                    billingCaption: Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(formattedPriceForYearlyPlan ?? formattedPrice)
-                )
-            )
-        case .none:
-            PlanPrice.monthly(
-                PlanPriceModel.Monthly(
-                    pricePerMonth: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedPrice)
-                )
-            )
+    func ribbonText(for price: SubscriptionPlanPrice) -> String {
+        guard let percentage = price.discountPercentage, percentage > 0 else {
+            // IOS-12210
+            return "Best for you"
         }
+        let discount = "\(percentage)%"
+        if let campaign = mobileOfferLabel, !campaign.isEmpty {
+            return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel(campaign, discount)
+        }
+        return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer(discount)
     }
 }

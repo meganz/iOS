@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -37,10 +38,11 @@ extension QuotaDialogViewModel {
     }
 
     func transferRecommendedPlan(accountDetailsEntity: AccountDetailsEntity, planEntity: PlanEntity) -> RecommendedPlan {
-        RecommendedPlan(
+        let planPrice = subscriptionPlanPriceUseCase.planPrice(for: planEntity)
+        return RecommendedPlan(
             name: planEntity.name,
-            ribbonText: planEntity.ribbonText,
-            price: planEntity.price,
+            ribbonText: planEntity.ribbonText(for: planPrice),
+            price: RecommendedPlanPriceMapper().map(planPrice),
             storageText: Strings.Localizable.SubscriptionPurchase.Plan.storage(planEntity.storage),
             transferText: Strings.Localizable.SubscriptionPurchase.Plan.transfer(planEntity.transfer),
             quotaProgress: recommendedTransferQuotaProgress(accountDetailsEntity: accountDetailsEntity, planEntity: planEntity)

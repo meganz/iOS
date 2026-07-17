@@ -1,0 +1,185 @@
+import Foundation
+import MEGADomain
+import MEGAL10n
+import MEGAUIComponent
+
+/// Maps the business-resolved ``SubscriptionPlanPrice`` to the view-layer `PlanPrice`.
+public struct RecommendedPlanPriceMapper {
+    /// Injected so currency formatting is locale-stable (tests pin it); production uses the current locale.
+    private let locale: Locale
+
+    public init(locale: Locale = .autoupdatingCurrent) {
+        self.locale = locale
+    }
+
+    public func map(_ price: SubscriptionPlanPrice) -> PlanPrice {
+        switch price {
+        case let .monthly(model):
+            .monthly(PlanPriceModel.Monthly(pricePerMonth: perMonth(model.price, model.currency)))
+        case let .yearly(model):
+            .yearly(
+                PlanPriceModel.Yearly(
+                    pricePerMonth: perMonth(model.price / 12, model.currency),
+                    billingCaption: Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(formattedCurrency(model.price, model.currency))
+                )
+            )
+        case let .discountMonthly(model):
+            .discountMonthly(discountMonthly(model))
+        case let .discountYearly(model):
+            .discountYearly(discountYearly(model))
+        }
+    }
+
+    private func discountMonthly(_ model: SubscriptionPlanPrice.DiscountMonthly) -> PlanPriceModel.DiscountMonthly {
+        let currencyCode = model.monthly.currency
+        return PlanPriceModel.DiscountMonthly(
+            originalPrice: formattedCurrency(model.offer.originalPrice, currencyCode),
+            discountedPrice: discountedPrice(model.offer.schedule, currencyCode),
+            billingCaption: monthlyDiscountBillingCaption(model)
+        )
+    }
+
+    private func discountYearly(_ model: SubscriptionPlanPrice.DiscountYearly) -> PlanPriceModel.DiscountYearly {
+        let currencyCode = model.yearly.currency
+        return .init(
+            pricePerMonth: perMonth(model.offer.schedule.pricePerMonth, currencyCode),
+            originalPrice: formattedCurrency(model.offer.originalPrice, currencyCode),
+            discountedPrice: discountedPrice(model.offer.schedule, currencyCode),
+            billingCaption: yearlyDiscountBillingCaption(model)
+        )
+    }
+
+    private func discountedPrice(_ schedule: OfferBillingSchedule, _ currencyCode: String) -> String {
+        switch schedule {
+        case let .recurring(price, period, _):
+            perCycle(price, currencyCode: currencyCode, periodUnit: period.unit)
+        case let .prepaid(price, period):
+            forSpan(price, currencyCode: currencyCode, period: period)
+        case let .free(period):
+            forSpan(Decimal(0), currencyCode: currencyCode, period: period)
+        }
+    }
+
+    private func monthlyDiscountBillingCaption(_ model: SubscriptionPlanPrice.DiscountMonthly) -> String {
+        let schedule = model.offer.schedule
+        let currencyCode = model.monthly.currency
+        let renewalPrice = model.monthly.price
+
+        return switch schedule {
+        case .recurring(let price, _, let periodCount):
+            billRecurringOfferThenRenewMonthly(price, renewalPrice, currencyCode, periodCount: periodCount)
+        case .prepaid(let price, let period):
+            billUpfrontOfferThenRenewMonthly(price, renewalPrice, currencyCode, period: period)
+        case .free(let period):
+            billUpfrontOfferThenRenewMonthly(0, renewalPrice, currencyCode, period: period)
+        }
+    }
+
+    /// Pay-as-you-go on a **monthly** plan. The offer bills once per month, so `periodCount` *is* the number of
+    /// discounted months and the "recurring months" copy is always the right one. The offer's `period`
+    /// (always 1 month here) carries no extra information and is intentionally ignored.
+    private func billRecurringOfferThenRenewMonthly(_ offerPrice: Decimal, _ renewalPrice: Decimal, _ currencyCode: String, periodCount: Int) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledMonthlyRecurringMonths(periodCount)
+            .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+            .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+    }
+
+    private func billUpfrontOfferThenRenewMonthly(_ offerPrice: Decimal, _ renewalPrice: Decimal, _ currencyCode: String, period: BillingPeriod) -> String {
+        switch period.unit {
+        case .month:
+            Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledMonthlyTotalMonths(period.value)
+                .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+                .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+        case .year:
+            Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledMonthlyTotalYears(period.value)
+                .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+                .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+        }
+    }
+
+    private func yearlyDiscountBillingCaption(_ model: SubscriptionPlanPrice.DiscountYearly) -> String {
+        let schedule = model.offer.schedule
+        let currencyCode = model.yearly.currency
+        let renewalPrice = model.yearly.price
+
+        return switch schedule {
+        case .recurring(let price, _, let periodCount):
+            billRecurringOfferThenRenewYearly(price, renewalPrice, currencyCode, periodCount: periodCount)
+        case .prepaid(let price, let period):
+            billUpfrontOfferThenRenewYearly(price, renewalPrice, currencyCode, period: period)
+        case .free(let period):
+            billUpfrontOfferThenRenewYearly(0, renewalPrice, currencyCode, period: period)
+        }
+    }
+
+    /// Pay-as-you-go on a **yearly** plan. The offer bills once per year, so `periodCount` *is* the number of
+    /// discounted years and the "yearly years" copy is always the right one. The offer's `period`
+    /// (always 1 year here) carries no extra information and is intentionally ignored.
+    private func billRecurringOfferThenRenewYearly(_ offerPrice: Decimal, _ renewalPrice: Decimal, _ currencyCode: String, periodCount: Int) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledYearlyYears(periodCount)
+            .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+            .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+    }
+
+    private func billUpfrontOfferThenRenewYearly(_ offerPrice: Decimal, _ renewalPrice: Decimal, _ currencyCode: String, period: BillingPeriod) -> String {
+        switch period.unit {
+        case .month:
+            Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledYearlyMonths(period.value)
+                .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+                .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+        case .year:
+            Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.introBilledYearlyYears(period.value)
+                .replacingOccurrences(of: "[A]", with: formattedCurrency(offerPrice, currencyCode))
+                .replacingOccurrences(of: "[B]", with: formattedCurrency(renewalPrice, currencyCode))
+        }
+    }
+
+    private func perCycle(_ price: Decimal, currencyCode: String, periodUnit: BillingPeriodUnit) -> String {
+        switch periodUnit {
+        case .month:
+            perMonth(price, currencyCode)
+        case .year:
+            perYear(price, currencyCode)
+        }
+    }
+
+    private func forSpan(_ price: Decimal, currencyCode: String, period: BillingPeriod) -> String {
+        switch period.unit {
+        case .month:
+            forMonths(period.value, price, currencyCode)
+        case .year:
+            forYears(period.value, price, currencyCode)
+        }
+    }
+
+    /// "XX/month"
+    private func perMonth(_ value: Decimal, _ currencyCode: String) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedCurrency(value, currencyCode))
+    }
+
+    /// "XX/year"
+    private func perYear(_ value: Decimal, _ currencyCode: String) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerYear(formattedCurrency(value, currencyCode))
+    }
+
+    /// "XX for 1 month" | "XX for x months"
+    private func forMonths(_ months: Int, _ value: Decimal, _ currencyCode: String) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyForMonths(months)
+            .replacingOccurrences(of: "[A]", with: formattedCurrency(value, currencyCode))
+    }
+
+    /// "XX for 1 year" | "XX for x years"
+    private func forYears(_ years: Int, _ value: Decimal, _ currencyCode: String) -> String {
+        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyForYears(years)
+            .replacingOccurrences(of: "[A]", with: formattedCurrency(value, currencyCode))
+    }
+
+    private func formattedCurrency(_ value: Decimal, _ code: String) -> String {
+        value.formatted(
+            Decimal
+                .FormatStyle
+                .Currency(code: code, locale: locale)
+                .rounded(rule: .down)
+        )
+    }
+}

@@ -12,7 +12,7 @@ struct QASettingsView: View {
         static let checkForUpdateText = "Check for updates"
         static let userDataHeaderText = "User Data"
         static let clearStandardUserDefaultsText = "Clear Standard UserDefaults"
-        static let quotaEventSimulatorText = "Storage / Transfer quota simulator"
+        static let quotaEventSimulatorText = "Quota dialog simulator"
     }
 
     let viewModel: QASettingsViewModel
@@ -53,11 +53,13 @@ struct QASettingsView: View {
                 Text("KM Transfer QA Settings")
             }
 
+            #if DEBUG || QA_CONFIG
             NavigationLink {
                 QuotaEventSimulatorView()
             } label: {
                 Text(Constants.quotaEventSimulatorText)
             }
+            #endif
 
             Section(
                 header:

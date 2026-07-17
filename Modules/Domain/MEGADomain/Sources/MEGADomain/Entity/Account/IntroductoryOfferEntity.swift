@@ -15,27 +15,8 @@ public struct IntroductoryOfferEntity: Sendable {
 
     public let price: Decimal
 
-    public struct SubscriptionPeriod: Sendable {
-        public enum Unit: Sendable {
-            case day
-            case week
-            case month
-            case year
-        }
-
-        /// The unit of time that this period represents.
-        public let unit: IntroductoryOfferEntity.SubscriptionPeriod.Unit
-
-        /// The number of units that the period represents.
-        public let value: Int
-
-        public init(unit: IntroductoryOfferEntity.SubscriptionPeriod.Unit, value: Int) {
-            self.unit = unit
-            self.value = value
-        }
-    }
-
-    public let period: SubscriptionPeriod
+    /// One billing cycle of the offer (mirrors StoreKit's `Product.SubscriptionPeriod`)
+    public let period: BillingPeriod
 
     /// The number of periods this offer will renew for.
     public let periodCount: Int
@@ -43,7 +24,7 @@ public struct IntroductoryOfferEntity: Sendable {
     /// How the introductory `price` is charged.
     public let paymentMode: PaymentMode
 
-    public init(price: Decimal, period: SubscriptionPeriod, periodCount: Int, paymentMode: PaymentMode) {
+    public init(price: Decimal, period: BillingPeriod, periodCount: Int, paymentMode: PaymentMode) {
         self.price = price
         self.period = period
         self.periodCount = periodCount

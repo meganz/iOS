@@ -21,16 +21,32 @@ public struct StorageQuotaDialogView: View {
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: Dependency.quotaDialogUseCase))
     }
 
-    /// For Preview only
-    fileprivate init(
+#if DEBUG || QA_CONFIG
+    /// Renders the dialog against a QA-provided use case (configured account + plan) instead of live data.
+    /// Used by the QA dialog simulator so every rendering factor can be driven.
+    public init(
         severity: StorageQuotaSeverity,
-        useCase: some QuotaDialogUseCaseProtocol,
+        useCase: QAQuotaDialogUseCase,
         onClose: @escaping () -> Void = {}
     ) {
         self.severity = severity
         self.onClose = onClose
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: useCase))
     }
+#endif
+
+#if DEBUG
+    /// For Preview only
+    fileprivate init(
+        severity: StorageQuotaSeverity,
+        useCase: PreviewQuotaDialogUseCase,
+        onClose: @escaping () -> Void = {}
+    ) {
+        self.severity = severity
+        self.onClose = onClose
+        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: useCase))
+    }
+#endif
 
     public var body: some View {
         dialog
@@ -85,6 +101,7 @@ public struct StorageQuotaDialogView: View {
     }
 }
 
+#if DEBUG
 #Preview("Almost full") {
     StorageQuotaDialogView(severity: .almostFull, useCase: PreviewQuotaDialogUseCase())
 }
@@ -101,3 +118,4 @@ public struct StorageQuotaDialogView: View {
     StorageQuotaDialogView(severity: .full, useCase: PreviewQuotaDialogUseCase())
         .preferredColorScheme(.dark)
 }
+#endif
