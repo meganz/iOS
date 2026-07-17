@@ -44,11 +44,16 @@ final class PlaybackEngine {
     private var rateObservation: NSKeyValueObservation?
     private var durationObservation: NSKeyValueObservation?
     private var endObservation: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
+
+    private var isPlaybackIntended = false
+    private var isInterrupted = false
 
     init(notificationCenter: NotificationCenter = .default) {
         self.notificationCenter = notificationCenter
         observeTimeControlStatus()
         startPeriodicTimeObserver()
+        observeAudioInterruption()
     }
     
     isolated deinit {
@@ -108,25 +113,30 @@ extension PlaybackEngine {
         playbackStatusSubject.send(.buffering)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
+        isPlaybackIntended = true
         player.play()
     }
 
     func replay() {
         player.seek(to: .zero)
         currentTimeSubject.send(0)
+        isPlaybackIntended = true
         player.play()
     }
 
     func togglePlayPause() {
         if player.timeControlStatus == .playing {
             player.pause()
+            isPlaybackIntended = false
         } else {
             player.play()
+            isPlaybackIntended = true
         }
     }
 
     func pause() {
         player.pause()
+        isPlaybackIntended = false
     }
 
     func seek(toSeconds seconds: TimeInterval) {
@@ -152,6 +162,8 @@ extension PlaybackEngine {
         player.pause()
         player.replaceCurrentItem(with: nil)
         setPlaybackSpeed(1)
+        isPlaybackIntended = false
+        isInterrupted = false
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
@@ -167,6 +179,69 @@ extension PlaybackEngine {
     /// background activation) lands in the audio-session task.
     private func configureAudioSession() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+    }
+}
+
+// MARK: - Audio Interruption
+
+extension PlaybackEngine {
+    private func observeAudioInterruption() {
+        notificationCenter.publisher(for: AVAudioSession.interruptionNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.handleAudioInterruption(notification)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handleAudioInterruption(_ notification: Notification) {
+        guard let type = Self.interruptionType(from: notification) else { return }
+
+        switch type {
+        case .began:
+            handleInterruptionBegan()
+        case .ended:
+            handleInterruptionEnded(notification: notification)
+        @unknown default:
+            break
+        }
+    }
+
+    private func handleInterruptionBegan() {
+        isInterrupted = true
+    }
+
+    private func handleInterruptionEnded(notification: Notification) {
+        guard isInterrupted else { return }
+        isInterrupted = false
+
+        guard isPlaybackIntended,
+              Self.interruptionOptions(from: notification).contains(.shouldResume) else {
+            return
+        }
+
+        player.play()
+    }
+}
+
+// MARK: - Interruption Notification Parsing
+
+extension PlaybackEngine {
+    static func interruptionType(from notification: Notification) -> AVAudioSession.InterruptionType? {
+        notification.rawRepresentable(forKey: AVAudioSessionInterruptionTypeKey)
+    }
+
+    static func interruptionOptions(from notification: Notification) -> AVAudioSession.InterruptionOptions {
+        notification.rawRepresentable(forKey: AVAudioSessionInterruptionOptionKey) ?? []
+    }
+}
+
+private extension Notification {
+    /// Decodes a `UInt`-backed `RawRepresentable` (an enum such as
+    /// `AVAudioSession.InterruptionType`, or an `OptionSet` such as
+    /// `AVAudioSession.InterruptionOptions`) stored in `userInfo` under `key`.
+    func rawRepresentable<T: RawRepresentable>(forKey key: String) -> T? where T.RawValue == UInt {
+        (userInfo?[key] as? UInt).flatMap(T.init(rawValue:))
     }
 }
 
