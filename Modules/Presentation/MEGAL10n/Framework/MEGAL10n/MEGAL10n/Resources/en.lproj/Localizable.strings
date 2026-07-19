@@ -5068,3 +5068,7 @@
 "subscriptionPurchase.feature.vpn.description"="Stay safe online with MEGA VPN";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
 "subscriptionPurchase.feature.pass.description"="Keep passwords safe with MEGA Pass";
+/* Short success banner shown when internet connectivity is restored */
+"general.noInternet.backOnline"="Back online";
+/* Snackbar shown when tapping a file that would need downloading while the device is offline */
+"cloudDrive.offline.fileNotAvailableOffline"="File not available offline";
