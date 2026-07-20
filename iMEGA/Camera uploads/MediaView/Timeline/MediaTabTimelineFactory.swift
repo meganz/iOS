@@ -51,11 +51,11 @@ enum MediaTabTimelineFactory {
             preferenceUseCase: PreferenceUseCase.default
         )
         
-        // The `Paginated Media Timeline` flag is read here, at the composition root, and
-        // nowhere else: when on we inject the use case, whose presence switches the view
-        // model to the skeleton path. Off = the use case is nil = unchanged eager path.
+        // The `imtp` remote flag is read here, at the composition root, and nowhere else:
+        // when on we inject the use case, whose presence switches the view model to the
+        // skeleton path. Off = the use case is nil = unchanged eager path.
         let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? =
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .paginatedMediaTimeline)
+            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosMediaTimelinePagination)
             ? MediaTimelineUseCase(
                 repository: MediaTimelineRepository(
                     sdk: .shared,

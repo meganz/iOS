@@ -15,4 +15,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosTransferLiveActivity = "itla"
     case iosUploadOnlyNewPhotos = "iuonp"
     case iosSkipSdkTeardownOnTermination = "istd"
+    case iosMediaTimelinePagination = "imtp"
 }
