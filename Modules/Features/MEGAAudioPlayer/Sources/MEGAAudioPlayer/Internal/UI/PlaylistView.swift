@@ -11,6 +11,8 @@ struct PlaylistView: View {
     let currentTrackID: String?
     let onSelect: (Int) -> Void
     let onMove: (IndexSet, Int) -> Void
+    /// Lazily resolves a row's metadata by track id (from the shared cache).
+    let loadMetadata: (String) async -> AudioMetadata?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -18,7 +20,7 @@ struct PlaylistView: View {
             List {
                 ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
                     let isCurrent = row.id == currentTrackID
-                    PlaylistRow(item: row, isCurrent: isCurrent)
+                    PlaylistRow(item: row, isCurrent: isCurrent, loadMetadata: loadMetadata)
                         .padding(.horizontal, TokenSpacing._5)
                         .contentShape(Rectangle())
                         .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
@@ -62,8 +64,22 @@ struct PlaylistView: View {
 private struct PlaylistRow: View {
     let item: AudioPlaylistItem
     let isCurrent: Bool
+    let loadMetadata: (String) async -> AudioMetadata?
+
+    @State private var metadata: AudioMetadata?
 
     private let thumbnailSize: CGFloat = TokenSpacing._11
+
+    private var displayTitle: String {
+        if let title = metadata?.title, !title.isEmpty { return title }
+        return item.title
+    }
+
+    private var artist: String? { metadata?.artist }
+
+    private var artwork: UIImage? {
+        metadata?.artworkData.flatMap(UIImage.init(data:))
+    }
 
     var body: some View {
         HStack(spacing: TokenSpacing._2) {
@@ -77,17 +93,17 @@ private struct PlaylistRow: View {
                             .scaledToFit()
                             .frame(width: TokenSpacing._5, height: TokenSpacing._5)
                     }
-                    Text(item.title)
+                    Text(displayTitle)
                         .font(.body)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
                         .lineLimit(1)
                 }
 
-                Text(item.artist ?? "")
+                Text(artist ?? "")
                     .font(.footnote)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     .lineLimit(1)
-                    .opacity(item.artist == nil ? 0 : 1)
+                    .opacity(artist == nil ? 0 : 1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -96,12 +112,15 @@ private struct PlaylistRow: View {
                 .frame(width: thumbnailSize, height: thumbnailSize)
         }
         .frame(height: 60)
+        .task(id: item.id) {
+            metadata = await loadMetadata(item.id)
+        }
     }
 
     private var thumbnail: some View {
         Group {
-            if let image = item.thumbnail {
-                Image(uiImage: image)
+            if let artwork {
+                Image(uiImage: artwork)
                     .resizable()
                     .scaledToFill()
             } else {
@@ -184,14 +203,15 @@ struct NowPlayingCompactHeader: View {
             let previewItems = ["Orange (Live)", "Superbloomer (Live)", "Liquor Lips (Live)", "Dessert song (Live)"]
                 .enumerated()
                 .map { index, title in
-                    AudioPlaylistItem(id: "\(index)", title: title, artist: "Arcy Drive", thumbnail: nil)
+                    AudioPlaylistItem(id: "\(index)", title: title)
                 }
             PlaylistView(
                 sourceName: "Arcy Drive",
                 items: previewItems,
                 currentTrackID: previewItems.first?.id,
                 onSelect: { _ in },
-                onMove: { _, _ in }
+                onMove: { _, _ in },
+                loadMetadata: { _ in AudioMetadata(title: nil, artist: "Arcy Drive", album: nil, artworkData: nil) }
             )
         }
     }

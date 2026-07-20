@@ -25,7 +25,7 @@ final class AudioPlaybackService {
 
     private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
-    private let metadataLoader: any AudioMetadataLoading
+    private let metadataCache: any AudioMetadataCacheProtocol
     private let engine: any PlaybackEngineProtocol
     private let notificationCenter: NotificationCenter
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
@@ -63,14 +63,17 @@ final class AudioPlaybackService {
     init(
         urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
-        metadataLoader: some AudioMetadataLoading = AudioMetadataLoader(),
+        metadataCache: some AudioMetadataCacheProtocol = AudioMetadataCache(
+            urlResolutionUseCase: DependencyInjection.urlResolutionUseCase,
+            metadataLoader: AudioMetadataLoader()
+        ),
         engine: some PlaybackEngineProtocol = PlaybackEngine(),
         notificationCenter: NotificationCenter = .default,
         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase
     ) {
         self.urlResolutionUseCase = urlResolutionUseCase
         self.streamingRepository = streamingRepository
-        self.metadataLoader = metadataLoader
+        self.metadataCache = metadataCache
         self.engine = engine
         self.notificationCenter = notificationCenter
         self.playbackContinuationUseCase = playbackContinuationUseCase
@@ -226,6 +229,11 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
     var currentQueue: PlaybackQueue {
         queueSubject.value
+    }
+
+    func metadata(forTrackID id: String) async -> AudioMetadata? {
+        guard let track = queueSubject.value.tracks.first(where: { $0.id == id }) else { return nil }
+        return await metadataCache.metadata(for: track)
     }
 
     private(set) var title: String {
@@ -384,8 +392,8 @@ extension AudioPlaybackService: PlaybackControllable {
             status = .error("url resolution error")
             return
         }
-        metadataTask = Task { [metadataLoader, weak self] in
-            let metadata = try? await metadataLoader.loadMetadata(from: url)
+        metadataTask = Task { [metadataCache, weak self] in
+            let metadata = await metadataCache.metadata(for: track, throttled: false)
             guard let self, !Task.isCancelled else { return }
             if let metadata, !metadata.isEmpty {
                 self.applyMetadata(metadata, generation: generation)
@@ -558,6 +566,7 @@ extension AudioPlaybackService: PlaybackControllable {
         clearResumeState()
         metadataTask?.cancel()
         metadataTask = nil
+        Task { [metadataCache] in await metadataCache.removeAll() }
         playGeneration += 1
         currentSource = nil
         unshuffledQueue = nil

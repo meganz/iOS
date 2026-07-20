@@ -1,9 +1,15 @@
+import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import UIKit
 
 enum DependencyInjection {
     static var streamingRepository: some AudioStreamingRepositoryProtocol {
         AudioStreamingRepository.newRepo
+    }
+
+    static var memoryWarningNotification: Notification.Name {
+        UIApplication.didReceiveMemoryWarningNotification
     }
 
     static var urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol {

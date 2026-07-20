@@ -42,7 +42,7 @@ final class MiniPlayerViewModel: ObservableObject {
         service.artistPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] artist in
-                self?.artist = artist ?? Strings.Localizable.Media.Audio.Metadata.Missing.artist
+                self?.artist = artist ?? ""
             }
             .store(in: &cancellables)
 

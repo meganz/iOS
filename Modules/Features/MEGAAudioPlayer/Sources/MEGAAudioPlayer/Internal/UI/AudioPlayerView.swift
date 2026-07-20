@@ -223,7 +223,8 @@ struct AudioPlayerView: View {
                     items: vm.playlistItems,
                     currentTrackID: vm.currentTrackID,
                     onSelect: vm.selectPlaylistItem,
-                    onMove: vm.movePlaylistItem
+                    onMove: vm.movePlaylistItem,
+                    loadMetadata: { await vm.metadata(forID: $0) }
                 )
                 .frame(maxHeight: .infinity)
                 .overlay(alignment: .top) {

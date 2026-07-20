@@ -141,7 +141,7 @@ final class AudioPlayerViewModel: ObservableObject {
             .map(\.tracks)
             .removeDuplicates { $0.map(\.id) == $1.map(\.id) }
             .map { tracks in
-                tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName, artist: nil, thumbnail: nil) }
+                tracks.map { AudioPlaylistItem(id: $0.id, title: $0.displayName) }
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
@@ -332,6 +332,10 @@ final class AudioPlayerViewModel: ObservableObject {
         isPlaylistVisible.toggle()
     }
 
+    func metadata(forID id: String) async -> AudioMetadata? {
+        await service?.metadata(forTrackID: id)
+    }
+
     func selectPlaylistItem(at index: Int) {
         service?.play(atIndex: index)
     }
@@ -344,7 +348,7 @@ final class AudioPlayerViewModel: ObservableObject {
 
     func setQueueForPreview(titles: [String], currentIndex: Int = 0) {
         playlistItems = titles.enumerated().map { index, title in
-            AudioPlaylistItem(id: "\(index)", title: title, artist: nil, thumbnail: nil)
+            AudioPlaylistItem(id: "\(index)", title: title)
         }
         currentTrackID = playlistItems.indices.contains(currentIndex) ? playlistItems[currentIndex].id : nil
     }

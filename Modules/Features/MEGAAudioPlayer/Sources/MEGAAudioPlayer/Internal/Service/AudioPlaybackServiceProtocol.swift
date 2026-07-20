@@ -36,6 +36,10 @@ protocol PlaybackStateObservable {
     var sleepTimerStatePublisher: AnyPublisher<SleepTimerState, Never> { get }
     var isShuffleOnPublisher: AnyPublisher<Bool, Never> { get }
     var resumePromptPublisher: AnyPublisher<ResumePrompt?, Never> { get }
+
+    // MARK: Queries
+
+    func metadata(forTrackID id: String) async -> AudioMetadata?
 }
 
 @MainActor
