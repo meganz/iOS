@@ -173,7 +173,7 @@ struct AudioPlayerView: View {
             Button {
                 vm.dismiss()
             } label: {
-                Image(systemName: "chevron.down")
+                MEGAAssets.Image.monoChevronDownMediumThinOutline
                     .frame(width: TokenSpacing._12, height: TokenSpacing._12)
                     .glassCircleIfAvailable()
             }
@@ -184,7 +184,7 @@ struct AudioPlayerView: View {
                 Button {
                     vm.didTapMore()
                 } label: {
-                    Image(systemName: "ellipsis")
+                    MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                         .frame(width: TokenSpacing._12, height: TokenSpacing._12)
                         .glassCircleIfAvailable()
                 }
