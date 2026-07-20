@@ -272,7 +272,8 @@ struct CloudDriveViewControllerFactory {
         initialViewMode: ViewModePreferenceEntity,
         nodeSource: NodeSource,
         searchResultsContainerViewModel: SearchResultsContainerViewModel,
-        noInternetViewModel: LegacyNoInternetViewModel,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        isNewOfflineModeEnabled: Bool,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
@@ -317,7 +318,8 @@ struct CloudDriveViewControllerFactory {
             adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
-            noInternetViewModel: noInternetViewModel,
+            networkMonitorUseCase: networkMonitorUseCase,
+            isNewOfflineModeEnabled: isNewOfflineModeEnabled,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
@@ -683,9 +685,7 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
-        let noInternetViewModel = LegacyNoInternetViewModel(
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
-        )
+        let networkMonitorUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
 
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,
@@ -711,7 +711,8 @@ struct CloudDriveViewControllerFactory {
             initialViewMode: initialViewMode,
             nodeSource: nodeSource,
             searchResultsContainerViewModel: searchResultsContainerViewModel,
-            noInternetViewModel: noInternetViewModel,
+            networkMonitorUseCase: networkMonitorUseCase,
+            isNewOfflineModeEnabled: CloudDriveOfflineModeGate.isNewOfflineModeEnabled,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,

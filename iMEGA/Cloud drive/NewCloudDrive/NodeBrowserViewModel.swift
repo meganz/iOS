@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 import MEGAUIComponent
 import Search
 import SwiftUI
@@ -81,7 +82,12 @@ final class NodeBrowserViewModel: ObservableObject {
     private let syncActivityTracker = SyncActivityTracker()
     private var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
-    let noInternetViewModel: LegacyNoInternetViewModel
+    
+    let noInternetViewModel: LegacyNoInternetViewModel?
+    let isNewOfflineModeEnabled: Bool
+    
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private var networkConnectivityTask: Task<Void, Never>?
     private let storageFullModalAlertViewRouter: any StorageFullModalAlertViewRouting
 
     @Published var nodeSource: NodeSource
@@ -155,7 +161,8 @@ final class NodeBrowserViewModel: ObservableObject {
         adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
-        noInternetViewModel: LegacyNoInternetViewModel,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        isNewOfflineModeEnabled: Bool,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
         cloudDriveViewModeMonitoringService: some CloudDriveViewModeMonitoring,
@@ -194,7 +201,13 @@ final class NodeBrowserViewModel: ObservableObject {
         self.nodeSource = nodeSource
         self.sortOrderProvider = sortOrderProvider
         self.sortOrder = sortOrderProvider()
-        self.noInternetViewModel = noInternetViewModel
+        self.networkMonitorUseCase = networkMonitorUseCase
+        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
+        // Legacy full-page cover only when the new offline mode is off; reconnect-refresh
+        // is handled by monitorNetworkConnectivity() in both modes, hence no callback here
+        self.noInternetViewModel = isNewOfflineModeEnabled
+            ? nil
+            : LegacyNoInternetViewModel(networkMonitorUseCase: networkMonitorUseCase)
         self.storageFullModalAlertViewRouter = storageFullModalAlertViewRouter
         self.warningBannerViewRouter = warningBannerViewRouter
         self.titleBuilder = titleBuilder
@@ -317,17 +330,7 @@ final class NodeBrowserViewModel: ObservableObject {
 
         refresh()
 
-        noInternetViewModel.networkConnectionStateChanged = { [weak self] isConnectedToNetwork in
-            Task { [weak self] in
-                guard isConnectedToNetwork, let self else { return }
-
-                /// wait for 10 attempts to see if the node is loaded in the nodeSource.
-                let numberOfTries = 10
-                if await waitForNodeToLoad(with: numberOfTries) {
-                    refresh()
-                }
-            }
-        }
+        monitorNetworkConnectivity()
 
         startMonitoringNodeUpdates()
         subscribeToViewModePreferenceChangeNotification(with: cloudDriveViewModeMonitoringService)
@@ -349,6 +352,7 @@ final class NodeBrowserViewModel: ObservableObject {
         updatedViewModesTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
         accountUpdatesMonitoringTask?.cancel()
+        networkConnectivityTask?.cancel()
 
         accountStorageMonitoringTask = nil
         refreshStorageStatusTask = nil
@@ -634,7 +638,29 @@ final class NodeBrowserViewModel: ObservableObject {
 
         return true
     }
-    
+
+    /// Refreshes the content once connectivity comes back, waiting for the node to be loaded
+    /// first. Runs in both offline-mode states — it replaces the callback the legacy
+    /// no-internet modifier used to drive.
+    private func monitorNetworkConnectivity() {
+        networkConnectivityTask = Task { [weak self, networkMonitorUseCase] in
+            let connectionSequence = networkMonitorUseCase
+                .connectionSequence
+                .prepend(networkMonitorUseCase.isConnected())
+                .removeDuplicates()
+            for await isConnected in connectionSequence {
+                guard let self else { return }
+                guard isConnected else { continue }
+
+                /// wait for 10 attempts to see if the node is loaded in the nodeSource.
+                let numberOfTries = 10
+                if await waitForNodeToLoad(with: numberOfTries) {
+                    refresh()
+                }
+            }
+        }
+    }
+
     private func updateSortOrderIfNeeded() {
         guard case let sortOrder = self.sortOrderProvider(),
               sortOrder != self.sortOrder else {

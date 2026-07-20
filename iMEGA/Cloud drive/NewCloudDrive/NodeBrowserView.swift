@@ -1,5 +1,6 @@
 import CloudDrive
 import MEGAAssets
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -10,29 +11,41 @@ import Transfer
 import UIKit
 
 struct NodeBrowserView: View {
-
     @StateObject var viewModel: NodeBrowserViewModel
     @StateObject var floatingAddButtonViewModel: FloatingAddButtonViewModel
 
     var body: some View {
-        content
-            .legacyNoInternetViewModifier(viewModel: viewModel.noInternetViewModel)
-            .ignoresSafeArea(.keyboard)
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarLeading) {
-                    leftToolbarContent
-                }
+        Group {
+            if let noInternetViewModel = viewModel.noInternetViewModel {
+                // New offline mode disabled: legacy full-page "No internet connection" cover
+                content
+                    .legacyNoInternetViewModifier(viewModel: noInternetViewModel)
+            } else {
+                // New offline mode: shared banner below the navigation bar; content stays
+                // visible and browsable while offline (IOS-12226)
+                content
+                    .noInternetViewModifier(
+                        viewModel: MEGAConnectivity.DependencyInjection.networkPathNoInternetViewModel
+                    )
+            }
+        }
+        .ignoresSafeArea(.keyboard)
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarLeading) {
+                leftToolbarContent
+            }
 
-                toolbarNavigationTitle
+            toolbarNavigationTitle
 
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    rightToolbarContent
-                }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                rightToolbarContent
+            }
 
-                TransferIndicatorBarItemConfigurator.toolbarFactory.toolbarContent(
-                    trailingItemCount: transferIndicatorTrailingItemCount
-                )
-            }.navigationBarBackButtonHidden(viewModel.hidesBackButton)
+            TransferIndicatorBarItemConfigurator.toolbarFactory.toolbarContent(
+                trailingItemCount: transferIndicatorTrailingItemCount
+            )
+        }
+        .navigationBarBackButtonHidden(viewModel.hidesBackButton)
     }
     
     private var content: some View {

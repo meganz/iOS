@@ -72,7 +72,9 @@ class NodeBrowserViewModelTests: XCTestCase {
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             lastPurgeUseCase: MockLastPurgeUseCase = MockLastPurgeUseCase(),
             sortOptionsForMD: [SortOption] = [SortOption(key: .name, localizedTitle: "")],
-            selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified)
+            selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified),
+            networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
+            isNewOfflineModeEnabled: Bool = true
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
@@ -145,10 +147,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 adsVisibilityViewModel: nil,
                 config: config,
                 nodeSource: nodeSource,
-                noInternetViewModel: LegacyNoInternetViewModel(
-                    networkMonitorUseCase: MockNetworkMonitorUseCase(),
-                    networkConnectionStateChanged: { _ in }
-                ),
+                networkMonitorUseCase: networkMonitorUseCase,
+                isNewOfflineModeEnabled: isNewOfflineModeEnabled,
                 nodeSourceUpdatesListener: NewCloudDriveNodeSourceUpdatesListener(
                     originalNodeSource: .testNode,
                     nodeUpdatesProvider: MockNodeUpdatesProvider()
@@ -327,6 +327,28 @@ class NodeBrowserViewModelTests: XCTestCase {
         let harness = Harness(node: .init(), updateTransferWidgetHandler: { didUpdateTransferWidget = true })
         harness.sut.onViewAppear()
         XCTAssertTrue(didUpdateTransferWidget)
+    }
+
+    // MARK: - Offline mode gating (IOS-12226)
+
+    @MainActor
+    func testNoInternetViewModel_whenNewOfflineModeEnabled_isNil() {
+        let harness = Harness(
+            node: .rootNode,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+        XCTAssertNil(harness.sut.noInternetViewModel)
+    }
+
+    @MainActor
+    func testNoInternetViewModel_whenNewOfflineModeDisabled_isCreatedForLegacyCover() {
+        let harness = Harness(
+            node: .rootNode,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+        XCTAssertNotNil(harness.sut.noInternetViewModel)
     }
 
     @MainActor
