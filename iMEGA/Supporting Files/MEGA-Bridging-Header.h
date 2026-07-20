@@ -119,8 +119,6 @@
 #import "MEGAUserAlert.h"
 #import "NodeTableViewCell.h"
 #import "ThumbnailViewerTableViewCell.h"
-#import "RecentsViewController.h"
-#import "RecentsTableViewHeaderFooterView.h"
 #import "OfflineViewController.h"
 #import "OfflineTableViewViewController.h"
 #import "OfflineTableViewCell.h"

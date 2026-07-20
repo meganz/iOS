@@ -94,13 +94,11 @@ extension HomeScreenFactory {
         let dependency = HomeView.Dependency(
             homeAddMenuActionHandler: homeAddMenuActionHandler,
             router: router,
-            transferIndicatorToolbarFactory: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
-                ? .indicator {
-                    let tracker = DIContainer.tracker
-                    tracker.trackAnalyticsEvent(with: TransfersToolbarWidgetPressedEvent())
-                    router.route(to: .transfers)
-                }
-                : .hidden,
+            transferIndicatorToolbarFactory: .indicator {
+                let tracker = DIContainer.tracker
+                tracker.trackAnalyticsEvent(with: TransfersToolbarWidgetPressedEvent())
+                router.route(to: .transfers)
+            },
             avatarFetcher: makeAvatarFetcher(
                 userNameProvider: userNameProvider,
                 userImageUseCase: userImageUseCase,

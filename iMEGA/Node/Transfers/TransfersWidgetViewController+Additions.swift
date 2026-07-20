@@ -40,18 +40,6 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
            DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransferLiveActivity) {
             TransferLiveActivityCoordinator.shared.startMonitoring()
         }
-        guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne) else { return }
-        
-        let progressIndicatorView = ProgressIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
-        progressIndicatorView.isUserInteractionEnabled = true
-        progressIndicatorView.isHidden = true
-        showProgressIndicatorViewFromLeft = true
-
-        self.progressView = progressIndicatorView
-
-        progressIndicatorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapProgressView)))
-        
-        progressIndicatorView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTransferWidget(_ :))))
     }
     
     @objc

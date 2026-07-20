@@ -10,9 +10,7 @@ import UIKit
 final class TransferIndicatorBarItemConfigurator: NSObject {
 
     static var toolbarFactory: TransferIndicatorToolbarFactory {
-        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosHomeRevampPhaseOne)
-            ? .indicator(action: presentTransfers)
-            : .hidden
+        .indicator(action: presentTransfers)
     }
 
     static var tracker: some AnalyticsTracking = DIContainer.tracker
@@ -25,7 +23,7 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
     /// Mirrors the condition used by `BarItemObserver` so callers that want to adapt
     /// layout (e.g. title width) stay in sync with actual bar item insertion.
     static var isIndicatorDisplayed: Bool {
-        toolbarFactory.isEnabled && SharedTransferIndicator.isCurrentlyVisible
+        SharedTransferIndicator.isCurrentlyVisible
     }
 
     /// Presents the transfers screen modally. Also used by SwiftUI screens

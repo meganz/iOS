@@ -4,6 +4,11 @@ import MEGAAppPresentation
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
+@objc protocol SearchActivatable {
+    func activateSearch()
+}
+
 /// Lets the tab bar reset a tab's SwiftUI navigation to its root when the already-selected tab is tapped again.
 ///
 /// UIKit automatically pops the tab's `UINavigationController` to its root on reselect, but Home hosts its

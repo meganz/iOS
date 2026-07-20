@@ -40,8 +40,7 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
             
         case TabManager.homeTabIndex():
             AdsSlotConfig(
-                displayAds: isVisibleController(type: HomeViewController.self) ||
-                isVisibleController(type: FilesExplorerContainerViewController.self) ||
+                displayAds: isVisibleController(type: FilesExplorerContainerViewController.self) ||
                 isVisibleController(type: VideoRevampTabContainerViewController.self) ||
                 isVisibleController(type: HomeViewHostingController.self)
             )

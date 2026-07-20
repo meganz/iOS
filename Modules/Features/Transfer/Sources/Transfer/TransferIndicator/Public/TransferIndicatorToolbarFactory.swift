@@ -10,14 +10,9 @@ public struct TransferIndicatorToolbarFactory {
 
     private static let observers = NSMapTable<UIViewController, BarItemObserver>.weakToStrongObjects()
 
-    public let isEnabled: Bool
     private let action: (() -> Void)?
 
-    public init(
-        isEnabled: Bool,
-        action: (() -> Void)? = nil
-    ) {
-        self.isEnabled = isEnabled
+    private init(action: (() -> Void)? = nil) {
         self.action = action
     }
 
@@ -25,22 +20,16 @@ public struct TransferIndicatorToolbarFactory {
         trailingItemCount >= 2 ? .leading : .trailing
     }
 
-    @ViewBuilder
     public var content: some View {
-        if isEnabled {
-            TransferIndicatorView(action: action)
-        }
+        TransferIndicatorView(action: action)
     }
 
-    @ToolbarContentBuilder
     public func toolbarContent(trailingItemCount: Int) -> some ToolbarContent {
-        if isEnabled {
-            ToolbarItem(
-                placement: Self.placement(forTrailingItemCount: trailingItemCount) == .leading
-                    ? .topBarLeading : .topBarTrailing
-            ) {
-                TransferIndicatorView(action: action)
-            }
+        ToolbarItem(
+            placement: Self.placement(forTrailingItemCount: trailingItemCount) == .leading
+                ? .topBarLeading : .topBarTrailing
+        ) {
+            TransferIndicatorView(action: action)
         }
     }
 
@@ -63,12 +52,8 @@ public struct TransferIndicatorToolbarFactory {
         observer.sync()
     }
 
-    public static var hidden: Self {
-        Self(isEnabled: false)
-    }
-
     public static func indicator(action: (() -> Void)? = nil) -> Self {
-        Self(isEnabled: true, action: action)
+        Self(action: action)
     }
 
     private func makeBarButtonItem() -> UIBarButtonItem {
@@ -122,7 +107,7 @@ extension TransferIndicatorToolbarFactory {
         }
 
         func sync() {
-            guard factory.isEnabled, SharedTransferIndicator.isCurrentlyVisible else {
+            guard SharedTransferIndicator.isCurrentlyVisible else {
                 remove()
                 return
             }
@@ -130,7 +115,7 @@ extension TransferIndicatorToolbarFactory {
         }
 
         private func insert() {
-            guard factory.isEnabled, let vc = viewController else { return }
+            guard let vc = viewController else { return }
             remove()
 
             let barItem = factory.makeBarButtonItem()

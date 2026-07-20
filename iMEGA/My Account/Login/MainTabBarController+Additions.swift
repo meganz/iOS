@@ -16,8 +16,7 @@ extension MainTabBarController {
 
     func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
-            from: self,
-            tracker: DIContainer.tracker
+            from: self
         )
     }
 
