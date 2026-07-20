@@ -349,4 +349,7 @@ public struct MEGAImageBundle {
     public static var promoBanner: Image { Image(.promoBanner) }
     public static var promoBannerCentered: Image { Image(.promoBannerCentered) }
     public static var quotaWarning: Image { Image(.quotaWarning) }
+    public static var monoAirplayMediumThinOutline: Image { Image(.monoAirplayMediumThinOutline) }
+    public static var monoChevronDownMediumThinOutline: Image { Image(.monoChevronDownMediumThinOutline) }
+    public static var monoMoreHorizontalMediumThinOutline: Image { Image(.monoMoreHorizontalMediumThinOutline) }
 }
