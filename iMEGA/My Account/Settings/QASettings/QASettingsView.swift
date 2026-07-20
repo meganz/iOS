@@ -1,3 +1,5 @@
+#if DEBUG || QA_CONFIG
+
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGASwiftUI
@@ -52,14 +54,12 @@ struct QASettingsView: View {
             } label: {
                 Text("KM Transfer QA Settings")
             }
-
-            #if DEBUG || QA_CONFIG
+            
             NavigationLink {
                 QuotaEventSimulatorView()
             } label: {
                 Text(Constants.quotaEventSimulatorText)
             }
-            #endif
 
             Section(
                 header:
@@ -74,3 +74,4 @@ struct QASettingsView: View {
         .background()
     }
 }
+#endif

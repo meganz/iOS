@@ -6,33 +6,37 @@ final class QuotaDialogViewModel: ObservableObject {
     enum ViewState {
         case loading
         case error
-        case upgradeAvailable(accountDetailsEntity: AccountDetailsEntity, planEntity: PlanEntity)
-        case noUpgradeAvailable(accountDetailsEntity: AccountDetailsEntity)
+        case upgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan, recommendedPlan: RecommendedPlan)
+        case noUpgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan)
     }
 
     @Published var viewState: ViewState = .loading
 
     private let useCase: any QuotaDialogUseCaseProtocol
-    let subscriptionPlanPriceUseCase: any SubscriptionPlanPriceUseCaseProtocol
+    private let mapper: any QuotaDialogMapping
 
     init(
         useCase: some QuotaDialogUseCaseProtocol,
-        subscriptionPlanPriceUseCase: some SubscriptionPlanPriceUseCaseProtocol = SubscriptionPlanPriceUseCase()
+        mapper: some QuotaDialogMapping
     ) {
         self.useCase = useCase
-        self.subscriptionPlanPriceUseCase = subscriptionPlanPriceUseCase
+        self.mapper = mapper
     }
 
     func load() async {
         do {
             switch try await useCase.upgradeOption() {
-            case let .available(accountDetails, plan):
+            case let .available(accountDetails, recommendedPlan):
                 viewState = .upgradeAvailable(
-                    accountDetailsEntity: accountDetails,
-                    planEntity: plan
+                    header: mapper.header(accountDetails: accountDetails),
+                    currentPlan: mapper.currentPlan(accountDetails: accountDetails),
+                    recommendedPlan: mapper.recommendedPlan(recommendedPlan, accountDetails: accountDetails)
                 )
             case let .unavailable(accountDetails):
-                viewState = .noUpgradeAvailable(accountDetailsEntity: accountDetails)
+                viewState = .noUpgradeAvailable(
+                    header: mapper.header(accountDetails: accountDetails),
+                    currentPlan: mapper.currentPlan(accountDetails: accountDetails)
+                )
             }
         } catch {
             viewState = .error

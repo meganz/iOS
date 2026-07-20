@@ -200,7 +200,9 @@ final class ImportAlbumViewModel: ObservableObject {
                 // However, since the the dialog is used in different places with UIKit via QuotaWarningsRouter.
                 // QuotaWarningsRouter has a critical logic that skips another dialog presentation when a quota dialog is already visible
                 // As a result, QuotaWarningsRouter is used here for that reason.
-                QuotaWarningsRouter().presentStorageDialog(severity: .almostFull)
+                QuotaWarningsRouter().presentStorageDialog(
+                    severity: accountStorageUseCase.currentStorageStatus == .almostFull ? .almostFull : .full
+                )
             } else {
                 showStorageQuotaWillExceed = true
             }

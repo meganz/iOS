@@ -28,6 +28,7 @@ let package = Package(
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Repository/MEGARepo"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure")
@@ -42,6 +43,7 @@ let package = Package(
                            "MEGAL10n",
                            "MEGADomain",
                            "MEGAAppSDKRepo",
+                           "MEGARepo",
                            "MEGAUIComponent",
                            "MEGASwift",
                            "MEGAInfrastructure"],
@@ -57,6 +59,7 @@ let package = Package(
             dependencies: ["QuotaWarnings",
                            "QuotaWarningsMock",
                            "MEGADomain",
+                           .product(name: "MEGADomainMock", package: "MEGADomain"),
                            "MEGAUIComponent"],
             swiftSettings: settings
         )

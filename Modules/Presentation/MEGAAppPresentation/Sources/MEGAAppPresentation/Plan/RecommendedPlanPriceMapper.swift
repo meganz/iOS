@@ -174,12 +174,13 @@ public struct RecommendedPlanPriceMapper {
             .replacingOccurrences(of: "[A]", with: formattedCurrency(value, currencyCode))
     }
 
+    /// Use rounding rule toNearestOrEven to keep consistent with current halfEven rounding mode.
     private func formattedCurrency(_ value: Decimal, _ code: String) -> String {
         value.formatted(
             Decimal
                 .FormatStyle
                 .Currency(code: code, locale: locale)
-                .rounded(rule: .down)
+                .rounded(rule: .toNearestOrEven)
         )
     }
 }

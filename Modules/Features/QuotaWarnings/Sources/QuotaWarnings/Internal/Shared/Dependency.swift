@@ -1,8 +1,20 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 
-enum Dependency {
-    static var quotaDialogUseCase: QuotaDialogUseCase {
-        QuotaDialogUseCase(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+enum QuotaDialogUseCaseFactory {
+    static func make(
+        accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol
+    ) -> QuotaDialogUseCase {
+        QuotaDialogUseCase(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountPlanProductsUseCase: AccountPlanProductsUseCase(
+                purchaseUseCase: accountPlanPurchaseUseCase,
+                introductoryOfferUseCase: IntroductoryOfferUseCase(repository: IntroductoryOfferRepository.newRepo)
+            ),
+            recommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCase(
+                subscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCase()
+            )
+        )
     }
 }

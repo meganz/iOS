@@ -1,3 +1,4 @@
+#if DEBUG
 import MEGADomain
 
 struct PreviewQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
@@ -12,7 +13,7 @@ struct PreviewQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
 
     func upgradeOption() async throws -> QuotaUpgradeOption {
         if let plan {
-            .available(accountDetails: account, plan: plan)
+            .available(accountDetails: account, recommendedPlan: RecommendedUpgradePlanEntity(plan: plan))
         } else {
             .unavailable(accountDetails: account)
         }
@@ -59,3 +60,4 @@ extension AccountDetailsEntity {
         )
     }
 }
+#endif

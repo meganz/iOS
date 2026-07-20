@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGADomain
 import MEGASdk
 import QuotaWarnings
 import SwiftUI
@@ -105,7 +106,12 @@ import UIKit
 /// Check `isQuotaDialogAlreadyPresented`
 private protocol QuotaWarningDialogHosting {}
 
-private final class QuotaWarningDialogHostingController<Content: View>: UIHostingController<Content>, QuotaWarningDialogHosting {}
+private final class QuotaWarningDialogHostingController<Content: View>: UIHostingController<Content>, QuotaWarningDialogHosting {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLiquidGlassNavigationBar(with: .clear)
+    }
+}
 
 private struct QuotaWarningDialogView: View {
     enum Kind {
@@ -115,13 +121,26 @@ private struct QuotaWarningDialogView: View {
     
     let kind: Kind
     let onClose: @MainActor () -> Void
-    
+
+    /// The plan catalog use case, built app-side because its repository depends on `MEGAPurchase`.
+    private var accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol {
+        AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
+    }
+
     var body: some View {
         switch kind {
         case .storage(let storageQuotaSeverity):
-            StorageQuotaDialogView(severity: storageQuotaSeverity, onClose: onClose)
+            StorageQuotaDialogView(
+                severity: storageQuotaSeverity,
+                dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
+                onClose: onClose
+            )
         case .transfer(let transferQuotaSeverity):
-            TransferQuotaDialogView(severity: transferQuotaSeverity, onClose: onClose)
+            TransferQuotaDialogView(
+                severity: transferQuotaSeverity,
+                dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
+                onClose: onClose
+            )
         }
     }
 }

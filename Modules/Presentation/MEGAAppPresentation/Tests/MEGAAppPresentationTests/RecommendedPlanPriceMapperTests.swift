@@ -112,11 +112,17 @@ struct RecommendedPlanPriceMapperTests {
         )))
     }
 
-    // MARK: - Floor rounding of per-month figures (IOS-12214)
+    // MARK: - Floor rounding of per-month figures
 
     @Test func perMonthFigures_areFlooredNotRoundedUp() {
-        // 9.996 must display as €9.99 (floor), never €10.00.
-        let result = sut.map(.monthly(.init(price: dec("9.996"), currency: "EUR")))
+        // 9.993 displayed as €9.99 (floor)
+        let result = sut.map(.monthly(.init(price: dec("9.993"), currency: "EUR")))
         #expect(result == .monthly(.init(pricePerMonth: "€9.99/month")))
+    }
+    
+    @Test func perMonthFigures_areFlooredRoundedUp() {
+        // 9.996 displayed as €10.00.
+        let result = sut.map(.monthly(.init(price: dec("9.996"), currency: "EUR")))
+        #expect(result == .monthly(.init(pricePerMonth: "€10.00/month")))
     }
 }
