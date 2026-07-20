@@ -6,16 +6,16 @@ import Testing
 @Suite("PhotoSection changedItemIndexPaths Tests")
 struct PhotoSection_changedItemIndexPathsTests {
 
-    /// A skeleton with two UTC day buckets → day sections sized from `counts`
+    /// A skeleton with two day buckets → day sections sized from `counts`
     /// (default [2, 1] gives sections of 2 and 1 items; flat order [0, 1 | 2]).
     private func makeSkeleton(counts: [Int] = [2, 1]) -> PhotoLibrary {
-        let dates = [
-            Date(timeIntervalSince1970: 1_660_780_800), // 2022-08-18T00:00:00Z
-            Date(timeIntervalSince1970: 1_658_102_400)  // 2022-07-18T00:00:00Z
+        let days = [
+            ("2022-08-18", Date(timeIntervalSince1970: 1_660_780_800)), // 2022-08-18T00:00:00Z
+            ("2022-07-18", Date(timeIntervalSince1970: 1_658_102_400))  // 2022-07-18T00:00:00Z
         ]
         let sections = counts.enumerated().map { index, count in
             MediaDateSectionEntity(
-                groupId: "d\(index)", startDate: dates[index], endDate: dates[index], count: count)
+                groupId: days[index].0, startDate: days[index].1, endDate: days[index].1, count: count)
         }
         return PhotoLibrary.skeleton(from: sections)
     }

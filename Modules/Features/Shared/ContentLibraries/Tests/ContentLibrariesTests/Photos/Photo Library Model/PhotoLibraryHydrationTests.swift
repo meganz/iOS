@@ -6,13 +6,13 @@ import Testing
 @Suite("PhotoLibrary Hydration Tests")
 struct PhotoLibraryHydrationTests {
 
-    /// Skeleton with two UTC day buckets, counts 2 and 3 (5 placeholder slots total).
+    /// Skeleton with two day buckets, counts 2 and 3 (5 placeholder slots total).
     private func makeSkeleton() -> PhotoLibrary {
         let day1 = Date(timeIntervalSince1970: 1_660_780_800) // 2022-08-18T00:00:00Z
         let day2 = Date(timeIntervalSince1970: 1_658_102_400) // 2022-07-18T00:00:00Z
         return PhotoLibrary.skeleton(from: [
-            MediaDateSectionEntity(groupId: "d1", startDate: day1, endDate: day1, count: 2),
-            MediaDateSectionEntity(groupId: "d2", startDate: day2, endDate: day2, count: 3)
+            MediaDateSectionEntity(groupId: "2022-08-18", startDate: day1, endDate: day1, count: 2),
+            MediaDateSectionEntity(groupId: "2022-07-18", startDate: day2, endDate: day2, count: 3)
         ])
     }
 

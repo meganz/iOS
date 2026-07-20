@@ -52,6 +52,8 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
                         include: { megaFilter.locationHandles = $0 },
                         exclude: { megaFilter.excludeLocationHandles = $0 })
             megaFilter.sensitivityFilter = excludeSensitive ? .excludeSensitive : .disabled
+            // Nil uses UTC; use the device's current offset for local date buckets.
+            megaFilter.utcOffset = TimeZone.current.iso8601UTCOffset
 
             let cancelToken = ThreadSafeCancelToken()
             return try await withTaskCancellationHandler {
@@ -260,6 +262,16 @@ private struct ResolvedScope {
 }
 
 // MARK: - DTO → Entity / Entity → filter mapping (Data layer)
+
+private extension TimeZone {
+    /// The ISO-8601 offset required by the SDK's fixed-offset timezone API.
+    var iso8601UTCOffset: String {
+        let seconds = secondsFromGMT()
+        let sign = seconds < 0 ? "-" : "+"
+        let totalMinutes = abs(seconds) / 60
+        return String(format: "%@%02d:%02d", sign, totalMinutes / 60, totalMinutes % 60)
+    }
+}
 
 private extension MEGADateSection {
     func toMediaDateSectionEntity() -> MediaDateSectionEntity {

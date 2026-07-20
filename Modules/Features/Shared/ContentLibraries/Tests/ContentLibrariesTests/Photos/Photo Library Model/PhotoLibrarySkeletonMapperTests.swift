@@ -1,47 +1,58 @@
 @testable import ContentLibraries
+import Foundation
 import MEGADomain
-import MEGADomainMock
-import MEGAFoundation
 import XCTest
 
 final class PhotoLibrarySkeletonMapperTests: XCTestCase {
 
-    /// Day-granularity sections in newest-first display order. "2022-08-01T00:00:00Z" is
-    /// deliberately a first-of-month UTC midnight, to prove GMT aggregation keeps it in
-    /// August (a negative-offset local calendar would roll it back into July). The
-    /// zero-count section must be dropped.
-    private func makeSections() throws -> [MediaDateSectionEntity] {
-        try [
-            ("2022-08-18T00:00:00Z", 2),
-            ("2022-08-01T00:00:00Z", 1),
-            ("2022-07-18T00:00:00Z", 3),
-            ("2021-01-05T00:00:00Z", 1),
-            ("2020-06-01T00:00:00Z", 0)
-        ].map { iso, count in
-            let start = try iso.date
-            return MediaDateSectionEntity(groupId: iso, startDate: start, endDate: start, count: count)
+    // MARK: - Local-calendar date builders
+
+    // Match the mapper: Gregorian groupId in the user's time zone.
+    private let gregorian: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        return calendar
+    }()
+    private func day(_ groupId: String) -> Date {
+        let parts = groupId.split(separator: "-").compactMap { Int($0) }
+        return gregorian.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2]))!
+    }
+    private func monthStart(_ year: Int, _ month: Int) -> Date {
+        gregorian.date(from: DateComponents(year: year, month: month, day: 1))!
+    }
+    private func yearStart(_ year: Int) -> Date {
+        gregorian.date(from: DateComponents(year: year, month: 1, day: 1))!
+    }
+
+    /// Day-granularity sections in newest-first display order. "2022-08-01" is deliberately a
+    /// first-of-month day, to prove month/year aggregation groups by the `groupId` and keeps it
+    /// in August. The zero-count section must be dropped.
+    private func makeSections() -> [MediaDateSectionEntity] {
+        [
+            ("2022-08-18", 2),
+            ("2022-08-01", 1),
+            ("2022-07-18", 3),
+            ("2021-01-05", 1),
+            ("2020-06-01", 0)
+        ].map { groupId, count in
+            MediaDateSectionEntity(groupId: groupId, startDate: day(groupId), endDate: day(groupId), count: count)
         }
     }
 
-    func testSkeleton_totalCountMatchesSumOfCounts() throws {
-        let library = PhotoLibrary.skeleton(from: try makeSections())
+    func testSkeleton_totalCountMatchesSumOfCounts() {
+        let library = PhotoLibrary.skeleton(from: makeSections())
         XCTAssertEqual(library.allPhotos.count, 7) // 2 + 1 + 3 + 1, zero-count dropped
     }
 
-    /// The mapper must never silently drop a slot during month/year aggregation: the
-    /// total placeholder count stays equal to the sum of section counts, and there is
-    /// exactly one `PhotoByDay` per non-zero section — even for boundary dates (leap day,
-    /// first-of-month UTC midnight, epoch, far future) that stress the calendar math
-    /// behind `removeDay`/`removeMonth`.
-    func testSkeleton_totalCountPreservedForBoundaryDates() throws {
-        let sections = try [
-            ("2100-01-01T00:00:00Z", 3), // far future, first-of-month UTC midnight
-            ("2024-02-29T00:00:00Z", 2), // leap day
-            ("2022-12-31T00:00:00Z", 5),
-            ("1970-01-01T00:00:00Z", 4)  // epoch
-        ].map { iso, count -> MediaDateSectionEntity in
-            let start = try iso.date
-            return MediaDateSectionEntity(groupId: iso, startDate: start, endDate: start, count: count)
+    /// Boundary dates must preserve every placeholder slot.
+    func testSkeleton_totalCountPreservedForBoundaryDates() {
+        let sections = [
+            ("2100-01-01", 3), // far future, first-of-month
+            ("2024-02-29", 2), // leap day
+            ("2022-12-31", 5),
+            ("1970-01-01", 4)  // epoch
+        ].map { groupId, count in
+            MediaDateSectionEntity(groupId: groupId, startDate: day(groupId), endDate: day(groupId), count: count)
         }
 
         let library = PhotoLibrary.skeleton(from: sections)
@@ -53,29 +64,20 @@ final class PhotoLibrarySkeletonMapperTests: XCTestCase {
         XCTAssertTrue(library.allPhotos.allSatisfy(\.isTimelinePlaceholder))
     }
 
-    func testSkeleton_buildsCorrectTreeShapeInInputOrder() throws {
-        let library = PhotoLibrary.skeleton(from: try makeSections())
+    func testSkeleton_buildsCorrectTreeShapeInInputOrder() {
+        let library = PhotoLibrary.skeleton(from: makeSections())
 
         let years = library.photoByYearList
         XCTAssertEqual(years.count, 2)
-        XCTAssertEqual(years.map(\.categoryDate), [
-            try "2022-01-01T00:00:00Z".date,
-            try "2021-01-01T00:00:00Z".date
-        ])
+        XCTAssertEqual(years.map(\.categoryDate), [yearStart(2022), yearStart(2021)])
 
         // 2022: August then July (input order preserved).
         let months2022 = years[0].contentList
-        XCTAssertEqual(months2022.map(\.categoryDate), [
-            try "2022-08-01T00:00:00Z".date,
-            try "2022-07-01T00:00:00Z".date
-        ])
+        XCTAssertEqual(months2022.map(\.categoryDate), [monthStart(2022, 8), monthStart(2022, 7)])
 
-        // August has two days (18th, 1st); the boundary 08-01 stayed in August via GMT.
+        // August has two days (18th, 1st); the boundary 08-01 stayed in August via its groupId.
         let augustDays = months2022[0].contentList
-        XCTAssertEqual(augustDays.map(\.categoryDate), [
-            try "2022-08-18T00:00:00Z".date,
-            try "2022-08-01T00:00:00Z".date
-        ])
+        XCTAssertEqual(augustDays.map(\.categoryDate), [day("2022-08-18"), day("2022-08-01")])
         XCTAssertEqual(augustDays.map(\.contentList.count), [2, 1])
 
         // 2021 has a single month/day of one slot.
@@ -83,20 +85,37 @@ final class PhotoLibrarySkeletonMapperTests: XCTestCase {
         XCTAssertEqual(years[1].contentList[0].contentList.count, 1)
     }
 
-    func testSkeleton_dayCategoryDatesEqualSectionStarts() throws {
-        let library = PhotoLibrary.skeleton(from: try makeSections())
+    func testSkeleton_dayCategoryDatesComeFromGroupId() {
+        let library = PhotoLibrary.skeleton(from: makeSections())
         let dayDates = library.photoByYearList
             .flatMap(\.contentList).flatMap(\.contentList).map(\.categoryDate)
-        XCTAssertEqual(dayDates, try [
-            "2022-08-18T00:00:00Z".date,
-            "2022-08-01T00:00:00Z".date,
-            "2022-07-18T00:00:00Z".date,
-            "2021-01-05T00:00:00Z".date
+        XCTAssertEqual(dayDates, [
+            day("2022-08-18"),
+            day("2022-08-01"),
+            day("2022-07-18"),
+            day("2021-01-05")
         ])
     }
 
-    func testSkeleton_everySlotIsPlaceholderWithUniqueHandle() throws {
-        let library = PhotoLibrary.skeleton(from: try makeSections())
+    /// Headers must follow groupId, not a divergent startDate.
+    func testSkeleton_headerDatesFollowGroupId_notDivergentStartDate() {
+        let divergentStart = day("2022-11-30") // a startDate that disagrees with the groupId's month
+        let sections = [MediaDateSectionEntity(
+            groupId: "2022-12-01", startDate: divergentStart, endDate: divergentStart, count: 1)]
+
+        let library = PhotoLibrary.skeleton(from: sections)
+        let yearNode = library.photoByYearList[0]
+        let monthNode = yearNode.contentList[0]
+        let dayNode = monthNode.contentList[0]
+
+        XCTAssertEqual(dayNode.categoryDate, day("2022-12-01"))
+        XCTAssertEqual(monthNode.categoryDate, monthStart(2022, 12)) // December, not November
+        XCTAssertEqual(yearNode.categoryDate, yearStart(2022))
+        XCTAssertNotEqual(dayNode.categoryDate, divergentStart)
+    }
+
+    func testSkeleton_everySlotIsPlaceholderWithUniqueHandle() {
+        let library = PhotoLibrary.skeleton(from: makeSections())
         let photos = library.allPhotos
 
         XCTAssertTrue(photos.allSatisfy(\.isTimelinePlaceholder))
@@ -117,9 +136,9 @@ final class PhotoLibrarySkeletonMapperTests: XCTestCase {
         XCTAssertTrue(PhotoLibrary.skeleton(from: []).isEmpty)
     }
 
-    func testSkeleton_allZeroCountsProducesEmptyLibrary() throws {
-        let start = try "2022-08-18T00:00:00Z".date
-        let sections = [MediaDateSectionEntity(groupId: "x", startDate: start, endDate: start, count: 0)]
+    func testSkeleton_allZeroCountsProducesEmptyLibrary() {
+        let sections = [MediaDateSectionEntity(
+            groupId: "2022-08-18", startDate: day("2022-08-18"), endDate: day("2022-08-18"), count: 0)]
         XCTAssertTrue(PhotoLibrary.skeleton(from: sections).isEmpty)
     }
 }

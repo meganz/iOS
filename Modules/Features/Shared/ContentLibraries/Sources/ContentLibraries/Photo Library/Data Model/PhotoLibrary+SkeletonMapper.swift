@@ -8,36 +8,63 @@ extension PhotoLibrary {
     /// `contentList.count` and `photo(at:)`) unchanged.
     ///
     /// Expects day-granularity sections in display order (as returned by `dateSections`);
-    /// the resulting tree preserves that order. Sections are UTC-canonical buckets, so
-    /// month/year aggregation is done in GMT to keep the tree boundaries aligned with the
-    /// SDK buckets.
+    /// the resulting tree preserves that order.
+    ///
+    /// Uses the SDK's local-calendar `groupId` for both headers and month/year grouping. Do not
+    /// re-derive these from `startDate`: the SDK uses a fixed UTC offset and can cross a DST boundary.
     public static func skeleton(from sections: [MediaDateSectionEntity]) -> PhotoLibrary {
-        let gmt = TimeZone(secondsFromGMT: 0)
         var nextHandleOffset: UInt64 = 0
 
-        // Day level — one PhotoByDay per section, filled with `count` placeholder slots.
-        let days: [PhotoByDay] = sections.compactMap { section in
+        // SDK groupIds are Gregorian; retain the user's time zone for local midnight.
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+
+        // Day level — one entry per non-empty section, filled with `count` placeholder slots.
+        let days: [SkeletonDay] = sections.compactMap { section in
             guard section.count > 0 else { return nil }
             let placeholders = (0..<section.count).map { _ -> NodeEntity in
                 defer { nextHandleOffset += 1 }
                 return NodeEntity.timelinePlaceholder(offset: nextHandleOffset, date: section.startDate)
             }
-            return PhotoByDay(categoryDate: section.startDate, contentList: placeholders)
+            // Keep slots even if an unexpected groupId cannot be parsed.
+            let dates = section.groupId.mediaSectionDates(using: calendar)
+            return SkeletonDay(
+                groupId: section.groupId,
+                monthDate: dates?.month ?? section.startDate,
+                yearDate: dates?.year ?? section.startDate,
+                day: PhotoByDay(categoryDate: dates?.day ?? section.startDate, contentList: placeholders))
         }
 
-        // `removeDay`/`removeMonth` are `Date?` only because `Calendar.date(from:)` is
-        // failable; for year/month components taken from a real date it never returns nil.
-        // Fall back to the day date itself so a slot can never be silently dropped even if
-        // that ever changed — the skeleton's total item count must always equal the sum of
-        // the section counts (fast-scroll track length, section headers and empty state all
-        // depend on it). A stray fallback would at worst mis-group a month, never lose a slot.
-        let months = days.grouped(by: { $0.categoryDate.removeDay(timeZone: gmt) ?? $0.categoryDate })
-            .map { PhotoByMonth(categoryDate: $0.key, contentList: $0.value) }
-
-        let years = months.grouped(by: { $0.categoryDate.removeMonth(timeZone: gmt) ?? $0.categoryDate })
-            .map { PhotoByYear(categoryDate: $0.key, contentList: $0.value) }
+        let years = days.grouped(by: { String($0.groupId.prefix(4)) }).map { yearGroup -> PhotoByYear in
+            let months = yearGroup.value.grouped(by: { String($0.groupId.prefix(7)) }).map { monthGroup in
+                PhotoByMonth(categoryDate: monthGroup.value[0].monthDate, contentList: monthGroup.value.map(\.day))
+            }
+            return PhotoByYear(categoryDate: yearGroup.value[0].yearDate, contentList: months)
+        }
 
         return PhotoLibrary(photoByYearList: years)
+    }
+}
+
+/// A skeleton day with its SDK bucket id and header dates.
+private struct SkeletonDay {
+    let groupId: String
+    let monthDate: Date
+    let yearDate: Date
+    let day: PhotoByDay
+}
+
+private extension String {
+    /// Parses a day-level Gregorian `groupId` into local day, month and year dates.
+    func mediaSectionDates(using calendar: Calendar) -> (day: Date, month: Date, year: Date)? {
+        let parts = split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        guard
+            let day = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2])),
+            let month = calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: 1)),
+            let year = calendar.date(from: DateComponents(year: parts[0], month: 1, day: 1))
+        else { return nil }
+        return (day, month, year)
     }
 }
 
