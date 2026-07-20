@@ -26,8 +26,7 @@ extension QuotaDialogMapping {
 
     func ribbonText(mobileOfferLabel: String?, price: SubscriptionPlanPrice) -> String {
         guard let percentage = price.discountPercentage, percentage > 0 else {
-            // IOS-12210
-            return "Best for you"
+            return Strings.Localizable.QuotaWarning.RecommendedPlan.Tag.bestForYou
         }
         let discount = "\(percentage)%"
         if let campaign = mobileOfferLabel, !campaign.isEmpty {

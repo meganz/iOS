@@ -1,8 +1,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAUIComponent
+import SwiftUI
 import Testing
-import UIKit
 @testable import QuotaWarnings
 
 @MainActor
@@ -74,7 +74,7 @@ private struct StubQuotaDialogMapper: QuotaDialogMapping {
     static let headerTitle = "stub-title"
 
     func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader {
-        .storage(StorageQuotaHeader(image: UIImage(), title: Self.headerTitle, subtitle: ""))
+        .storage(StorageQuotaHeader(image: Image(systemName: "photo"), title: Self.headerTitle, subtitle: ""))
     }
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
         CurrentPlan(name: "current", quota: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal))

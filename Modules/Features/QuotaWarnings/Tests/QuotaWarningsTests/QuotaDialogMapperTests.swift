@@ -1,8 +1,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAUIComponent
-import Testing
 @testable import QuotaWarnings
+import Testing
 
 private extension QuotaDialogHeader {
     var storageHeader: StorageQuotaHeader? {
@@ -43,6 +43,13 @@ struct StorageQuotaDialogMapperTests {
         #expect(header.subtitle == "Upgrade your plan to get more storage and upload more files")
     }
 
+    @Test func header_full_overHundredPercent_showsActualPercentUncapped() throws {
+        let sut = StorageQuotaDialogMapper(severity: .full)
+        let header = try #require(sut.header(accountDetails: .build(storageUsed: 120, storageMax: 100)).storageHeader)
+
+        #expect(header.title == "Your storage is 120% full")
+    }
+
     @Test func currentPlan_usesStorageUsageAndSeverityStatus() {
         let sut = StorageQuotaDialogMapper(severity: .full)
         let currentPlan = sut.currentPlan(accountDetails: .build(storageUsed: 90, storageMax: 100))
@@ -74,7 +81,7 @@ struct TransferQuotaDialogMapperTests {
         let header = try #require(sut.header(accountDetails: .build(proLevel: .free)).transferHeader)
 
         #expect(header.title == "Your transfer quota is running low")
-        #expect(header.learnMore.text == "Learn more.")
+        #expect(header.learnMore.text == "Learn more")
     }
 
     @Test func header_limitedDownloadPaidAccount_showsPercentTitle() throws {

@@ -40,7 +40,7 @@ struct QuotaProgress: Equatable {
 
     var usedPercentage: Int {
         guard totalBytes > 0 else { return 0 }
-        return min(100, max(0, Int((Double(usedBytes) / Double(totalBytes) * 100).rounded())))
+        return max(0, Int((Double(usedBytes) / Double(totalBytes) * 100).rounded()))
     }
 
     init(status: QuotaStatus, usedBytes: Int64, totalBytes: Int64, style: QuotaUsageStyle) {

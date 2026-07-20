@@ -504,4 +504,5 @@ public struct MEGAUIImageBundle {
     public static var monoCalendar01SmallThinOutline: UIImage { UIImage.monoCalendar01SmallThinOutline }
     public static var promoBanner: UIImage { UIImage.promoBanner }
     public static var promoBannerCentered: UIImage { UIImage.promoBannerCentered }
+    public static var quotaWarning: UIImage { UIImage.quotaWarning }
 }

@@ -2,14 +2,14 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGASwift
 import MEGAUIComponent
 
 struct TransferQuotaDialogMapper: QuotaDialogMapping {
     private let severity: TransferQuotaSeverity
 
-    // IOS-12210
-    private let learnMoreTitle = "Learn more."
+    private let learnMoreTitle = Strings.Localizable.learnMore
     private let learnMoreURL = URL(string: "https://help.mega.io/plans-storage/space-storage/transfer-quota")!
 
     init(severity: TransferQuotaSeverity) {
@@ -18,7 +18,7 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
 
     func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader {
         .transfer(TransferQuotaHeader(
-            image: MEGAAssets.UIImage.transferExceededQuota,
+            image: MEGAAssets.Image.quotaWarning,
             title: title(accountDetails: accountDetails),
             subtitle: subtitle,
             learnMore: .init(text: learnMoreTitle, url: learnMoreURL)
@@ -48,29 +48,25 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         switch severity {
         case .limitedDownload:
             if accountDetails.isFree {
-                // IOS-12210
-                "Your transfer quota is running low"
+                Strings.Localizable.QuotaWarning.Transfer.RunningLow.title
             } else {
-                // IOS-12210
-                "You've used \(currentQuotaProgress(accountDetails: accountDetails).usedPercentage)% of your transfer quota"
+                Strings.Localizable.QuotaWarning.Transfer.PercentUsed.title(
+                    currentQuotaProgress(accountDetails: accountDetails).usedPercentage
+                )
             }
         case .downloadExceeded, .streamingExceeded:
-            // IOS-12210
-            "Transfer quota exceeded"
+            Strings.Localizable.QuotaWarning.Transfer.Exceeded.title
         }
     }
 
     private var subtitle: String {
         switch severity {
         case .limitedDownload:
-            // IOS-12210
-            "As a result, your download may be interrupted. Upgrade your plan to get more transfer quota. \(learnMoreTitle)"
+            Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.subtitle(learnMoreTitle)
         case .downloadExceeded:
-            // IOS-12210
-            "To continue your download, upgrade your plan to get more transfer quota. \(learnMoreTitle)"
+            Strings.Localizable.QuotaWarning.Transfer.DownloadExceeded.subtitle(learnMoreTitle)
         case .streamingExceeded:
-            // IOS-12210
-            "To continue media playback, upgrade your plan to get more transfer quota. \(learnMoreTitle)"
+            Strings.Localizable.QuotaWarning.Transfer.StreamingExceeded.subtitle(learnMoreTitle)
         }
     }
 

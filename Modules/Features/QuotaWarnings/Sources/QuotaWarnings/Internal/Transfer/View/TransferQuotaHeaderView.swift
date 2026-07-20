@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAInfrastructure
 import MEGAUIComponent
@@ -12,7 +13,7 @@ struct TransferQuotaHeaderView: View {
 
     var body: some View {
         VStack(spacing: TokenSpacing._5) {
-            Image(uiImage: header.image)
+            header.image
                 .resizable()
                 .scaledToFit()
                 .frame(width: 120, height: 120)
@@ -53,7 +54,7 @@ struct TransferQuotaHeaderView: View {
 
 #Preview {
     TransferQuotaHeaderView(header: TransferQuotaHeader(
-        image: .init(),
+        image: MEGAAssets.Image.quotaWarning,
         title: "Transfer quota exceeded",
         subtitle: "To continue your download, upgrade your plan to get more transfer quota. Learn more.",
         learnMore: .init(text: "Learn more.", url: URL(string: "https://help.mega.io")!)

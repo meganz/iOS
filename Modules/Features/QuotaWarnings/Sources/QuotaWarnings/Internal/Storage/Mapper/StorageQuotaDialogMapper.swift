@@ -1,6 +1,7 @@
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGASwift
 import MEGAUIComponent
 
@@ -14,9 +15,8 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
     func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader {
         let progress = currentQuotaProgress(accountDetails: accountDetails)
         return .storage(StorageQuotaHeader(
-            image: MEGAAssets.UIImage.storageAlmostFull,
-            // IOS-12210
-            title: "Your storage is \(progress.usedPercentage)% full",
+            image: MEGAAssets.Image.quotaWarning,
+            title: Strings.Localizable.QuotaWarning.Storage.title(progress.usedPercentage),
             subtitle: subtitle
         ))
     }
@@ -43,11 +43,9 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
     private var subtitle: String {
         switch severity {
         case .almostFull:
-            // IOS-12210
-            "Upgrade your plan before you run out of space"
+            Strings.Localizable.QuotaWarning.Storage.AlmostFull.subtitle
         case .full:
-            // IOS-12210
-            "Upgrade your plan to get more storage and upload more files"
+            Strings.Localizable.QuotaWarning.Storage.Full.subtitle
         }
     }
 

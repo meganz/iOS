@@ -365,6 +365,7 @@ extension MEGAAssets {
         public static var monoCalendar01SmallThinOutline: SwiftUI.Image { MEGAImageBundle.monoCalendar01SmallThinOutline }
         public static var promoBanner: SwiftUI.Image { MEGAImageBundle.promoBanner }
         public static var promoBannerCentered: SwiftUI.Image { MEGAImageBundle.promoBannerCentered }
+        public static var quotaWarning: SwiftUI.Image { MEGAImageBundle.quotaWarning }
     }
 }
 
@@ -867,5 +868,6 @@ extension MEGAAssets {
         public static var monoCalendar01SmallThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCalendar01SmallThinOutline }
         public static var promoBanner: UIKit.UIImage { MEGAUIImageBundle.promoBanner }
         public static var promoBannerCentered: UIKit.UIImage { MEGAUIImageBundle.promoBannerCentered }
+        public static var quotaWarning: UIKit.UIImage { MEGAUIImageBundle.quotaWarning }
     }
 }

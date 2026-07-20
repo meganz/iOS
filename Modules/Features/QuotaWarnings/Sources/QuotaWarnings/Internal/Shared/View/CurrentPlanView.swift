@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -30,7 +31,7 @@ struct CurrentPlanView: View {
             Text("•")
                 .font(.callout.weight(.semibold))
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            Text("Current plan") // IOS-12210
+            Text(Strings.Localizable.UpgradeAccountPlan.Plan.Tag.currentPlan)
                 .font(.footnote.weight(.regular))
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }

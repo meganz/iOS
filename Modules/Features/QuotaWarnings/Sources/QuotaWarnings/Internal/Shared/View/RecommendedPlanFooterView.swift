@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -7,10 +8,16 @@ struct RecommendedPlanFooterView: View {
     var body: some View {
         MEGABottomAnchoredButtons(
             buttons: [
-                // IOS-12210
-                MEGAButton("Upgrade to \(planName)", type: .primary, action: {}),
-                // IOS-12210
-                MEGAButton("View all plans", type: .textOnly, action: {})
+                MEGAButton(
+                    Strings.Localizable.QuotaWarning.RecommendedPlan.Button.upgradeToPlan(planName),
+                    type: .primary,
+                    action: {}
+                ),
+                MEGAButton(
+                    Strings.Localizable.QuotaWarning.RecommendedPlan.Button.viewAllPlans,
+                    type: .textOnly,
+                    action: {}
+                )
             ],
             allowMaxWidthForWideScreen: true
         )

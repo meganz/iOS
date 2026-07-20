@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -10,7 +11,7 @@ struct StorageQuotaHeaderView: View {
 
     var body: some View {
         VStack(spacing: TokenSpacing._5) {
-            Image(uiImage: header.image)
+            header.image
                 .resizable()
                 .scaledToFit()
                 .frame(width: 120, height: 120)
@@ -30,7 +31,7 @@ struct StorageQuotaHeaderView: View {
 
 #Preview {
     StorageQuotaHeaderView(header: StorageQuotaHeader(
-        image: .init(),
+        image: MEGAAssets.Image.quotaWarning,
         title: "Your storage is 90% full",
         subtitle: "Upgrade your plan before you run out of space"
     ))
