@@ -124,6 +124,7 @@
     [self registerAppExitHandlers];
     [self injectAuthenticationDependencies];
     [self injectSearchDependencies];
+    [self injectConnectivityLocalizations];
 
     [self initialiseModules];
     

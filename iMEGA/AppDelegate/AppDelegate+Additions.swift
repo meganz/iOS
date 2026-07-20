@@ -824,6 +824,19 @@ extension AppDelegate {
     }
 }
 
+// MARK: - Connectivity localizations
+extension AppDelegate {
+    /// The shared no-internet banner (MEGAConnectivity) falls back to its hardcoded English
+    /// preview strings unless the host app injects localized ones — which was never done,
+    /// so the Settings/Menu banners showed English in every language.
+    @objc func injectConnectivityLocalizations() {
+        MEGAConnectivity.Localizations.noInternetLocalizations = .init(
+            noInternetConnectionLabel: Strings.Localizable.noInternetConnection,
+            backOnline: Strings.Localizable.General.NoInternet.backOnline
+        )
+    }
+}
+
 // MARK: - Handlers for app exit event
 extension AppDelegate {
     /// Remote flags are only readable once login + fetchnodes complete (RemoteFeatureFlagReadySource),
