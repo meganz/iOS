@@ -11,6 +11,8 @@ public final class MEGAAVPlayer {
     public var currentNode: (any PlayableNode)?
     private var nodes: [any PlayableNode]?
 
+    private var currentURL: URL?
+
     private var timeObserverToken: Any?
 
     private let stateSubject: CurrentValueSubject<PlaybackState, Never> = .init(.opening)
@@ -65,6 +67,7 @@ public final class MEGAAVPlayer {
         observePlayerTimeControlStatus()
         observePlayerPeriodicTime()
         observePlayerStatus()
+        observeExternalPlayback()
     }
 
     deinit {
@@ -125,6 +128,7 @@ extension MEGAAVPlayer: PlaybackControllable {
 
     public func stop() {
         saveOrDeleteCurrentPosition()
+        currentURL = nil
         player.replaceCurrentItem(with: nil)
         if let timeObserverToken {
             player.removeTimeObserver(timeObserverToken)
@@ -290,6 +294,7 @@ extension MEGAAVPlayer: NodeLoadable {
         state = .opening
         currentTime = .seconds(-1)
         duration = .seconds(-1)
+        currentURL = url
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
 
@@ -542,6 +547,42 @@ extension MEGAAVPlayer {
                 self?.playbackDebugMessage("Player status changed to \(status.rawValue)")
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - External playback (AirPlay)
+
+extension MEGAAVPlayer {
+    private func observeExternalPlayback() {
+        player.publisher(for: \.isExternalPlaybackActive)
+            .removeDuplicates()
+            .scan((old: false, new: false)) { state, value in
+                (old: state.new, new: value)
+            }
+            .dropFirst()
+            .sink { [weak self] state in
+                guard state.old != state.new else { return }
+                self?.playbackDebugMessage("External playback active: \(state.new)")
+                self?.replaceURLForExternalPlayback(activated: state.new)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func replaceURLForExternalPlayback(activated: Bool) {
+        guard let currentURL, player.currentItem != nil else { return }
+        let url = activated ? currentURL.updatedURLWithCurrentAddress() : currentURL
+        replaceCurrentItemURL(to: url)
+    }
+
+    private func replaceCurrentItemURL(to url: URL) {
+        playbackDebugMessage("Replacing player item url to: \(url)")
+        let currentTime = player.currentTime()
+        let newItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: newItem)
+        observe(for: newItem)
+
+        guard currentTime.isValid else { return }
+        player.seek(to: currentTime)
     }
 }
 

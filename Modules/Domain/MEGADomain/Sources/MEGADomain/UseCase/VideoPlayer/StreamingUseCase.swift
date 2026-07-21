@@ -22,11 +22,7 @@ public struct StreamingUseCase: StreamingUseCaseProtocol {
     }
 
     public func streamingLink(for node: any PlayableNode) -> URL? {
-        if repository.httpServerIsLocalOnly {
-            return repository.httpServerGetLocalLink(node)
-        } else {
-            return repository.httpServerGetLocalLink(node)?.updatedURLWithCurrentAddress()
-        }
+        repository.httpServerGetLocalLink(node)
     }
 
     public func startStreaming() {
