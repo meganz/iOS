@@ -4744,6 +4744,8 @@
 "videoPlayer.snapshot.snackBar.title"="Image saved to your device";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture-in-picture";
+/* The Airplay video player option in bottom more menu */
+"videoPlayer.airplay.bottomSheet.title"="Airplay";
 /* The Subtitles video player option in bottom more menu */
 "videoPlayer.subtitles.bottomSheet.title"="Subtitles";
 /* The add subtitle from Cloud drive option in subtitle menu */
