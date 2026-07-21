@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
+#if DEBUG || QA_CONFIG
 protocol QASettingsRouting: Routing {
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction])
     func showAlert(withError error: any Error)
@@ -51,3 +52,4 @@ struct QASettingsRouter: QASettingsRouting {
         )
     }
 }
+#endif

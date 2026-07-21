@@ -2,6 +2,8 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
+#if DEBUG || QA_CONFIG
+
 @MainActor
 final class QASettingsViewModel {
     private enum Constants {
@@ -85,3 +87,4 @@ final class QASettingsViewModel {
         router.showAlert(withError: error)
     }
 }
+#endif
