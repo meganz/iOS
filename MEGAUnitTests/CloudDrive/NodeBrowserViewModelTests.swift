@@ -177,6 +177,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
+                saveMediaDiscoverySortOrder: { _ in },
                 onNodeStructureChanged: onNodeStructureChanged,
                 onMoreOptionsButtonTapped: { _ in }
             )

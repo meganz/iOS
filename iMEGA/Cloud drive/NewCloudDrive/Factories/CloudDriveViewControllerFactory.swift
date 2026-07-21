@@ -383,6 +383,10 @@ struct CloudDriveViewControllerFactory {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
             },
             sortOrderProvider: sortOrderProvider,
+            saveMediaDiscoverySortOrder: { [sortOrderPreferenceUseCase] sortOrder in
+                guard let handle = nodeSource.parentNode?.handle else { return }
+                sortOrderPreferenceUseCase.save(sortOrder: sortOrder, for: handle)
+            },
             onNodeStructureChanged: onNodeStructureChanged,
             onMoreOptionsButtonTapped: onMoreOptionsButtonTapped
         )
@@ -1170,10 +1174,11 @@ struct CloudDriveViewControllerFactory {
         isShowingAutomatically: Bool,
         isFromSharedItem: Bool
     ) -> MediaDiscoveryContentViewModel {
-        .init(
+        let persistedSortOrder = sortOrderPreferenceUseCase.sortOrder(for: parentNodeProvider()?.handle)
+        return .init(
             contentMode: isFromSharedItem ? .mediaDiscoverySharedItems : .mediaDiscovery,
             parentNodeProvider: parentNodeProvider,
-            sortOrder: .newest, // For media discovery, we default the sort order to newest.
+            sortOrder: persistedSortOrder == .modificationAsc ? .oldest : .newest,
             isAutomaticallyShown: isShowingAutomatically,
             delegate: mediaContentDelegate,
             analyticsUseCase: mediaAnalyticsUseCase,

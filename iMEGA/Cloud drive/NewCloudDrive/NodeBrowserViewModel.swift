@@ -188,6 +188,7 @@ final class NodeBrowserViewModel: ObservableObject {
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
+        saveMediaDiscoverySortOrder: @escaping (MEGADomain.SortOrderEntity) -> Void,
         onNodeStructureChanged: @escaping () -> Void,
         onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
     ) {
@@ -237,10 +238,12 @@ final class NodeBrowserViewModel: ObservableObject {
         $mediaDiscoverySortOrder
             .dropFirst()
             .removeDuplicates()
-            .sink { [mediaDiscoveryViewModel, tracker] order in
+            .sink { [mediaDiscoveryViewModel, tracker, saveMediaDiscoverySortOrder] order in
                 Task { @MainActor in
                     tracker.trackAnalyticsEvent(with: SortByDateModifiedMenuItemEvent())
-                    await mediaDiscoveryViewModel?.update(sortOrder: SortOrderType(megaSortOrderType: order.toMEGASortOrderType()))
+                    let sortOrder = SortOrderType(megaSortOrderType: order.toMEGASortOrderType())
+                    saveMediaDiscoverySortOrder(sortOrder.toSortOrderEntity())
+                    await mediaDiscoveryViewModel?.update(sortOrder: sortOrder)
                 }
             }
             .store(in: &subscriptions)
