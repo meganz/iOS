@@ -1669,6 +1669,7 @@
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
 		A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */; };
+		A110896A2E2F0000000AC002 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = A110896A2E2F0000000AC001 /* AppIcon.icon */; };
 		A5C710022DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */; };
 		A5C710032DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */; };
 		A5CB0B682DD31777004B6AB9 /* CopyableLabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */; };
@@ -4509,6 +4510,7 @@
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
+		A110896A2E2F0000000AC001 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrimaryAppIcon.xcassets; sourceTree = "<group>"; };
 		A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CopyableLabel+Additions.swift"; sourceTree = "<group>"; };
 		A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+FeatureFlagProvider.swift"; sourceTree = "<group>"; };
@@ -6412,6 +6414,7 @@
 				B67FFF9629D53D2400E830FA /* Debug */,
 				B67FFF9529D53D1A00E830FA /* QA */,
 				B67FFF9429D53D1400E830FA /* Release */,
+				A110896A2E2F0000000AC001 /* AppIcon.icon */,
 				1373618E1A6664C300B740E8 /* Info.plist */,
 				E803CB661D5336F100F81A36 /* InfoPlist.strings */,
 				1373618F1A6664C300B740E8 /* main.m */,
@@ -14203,6 +14206,7 @@
 				5B72739A240D3465005816AB /* altIconNight@3x.png in Resources */,
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
+				A110896A2E2F0000000AC002 /* AppIcon.icon in Resources */,
 				A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
 				83E2A0142D1AC137002B85A9 /* audioClipSent.wav in Resources */,
 				C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */,
