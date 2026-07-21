@@ -196,6 +196,12 @@ extension NSURL {
         return Self.ignoredPaths.contains(where: { path.hasPrefix($0) })
     }
 
+    /// Whether this URL's host is one of MEGA's own universal-link domains
+    @objc var mnz_isMEGAUniversalLinkHost: Bool {
+        guard let host = host?.lowercased() else { return false }
+        return Self.universalLinkHosts.contains(host)
+    }
+
     private static let universalLinkHosts: Set<String> = [
         "mega.nz", "www.mega.nz",
         "mega.app", "www.mega.app",

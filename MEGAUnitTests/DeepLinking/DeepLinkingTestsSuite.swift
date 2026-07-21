@@ -454,4 +454,39 @@ struct DeepLinkingTestSuite {
             assertDeepLinkType(urlString: url, expectedType: .cameraUploadsSettings)
         }
     }
+
+    // MARK: - MEGA Universal-Link Host Tests
+    @Suite("MEGA Universal-Link Host Tests - Verifies host gating used by the session-transfer flow (IOS-12259).")
+    struct MEGAUniversalLinkHostTests {
+        private static func assertIsMEGAHost(_ urlString: String, _ expected: Bool) {
+            guard let url = URL(string: urlString) as? NSURL else {
+                Issue.record("Invalid URL string: \(urlString)")
+                return
+            }
+            #expect(url.mnz_isMEGAUniversalLinkHost == expected, "Expected \(expected) for URL: \(urlString)")
+        }
+
+        @Test("MEGA universal-link hosts should be recognised", arguments: [
+            "https://mega.nz/fm/pro",
+            "https://www.mega.nz/fm/pro",
+            "https://MEGA.nz/fm/pro",
+            "https://mega.app/fm/chat",
+            "https://www.mega.app/",
+            "https://testbed.preview.mega.co.nz/fm/account"
+        ])
+        func megaHostsAreRecognised(url: String) {
+            Self.assertIsMEGAHost(url, true)
+        }
+
+        @Test("Non-MEGA hosts must not be treated as MEGA hosts", arguments: [
+            "https://example.com/fm/pro",
+            "https://mega.nz.evil.com/fm/pro",
+            "https://evil-mega.nz.attacker.com/fm/pro",
+            "https://mega.io/fm/pro",
+            "https://x.fm/anything"
+        ])
+        func nonMegaHostsAreRejected(url: String) {
+            Self.assertIsMEGAHost(url, false)
+        }
+    }
 }

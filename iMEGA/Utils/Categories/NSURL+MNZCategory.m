@@ -31,7 +31,7 @@
     }
     
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([self.absoluteString containsString:RequireTransferSession]) {
+        if (self.mnz_isMEGAUniversalLinkHost && [self.absoluteString containsString:RequireTransferSession]) {
             NSUInteger location = [self.absoluteString rangeOfString:RequireTransferSession].location + RequireTransferSession.length;
             NSString *path = [self.absoluteString substringFromIndex:location];
             RequestDelegate *delegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
