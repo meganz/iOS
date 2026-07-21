@@ -653,14 +653,6 @@
 		5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
 		5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3B0D142684B24700479A68 /* ShareViewController.m */; };
-		5B3B0D1E2684B8F200479A68 /* altIconMinimal@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */; };
-		5B3B0D1F2684B8F200479A68 /* defaultIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */; };
-		5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */; };
-		5B3B0D212684B8F200479A68 /* altIconNight@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */; };
-		5B3B0D262684B91B00479A68 /* altIconMinimal@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */; };
-		5B3B0D272684B91B00479A68 /* altIconDay@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */; };
-		5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */; };
-		5B3B0D292684B91B00479A68 /* defaultIcon@3x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
 		5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
 		5B40B3AC2422ACB900B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
@@ -683,14 +675,6 @@
 		5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */; };
 		5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B727382240D1570005816AB /* AppearanceTableViewController.swift */; };
 		5B727385240D1682005816AB /* Appearance.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B727384240D1682005816AB /* Appearance.storyboard */; };
-		5B727393240D32F9005816AB /* altIconMinimal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727390240D32F8005816AB /* altIconMinimal@2x.png */; };
-		5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727391240D32F9005816AB /* altIconNight@2x.png */; };
-		5B727395240D32F9005816AB /* altIconDay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727392240D32F9005816AB /* altIconDay@2x.png */; };
-		5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727396240D3465005816AB /* altIconMinimal@3x.png */; };
-		5B72739A240D3465005816AB /* altIconNight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727397240D3465005816AB /* altIconNight@3x.png */; };
-		5B72739B240D3465005816AB /* altIconDay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B727398240D3465005816AB /* altIconDay@3x.png */; };
-		5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739C240D430F005816AB /* defaultIcon@3x.png */; };
-		5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739D240D4310005816AB /* defaultIcon@2x.png */; };
 		5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */; };
 		5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		5B79E88D26E6973A0070D782 /* EmptyStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79E88C26E6973A0070D782 /* EmptyStateType.swift */; };
@@ -3498,14 +3482,6 @@
 		5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatAttachedContactsViewController.h; path = Chat/ChatAttachedContactsViewController.h; sourceTree = "<group>"; };
 		5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatAttachedContactsViewController.m; path = Chat/ChatAttachedContactsViewController.m; sourceTree = "<group>"; };
 		5B3B0D142684B24700479A68 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
-		5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconMinimal@2x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultIcon@2x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconDay@2x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconNight@2x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconMinimal@3x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconDay@3x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "altIconNight@3x~ipad.png"; sourceTree = "<group>"; };
-		5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultIcon@3x~ipad.png"; sourceTree = "<group>"; };
 		5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementsDetailsViewController.m; sourceTree = "<group>"; };
 		5B40AB311F7A512E0034C3B3 /* AchievementsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementsDetailsViewController.h; sourceTree = "<group>"; };
 		5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingPreference.swift; sourceTree = "<group>"; };
@@ -3536,14 +3512,6 @@
 		5B716E3123741AC900925E18 /* MEGAShare-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAShare-Bridging-Header.h"; sourceTree = "<group>"; };
 		5B727382240D1570005816AB /* AppearanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceTableViewController.swift; sourceTree = "<group>"; };
 		5B727384240D1682005816AB /* Appearance.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Appearance.storyboard; sourceTree = "<group>"; };
-		5B727390240D32F8005816AB /* altIconMinimal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconMinimal@2x.png"; path = "App Icons/altIconMinimal@2x.png"; sourceTree = "<group>"; };
-		5B727391240D32F9005816AB /* altIconNight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconNight@2x.png"; path = "App Icons/altIconNight@2x.png"; sourceTree = "<group>"; };
-		5B727392240D32F9005816AB /* altIconDay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconDay@2x.png"; path = "App Icons/altIconDay@2x.png"; sourceTree = "<group>"; };
-		5B727396240D3465005816AB /* altIconMinimal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconMinimal@3x.png"; path = "App Icons/altIconMinimal@3x.png"; sourceTree = "<group>"; };
-		5B727397240D3465005816AB /* altIconNight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconNight@3x.png"; path = "App Icons/altIconNight@3x.png"; sourceTree = "<group>"; };
-		5B727398240D3465005816AB /* altIconDay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "altIconDay@3x.png"; path = "App Icons/altIconDay@3x.png"; sourceTree = "<group>"; };
-		5B72739C240D430F005816AB /* defaultIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaultIcon@3x.png"; path = "App Icons/defaultIcon@3x.png"; sourceTree = "<group>"; };
-		5B72739D240D4310005816AB /* defaultIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaultIcon@2x.png"; path = "App Icons/defaultIcon@2x.png"; sourceTree = "<group>"; };
 		5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingAndViewModeTableViewController.swift; sourceTree = "<group>"; };
 		5B72A14B20D3A69C007FE4FD /* URLType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLType.h; sourceTree = "<group>"; };
 		5B79E88C26E6973A0070D782 /* EmptyStateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateType.swift; sourceTree = "<group>"; };
@@ -6410,7 +6378,6 @@
 		1373618D1A6664C300B740E8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5B72738F240D32EA005816AB /* App Icons */,
 				B67FFF9629D53D2400E830FA /* Debug */,
 				B67FFF9529D53D1A00E830FA /* QA */,
 				B67FFF9429D53D1400E830FA /* Release */,
@@ -7995,29 +7962,6 @@
 				5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */,
 			);
 			path = Appearance;
-			sourceTree = "<group>";
-		};
-		5B72738F240D32EA005816AB /* App Icons */ = {
-			isa = PBXGroup;
-			children = (
-				5B727392240D32F9005816AB /* altIconDay@2x.png */,
-				5B3B0D1C2684B8F100479A68 /* altIconDay@2x~ipad.png */,
-				5B727398240D3465005816AB /* altIconDay@3x.png */,
-				5B3B0D232684B91A00479A68 /* altIconDay@3x~ipad.png */,
-				5B727390240D32F8005816AB /* altIconMinimal@2x.png */,
-				5B3B0D182684B8F000479A68 /* altIconMinimal@2x~ipad.png */,
-				5B727396240D3465005816AB /* altIconMinimal@3x.png */,
-				5B3B0D222684B91900479A68 /* altIconMinimal@3x~ipad.png */,
-				5B727391240D32F9005816AB /* altIconNight@2x.png */,
-				5B3B0D1D2684B8F200479A68 /* altIconNight@2x~ipad.png */,
-				5B727397240D3465005816AB /* altIconNight@3x.png */,
-				5B3B0D242684B91A00479A68 /* altIconNight@3x~ipad.png */,
-				5B72739D240D4310005816AB /* defaultIcon@2x.png */,
-				5B3B0D1B2684B8F100479A68 /* defaultIcon@2x~ipad.png */,
-				5B72739C240D430F005816AB /* defaultIcon@3x.png */,
-				5B3B0D252684B91B00479A68 /* defaultIcon@3x~ipad.png */,
-			);
-			name = "App Icons";
 			sourceTree = "<group>";
 		};
 		5B7273A2240E65F4005816AB /* Appearance */ = {
@@ -14193,18 +14137,6 @@
 				BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */,
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
 				832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */,
-				5B727395240D32F9005816AB /* altIconDay@2x.png in Resources */,
-				5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */,
-				5B72739B240D3465005816AB /* altIconDay@3x.png in Resources */,
-				5B3B0D272684B91B00479A68 /* altIconDay@3x~ipad.png in Resources */,
-				5B727393240D32F9005816AB /* altIconMinimal@2x.png in Resources */,
-				5B3B0D1E2684B8F200479A68 /* altIconMinimal@2x~ipad.png in Resources */,
-				5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */,
-				5B3B0D262684B91B00479A68 /* altIconMinimal@3x~ipad.png in Resources */,
-				5B727394240D32F9005816AB /* altIconNight@2x.png in Resources */,
-				5B3B0D212684B8F200479A68 /* altIconNight@2x~ipad.png in Resources */,
-				5B72739A240D3465005816AB /* altIconNight@3x.png in Resources */,
-				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
 				A110896A2E2F0000000AC002 /* AppIcon.icon in Resources */,
 				A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
@@ -14237,10 +14169,6 @@
 				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */,
-				5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */,
-				5B3B0D1F2684B8F200479A68 /* defaultIcon@2x~ipad.png in Resources */,
-				5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */,
-				5B3B0D292684B91B00479A68 /* defaultIcon@3x~ipad.png in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				BFC933DF24A44E2300BC2A75 /* EmojiCarousalView.xib in Resources */,
 				BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */,

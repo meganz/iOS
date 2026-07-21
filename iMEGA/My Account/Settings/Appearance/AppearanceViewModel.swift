@@ -62,7 +62,7 @@ final class AppearanceViewModel {
             sensitiveNodeUseCase.isAccessible()
         case .none:
             false
-        case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .mediaDiscoverySubfolder:
+        case .launch, .layout, .recents, .mediaDiscovery, .mediaDiscoverySubfolder:
             true
         }
     }

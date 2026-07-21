@@ -1,5 +1,4 @@
 import MEGAAppPresentation
-import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -12,13 +11,6 @@ enum AppearanceSection: Int {
     case mediaDiscovery
     case mediaDiscoverySubfolder
     case recents
-    case appIcon
-}
-
-enum IconName: String {
-    case day = "altIconDay"
-    case night = "altIconNight"
-    case minimal = "altIconMinimal"
 }
 
 class AppearanceTableViewController: UITableViewController {
@@ -38,24 +30,6 @@ class AppearanceTableViewController: UITableViewController {
     
     @IBOutlet weak var hideRecentActivityLabel: UILabel!
     @IBOutlet weak var hideRecentActivitySwitch: UISwitch!
-    
-    @IBOutlet weak var defaultIconContainerView: UIView!
-    @IBOutlet weak var defaultIconButton: UIButton!
-    @IBOutlet weak var defaultIconLabel: UILabel!
-    
-    @IBOutlet weak var dayIconContainerView: UIView!
-    @IBOutlet weak var dayIconButton: UIButton!
-    @IBOutlet weak var dayIconLabel: UILabel!
-    
-    @IBOutlet weak var nightIconContainerView: UIView!
-    @IBOutlet weak var nightIconButton: UIButton!
-    @IBOutlet weak var nightIconLabel: UILabel!
-    
-    @IBOutlet weak var minimalIconContainerView: UIView!
-    @IBOutlet weak var minimalIconButton: UIButton!
-    @IBOutlet weak var minimalIconLabel: UILabel!
-    
-    @IBOutlet weak var iconSelectorBackgroundImageView: UIImageView!
 
     private let viewModel: AppearanceViewModel
     
@@ -85,24 +59,9 @@ class AppearanceTableViewController: UITableViewController {
         mediaDiscoveryViewLabel.textAlignment = .natural
         mediaDiscoverySubfolderLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscoverySubFolder
         hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
-        
-        defaultIconLabel.text = Strings.Localizable.default
-        dayIconLabel.text = Strings.Localizable.day.localizedCapitalized
-        nightIconLabel.text = Strings.Localizable.night
-        minimalIconLabel.text = Strings.Localizable.minimal
-        
-        defaultIconLabel.textColor = TokenColors.Text.onColor
-        dayIconLabel.textColor = TokenColors.Text.onColor
-        nightIconLabel.textColor = TokenColors.Text.onColor
-        minimalIconLabel.textColor = TokenColors.Text.onColor
-        
-        iconSelectorBackgroundImageView.image = MEGAAssets.UIImage.image(named: "iconSelectorBackground")
-        
+
         Task { await loadSettings() }
-        
-        let alternateIconName = UIApplication.shared.alternateIconName
-        selectIcon(with: alternateIconName)
-        
+
         setupColors()
     }
     
@@ -130,71 +89,6 @@ class AppearanceTableViewController: UITableViewController {
         defaultTabDetailLabel.textColor = TokenColors.Text.secondary
     }
     
-    private func selectIcon(with name: String?) {
-        switch name {
-        case IconName.day.rawValue:
-            markIcon(in: dayIconContainerView)
-            changeLabelWeight(to: dayIconLabel)
-            
-        case IconName.night.rawValue:
-            markIcon(in: nightIconContainerView)
-            changeLabelWeight(to: nightIconLabel)
-            
-        case IconName.minimal.rawValue:
-            markIcon(in: minimalIconContainerView)
-            changeLabelWeight(to: minimalIconLabel)
-            
-        default:
-            markIcon(in: defaultIconContainerView)
-            changeLabelWeight(to: defaultIconLabel)
-        }
-    }
-    
-    private func markIcon(in view: UIView) {
-        view.layer.borderColor = TokenColors.Border.strongSelected.cgColor
-    }
-    
-    private func changeLabelWeight(to label: UILabel) {
-        label.font = UIFont.preferredFont(style: .caption1, weight: .bold)
-        label.textColor = TokenColors.Text.onColor
-    }
-    
-    private func resetPreviousIcon(with name: String?) {
-        switch name {
-        case IconName.day.rawValue:
-            dayIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            dayIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
-            
-        case IconName.night.rawValue:
-            nightIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            nightIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
-            
-        case IconName.minimal.rawValue:
-            minimalIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            minimalIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
-            
-        default:
-            defaultIconContainerView.layer.borderColor = UIColor.clear.cgColor
-            defaultIconLabel.font = UIFont.preferredFont(style: .caption1, weight: .medium)
-        }
-    }
-    
-    private func changeAppIcon(to iconName: String?) {
-        if UIApplication.shared.supportsAlternateIcons {
-            let alternateIconName = UIApplication.shared.alternateIconName
-            UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
-                if let error = error {
-                    MEGALogError("App icon failed to change due to \(error.localizedDescription)")
-                } else {
-                    Task { @MainActor in
-                        self.selectIcon(with: iconName)
-                        self.resetPreviousIcon(with: alternateIconName)
-                    }
-                }
-            })
-        }
-    }
-    
     // MARK: - IBActions
     @IBAction func hiddenItemsViewValueChanged(_ sender: UISwitch) {
         viewModel.saveSetting(for: .showHiddenItems(sender.isOn))
@@ -211,23 +105,7 @@ class AppearanceTableViewController: UITableViewController {
     @IBAction func hideRecentActivityValueChanged(_ sender: UISwitch) {
         viewModel.saveSetting(for: .hideRecentActivity(sender.isOn))
     }
-    
-    @IBAction func defaultIconTouchUpInside(_ sender: UIButton) {
-        changeAppIcon(to: nil)
-    }
-    
-    @IBAction func dayIconTouchUpInside(_ sender: UIButton) {
-        changeAppIcon(to: IconName.day.rawValue)
-    }
-    
-    @IBAction func nightIconTouchUpInside(_ sender: UIButton) {
-        changeAppIcon(to: IconName.night.rawValue)
-    }
-    
-    @IBAction func minimalIconTouchUpInside(_ sender: UIButton) {
-        changeAppIcon(to: IconName.minimal.rawValue)
-    }
-    
+
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -286,8 +164,6 @@ class AppearanceTableViewController: UITableViewController {
             Strings.Localizable.Settings.UserInterface.MediaDiscovery.header
         case .recents:
             Strings.Localizable.recents
-        case .appIcon:
-            Strings.Localizable.appIcon
         }
     }
     
@@ -307,7 +183,7 @@ class AppearanceTableViewController: UITableViewController {
             Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
         case .hiddenItems:
             Strings.Localizable.Settings.UserInterface.HiddenItems.footer
-        case .appIcon, .mediaDiscovery:
+        case .mediaDiscovery:
             nil
         }
     }
@@ -325,14 +201,14 @@ class AppearanceTableViewController: UITableViewController {
                     linkUrl: linkUrl
                 )
             }
-        case .none, .launch, .layout, .hiddenItems, .mediaDiscoverySubfolder, .recents, .appIcon:
+        case .none, .launch, .layout, .hiddenItems, .mediaDiscoverySubfolder, .recents:
             return nil
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch AppearanceSection(rawValue: section) {
-        case .launch, .layout, .recents, .appIcon, .mediaDiscovery, .none, .mediaDiscoverySubfolder, .hiddenItems:
+        case .launch, .layout, .recents, .mediaDiscovery, .none, .mediaDiscoverySubfolder, .hiddenItems:
             UITableView.automaticDimension
         }
     }

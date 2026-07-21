@@ -84,8 +84,7 @@ final class AppearanceViewModelTests: XCTestCase {
             (.hiddenItems, false),
             (.mediaDiscovery, true),
             (.mediaDiscoverySubfolder, true),
-            (.recents, true),
-            (.appIcon, true)
+            (.recents, true)
         ]
         
         expectedResult.forEach { section, result in
@@ -104,8 +103,7 @@ final class AppearanceViewModelTests: XCTestCase {
             (.hiddenItems, false),
             (.mediaDiscovery, true),
             (.mediaDiscoverySubfolder, true),
-            (.recents, true),
-            (.appIcon, true)
+            (.recents, true)
         ]
         
         expectedResult.forEach { section, result in
@@ -124,8 +122,7 @@ final class AppearanceViewModelTests: XCTestCase {
             (.hiddenItems, true),
             (.mediaDiscovery, true),
             (.mediaDiscoverySubfolder, true),
-            (.recents, true),
-            (.appIcon, true)
+            (.recents, true)
         ]
         
         expectedResult.forEach { section, result in
