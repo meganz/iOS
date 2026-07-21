@@ -599,18 +599,19 @@ struct NewTimelineViewModelTests {
             #expect(sut.photoLibraryContentViewModel.library.allPhotos[0].hasThumbnail == false) // unchanged
         }
 
-        @Test("A sensitivity-only node update is NOT patched in place (left to the authoritative shape reconcile)")
-        func nodeMetadataUpdateForSensitivityOnlyChangeIsNotPatched() async {
-            // isMarkedSensitive under exclude-sensitive is a membership change: the section monitor
-            // must reproject the node out, not this patch (which would briefly keep a should-be-
-            // hidden node on screen). So a sensitivity-only update must leave the library untouched.
+        @Test("A sensitivity-only update is NOT patched when hidden items are excluded (left to the shape reconcile)")
+        func nodeMetadataUpdateForSensitivityOnlyChangeIsNotPatchedWhenHiddenExcluded() async {
+            // With hidden items excluded, isMarkedSensitive is a membership change: the section
+            // monitor must reproject the node out, not this patch (which would briefly keep a
+            // should-be-hidden node on screen). So the update must leave the library untouched.
             let sut = makeSUT(
                 nodeUseCase: MockNodeUseCase(
                     nodeUpdates: SingleItemAsyncSequence(
                         item: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: true)])
                         .eraseToAnyAsyncSequence()),
                 mediaTimelineUseCase: MockMediaTimelineUseCase(
-                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1))))
+                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
+                    excludeSensitivesResult: true))
             await sut.loadPhotos()
             sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
                 .replacingPhotos(from: 0, with: [
@@ -620,6 +621,30 @@ struct NewTimelineViewModelTests {
 
             // Same render fields (hasThumbnail true both sides) → no patch; sensitivity flip ignored here.
             #expect(sut.photoLibraryContentViewModel.library.allPhotos[0].isMarkedSensitive == false)
+        }
+
+        @Test("A sensitivity-only update IS patched in place when hidden items are shown (re-render blurred)")
+        func nodeMetadataUpdateForSensitivityOnlyChangeIsPatchedWhenHiddenShown() async {
+            // With hidden items shown, hiding a node keeps it in the set (unchanged count, so the
+            // section monitor does nothing); only this in-place patch can re-render it blurred.
+            let sut = makeSUT(
+                nodeUseCase: MockNodeUseCase(
+                    nodeUpdates: SingleItemAsyncSequence(
+                        item: [NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: true)])
+                        .eraseToAnyAsyncSequence()),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 1)),
+                    excludeSensitivesResult: false))
+            await sut.loadPhotos()
+            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
+                .replacingPhotos(from: 0, with: [
+                    NodeEntity(name: "n.jpg", handle: 10, hasThumbnail: true, isMarkedSensitive: false)])
+
+            await sut.monitorNodeMetadataUpdates()
+
+            let node = sut.photoLibraryContentViewModel.library.allPhotos[0]
+            #expect(node.handle == 10)
+            #expect(node.isMarkedSensitive) // patched in place → cell reconfigures and blurs
         }
     }
 

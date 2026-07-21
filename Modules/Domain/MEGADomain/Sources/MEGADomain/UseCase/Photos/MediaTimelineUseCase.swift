@@ -46,6 +46,8 @@ public protocol MediaTimelineUseCaseProtocol: Sendable {
         granularity: MediaDateGranularityEntity,
         sortOrder: MediaTimelineSortOrderEntity
     ) async -> AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>
+    
+    func excludeSensitives() async -> Bool
 }
 
 public struct MediaTimelineUseCase<
@@ -133,6 +135,10 @@ public struct MediaTimelineUseCase<
             .map { _ in await loadSections(filter: filter, granularity: granularity, sortOrder: sortOrder) }
             .prepend { await loadSections(filter: filter, granularity: granularity, sortOrder: sortOrder) }
             .eraseToAnyAsyncSequence()
+    }
+
+    public func excludeSensitives() async -> Bool {
+        await sensitiveDisplayPreferenceUseCase.excludeSensitives()
     }
 
     private func loadSections(

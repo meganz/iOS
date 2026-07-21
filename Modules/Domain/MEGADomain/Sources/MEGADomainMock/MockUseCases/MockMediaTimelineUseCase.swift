@@ -58,6 +58,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
     private let mediaPageBeforeResult: Result<[NodeEntity], any Error>
     private let mediaWindowResult: Result<[NodeEntity], any Error>
     private let monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>
+    private let excludeSensitivesResult: Bool
     private let recorder: MediaTimelineUseCaseRecorder?
 
     public init(
@@ -66,6 +67,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         mediaPageBeforeResult: Result<[NodeEntity], any Error> = .success([]),
         mediaWindowResult: Result<[NodeEntity], any Error> = .success([]),
         monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> = EmptyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>().eraseToAnyAsyncSequence(),
+        excludeSensitivesResult: Bool = true,
         recorder: MediaTimelineUseCaseRecorder? = nil
     ) {
         self.dateSectionsResult = dateSectionsResult
@@ -73,6 +75,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         self.mediaPageBeforeResult = mediaPageBeforeResult
         self.mediaWindowResult = mediaWindowResult
         self.monitorDateSectionsSequence = monitorDateSectionsSequence
+        self.excludeSensitivesResult = excludeSensitivesResult
         self.recorder = recorder
     }
 
@@ -121,5 +124,9 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         sortOrder: MediaTimelineSortOrderEntity
     ) async -> AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> {
         monitorDateSectionsSequence
+    }
+
+    public func excludeSensitives() async -> Bool {
+        excludeSensitivesResult
     }
 }

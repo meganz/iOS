@@ -78,6 +78,14 @@ final class MediaTimelineUseCaseTests: XCTestCase {
         XCTAssertEqual(afterSensitivityChange, sections)
     }
 
+    func testExcludeSensitives_forwardsAccountPreference() async {
+        let excluded = await makeSUT(excludeSensitives: true).excludeSensitives()
+        let shown = await makeSUT(excludeSensitives: false).excludeSensitives()
+
+        XCTAssertTrue(excluded)
+        XCTAssertFalse(shown)
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(

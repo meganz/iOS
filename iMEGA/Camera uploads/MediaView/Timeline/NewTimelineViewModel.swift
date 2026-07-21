@@ -180,8 +180,9 @@ final class NewTimelineViewModel: ObservableObject {
             // If a metadata patch committed during the `await`s above, `assembled` was built from a
             // pre-patch snapshot and would revert it.
             if libraryRevision != revisionBefore {
+                let showsHiddenNodes = await !mediaTimelineUseCase.excludeSensitives()
                 assembled = assembled.mergingMetadata(from: photoLibraryContentViewModel.library) { mine, other in
-                    guard metadataDiffers(mine, other) else { return false }
+                    guard metadataDiffers(mine, other, showsHiddenNodes: showsHiddenNodes) else { return false }
                     if mine.hasThumbnail && !other.hasThumbnail { return false }
                     if mine.hasPreview && !other.hasPreview { return false }
                     return true
@@ -209,7 +210,11 @@ final class NewTimelineViewModel: ObservableObject {
     /// The O(total) flatten + scan + tree rebuild runs off the main actor so a Camera-Upload
     /// burst on a very large library doesn't do heavy work on the main thread.
     private func patchVisibleMetadata(with updatedNodes: [NodeEntity]) async {
-        guard mediaTimelineUseCase != nil, updatedNodes.isNotEmpty else { return }
+        guard let mediaTimelineUseCase, updatedNodes.isNotEmpty else { return }
+        // A node's own sensitivity flip only re-renders in place when hidden items are shown
+        // (the node stays, just blurs); when they're excluded, hiding is a membership change
+        // the `dateSections` monitor removes — so we must not patch it visible-but-blurred here.
+        let showsHiddenNodes = await !mediaTimelineUseCase.excludeSensitives()
         let updatesByHandle = Dictionary(
             updatedNodes.map { ($0.handle, $0) }, uniquingKeysWith: { _, latest in latest })
 
@@ -217,7 +222,8 @@ final class NewTimelineViewModel: ObservableObject {
         for _ in 0..<maxOffActorAttempts {
             let snapshot = photoLibraryContentViewModel.library
             let revisionBefore = libraryRevision
-            let patched = await patchingMetadataOffActor(snapshot, with: updatesByHandle)
+            let patched = await patchingMetadataOffActor(
+                snapshot, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes)
             // Re-check the revision before acting on the result. If the library moved under us,
             // re-snapshot and retry regardless of whether we found a match: a slot that was a
             // placeholder in the stale snapshot (no match) may have hydrated into a real node our
@@ -232,7 +238,8 @@ final class NewTimelineViewModel: ObservableObject {
         }
         // Lost the race on every off-actor attempt (needs repeated concurrent commits — extremely
         // rare); apply on the actor so it can't be raced again.
-        if let rebased = applyingMetadata(to: photoLibraryContentViewModel.library, with: updatesByHandle) {
+        if let rebased = applyingMetadata(
+            to: photoLibraryContentViewModel.library, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes) {
             commitLibrary(rebased)
         }
     }
@@ -240,9 +247,10 @@ final class NewTimelineViewModel: ObservableObject {
     /// Off-actor wrapper so the metadata rebuild runs on the cooperative pool, not the main actor.
     private nonisolated func patchingMetadataOffActor(
         _ library: PhotoLibrary,
-        with updatesByHandle: [HandleEntity: NodeEntity]
+        with updatesByHandle: [HandleEntity: NodeEntity],
+        showsHiddenNodes: Bool
     ) async -> PhotoLibrary? {
-        applyingMetadata(to: library, with: updatesByHandle)
+        applyingMetadata(to: library, with: updatesByHandle, showsHiddenNodes: showsHiddenNodes)
     }
 
     /// Pure metadata patch: swap in each updated node whose handle matches a real (non-placeholder)
@@ -250,7 +258,8 @@ final class NewTimelineViewModel: ObservableObject {
     /// when nothing changed, so the caller commits only real work.
     private nonisolated func applyingMetadata(
         to library: PhotoLibrary,
-        with updatesByHandle: [HandleEntity: NodeEntity]
+        with updatesByHandle: [HandleEntity: NodeEntity],
+        showsHiddenNodes: Bool
     ) -> PhotoLibrary? {
         var replacements: [Int: NodeEntity] = [:]
         for (index, node) in library.allPhotos.enumerated() where !node.isTimelinePlaceholder {
@@ -258,7 +267,7 @@ final class NewTimelineViewModel: ObservableObject {
             // would briefly leave a removed node on screen at a stale position.
             guard let updated = updatesByHandle[node.handle],
                   !updated.isRemoved,
-                  metadataDiffers(node, updated) else { continue }
+                  metadataDiffers(node, updated, showsHiddenNodes: showsHiddenNodes) else { continue }
             replacements[index] = updated
         }
         guard replacements.isNotEmpty else { return nil }
@@ -266,11 +275,15 @@ final class NewTimelineViewModel: ObservableObject {
     }
 
     /// Whether two same-handle nodes differ in a field this in-place patch is allowed to refresh:
-    /// render-only fields that don't change a node's **position** or **filter membership**.
-    private nonisolated func metadataDiffers(_ lhs: NodeEntity, _ rhs: NodeEntity) -> Bool {
+    /// render-only fields that don't change a node's **position**. `isMarkedSensitive` counts only
+    /// when `showsHiddenNodes` is true
+    private nonisolated func metadataDiffers(
+        _ lhs: NodeEntity, _ rhs: NodeEntity, showsHiddenNodes: Bool
+    ) -> Bool {
         lhs.hasThumbnail != rhs.hasThumbnail
             || lhs.hasPreview != rhs.hasPreview
             || lhs.isFavourite != rhs.isFavourite
+            || (showsHiddenNodes && lhs.isMarkedSensitive != rhs.isMarkedSensitive)
     }
 
     func emptyScreenTypeToShow() -> PhotosEmptyScreenViewType {
