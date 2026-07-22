@@ -1119,6 +1119,16 @@ struct PlayerOverlayViewModelTests {
         #expect(didTapPictureInPictureActionCallTimes == 1)
     }
 
+    @Test
+    func didTapAirPlay_shouldDismissBottomSheet() {
+        let sut = makeSUT()
+        sut.isBottomMoreSheetPresented = true
+
+        sut.didTapAirPlay()
+
+        #expect(sut.isBottomMoreSheetPresented == false)
+    }
+
     // MARK: Play next or previous Tests
 
     @Test

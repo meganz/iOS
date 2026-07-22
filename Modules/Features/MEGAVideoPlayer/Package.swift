@@ -26,6 +26,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
@@ -46,6 +48,8 @@ let package = Package(
             name: "MEGAVideoPlayer",
             dependencies: [
                 "MEGAL10n",
+                "MEGAAssets",
+                "MEGASwiftUI",
                 "MEGALogger",
                 "MEGADesignToken",
                 "MEGAUIComponent",

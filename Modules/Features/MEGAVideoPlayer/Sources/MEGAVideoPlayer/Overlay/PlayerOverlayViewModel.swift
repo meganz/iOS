@@ -344,6 +344,11 @@ extension PlayerOverlayViewModel {
         resetAutoHide()
     }
     
+    func didTapAirPlay() {
+        isBottomMoreSheetPresented = false
+        resetAutoHide()
+    }
+
     func didTapSubtitle() {
         isBottomMoreSheetPresented = false
     }

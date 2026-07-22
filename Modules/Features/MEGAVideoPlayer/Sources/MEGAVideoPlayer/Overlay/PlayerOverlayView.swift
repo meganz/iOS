@@ -1,8 +1,10 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAInfrastructure
 import MEGAL10n
 import MEGAPermissions
+import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
 
@@ -491,7 +493,7 @@ extension PlayerOverlayView {
     }
 
     private var bottomMoreSheetHeight: Int {
-        3 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+        4 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
     }
 
     private var playbackSpeedsSelectionListView: some View {
@@ -554,6 +556,18 @@ extension PlayerOverlayView {
                 icon: "pictureInPicture",
                 title: Strings.Localizable.VideoPlayer.Pip.BottomSheet.title,
                 action: viewModel.didTapPictureInPicture)
+
+            bottomMoreSheetRowView(
+                image: MEGAAssets.Image.monoAirplayMediumThinOutline,
+                title: Strings.Localizable.VideoPlayer.AirPlay.BottomSheet.title,
+                action: {}
+            )
+            .overlay {
+                AirPlayButton(
+                    onWillBeginPresentingRoutes: viewModel.didTapAirPlay
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .padding(.top, Constants.bottomSheetTopPadding)
         .background(
@@ -568,12 +582,20 @@ extension PlayerOverlayView {
         title: String,
         action: @escaping () -> Void
     ) -> some View {
+        bottomMoreSheetRowView(image: Image(icon, bundle: .module), title: title, action: action)
+    }
+    
+    private func bottomMoreSheetRowView(
+        image: Image,
+        title: String,
+        action: @escaping () -> Void
+    ) -> some View {
         Button {
             action()
         } label: {
             HStack(spacing: TokenSpacing._4) {
-                Image(icon, bundle: .module)
-                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                image
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                     .frame(width: 24, height: 24, alignment: .center)
 
                 Text(title)
