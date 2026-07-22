@@ -4,6 +4,7 @@ import SwiftUI
 
 struct RecommendedPlanFooterView: View {
     let planName: String
+    let onViewAllPlans: @MainActor () -> Void
 
     var body: some View {
         MEGABottomAnchoredButtons(
@@ -16,7 +17,7 @@ struct RecommendedPlanFooterView: View {
                 MEGAButton(
                     Strings.Localizable.QuotaWarning.RecommendedPlan.Button.viewAllPlans,
                     type: .textOnly,
-                    action: {}
+                    action: onViewAllPlans
                 )
             ],
             allowMaxWidthForWideScreen: true
@@ -25,5 +26,5 @@ struct RecommendedPlanFooterView: View {
 }
 
 #Preview {
-    RecommendedPlanFooterView(planName: "Essential")
+    RecommendedPlanFooterView(planName: "Essential", onViewAllPlans: {})
 }

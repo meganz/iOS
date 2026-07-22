@@ -14,7 +14,7 @@ struct QuotaDialogSkeletonView: View {
                     cardPlaceholder
                 }
                 .padding(.horizontal, TokenSpacing._5)
-                .padding(.vertical, TokenSpacing._9)
+                .padding(.bottom, TokenSpacing._5)
                 .maxWidthForWideScreen()
                 .frame(maxWidth: .infinity)
             }

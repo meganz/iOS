@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
 import QuotaWarnings
@@ -92,9 +93,37 @@ import UIKit
         guard !isQuotaDialogAlreadyPresented else { return }
         let presenter = UIApplication.mnz_presentingViewController()
         let onClose: @MainActor () -> Void = { [weak presenter] in presenter?.dismiss(animated: true) }
-        let hostingController = QuotaWarningDialogHostingController(rootView: QuotaWarningDialogView(kind: kind, onClose: onClose))
+
+        weak var presentedNavigationController: MEGANavigationController?
+        let onViewAllPlans: @MainActor () -> Void = {
+            guard let navigationController = presentedNavigationController else { return }
+            Self.presentAllPlans(from: navigationController)
+        }
+
+        let hostingController = QuotaWarningDialogHostingController(
+            rootView: QuotaWarningDialogView(kind: kind, onClose: onClose, onViewAllPlans: onViewAllPlans)
+        )
         let navigationController = MEGANavigationController(rootViewController: hostingController)
+        presentedNavigationController = navigationController
         presenter.present(navigationController, animated: true)
+    }
+
+    private static func presentAllPlans(from navigationController: UINavigationController) {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        guard let currentAccountDetails = accountUseCase.currentAccountDetails else {
+            MEGALogError("[QuotaWarningsRouter]: Could not retrieve current account details")
+            return
+        }
+        SubscriptionPurchaseRouter(
+            presenter: navigationController,
+            currentAccountDetails: currentAccountDetails,
+            presentationStyle: .push,
+            viewType: .upgrade,
+            accountUseCase: accountUseCase,
+            onDismiss: { [weak navigationController] in
+                navigationController?.popViewController(animated: true)
+            }
+        ).start()
     }
 
     private var isQuotaDialogAlreadyPresented: Bool {
@@ -109,7 +138,7 @@ private protocol QuotaWarningDialogHosting {}
 private final class QuotaWarningDialogHostingController<Content: View>: UIHostingController<Content>, QuotaWarningDialogHosting {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLiquidGlassNavigationBar(with: .clear)
+        navigationController?.navigationBar.isHidden = true
     }
 }
 
@@ -121,6 +150,7 @@ private struct QuotaWarningDialogView: View {
     
     let kind: Kind
     let onClose: @MainActor () -> Void
+    let onViewAllPlans: @MainActor () -> Void
 
     /// The plan catalog use case, built app-side because its repository depends on `MEGAPurchase`.
     private var accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol {
@@ -133,13 +163,15 @@ private struct QuotaWarningDialogView: View {
             StorageQuotaDialogView(
                 severity: storageQuotaSeverity,
                 dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
-                onClose: onClose
+                onClose: onClose,
+                onViewAllPlans: onViewAllPlans
             )
         case .transfer(let transferQuotaSeverity):
             TransferQuotaDialogView(
                 severity: transferQuotaSeverity,
                 dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
-                onClose: onClose
+                onClose: onClose,
+                onViewAllPlans: onViewAllPlans
             )
         }
     }

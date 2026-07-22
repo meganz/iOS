@@ -6,7 +6,7 @@ import MEGADomain
 /// Owns loading and the loading/standard/promo state switching for the revamp
 /// Upgrade screen. Builds the content view model once the plans are loaded.
 @MainActor
-public final class UpgradePlansContainerViewModel: ObservableObject {
+final class UpgradePlansContainerViewModel: ObservableObject {
     public enum ViewState {
         case loading
         case standard(RevampUpgradePlansViewModel)
@@ -21,9 +21,9 @@ public final class UpgradePlansContainerViewModel: ObservableObject {
     @Published public var isAlertPresented = false
 
     // [IOS-12239]: Handle error alert
-    public private(set) var alertType: UpgradeAccountPlanAlertType?
+    private(set) var alertType: UpgradeAccountPlanAlertType?
 
-    public init(dependency: RevampUpgradePlansDependency) {
+    init(dependency: RevampUpgradePlansDependency) {
         self.dependency = dependency
         observeRestoreResult()
     }
@@ -34,11 +34,11 @@ public final class UpgradePlansContainerViewModel: ObservableObject {
         }
     }
 
-    public func onAppear() {
+    func onAppear() {
         dependency.tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
     }
 
-    public func loadData() async {
+    func loadData() async {
         viewState = .loading
         await dependency.purchaseUseCase.registerRestoreDelegate()
 

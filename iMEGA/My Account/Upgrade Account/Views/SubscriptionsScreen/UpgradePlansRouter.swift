@@ -9,25 +9,32 @@ import SwiftUI
 
 @MainActor
 final class UpgradePlansRouter {
+    enum PresentationStyle {
+        case push, present
+    }
+    
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
+    private let presentationStyle: UpgradePlansRouter.PresentationStyle
     private let accountUseCase: any AccountUseCaseProtocol
-    private let accountDetails: AccountDetailsEntity
     private let viewType: UpgradeAccountPlanViewType
     private let isFromAds: Bool
-
+    private let onDismiss: @MainActor () -> Void
+    
     init(
         presenter: UIViewController?,
-        currentAccountDetails: AccountDetailsEntity,
+        presentationStyle: UpgradePlansRouter.PresentationStyle,
         viewType: UpgradeAccountPlanViewType,
         accountUseCase: some AccountUseCaseProtocol,
         isFromAds: Bool = false,
+        onDismiss: @escaping @MainActor () -> Void
     ) {
         self.presenter = presenter
-        self.accountDetails = currentAccountDetails
+        self.presentationStyle = presentationStyle
         self.viewType = viewType
         self.accountUseCase = accountUseCase
         self.isFromAds = isFromAds
+        self.onDismiss = onDismiss
     }
 
     func build() -> UIViewController {
@@ -57,17 +64,12 @@ final class UpgradePlansRouter {
                 NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
             }
         )
-        let viewModel = UpgradePlansContainerViewModel(dependency: dependency)
-        let view = UpgradePlansContainerView(viewModel: viewModel)
+        let view = UpgradePlansContainerView(dependency: dependency, onDismiss: onDismiss)
         let hostingController = UIHostingController(rootView: view)
         hostingController.modalPresentationStyle = .fullScreen
         baseViewController = hostingController
         termsAndPoliciesPresenter.presentingViewController = hostingController
         return hostingController
-    }
-
-    func start() {
-        presenter?.present(build(), animated: true)
     }
 
     private var revampViewType: RevampUpgradePlansViewType {

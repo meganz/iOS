@@ -17,20 +17,23 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private let accountUseCase: any AccountUseCaseProtocol
     private let accountDetails: AccountDetailsEntity
+    private let presentationStyle: UpgradePlansRouter.PresentationStyle
     private let viewType: UpgradeAccountPlanViewType
-    private let onDismiss: (() -> Void)?
+    private let onDismiss: (@MainActor () -> Void)?
     let isFromAds: Bool
 
     init(
         presenter: UIViewController?,
         currentAccountDetails: AccountDetailsEntity,
+        presentationStyle: UpgradePlansRouter.PresentationStyle = .present,
         viewType: UpgradeAccountPlanViewType,
         accountUseCase: some AccountUseCaseProtocol,
         isFromAds: Bool = false,
-        onDismiss: (() -> Void)? = nil
+        onDismiss: (@MainActor () -> Void)? = nil
     ) {
         self.presenter = presenter
         self.accountDetails = currentAccountDetails
+        self.presentationStyle = presentationStyle
         self.viewType = viewType
         self.accountUseCase = accountUseCase
         self.isFromAds = isFromAds
@@ -41,10 +44,11 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
         if isRevampUpgradePlansEnabled {
             let controller = UpgradePlansRouter(
                 presenter: presenter,
-                currentAccountDetails: accountDetails,
+                presentationStyle: presentationStyle,
                 viewType: viewType,
                 accountUseCase: accountUseCase,
-                isFromAds: isFromAds
+                isFromAds: isFromAds,
+                onDismiss: onDismiss ?? dismiss
             ).build()
             baseViewController = controller
             return controller
@@ -72,7 +76,17 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     }
 
     func start() {
-        presenter?.present(build(), animated: true)
+        let viewController = build()
+        switch presentationStyle {
+        case .push:
+            if let navigationController = presenter as? UINavigationController {
+                navigationController.pushViewController(viewController, animated: true)
+            } else {
+                presenter?.present(viewController, animated: true)
+            }
+        case .present:
+            presenter?.present(viewController, animated: true)
+        }
     }
 
     func showTermsAndPolicies() {
@@ -84,7 +98,16 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     }
     
     private func dismiss() {
-        baseViewController?.dismiss(animated: true)
+        switch presentationStyle {
+        case .push:
+            if let navigationController = baseViewController?.navigationController {
+                navigationController.popViewController(animated: true)
+            } else {
+                baseViewController?.dismiss(animated: true)
+            }
+        case .present:
+            baseViewController?.dismiss(animated: true)
+        }
     }
 
     private var isRevampUpgradePlansEnabled: Bool {

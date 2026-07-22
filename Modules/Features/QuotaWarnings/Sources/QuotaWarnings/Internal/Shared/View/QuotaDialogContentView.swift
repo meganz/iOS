@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
@@ -7,15 +8,13 @@ import SwiftUI
 struct QuotaDialogContentView: View {
     @ObservedObject var viewModel: QuotaDialogViewModel
     let onClose: () -> Void
+    let onViewAllPlans: @MainActor () -> Void
 
     var body: some View {
         dialog
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: onClose) {
-                        XmarkCloseButton()
-                    }
-                }
+            .safeAreaInset(edge: .top, spacing: 0) {
+                QuotaDialogTopBar(onClose: onClose)
+                    .ignoresSafeArea(edges: .top)
             }
             .onFirstLoad { await viewModel.load() }
     }
@@ -31,7 +30,7 @@ struct QuotaDialogContentView: View {
                 header: { QuotaDialogHeaderView(header: header) },
                 currentPlanCard: { CurrentPlanView(currentPlan: currentPlan) },
                 recommendedPlanCard: { RecommendedPlanView(plan: recommendedPlan) },
-                footer: { RecommendedPlanFooterView(planName: recommendedPlan.name) }
+                footer: { RecommendedPlanFooterView(planName: recommendedPlan.name, onViewAllPlans: onViewAllPlans) }
             )
         case let .noUpgradeAvailable(header, currentPlan):
             QuotaDialogView(

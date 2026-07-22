@@ -19,13 +19,16 @@ public struct StorageQuotaDialogView: View {
 
     @StateObject private var viewModel: QuotaDialogViewModel
     private let onClose: () -> Void
+    private let onViewAllPlans: @MainActor () -> Void
 
     public init(
         severity: StorageQuotaSeverity,
         dependency: Dependency,
-        onClose: @escaping () -> Void = {}
+        onClose: @escaping () -> Void = {},
+        onViewAllPlans: @escaping @MainActor () -> Void = {}
     ) {
         self.onClose = onClose
+        self.onViewAllPlans = onViewAllPlans
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(
             useCase: dependency.useCase,
             mapper: StorageQuotaDialogMapper(severity: severity)
@@ -37,9 +40,11 @@ public struct StorageQuotaDialogView: View {
     public init(
         severity: StorageQuotaSeverity,
         useCase: QAQuotaDialogUseCase,
-        onClose: @escaping () -> Void = {}
+        onClose: @escaping () -> Void = {},
+        onViewAllPlans: @escaping @MainActor () -> Void = {}
     ) {
         self.onClose = onClose
+        self.onViewAllPlans = onViewAllPlans
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(
             useCase: useCase,
             mapper: StorageQuotaDialogMapper(severity: severity)
@@ -52,9 +57,11 @@ public struct StorageQuotaDialogView: View {
     fileprivate init(
         severity: StorageQuotaSeverity,
         useCase: PreviewQuotaDialogUseCase,
-        onClose: @escaping () -> Void = {}
+        onClose: @escaping () -> Void = {},
+        onViewAllPlans: @escaping @MainActor () -> Void = {}
     ) {
         self.onClose = onClose
+        self.onViewAllPlans = onViewAllPlans
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(
             useCase: useCase,
             mapper: StorageQuotaDialogMapper(severity: severity)
@@ -63,7 +70,7 @@ public struct StorageQuotaDialogView: View {
 #endif
 
     public var body: some View {
-        QuotaDialogContentView(viewModel: viewModel, onClose: onClose)
+        QuotaDialogContentView(viewModel: viewModel, onClose: onClose, onViewAllPlans: onViewAllPlans)
     }
 }
 

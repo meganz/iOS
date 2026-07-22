@@ -8,13 +8,13 @@ protocol UpgradeSubscriptionRouting {
 
 final class UpgradeSubscriptionRouter: UpgradeSubscriptionRouting {
     private weak var presenter: UIViewController?
-    private let onDismiss: (() -> Void)?
+    private let onDismiss: (@MainActor () -> Void)?
     private let isFromAds: Bool
     
     init(
         presenter: UIViewController?,
         isFromAds: Bool = false,
-        onDismiss: (() -> Void)? = nil
+        onDismiss: (@MainActor () -> Void)? = nil
     ) {
         self.presenter = presenter
         self.isFromAds = isFromAds
@@ -34,7 +34,8 @@ final class UpgradeSubscriptionRouter: UpgradeSubscriptionRouting {
             viewType: .upgrade,
             accountUseCase: accountUseCase,
             isFromAds: isFromAds,
-            onDismiss: onDismiss)
+            onDismiss: onDismiss
+        )
         .start()
     }
 }

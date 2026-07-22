@@ -2,17 +2,18 @@ import Accounts
 import MEGAAppSDKRepo
 import MEGADomain
 
+@MainActor
 struct SubscriptionPurchaseViewCoordinator {
     private let window: UIWindow
     private let isNewUserRegistration: Bool
     private let accountUseCase: any AccountUseCaseProtocol
-    private let onDismiss: () -> Void
+    private let onDismiss: @MainActor () -> Void
 
     init(
         window: UIWindow,
         isNewUserRegistration: Bool,
         accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo),
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping @MainActor () -> Void
     ) {
         self.window = window
         self.isNewUserRegistration = isNewUserRegistration
