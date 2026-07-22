@@ -92,6 +92,7 @@ import UIKit
     /// Skips presentation when a quota dialog is already visible
     private func presentQuotaDialog(for kind: QuotaWarningDialogView.Kind) {
         guard !QuotaWarningsRouter.isDialogPresenting else { return }
+        QuotaWarningsRouter.isDialogPresenting = true
         let presenter = UIApplication.mnz_presentingViewController()
         let onClose: @MainActor () -> Void = { [weak presenter] in
             presenter?.dismiss(animated: true)
@@ -139,15 +140,10 @@ import UIKit
     }
 }
 
-/// Marker so an already-presented revamp quota dialog can be detected via `mnz_visibleViewController()`,
-/// Check `isQuotaDialogAlreadyPresented`
-private protocol QuotaWarningDialogHosting {}
-
-private final class QuotaWarningDialogHostingController<Content: View>: UIHostingController<Content>, QuotaWarningDialogHosting {
+private final class QuotaWarningDialogHostingController<Content: View>: UIHostingController<Content> {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        QuotaWarningsRouter.isDialogPresenting = true
     }
     
     isolated deinit {

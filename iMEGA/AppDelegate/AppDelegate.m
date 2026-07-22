@@ -83,6 +83,7 @@
 
 @property (nonatomic) MEGAError * _Nullable temporaryTransferErrorToDisplayLater;
 @property (nonatomic) MEGATransfer * _Nullable temporaryTransferTypeToDisplayLater;
+@property (nonatomic) MEGAEvent * _Nullable storageEventToDisplayLater;
 
 @end
 
@@ -698,6 +699,8 @@
                     [self showCookieDialogIfNeeded];
 
                     [self processGenericAppPushNotificationTapIfNeeded];
+
+                    [self showStorageQuotaWarningIfNeeded];
                 } else {
                     [self processActionsAfterSetRootVC];
                 }
@@ -756,8 +759,17 @@
 
     [self showTemporaryTransferErrorDialogIfNeeded];
 
+    [self showStorageQuotaWarningIfNeeded];
+
     if (!hadPendingAction) {
         [self dispatchDefaultLaunchDestinationIfNeeded];
+    }
+}
+
+- (void)showStorageQuotaWarningIfNeeded {
+    if (self.storageEventToDisplayLater) {
+        [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithEvent:self.storageEventToDisplayLater];
+        self.storageEventToDisplayLater = nil;
     }
 }
 
@@ -1266,9 +1278,15 @@
                 [self presentOverDiskQuota];
             } else {
                 if (event.number == StorageStateRed || event.number == StorageStateOrange) {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (self.mainTBC != nil) {
                         [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithEvent:event];
-                    });
+                    } else {
+                        // Launch: the main tab bar hasn't been installed as the window root yet,
+                        // so the root is still the transient LaunchViewController. Presenting now
+                        // would be torn down when showMainTabBar swaps the window root, so defer
+                        // until the tab bar is the stable root and replay it there.
+                        self.storageEventToDisplayLater = event;
+                    }
                 }
             }
             break;
