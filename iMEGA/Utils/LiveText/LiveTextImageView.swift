@@ -8,6 +8,8 @@ final class LiveTextImageView: SDAnimatedImageView {
     
     private let imageAnalyzer = ImageAnalyzer()
     
+    private var hasCompletedAnalysis = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -18,8 +20,8 @@ final class LiveTextImageView: SDAnimatedImageView {
     
     @MainActor
     func startAnalysis() {
-        guard let image else { return }
-        
+        guard let image, !hasCompletedAnalysis else { return }
+
         addInteraction(interaction)
         
         Task {
@@ -27,6 +29,8 @@ final class LiveTextImageView: SDAnimatedImageView {
             
             do {
                 let analysis = try await imageAnalyzer.analyze(image, configuration: configuration)
+                hasCompletedAnalysis = true
+                guard analysis.hasResults(for: [.text, .machineReadableCode]) else { return }
                 interaction.analysis = analysis
                 interaction.preferredInteractionTypes = .automatic
             } catch {
@@ -44,8 +48,8 @@ final class LiveTextImageView: SDAnimatedImageView {
         interaction.isSupplementaryInterfaceHidden
     }
     
-    func isInteractionAnalysisEmpty() -> Bool {
-        interaction.analysis == nil
+    func shouldStartAnalysis() -> Bool {
+        !hasCompletedAnalysis
     }
     
     @MainActor
@@ -58,7 +62,7 @@ final class LiveTextImageView: SDAnimatedImageView {
 extension UIImageView {
     @objc func startImageLiveTextAnalysisIfNeeded() {
         guard let liveTextImageView = self as? LiveTextImageView,
-              liveTextImageView.isInteractionAnalysisEmpty() else {
+              liveTextImageView.shouldStartAnalysis() else {
             return
         }
         liveTextImageView.startAnalysis()
