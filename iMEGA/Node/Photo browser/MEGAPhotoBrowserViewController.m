@@ -115,10 +115,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.rightToolbarItem.accessibilityIdentifier = @"rightToolbarItem";
 
     switch (self.displayMode) {
-        case DisplayModeFileLink:
-            self.centerToolbarItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
-            break;
-            
         case DisplayModeCloudDrive:
         case DisplayModeSharedItem:
         case DisplayModePhotosTimeline:

@@ -183,7 +183,7 @@ struct ImportAlbumView: View {
     }
     
     private func importAlbumToolbarButton() -> some View {
-        ToolbarImageButton(image: MEGAAssets.UIImage.import,
+        ToolbarImageButton(image: MEGAAssets.UIImage.folderArrow,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.importAlbum() }
@@ -205,7 +205,7 @@ struct ImportAlbumView: View {
     }
     
     private func saveToPhotosToolbarButton() -> some View {
-        ToolbarImageButton(image: MEGAAssets.UIImage.saveToPhotos,
+        ToolbarImageButton(image: MEGAAssets.UIImage.photosApp,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.saveToPhotos() }
@@ -215,7 +215,7 @@ struct ImportAlbumView: View {
     
     private func shareLinkButton() -> some View {
         ToolbarImageButton(
-            image: MEGAAssets.UIImage.link,
+            image: MEGAAssets.UIImage.link01,
             isDisabled: viewModel.isShareLinkButtonDisabled,
             action: viewModel.shareLinkTapped)
         .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
@@ -267,6 +267,7 @@ private struct ToolbarImageButton: View {
                 .resizable()
                 .frame(width: Constants.imageSize.width,
                        height: Constants.imageSize.height)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 .opacity(toolbarButtonOpacity)
         }
         .disabled(isDisabled)

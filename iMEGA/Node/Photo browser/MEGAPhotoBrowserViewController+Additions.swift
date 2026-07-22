@@ -786,12 +786,12 @@ extension MEGAPhotoBrowserViewController {
         
         switch displayMode {
         case .fileLink:
-            self.leftToolbarItem?.image = MEGAAssets.UIImage.import
-            self.rightToolbarItem?.image = MEGAAssets.UIImage.share
+            self.leftToolbarItem?.image = MEGAAssets.UIImage.folderArrow
+            self.centerToolbarItem?.image = MEGAAssets.UIImage.photosApp
         default:
             self.leftToolbarItem?.image = MEGAAssets.UIImage.thumbnailsThin
-            self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
         }
+        self.rightToolbarItem?.image = MEGAAssets.UIImage.externalLink
         
         self.saveToolbarItem.image = MEGAAssets.UIImage.photosApp
         self.importToolbarItem.image = MEGAAssets.UIImage.folderArrow
