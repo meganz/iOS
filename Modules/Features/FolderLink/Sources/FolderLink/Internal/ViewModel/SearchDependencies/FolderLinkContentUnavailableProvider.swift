@@ -51,9 +51,8 @@ fileprivate extension ContentUnavailableViewModel {
     
     static var emptyFolder: Self {
         ContentUnavailableViewModel(
-            image: MEGAAssets.Image.cloudDriveEmptyStateNonRoot,
-            title: Strings.Localizable.CloudDrive.EmptyStateTitle.nonRoot,
-            subtitle: Strings.Localizable.CloudDrive.emptyStateSubtitle,
+            image: MEGAAssets.Image.glassFolder,
+            title: Strings.Localizable.emptyFolder,
             font: .body, // Not used in revamped UI
             titleTextColor: .primary, // Not used in revamped UI
             actions: []
