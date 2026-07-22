@@ -24,6 +24,7 @@ final class QuotaDialogViewModel: ObservableObject {
     }
 
     func load() async {
+        viewState = .loading
         do {
             switch try await useCase.upgradeOption() {
             case let .available(accountDetails, recommendedPlan):
@@ -41,5 +42,9 @@ final class QuotaDialogViewModel: ObservableObject {
         } catch {
             viewState = .error
         }
+    }
+    
+    func retry() async {
+        await load()
     }
 }

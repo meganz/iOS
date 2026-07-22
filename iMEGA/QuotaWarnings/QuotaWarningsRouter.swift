@@ -8,7 +8,8 @@ import UIKit
 
 @MainActor
 @objc final class QuotaWarningsRouter: NSObject {
-
+    static var isDialogPresenting: Bool = false
+    
     private var isRedesignEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp)
     }
@@ -90,9 +91,12 @@ import UIKit
     /// Presents a quota dialog, wrapped in a navigation controller for its toolbar close button.
     /// Skips presentation when a quota dialog is already visible
     private func presentQuotaDialog(for kind: QuotaWarningDialogView.Kind) {
-        guard !isQuotaDialogAlreadyPresented else { return }
+        guard !QuotaWarningsRouter.isDialogPresenting else { return }
         let presenter = UIApplication.mnz_presentingViewController()
-        let onClose: @MainActor () -> Void = { [weak presenter] in presenter?.dismiss(animated: true) }
+        let onClose: @MainActor () -> Void = { [weak presenter] in
+            presenter?.dismiss(animated: true)
+            QuotaWarningsRouter.isDialogPresenting = false
+        }
 
         weak var presentedNavigationController: MEGANavigationController?
         let onViewAllPlans: @MainActor () -> Void = {
@@ -100,8 +104,16 @@ import UIKit
             Self.presentAllPlans(from: navigationController)
         }
 
+        let dependency: QuotaWarningDialogView.Dependency = QuotaWarningDialogView.Dependency(
+            accountPlanPurchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
+        )
         let hostingController = QuotaWarningDialogHostingController(
-            rootView: QuotaWarningDialogView(kind: kind, onClose: onClose, onViewAllPlans: onViewAllPlans)
+            rootView: QuotaWarningDialogView(
+                dependency: dependency,
+                kind: kind,
+                onClose: onClose,
+                onViewAllPlans: onViewAllPlans
+            )
         )
         let navigationController = MEGANavigationController(rootViewController: hostingController)
         presentedNavigationController = navigationController
@@ -125,10 +137,6 @@ import UIKit
             }
         ).start()
     }
-
-    private var isQuotaDialogAlreadyPresented: Bool {
-        UIApplication.mnz_visibleViewController() is any QuotaWarningDialogHosting
-    }
 }
 
 /// Marker so an already-presented revamp quota dialog can be detected via `mnz_visibleViewController()`,
@@ -139,40 +147,10 @@ private final class QuotaWarningDialogHostingController<Content: View>: UIHostin
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-    }
-}
-
-private struct QuotaWarningDialogView: View {
-    enum Kind {
-        case storage(StorageQuotaSeverity)
-        case transfer(TransferQuotaSeverity)
+        QuotaWarningsRouter.isDialogPresenting = true
     }
     
-    let kind: Kind
-    let onClose: @MainActor () -> Void
-    let onViewAllPlans: @MainActor () -> Void
-
-    /// The plan catalog use case, built app-side because its repository depends on `MEGAPurchase`.
-    private var accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol {
-        AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
-    }
-
-    var body: some View {
-        switch kind {
-        case .storage(let storageQuotaSeverity):
-            StorageQuotaDialogView(
-                severity: storageQuotaSeverity,
-                dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
-                onClose: onClose,
-                onViewAllPlans: onViewAllPlans
-            )
-        case .transfer(let transferQuotaSeverity):
-            TransferQuotaDialogView(
-                severity: transferQuotaSeverity,
-                dependency: .init(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase),
-                onClose: onClose,
-                onViewAllPlans: onViewAllPlans
-            )
-        }
+    isolated deinit {
+        QuotaWarningsRouter.isDialogPresenting = false
     }
 }

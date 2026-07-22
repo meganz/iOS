@@ -29,12 +29,17 @@ struct QuotaEventSimulatorView: View {
     // MARK: - Editable catalog (current-plan lookup + recommendation run against this)
     @State private var planList: [PlanConfig] = PlanConfig.defaultCatalog
 
+    // MARK: - State sequence (scripts loading → error/success transitions + the retry button)
+    @State private var useSequence = false
+    @State private var steps: [StepConfig] = StepConfig.defaultSequence
+
     @State private var isPresentingDialog = false
 
     var body: some View {
         List {
             currentPlanSection
             scenarioSection
+            sequenceSection
             planListSection
             recommendationSection
             startSection
@@ -42,6 +47,11 @@ struct QuotaEventSimulatorView: View {
         .listStyle(.grouped)
         .navigationTitle("Quota dialog simulator")
         .sheet(isPresented: $isPresentingDialog) { dialog }
+        // The recommendation keys off the account's allowance (storage/transfer max) + cycle, not the tier
+        // directly, so mirror the selected current plan's limits onto the max pickers whenever it changes —
+        // otherwise changing the current plan leaves the recommendation unchanged.
+        .onChange(of: currentTier) { _ in syncCurrentPlanLimits() }
+        .onChange(of: currentCycle) { _ in syncCurrentPlanLimits() }
     }
 
     // MARK: - Sections
@@ -64,6 +74,29 @@ struct QuotaEventSimulatorView: View {
             qaPicker("Scenario", selection: $scenario, options: Scenario.allCases) { $0.title }
         } header: {
             header("Scenario")
+        }
+    }
+
+    private var sequenceSection: some View {
+        Section {
+            Toggle("Use step sequence", isOn: $useSequence)
+            if useSequence {
+                NavigationLink {
+                    StepListView(steps: $steps)
+                } label: {
+                    HStack {
+                        Text("Steps")
+                        Spacer()
+                        Text("\(steps.count) steps").foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    }
+                }
+            }
+        } header: {
+            header("State sequence")
+        } footer: {
+            Text("Scripts successive loads: step 1 = initial load, each next step = a Try Again tap. "
+                 + "Delay shows the skeleton before the step resolves; result picks how it ends. Clamps to the last step.")
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
     }
 
@@ -111,12 +144,12 @@ struct QuotaEventSimulatorView: View {
 
     @ViewBuilder private var dialog: some View {
         NavigationStack {
-            switch scenario.kind {
-            case let .storage(severity):
-                StorageQuotaDialogView(severity: severity, useCase: qaUseCase, onClose: { isPresentingDialog = false })
-            case let .transfer(severity):
-                TransferQuotaDialogView(severity: severity, useCase: qaUseCase, onClose: { isPresentingDialog = false })
-            }
+            QuotaWarningDialogView(
+                dependency: .init(quotaDialogUseCase: qaUseCase),
+                kind: scenario.kind,
+                onClose: { isPresentingDialog = false },
+                onViewAllPlans: {}
+            )
         }
     }
 
@@ -125,7 +158,14 @@ struct QuotaEventSimulatorView: View {
     private var catalog: [PlanEntity] { planList.map { $0.toPlanEntity() } }
 
     private var qaUseCase: QAQuotaDialogUseCase {
-        QAQuotaDialogUseCase(accountDetails: accountDetails, catalog: catalog)
+        guard useSequence, !steps.isEmpty else {
+            return QAQuotaDialogUseCase(accountDetails: accountDetails, catalog: catalog)
+        }
+        return QAQuotaDialogUseCase(
+            accountDetails: accountDetails,
+            catalog: catalog,
+            sequence: steps.map { QAQuotaStep(result: $0.result, delay: $0.delay) }
+        )
     }
 
     private var recommendation: RecommendedUpgradePlanEntity? {
@@ -172,6 +212,20 @@ struct QuotaEventSimulatorView: View {
         Binding(get: { selectedCurrentTier }, set: { currentTier = $0 })
     }
 
+    /// Mirrors the selected current plan's limits onto the storage/transfer max pickers, so changing the
+    /// current plan actually changes the allowance the recommendation runs against. Free has no catalog
+    /// entry, so it falls back to the free tier's allowance.
+    private func syncCurrentPlanLimits() {
+        guard selectedCurrentTier != .free else {
+            storageMaxGB = QAConstants.freeAllowanceGB
+            transferMaxGB = QAConstants.freeAllowanceGB
+            return
+        }
+        guard let plan = planList.first(where: { $0.tier == selectedCurrentTier && $0.cycle == currentCycle }) else { return }
+        storageMaxGB = plan.storageGB
+        transferMaxGB = plan.transferGB
+    }
+
     // MARK: - Small view helpers
 
     private func infoRow(_ title: String, _ value: String) -> some View {
@@ -202,12 +256,7 @@ private extension QuotaEventSimulatorView {
 
         var title: String { rawValue }
 
-        enum Kind {
-            case storage(StorageQuotaSeverity)
-            case transfer(TransferQuotaSeverity)
-        }
-
-        var kind: Kind {
+        var kind: QuotaWarningDialogView.Kind {
             switch self {
             case .storageAlmostFull: .storage(.almostFull)
             case .storageFull: .storage(.full)
@@ -304,7 +353,82 @@ private struct PlanEditorView: View {
     }
 }
 
+// MARK: - State sequence editor
+
+private struct StepListView: View {
+    @Binding var steps: [StepConfig]
+
+    var body: some View {
+        List {
+            ForEach($steps) { $step in
+                NavigationLink {
+                    StepEditorView(step: $step)
+                } label: {
+                    StepRowView(step: step, number: (steps.firstIndex(of: step) ?? 0) + 1)
+                }
+            }
+            .onDelete { steps.remove(atOffsets: $0) }
+            .onMove { steps.move(fromOffsets: $0, toOffset: $1) }
+        }
+        .navigationTitle("State sequence")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) { EditButton() }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    steps.append(StepConfig())
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+    }
+}
+
+private struct StepRowView: View {
+    let step: StepConfig
+    let number: Int
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text("\(number)")
+                .font(.headline)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(step.result.qaLabel)
+                Text(step.delay > 0 ? "after \(qaDelayLabel(step.delay))" : "immediately")
+                    .font(.caption)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
+            Spacer()
+        }
+    }
+}
+
+private struct StepEditorView: View {
+    @Binding var step: StepConfig
+
+    var body: some View {
+        Form {
+            qaPicker("Result", selection: $step.result, options: QAQuotaStep.Result.allCases) { $0.qaLabel }
+            qaPicker("Delay", selection: $step.delay, options: QAConstants.stepDelays) { qaDelayLabel($0) }
+        }
+        .navigationTitle(step.result.qaLabel)
+    }
+}
+
 // MARK: - Editable models
+
+private struct StepConfig: Identifiable, Hashable {
+    var id = UUID()
+    var result: QAQuotaStep.Result = .success
+    var delay: TimeInterval = 1
+
+    /// Demonstrates the retry flow out of the box: load → error, then a Try Again that succeeds.
+    static let defaultSequence: [StepConfig] = [
+        StepConfig(result: .error, delay: 2),
+        StepConfig(result: .success, delay: 1)
+    ]
+}
 
 private struct PlanConfig: Identifiable, Hashable {
     var id = UUID()
@@ -414,8 +538,11 @@ private enum QAConstants {
     static let cycles: [SubscriptionCycleEntity] = [.monthly, .yearly]
     static let currencies = ["EUR", "USD", "GBP"]
     static let offerMonths = [1, 2, 3, 6, 12]
-    static let dataSizesGB = [20, 200, 400, 2048, 8192, 16384]
+    static let dataSizesGB = [20, 200, 400, 1024, 2048, 8192, 16384]
     static let usageSizesGB = [0, 1, 4, 10, 19, 100, 500, 1024, 2048]
+    static let stepDelays: [TimeInterval] = [0, 0.5, 1, 2, 3, 5]
+    /// Allowance used for the current plan when Free is selected (no catalog entry to derive limits from).
+    static let freeAllowanceGB = 20
     // Exact string decimals so floored per-month figures don't drift by a cent.
     static let prices: [Decimal] = [
         "0", "4.99", "9.99", "19.99", "24", "29.94", "29.99", "40.01", "48", "49.99",
@@ -437,6 +564,21 @@ private func qaPicker<Value: Hashable>(
         }
     }
     .pickerStyle(.menu)
+}
+
+private func qaDelayLabel(_ seconds: TimeInterval) -> String {
+    seconds == seconds.rounded() ? "\(Int(seconds))s" : String(format: "%.1fs", seconds)
+}
+
+private extension QAQuotaStep.Result {
+    var qaLabel: String {
+        switch self {
+        case .success: "Success"
+        case .noUpgrade: "No upgrade"
+        case .error: "Error"
+        case .loading: "Loading (stuck)"
+        }
+    }
 }
 
 private func qaFormatted(_ value: Decimal, _ currency: String) -> String {

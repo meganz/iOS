@@ -6,10 +6,26 @@ import SwiftUI
 /// Renders the dialog for a given `QuotaDialogViewModel`, shared by the storage and transfer entry points
 /// (which differ only in the mapper their view model was built with).
 struct QuotaDialogContentView: View {
-    @ObservedObject var viewModel: QuotaDialogViewModel
-    let onClose: () -> Void
-    let onViewAllPlans: @MainActor () -> Void
+    struct Dependency {
+        let useCase: any QuotaDialogUseCaseProtocol
+        let mapper: any QuotaDialogMapping
+    }
+    
+    @StateObject private var viewModel: QuotaDialogViewModel
+    
+    private let onClose: @MainActor () -> Void
+    private let onViewAllPlans: @MainActor () -> Void
 
+    init(
+        dependency: QuotaDialogContentView.Dependency,
+        onClose: @escaping @MainActor () -> Void,
+        onViewAllPlans: @escaping @MainActor () -> Void
+    ) {
+        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: dependency.useCase, mapper: dependency.mapper))
+        self.onClose = onClose
+        self.onViewAllPlans = onViewAllPlans
+    }
+    
     var body: some View {
         dialog
             .safeAreaInset(edge: .top, spacing: 0) {
@@ -24,7 +40,7 @@ struct QuotaDialogContentView: View {
         case .loading:
             QuotaDialogSkeletonView()
         case .error:
-            QuotaDialogErrorView()
+            QuotaDialogErrorView(onRetry: { Task { await viewModel.retry() } })
         case let .upgradeAvailable(header, currentPlan, recommendedPlan):
             QuotaDialogView(
                 header: { QuotaDialogHeaderView(header: header) },
