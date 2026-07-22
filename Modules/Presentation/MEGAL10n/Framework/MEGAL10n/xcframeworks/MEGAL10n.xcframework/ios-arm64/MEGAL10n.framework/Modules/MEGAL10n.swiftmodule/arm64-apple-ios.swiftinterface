@@ -5227,7 +5227,7 @@ public enum Strings {
       }
     }
     public enum VideoPlayer {
-      public enum Airplay {
+      public enum AirPlay {
         public enum BottomSheet {
           public static let title: Swift.String
         }

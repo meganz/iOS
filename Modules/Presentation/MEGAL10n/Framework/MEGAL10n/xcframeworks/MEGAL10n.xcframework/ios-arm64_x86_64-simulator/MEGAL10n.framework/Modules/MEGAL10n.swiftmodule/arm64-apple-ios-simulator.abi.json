@@ -159269,8 +159269,8 @@
                 "children": [
                   {
                     "kind": "TypeDecl",
-                    "name": "Airplay",
-                    "printedName": "Airplay",
+                    "name": "AirPlay",
+                    "printedName": "AirPlay",
                     "children": [
                       {
                         "kind": "TypeDecl",
@@ -159290,8 +159290,8 @@
                               }
                             ],
                             "declKind": "Var",
-                            "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO5titleSSvpZ",
-                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO5titleSSvpZ",
+                            "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO5titleSSvpZ",
+                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO5titleSSvpZ",
                             "moduleName": "MEGAL10n",
                             "static": true,
                             "declAttributes": [
@@ -159316,8 +159316,8 @@
                                   }
                                 ],
                                 "declKind": "Accessor",
-                                "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO5titleSSvgZ",
-                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO5titleSSvgZ",
+                                "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO5titleSSvgZ",
+                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO5titleSSvgZ",
                                 "moduleName": "MEGAL10n",
                                 "static": true,
                                 "implicit": true,
@@ -159327,8 +159327,8 @@
                           }
                         ],
                         "declKind": "Enum",
-                        "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO",
-                        "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO11BottomSheetO",
+                        "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO",
+                        "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO11BottomSheetO",
                         "moduleName": "MEGAL10n",
                         "declAttributes": [
                           "AccessControl"
@@ -159352,8 +159352,8 @@
                       }
                     ],
                     "declKind": "Enum",
-                    "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO",
-                    "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirplayO",
+                    "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO",
+                    "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO",
                     "moduleName": "MEGAL10n",
                     "declAttributes": [
                       "AccessControl"
@@ -211683,14 +211683,14 @@
       "kind": "StringLiteral",
       "offset": 740701,
       "length": 39,
-      "value": "\"videoPlayer.airplay.bottomSheet.title\""
+      "value": "\"videoPlayer.airPlay.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-higqlmpfqpdaxfgvonvhizfnbpej\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
       "offset": 740752,
       "length": 9,
-      "value": "\"Airplay\""
+      "value": "\"AirPlay\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-higqlmpfqpdaxfgvonvhizfnbpej\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
