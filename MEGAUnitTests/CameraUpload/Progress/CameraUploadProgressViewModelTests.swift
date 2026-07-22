@@ -50,6 +50,31 @@ struct CameraUploadProgressViewModelTests {
             }
         }
         
+        @Test
+        func failedUploadStatus() async {
+            let item = CameraUploadStateEntity(
+                stats: uploadStats,
+                pausedReason: nil)
+            let cameraUploadStateAsyncSequence = SingleItemAsyncSequence(
+                item: item)
+                .eraseToAnyAsyncSequence()
+            let monitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(
+                cameraUploadState: cameraUploadStateAsyncSequence
+            )
+            let queuedCameraUploadsUseCase = MockQueuedCameraUploadsUseCase(items: [
+                CameraAssetUploadEntity(localIdentifier: "failed-item-1", status: .failed),
+                CameraAssetUploadEntity(localIdentifier: "failed-item-2", status: .failed),
+                CameraAssetUploadEntity(localIdentifier: "queued-item", status: .queuedUp)
+            ])
+            let sut = makeSUT(
+                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+                queuedCameraUploadsUseCase: queuedCameraUploadsUseCase)
+
+            await performAsyncTestOnMonitorStates(sut: sut, publisher: sut.$failedUploadStatus) {
+                #expect($0 == "Failed: 2 items")
+            }
+        }
+
         @Test(arguments: [
             (CameraUploadStateEntity.PausedReason.lowBattery, Strings.Localizable.CameraUploads.Progress.Banner.Paused.LowBattery.subtitle),
             (.highThermalState, Strings.Localizable.CameraUploads.Progress.Banner.Paused.HighThermalState.subtitle),

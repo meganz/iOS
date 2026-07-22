@@ -38,4 +38,8 @@ public struct MockQueuedCameraUploadsUseCase: QueuedCameraUploadsUseCaseProtocol
             return Array(items[0..<endIndex])
         }
     }
+
+    public func failedUploadsCount() async throws -> Int {
+        items.filter { $0.status == .failed }.count
+    }
 }

@@ -351,7 +351,13 @@ extension CameraUploadPaginationManager {
     
     private func buildPaginationUpdate() -> PaginationUpdate {
         let sortedPages = pages.sorted { $0.index < $1.index }
-        let allItems = sortedPages.flatMap { $0.items }
+        
+        // The diffable data source identifies queue rows by `localIdentifier`, so pagination
+        // updates must not contain duplicate records even if loaded page boundaries shift.
+        var seenIdentifiers = Set<CameraUploadLocalIdentifierEntity>()
+        let allItems = sortedPages
+            .flatMap { $0.items }
+            .filter { seenIdentifiers.insert($0.localIdentifier).inserted }
         
         let firstPageIndex = sortedPages.first?.index ?? 0
         let lastPageIndex = sortedPages.last?.index ?? 0

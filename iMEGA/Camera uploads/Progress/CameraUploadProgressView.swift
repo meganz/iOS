@@ -129,7 +129,13 @@ struct CameraUploadProgressView: View {
     }
     
     private func uploadStatusView(isLoading: Bool) -> some View {
-        Text(viewModel.uploadStatus)
+        VStack(alignment: .leading, spacing: TokenSpacing._2) {
+            Text(viewModel.uploadStatus)
+
+            if let failedUploadStatus = viewModel.failedUploadStatus {
+                Text(failedUploadStatus)
+            }
+        }
             .font(.subheadline)
             .foregroundStyle(TokenColors.Text.primary.swiftUI)
             .padding(TokenSpacing._5)

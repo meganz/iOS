@@ -77,7 +77,15 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     
     private func addInProgressItemToDataSource(viewModel: CameraUploadInProgressRowViewModel) {
         var snapshot = snapshot()
-        
+
+        let alreadyInProgress = snapshot.itemIdentifiers(inSection: .inProgress).contains { item in
+            if case .inProgress(let existing) = item {
+                return existing.id == viewModel.id
+            }
+            return false
+        }
+        if alreadyInProgress { return }
+
         let queueItemsToRemove = snapshot.itemIdentifiers(inSection: .inQueue)
             .filter { item in
                 if case .inQueue(let queueViewModel) = item {
@@ -169,6 +177,10 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         var snapshot = snapshot()
         
         try Task.checkCancellation()
+
+        guard snapshot.sectionIdentifiers.contains(.inQueue) else {
+            return
+        }
         
         let existingQueueItems = snapshot.itemIdentifiers(inSection: .inQueue)
         

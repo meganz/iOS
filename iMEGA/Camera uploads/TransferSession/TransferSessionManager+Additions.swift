@@ -4,13 +4,16 @@ import MEGARepo
 
 extension TransferSessionManager {
     @objc func restoreProgressReporting(for tasks: [URLSessionTask]) {
-        guard let repository = makeCameraUploadTransferProgressRepository() else { return }
+        guard let repository = makeCameraUploadTransferProgressRepository() else {
+            return
+        }
         
         var localIdentifierRestoredProgress: [CameraUploadLocalIdentifierEntity: RestoredLocalIdentifierProgress] = [:]
         
         for task in tasks {
             guard let taskDescription = task.taskDescription,
                   let taskInfo = taskDescription.parseTaskInfo() else { continue }
+
             let progress = localIdentifierRestoredProgress[taskInfo.localIdentifier] ?? RestoredLocalIdentifierProgress(
                 taskIdentifierForChunk: [task.taskIdentifier: taskInfo.chunkIndex], sentPerChunk: [:], expectedBytesPerChunk: [:])
             

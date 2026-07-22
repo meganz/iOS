@@ -14,10 +14,14 @@ public protocol CameraUploadProgressUseCaseProtocol: Sendable {
     /// - Returns: An asynchronous sequence of upload phase events.
     var cameraUploadPhaseEventUpdates: AnyAsyncSequence<CameraUploadPhaseEventEntity> { get async }
     
-    /// The list of files currently being uploaded.
+    /// A single consistent snapshot of the uploading DB records, partitioned in one pass into:
+    /// - `inProgress`: files that have transferred at least one byte, resolved to file details, and
+    /// - `pending`: uploads handed to the background transfer system but not yet transferring.
     ///
-    /// Each element is a `CameraUploadFileDetailsEntity` representing a photo or video in progress.
-    func inProgressFiles() async throws -> [CameraUploadFileDetailsEntity]
+    /// The record set and each record's progress are read exactly once, so both partitions come
+    /// from the same snapshot — no duplicate DB/progress work, and no race where a record crossing
+    /// the 0→>0 byte boundary ends up in both lists or in neither.
+    func inProgressAndPendingFiles() async throws -> (inProgress: [CameraUploadFileDetailsEntity], pending: [CameraAssetUploadEntity])
     
     /// Gets the current upload progress for a specific asset.
     ///
@@ -50,13 +54,26 @@ public struct CameraUploadProgressUseCase: CameraUploadProgressUseCaseProtocol {
         }
     }
     
-    public func inProgressFiles() async throws -> [CameraUploadFileDetailsEntity] {
-        let inProgressUploadIdentifiers = try await inProgressUploadIdentifiers()
+    public func inProgressAndPendingFiles() async throws -> (inProgress: [CameraUploadFileDetailsEntity], pending: [CameraAssetUploadEntity]) {
+        let uploadingRecords = try await uploadingRecords()
         try Task.checkCancellation()
-        let details = try await cameraUploadAssetRepository.fileDetails(forLocalIdentifiers: inProgressUploadIdentifiers)
+
+        // Partition the single record set by a single progress read per record: transferred bytes
+        // → in progress, otherwise → pending. Reading once keeps the two lists mutually exclusive.
+        var transferredIdentifiers: [CameraUploadLocalIdentifierEntity] = []
+        var pending: [CameraAssetUploadEntity] = []
+        for record in uploadingRecords {
+            let progressData = await transferProgressRepository.progressRawData(for: record.localIdentifier)
+            if progressData.totalBytesSent > 0 {
+                transferredIdentifiers.append(record.localIdentifier)
+            } else {
+                pending.append(record)
+            }
+        }
         try Task.checkCancellation()
-        let detailsMap = Dictionary(uniqueKeysWithValues: details.map { ($0.localIdentifier, $0) })
-        return inProgressUploadIdentifiers.compactMap { detailsMap[$0] }
+
+        let inProgress = try await fileDetails(forOrderedIdentifiers: transferredIdentifiers)
+        return (inProgress, pending)
     }
     
     public func uploadProgress(for localIdentifier: CameraUploadLocalIdentifierEntity) async -> CameraUploadProgressEntity {
@@ -70,22 +87,6 @@ public struct CameraUploadProgressUseCase: CameraUploadProgressUseCaseProtocol {
             .eraseToAnyAsyncSequence()
     }
     
-    private func inProgressUploadIdentifiers() async throws -> Set<CameraUploadLocalIdentifierEntity> {
-        try await transferProgressRepository.activeUploads.async
-            .compactMap {
-                try Task.checkCancellation()
-                let progressData = await transferProgressRepository.progressRawData(for: $0)
-                return if progressData.totalBytesSent > 0 {
-                    $0
-                } else {
-                    nil
-                }
-            }
-            .reduce(into: Set<CameraUploadLocalIdentifierEntity>()) { result, identifier in
-                result.insert(identifier)
-            }
-    }
-    
     private func calculateProgress(for rawData: CameraUploadTaskProgressRawDataEntity) -> CameraUploadProgressEntity {
         let totalBytesExpected = rawData.totalBytesExpected
         let rawProgress = if totalBytesExpected > 0 {
@@ -97,6 +98,25 @@ public struct CameraUploadProgressUseCase: CameraUploadProgressUseCaseProtocol {
             percentage: min(max(rawProgress, 0.0), 1.0),
             totalBytes: totalBytesExpected,
             bytesPerSecond: calculateBytesPerSecond(for: rawData.speedSamples))
+    }
+
+    private func uploadingRecords() async throws -> [CameraAssetUploadEntity] {
+        try await cameraUploadAssetRepository.uploads(
+            startingFrom: nil,
+            isForward: true,
+            limit: nil,
+            statuses: [.uploading],
+            mediaTypes: [.image, .video])
+    }
+
+    private func fileDetails(
+        forOrderedIdentifiers identifiers: [CameraUploadLocalIdentifierEntity]
+    ) async throws -> [CameraUploadFileDetailsEntity] {
+        guard !identifiers.isEmpty else { return [] }
+        let details = try await cameraUploadAssetRepository.fileDetails(forLocalIdentifiers: Set(identifiers))
+        try Task.checkCancellation()
+        let detailsMap = Dictionary(uniqueKeysWithValues: details.map { ($0.localIdentifier, $0) })
+        return identifiers.compactMap { detailsMap[$0] }
     }
     
     /// Calculates rolling upload speed (bytes/sec) for a series of progress samples.

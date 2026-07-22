@@ -1,4 +1,5 @@
 import AsyncAlgorithms
+import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
@@ -30,6 +31,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
     @Published private(set) var viewState: ViewState = .loading
     @Published private(set) var bannerViewModel: BannerViewModel?
     @Published private(set) var uploadStatus = ""
+    @Published private(set) var failedUploadStatus: String?
     @Published private(set) var cameraUploadProgressTableViewModel: CameraUploadProgressTableViewModel
     @Published var showPhotoPermissionAlert = false
     
@@ -42,6 +44,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let devicePermissionHandler: any DevicePermissionsHandling
+    private let queuedCameraUploadsUseCase: any QueuedCameraUploadsUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
     
@@ -61,6 +64,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
         notificationCenter: NotificationCenter = .default
     ) {
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
+        self.queuedCameraUploadsUseCase = queuedCameraUploadsUseCase
         cameraUploadProgressTableViewModel = .init(
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
@@ -98,6 +102,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
                 Strings.localized("cameraUploads.progress.uploading.items", comment: "")
             }
             uploadStatus = String(format: format, locale: .current, pendingFilesCount)
+            await updateFailedUploadStatus()
             
             bannerViewModel = makeBannerViewModel(
                 storageState: storageState,
@@ -160,6 +165,20 @@ final class CameraUploadProgressViewModel: ObservableObject {
                 await cameraUploadProgressTableViewModel.reset()
             }
         }
+    }
+
+    private func updateFailedUploadStatus() async {
+        do {
+            let failedFilesCount = try await queuedCameraUploadsUseCase.failedUploadsCount()
+            failedUploadStatus = failedFilesCount > 0 ? Self.failedUploadStatus(failedFilesCount: failedFilesCount) : nil
+        } catch {
+            MEGALogError("[CameraUploadProgressViewModel] failed uploads count fetch failed: \(error)")
+        }
+    }
+    
+    // WIP: Add L10n plurals if goes online
+    private static func failedUploadStatus(failedFilesCount: Int) -> String {
+        failedFilesCount == 1 ? "Failed: 1 item" : "Failed: \(failedFilesCount) items"
     }
 }
 

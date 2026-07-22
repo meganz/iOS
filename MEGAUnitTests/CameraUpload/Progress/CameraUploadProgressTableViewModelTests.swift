@@ -19,9 +19,14 @@ struct CameraUploadProgressTableViewModelTests {
     @Test func initialInProgressViewModels() async {
         let assetIdentifier = "localIdentifier"
         let inQueueAssetIdentifier = "inQueueLocalIdentifier"
+        let pendingUploadIdentifier = "pendingUploadLocalIdentifier"
         let fileEntity = CameraUploadFileDetailsEntity(localIdentifier: assetIdentifier)
+        let pendingUploadEntity = CameraAssetUploadEntity(
+            localIdentifier: pendingUploadIdentifier,
+            status: .uploading)
         let cameraUploadProgressUseCase = MockCameraUploadProgressUseCase(
-            inProgressFilesResult: .success([fileEntity])
+            inProgressFilesResult: .success([fileEntity]),
+            pendingUploadFilesResult: .success([pendingUploadEntity])
         )
         let cameraUploadFileDetailsUseCase = MockCameraUploadFileDetailsUseCase()
         let photoLibraryThumbnailProvider = MockPhotoLibraryThumbnailProvider()
@@ -47,15 +52,17 @@ struct CameraUploadProgressTableViewModelTests {
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             thumbnailSize: thumbnailSize)]
-        let expectedInQueue = [CameraUploadInQueueRowViewModel(
-            assetUploadEntity: assetUploadEntity,
-            cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
-            thumbnailSize: thumbnailSize)]
+        let expectedInQueue = [assetUploadEntity, pendingUploadEntity].map {
+            CameraUploadInQueueRowViewModel(
+                assetUploadEntity: $0,
+                cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
+                photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
+                thumbnailSize: thumbnailSize)
+        }
         #expect(sut.snapshotUpdate == .initialLoad(
             inProgress: expectedInProgress,
             inQueue: expectedInQueue))
-        #expect(photoLibraryThumbnailProvider.invocations == [.startCaching(for: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])
+        #expect(photoLibraryThumbnailProvider.invocations == [.startCaching(for: [assetIdentifier, inQueueAssetIdentifier, pendingUploadIdentifier], targetSize: thumbnailSize)])
     }
     
     @MainActor
@@ -340,8 +347,8 @@ actor MockPaginationManager: CameraUploadPaginationManagerProtocol {
     private let loadInitialPageResult: PaginationUpdate
     private let loadPageIfNeededResult: PaginationUpdate?
     private(set) var removedItems: [CameraUploadLocalIdentifierEntity] = []
-    private(set) var resetCalled = false
     private(set) var cancelAllCalled = false
+    private(set) var loadInitialPageCallCount = 0
     private(set) var loadPageIfNeededCallCount = 0
     
     init(
@@ -355,7 +362,8 @@ actor MockPaginationManager: CameraUploadPaginationManagerProtocol {
     }
     
     func loadInitialPage() async -> PaginationUpdate {
-        loadInitialPageResult
+        loadInitialPageCallCount += 1
+        return loadInitialPageResult
     }
     
     func loadPageIfNeeded(itemIndex: Int) async -> PaginationUpdate? {
@@ -366,11 +374,9 @@ actor MockPaginationManager: CameraUploadPaginationManagerProtocol {
     func removeItemFromPages(localIdentifier: CameraUploadLocalIdentifierEntity) {
         removedItems.append(localIdentifier)
     }
-    
-    func reset() {
-        resetCalled = true
-    }
-    
+
+    func reset() {}
+
     func cancelAll() {
         cancelAllCalled = true
     }

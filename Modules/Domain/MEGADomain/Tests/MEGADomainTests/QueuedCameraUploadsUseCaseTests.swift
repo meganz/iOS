@@ -63,6 +63,45 @@ struct QueuedCameraUploadsUseCaseTests {
         ])
     }
 
+    @Test
+    func failedUploadsCountReturnsZeroWhenCameraUploadDisabled() async throws {
+        let preferenceRepository = MockPreferenceRepository()
+        preferenceRepository[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = false
+
+        let sut = Self.makeSUT(preferenceRepository: preferenceRepository)
+
+        #expect(try await sut.failedUploadsCount() == 0)
+    }
+
+    @Test
+    func failedUploadsCountFetchesOnlyFailedRecordsAndReturnsTheirCount() async throws {
+        let failedRecords = [
+            CameraAssetUploadEntity(localIdentifier: "failed-1", status: .failed),
+            CameraAssetUploadEntity(localIdentifier: "failed-2", status: .failed)
+        ]
+        let cameraUploadAssetRepository = MockCameraUploadAssetRepository(
+            uploadsResult: .success(failedRecords)
+        )
+        let preferenceRepository = MockPreferenceRepository()
+        preferenceRepository[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = true
+        preferenceRepository[PreferenceKeyEntity.isVideoUploadEnabled.rawValue] = false
+
+        let sut = Self.makeSUT(
+            cameraUploadAssetRepository: cameraUploadAssetRepository,
+            preferenceRepository: preferenceRepository
+        )
+
+        #expect(try await sut.failedUploadsCount() == 2)
+        // Only `.failed` records are fetched — the cost does not scale with the whole queue.
+        #expect(cameraUploadAssetRepository.invocations == [
+            .uploads(startingFrom: nil,
+                     isForward: true,
+                     limit: nil,
+                     statuses: [.failed],
+                     mediaTypes: [.image])
+        ])
+    }
+
     private static func makeSUT(
         cameraUploadAssetRepository: some CameraUploadAssetRepositoryProtocol = MockCameraUploadAssetRepository(),
         preferenceRepository: some PreferenceRepositoryProtocol = MockPreferenceRepository()

@@ -17,6 +17,8 @@ public protocol QueuedCameraUploadsUseCaseProtocol: Sendable {
         startingFrom cursor: QueuedCameraUploadCursorEntity?,
         isForward: Bool,
         limit: Int?) async throws -> [CameraAssetUploadEntity]
+    
+    func failedUploadsCount() async throws -> Int
 }
 
 public struct QueuedCameraUploadsUseCase: QueuedCameraUploadsUseCaseProtocol {
@@ -51,7 +53,20 @@ public struct QueuedCameraUploadsUseCase: QueuedCameraUploadsUseCaseProtocol {
                 statuses: [.notStarted, .notReady, .processing, .queuedUp, .cancelled, .failed],
                 mediaTypes: mediaTypesForCameraUploads())
     }
-    
+
+    public func failedUploadsCount() async throws -> Int {
+        guard isCameraUploadsEnabled else { return 0 }
+
+        return try await cameraUploadAssetRepository
+            .uploads(
+                startingFrom: nil,
+                isForward: true,
+                limit: nil,
+                statuses: [.failed],
+                mediaTypes: mediaTypesForCameraUploads())
+            .count
+    }
+
     private func mediaTypesForCameraUploads() -> [PhotoAssetMediaTypeEntity] {
         var mediaTypes = [PhotoAssetMediaTypeEntity.image]
         if isVideoUploadEnabled {

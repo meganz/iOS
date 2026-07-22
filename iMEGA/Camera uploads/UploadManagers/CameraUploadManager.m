@@ -668,7 +668,7 @@ static BOOL gIsSharedInitialized = NO;
         self.photoUploadOperationQueue.suspended = YES;
     }
     
-    if (!self.isPhotoUploadQueueSuspended) {
+    if (!self.isVideoUploadQueueSuspended) {
         self.videoUploadOperationQueue.suspended = YES;
     }
 }

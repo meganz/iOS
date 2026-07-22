@@ -24,29 +24,58 @@ struct CameraUploadProgressUseCaseTests {
     }
     
     @Test
-    func activeCameraUploadAssets() async throws {
-        let inProgressIdentifier: CameraUploadLocalIdentifierEntity = "localIdentifier"
-        let registeredIdentifier: CameraUploadLocalIdentifierEntity = "registered-localIdentifier"
-        let activeUploads: [CameraUploadLocalIdentifierEntity] = [inProgressIdentifier, registeredIdentifier]
-        let rawData = CameraUploadTaskProgressRawDataEntity(
-            totalBytesSent: 50, totalBytesExpected: 100, speedSamples: [])
-        let expectedFiles = [
+    func inProgressAndPendingFilesPartitionsUploadingRecordsByTransferredBytes() async throws {
+        let identifierA: CameraUploadLocalIdentifierEntity = "uploading-A"
+        let identifierB: CameraUploadLocalIdentifierEntity = "uploading-B"
+        let uploadingRecords = [
+            CameraAssetUploadEntity(localIdentifier: identifierA, status: .uploading),
+            CameraAssetUploadEntity(localIdentifier: identifierB, status: .uploading)
+        ]
+        let expectedInProgress = [
             CameraUploadFileDetailsEntity(
-                localIdentifier: inProgressIdentifier,
-                fileName: "im-uploading", fileExtension: "jpg")
+                localIdentifier: identifierA,
+                fileName: "a", fileExtension: "jpg")
         ]
         let cameraUploadAssetRepository = MockCameraUploadAssetRepository(
-            fileDetailsResult: .success(Set(expectedFiles))
+            uploadsResult: .success(uploadingRecords),
+            fileDetailsResult: .success(Set(expectedInProgress))
         )
         let sut = Self.makeSUT(
             cameraUploadAssetRepository: cameraUploadAssetRepository,
             transferProgressRepository: MockCameraUploadTransferProgressRepository(
-                activeUploads: activeUploads,
-                progressRawDataForIdentifier: [inProgressIdentifier: rawData]
-            )
+                progressRawDataForIdentifier: [
+                    identifierA: .init(totalBytesSent: 1, totalBytesExpected: 100, speedSamples: []),
+                    identifierB: .init(totalBytesSent: 0, totalBytesExpected: 100, speedSamples: [])
+                ])
         )
-        
-        #expect(try await sut.inProgressFiles() == expectedFiles)
+
+        let (inProgress, pending) = try await sut.inProgressAndPendingFiles()
+
+        #expect(inProgress == expectedInProgress)
+        #expect(pending == [uploadingRecords[1]])
+        // The uploading record set is fetched exactly once for both partitions.
+        #expect(cameraUploadAssetRepository.invocations.filter {
+            $0 == .uploads(
+                startingFrom: nil,
+                isForward: true,
+                limit: nil,
+                statuses: [.uploading],
+                mediaTypes: [.image, .video])
+        }.count == 1)
+    }
+
+    @Test
+    func inProgressAndPendingFilesReturnsEmptyWhenNoUploadingRecords() async throws {
+        let cameraUploadAssetRepository = MockCameraUploadAssetRepository(
+            uploadsResult: .success([])
+        )
+        let sut = Self.makeSUT(
+            cameraUploadAssetRepository: cameraUploadAssetRepository
+        )
+
+        let (inProgress, pending) = try await sut.inProgressAndPendingFiles()
+        #expect(inProgress.isEmpty)
+        #expect(pending.isEmpty)
     }
     
     @Test(arguments: zip([

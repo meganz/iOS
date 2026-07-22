@@ -25,6 +25,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     private var lastProcessedPageIndex: Int?
     private(set) var isPaginationInProgress = false
     private var lastScrollPosition: Int?
+    private var pendingUploadFiles: [CameraAssetUploadEntity] = []
     
     let rowHeight: CGFloat = 60
     
@@ -50,12 +51,16 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     
     func loadInitial() async {
         do {
-            async let inProgressFiles = cameraUploadProgressUseCase.inProgressFiles()
+            async let inProgressAndPending = cameraUploadProgressUseCase.inProgressAndPendingFiles()
             async let update =  paginationManager.loadInitialPage()
-            let (inProgress, inQueueUpdate) = try await (inProgressFiles, update)
-            
+            let ((inProgress, pendingUploads), inQueueUpdate) = try await (inProgressAndPending, update)
+            // in-progress and pending are disjoint partitions of the same snapshot, so the queue
+            // section can use `pendingUploads` directly without filtering out in-progress items.
+            self.pendingUploadFiles = pendingUploads
+
             try Task.checkCancellation()
-            let allLocalIdentifiers = inProgress.map(\.localIdentifier) + inQueueUpdate.items.map(\.localIdentifier)
+            let inQueueItems = inQueueUpdate.items + pendingUploads
+            let allLocalIdentifiers = inProgress.map(\.localIdentifier) + inQueueItems.map(\.localIdentifier)
             if allLocalIdentifiers.isNotEmpty {
                 photoLibraryThumbnailProvider.startCaching(
                     for: allLocalIdentifiers, targetSize: thumbnailSize)
@@ -71,7 +76,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             
             try Task.checkCancellation()
             
-            let inQueueVMs = inQueueUpdate.items.map {
+            let inQueueVMs = inQueueItems.dedupedByLocalIdentifier().map {
                 CameraUploadInQueueRowViewModel(
                     assetUploadEntity: $0,
                     cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
@@ -80,7 +85,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             }
             try Task.checkCancellation()
             
-            snapshotUpdate = .initialLoad(inProgress: inProgressVMs, inQueue: inQueueVMs)
+            emitSnapshotUpdate(.initialLoad(inProgress: inProgressVMs, inQueue: inQueueVMs))
         } catch {
             MEGALogError("[\(type(of: self))] initial load failed error: \(error)")
         }
@@ -97,16 +102,17 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                     continue
                 }
                 
-                snapshotUpdate = .inProgressItemAdded(.init(
+                emitSnapshotUpdate(.inProgressItemAdded(.init(
                     fileEntity: fileEntity,
                     cameraUploadProgressUseCase: cameraUploadProgressUseCase,
                     photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
-                    thumbnailSize: thumbnailSize))
+                    thumbnailSize: thumbnailSize)))
                 
                 await paginationManager.removeItemFromPages(localIdentifier: phaseEvent.assetIdentifier)
+                pendingUploadFiles.removeAll { $0.localIdentifier == phaseEvent.assetIdentifier }
             case .completed:
-                snapshotUpdate = .itemRemoved(phaseEvent.assetIdentifier)
-                
+                emitSnapshotUpdate(.itemRemoved(phaseEvent.assetIdentifier))
+                pendingUploadFiles.removeAll { $0.localIdentifier == phaseEvent.assetIdentifier }
                 photoLibraryThumbnailProvider.stopCaching(
                     for: [phaseEvent.assetIdentifier], targetSize: thumbnailSize)
             default: continue
@@ -150,14 +156,11 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         
         MEGALogDebug("[\(type(of: self))] Loading page \(currentPageIndex) (itemIndex: \(itemIndex))")
         
-        guard let update = await paginationManager.loadPageIfNeeded(
-            itemIndex: itemIndex
-        ) else {
+        if let update = await paginationManager.loadPageIfNeeded(itemIndex: itemIndex) {
+            applyInQueueUpdate(update)
+        } else {
             MEGALogDebug("[\(type(of: self))] No new data for page \(currentPageIndex)")
-            return
         }
-        
-        applyInQueueUpdate(update)
     }
     
     func isNearEdge(visibleIndex: Int, totalItems: Int) -> Bool {
@@ -166,18 +169,16 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     
     func reset() async {
         await paginationManager.reset()
-        snapshotUpdate = .loading(numberOfRowsPerSection: 4)
-        
-        lastProcessedPageIndex = nil
-        lastScrollPosition = nil
-        isPaginationInProgress = false
+        pendingUploadFiles = []
+        emitSnapshotUpdate(.loading(numberOfRowsPerSection: 4))
+        resetPaginationState()
     }
     
     private func applyInQueueUpdate(_ update: PaginationUpdate) {
         firstPageIndex = update.firstPageIndex
         lastPageIndex = update.lastPageIndex
         
-        let viewModels = update.items.map {
+        let viewModels = (update.items + pendingUploadFiles).dedupedByLocalIdentifier().map {
             CameraUploadInQueueRowViewModel(
                 assetUploadEntity: $0,
                 cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
@@ -185,7 +186,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                 thumbnailSize: thumbnailSize)
         }
         
-        snapshotUpdate = .inQueueUpdated(viewModels)
+        emitSnapshotUpdate(.inQueueUpdated(viewModels))
     }
     
     private func shouldLoadMore(for visibleIndex: Int, totalItems: Int) -> Bool {
@@ -193,5 +194,24 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         let isNearTopEdge = visibleIndex < edgeThreshold
         let isNearBottomEdge = visibleIndex >= (totalItems - edgeThreshold)
         return (isNearTopEdge || isNearBottomEdge) && totalItems >= pageSize
+    }
+    
+    private func emitSnapshotUpdate(_ update: SnapshotUpdate) {
+        snapshotUpdate = update
+    }
+    
+    private func resetPaginationState() {
+        firstPageIndex = 0
+        lastPageIndex = 0
+        lastProcessedPageIndex = nil
+        lastScrollPosition = nil
+        isPaginationInProgress = false
+    }
+}
+
+private extension [CameraAssetUploadEntity] {
+    func dedupedByLocalIdentifier() -> [CameraAssetUploadEntity] {
+        var seenIdentifiers = Set<CameraUploadLocalIdentifierEntity>()
+        return filter { seenIdentifiers.insert($0.localIdentifier).inserted }
     }
 }
