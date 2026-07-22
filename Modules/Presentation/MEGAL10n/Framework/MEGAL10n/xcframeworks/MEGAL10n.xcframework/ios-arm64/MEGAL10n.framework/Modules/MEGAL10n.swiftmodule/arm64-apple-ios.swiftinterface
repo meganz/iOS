@@ -5231,6 +5231,9 @@ public enum Strings {
         public enum BottomSheet {
           public static let title: Swift.String
         }
+        public enum Indicator {
+          public static func playingOnDevice(_ p1: Any) -> Swift.String
+        }
       }
       public enum Chip {
         public static func seekDisplayText(_ p1: Any) -> Swift.String
