@@ -562,14 +562,23 @@ extension MEGAAVPlayer {
             .dropFirst()
             .sink { [weak self] state in
                 guard state.old != state.new else { return }
-                self?.playbackDebugMessage("External playback active: \(state.new)")
-                self?.replaceURLForExternalPlayback(activated: state.new)
+                guard let self else { return }
+                playbackDebugMessage("External playback active: \(state.new)")
+                let isPlaying = player.rate > 0
+                player.pause()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    replaceURLForExternalPlayback(activated: state.new)
+                    if isPlaying {
+                        player.play()
+                    }
+                }
             }
             .store(in: &cancellables)
     }
 
     private func replaceURLForExternalPlayback(activated: Bool) {
-        guard let currentURL, player.currentItem != nil else { return }
+        guard let currentURL else { return }
         let url = activated ? currentURL.updatedURLWithCurrentAddress() : currentURL
         replaceCurrentItemURL(to: url)
     }
