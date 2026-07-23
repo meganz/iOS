@@ -5,7 +5,7 @@ import MEGADomain
 /// The standard and promo pages use the same type; promo-only content
 /// (`promoHeader`, `highlightedPlanCard`) is `nil` on the standard page.
 @MainActor
-public final class RevampUpgradePlansViewModel {
+public final class UpgradePlansViewModel {
     private let isPromo: Bool
     private let accountDetails: AccountDetailsEntity
     private let plans: [PlanEntity]

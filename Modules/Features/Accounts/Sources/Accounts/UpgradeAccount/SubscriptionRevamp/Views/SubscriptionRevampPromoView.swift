@@ -7,31 +7,36 @@ import SwiftUI
 ///
 /// A promo banner with a fade-out gradient, the promo hero card, then the
 /// shared plan/feature/benefit sections. Driven by mock data.
-public struct SubscriptionRevampPromoView: View {
+public struct SubscriptionPromoView: View {
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     private let dependency: RevampUpgradePlansDependency
-    private let viewModel: RevampUpgradePlansViewModel
+    private let viewModel: UpgradePlansViewModel
+    private let dismissAction: () -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
-        viewModel: RevampUpgradePlansViewModel
+        viewModel: UpgradePlansViewModel,
+        dismissAction: @escaping () -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
+        self.dismissAction = dismissAction
     }
 
     public var body: some View {
-        SubscriptionRevampBaseView(
-            compactHeaderImage: MEGAAssets.Image.promoBanner
-            , regularHeader: {
+        SubscriptionBaseView(
+            compactHeaderImage: MEGAAssets.Image.promoBanner,
+            closeButtonType: .init(viewType: dependency.viewType),
+            dismissAction: dismissAction,
+            regularHeader: {
                 promoBanner
             }, content: {
                 promoHero
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
-                SubscriptionRevampContentSectionsView(dependency: dependency, viewModel: viewModel)
+                SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel)
             }
         )
     }

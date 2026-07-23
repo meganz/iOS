@@ -8,9 +8,9 @@ import SwiftUI
 ///
 /// The standard and promo pages differ only in their header and intro; everything
 /// from the features list downward lives here.
-struct SubscriptionRevampContentSectionsView: View {
+struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
-    let viewModel: RevampUpgradePlansViewModel
+    let viewModel: UpgradePlansViewModel
 
     @State private var selectedCycle: SubscriptionCycleEntity = .yearly
 

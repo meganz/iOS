@@ -47,9 +47,17 @@ public struct UpgradePlansContainerView: View {
         case .loading:
             SubscriptionRevampLoadingView()
         case .standard(let contentViewModel):
-            SubscriptionRevampStandardView(dependency: viewModel.dependency, viewModel: contentViewModel)
+            SubscriptionStandardView(
+                dependency: viewModel.dependency,
+                viewModel: contentViewModel,
+                dismissAction: { viewModel.dismiss() }
+            )
         case .promo(let contentViewModel):
-            SubscriptionRevampPromoView(dependency: viewModel.dependency, viewModel: contentViewModel)
+            SubscriptionPromoView(
+                dependency: viewModel.dependency,
+                viewModel: contentViewModel,
+                dismissAction: { viewModel.dismiss() }
+            )
         }
     }
 }

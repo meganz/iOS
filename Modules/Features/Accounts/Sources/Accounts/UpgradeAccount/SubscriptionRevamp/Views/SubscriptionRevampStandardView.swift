@@ -7,28 +7,33 @@ import SwiftUI
 ///
 /// A plain landscape header image, the "Upgrade to MEGA Pro" title, then the
 /// shared plan/feature/benefit sections. Driven by mock data.
-public struct SubscriptionRevampStandardView: View {
+public struct SubscriptionStandardView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     private let dependency: RevampUpgradePlansDependency
-    private let viewModel: RevampUpgradePlansViewModel
+    private let viewModel: UpgradePlansViewModel
+    private let dismissAction: () -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
-        viewModel: RevampUpgradePlansViewModel
+        viewModel: UpgradePlansViewModel,
+        dismissAction: @escaping () -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
+        self.dismissAction = dismissAction
     }
 
     public var body: some View {
-        SubscriptionRevampBaseView(
-            compactHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape
+        SubscriptionBaseView(
+            compactHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape,
+            closeButtonType: .init(viewType: dependency.viewType),
+            dismissAction: dismissAction
         ) {
             headerImage
         } content: {
             titleHeader
-            SubscriptionRevampContentSectionsView(dependency: dependency, viewModel: viewModel)
+            SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel)
         }
     }
 

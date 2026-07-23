@@ -9,8 +9,8 @@ import MEGADomain
 final class UpgradePlansContainerViewModel: ObservableObject {
     public enum ViewState {
         case loading
-        case standard(RevampUpgradePlansViewModel)
-        case promo(RevampUpgradePlansViewModel)
+        case standard(UpgradePlansViewModel)
+        case promo(UpgradePlansViewModel)
     }
 
     let dependency: RevampUpgradePlansDependency
@@ -38,6 +38,14 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         dependency.tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
     }
 
+    func dismiss() {
+        guard !isDismiss else { return }
+        if dependency.viewType.usesMaybeLaterButton {
+            dependency.tracker.trackAnalyticsEvent(with: MaybeLaterUpgradeAccountButtonPressedEvent())
+        }
+        isDismiss = true
+    }
+
     func loadData() async {
         viewState = .loading
         await dependency.purchaseUseCase.registerRestoreDelegate()
@@ -48,7 +56,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
             let hasPromo = plans.contains(where: { $0.introductoryOffer != nil })
-            let contentViewModel = RevampUpgradePlansViewModel(
+            let contentViewModel = UpgradePlansViewModel(
                 isPromo: hasPromo,
                 accountDetails: accountDetails,
                 plans: plans,

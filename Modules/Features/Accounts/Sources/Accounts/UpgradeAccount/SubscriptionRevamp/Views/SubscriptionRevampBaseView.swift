@@ -1,17 +1,14 @@
-import MEGAAssets
 import MEGADesignToken
-import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
 /// Shared chrome for the redesigned subscription pages.
 ///
-/// Owns the navigation header (fixed glass close button, scroll-driven glass
-/// background), the scroll container with its scroll-position tracking, and the
-/// regular/compact size-class layouts. The promo and standard pages supply only
-/// what differs: the header image and the scrollable content.
-struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
-    @Environment(\.dismiss) private var dismiss
+/// Owns the navigation header (close / "Maybe later" dismiss button, scroll-driven
+/// glass background), the scroll container with its scroll-position tracking, and
+/// the regular/compact size-class layouts. The promo and standard pages supply
+/// only what differs: the header image and the scrollable content.
+struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var isAtTop = true
     @State private var topInset: CGFloat = 0
@@ -21,15 +18,21 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
     private let topOffsetThreshold: CGFloat = 5
 
     private let compactHeaderImage: Image
+    private let closeButtonType: SubscriptionNavigationHeader.CloseButtonType
+    private let dismissAction: () -> Void
     private let regularHeader: RegularHeader
     private let content: Content
 
     init(
         compactHeaderImage: Image,
+        closeButtonType: SubscriptionNavigationHeader.CloseButtonType = .close,
+        dismissAction: @escaping () -> Void,
         @ViewBuilder regularHeader: () -> RegularHeader,
         @ViewBuilder content: () -> Content
     ) {
         self.compactHeaderImage = compactHeaderImage
+        self.closeButtonType = closeButtonType
+        self.dismissAction = dismissAction
         self.regularHeader = regularHeader()
         self.content = content()
     }
@@ -46,7 +49,11 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
                 .background(TokenColors.Background.page.swiftUI)
                 .ignoresSafeArea()
 
-            navigationHeader
+            SubscriptionNavigationHeader(
+                closeButtonType: closeButtonType,
+                isAtTop: isAtTop,
+                dismissAction: dismissAction
+            )
         }
     }
 
@@ -55,7 +62,7 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
     @ViewBuilder
     private var layoutView: some View {
         if verticalSizeClass == .compact {
-            SubscriptionRevampCompactHeightLayout(
+            SubscriptionCompactHeightLayout(
                 leadingPadding: compactContentLeadingPadding,
                 headerBackground: compactHeaderBackground,
                 scrollContent: scrollContent
@@ -107,57 +114,11 @@ struct SubscriptionRevampBaseView<RegularHeader: View, Content: View>: View {
         .coordinateSpace(name: coordinateSpaceName)
         .onTopInsetChange { topInset = $0 }
     }
-
-    // MARK: - Navigation header
-
-    private var navigationHeader: some View {
-        HStack {
-            headerButton
-
-            Spacer()
-        }
-        .padding(.horizontal, TokenSpacing._5)
-        .padding(.vertical, TokenSpacing._3)
-        .background {
-            if !isAtTop {
-                headerBackground
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var headerBackground: some View {
-        if #available(iOS 26.0, *) {
-            Color.clear
-                .glassEffect(.regular, in: Rectangle())
-                .ignoresSafeArea(edges: [.top, .leading, .trailing])
-        } else {
-            VStack(spacing: 0) {
-                Color.clear
-                    .background(.regularMaterial)
-                Divider()
-            }
-            .ignoresSafeArea(edges: [.top, .leading, .trailing])
-        }
-    }
-
-    private var headerButton: some View {
-        Button {
-            dismiss()
-        } label: {
-            MEGAAssets.Image.monoChevronLeftMediumThinOutline
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .frame(width: 44, height: 44)
-                .contentShape(Circle())
-        }
-        .glassCircle()
-        .accessibilityLabel(Strings.Localizable.close)
-    }
 }
 
 // MARK: - Layout containers
 
-private struct SubscriptionRevampCompactHeightLayout<
+private struct SubscriptionCompactHeightLayout<
     HeaderBackground: View,
     ScrollContent: View
 >: View {
