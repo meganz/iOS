@@ -1,6 +1,5 @@
 import MEGAAssets
 import MEGADesignToken
-import MEGADomain
 import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
@@ -10,18 +9,6 @@ struct SubscriptionCurrentPlanView: View {
 
     init(viewModel: SubscriptionCurrentPlanViewModel) {
         self.viewModel = viewModel
-    }
-
-    init(
-        plan: PlanEntity,
-        status: SubscriptionCurrentPlanViewModel.Status? = nil,
-        badgeTitle: String? = nil
-    ) {
-        self.init(viewModel: SubscriptionCurrentPlanViewModel(
-            plan: plan,
-            status: status,
-            badgeTitle: badgeTitle
-        ))
     }
 
     var body: some View {
@@ -97,29 +84,4 @@ struct SubscriptionCurrentPlanView: View {
         case .expires: MEGAAssets.Image.hourglassNewestSmallRegularOutline
         }
     }
-}
-
-#Preview("Subscription") {
-    SubscriptionCurrentPlanView(
-        plan: PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly),
-        status: .renews
-    )
-    .padding()
-}
-
-#Preview("One-off · expiring") {
-    SubscriptionCurrentPlanView(
-        plan: PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .none),
-        status: .expires,
-        badgeTitle: "Expiring",
-    )
-    .padding()
-}
-
-#Preview("Highest tier") {
-    SubscriptionCurrentPlanView(
-        plan: PlanEntity(type: .proIII, name: "Pro III", subscriptionCycle: .monthly),
-        status: .renews,
-    )
-    .padding()
 }

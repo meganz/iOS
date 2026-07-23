@@ -37,7 +37,8 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
-        .package(path: "../../MEGASharedRepo/MEGAStoreKit")
+        .package(path: "../../MEGASharedRepo/MEGAStoreKit"),
+        .package(path: "../../Infrastracture/MEGAFoundation")
     ],
     targets: [
         .target(
@@ -53,6 +54,7 @@ let package = Package(
                            "MEGAUIComponent",
                            "MEGAConnectivity",
                            "MEGAStoreKit",
+                           "MEGAFoundation",
                            .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")],
             swiftSettings: settings
         ),

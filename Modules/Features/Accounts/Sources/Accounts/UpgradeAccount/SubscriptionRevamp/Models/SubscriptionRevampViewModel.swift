@@ -1,16 +1,34 @@
-import Foundation
-import MEGAL10n
+import MEGADomain
 
 /// Shared presentation model backing both redesigned subscription pages.
 ///
 /// The standard and promo pages use the same type; promo-only content
 /// (`promoHeader`, `highlightedPlanCard`) is `nil` on the standard page.
 @MainActor
-public final class RevampUpgradePlansViewModel { // [IOS-12185]: Wire actual data to view model
+public final class RevampUpgradePlansViewModel {
     private let isPromo: Bool
+    private let accountDetails: AccountDetailsEntity
+    private let plans: [PlanEntity]
+    private let displayName: @Sendable (AccountTypeEntity) -> String
 
-    init(isPromo: Bool = false) {
+    init(
+        isPromo: Bool = false,
+        accountDetails: AccountDetailsEntity,
+        plans: [PlanEntity],
+        displayName: @escaping @Sendable (AccountTypeEntity) -> String
+    ) {
         self.isPromo = isPromo
+        self.accountDetails = accountDetails
+        self.plans = plans
+        self.displayName = displayName
+    }
+
+    private var presenter: SubscriptionCurrentPlanPresenter {
+        SubscriptionCurrentPlanPresenter(
+            accountDetails: accountDetails,
+            plans: plans,
+            displayName: displayName
+        )
     }
 
     var promoHeader: SubscriptionPromoHeaderModel? {
@@ -21,19 +39,11 @@ public final class RevampUpgradePlansViewModel { // [IOS-12185]: Wire actual dat
         isPromo ? SubscriptionRevampMockData.promoPlanCard : nil
     }
 
-    var currentPlan: SubscriptionCurrentPlanViewModel {
-        SubscriptionRevampMockData.currentPlan
+    var currentPlanViewModel: SubscriptionCurrentPlanViewModel? {
+        presenter.currentPlanViewModel
     }
 
     var freePlanCard: SubscriptionFreePlanCardModel? {
         SubscriptionRevampMockData.freePlanCard
-    }
-
-    static var standard: RevampUpgradePlansViewModel { // To be removed, temporarily used for testing purpose
-        RevampUpgradePlansViewModel()
-    }
-
-    static var promo: RevampUpgradePlansViewModel { // To be removed, temporarily used for testing purpose
-        RevampUpgradePlansViewModel(isPromo: true)
     }
 }

@@ -22,10 +22,6 @@ public struct SubscriptionRevampPromoView: View {
         self.dependency = dependency
     }
 
-    public init(dependency: RevampUpgradePlansDependency) {
-        self.init(dependency: dependency, viewModel: .promo)
-    }
-
     public var body: some View {
         SubscriptionRevampBaseView(
             compactHeaderImage: MEGAAssets.Image.promoBanner

@@ -13,6 +13,7 @@ public struct RevampUpgradePlansDependency: Sendable {
     let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     let tracker: any AnalyticsTracking
     let viewType: RevampUpgradePlansViewType
+    let accountDisplayName: @Sendable (AccountTypeEntity) -> String
     let domainName: String
     let appVersion: String
     let isFromAds: Bool
@@ -31,6 +32,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         termsAndPoliciesPresenter: some TermsAndPoliciesPresenting,
         tracker: some AnalyticsTracking,
         viewType: RevampUpgradePlansViewType,
+        accountDisplayName: @Sendable @escaping (AccountTypeEntity) -> String,
         domainName: String,
         appVersion: String,
         isFromAds: Bool,
@@ -48,6 +50,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.tracker = tracker
         self.viewType = viewType
+        self.accountDisplayName = accountDisplayName
         self.domainName = domainName
         self.appVersion = appVersion
         self.isFromAds = isFromAds

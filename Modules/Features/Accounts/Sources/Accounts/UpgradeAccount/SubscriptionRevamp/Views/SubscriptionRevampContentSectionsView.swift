@@ -18,8 +18,10 @@ struct SubscriptionRevampContentSectionsView: View {
         VStack(alignment: .leading, spacing: 0) {
             SubscriptionProFeaturesView()
                 .padding(.top, TokenSpacing._3)
-            SubscriptionCurrentPlanView(viewModel: viewModel.currentPlan)
-                .padding(.top, TokenSpacing._3)
+            if let currentPlan = viewModel.currentPlanViewModel {
+                SubscriptionCurrentPlanView(viewModel: currentPlan)
+                    .padding(.top, TokenSpacing._3)
+            }
             cyclePicker
                 .padding(.top, TokenSpacing._3)
             SubscriptionPlanCardsView()

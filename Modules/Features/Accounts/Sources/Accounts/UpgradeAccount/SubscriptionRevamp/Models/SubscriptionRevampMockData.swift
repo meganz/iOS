@@ -11,13 +11,6 @@ enum SubscriptionRevampMockData {
 
     static let savingText = "Save up to 16%" // To be localized later
     
-    static var currentPlan: SubscriptionCurrentPlanViewModel {
-        SubscriptionCurrentPlanViewModel(
-            plan: PlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly),
-            status: .renews
-        )
-    }
-
     static func cycleTitle(_ cycle: SubscriptionCycleEntity) -> String {
         switch cycle {
         case .monthly: "Monthly" // To be localized later

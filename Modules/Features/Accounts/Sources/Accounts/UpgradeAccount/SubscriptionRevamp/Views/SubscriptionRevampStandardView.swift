@@ -21,13 +21,6 @@ public struct SubscriptionRevampStandardView: View {
         self.dependency = dependency
     }
 
-    public init(dependency: RevampUpgradePlansDependency) { // To be removed, temporarily used for testing purpose
-        self.init(
-            dependency: dependency,
-            viewModel: .standard
-        )
-    }
-
     public var body: some View {
         SubscriptionRevampBaseView(
             compactHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape

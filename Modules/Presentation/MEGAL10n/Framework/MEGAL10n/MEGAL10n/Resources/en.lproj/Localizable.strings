@@ -5120,3 +5120,5 @@
 "quotaWarning.error.button.tryAgain"="Try again";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. */
 "videoPlayer.airPlay.indicator.playingOnDevice"="This video is playing on an external device";
+/* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
+"subscriptionPurchase.revamp.badge.expiring"="Expiring";

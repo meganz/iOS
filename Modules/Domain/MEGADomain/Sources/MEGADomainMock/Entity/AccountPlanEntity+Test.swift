@@ -5,6 +5,7 @@ public extension AccountPlanEntity {
         isProPlan: Bool = true,
         accountType: AccountTypeEntity = .proI,
         expirationTime: Int64 = 0,
+        startTime: Int64 = 0,
         features: [String]? = nil,
         type: Int32 = 0,
         subscriptionId: String? = nil,
@@ -14,6 +15,7 @@ public extension AccountPlanEntity {
             isProPlan: isProPlan,
             accountType: accountType,
             expirationTime: expirationTime,
+            startTime: startTime,
             features: features,
             type: type,
             subscriptionId: subscriptionId

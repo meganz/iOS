@@ -7,6 +7,7 @@ extension MEGAAccountPlan {
             isProPlan: self.isProPlan,
             accountType: self.accountType.toAccountTypeEntity(),
             expirationTime: self.expirationTime,
+            startTime: self.startTime,
             features: self.features,
             type: self.type,
             subscriptionId: self.subscriptionId

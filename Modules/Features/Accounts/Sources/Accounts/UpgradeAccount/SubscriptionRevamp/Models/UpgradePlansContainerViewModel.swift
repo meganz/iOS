@@ -43,12 +43,16 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         await dependency.purchaseUseCase.registerRestoreDelegate()
 
         do {
-            // [IOS-12240]: Construct the correct viewModel
-            _ = try await dependency.fetchUseCase.currentAccountDetails()
-            let plans = await dependency.fetchUseCase.plans()
+            async let accountDetailsResult = dependency.fetchUseCase.currentAccountDetails()
+            async let plansResult = dependency.fetchUseCase.plans()
+            let accountDetails = try await accountDetailsResult
+            let plans = await plansResult
             let hasPromo = plans.contains(where: { $0.introductoryOffer != nil })
             let contentViewModel = RevampUpgradePlansViewModel(
-                isPromo: hasPromo
+                isPromo: hasPromo,
+                accountDetails: accountDetails,
+                plans: plans,
+                displayName: dependency.accountDisplayName
             )
             viewState = hasPromo ? .promo(contentViewModel) : .standard(contentViewModel)
         } catch {

@@ -56,6 +56,7 @@ final class UpgradePlansRouter {
             termsAndPoliciesPresenter: termsAndPoliciesPresenter,
             tracker: DIContainer.tracker,
             viewType: revampViewType,
+            accountDisplayName: { $0.toAccountTypeDisplayName() },
             domainName: DIContainer.domainName,
             appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion,
             isFromAds: isFromAds,
