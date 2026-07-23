@@ -119,10 +119,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeSharedItem:
         case DisplayModePhotosTimeline:
         case DisplayModePhotosAlbum:
-            [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
-            break;
         case DisplayModeRecents:
-            [self hideBarButtonWithBarButtonItem:self.centerToolbarItem];
+            [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
         case DisplayModeRubbishBin:
             [self.toolbar setItems:@[self.leftToolbarItem]];
@@ -422,6 +420,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeCloudDrive:
         case DisplayModePhotosTimeline:
         case DisplayModePhotosAlbum:
+        case DisplayModeRecents:
             return self.centerToolbarItem;
         case DisplayModeAlbumLink:
         case DisplayModeNodeInsideFolderLink:
