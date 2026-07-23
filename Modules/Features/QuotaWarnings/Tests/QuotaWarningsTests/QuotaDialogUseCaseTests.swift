@@ -7,6 +7,7 @@ import Testing
 struct QuotaDialogUseCaseTests {
     private func entity(name: String = "Essential") -> RecommendedUpgradePlanEntity {
         RecommendedUpgradePlanEntity(
+            productIdentifier: "essential.yearly",
             name: name, storage: "200 GB", storageLimit: 200,
             transfer: "2 TB", transferLimit: 2048, mobileOfferLabel: nil,
             price: .yearly(.init(price: 40, currency: "EUR"))

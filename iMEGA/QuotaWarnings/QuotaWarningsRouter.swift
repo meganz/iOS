@@ -105,8 +105,10 @@ import UIKit
             Self.presentAllPlans(from: navigationController)
         }
 
+        let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
         let dependency: QuotaWarningDialogView.Dependency = QuotaWarningDialogView.Dependency(
-            accountPlanPurchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
+            accountPlanPurchaseUseCase: purchaseUseCase,
+            planPurchaser: PlanPurchaser(purchaseUseCase: purchaseUseCase, postPurchaseDelay: 0)
         )
         let hostingController = QuotaWarningDialogHostingController(
             rootView: QuotaWarningDialogView(
@@ -134,7 +136,13 @@ import UIKit
             viewType: .upgrade,
             accountUseCase: accountUseCase,
             onDismiss: { [weak navigationController] in
+                // Back / "maybe later" → return to the quota dialog.
                 navigationController?.popViewController(animated: true)
+            },
+            purchaseCompleteBehavior: .perform { [weak navigationController] in
+                // Purchase completed on the pushed subscription page → dismiss the whole quota dialog
+                // (this navigation controller), not just pop back to the now-stale dialog.
+                navigationController?.dismiss(animated: true)
             }
         ).start()
     }

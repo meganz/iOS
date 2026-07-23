@@ -20,14 +20,16 @@ final class UpgradePlansRouter {
     private let viewType: UpgradeAccountPlanViewType
     private let isFromAds: Bool
     private let onDismiss: @MainActor () -> Void
-    
+    private let purchaseCompleteBehavior: PurchaseCompleteBehavior
+
     init(
         presenter: UIViewController?,
         presentationStyle: UpgradePlansRouter.PresentationStyle,
         viewType: UpgradeAccountPlanViewType,
         accountUseCase: some AccountUseCaseProtocol,
         isFromAds: Bool = false,
-        onDismiss: @escaping @MainActor () -> Void
+        onDismiss: @escaping @MainActor () -> Void,
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) {
         self.presenter = presenter
         self.presentationStyle = presentationStyle
@@ -35,6 +37,7 @@ final class UpgradePlansRouter {
         self.accountUseCase = accountUseCase
         self.isFromAds = isFromAds
         self.onDismiss = onDismiss
+        self.purchaseCompleteBehavior = purchaseCompleteBehavior
     }
 
     func build() -> UIViewController {
@@ -63,7 +66,8 @@ final class UpgradePlansRouter {
             notifyPurchaseSucceeded: {
                 NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
                 NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
-            }
+            },
+            purchaseCompleteBehavior: purchaseCompleteBehavior
         )
         let view = UpgradePlansContainerView(dependency: dependency, onDismiss: onDismiss)
         let hostingController = UIHostingController(rootView: view)

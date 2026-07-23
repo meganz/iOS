@@ -20,9 +20,11 @@ struct RecommendedUpgradePlanUseCaseTests {
         storage: String = "",
         transfer: String = "",
         mobileOfferLabel: String? = nil,
-        offer: IntroductoryOfferEntity? = nil
+        offer: IntroductoryOfferEntity? = nil,
+        productIdentifier: String = ""
     ) -> PlanEntity {
         PlanEntity(
+            productIdentifier: productIdentifier,
             type: type,
             name: name,
             currency: "EUR",
@@ -280,10 +282,11 @@ struct RecommendedUpgradePlanUseCaseTests {
             plan(
                 type: .proI, name: "Pro I", cycle: .yearly, price: 100,
                 storageLimit: 2048, transferLimit: 2048, storage: "2 TB", transfer: "2 TB",
-                mobileOfferLabel: "Black Friday"
+                mobileOfferLabel: "Black Friday", productIdentifier: "pro1.yearly"
             )
         ]
         let result = sut.recommend(for: .build(proLevel: .free), from: plans)
+        #expect(result?.productIdentifier == "pro1.yearly")
         #expect(result?.storage == "2 TB")
         #expect(result?.storageLimit == 2048)
         #expect(result?.transfer == "2 TB")

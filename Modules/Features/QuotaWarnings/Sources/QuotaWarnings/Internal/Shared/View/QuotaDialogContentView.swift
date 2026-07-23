@@ -1,4 +1,6 @@
+import MEGAAppPresentation
 import MEGADesignToken
+import MEGADomain
 import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
@@ -9,10 +11,16 @@ struct QuotaDialogContentView: View {
     struct Dependency {
         let useCase: any QuotaDialogUseCaseProtocol
         let mapper: any QuotaDialogMapping
+        let planPurchaser: any PlanPurchasing
+        
+        var upgradableFooterDependency: RecommendedPlanFooterView.Dependency {
+            RecommendedPlanFooterView.Dependency(planPurchaser: planPurchaser)
+        }
     }
-    
+
     @StateObject private var viewModel: QuotaDialogViewModel
-    
+
+    private let dependency: QuotaDialogContentView.Dependency
     private let onClose: @MainActor () -> Void
     private let onViewAllPlans: @MainActor () -> Void
 
@@ -21,11 +29,15 @@ struct QuotaDialogContentView: View {
         onClose: @escaping @MainActor () -> Void,
         onViewAllPlans: @escaping @MainActor () -> Void
     ) {
-        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(useCase: dependency.useCase, mapper: dependency.mapper))
+        _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(
+            useCase: dependency.useCase,
+            mapper: dependency.mapper
+        ))
+        self.dependency = dependency
         self.onClose = onClose
         self.onViewAllPlans = onViewAllPlans
     }
-    
+
     var body: some View {
         dialog
             .safeAreaInset(edge: .top, spacing: 0) {
@@ -46,7 +58,14 @@ struct QuotaDialogContentView: View {
                 header: { QuotaDialogHeaderView(header: header) },
                 currentPlanCard: { CurrentPlanView(currentPlan: currentPlan) },
                 recommendedPlanCard: { RecommendedPlanView(plan: recommendedPlan) },
-                footer: { RecommendedPlanFooterView(planName: recommendedPlan.name, onViewAllPlans: onViewAllPlans) }
+                footer: {
+                    RecommendedPlanFooterView(
+                        recommendedPlan: recommendedPlan,
+                        dependency: dependency.upgradableFooterDependency,
+                        onPurchased: onClose,
+                        onViewAllPlans: onViewAllPlans
+                    )
+                }
             )
         case let .noUpgradeAvailable(header, currentPlan):
             QuotaDialogView(

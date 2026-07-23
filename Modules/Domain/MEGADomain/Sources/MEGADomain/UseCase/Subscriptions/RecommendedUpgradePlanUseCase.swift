@@ -39,6 +39,7 @@ public struct RecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCaseProtoc
         }) else { return nil }
         
         return RecommendedUpgradePlanEntity(
+            productIdentifier: bestPlan.productIdentifier,
             name: bestPlan.name,
             storage: bestPlan.storage,
             storageLimit: bestPlan.storageLimit,

@@ -42,6 +42,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
 
     private let canOpenURL: @Sendable (URL) async -> Bool
     private let openURL: @Sendable (URL) async -> Void
+    private let purchaseCompleteBehavior: PurchaseCompleteBehavior
 
     private var planList: [PlanEntity] = []
     private var accountDetails: AccountDetailsEntity
@@ -107,7 +108,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         router: some UpgradeAccountPlanRouting,
         appVersion: String,
         canOpenURL: @Sendable @escaping (URL) async -> Bool = { UIApplication.shared.canOpenURL($0) },
-        openURL: @Sendable @escaping (URL) async -> Void = { UIApplication.shared.open($0) }
+        openURL: @Sendable @escaping (URL) async -> Void = { UIApplication.shared.open($0) },
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -122,6 +124,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.appVersion = appVersion
         self.canOpenURL = canOpenURL
         self.openURL = openURL
+        self.purchaseCompleteBehavior = purchaseCompleteBehavior
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         isNewYearlyPlanStyleEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosNewYearlyPlanCard)
         $lastCloseAdsDate.useCase = preferenceUseCase
@@ -208,7 +211,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             guard let self else { return }
             purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
             postDismissOnboardingProPlanDialog()
-            isDismiss = true
+            switch purchaseCompleteBehavior {
+            case .dismiss:
+                isDismiss = true
+            case .perform(let action):
+                action()
+            }
             observeAccountUpdatesTask?.cancel()
         }
     }
@@ -611,7 +619,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
             guard let self else { return }
 
-            await purchaseUseCase.purchasePlan(currentSelectedPlan)
+            await purchaseUseCase.purchasePlan(productIdentifier: currentSelectedPlan.productIdentifier)
         })
     }
 
@@ -624,7 +632,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 await openURL(externalLink)
                 isLoading = false
             } else {
-                await purchaseUseCase.purchasePlan(currentSelectedPlan)
+                await purchaseUseCase.purchasePlan(productIdentifier: currentSelectedPlan.productIdentifier)
             }
         })
     }

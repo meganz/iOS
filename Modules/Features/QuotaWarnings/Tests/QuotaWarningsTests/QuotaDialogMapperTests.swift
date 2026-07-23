@@ -7,6 +7,7 @@ import Testing
 struct StorageQuotaDialogMapperTests {
     private func recommendedEntity() -> RecommendedUpgradePlanEntity {
         RecommendedUpgradePlanEntity(
+            productIdentifier: "essential.yearly",
             name: "Essential",
             storage: "200 GB",
             storageLimit: 200,

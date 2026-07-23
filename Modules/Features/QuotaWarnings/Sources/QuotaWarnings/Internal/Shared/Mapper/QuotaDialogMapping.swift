@@ -20,6 +20,7 @@ extension QuotaDialogMapping {
     /// Builds the recommended-plan card model; callers supply the quota progress (storage- or transfer-based).
     func makeRecommendedPlan(_ plan: RecommendedUpgradePlanEntity, quotaProgress: QuotaProgress) -> RecommendedPlan {
         RecommendedPlan(
+            productIdentifier: plan.productIdentifier,
             name: plan.name,
             ribbonText: ribbonText(mobileOfferLabel: plan.mobileOfferLabel, price: plan.price),
             price: RecommendedPlanPriceMapper().map(plan.price),

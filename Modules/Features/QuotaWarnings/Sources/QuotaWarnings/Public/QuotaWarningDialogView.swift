@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import SwiftUI
 
@@ -23,22 +24,29 @@ public struct QuotaWarningDialogView: View {
     
     public struct Dependency {
         let quotaDialogUseCase: any QuotaDialogUseCaseProtocol
-        
-        public init(accountPlanPurchaseUseCase: any AccountPlanPurchaseUseCaseProtocol) {
+        let planPurchaser: any PlanPurchasing
+
+        public init(
+            accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+            planPurchaser: some PlanPurchasing
+        ) {
             self.quotaDialogUseCase = QuotaDialogUseCaseFactory.make(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase)
+            self.planPurchaser = planPurchaser
         }
-        
+
         func storageDialogDependency(_ severity: StorageQuotaSeverity) -> QuotaDialogContentView.Dependency {
             QuotaDialogContentView.Dependency(
                 useCase: quotaDialogUseCase,
-                mapper: StorageQuotaDialogMapper(severity: severity)
+                mapper: StorageQuotaDialogMapper(severity: severity),
+                planPurchaser: planPurchaser
             )
         }
-        
+
         func transferDialogDependency(_ severity: TransferQuotaSeverity) -> QuotaDialogContentView.Dependency {
             QuotaDialogContentView.Dependency(
                 useCase: quotaDialogUseCase,
-                mapper: TransferQuotaDialogMapper(severity: severity)
+                mapper: TransferQuotaDialogMapper(severity: severity),
+                planPurchaser: planPurchaser
             )
         }
     }
@@ -73,10 +81,12 @@ public struct QuotaWarningDialogView: View {
 }
 
 #if DEBUG
+@MainActor
 extension QuotaWarningDialogView.Dependency {
     /// For Preview only.
     init(previewUseCase: PreviewQuotaDialogUseCase) {
         self.quotaDialogUseCase = previewUseCase
+        self.planPurchaser = PreviewPlanPurchasing()
     }
 }
 

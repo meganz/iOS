@@ -4,8 +4,8 @@ public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
     func accountPlanProducts() async -> [PlanEntity]
     func lowestPlan() async -> PlanEntity
     func restorePurchase()
-    func purchasePlan(_ plan: PlanEntity) async
-    
+    func purchasePlan(productIdentifier: String) async
+
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
@@ -48,8 +48,8 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
         repo.restorePurchase()
     }
     
-    public func purchasePlan(_ plan: PlanEntity) async {
-        await repo.purchasePlan(plan)
+    public func purchasePlan(productIdentifier: String) async {
+        await repo.purchasePlan(productIdentifier: productIdentifier)
     }
 
     public var successfulRestorePublisher: AnyPublisher<Void, Never> {

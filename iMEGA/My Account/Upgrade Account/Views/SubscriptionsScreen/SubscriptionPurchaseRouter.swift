@@ -20,6 +20,7 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     private let presentationStyle: UpgradePlansRouter.PresentationStyle
     private let viewType: UpgradeAccountPlanViewType
     private let onDismiss: (@MainActor () -> Void)?
+    private let purchaseCompleteBehavior: PurchaseCompleteBehavior
     let isFromAds: Bool
 
     init(
@@ -29,7 +30,8 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
         viewType: UpgradeAccountPlanViewType,
         accountUseCase: some AccountUseCaseProtocol,
         isFromAds: Bool = false,
-        onDismiss: (@MainActor () -> Void)? = nil
+        onDismiss: (@MainActor () -> Void)? = nil,
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) {
         self.presenter = presenter
         self.accountDetails = currentAccountDetails
@@ -38,6 +40,7 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
         self.accountUseCase = accountUseCase
         self.isFromAds = isFromAds
         self.onDismiss = onDismiss
+        self.purchaseCompleteBehavior = purchaseCompleteBehavior
     }
 
     func build() -> UIViewController {
@@ -48,7 +51,8 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
                 viewType: viewType,
                 accountUseCase: accountUseCase,
                 isFromAds: isFromAds,
-                onDismiss: onDismiss ?? dismiss
+                onDismiss: onDismiss ?? dismiss,
+                purchaseCompleteBehavior: purchaseCompleteBehavior
             ).build()
             baseViewController = controller
             return controller
@@ -64,7 +68,8 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
             ),
             viewType: viewType,
             router: self,
-            appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion
+            appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion,
+            purchaseCompleteBehavior: purchaseCompleteBehavior
         )
         let subscriptionView = SubscriptionPurchaseView(
             viewModel: viewModel,

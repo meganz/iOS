@@ -75,9 +75,9 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     }
     
     @MainActor
-    func purchasePlan(_ plan: PlanEntity) async {
+    func purchasePlan(productIdentifier: String) async {
         guard let products = purchase.products as? [SKProduct],
-              let productPlan = products.first(where: { $0.productIdentifier == plan.productIdentifier }) else {
+              let productPlan = products.first(where: { $0.productIdentifier == productIdentifier }) else {
             return
         }
         purchase.purchaseProduct(productPlan)

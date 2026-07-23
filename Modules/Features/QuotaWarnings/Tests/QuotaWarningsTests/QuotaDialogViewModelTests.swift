@@ -7,7 +7,9 @@ import Testing
 @MainActor
 @Suite("QuotaDialogViewModel")
 struct QuotaDialogViewModelTests {
-    private func makeSUT(result: Result<QuotaUpgradeOption, any Error>) -> QuotaDialogViewModel {
+    private func makeSUT(
+        result: Result<QuotaUpgradeOption, any Error>
+    ) -> QuotaDialogViewModel {
         QuotaDialogViewModel(
             useCase: MockQuotaDialogUseCase(result: result),
             mapper: StubQuotaDialogMapper()
@@ -16,6 +18,7 @@ struct QuotaDialogViewModelTests {
 
     private func entity() -> RecommendedUpgradePlanEntity {
         RecommendedUpgradePlanEntity(
+            productIdentifier: "essential.yearly",
             name: "Essential", storage: "200 GB", storageLimit: 200,
             transfer: "2 TB", transferLimit: 2048, mobileOfferLabel: nil,
             price: .yearly(.init(price: 40, currency: "EUR"))
@@ -30,11 +33,7 @@ struct QuotaDialogViewModelTests {
             Issue.record("Expected .upgradeAvailable, got \(sut.viewState)")
             return
         }
-        guard case let .storage(storageHeader) = header else {
-            Issue.record("Expected a storage header")
-            return
-        }
-        #expect(storageHeader.title == StubQuotaDialogMapper.headerTitle)
+        #expect(header.title == StubQuotaDialogMapper.headerTitle)
         #expect(recommendedPlan.name == "mapped")
     }
 
@@ -80,6 +79,7 @@ private struct StubQuotaDialogMapper: QuotaDialogMapping {
     }
     func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan {
         RecommendedPlan(
+            productIdentifier: "essential.yearly",
             name: "mapped", ribbonText: "", price: .monthly(.init(pricePerMonth: "€1")),
             storageText: "", transferText: "",
             quotaProgress: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal)

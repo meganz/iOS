@@ -1,4 +1,6 @@
+import Combine
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGASwift
@@ -26,6 +28,9 @@ struct QuotaEventSimulatorView: View {
     // MARK: - Scenario
     @State private var scenario: Scenario = .storageAlmostFull
 
+    // MARK: - Purchase simulation (one-tap Upgrade) — scripts the outcome the mock purchaser emits.
+    @State private var purchaseScenario: MockPlanPurchasing.Scenario = .success
+
     // MARK: - Editable catalog (current-plan lookup + recommendation run against this)
     @State private var planList: [PlanConfig] = PlanConfig.defaultCatalog
 
@@ -39,6 +44,7 @@ struct QuotaEventSimulatorView: View {
         List {
             currentPlanSection
             scenarioSection
+            purchaseSection
             sequenceSection
             planListSection
             recommendationSection
@@ -47,25 +53,29 @@ struct QuotaEventSimulatorView: View {
         .listStyle(.grouped)
         .navigationTitle("Quota dialog simulator")
         .sheet(isPresented: $isPresentingDialog) { dialog }
-        // The recommendation keys off the account's allowance (storage/transfer max) + cycle, not the tier
-        // directly, so mirror the selected current plan's limits onto the max pickers whenever it changes —
-        // otherwise changing the current plan leaves the recommendation unchanged.
-        .onChange(of: currentTier) { _ in syncCurrentPlanLimits() }
-        .onChange(of: currentCycle) { _ in syncCurrentPlanLimits() }
     }
 
     // MARK: - Sections
 
     private var currentPlanSection: some View {
         Section {
-            qaPicker("Plan", selection: currentTierSelection, options: currentTierOptions) { PlanConfig.name(for: $0) }
-            qaPicker("Billing cycle", selection: $currentCycle, options: QAConstants.cycles) { $0.label }
-            qaPicker("Storage usage", selection: $storageUsedGB, options: QAConstants.usageSizesGB) { $0.toGBString() }
-            qaPicker("Storage max", selection: $storageMaxGB, options: QAConstants.dataSizesGB) { $0.toGBString() }
-            qaPicker("Transfer usage", selection: $transferUsedGB, options: QAConstants.usageSizesGB) { $0.toGBString() }
-            qaPicker("Transfer max", selection: $transferMaxGB, options: QAConstants.dataSizesGB) { $0.toGBString() }
-        } header: {
-            header("Current plan")
+            NavigationLink {
+                CurrentPlanConfigView(
+                    tierSelection: currentTierSelection,
+                    tierOptions: currentTierOptions,
+                    currentCycle: $currentCycle,
+                    storageUsedGB: $storageUsedGB,
+                    storageMaxGB: $storageMaxGB,
+                    transferUsedGB: $transferUsedGB,
+                    transferMaxGB: $transferMaxGB
+                )
+            } label: {
+                summaryRow("Current plan", currentPlanSummary)
+            }
+        } footer: {
+            Text("Storage \(storageUsedGB) / \(storageMaxGB) GB (used / limit) · "
+                 + "Transfer \(transferUsedGB) / \(transferMaxGB) GB (used / limit)")
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
     }
 
@@ -74,6 +84,16 @@ struct QuotaEventSimulatorView: View {
             qaPicker("Scenario", selection: $scenario, options: Scenario.allCases) { $0.title }
         } header: {
             header("Scenario")
+        }
+    }
+
+    private var purchaseSection: some View {
+        Section {
+            NavigationLink {
+                PurchaseConfigView(scenario: $purchaseScenario)
+            } label: {
+                summaryRow("Purchase simulation", purchaseScenario.qaLabel)
+            }
         }
     }
 
@@ -145,7 +165,7 @@ struct QuotaEventSimulatorView: View {
     @ViewBuilder private var dialog: some View {
         NavigationStack {
             QuotaWarningDialogView(
-                dependency: .init(quotaDialogUseCase: qaUseCase),
+                dependency: .init(quotaDialogUseCase: qaUseCase, planPurchaser: planPurchaser),
                 kind: scenario.kind,
                 onClose: { isPresentingDialog = false },
                 onViewAllPlans: {}
@@ -154,6 +174,10 @@ struct QuotaEventSimulatorView: View {
     }
 
     // MARK: - Wiring
+
+    private var planPurchaser: any PlanPurchasing {
+        MockPlanPurchasing(scenario: purchaseScenario)
+    }
 
     private var catalog: [PlanEntity] { planList.map { $0.toPlanEntity() } }
 
@@ -209,24 +233,63 @@ struct QuotaEventSimulatorView: View {
     }
 
     private var currentTierSelection: Binding<AccountTypeEntity> {
-        Binding(get: { selectedCurrentTier }, set: { currentTier = $0 })
+        Binding(get: { selectedCurrentTier }, set: {
+            currentTier = $0
+            syncCurrentPlan()
+        })
     }
 
-    /// Mirrors the selected current plan's limits onto the storage/transfer max pickers, so changing the
-    /// current plan actually changes the allowance the recommendation runs against. Free has no catalog
-    /// entry, so it falls back to the free tier's allowance.
-    private func syncCurrentPlanLimits() {
-        guard selectedCurrentTier != .free else {
-            storageMaxGB = QAConstants.freeAllowanceGB
-            transferMaxGB = QAConstants.freeAllowanceGB
-            return
+    /// The storage / transfer allowance (limits) for the selected tier, read from its catalog entry. The
+    /// allowance is the same in both billing cycles (cycle only affects price), so this matches on tier
+    /// alone. Free has no catalog entry, so it falls back to the free allowance.
+    private func limits(for tier: AccountTypeEntity) -> (storage: Int, transfer: Int) {
+        guard tier != .free, let plan = planList.first(where: { $0.tier == tier }) else {
+            return (QAConstants.freeAllowanceGB, QAConstants.freeAllowanceGB)
         }
-        guard let plan = planList.first(where: { $0.tier == selectedCurrentTier && $0.cycle == currentCycle }) else { return }
-        storageMaxGB = plan.storageGB
-        transferMaxGB = plan.transferGB
+        return (plan.storageGB, plan.transferGB)
+    }
+
+    /// When the current tier changes, set the storage / transfer limits to the tier's allowance and rescale
+    /// usage to keep the same fill ratio, so the whole current plan — usage and limits — reflects the pick
+    /// and the recommendation runs against the right allowance.
+    private func syncCurrentPlan() {
+        let (newStorageMax, newTransferMax) = limits(for: selectedCurrentTier)
+        storageUsedGB = rescaledUsage(storageUsedGB, fromMax: storageMaxGB, toMax: newStorageMax)
+        transferUsedGB = rescaledUsage(transferUsedGB, fromMax: transferMaxGB, toMax: newTransferMax)
+        storageMaxGB = newStorageMax
+        transferMaxGB = newTransferMax
+    }
+
+    /// Rescales `used` from the old max to the new max (preserving the fill ratio) and snaps to the nearest
+    /// usage option that does not exceed the new max, so the picker always has a matching value.
+    private func rescaledUsage(_ used: Int, fromMax: Int, toMax: Int) -> Int {
+        let ratio = fromMax > 0 ? Double(used) / Double(fromMax) : 0
+        let target = Double(toMax) * ratio
+        let options = QAConstants.usageSizesGB.filter { $0 <= toMax }
+        guard let nearest = options.min(by: { abs(Double($0) - target) < abs(Double($1) - target) }) else {
+            return min(used, toMax)
+        }
+        return nearest
+    }
+
+    // MARK: - Summaries
+
+    private var currentPlanSummary: String {
+        "\(PlanConfig.name(for: selectedCurrentTier)) · \(currentCycle.label) · \(storageUsedGB)/\(storageMaxGB) GB"
     }
 
     // MARK: - Small view helpers
+
+    /// A tappable row: bold title + secondary summary of what's configured behind it.
+    private func summaryRow(_ title: String, _ summary: String) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(summary)
+                .multilineTextAlignment(.trailing)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
+    }
 
     private func infoRow(_ title: String, _ value: String) -> some View {
         HStack {
@@ -269,6 +332,50 @@ private extension QuotaEventSimulatorView {
             case .transferStreamingExceeded: .transfer(.streamingExceeded)
             }
         }
+    }
+}
+
+// MARK: - Current plan config (pushed)
+
+private struct CurrentPlanConfigView: View {
+    let tierSelection: Binding<AccountTypeEntity>
+    let tierOptions: [AccountTypeEntity]
+    @Binding var currentCycle: SubscriptionCycleEntity
+    @Binding var storageUsedGB: Int
+    @Binding var storageMaxGB: Int
+    @Binding var transferUsedGB: Int
+    @Binding var transferMaxGB: Int
+
+    var body: some View {
+        Form {
+            qaPicker("Plan", selection: tierSelection, options: tierOptions) { PlanConfig.name(for: $0) }
+            qaPicker("Billing cycle", selection: $currentCycle, options: QAConstants.cycles) { $0.label }
+            qaPicker("Storage usage", selection: $storageUsedGB, options: QAConstants.usageSizesGB) { $0.toGBString() }
+            qaPicker("Storage max", selection: $storageMaxGB, options: QAConstants.dataSizesGB) { $0.toGBString() }
+            qaPicker("Transfer usage", selection: $transferUsedGB, options: QAConstants.usageSizesGB) { $0.toGBString() }
+            qaPicker("Transfer max", selection: $transferMaxGB, options: QAConstants.dataSizesGB) { $0.toGBString() }
+        }
+        .navigationTitle("Current plan")
+    }
+}
+
+// MARK: - Purchase simulation config (pushed)
+
+private struct PurchaseConfigView: View {
+    @Binding var scenario: MockPlanPurchasing.Scenario
+
+    var body: some View {
+        Form {
+            Section {
+                qaPicker("Scenario", selection: $scenario, options: QAConstants.purchaseScenarios) { $0.qaLabel }
+            } footer: {
+                Text("Tapping Upgrade in the dialog scripts this outcome so you can check the UI: success dismisses; "
+                     + "failed / cancelled show their result; cancellable shows the Yes/No alert then succeeds or "
+                     + "fails; non-cancellable shows the can't-purchase alert.")
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
+        }
+        .navigationTitle("Purchase simulation")
     }
 }
 
@@ -540,6 +647,8 @@ private enum QAOfferType: String, CaseIterable, Hashable {
 private enum QAConstants {
     static let tiers: [AccountTypeEntity] = [.lite, .proI, .proII, .proIII]
     static let cycles: [SubscriptionCycleEntity] = [.monthly, .yearly]
+    /// Purchase outcomes the simulator can script (every case except the `.idle` preview default).
+    static let purchaseScenarios: [MockPlanPurchasing.Scenario] = MockPlanPurchasing.Scenario.allCases.filter { $0 != .idle }
     static let currencies = ["EUR", "USD", "GBP"]
     static let offerMonths = [1, 2, 3, 6, 12]
     static let dataSizesGB = [20, 200, 400, 1024, 2048, 8192, 16384]
@@ -620,6 +729,78 @@ private extension SubscriptionCycleEntity {
         case .monthly: "Monthly"
         case .yearly: "Yearly"
         }
+    }
+}
+
+private extension MockPlanPurchasing.Scenario {
+    var qaLabel: String {
+        switch self {
+        case .success: "Buy succeeds"
+        case .failed: "Buy fails"
+        case .cancelledByUser: "User cancels"
+        case .cancellableThenSuccess: "Cancellable sub → then succeeds"
+        case .cancellableThenFailed: "Cancellable sub → then fails"
+        case .nonCancellable: "Non-cancellable sub"
+        case .idle: "Idle"
+        }
+    }
+}
+
+// MARK: - Purchase simulation (mock)
+
+/// A `PlanPurchasing` that scripts outcomes for the QA simulator so every purchase branch can be exercised
+/// without real StoreKit or a real active subscription. It emits the same outcome sequence the real
+/// `PlanPurchaser` would for each situation, and — like the real `MEGAPurchase` — drives `SVProgressHUD`
+/// while the purchase is in flight, so the QA experience matches production.
+@MainActor
+final class MockPlanPurchasing: PlanPurchasing {
+    enum Scenario: String, CaseIterable, Sendable {
+        case success
+        case failed
+        case cancelledByUser
+        case cancellableThenSuccess
+        case cancellableThenFailed
+        case nonCancellable
+        /// Emits nothing on tap.
+        case idle
+    }
+
+    private let scenario: Scenario
+    private let subject = PassthroughSubject<PlanPurchaseOutcome, Never>()
+
+    var outcomes: AnyPublisher<PlanPurchaseOutcome, Never> { subject.eraseToAnyPublisher() }
+
+    init(scenario: Scenario = .idle) { self.scenario = scenario }
+
+    func purchase(productIdentifier: String) async {
+        switch scenario {
+        case .success:
+            await runPurchasing(then: .succeeded)
+        case .failed:
+            await runPurchasing(then: .failed)
+        case .cancelledByUser:
+            await runPurchasing(then: .cancelled)
+        case .nonCancellable:
+            // Blocked before any purchase starts — no `.purchasing`, just the inform outcome.
+            subject.send(.cannotPurchaseWithActiveSubscription)
+        case .cancellableThenSuccess, .cancellableThenFailed:
+            let afterConfirm: PlanPurchaseOutcome = scenario == .cancellableThenSuccess ? .succeeded : .failed
+            subject.send(.requiresCancellationConfirmation(confirmCancelAndBuy: { [weak self] in
+                await self?.runPurchasing(then: afterConfirm)
+            }))
+        case .idle:
+            break
+        }
+    }
+
+    /// Emits `.purchasing`, shows the loading HUD like the real `MEGAPurchase`, waits so the busy state is
+    /// visible, then dismisses the HUD and emits the terminal outcome.
+    private func runPurchasing(then terminal: PlanPurchaseOutcome) async {
+        subject.send(.purchasing)
+        SVProgressHUD.show()
+        try? await Task.sleep(nanoseconds: 600_000_000)
+        await SVProgressHUD.dismiss()
+        subject.send(terminal)
     }
 }
 #endif

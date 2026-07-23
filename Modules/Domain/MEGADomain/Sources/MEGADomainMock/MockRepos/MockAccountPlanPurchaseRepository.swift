@@ -58,7 +58,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         restorePurchaseCalled += 1
     }
     
-    public func purchasePlan(_ plan: PlanEntity) async {
+    public func purchasePlan(productIdentifier: String) async {
         purchasePlanCalled += 1
     }
     

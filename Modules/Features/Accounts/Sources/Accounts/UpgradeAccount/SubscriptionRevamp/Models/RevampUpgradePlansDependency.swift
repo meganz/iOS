@@ -20,6 +20,7 @@ public struct RevampUpgradePlansDependency: Sendable {
     let canOpenURL: @Sendable (URL) async -> Bool
     let openURL: @Sendable (URL) async -> Void
     let notifyPurchaseSucceeded: @Sendable () -> Void
+    let purchaseCompleteBehavior: PurchaseCompleteBehavior
     let termsAndPoliciesPresenter: any TermsAndPoliciesPresenting
 
     public init(
@@ -41,6 +42,7 @@ public struct RevampUpgradePlansDependency: Sendable {
             await MainActor.run { UIApplication.shared.open(url) }
         },
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
     ) {
         self.fetchUseCase = fetchUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -57,6 +59,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.canOpenURL = canOpenURL
         self.openURL = openURL
         self.notifyPurchaseSucceeded = notifyPurchaseSucceeded
+        self.purchaseCompleteBehavior = purchaseCompleteBehavior
         self.termsAndPoliciesPresenter = termsAndPoliciesPresenter
     }
 }

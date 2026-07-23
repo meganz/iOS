@@ -3,7 +3,7 @@ import Combine
 public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol, Sendable {
     func accountPlanProducts(useAPIPrice: Bool) async -> [PlanEntity]
     func restorePurchase()
-    func purchasePlan(_ plan: PlanEntity) async
+    func purchasePlan(productIdentifier: String) async
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }

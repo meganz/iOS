@@ -12,6 +12,8 @@ struct CurrentPlan: Equatable {
 }
 
 struct RecommendedPlan: Equatable {
+    /// StoreKit product identifier, forwarded to the purchase port when the user taps Upgrade.
+    let productIdentifier: String
     let name: String
     let ribbonText: String
     let price: PlanPrice

@@ -6,6 +6,7 @@ extension RecommendedUpgradePlanEntity {
     /// Production selection + pricing lives in `RecommendedUpgradePlanUseCase`.
     init(plan: PlanEntity) {
         self.init(
+            productIdentifier: plan.productIdentifier,
             name: plan.name,
             storage: plan.storage,
             storageLimit: plan.storageLimit,

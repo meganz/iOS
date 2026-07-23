@@ -77,7 +77,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         return _monitorSubmitReceiptPublisher
     }
     
-    public func purchasePlan(_ plan: PlanEntity) async {
+    public func purchasePlan(productIdentifier: String) async {
         purchasePlanCalled += 1
     }
     
