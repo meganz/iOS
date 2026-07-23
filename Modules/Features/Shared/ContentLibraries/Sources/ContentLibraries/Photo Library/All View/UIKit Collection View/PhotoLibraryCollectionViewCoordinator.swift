@@ -55,6 +55,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var visibleSectionHeaders: Set<Int> = []
     private var subscriptions = Set<AnyCancellable>()
     private weak var dragSelectionPanGesture: UIPanGestureRecognizer?
+    private weak var longPressGesture: UILongPressGestureRecognizer?
 
     private var dragInitialIndexPath: IndexPath?
     private var dragLastIndexPath: IndexPath?
@@ -201,10 +202,30 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         dragSelectionPanGesture = panGesture
         collectionView.addGestureRecognizer(panGesture)
 
+        // Long-press to enter selection. A UIKit recognizer (not a SwiftUI gesture in the hosting
+        // cell) so it coexists with the scroll pan — moving the finger cancels the press and lets
+        // the list scroll, instead of the cell swallowing the drag on iOS 17.
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        longPress.delegate = self
+        longPressGesture = longPress
+        collectionView.addGestureRecognizer(longPress)
+
         collectionView.dataSource = self
         collectionView.delegate = self
     }
 
+    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began,
+              let collectionView,
+              !viewModel.isEditing else { return }
+        let location = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: location),
+              let photo = photoLibraryDataSource.photo(at: indexPath),
+              !photo.isTimelinePlaceholder else { return }
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        (collectionView.cellForItem(at: indexPath) as? PhotoLibraryCollectionCell)?.viewModel.handleLongPress()
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         viewModel
             .photoZoomControlPositionTracker
@@ -602,6 +623,12 @@ extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrol
 // MARK: - UIGestureRecognizerDelegate
 extension PhotoLibraryCollectionViewCoordinator: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer === longPressGesture {
+            guard !viewModel.isEditing else { return false }
+            let location = gestureRecognizer.location(in: collectionView)
+            return collectionView?.indexPathForItem(at: location) != nil
+        }
+        
         guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer,
               gestureRecognizer === dragSelectionPanGesture,
               viewModel.isEditing else {
