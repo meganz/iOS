@@ -29,6 +29,7 @@ public struct PlanEntity: Sendable {
     public var introductoryOffer: IntroductoryOfferEntity?
     public var mobileOfferLabel: String? // [IOS-12265]: Remove mobileOfferLabel, use mobileOffer instead
     public var mobileOffer: MobileOfferEntity?
+    public var promotionalOffer: PromotionalOfferEntity?
 
     public var price: Decimal { appStorePrice.price }
     public var formattedPrice: String { appStorePrice.formattedPrice }
@@ -98,7 +99,8 @@ public struct PlanEntity: Sendable {
         formattedPrice: String = "",
         introductoryOffer: IntroductoryOfferEntity? = nil,
         mobileOfferLabel: String? = nil,
-        mobileOffer: MobileOfferEntity? = nil
+        mobileOffer: MobileOfferEntity? = nil,
+        promotionalOffer: PromotionalOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -116,6 +118,7 @@ public struct PlanEntity: Sendable {
         self.introductoryOffer = introductoryOffer
         self.mobileOfferLabel = mobileOfferLabel
         self.mobileOffer = mobileOffer
+        self.promotionalOffer = promotionalOffer
     }
 
     public init(
@@ -129,7 +132,8 @@ public struct PlanEntity: Sendable {
         appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
         introductoryOffer: IntroductoryOfferEntity? = nil,
         mobileOfferLabel: String? = nil,
-        mobileOffer: MobileOfferEntity? = nil
+        mobileOffer: MobileOfferEntity? = nil,
+        promotionalOffer: PromotionalOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -144,6 +148,7 @@ public struct PlanEntity: Sendable {
         self.introductoryOffer = introductoryOffer
         self.mobileOfferLabel = mobileOfferLabel
         self.mobileOffer = mobileOffer
+        self.promotionalOffer = promotionalOffer
     }
 }
 

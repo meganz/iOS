@@ -35,7 +35,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
-    private let introductoryOfferUseCase: any IntroductoryOfferUseCaseProtocol
+    private let introductoryOfferUseCase: any StoreKitOfferUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
     private let appVersion: String
@@ -101,7 +101,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = DIContainer.externalPurchaseUseCase,
-        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol,
+        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
         router: some UpgradeAccountPlanRouting,
@@ -236,7 +236,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             isLoadingPlans = true
             defer { isLoadingPlans = false }
             planList = await purchaseUseCase.accountPlanProducts()
-            let introductoryOffersDict = await introductoryOfferUseCase.fetchIntroductoryOffers(for: planList)
+            let introductoryOffersDict = await introductoryOfferUseCase.fetchOffers(for: planList).introductory
             for (index, plan) in planList.enumerated() {
                 planList[index].introductoryOffer = introductoryOffersDict[plan]
             }

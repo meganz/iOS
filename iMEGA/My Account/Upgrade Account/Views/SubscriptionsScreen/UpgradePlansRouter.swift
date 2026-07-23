@@ -41,7 +41,7 @@ final class UpgradePlansRouter {
         let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
         let fetchUseCase = RevampUpgradePlansUseCase(
             purchaseUseCase: purchaseUseCase,
-            introductoryOfferUseCase: IntroductoryOfferUseCase(repository: IntroductoryOfferRepository.newRepo),
+            introductoryOfferUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo),
             accountUseCase: accountUseCase
         )
 

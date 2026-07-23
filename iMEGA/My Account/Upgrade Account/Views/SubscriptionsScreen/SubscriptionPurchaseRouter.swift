@@ -59,8 +59,8 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
             accountUseCase: accountUseCase,
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
-            introductoryOfferUseCase: IntroductoryOfferUseCase(
-                repository: IntroductoryOfferRepository.newRepo
+            introductoryOfferUseCase: StoreKitOfferUseCase(
+                repository: StoreKitOfferRepository.newRepo
             ),
             viewType: viewType,
             router: self,

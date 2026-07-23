@@ -11,7 +11,7 @@ struct AccountPlanProductsUseCaseTests {
     private func makeSUT(plans: [PlanEntity], offers: [PlanEntity: IntroductoryOfferEntity]) -> AccountPlanProductsUseCase {
         AccountPlanProductsUseCase(
             purchaseUseCase: MockAccountPlanPurchaseUseCase(accountPlanProducts: plans),
-            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: offers)
+            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: offers)
         )
     }
 

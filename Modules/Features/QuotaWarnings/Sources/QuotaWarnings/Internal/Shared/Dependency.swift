@@ -10,7 +10,7 @@ enum QuotaDialogUseCaseFactory {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             accountPlanProductsUseCase: AccountPlanProductsUseCase(
                 purchaseUseCase: accountPlanPurchaseUseCase,
-                introductoryOfferUseCase: IntroductoryOfferUseCase(repository: IntroductoryOfferRepository.newRepo)
+                introductoryOfferUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo)
             ),
             recommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCase(
                 subscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCase()

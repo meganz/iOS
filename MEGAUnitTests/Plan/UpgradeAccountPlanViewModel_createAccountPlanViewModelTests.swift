@@ -240,7 +240,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         let sut = makeSUT(
             accountDetails: details,
             planList: planList,
-            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict)
+            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: introOfferDict)
         )
         sut.$currentPlan
             .dropFirst()
@@ -296,7 +296,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         let sut = makeSUT(
             accountDetails: details,
             planList: planList,
-            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict)
+            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: introOfferDict)
         )
         sut.$currentPlan
             .dropFirst()
@@ -318,7 +318,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         accountDetails: AccountDetailsEntity,
         currentAccountDetails: AccountDetailsEntity? = nil,
         planList: [PlanEntity] = [],
-        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol = MockIntroductoryOfferUseCase(),
+        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol = MockStoreKitOfferUseCase(),
         viewType: UpgradeAccountPlanViewType = .upgrade,
         appVersion: String = "1.0.0"
     ) -> UpgradeAccountPlanViewModel {

@@ -1232,7 +1232,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let introOfferDict = [planWithIntroOffer: introOffer]
         
         let (sut, _) = makeSUT(
-            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict),
+            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: introOfferDict),
             accountDetails: .build(proLevel: .free),
             planList: planList
         )
@@ -1246,7 +1246,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let planList = [PlanEntity.proI_monthly, PlanEntity.proI_yearly]
         
         let (sut, _) = makeSUT(
-            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: [:]),
+            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: [:]),
             accountDetails: .build(proLevel: .free),
             planList: planList
         )
@@ -1303,7 +1303,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     func makeSUT(
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = MockExternalPurchaseUseCase(),
-        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol = MockIntroductoryOfferUseCase(),
+        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol = MockStoreKitOfferUseCase(),
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],

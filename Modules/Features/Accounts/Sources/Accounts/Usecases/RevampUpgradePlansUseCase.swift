@@ -1,6 +1,6 @@
 import MEGADomain
 public protocol RevampUpgradePlansUseCaseProtocol: Sendable {
-    /// Available account plans with their introductory offers merged in.
+    /// Available account plans with their introductory and promotional offers merged in.
     func plans() async -> [PlanEntity]
     /// The user's current account details, refreshed when not already cached.
     func currentAccountDetails() async throws -> AccountDetailsEntity
@@ -8,12 +8,12 @@ public protocol RevampUpgradePlansUseCaseProtocol: Sendable {
 
 public struct RevampUpgradePlansUseCase: RevampUpgradePlansUseCaseProtocol {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
-    private let introductoryOfferUseCase: any IntroductoryOfferUseCaseProtocol
+    private let introductoryOfferUseCase: any StoreKitOfferUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
 
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol,
+        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol
     ) {
         self.purchaseUseCase = purchaseUseCase
@@ -23,9 +23,10 @@ public struct RevampUpgradePlansUseCase: RevampUpgradePlansUseCaseProtocol {
 
     public func plans() async -> [PlanEntity] {
         var plans = await purchaseUseCase.accountPlanProducts()
-        let offers = await introductoryOfferUseCase.fetchIntroductoryOffers(for: plans)
+        let offers = await introductoryOfferUseCase.fetchOffers(for: plans)
         for index in plans.indices {
-            plans[index].introductoryOffer = offers[plans[index]]
+            plans[index].introductoryOffer = offers.introductory[plans[index]]
+            plans[index].promotionalOffer = offers.promotional[plans[index]]
         }
         return plans
     }

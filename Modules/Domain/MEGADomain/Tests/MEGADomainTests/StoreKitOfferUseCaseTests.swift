@@ -3,7 +3,7 @@ import MEGADomainMock
 import Testing
 
 @MainActor
-struct IntroductoryOfferUseCaseTests {
+struct StoreKitOfferUseCaseTests {
     @Test
     func fetchIntroductoryOffers_withMultiplePlans_shouldReturnOfferMapping() async {
         let plan1 = PlanEntity(productIdentifier: "plan1", type: .proI, subscriptionCycle: .yearly)
@@ -22,10 +22,10 @@ struct IntroductoryOfferUseCaseTests {
         )
         
         let expectedMapping = [plan1: offer1, plan2: offer2]
-        let mockRepo = MockIntroductoryOfferRepository(expectedMapping: expectedMapping)
-        let sut = IntroductoryOfferUseCase(repository: mockRepo)
+        let mockRepo = MockStoreKitOfferRepository(expectedMapping: expectedMapping)
+        let sut = StoreKitOfferUseCase(repository: mockRepo)
         
-        let result = await sut.fetchIntroductoryOffers(for: [plan1, plan2, plan3])
+        let result = await sut.fetchOffers(for: [plan1, plan2, plan3]).introductory
         
         #expect(result.count == 2)
         #expect(result[plan1] == offer1)
@@ -35,10 +35,10 @@ struct IntroductoryOfferUseCaseTests {
     
     @Test
     func fetchIntroductoryOffers_withEmptyPlanList_shouldReturnEmptyMapping() async {
-        let mockRepo = MockIntroductoryOfferRepository(expectedMapping: [:])
-        let sut = IntroductoryOfferUseCase(repository: mockRepo)
+        let mockRepo = MockStoreKitOfferRepository(expectedMapping: [:])
+        let sut = StoreKitOfferUseCase(repository: mockRepo)
         
-        let result = await sut.fetchIntroductoryOffers(for: [])
+        let result = await sut.fetchOffers(for: []).introductory
         
         #expect(result.isEmpty)
     }
@@ -48,10 +48,10 @@ struct IntroductoryOfferUseCaseTests {
         let plan1 = PlanEntity(productIdentifier: "plan1", type: .proI, subscriptionCycle: .yearly)
         let plan2 = PlanEntity(productIdentifier: "plan2", type: .proII, subscriptionCycle: .yearly)
         
-        let mockRepo = MockIntroductoryOfferRepository(expectedMapping: [:])
-        let sut = IntroductoryOfferUseCase(repository: mockRepo)
+        let mockRepo = MockStoreKitOfferRepository(expectedMapping: [:])
+        let sut = StoreKitOfferUseCase(repository: mockRepo)
         
-        let result = await sut.fetchIntroductoryOffers(for: [plan1, plan2])
+        let result = await sut.fetchOffers(for: [plan1, plan2]).introductory
         
         #expect(result.isEmpty)
     }

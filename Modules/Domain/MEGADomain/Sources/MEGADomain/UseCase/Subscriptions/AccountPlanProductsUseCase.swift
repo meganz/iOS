@@ -5,11 +5,11 @@ public protocol AccountPlanProductsUseCaseProtocol: Sendable {
 
 public struct AccountPlanProductsUseCase: AccountPlanProductsUseCaseProtocol {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
-    private let introductoryOfferUseCase: any IntroductoryOfferUseCaseProtocol
+    private let introductoryOfferUseCase: any StoreKitOfferUseCaseProtocol
 
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol
+        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.introductoryOfferUseCase = introductoryOfferUseCase
@@ -17,9 +17,9 @@ public struct AccountPlanProductsUseCase: AccountPlanProductsUseCaseProtocol {
 
     public func availablePlans() async -> [PlanEntity] {
         var plans = await purchaseUseCase.accountPlanProducts()
-        let offers = await introductoryOfferUseCase.fetchIntroductoryOffers(for: plans)
+        let offers = await introductoryOfferUseCase.fetchOffers(for: plans)
         for index in plans.indices {
-            plans[index].introductoryOffer = offers[plans[index]]
+            plans[index].introductoryOffer = offers.introductory[plans[index]]
         }
         return plans
     }
