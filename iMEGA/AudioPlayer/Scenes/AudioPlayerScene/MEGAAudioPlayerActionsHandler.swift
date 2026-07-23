@@ -5,25 +5,17 @@ import MEGASDKRepo
 import UIKit
 
 /// Builds the closure that `MEGAAudioPlayerViewRouter` invokes when the user
-/// taps the three-dot button on the revamped audio player. Centralises the
-/// branch between `NodeActionViewController` (cloud / folder link / chat /
-/// search result), the file-link variant, and the offline / nil no-ops, so the
-/// 4 host call sites stay one-liners.
+/// taps the three-dot button on the revamped audio player.
 @MainActor
 enum MEGAAudioPlayerActionsHandler {
     static func make() -> MEGAAudioPlayerViewRouter.ActionsHandler {
-        { hostVC, source in
-            switch source {
-            case .cloudNode(let node, _),
-                 .searchResult(let node),
-                 .folderLink(let node, _),
-                 .allAudios(let node, _),
-                 .recents(let node, _),
-                 .chatMessage(let node):
+        { hostVC, track in
+            switch track {
+            case .account(let node), .folderLink(let node):
                 presentNodeAction(for: node, on: hostVC)
             case .fileLink(let url, _):
                 presentFileLinkAction(for: url, on: hostVC)
-            case .offlineFiles:
+            case .offline:
                 // The player hides the three-dot for offline playback, matching
                 // legacy. This branch only runs if that invariant breaks.
                 break

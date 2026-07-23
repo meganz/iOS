@@ -15,15 +15,15 @@ import UIKit
 /// ```
 @MainActor
 public final class MEGAAudioPlayerViewRouter {
-    /// Invoked when the user taps the three-dot button. The host app
-    /// builds and presents the appropriate action sheet from `hostVC`:
-    /// - `.cloudNode` / `.folderLink` / `.chatMessage` / `.searchResult` →
-    ///   legacy `NodeActionViewController` with the generic delegate.
+    /// Invoked when the user taps the three-dot button, carrying the track that
+    /// is currently playing. The host app builds and presents the appropriate action sheet from `hostVC`:
+    /// - `.account` / `.folderLink` → legacy `NodeActionViewController` with the
+    ///   generic delegate.
     /// - `.fileLink` → `NodeActionViewController` with
     ///   `FileLinkActionViewControllerDelegate`.
-    /// - `.offlineFiles` → never fires (the player hides the three-dot button
+    /// - `.offline` → never fires (the player hides the three-dot button
     ///   for offline playback, matching legacy behaviour).
-    public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ source: PlaybackSource) -> Void
+    public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ track: PlaybackTrack) -> Void
 
     private weak var presenter: UIViewController?
     private let service: any AudioPlaybackServiceProtocol
@@ -106,9 +106,9 @@ public final class MEGAAudioPlayerViewRouter {
         host.onDismiss = stopPlaybackIfLoggedOut
 
         let actionsHandler = self.actionsHandler
-        vm.onMoreTap = { [weak host] source in
+        vm.onMoreTap = { [weak host] track in
             guard let host, let actionsHandler else { return }
-            actionsHandler(host, source)
+            actionsHandler(host, track)
         }
 
         host.view.backgroundColor = .clear

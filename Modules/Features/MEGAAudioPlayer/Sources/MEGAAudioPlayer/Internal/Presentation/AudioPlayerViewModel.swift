@@ -14,8 +14,8 @@ final class AudioPlayerViewModel: ObservableObject {
     // now; later: minimize to mini player). VM stays UI-agnostic — just forwards.
     var onDismiss: (() -> Void)?
 
-    // Router-injected callback for the three-dot button.
-    var onMoreTap: ((PlaybackSource) -> Void)?
+    // Router-injected callback for the three-dot button. 
+    var onMoreTap: ((PlaybackTrack) -> Void)?
 
     @Published private(set) var currentSource: PlaybackSource?
 
@@ -246,8 +246,8 @@ final class AudioPlayerViewModel: ObservableObject {
     }
 
     func didTapMore() {
-        guard let currentSource else { return }
-        onMoreTap?(currentSource)
+        guard let track = service?.currentQueue.current else { return }
+        onMoreTap?(track)
     }
 
     /// Seed `artworkImage` + `glowColor` directly. Normally driven by the

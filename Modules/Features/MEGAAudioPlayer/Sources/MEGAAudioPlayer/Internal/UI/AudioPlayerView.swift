@@ -176,6 +176,7 @@ struct AudioPlayerView: View {
                 MEGAAssets.Image.monoChevronDownMediumThinOutline
                     .frame(width: TokenSpacing._12, height: TokenSpacing._12)
                     .glassCircleIfAvailable()
+                    .contentShape(Rectangle())
             }
 
             Spacer()
@@ -187,6 +188,7 @@ struct AudioPlayerView: View {
                     MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                         .frame(width: TokenSpacing._12, height: TokenSpacing._12)
                         .glassCircleIfAvailable()
+                        .contentShape(Rectangle())
                 }
             }
         }

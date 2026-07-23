@@ -1,13 +1,6 @@
 import Foundation
 import MEGADomain
 
-enum PlaybackTrack: Sendable {
-    case account(NodeEntity)
-    case folderLink(NodeEntity)
-    case fileLink(url: URL, node: (any PlayableNode)?)
-    case offline(URL)
-}
-
 extension PlaybackTrack {
     var id: String {
         switch self {
