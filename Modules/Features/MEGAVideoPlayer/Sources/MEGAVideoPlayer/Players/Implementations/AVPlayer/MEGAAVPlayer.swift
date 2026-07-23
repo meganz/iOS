@@ -298,7 +298,8 @@ extension MEGAAVPlayer: NodeLoadable {
         currentTime = .seconds(-1)
         duration = .seconds(-1)
         currentURL = url
-        let playerItem = AVPlayerItem(url: url)
+        let itemURL = player.isExternalPlaybackActive ? url.updatedURLWithCurrentAddress() : url
+        let playerItem = AVPlayerItem(url: itemURL)
         player.replaceCurrentItem(with: playerItem)
 
         observe(for: playerItem)
