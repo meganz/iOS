@@ -1,4 +1,5 @@
 import MEGASdk
+import QuotaWarnings
 import UIKit
 
 @MainActor
@@ -11,11 +12,12 @@ final class DebugQuotaEventSimulator {
     /// Storage scenarios. Raw values match the SDK `StorageState` codes read by
     /// `EventEntity+Mapper.mapCodeToStorageState` (0 green … 4 paywall).
     enum StorageScenario: Int, CaseIterable, Identifiable {
-        case healthy = 0        // green
-        case almostFull = 1     // orange
-        case full = 2           // red
-        case pendingChange = 3  // change
-        case paywall = 4        // paywall → Over Disk Quota screen
+        case healthy = 0            // green
+        case almostFull = 1         // orange
+        case full = 2               // red
+        case pendingChange = 3      // change
+        case paywall = 4            // paywall → Over Disk Quota screen
+        case fullUploadAttempt = 5  // not an SDK state; presented directly (upload-blocked copy)
 
         var id: Int { rawValue }
 
@@ -26,6 +28,7 @@ final class DebugQuotaEventSimulator {
             case .full: "Storage full (red modal)"
             case .pendingChange: "Storage pending change (refetch)"
             case .paywall: "Storage paywall (ODQ screen)"
+            case .fullUploadAttempt: "Storage full – upload attempt (modal)"
             }
         }
     }
@@ -33,6 +36,7 @@ final class DebugQuotaEventSimulator {
     /// Transfer (bandwidth) over-quota scenarios — the OBQ dialog display modes.
     enum TransferScenario: Int, CaseIterable, Identifiable {
         case limitedDownload
+        case limitedStreaming
         case downloadExceeded
         case streamingExceeded
 
@@ -41,6 +45,7 @@ final class DebugQuotaEventSimulator {
         var title: String {
             switch self {
             case .limitedDownload: "Transfer quota – limited download"
+            case .limitedStreaming: "Transfer quota – limited streaming"
             case .downloadExceeded: "Transfer quota – download exceeded"
             case .streamingExceeded: "Transfer quota – streaming exceeded"
             }
@@ -49,6 +54,7 @@ final class DebugQuotaEventSimulator {
         var displayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode {
             switch self {
             case .limitedDownload: .limitedDownload
+            case .limitedStreaming: .streamingExceeded
             case .downloadExceeded: .downloadExceeded
             case .streamingExceeded: .streamingExceeded
             }
@@ -114,6 +120,12 @@ final class DebugQuotaEventSimulator {
     }
 
     private func fireStorageEvent(_ scenario: StorageScenario) {
+        // The upload-attempt copy isn't an SDK storage state, so present its severity directly
+        // instead of synthesizing an `EventStorage`.
+        if scenario == .fullUploadAttempt {
+            QuotaWarningsRouter().presentStorageDialog(severity: .fullUploadAttempt)
+            return
+        }
         guard let simulator = UIApplication.shared.delegate as? (any QAQuotaEventSimulating) else { return }
         simulator.qaSimulateStorageEvent(DebugStorageEvent(number: scenario.rawValue))
     }

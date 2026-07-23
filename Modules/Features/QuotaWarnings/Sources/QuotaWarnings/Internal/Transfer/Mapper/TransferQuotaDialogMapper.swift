@@ -1,10 +1,13 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
 import MEGASwift
 import MEGAUIComponent
+import SwiftUI
 
 struct TransferQuotaDialogMapper: QuotaDialogMapping {
     private let severity: TransferQuotaSeverity
@@ -16,13 +19,15 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         self.severity = severity
     }
 
-    func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader {
-        .transfer(TransferQuotaHeader(
+    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader {
+        QuotaDialogHeader(
             image: MEGAAssets.Image.quotaWarning,
             title: title(accountDetails: accountDetails),
-            subtitle: subtitle,
-            learnMore: .init(text: learnMoreTitle, url: learnMoreURL)
-        ))
+            subtitle: .attributed(
+                text: subtitleText(canUpgrade: canUpgrade),
+                links: [canUpgrade ? learnMoreAttribute : megaIoLinkAttribute]
+            )
+        )
     }
 
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
@@ -44,9 +49,21 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
 
     // MARK: - Private
 
+    private var learnMoreAttribute: SubstringAttribute {
+        var attributes = AttributeContainer()
+        attributes.underlineStyle = .single
+        attributes.font = .callout.weight(.regular)
+        attributes.foregroundColor = TokenColors.Text.primary.swiftUI
+        return SubstringAttribute(
+            text: learnMoreTitle,
+            attributes: attributes,
+            action: { DependencyInjection.externalLinkOpener.openExternalLink(with: learnMoreURL) }
+        )
+    }
+
     private func title(accountDetails: AccountDetailsEntity) -> String {
         switch severity {
-        case .limitedDownload:
+        case .limitedDownload, .limitedStreaming:
             if accountDetails.isFree {
                 Strings.Localizable.QuotaWarning.Transfer.RunningLow.title
             } else {
@@ -59,20 +76,30 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         }
     }
 
-    private var subtitle: String {
+    private func subtitleText(canUpgrade: Bool) -> String {
         switch severity {
         case .limitedDownload:
-            Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.subtitle(learnMoreTitle)
+            canUpgrade
+                ? Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.subtitle(learnMoreTitle)
+                : Strings.Localizable.QuotaWarning.Transfer.LimitedDownload.Manage.subtitle(megaIoLinkText)
+        case .limitedStreaming:
+            canUpgrade
+                ? Strings.Localizable.QuotaWarning.Transfer.LimitedStreaming.subtitle(learnMoreTitle)
+                : Strings.Localizable.QuotaWarning.Transfer.LimitedStreaming.Manage.subtitle(megaIoLinkText)
         case .downloadExceeded:
-            Strings.Localizable.QuotaWarning.Transfer.DownloadExceeded.subtitle(learnMoreTitle)
+            canUpgrade
+                ? Strings.Localizable.QuotaWarning.Transfer.DownloadExceeded.subtitle(learnMoreTitle)
+                : Strings.Localizable.QuotaWarning.Transfer.DownloadExceeded.Manage.subtitle(megaIoLinkText)
         case .streamingExceeded:
-            Strings.Localizable.QuotaWarning.Transfer.StreamingExceeded.subtitle(learnMoreTitle)
+            canUpgrade
+                ? Strings.Localizable.QuotaWarning.Transfer.StreamingExceeded.subtitle(learnMoreTitle)
+                : Strings.Localizable.QuotaWarning.Transfer.StreamingExceeded.Manage.subtitle(megaIoLinkText)
         }
     }
 
     private func currentQuotaProgress(accountDetails: AccountDetailsEntity) -> QuotaProgress {
         let status: QuotaStatus = switch severity {
-        case .limitedDownload: .almostFull
+        case .limitedDownload, .limitedStreaming: .almostFull
         case .downloadExceeded, .streamingExceeded: .full
         }
 

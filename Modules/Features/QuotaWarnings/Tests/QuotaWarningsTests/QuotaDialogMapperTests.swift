@@ -1,17 +1,7 @@
 import MEGADomain
 import MEGADomainMock
-import MEGAUIComponent
 @testable import QuotaWarnings
 import Testing
-
-private extension QuotaDialogHeader {
-    var storageHeader: StorageQuotaHeader? {
-        if case let .storage(header) = self { header } else { nil }
-    }
-    var transferHeader: TransferQuotaHeader? {
-        if case let .transfer(header) = self { header } else { nil }
-    }
-}
 
 @Suite("Storage quota dialog mapper")
 struct StorageQuotaDialogMapperTests {
@@ -27,27 +17,52 @@ struct StorageQuotaDialogMapperTests {
         )
     }
 
-    @Test func header_almostFull_showsPercentAndAlmostFullCopy() throws {
+    @Test func header_almostFull_showsPercentAndAlmostFullCopy() {
         let sut = StorageQuotaDialogMapper(severity: .almostFull)
-        let header = try #require(sut.header(accountDetails: .build(storageUsed: 90, storageMax: 100)).storageHeader)
+        let header = sut.header(accountDetails: .build(storageUsed: 90, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 90% full")
-        #expect(header.subtitle == "Upgrade your plan before you run out of space")
+        #expect(header.subtitle.text == "Upgrade your plan before you run out of space")
     }
 
-    @Test func header_full_showsFullCopy() throws {
+    @Test func header_full_showsFullCopy() {
         let sut = StorageQuotaDialogMapper(severity: .full)
-        let header = try #require(sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100)).storageHeader)
+        let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 100% full")
-        #expect(header.subtitle == "Upgrade your plan to get more storage and upload more files")
+        #expect(header.subtitle.text == "Upgrade your plan to get more storage and upload more files")
     }
 
-    @Test func header_full_overHundredPercent_showsActualPercentUncapped() throws {
+    @Test func header_fullUploadAttempt_showsRunOutOfSpaceCopy() {
+        let sut = StorageQuotaDialogMapper(severity: .fullUploadAttempt)
+        let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: true)
+
+        #expect(header.title == "Your storage is 100% full")
+        #expect(header.subtitle.text == "You've run out of storage space. Upgrade your plan to continue uploading")
+    }
+
+    @Test func header_noUpgrade_showsManageCopyRegardlessOfSeverity() {
+        for severity in [StorageQuotaSeverity.almostFull, .full, .fullUploadAttempt] {
+            let sut = StorageQuotaDialogMapper(severity: severity)
+            let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: false)
+
+            #expect(header.subtitle.text == "Make room in Cloud drive, or manage your plan at mega.io for more storage")
+            #expect(header.subtitle.links.count == 1)
+        }
+    }
+
+    @Test func header_full_overHundredPercent_showsActualPercentUncapped() {
         let sut = StorageQuotaDialogMapper(severity: .full)
-        let header = try #require(sut.header(accountDetails: .build(storageUsed: 120, storageMax: 100)).storageHeader)
+        let header = sut.header(accountDetails: .build(storageUsed: 120, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 120% full")
+    }
+
+    @Test func header_upgradeAvailable_hasNoInlineLink() {
+        let sut = StorageQuotaDialogMapper(severity: .almostFull)
+        let header = sut.header(accountDetails: .build(storageUsed: 90, storageMax: 100), canUpgrade: true)
+
+        #expect(header.subtitle.links.isEmpty)
     }
 
     @Test func currentPlan_usesStorageUsageAndSeverityStatus() {
@@ -76,26 +91,50 @@ struct StorageQuotaDialogMapperTests {
 
 @Suite("Transfer quota dialog mapper")
 struct TransferQuotaDialogMapperTests {
-    @Test func header_limitedDownloadFreeAccount_showsRunningLowTitle() throws {
+    @Test func header_limitedDownloadFreeAccount_showsRunningLowTitle() {
         let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
-        let header = try #require(sut.header(accountDetails: .build(proLevel: .free)).transferHeader)
+        let header = sut.header(accountDetails: .build(proLevel: .free), canUpgrade: true)
 
         #expect(header.title == "Your transfer quota is running low")
-        #expect(header.learnMore.text == "Learn more")
+        #expect(header.subtitle.text == "As a result, your download may be interrupted. Upgrade your plan to get more transfer quota. Learn more")
+        #expect(header.subtitle.links.count == 1)
     }
 
-    @Test func header_limitedDownloadPaidAccount_showsPercentTitle() throws {
+    @Test func header_limitedStreaming_showsRunningLowTitleAndStreamingCopy() {
+        let sut = TransferQuotaDialogMapper(severity: .limitedStreaming)
+        let header = sut.header(accountDetails: .build(proLevel: .free), canUpgrade: true)
+
+        #expect(header.title == "Your transfer quota is running low")
+        #expect(header.subtitle.text == "As a result, media playback may be interrupted. Upgrade your plan to get more transfer quota. Learn more")
+        #expect(header.subtitle.links.count == 1)
+    }
+
+    @Test func header_limitedDownloadPaidAccount_showsPercentTitle() {
         let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
-        let header = try #require(sut.header(accountDetails: .build(transferUsed: 80, transferMax: 100, proLevel: .proI)).transferHeader)
+        let header = sut.header(accountDetails: .build(transferUsed: 80, transferMax: 100, proLevel: .proI), canUpgrade: true)
 
         #expect(header.title == "You've used 80% of your transfer quota")
     }
 
-    @Test func header_exceeded_showsExceededTitle() throws {
+    @Test func header_exceeded_showsExceededTitle() {
         let sut = TransferQuotaDialogMapper(severity: .downloadExceeded)
-        let header = try #require(sut.header(accountDetails: .build(proLevel: .proI)).transferHeader)
+        let header = sut.header(accountDetails: .build(proLevel: .proI), canUpgrade: true)
 
         #expect(header.title == "Transfer quota exceeded")
+    }
+
+    @Test(arguments: [
+        (TransferQuotaSeverity.limitedDownload, "As a result, your download may be interrupted. Manage your plan at mega.io for more transfer quota"),
+        (.limitedStreaming, "As a result, media playback may be interrupted. Manage your plan at mega.io for more transfer quota"),
+        (.downloadExceeded, "To continue your download, manage your plan at mega.io for more transfer quota"),
+        (.streamingExceeded, "To continue media playback, manage your plan at mega.io for more transfer quota")
+    ])
+    func header_noUpgrade_showsManageCopyWithMegaIoLink(severity: TransferQuotaSeverity, expectedSubtitle: String) {
+        let sut = TransferQuotaDialogMapper(severity: severity)
+        let header = sut.header(accountDetails: .build(proLevel: .proIII), canUpgrade: false)
+
+        #expect(header.subtitle.text == expectedSubtitle)
+        #expect(header.subtitle.links.count == 1)
     }
 
     @Test func currentPlan_freeAccountUsesUsedOnlyStyle() {

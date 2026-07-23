@@ -29,13 +29,13 @@ final class QuotaDialogViewModel: ObservableObject {
             switch try await useCase.upgradeOption() {
             case let .available(accountDetails, recommendedPlan):
                 viewState = .upgradeAvailable(
-                    header: mapper.header(accountDetails: accountDetails),
+                    header: mapper.header(accountDetails: accountDetails, canUpgrade: true),
                     currentPlan: mapper.currentPlan(accountDetails: accountDetails),
                     recommendedPlan: mapper.recommendedPlan(recommendedPlan, accountDetails: accountDetails)
                 )
             case let .unavailable(accountDetails):
                 viewState = .noUpgradeAvailable(
-                    header: mapper.header(accountDetails: accountDetails),
+                    header: mapper.header(accountDetails: accountDetails, canUpgrade: false),
                     currentPlan: mapper.currentPlan(accountDetails: accountDetails)
                 )
             }

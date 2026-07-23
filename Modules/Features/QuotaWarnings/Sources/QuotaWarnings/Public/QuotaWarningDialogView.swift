@@ -4,11 +4,14 @@ import SwiftUI
 public enum StorageQuotaSeverity: Equatable, Sendable {
     case almostFull
     case full
+    /// Storage is full and the user just attempted an upload/action that was blocked (over-quota API error).
+    case fullUploadAttempt
 }
 
 public enum TransferQuotaSeverity: Equatable, Sendable {
     case limitedDownload
     case downloadExceeded
+    case limitedStreaming
     case streamingExceeded
 }
 

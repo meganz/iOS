@@ -1,6 +1,5 @@
 import MEGADomain
 import MEGADomainMock
-import MEGAUIComponent
 import SwiftUI
 import Testing
 @testable import QuotaWarnings
@@ -73,8 +72,8 @@ private final class MockQuotaDialogUseCase: QuotaDialogUseCaseProtocol, @uncheck
 private struct StubQuotaDialogMapper: QuotaDialogMapping {
     static let headerTitle = "stub-title"
 
-    func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader {
-        .storage(StorageQuotaHeader(image: Image(systemName: "photo"), title: Self.headerTitle, subtitle: ""))
+    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader {
+        QuotaDialogHeader(image: Image(systemName: "photo"), title: Self.headerTitle, subtitle: .plain(""))
     }
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
         CurrentPlan(name: "current", quota: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal))

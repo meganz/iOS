@@ -1,27 +1,30 @@
+import MEGAUIComponent
 import SwiftUI
 
-/// Presentation model for the dialog header, produced by the mapper so the header views stay dumb.
-/// Storage and transfer are distinct cases because they render differently (transfer carries an inline
-/// "Learn more" link), so `QuotaDialogHeaderView` picks the matching subview.
-enum QuotaDialogHeader {
-    case storage(StorageQuotaHeader)
-    case transfer(TransferQuotaHeader)
-}
-
-struct StorageQuotaHeader {
+struct QuotaDialogHeader {
     let image: Image
     let title: String
-    let subtitle: String
+    let subtitle: QuotaDialogSubtitle
 }
 
-struct TransferQuotaHeader {
-    struct LearnMore {
-        let text: String
-        let url: URL
+/// A dialog subtitle: either plain text, or text with inline tappable link substrings (e.g. the "Learn more" or "mega.io")
+enum QuotaDialogSubtitle {
+    case plain(String)
+    case attributed(text: String, links: [SubstringAttribute])
+
+    /// The subtitle's display text, regardless of case.
+    var text: String {
+        switch self {
+        case .plain(let text): text
+        case .attributed(let text, _): text
+        }
     }
 
-    let image: Image
-    let title: String
-    let subtitle: String
-    let learnMore: LearnMore
+    /// The inline link substrings; empty for `.plain`.
+    var links: [SubstringAttribute] {
+        switch self {
+        case .plain: []
+        case .attributed(_, let links): links
+        }
+    }
 }

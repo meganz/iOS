@@ -1,12 +1,17 @@
+import Foundation
 import MEGAAppPresentation
+import MEGADesignToken
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
+import MEGAUIComponent
+import SwiftUI
 
 /// Maps the domain result (`AccountDetailsEntity` + `RecommendedUpgradePlanEntity`) into the presentation
 /// models the dialog renders. Storage and transfer each provide their own implementation (with severity
 /// baked in); the shared recommended-card mapping lives here.
 protocol QuotaDialogMapping {
-    func header(accountDetails: AccountDetailsEntity) -> QuotaDialogHeader
+    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan
     func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan
 }
@@ -33,5 +38,21 @@ extension QuotaDialogMapping {
             return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel(campaign, discount)
         }
         return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer(discount)
+    }
+
+    var megaIoLinkText: String { "mega.io" }
+
+    var megaIoLinkAttribute: SubstringAttribute {
+        var attributes = AttributeContainer()
+        attributes.underlineStyle = .single
+        attributes.font = .callout.weight(.regular)
+        attributes.foregroundColor = TokenColors.Text.primary.swiftUI
+        return SubstringAttribute(
+            text: megaIoLinkText,
+            attributes: attributes,
+            action: {
+                DependencyInjection.externalLinkOpener.openExternalLink(with: URL(string: "https://www.mega.io")!)
+            }
+        )
     }
 }

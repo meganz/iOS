@@ -5078,8 +5078,12 @@
 "quotaWarning.storage.title"="Your storage is %d%% full";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="Upgrade your plan before you run out of space";
-/* Subtitle of the storage quota warning dialog shown when storage is full. */
+/* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
 "quotaWarning.storage.full.subtitle"="Upgrade your plan to get more storage and upload more files";
+/* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
+"quotaWarning.storage.full.uploading.subtitle"="You've run out of storage space. Upgrade your plan to continue uploading";
+/* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.storage.manage.subtitle"="Make room in Cloud drive, or manage your plan at %@ for more storage";
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="Your transfer quota is running low";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
@@ -5088,10 +5092,20 @@
 "quotaWarning.transfer.exceeded.title"="Transfer quota exceeded";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
 "quotaWarning.transfer.limitedDownload.subtitle"="As a result, your download may be interrupted. Upgrade your plan to get more transfer quota. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedStreaming.subtitle"="As a result, media playback may be interrupted. Upgrade your plan to get more transfer quota. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
 "quotaWarning.transfer.downloadExceeded.subtitle"="To continue your download, upgrade your plan to get more transfer quota. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
 "quotaWarning.transfer.streamingExceeded.subtitle"="To continue media playback, upgrade your plan to get more transfer quota. %@";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="As a result, your download may be interrupted. Manage your plan at %@ for more transfer quota";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="As a result, media playback may be interrupted. Manage your plan at %@ for more transfer quota";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="To continue your download, manage your plan at %@ for more transfer quota";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="To continue media playback, manage your plan at %@ for more transfer quota";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
 "quotaWarning.recommendedPlan.tag.bestForYou"="Best for you";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */

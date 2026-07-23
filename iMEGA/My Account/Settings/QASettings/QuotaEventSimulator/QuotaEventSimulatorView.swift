@@ -250,7 +250,9 @@ private extension QuotaEventSimulatorView {
     enum Scenario: String, CaseIterable, Hashable {
         case storageAlmostFull = "Storage almost full"
         case storageFull = "Storage full"
+        case storageFullUploadAttempt = "Storage full – upload attempt"
         case transferLimitedDownload = "Transfer – limited download"
+        case transferLimitedStreaming = "Transfer – limited streaming"
         case transferDownloadExceeded = "Transfer – download exceeded"
         case transferStreamingExceeded = "Transfer – streaming exceeded"
 
@@ -260,7 +262,9 @@ private extension QuotaEventSimulatorView {
             switch self {
             case .storageAlmostFull: .storage(.almostFull)
             case .storageFull: .storage(.full)
+            case .storageFullUploadAttempt: .storage(.fullUploadAttempt)
             case .transferLimitedDownload: .transfer(.limitedDownload)
+            case .transferLimitedStreaming: .transfer(.limitedStreaming)
             case .transferDownloadExceeded: .transfer(.downloadExceeded)
             case .transferStreamingExceeded: .transfer(.streamingExceeded)
             }
