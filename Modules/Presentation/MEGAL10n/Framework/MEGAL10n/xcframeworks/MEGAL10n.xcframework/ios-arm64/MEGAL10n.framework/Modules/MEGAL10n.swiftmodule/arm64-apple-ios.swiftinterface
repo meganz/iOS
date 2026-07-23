@@ -5232,7 +5232,7 @@ public enum Strings {
           public static let title: Swift.String
         }
         public enum Indicator {
-          public static func playingOnDevice(_ p1: Any) -> Swift.String
+          public static let playingOnDevice: Swift.String
         }
       }
       public enum Chip {

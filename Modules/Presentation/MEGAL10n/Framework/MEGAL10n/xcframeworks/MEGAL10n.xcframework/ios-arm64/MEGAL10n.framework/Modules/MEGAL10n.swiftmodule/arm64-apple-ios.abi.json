@@ -159356,32 +159356,52 @@
                         "printedName": "Indicator",
                         "children": [
                           {
-                            "kind": "Function",
+                            "kind": "Var",
                             "name": "playingOnDevice",
-                            "printedName": "playingOnDevice(_:)",
+                            "printedName": "playingOnDevice",
                             "children": [
                               {
                                 "kind": "TypeNominal",
                                 "name": "String",
                                 "printedName": "Swift.String",
                                 "usr": "s:SS"
-                              },
-                              {
-                                "kind": "TypeNominal",
-                                "name": "ProtocolComposition",
-                                "printedName": "Any"
                               }
                             ],
-                            "declKind": "Func",
-                            "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceySSypFZ",
-                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceySSypFZ",
+                            "declKind": "Var",
+                            "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceSSvpZ",
+                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceSSvpZ",
                             "moduleName": "MEGAL10n",
                             "static": true,
                             "declAttributes": [
+                              "HasInitialValue",
+                              "HasStorage",
                               "AccessControl",
                               "RawDocComment"
                             ],
-                            "funcSelfKind": "NonMutating"
+                            "isLet": true,
+                            "hasStorage": true,
+                            "accessors": [
+                              {
+                                "kind": "Accessor",
+                                "name": "Get",
+                                "printedName": "Get()",
+                                "children": [
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  }
+                                ],
+                                "declKind": "Accessor",
+                                "usr": "s:8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceSSvgZ",
+                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO11VideoPlayerO7AirPlayO9IndicatorO15playingOnDeviceSSvgZ",
+                                "moduleName": "MEGAL10n",
+                                "static": true,
+                                "implicit": true,
+                                "accessorKind": "get"
+                              }
+                            ]
                           }
                         ],
                         "declKind": "Enum",
@@ -211753,1302 +211773,1323 @@
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741648,
+      "offset": 740973,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741663,
+      "offset": 740988,
+      "length": 47,
+      "value": "\"videoPlayer.airPlay.indicator.playingOnDevice\""
+    },
+    {
+      "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 741047,
+      "length": 45,
+      "value": "\"This video is playing on an external device\""
+    },
+    {
+      "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 741550,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 741565,
       "length": 34,
       "value": "\"videoPlayer.lock.lockVideoPlayer\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741709,
+      "offset": 741611,
       "length": 19,
       "value": "\"Lock video player\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741843,
+      "offset": 741745,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741858,
+      "offset": 741760,
       "length": 31,
       "value": "\"videoPlayer.lock.screenLocked\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741901,
+      "offset": 741803,
       "length": 18,
       "value": "\"Screen is locked\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742031,
+      "offset": 741933,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742046,
+      "offset": 741948,
       "length": 34,
       "value": "\"videoPlayer.lock.tapIconToUnlock\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742092,
+      "offset": 741994,
       "length": 29,
       "value": "\"Tap the lock icon to unlock\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742313,
+      "offset": 742215,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742328,
+      "offset": 742230,
       "length": 35,
       "value": "\"videoPlayer.pip.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742375,
+      "offset": 742277,
       "length": 20,
       "value": "\"Picture-in-picture\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742588,
+      "offset": 742490,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742603,
+      "offset": 742505,
       "length": 40,
       "value": "\"videoPlayer.snapshot.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742655,
+      "offset": 742557,
       "length": 9,
       "value": "\"Capture\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742811,
+      "offset": 742713,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742826,
+      "offset": 742728,
       "length": 37,
       "value": "\"videoPlayer.snapshot.snackBar.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 742875,
+      "offset": 742777,
       "length": 28,
       "value": "\"Image saved to your device\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743102,
+      "offset": 743004,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743117,
+      "offset": 743019,
       "length": 41,
       "value": "\"videoPlayer.subtitles.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743170,
+      "offset": 743072,
       "length": 11,
       "value": "\"Subtitles\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743351,
+      "offset": 743253,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743366,
+      "offset": 743268,
       "length": 46,
       "value": "\"videoPlayer.subtitles.menu.addFromCloudDrive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743424,
+      "offset": 743326,
       "length": 31,
       "value": "\"Add subtitle from Cloud drive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743548,
+      "offset": 743450,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743563,
+      "offset": 743465,
       "length": 32,
       "value": "\"videoPlayer.subtitles.menu.off\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743607,
+      "offset": 743509,
       "length": 5,
       "value": "\"Off\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743771,
+      "offset": 743673,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743786,
+      "offset": 743688,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.addSubtitle\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743840,
+      "offset": 743742,
       "length": 14,
       "value": "\"Add subtitle\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743963,
+      "offset": 743865,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 743978,
+      "offset": 743880,
       "length": 37,
       "value": "\"videoPlayer.subtitles.select.cancel\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744027,
+      "offset": 743929,
       "length": 8,
       "value": "\"Cancel\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744135,
+      "offset": 744037,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744150,
+      "offset": 744052,
       "length": 36,
       "value": "\"videoPlayer.subtitles.select.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744198,
+      "offset": 744100,
       "length": 24,
       "value": "\"Select a subtitle file\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744372,
+      "offset": 744274,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744387,
+      "offset": 744289,
       "length": 44,
       "value": "\"videoPlayer.subtitles.select.empty.content\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744443,
+      "offset": 744345,
       "length": 52,
       "value": "\"Upload subtitles in SRT format to your Cloud drive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744611,
+      "offset": 744513,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744626,
+      "offset": 744528,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.empty.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744680,
+      "offset": 744582,
       "length": 20,
       "value": "\"No subtitles found\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744862,
+      "offset": 744764,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744877,
+      "offset": 744779,
       "length": 44,
       "value": "\"videoPlayer.subtitles.select.error.content\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744933,
+      "offset": 744835,
       "length": 92,
       "value": "\"There was an issue with the subtitle file.\nSelect a different subtitle file or try again.\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745139,
+      "offset": 745041,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745154,
+      "offset": 745056,
       "length": 39,
       "value": "\"videoPlayer.subtitles.select.error.ok\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745205,
+      "offset": 745107,
       "length": 12,
       "value": "\"OK, got it\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745333,
+      "offset": 745235,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745348,
+      "offset": 745250,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.error.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745402,
+      "offset": 745304,
       "length": 24,
       "value": "\"Unable to add subtitle\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745595,
+      "offset": 745497,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745610,
+      "offset": 745512,
       "length": 47,
       "value": "\"videoPlayer.subtitles.select.search.noResults\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745669,
+      "offset": 745571,
       "length": 19,
       "value": "\"No search results\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745868,
+      "offset": 745770,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745883,
+      "offset": 745785,
       "length": 28,
       "value": "\"videos.navigationbar.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 745923,
+      "offset": 745825,
       "length": 8,
       "value": "\"Videos\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746087,
+      "offset": 745989,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746102,
+      "offset": 746004,
       "length": 35,
       "value": "\"videos.recentlyWatched.emptyState\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746149,
+      "offset": 746051,
       "length": 20,
       "value": "\"No recent activity\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746276,
+      "offset": 746178,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746291,
+      "offset": 746193,
       "length": 43,
       "value": "\"videos.recentlyWatched.navigationBarTitle\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746346,
+      "offset": 746248,
       "length": 18,
       "value": "\"Recently watched\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746539,
+      "offset": 746441,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746554,
+      "offset": 746456,
       "length": 45,
       "value": "\"videos.recentlyWatched.deletion.alert.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746611,
+      "offset": 746513,
       "length": 78,
       "value": "\"Videos will be removed from this list, but not deleted from your Cloud drive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746879,
+      "offset": 746781,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746894,
+      "offset": 746796,
       "length": 67,
       "value": "\"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746973,
+      "offset": 746875,
       "length": 12,
       "value": "\"Clear list\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747217,
+      "offset": 747119,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747232,
+      "offset": 747134,
       "length": 35,
       "value": "\"videos.tab.all.content.emptyState\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747279,
+      "offset": 747181,
       "length": 17,
       "value": "\"No videos found\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747537,
+      "offset": 747439,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747552,
+      "offset": 747454,
       "length": 52,
       "value": "\"videos.tab.all.filter.duration.option.allDurations\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747616,
+      "offset": 747518,
       "length": 15,
       "value": "\"All durations\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747781,
+      "offset": 747683,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747796,
+      "offset": 747698,
       "length": 61,
       "value": "\"videos.tab.all.filter.duration.option.between10And60Seconds\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747869,
+      "offset": 747771,
       "length": 27,
       "value": "\"Between 10 and 60 seconds\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748042,
+      "offset": 747944,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748057,
+      "offset": 747959,
       "length": 59,
       "value": "\"videos.tab.all.filter.duration.option.between1And4Minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748128,
+      "offset": 748030,
       "length": 25,
       "value": "\"Between 1 and 4 minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748301,
+      "offset": 748203,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748316,
+      "offset": 748218,
       "length": 60,
       "value": "\"videos.tab.all.filter.duration.option.between4And20Minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748388,
+      "offset": 748290,
       "length": 26,
       "value": "\"Between 4 and 20 minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748555,
+      "offset": 748457,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748570,
+      "offset": 748472,
       "length": 57,
       "value": "\"videos.tab.all.filter.duration.option.lessThan10Seconds\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748639,
+      "offset": 748541,
       "length": 22,
       "value": "\"Less than 10 seconds\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748802,
+      "offset": 748704,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748817,
+      "offset": 748719,
       "length": 57,
       "value": "\"videos.tab.all.filter.duration.option.moreThan20Minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748886,
+      "offset": 748788,
       "length": 22,
       "value": "\"More than 20 minutes\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749077,
+      "offset": 748979,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749092,
+      "offset": 748994,
       "length": 47,
       "value": "\"videos.tab.all.filter.duration.title.duration\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749151,
+      "offset": 749053,
       "length": 10,
       "value": "\"Duration\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749390,
+      "offset": 749292,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749405,
+      "offset": 749307,
       "length": 52,
       "value": "\"videos.tab.all.filter.location.option.allLocations\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749469,
+      "offset": 749371,
       "length": 15,
       "value": "\"All locations\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749615,
+      "offset": 749517,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749630,
+      "offset": 749532,
       "length": 53,
       "value": "\"videos.tab.all.filter.location.option.cameraUploads\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749695,
+      "offset": 749597,
       "length": 16,
       "value": "\"Camera uploads\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749836,
+      "offset": 749738,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749851,
+      "offset": 749753,
       "length": 50,
       "value": "\"videos.tab.all.filter.location.option.cloudDrive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749913,
+      "offset": 749815,
       "length": 13,
       "value": "\"Cloud drive\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750053,
+      "offset": 749955,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750068,
+      "offset": 749970,
       "length": 51,
       "value": "\"videos.tab.all.filter.location.option.sharedItems\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750131,
+      "offset": 750033,
       "length": 14,
       "value": "\"Shared items\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750314,
+      "offset": 750216,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750329,
+      "offset": 750231,
       "length": 47,
       "value": "\"videos.tab.all.filter.location.title.location\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750388,
+      "offset": 750290,
       "length": 10,
       "value": "\"Location\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750675,
+      "offset": 750577,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750690,
+      "offset": 750592,
       "length": 40,
       "value": "\"videos.tab.playlist.browser.button.add\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750742,
+      "offset": 750644,
       "length": 5,
       "value": "\"Add\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750920,
+      "offset": 750822,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750935,
+      "offset": 750837,
       "length": 40,
       "value": "\"videos.tab.playlist.content.emptyState\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750987,
+      "offset": 750889,
       "length": 20,
       "value": "\"No playlists found\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751144,
+      "offset": 751046,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751159,
+      "offset": 751061,
       "length": 41,
       "value": "\"videos.tab.playlist.content.newPlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751212,
+      "offset": 751114,
       "length": 14,
       "value": "\"New playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751362,
+      "offset": 751264,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751377,
+      "offset": 751279,
       "length": 48,
       "value": "\"videos.tab.playlist.content.removeFromPlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751437,
+      "offset": 751339,
       "length": 22,
       "value": "\"Remove from playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751637,
+      "offset": 751539,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751652,
+      "offset": 751554,
       "length": 47,
       "value": "\"videos.tab.playlist.content.alert.placeholder\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751711,
+      "offset": 751613,
       "length": 14,
       "value": "\"New playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751848,
+      "offset": 751750,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751863,
+      "offset": 751765,
       "length": 41,
       "value": "\"videos.tab.playlist.content.alert.title\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751916,
+      "offset": 751818,
       "length": 21,
       "value": "\"Enter playlist name\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752117,
+      "offset": 752019,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752132,
+      "offset": 752034,
       "length": 49,
       "value": "\"videos.tab.playlist.content.alert.button.create\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752193,
+      "offset": 752095,
       "length": 8,
       "value": "\"Create\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752326,
+      "offset": 752228,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752341,
+      "offset": 752243,
       "length": 49,
       "value": "\"videos.tab.playlist.content.alert.button.rename\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752402,
+      "offset": 752304,
       "length": 8,
       "value": "\"Rename\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752593,
+      "offset": 752495,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752608,
+      "offset": 752510,
       "length": 60,
       "value": "\"videos.tab.playlist.content.alert.subtitle.enterTheNewName\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752680,
+      "offset": 752582,
       "length": 20,
       "value": "\"Enter the new name\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752881,
+      "offset": 752783,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752896,
+      "offset": 752798,
       "length": 102,
       "value": "\"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753010,
+      "offset": 752912,
       "length": 71,
       "value": "\"Playlist will be deleted but its contents will stay in your Timeline.\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753266,
+      "offset": 753168,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753281,
+      "offset": 753183,
       "length": 56,
       "value": "\"videos.tab.playlist.content.alert.title.deletePlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753349,
+      "offset": 753251,
       "length": 18,
       "value": "\"Delete playlist?\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753485,
+      "offset": 753387,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753500,
+      "offset": 753402,
       "length": 48,
       "value": "\"videos.tab.playlist.content.alert.title.rename\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753560,
+      "offset": 753462,
       "length": 17,
       "value": "\"Rename playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753866,
+      "offset": 753768,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753881,
+      "offset": 753783,
       "length": 53,
       "value": "\"videos.tab.playlist.content.header.button.title.add\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753946,
+      "offset": 753848,
       "length": 5,
       "value": "\"Add\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754204,
+      "offset": 754106,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754219,
+      "offset": 754121,
       "length": 65,
       "value": "\"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754296,
+      "offset": 754198,
       "length": 16,
       "value": "\"Empty playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754484,
+      "offset": 754386,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754499,
+      "offset": 754401,
       "length": 58,
       "value": "\"videos.tab.playlist.content.playlistCell.title.favorites\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754569,
+      "offset": 754471,
       "length": 12,
       "value": "\"Favourites\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754788,
+      "offset": 754690,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754803,
+      "offset": 754705,
       "length": 58,
       "value": "\"videos.tab.playlist.content.snackbar.playlistNameDeleted\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754873,
+      "offset": 754775,
       "length": 19,
       "value": "\"“[A]” deleted\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755016,
+      "offset": 754918,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755031,
+      "offset": 754933,
       "length": 53,
       "value": "\"videos.tab.playlist.content.snackbar.renamingFailed\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755096,
+      "offset": 754998,
       "length": 17,
       "value": "\"Renaming failed\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755353,
+      "offset": 755255,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755368,
+      "offset": 755270,
       "length": 53,
       "value": "\"videos.tab.playlist.create.alert.enterDifferentName\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755433,
+      "offset": 755335,
       "length": 24,
       "value": "\"Enter a different name\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755602,
+      "offset": 755504,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755617,
+      "offset": 755519,
       "length": 47,
       "value": "\"videos.tab.playlist.create.alert.enterNewName\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755676,
+      "offset": 755578,
       "length": 18,
       "value": "\"Enter a new name\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755855,
+      "offset": 755757,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755870,
+      "offset": 755772,
       "length": 58,
       "value": "\"videos.tab.playlist.create.alert.userVideoPlaylistExists\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755940,
+      "offset": 755842,
       "length": 42,
       "value": "\"A playlist with this name already exists\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756149,
+      "offset": 756051,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756164,
+      "offset": 756066,
       "length": 62,
       "value": "\"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756238,
+      "offset": 756140,
       "length": 35,
       "value": "\"This playlist name is not allowed\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756585,
+      "offset": 756487,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756600,
+      "offset": 756502,
       "length": 74,
       "value": "\"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756686,
+      "offset": 756588,
       "length": 23,
       "value": "\"Remove from playlist?\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756908,
+      "offset": 756810,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756923,
+      "offset": 756825,
       "length": 52,
       "value": "\"videos.tab.playlist.playlistContent.menu.addVideos\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756987,
+      "offset": 756889,
       "length": 12,
       "value": "\"Add videos\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757129,
+      "offset": 757031,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757144,
+      "offset": 757046,
       "length": 57,
       "value": "\"videos.tab.playlist.playlistContent.menu.deletePlaylist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757213,
+      "offset": 757115,
       "length": 17,
       "value": "\"Delete playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758088,
+      "offset": 757990,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758103,
+      "offset": 758005,
       "length": 22,
       "value": "\"videos.tab.title.all\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758137,
+      "offset": 758039,
       "length": 12,
       "value": "\"All videos\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758249,
+      "offset": 758151,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758264,
+      "offset": 758166,
       "length": 27,
       "value": "\"videos.tab.title.playlist\""
     },
     {
       "filePath": "\/Users\/mega-yfa\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758303,
+      "offset": 758205,
       "length": 11,
       "value": "\"Playlists\""
     }
