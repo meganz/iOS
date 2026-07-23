@@ -87,10 +87,22 @@
         if ([SKPaymentQueue canMakePayments]) {
             [SVProgressHUD show];
 
-            SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
-            NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
-            paymentRequest.applicationUsername = base64UserHandle;
-            [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
+            __weak typeof(self) weakSelf = self;
+            [self refreshPricingForProduct:product completionHandler:^(BOOL pricingRefreshed) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    typeof(self) strongSelf = weakSelf;
+                    if (strongSelf == nil) {
+                        [SVProgressHUD dismiss];
+                        return;
+                    }
+                    if (pricingRefreshed) {
+                        [strongSelf addPaymentForProduct:product applyPromotionalOffer:YES];
+                    } else {
+                        // [IOS-12264]: Handle refresh failure
+                        [strongSelf addPaymentForProduct:product applyPromotionalOffer:NO];
+                    }
+                });
+            }];
         } else {
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
 

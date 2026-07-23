@@ -92,13 +92,15 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             // there's a mismatch between the products listed in the SDK/API and those available in the Apple Store.
             // This discrepancy can occur when new products are added to the SDK/API but haven't been added to the Apple Store yet.
             let index = Int(purchase.pricingProductIndex(for: product))
+            let mobileOffer = purchase.pricing?.toMobileOfferEntity(index: index)
             let plan = product.toPlanEntity(
                 storage: storageGB(atProductIndex: index),
                 transfer: transferGB(atProductIndex: index),
                 apiPrice: price(atProductIndex: index),
                 apiCurrencyCode: purchase.currency.localCurrencyName,
                 useAPIPrice: useAPIPrice,
-                mobileOfferLabel: mobileOfferLabel(atProductIndex: index)
+                mobileOfferLabel: mobileOffer?.label,
+                mobileOffer: mobileOffer
             )
             accountPlans.append(plan)
         }
@@ -121,10 +123,6 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
 
         let localPriceInCents = Decimal(pricing.localPrice(atProductIndex: index))
         return localPriceInCents / 100.0
-    }
-
-    private func mobileOfferLabel(atProductIndex index: Int) -> String? {
-        purchase.pricing?.mobileOfferLabel(atProductIndex: index)
     }
 
     func startMonitoringSubmitReceiptAfterPurchase() {
