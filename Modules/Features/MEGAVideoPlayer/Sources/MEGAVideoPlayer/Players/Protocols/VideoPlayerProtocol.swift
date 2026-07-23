@@ -11,6 +11,7 @@ public typealias VideoPlayerProtocol = PlaybackStateObservable
     & VideoRenderable
     & PictureInPictureLoadable
     & PlaybackDebugMessageObservable
+    & ExternalPlaybackObservable
     & PlayerOptionIdentifiable
 
 // MARK: - Protocols
@@ -83,6 +84,13 @@ public protocol NodeLoadable {
 
 public protocol PlaybackDebugMessageObservable {
     var debugMessagePublisher: AnyPublisher<String, Never> { get }
+}
+
+@MainActor
+public protocol ExternalPlaybackObservable {
+    var isExternalPlaybackActive: Bool { get }
+
+    var isExternalPlaybackActivePublisher: AnyPublisher<Bool, Never> { get }
 }
 
 public protocol PlayerOptionIdentifiable {

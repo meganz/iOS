@@ -220,10 +220,10 @@ final class MEGAPlaybackReportingManager {
 
     private func trackVideoPlaybackFirstFrameEvent() {
         guard let firstFrameTimeStamp, let openTimeStamp else { return }
-        let firstFrameTime = firstFrameTimeStamp - openTimeStamp
+        let firstFrameTimeInMilliseconds = (firstFrameTimeStamp - openTimeStamp) * 1000
         analyticsTracker.trackAnalyticsEvent(
             with: VideoPlaybackFirstFrameNewVPEvent(
-                time: Int32(firstFrameTime),
+                time: Int32(firstFrameTimeInMilliseconds),
                 scenario: VideoPlaybackFirstFrameNewVP.VideoPlaybackScenario.manualclick,
                 commonMap: eventsCommonMap
             )

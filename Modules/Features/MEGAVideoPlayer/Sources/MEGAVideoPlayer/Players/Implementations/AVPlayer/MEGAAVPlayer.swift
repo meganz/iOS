@@ -22,6 +22,7 @@ public final class MEGAAVPlayer {
     private let nodeNameSubject: CurrentValueSubject<String, Never> = .init("")
     private let bufferRangeSubject: CurrentValueSubject<(start: Duration, end: Duration)?, Never> = .init(nil)
     private let itemStatusSubject: CurrentValueSubject<AVPlayerItem.Status, Never> = .init(.unknown)
+    private let isExternalPlaybackActiveSubject: CurrentValueSubject<Bool, Never> = .init(false)
 
     public let statePublisher: AnyPublisher<PlaybackState, Never>
     public let currentTimePublisher: AnyPublisher<Duration, Never>
@@ -30,6 +31,7 @@ public final class MEGAAVPlayer {
     public let nodeNamePublisher: AnyPublisher<String, Never>
     public let bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never>
     public let itemStatusPublisher: AnyPublisher<AVPlayerItem.Status, Never>
+    public let isExternalPlaybackActivePublisher: AnyPublisher<Bool, Never>
 
     public var onNodeDeleted: (() -> Void)?
 
@@ -63,6 +65,7 @@ public final class MEGAAVPlayer {
         self.nodeNamePublisher = nodeNameSubject.eraseToAnyPublisher()
         self.bufferRangePublisher = bufferRangeSubject.eraseToAnyPublisher()
         self.itemStatusPublisher = itemStatusSubject.eraseToAnyPublisher()
+        self.isExternalPlaybackActivePublisher = isExternalPlaybackActiveSubject.eraseToAnyPublisher()
 
         observePlayerTimeControlStatus()
         observePlayerPeriodicTime()
@@ -552,7 +555,11 @@ extension MEGAAVPlayer {
 
 // MARK: - External playback (AirPlay)
 
-extension MEGAAVPlayer {
+extension MEGAAVPlayer: ExternalPlaybackObservable {
+    public var isExternalPlaybackActive: Bool {
+        isExternalPlaybackActiveSubject.value
+    }
+
     private func observeExternalPlayback() {
         player.publisher(for: \.isExternalPlaybackActive)
             .removeDuplicates()
@@ -569,12 +576,17 @@ extension MEGAAVPlayer {
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     replaceURLForExternalPlayback(activated: state.new)
+                    updateExternalPlaybackState(activated: state.new)
                     if isPlaying {
                         player.play()
                     }
                 }
             }
             .store(in: &cancellables)
+    }
+
+    private func updateExternalPlaybackState(activated: Bool) {
+        isExternalPlaybackActiveSubject.send(activated)
     }
 
     private func replaceURLForExternalPlayback(activated: Bool) {

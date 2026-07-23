@@ -74,6 +74,10 @@ public struct PlayerOverlayView: View {
                                 )
                         )
                     
+                    if viewModel.isExternalPlaybackActive {
+                        AirPlayIndicatorView()
+                    }
+
                     if viewModel.isControlsVisible {
                         topToolbar
                         centerPlaybackButtons

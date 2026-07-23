@@ -15,6 +15,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var nodeName: String = "Mock Video Title"
     @Published public var bufferRange: (start: Duration, end: Duration)?
     @Published public var itemStatus: AVPlayerItem.Status = .unknown
+    @Published public var isExternalPlaybackActive: Bool = false
 
     public var currentNode: (any PlayableNode)?
     public var onNodeDeleted: (() -> Void)?
@@ -48,6 +49,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
 
     public var itemStatusPublisher: AnyPublisher<AVPlayerItem.Status, Never> {
         $itemStatus.eraseToAnyPublisher()
+    }
+
+    public var isExternalPlaybackActivePublisher: AnyPublisher<Bool, Never> {
+        $isExternalPlaybackActive.eraseToAnyPublisher()
     }
 
     public nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {

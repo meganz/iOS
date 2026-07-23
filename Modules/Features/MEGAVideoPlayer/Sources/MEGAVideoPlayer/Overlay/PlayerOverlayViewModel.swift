@@ -29,6 +29,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLockOverlayVisible: Bool = false
     @Published var showSnapshotSuccessMessage: Bool = false
     @Published var bufferRange: (start: Duration, end: Duration)?
+    @Published var isExternalPlaybackActive: Bool = false
     private(set) var shouldShowPhotoPermissionAlert = false
     private var isHoldToSpeed = false
     private var autoHideTimer: Timer?
@@ -76,6 +77,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         observeCanPlayNext()
         observeNodeName()
         observeBufferRange()
+        observeExternalPlayback()
     }
 
     private func observeState() {
@@ -125,6 +127,12 @@ public final class PlayerOverlayViewModel: ObservableObject {
             .bufferRangePublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$bufferRange)
+    }
+
+    private func observeExternalPlayback() {
+        player
+            .isExternalPlaybackActivePublisher
+            .assign(to: &$isExternalPlaybackActive)
     }
 }
 
