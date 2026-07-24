@@ -5052,3 +5052,79 @@
 "transfers.overQuotaBanner.storage.title"="ストレージ容量を追加";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
 "transfers.overQuotaBanner.both.title"="ストレージと転送量を追加";
+/* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
+"account.profile.expiry.future"="有効期限：%@";
+/* Section header above the list of Pro plan features on the revamped upgrade page */
+"subscriptionPurchase.revamp.features.title"="Proを選ぶ理由";
+/* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.monthly"="月額プラン";
+/* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.yearly"="年額プラン";
+/* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
+"subscriptionPurchase.revamp.cycle.saving"="最大%@お得";
+/* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
+"general.undo"="元に戻す";
+/* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
+"subscriptionPurchase.button.getPlan"="%@を入手";
+/* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
+"subscriptionPurchase.title"="MEGA Proにアップグレード";
+/* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
+"subscriptionPurchase.feature.transfer.description"="最大 %@の転送容量をご利用いただけます";
+/* Description for the MEGA VPN Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.vpn.description"="MEGA VPNでオンラインでの安全を確保";
+/* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.pass.description"="MEGA Passでパスワードを安全に保管";
+/* Short success banner shown when internet connectivity is restored */
+"general.noInternet.backOnline"="オンラインに戻りました";
+/* Snackbar shown when tapping a file that would need downloading while the device is offline */
+"cloudDrive.offline.fileNotAvailableOffline"="ファイルはオフラインでは利用できません";
+/* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
+"quotaWarning.storage.title"="ストレージの%d%%をご利用中です";
+/* Subtitle of the storage quota warning dialog shown when storage is almost full. */
+"quotaWarning.storage.almostFull.subtitle"="空き容量がなくなる前にプランをアップグレード";
+/* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
+"quotaWarning.storage.full.subtitle"="プランをアップグレードしてストレージを増やし、さらにファイルをアップロードしましょう";
+/* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
+"quotaWarning.transfer.runningLow.title"="転送容量が残りわずかです";
+/* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
+"quotaWarning.transfer.percentUsed.title"="転送容量の%d%%をご利用中です";
+/* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
+"quotaWarning.transfer.exceeded.title"="転送容量制限を超過しました";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedDownload.subtitle"="そのため、ダウンロードが途中で止まってしまうことがあります。プランをアップグレードすると、転送容量を増やせます。%@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.downloadExceeded.subtitle"="ダウンロードを継続するには、プランをアップグレードして転送容量を増やしてください。%@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.streamingExceeded.subtitle"="メディア再生を継続するには、プランをアップグレードして転送容量を増やしてください。%@";
+/* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
+"quotaWarning.recommendedPlan.tag.bestForYou"="お客様に最適なプラン";
+/* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="%@にアップグレード";
+/* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
+"quotaWarning.recommendedPlan.button.viewAllPlans"="すべてのプランを見る";
+/* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.title"="接続できませんでした";
+/* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.subtitle"="後でもう一度試して、ストレージとデータ転送量の使用状況を確認し、ご必要に応じてプランをアップグレードしてください。";
+/* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
+"quotaWarning.error.button.tryAgain"="もう一度試す";
+/* The AirPlay video player option in bottom more menu */
+"videoPlayer.airPlay.bottomSheet.title"="AirPlay";
+/* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
+"videoPlayer.airPlay.indicator.playingOnDevice"="この動画は外部デバイスで再生されています";
+/* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
+"quotaWarning.storage.full.uploading.subtitle"="ストレージ容量がなくなりました。アップロードを継続するにはプランをアップグレードしてください。";
+/* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.storage.manage.subtitle"="クラウドドライブの空き容量を増やすか、%@でプランを管理してストレージ容量を増やしてください。";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedStreaming.subtitle"="そのため、メディア再生が中断される可能性があります。プランをアップグレードすると、転送容量を増やせます。%@";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="そのため、ダウンロードが途中で止まってしまう可能性があります。%@でプランを管理して、転送容量を増やしてください。";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="そのため、メディア再生が途中で止まってしまう可能性があります。%@でプランを管理して転送容量を増やしてください。";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="ダウンロードを継続するには、%@でプランを管理して転送容量を増やしてください。";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="メディア再生を継続するには、%@でプランを管理して転送容量を増やしてください。";
+/* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
+"subscriptionPurchase.revamp.badge.expiring"="期限間近";

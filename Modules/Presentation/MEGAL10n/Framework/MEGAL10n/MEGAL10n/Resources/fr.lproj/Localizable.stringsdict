@@ -3793,9 +3793,191 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%#@ignore@</string>
+        <string>%d minute</string>
+        <key>many</key>
+        <string>%d minutes</string>
         <key>other</key>
         <string>%d minutes</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Heure</string>
+        <key>many</key>
+        <string>Heures</string>
+        <key>other</key>
+        <string>Heures</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Minute</string>
+        <key>many</key>
+        <string>Minutes</string>
+        <key>other</key>
+        <string>Minutes</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Jour</string>
+        <key>many</key>
+        <string>Jours</string>
+        <key>other</key>
+        <string>Jours</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] pour %d mois</string>
+        <key>many</key>
+        <string>[A] pour %d mois</string>
+        <key>other</key>
+        <string>[A] pour %d mois</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] pour %d an</string>
+        <key>many</key>
+        <string>[A] pour %d ans</string>
+        <key>other</key>
+        <string>[A] pour %d ans</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturé à [A]/mois pendant le premier %d mois, puis [B]/mois</string>
+        <key>many</key>
+        <string>Facturé à [A]/mois pendant les %d premiers mois, puis [B]/mois</string>
+        <key>other</key>
+        <string>Facturé à [A]/mois pendant les %d premiers mois, puis [B]/mois</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturé à [A] pendant le premier %d mois, puis [B]/mois</string>
+        <key>many</key>
+        <string>Facturé à [A] pendant les %d premiers mois, puis [B]/mois</string>
+        <key>other</key>
+        <string>Facturé à [A] pendant les %d premiers mois, puis [B]/mois</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturé à [A] pendant la première année, puis [B]/mois</string>
+        <key>many</key>
+        <string>Facturé à [A] pendant les %d premières années, puis [B]/mois</string>
+        <key>other</key>
+        <string>Facturé à [A] pendant les %d premières années, puis [B]/mois</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturé à [A] pendant le premier %d mois, puis [B] facturé annuellement</string>
+        <key>many</key>
+        <string>Facturé à [A] pendant les %d premiers mois, puis [B] facturé annuellement</string>
+        <key>other</key>
+        <string>Facturé à [A] pendant les %d premiers mois, puis [B] facturé annuellement</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturé à [A] pendant la première année, puis [B] facturé annuellement</string>
+        <key>many</key>
+        <string>Facturé à [A] pendant les %d premières années, puis [B] facturé annuellement</string>
+        <key>other</key>
+        <string>Facturé à [A] pendant les %d premières années, puis [B] facturé annuellement</string>
       </dict>
     </dict>
   </dict>

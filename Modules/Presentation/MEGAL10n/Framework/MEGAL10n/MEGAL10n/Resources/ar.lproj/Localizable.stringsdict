@@ -5055,13 +5055,255 @@
         <key>zero</key>
         <string>%d دقيقة</string>
         <key>one</key>
-        <string>%#@ignore@</string>
+        <string>دقيقة واحدة</string>
         <key>two</key>
-        <string>%d دقيقة</string>
+        <string>دقيقتان</string>
         <key>few</key>
+        <string>%d دقائق</string>
+        <key>many</key>
         <string>%d دقيقة</string>
         <key>other</key>
-        <string>%d دقائق</string>
+        <string>%d دقيقة</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>ساعة</string>
+        <key>one</key>
+        <string>ساعة</string>
+        <key>two</key>
+        <string>ساعتين</string>
+        <key>few</key>
+        <string>‬ساعات</string>
+        <key>many</key>
+        <string>ساعات</string>
+        <key>other</key>
+        <string>ساعات</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>دقيقة</string>
+        <key>one</key>
+        <string>دقيقة</string>
+        <key>two</key>
+        <string>دقيقتان</string>
+        <key>few</key>
+        <string>دقائق</string>
+        <key>many</key>
+        <string>دقائق</string>
+        <key>other</key>
+        <string>دقائق</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>يوم</string>
+        <key>one</key>
+        <string>يوم</string>
+        <key>two</key>
+        <string>يومان</string>
+        <key>few</key>
+        <string>أيام</string>
+        <key>many</key>
+        <string>أيام</string>
+        <key>other</key>
+        <string>أيام</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>[A] لمدة 0 شهر</string>
+        <key>one</key>
+        <string>[A] لمدة شهر واحد</string>
+        <key>two</key>
+        <string>[A] لمدة شهرين</string>
+        <key>few</key>
+        <string>[A] لمدة %d أشهر</string>
+        <key>many</key>
+        <string>[A] لمدة %d شهرًا</string>
+        <key>other</key>
+        <string>[A] لمدة %d شهر</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>[A] لمدة 0 سنة</string>
+        <key>one</key>
+        <string>[A] لمدة سنة واحدة</string>
+        <key>two</key>
+        <string>[A] لمدة سنتين</string>
+        <key>few</key>
+        <string>[A] لمدة %d سنوات</string>
+        <key>many</key>
+        <string>[A] لمدة %d سنةً</string>
+        <key>other</key>
+        <string>[A] لمدة %d سنة</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول 0 شهر، ثم [B]/شهريًا بعد ذلك</string>
+        <key>one</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول شهر واحد، ثم [B]/شهريًا بعد ذلك</string>
+        <key>two</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول شهرين، ثم [B]/شهريًا بعد ذلك</string>
+        <key>few</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول %d أشهر، ثم [B]/شهريًا بعد ذلك</string>
+        <key>many</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول %d شهرًا، ثم [B]/شهريًا بعد ذلك</string>
+        <key>other</key>
+        <string>تُفرض رسوم [A]/شهريًا لأول %d شهر، ثم [B]/شهريًا بعد ذلك</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تُفرض رسوم [A] لأول 0 شهر، ثم [B]/شهريًا بعد ذلك</string>
+        <key>one</key>
+        <string>تُفرض رسوم [A] لأول شهر واحد، ثم [B]/شهريًا بعد ذلك</string>
+        <key>two</key>
+        <string>تُفرض رسوم [A] لأول شهرين، ثم [B]/شهريًا بعد ذلك</string>
+        <key>few</key>
+        <string>تُفرض رسوم [A] لأول %d أشهر، ثم [B]/شهريًا بعد ذلك</string>
+        <key>many</key>
+        <string>تُفرض رسوم [A] لأول %d شهرًا، ثم [B]/شهريًا بعد ذلك</string>
+        <key>other</key>
+        <string>تُفرض رسوم [A] لأول %d شهر، ثم [B]/شهريًا بعد ذلك</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تُفرض رسوم [A] لأول 0 سنة، ثم [B]/شهريًا بعد ذلك</string>
+        <key>one</key>
+        <string>تُفرض رسوم [A] للسنة الأولى، ثم [B]/شهريًا بعد ذلك</string>
+        <key>two</key>
+        <string>تُفرض رسوم [A] لأول سنتين، ثم [B]/شهريًا بعد ذلك</string>
+        <key>few</key>
+        <string>تُفرض رسوم [A] لأول %d سنوات، ثم [B]/شهريًا بعد ذلك</string>
+        <key>many</key>
+        <string>تُفرض رسوم [A] لأول %d سنةً، ثم [B]/شهريًا بعد ذلك</string>
+        <key>other</key>
+        <string>تُفرض رسوم [A] لأول %d سنة، ثم [B]/شهريًا بعد ذلك</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تُفرض رسوم [A] لأول 0 شهر، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>one</key>
+        <string>تُفرض رسوم [A] لأول شهر واحد، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>two</key>
+        <string>تُفرض رسوم [A] لأول شهرين، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>few</key>
+        <string>تُفرض رسوم [A] لأول %d أشهر، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>many</key>
+        <string>تُفرض رسوم [A] لأول %d شهرًا، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>other</key>
+        <string>تُفرض رسوم [A] لأول %d شهر، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تُفرض رسوم [A] لأول 0 سنة، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>one</key>
+        <string>تُفرض رسوم [A] للسنة الأولى، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>two</key>
+        <string>تُفرض رسوم [A] لأول سنتين، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>few</key>
+        <string>تُفرض رسوم [A] لأول %d سنوات، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>many</key>
+        <string>تُفرض رسوم [A] لأول %d سنةً، ثم [B] تُحصّل سنويًا بعد ذلك</string>
+        <key>other</key>
+        <string>تُفرض رسوم [A] لأول %d سنة، ثم [B] تُحصّل سنويًا بعد ذلك</string>
       </dict>
     </dict>
   </dict>

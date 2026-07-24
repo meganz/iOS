@@ -3793,11 +3793,181 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%#@ignore@</string>
-        <key>few</key>
         <string>%d minut</string>
-        <key>other</key>
+        <key>few</key>
         <string>%d minute</string>
+        <key>other</key>
+        <string>%d de minute</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>few</key>
+        <string>Zi</string>
+        <key>other</key>
+        <string>zile</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ore</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>minute</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] pentru %d lună</string>
+        <key>few</key>
+        <string>[A] pentru %d luni</string>
+        <key>other</key>
+        <string>[A] pentru %d de luni</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] pentru %d an</string>
+        <key>few</key>
+        <string>[A] pentru %d ani</string>
+        <key>other</key>
+        <string>[A] pentru %d de ani</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturat la [A]/lună pentru prima %d lună, apoi [B]/lună</string>
+        <key>few</key>
+        <string>Facturat la [A]/lună pentru primele %d luni, apoi [B]/lună</string>
+        <key>other</key>
+        <string>Facturat la [A]/lună pentru primele %d de luni, apoi [B]/lună</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturat la [A] pentru prima %d lună, apoi [B]/lună</string>
+        <key>few</key>
+        <string>Facturat la [A] pentru primele %d luni, apoi [B]/lună</string>
+        <key>other</key>
+        <string>Facturat la [A] pentru primele %d de luni, apoi [B]/lună</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturat la [A] pentru primul an, apoi [B]/lună</string>
+        <key>few</key>
+        <string>Facturat la [A] pentru primii %d ani, apoi [B]/lună</string>
+        <key>other</key>
+        <string>Facturat la [A] pentru primii %d de ani, apoi [B]/lună</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturat la [A] pentru prima %d lună, apoi facturat anual la [B]</string>
+        <key>few</key>
+        <string>Facturat la [A] pentru primele %d luni, apoi facturat anual la [B]</string>
+        <key>other</key>
+        <string>Facturat la [A] pentru primele %d de luni, apoi facturat anual la [B]</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Facturat la [A] pentru primul an, apoi facturat anual la [B]</string>
+        <key>few</key>
+        <string>Facturat la [A] pentru primii %d ani, apoi facturat anual la [B]</string>
+        <key>other</key>
+        <string>Facturat la [A] pentru primii %d de ani, apoi facturat anual la [B]</string>
       </dict>
     </dict>
   </dict>

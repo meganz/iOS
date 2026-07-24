@@ -3792,10 +3792,182 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>few</key>
+        <key>one</key>
         <string>%d минута</string>
-        <key>many</key>
+        <key>few</key>
         <string>%d минуты</string>
+        <key>many</key>
+        <string>%d минут</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>few</key>
+        <string>День</string>
+        <key>many</key>
+        <string>Дни</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.hours</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>many</key>
+        <string>Часы</string>
+      </dict>
+    </dict>
+    <key>subscriptionPurchase.revamp.countdown.minutes</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>many</key>
+        <string>Минуты</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за %d месяц</string>
+        <key>few</key>
+        <string>[A] за %d месяца</string>
+        <key>many</key>
+        <string>[A] за %d месяцев</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за %d год</string>
+        <key>few</key>
+        <string>[A] за %d года</string>
+        <key>many</key>
+        <string>[A] за %d лет</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A]/месяц за первый %d месяц, затем [B]/месяц</string>
+        <key>few</key>
+        <string>[A]/месяц за первые %d месяца, затем [B]/месяц</string>
+        <key>many</key>
+        <string>[A]/месяц за первые %d месяцев, затем [B]/месяц</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за первый %d месяц, затем [B]/месяц</string>
+        <key>few</key>
+        <string>[A] за первые %d месяца, затем [B]/месяц</string>
+        <key>many</key>
+        <string>[A] за первые %d месяцев, затем [B]/месяц</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за первый год, затем [B]/месяц</string>
+        <key>few</key>
+        <string>[A] за первые %d года, затем [B]/месяц</string>
+        <key>many</key>
+        <string>[A] за первые %d лет, затем [B]/месяц</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за первый %d месяц, затем [B] ежегодно</string>
+        <key>few</key>
+        <string>[A] за первые %d месяца, затем [B] ежегодно</string>
+        <key>many</key>
+        <string>[A] за первые %d месяцев, затем [B] ежегодно</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] за первый год, затем [B] ежегодно</string>
+        <key>few</key>
+        <string>[A] за первые %d года, затем [B] ежегодно</string>
+        <key>many</key>
+        <string>[A] за первые %d лет, затем [B] ежегодно</string>
       </dict>
     </dict>
   </dict>

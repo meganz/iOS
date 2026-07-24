@@ -1853,7 +1853,7 @@
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="게시중단 알림";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="게시중단된 항목이 재게시됨";
+"Takedown reinstated"="게시 중단된 항목이 재게시됨";
 /* Label shown inside an unseen notification */
 "New"="신규";
 /* When a contact sent a contact/friend request */
@@ -2039,11 +2039,11 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="이 파일은 게시중단 통보 대상입니다.";
+"This file has been the subject of a takedown notice."="이 파일은 게시 중단 요청의 대상입니다.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="이 폴더는 게시중단 통보 대상입니다.";
+"This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 요청의 대상입니다.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="게시중단 이의제기";
+"Dispute Takedown"="게시 중단 이의 제기";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="이용자 관리는 데스크톱 웹 브라우저에서만 가능합니다.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -5052,3 +5052,79 @@
 "transfers.overQuotaBanner.storage.title"="저장소 할당량 늘리기";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
 "transfers.overQuotaBanner.both.title"="저장소와 전송 할당량 늘리기";
+/* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
+"account.profile.expiry.future"="%@에 만료";
+/* Section header above the list of Pro plan features on the revamped upgrade page */
+"subscriptionPurchase.revamp.features.title"="왜 Pro를 써야 하나요?";
+/* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.monthly"="월간 구독";
+/* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.yearly"="연간 구독";
+/* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
+"subscriptionPurchase.revamp.cycle.saving"="최대 %@ 할인";
+/* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
+"general.undo"="실행 취소";
+/* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
+"quotaWarning.storage.title"="저장소가 %d%% 꽉 찼습니다.";
+/* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
+"quotaWarning.transfer.percentUsed.title"="전송 한도의 %d%%를 사용했습니다.";
+/* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.title"="연결할 수 없습니다.";
+/* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.subtitle"="저장소 및 전송 사용량을 확인하려면 나중에 다시 시도하고 필요하면 요금제를 업그레이드하세요.";
+/* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
+"subscriptionPurchase.button.getPlan"="%@ 얻기";
+/* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
+"subscriptionPurchase.feature.transfer.description"="최대 %@의 전송 한도를 이용하세요.";
+/* Snackbar shown when tapping a file that would need downloading while the device is offline */
+"cloudDrive.offline.fileNotAvailableOffline"="오프라인에서 파일을 사용할 수 없습니다.";
+/* The AirPlay video player option in bottom more menu */
+"videoPlayer.airPlay.bottomSheet.title"="AirPlay";
+/* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
+"quotaWarning.storage.full.uploading.subtitle"="저장 공간이 부족합니다. 업로드를 계속하려면 요금제를 업그레이드하세요.";
+/* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.storage.manage.subtitle"="클라우드 드라이브에 공간을 확보하거나 더 많은 저장 공간이 필요하면 %@에서 요금제를 관리하세요.";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedDownload.subtitle"="그 결과 다운로드가 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 요금제를 업그레이드하세요. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedStreaming.subtitle"="그 결과 미디어 재생이 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 요금제를 업그레이드하세요. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.downloadExceeded.subtitle"="다운로드를 계속하려면 요금제를 업그레이드하여 더 많은 전송 한도를 얻으세요. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.streamingExceeded.subtitle"="미디어 재생을 계속하려면 요금제를 업그레이드하여 더 많은 전송 한도를 얻으세요. %@";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="그 결과 다운로드가 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 %@에서 요금제를 관리하세요.";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="그 결과 미디어 재생이 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 %@에서 요금제를 관리하세요.";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="다운로드를 계속하려면 %@에서 요금제를 관리하여 더 많은 전송 한도를 얻으세요.";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="미디어 재생을 계속하려면 %@에서 요금제를 관리하여 더 많은 전송 한도를 확보하세요.";
+/* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
+"quotaWarning.recommendedPlan.tag.bestForYou"="당신에게 가장 적합";
+/* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
+"videoPlayer.airPlay.indicator.playingOnDevice"="이 비디오는 외부 기기에서 재생 중입니다.";
+/* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="%@로 업그레이드";
+/* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
+"subscriptionPurchase.revamp.badge.expiring"="만료 예정";
+/* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
+"subscriptionPurchase.title"="MEGA Pro로 업그레이드";
+/* Description for the MEGA VPN Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.vpn.description"="MEGA VPN으로 온라인에서 안전하게 지내세요";
+/* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.pass.description"="MEGA Pass로 암호를 안전하게 지키세요";
+/* Short success banner shown when internet connectivity is restored */
+"general.noInternet.backOnline"="다시 온라인 됨";
+/* Subtitle of the storage quota warning dialog shown when storage is almost full. */
+"quotaWarning.storage.almostFull.subtitle"="공간이 부족해지기 전에 요금제를 업그레이드하세요";
+/* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
+"quotaWarning.storage.full.subtitle"="저장소를 늘리고 더 많은 파일을 업로드하려면 요금제를 업그레이드하세요";
+/* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
+"quotaWarning.transfer.runningLow.title"="전송 할당량이 적습니다";
+/* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
+"quotaWarning.transfer.exceeded.title"="전송 할당량 초과됨";
+/* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
+"quotaWarning.recommendedPlan.button.viewAllPlans"="모든 요금제 보기";
+/* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
+"quotaWarning.error.button.tryAgain"="다시 시도";

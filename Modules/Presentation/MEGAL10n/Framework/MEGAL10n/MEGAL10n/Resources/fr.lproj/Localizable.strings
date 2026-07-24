@@ -5047,8 +5047,84 @@
 /* Navigation bar title for Choose Default Launch Tab screen */
 "home.customization.defaultLaunchTab.title"="Onglet de lancement par défaut";
 /* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.transfer.title"="Obtenir plus de quota de transfert";
+"transfers.overQuotaBanner.transfer.title"="Obtenez plus de quota de transfert";
 /* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
 "transfers.overQuotaBanner.storage.title"="Obtenez plus d'espace de stockage";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
 "transfers.overQuotaBanner.both.title"="Obtenez plus d'espace de stockage et de quota de transfert";
+/* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
+"account.profile.expiry.future"="Se renouvelle le %@";
+/* Section header above the list of Pro plan features on the revamped upgrade page */
+"subscriptionPurchase.revamp.features.title"="Pourquoi passer à Pro ?";
+/* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.monthly"="Abonnement mensuel";
+/* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
+"subscriptionPurchase.revamp.cycle.yearly"="Abonnement annuel";
+/* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
+"subscriptionPurchase.revamp.cycle.saving"="Économisez jusqu'à %@";
+/* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
+"general.undo"="Annuler";
+/* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
+"subscriptionPurchase.title"="Passez à MEGA Pro";
+/* Description for the MEGA VPN Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.vpn.description"="Restez en sécurité en ligne avec MEGA VPN";
+/* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
+"subscriptionPurchase.feature.pass.description"="Protégez vos mots de passe avec MEGA Pass";
+/* Short success banner shown when internet connectivity is restored */
+"general.noInternet.backOnline"="De nouveau en ligne";
+/* Subtitle of the storage quota warning dialog shown when storage is almost full. */
+"quotaWarning.storage.almostFull.subtitle"="Passez à un abonnement supérieur avant d'être à court d'espace";
+/* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
+"quotaWarning.storage.full.subtitle"="Passez à un abonnement supérieur pour obtenir plus de stockage et téléverser davantage de fichiers";
+/* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
+"quotaWarning.transfer.runningLow.title"="Votre quota de transfert est presque épuisé";
+/* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
+"quotaWarning.transfer.exceeded.title"="Le quota de transfert a été dépassé";
+/* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
+"quotaWarning.recommendedPlan.button.viewAllPlans"="Voir tous les abonnements";
+/* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
+"quotaWarning.error.button.tryAgain"="Réessayer";
+/* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
+"subscriptionPurchase.button.getPlan"="Obtenez %@";
+/* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
+"subscriptionPurchase.feature.transfer.description"="Profitez d'un quota de transfert allant jusqu'à %@";
+/* Snackbar shown when tapping a file that would need downloading while the device is offline */
+"cloudDrive.offline.fileNotAvailableOffline"="Fichier non disponible hors ligne";
+/* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
+"quotaWarning.storage.title"="Votre espace de stockage est %d%% plein";
+/* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
+"quotaWarning.transfer.percentUsed.title"="Vous avez utilisé %d%% de votre quota de transfert";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedDownload.subtitle"="En conséquence, votre téléchargement peut être interrompu. Mettez à niveau votre forfait pour obtenir un quota de transfert supplémentaire. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.downloadExceeded.subtitle"="Pour continuer votre téléchargement, mettez à niveau votre forfait pour obtenir un quota de transfert plus élevé. %@";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.streamingExceeded.subtitle"="Pour continuer la lecture des médias, mettez à niveau votre forfait pour obtenir un quota de transfert plus élevé. %@";
+/* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
+"quotaWarning.recommendedPlan.tag.bestForYou"="Le meilleur pour vous";
+/* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="Passez à %@";
+/* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.title"="Impossible de se connecter";
+/* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
+"quotaWarning.error.subtitle"="Réessayez plus tard pour vérifier votre espace de stockage et votre utilisation du quota de transfert, et mettez votre plan à niveau si nécessaire.";
+/* The AirPlay video player option in bottom more menu */
+"videoPlayer.airPlay.bottomSheet.title"="AirPlay";
+/* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
+"videoPlayer.airPlay.indicator.playingOnDevice"="Cette vidéo est en cours de lecture sur un appareil externe";
+/* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
+"quotaWarning.storage.full.uploading.subtitle"="Vous êtes à court d'espace de stockage. Mettez votre plan à niveau pour continuer à téléverser";
+/* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.storage.manage.subtitle"="Faites de la place dans Cloud Drive, ou gérez votre plan à %@ pour plus de stockage";
+/* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
+"quotaWarning.transfer.limitedStreaming.subtitle"="En conséquence, la lecture des médias peut être interrompue. Mettez à niveau votre plan pour obtenir un quota de transfert plus élevé. %@";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="En conséquence, votre téléchargement peut être interrompu. Gérez votre plan à %@ pour obtenir un quota de transfert plus élevé";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="En conséquence, la lecture des médias peut être interrompue. Gérez votre plan à %@ pour obtenir un quota de transfert plus élevé";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Pour continuer votre téléchargement, gérez votre plan à %@ pour obtenir un quota de transfert plus élevé";
+/* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Pour poursuivre la lecture des médias, gérez votre plan à l’adresse %@ pour obtenir davantage de quota de transfert";
+/* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
+"subscriptionPurchase.revamp.badge.expiring"="Expirant";
