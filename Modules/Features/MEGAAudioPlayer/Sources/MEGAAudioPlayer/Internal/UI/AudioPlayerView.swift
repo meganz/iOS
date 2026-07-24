@@ -74,6 +74,8 @@ struct AudioPlayerView: View {
                             loadingState: vm.loadingState,
                             isShuffleOn: vm.isShuffleOn,
                             repeatMode: vm.repeatMode,
+                            isSingleTrack: vm.isSingleTrack,
+                            isOnLastTrack: vm.isOnLastTrack,
                             onShuffle: vm.toggleShuffle,
                             onSkipPrevious: vm.skipPrevious,
                             onPlayPause: vm.togglePlayPause,
@@ -101,7 +103,7 @@ struct AudioPlayerView: View {
                     currentMode: vm.playbackMode,
                     isAirPlayActive: vm.isAirPlayActive,
                     loadingState: vm.loadingState,
-                    isQueueEnabled: vm.isQueueButtonEnabled,
+                    isQueueEnabled: vm.isQueueButtonEnabled && !vm.isSingleTrack,
                     isPlaylistActive: vm.isPlaylistVisible,
                     onModeToggle: vm.switchPlaybackMode,
                     onPlaylist: vm.togglePlaylist
@@ -650,12 +652,15 @@ private struct ScrubberSection: View {
 // MARK: - Loading Helpers
 
 private extension View {
+    func controlDisabled(_ isDisabled: Bool) -> some View {
+        self
+            .allowsHitTesting(!isDisabled)
+            .disabled(isDisabled)
+            .opacity(isDisabled ? 0.3 : 1)
+    }
+
     func disabledWhileLoading(_ state: PlayerLoadingState) -> some View {
-        let isLoading = state == .loading
-        return self
-            .allowsHitTesting(!isLoading)
-            .disabled(isLoading)
-            .opacity(isLoading ? 0.3 : 1)
+        controlDisabled(state == .loading)
     }
 }
 
@@ -691,6 +696,8 @@ private struct MusicModeControlsSection: View {
     let loadingState: PlayerLoadingState
     let isShuffleOn: Bool
     let repeatMode: RepeatMode
+    let isSingleTrack: Bool
+    let isOnLastTrack: Bool
     let onShuffle: () -> Void
     let onSkipPrevious: () -> Void
     let onPlayPause: () -> Void
@@ -699,12 +706,17 @@ private struct MusicModeControlsSection: View {
 
     private let secondaryIconSize: CGFloat = 22
 
+    private var isShuffleDisabled: Bool {
+        isSingleTrack || (isOnLastTrack && !isShuffleOn)
+    }
+
     var body: some View {
         HStack {
             iconButton(
                 image: MEGAAssets.Image.audioShuffle,
                 size: secondaryIconSize,
                 isAccented: isShuffleOn,
+                isDisabled: isShuffleDisabled,
                 action: onShuffle
             )
             .overlay(alignment: .bottom) { activeDot(isVisible: isShuffleOn) }
@@ -723,6 +735,7 @@ private struct MusicModeControlsSection: View {
                 image: MEGAAssets.Image.audioSkipForward,
                 size: TokenSpacing._8,
                 isAccented: false,
+                isDisabled: isSingleTrack,
                 action: onSkipNext
             )
             Spacer()
@@ -738,13 +751,13 @@ private struct MusicModeControlsSection: View {
         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
 
-    private func iconButton(image: Image, size: CGFloat, isAccented: Bool, action: @escaping () -> Void) -> some View {
+    private func iconButton(image: Image, size: CGFloat, isAccented: Bool, isDisabled: Bool = false, action: @escaping () -> Void) -> some View {
         image
             .foregroundStyle(isAccented ? TokenColors.Icon.brand.swiftUI : TokenColors.Icon.primary.swiftUI)
             .frame(width: size)
             .contentShape(Rectangle())
             .onTapGesture(perform: action)
-            .disabledWhileLoading(loadingState)
+            .controlDisabled(loadingState == .loading || isDisabled)
     }
 
     private func activeDot(isVisible: Bool) -> some View {

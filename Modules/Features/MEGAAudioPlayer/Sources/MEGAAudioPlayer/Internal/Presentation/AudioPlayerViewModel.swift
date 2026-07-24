@@ -85,6 +85,12 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var currentTrackID: String?
 
+    // MARK: - Derived transport-control enablement
+
+    @Published private(set) var isSingleTrack: Bool = false
+
+    @Published private(set) var isOnLastTrack: Bool = false
+
     // MARK: - Resume prompt
 
     @Published private(set) var resumePrompt: ResumePrompt?
@@ -217,6 +223,18 @@ final class AudioPlayerViewModel: ObservableObject {
 
         service.resumePromptPublisher
             .assign(to: &$resumePrompt)
+        
+        service.currentQueuePublisher
+            .map { $0.tracks.count == 1 }
+            .removeDuplicates()
+            .assign(to: &$isSingleTrack)
+
+        service.currentQueuePublisher
+            .map { queue in
+                !queue.tracks.isEmpty && queue.currentIndex >= queue.tracks.count - 1
+            }
+            .removeDuplicates()
+            .assign(to: &$isOnLastTrack)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -351,6 +369,8 @@ final class AudioPlayerViewModel: ObservableObject {
             AudioPlaylistItem(id: "\(index)", title: title)
         }
         currentTrackID = playlistItems.indices.contains(currentIndex) ? playlistItems[currentIndex].id : nil
+        isSingleTrack = titles.count == 1
+        isOnLastTrack = !titles.isEmpty && currentIndex >= titles.count - 1
     }
 
     func switchPlaybackMode() {

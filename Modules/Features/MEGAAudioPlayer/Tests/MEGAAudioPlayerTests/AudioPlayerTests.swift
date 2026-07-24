@@ -1,6 +1,36 @@
 @testable import MEGAAudioPlayer
 import Testing
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@MainActor
+struct AudioPlayerViewModelTransportControlsTests {
+    @Test func singleTrack_isSingleTrackTrue_andOnLastTrack() {
+        let vm = AudioPlayerViewModel()
+        vm.setQueueForPreview(titles: ["Only Song"], currentIndex: 0)
+
+        #expect(vm.isSingleTrack)
+        #expect(vm.isOnLastTrack)
+    }
+
+    @Test func multiTrack_currentInMiddle_isNotSingleNorLast() {
+        let vm = AudioPlayerViewModel()
+        vm.setQueueForPreview(titles: ["A", "B", "C"], currentIndex: 1)
+
+        #expect(!vm.isSingleTrack)
+        #expect(!vm.isOnLastTrack)
+    }
+
+    @Test func multiTrack_currentIsLast_isOnLastTrackButNotSingle() {
+        let vm = AudioPlayerViewModel()
+        vm.setQueueForPreview(titles: ["A", "B", "C"], currentIndex: 2)
+
+        #expect(!vm.isSingleTrack)
+        #expect(vm.isOnLastTrack)
+    }
+
+    @Test func emptyQueue_isNeitherSingleNorLast() {
+        let vm = AudioPlayerViewModel()
+
+        #expect(!vm.isSingleTrack)
+        #expect(!vm.isOnLastTrack)
+    }
 }

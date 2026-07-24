@@ -426,7 +426,7 @@ extension AudioPlaybackService: PlaybackControllable {
 
     func playNext() {
         saveCurrentPlaybackPositionIfNeeded()
-        advanceToNextTrack(wrapAround: repeatModeSubject.value == .all)
+        advanceToNextTrack(wrapAround: true)
     }
 
     func play(atIndex index: Int) {
@@ -468,8 +468,22 @@ extension AudioPlaybackService: PlaybackControllable {
         case .all:
             advanceToNextTrack(wrapAround: true)
         case .off:
-            advanceToNextTrack(wrapAround: false)
+            if isOnLastTrack {
+                rewindToStartAndPause()
+            } else {
+                advanceToNextTrack(wrapAround: false)
+            }
         }
+    }
+
+    private var isOnLastTrack: Bool {
+        let queue = playbackQueue
+        return !queue.tracks.isEmpty && queue.currentIndex >= queue.tracks.count - 1
+    }
+
+    private func rewindToStartAndPause() {
+        engine.seek(toSeconds: 0)
+        engine.pause()
     }
 
     private func advanceToNextTrack(wrapAround: Bool) {
