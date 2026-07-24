@@ -65,6 +65,10 @@ final class FolderLinkMediaDiscoveryContentViewModel: ObservableObject, MediaDis
     
     func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {}
     
+    func didEnterEditMode() {
+        editMode = .active
+    }
+    
     func toggleSelectAll() {
         mediaDiscoveryContentViewModel.toggleAllSelected()
     }

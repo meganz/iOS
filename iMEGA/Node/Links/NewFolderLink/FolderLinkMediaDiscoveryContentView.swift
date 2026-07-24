@@ -35,6 +35,9 @@ struct FolderLinkMediaDiscoveryContentView: FolderLinkMediaDiscoveryContent {
             .onChange(of: viewModel.editMode) { mode in
                 contentViewModel.editMode = mode
             }
+            .onChange(of: contentViewModel.editMode) { mode in
+                viewModel.editMode = mode
+            }
             .onChange(of: contentViewModel.selectedPhotos) { photos in
                 viewModel.updateSelectedPhotos(photos)
             }
