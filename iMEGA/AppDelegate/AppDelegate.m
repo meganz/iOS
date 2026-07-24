@@ -44,6 +44,7 @@
 #import "MEGA-Swift.h"
 @import Firebase;
 @import FirebaseAnalytics;
+@import FirebaseCrashlytics;
 #import "LocalizationHelper.h"
 @import SDWebImageWebPCoder;
 
@@ -854,14 +855,14 @@
         NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
         if (applicationSupportDirectoryURL == nil) {
             MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
-            [self logSeedExportEvent:MEGAExtensionsDBExportApplicationSupportMissingEvent];
+            [self logSeedExportEvent:MEGAExtensionsDBExportApplicationSupportMissingEvent error:error];
             return;
         }
 
         NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
         if (groupSupportURL == nil) {
             MEGALogError(@"Failed to obtain the App Group GroupSupport directory URL");
-            [self logSeedExportEvent:MEGAExtensionsDBExportAppGroupMissingEvent];
+            [self logSeedExportEvent:MEGAExtensionsDBExportAppGroupMissingEvent error:nil];
             return;
         }
         NSString *groupSupportPath = groupSupportURL.path;
@@ -869,7 +870,7 @@
             NSError *createDirectoryError;
             if (![fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:&createDirectoryError]) {
                 MEGALogError(@"Failed to create GroupSupport directory with error: %@", createDirectoryError);
-                [self logSeedExportEvent:MEGAExtensionsDBExportGroupDirFailedEvent];
+                [self logSeedExportEvent:MEGAExtensionsDBExportGroupDirFailedEvent error:createDirectoryError];
                 return;
             }
         }
@@ -878,7 +879,7 @@
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
         if (applicationSupportContent == nil) {
             MEGALogError(@"Failed to enumerate Application Support directory with error: %@", error);
-            [self logSeedExportEvent:MEGAExtensionsDBExportEnumerateFailedEvent];
+            [self logSeedExportEvent:MEGAExtensionsDBExportEnumerateFailedEvent error:error];
             return;
         }
         for (NSString *filename in applicationSupportContent) {
@@ -890,15 +891,67 @@
                     MEGALogDebug(@"Copy file %@", filename);
                 } else {
                     MEGALogError(@"Copy item at path failed with error: %@", copyError);
-                    [self logSeedExportEvent:MEGAExtensionsDBExportCopyFailedEvent];
+                    [self logSeedExportEvent:MEGAExtensionsDBExportCopyFailedEvent error:copyError];
+                    [self recordSeedExportCopyFailureWithError:copyError
+                                                      filename:filename
+                                                    sourcePath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename]
+                                               destinationPath:destinationPath];
                 }
             }
         }
     });
 }
 
-- (void)logSeedExportEvent:(NSString *)eventName {
-    [FIRAnalytics logEventWithName:eventName parameters:nil];
+- (void)logSeedExportEvent:(NSString *)eventName error:(NSError *)error {
+    NSMutableDictionary<NSString *, id> *parameters = [NSMutableDictionary dictionary];
+    if (error != nil) {
+        parameters[@"error_code"] = @(error.code);
+        parameters[@"error_domain"] = error.domain ?: @"unknown";
+    }
+    [FIRAnalytics logEventWithName:eventName parameters:parameters.count > 0 ? parameters : nil];
+}
+
+- (void)recordSeedExportCopyFailureWithError:(NSError *)error
+                                    filename:(NSString *)filename
+                                  sourcePath:(NSString *)sourcePath
+                             destinationPath:(NSString *)destinationPath {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableDictionary<NSString *, id> *userInfo = [NSMutableDictionary dictionary];
+
+    // Report a fixed file_type rather than the raw filename
+    NSString *fileType = @"unknown";
+    if ([filename containsString:@"megaclient_statecache"]) {
+        fileType = @"statecache";
+    } else if ([filename containsString:@"karere"]) {
+        fileType = @"karere";
+    }
+    userInfo[@"file_type"] = fileType;
+
+    NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
+    if ([underlyingError isKindOfClass:NSError.class]) {
+        userInfo[@"underlying_error_code"] = @(underlyingError.code);
+        userInfo[@"underlying_error_domain"] = underlyingError.domain ?: @"unknown";
+    }
+
+    NSNumber *sourceSize = [fileManager attributesOfItemAtPath:sourcePath error:nil][NSFileSize];
+    if (sourceSize != nil) {
+        userInfo[@"source_size"] = sourceSize;
+    }
+
+    NSNumber *freeSpace = [fileManager attributesOfFileSystemForPath:destinationPath.stringByDeletingLastPathComponent error:nil][NSFileSystemFreeSize];
+    if (freeSpace != nil) {
+        userInfo[@"group_free_space"] = freeSpace;
+    }
+
+    // A destination that still exists after the failed copy points at the pre-copy remove having failed.
+    userInfo[@"destination_exists"] = @([fileManager fileExistsAtPath:destinationPath]);
+
+    // Log the file_type only — never the raw filename or the full source/destination paths, which can be sensitive.
+    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
+                                   msg:[NSString stringWithFormat:@"Extensions DB export copy failed for %@", fileType]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    [[FIRCrashlytics crashlytics] recordError:error userInfo:userInfo];
 }
 
 - (void)presentInviteContactCustomAlertViewController {
