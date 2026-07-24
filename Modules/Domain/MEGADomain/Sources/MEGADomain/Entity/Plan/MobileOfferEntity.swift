@@ -24,8 +24,8 @@ public struct MobileOfferIosSignatureEntity: Sendable, Equatable {
     }
 }
 
-/// An API-driven promotional ("mobile") offer attached to a purchasable plan.
-/// In contrast to Introductory offer, promotional offer is sourced from the `ios` object inside the API `utqa` command's `mo` object.
+/// An API-driven mobile offer attached to a purchasable plan.
+/// Could represent either intro or promo offer. If `iosSignature` is present, it's a promo offer.
 /// Sourced from the API `utqa` command's `mo` object and surfaced through the SDK.
 public struct MobileOfferEntity: Sendable, Equatable {
     /// The offer identifier, e.g. `black-friday-2025`.

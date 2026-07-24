@@ -26,10 +26,16 @@ public struct PlanEntity: Sendable {
     public var apiPrice: PlanPriceEntity?
     public var appStorePrice: PlanPriceEntity
 
+    // The introductory offer available to this plan, sourced from StoreKit
     public var introductoryOffer: IntroductoryOfferEntity?
-    public var mobileOfferLabel: String? // [IOS-12265]: Remove mobileOfferLabel, use mobileOffer instead
+
+    // The mobile offer available to this plan, sourced from API.
     public var mobileOffer: MobileOfferEntity?
+
+    // The promotion offer available to this plan, sourced from StoreKit
     public var promotionalOffer: PromotionalOfferEntity?
+
+    public var mobileOfferLabel: String? // [IOS-12265]: Remove mobileOfferLabel, use mobileOffer instead
 
     public var price: Decimal { appStorePrice.price }
     public var formattedPrice: String { appStorePrice.formattedPrice }
@@ -83,6 +89,12 @@ public struct PlanEntity: Sendable {
         let discountPercentage = ((fullPrice - introPrice) / fullPrice) * 100
         let discountPercentageRounded = NSDecimalNumber(decimal: discountPercentage).rounding(accordingToBehavior: nil).intValue
         return discountPercentageRounded
+    }
+
+    // A promotional offer is only valid (e.g: Can be shown to user and can be redeemed)
+    // once it's available from StoreKit and its signature is also provided by API
+    public var hasValidPromotionalOffer: Bool {
+        promotionalOffer != nil && mobileOffer?.iosSignature != nil
     }
 
     public init(

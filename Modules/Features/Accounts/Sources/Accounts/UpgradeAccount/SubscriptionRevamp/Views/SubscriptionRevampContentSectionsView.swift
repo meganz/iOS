@@ -12,6 +12,7 @@ struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
     let viewModel: UpgradePlansViewModel
 
+    // [IOS-12292]: Handle computation of default selectedCycle
     @State private var selectedCycle: SubscriptionCycleEntity = .yearly
 
     var body: some View {
@@ -24,11 +25,10 @@ struct SubscriptionContentSectionsView: View {
             }
             cyclePicker
                 .padding(.top, TokenSpacing._3)
-            SubscriptionPlanCardsView()
+            SubscriptionPlanCardsView(cards: viewModel.planCards(for: selectedCycle))
                 .padding(.top, TokenSpacing._3)
             SubscriptionBenefitsListView()
-                .padding(.top, TokenSpacing._3)
-                .padding(.top, TokenSpacing._2)
+                .padding(.top, TokenSpacing._4)
             if let freePlanCard = viewModel.freePlanCard {
                 SubscriptionFreePlanCardView(model: freePlanCard)
                     .padding(.vertical, TokenSpacing._5)
@@ -43,10 +43,10 @@ struct SubscriptionContentSectionsView: View {
 
     private var cyclePicker: some View {
         SubscriptionCyclePickerView(
-            options: SubscriptionRevampMockData.cycleOptions,
+            options: viewModel.cycleOptions,
             selection: $selectedCycle,
-            title: SubscriptionRevampMockData.cycleTitle,
-            savingText: SubscriptionRevampMockData.savingText
+            title: viewModel.cycleTitle,
+            savingText: viewModel.savingText
         )
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, TokenSpacing._7)

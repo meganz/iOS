@@ -75,11 +75,7 @@ public struct SubscriptionPromoView: View {
             } content: {
                 VStack(alignment: .leading, spacing: TokenSpacing._4) {
                     PlanTitleView(card.title)
-                    PlanPriceView(.discountMonthly(.init( // [IOS-12185]: Feed the correct PlanPrice to the higlighed plan
-                        originalPrice: card.originalPrice,
-                        discountedPrice: card.discountedPrice,
-                        billingCaption: card.priceDescription
-                    )))
+                    PlanPriceView(card.price)
                     PlanFeatureListView {
                         PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                         PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)

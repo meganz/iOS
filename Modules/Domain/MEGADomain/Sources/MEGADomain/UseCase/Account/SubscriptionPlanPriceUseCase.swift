@@ -9,10 +9,15 @@ public struct SubscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCaseProtocol
     public init() {}
 
     public func planPrice(for plan: PlanEntity) -> SubscriptionPlanPrice {
-        guard let offer = plan.introductoryOffer else {
-            return nonDiscountPrice(for: plan)
+        // Introductory offers take priority over promotional offers on the same plan.
+        if let introductoryOffer = plan.introductoryOffer {
+            return discountPrice(for: plan, schedule: introductoryOffer.billingSchedule)
         }
-        return discountPrice(for: plan, schedule: offer.billingSchedule)
+
+        if plan.hasValidPromotionalOffer, let promotionalOffer = plan.promotionalOffer {
+            return discountPrice(for: plan, schedule: promotionalOffer.billingSchedule)
+        }
+        return nonDiscountPrice(for: plan)
     }
 
     // MARK: - No discount

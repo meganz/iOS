@@ -6,15 +6,11 @@ import SwiftUI
 
 /// Renders the list of ``SubscriptionPlanCardModel`` variants; shared by the promo and standard pages.
 struct SubscriptionPlanCardsView: View {
-    private let viewModel: SubscriptionPlanCardsViewModel
-
-    init(viewModel: SubscriptionPlanCardsViewModel = SubscriptionPlanCardsViewModel()) {
-        self.viewModel = viewModel
-    }
+    let cards: [SubscriptionPlanCardModel]
 
     var body: some View {
         VStack(spacing: TokenSpacing._4) {
-            ForEach(viewModel.cards) { card in
+            ForEach(cards) { card in
                 planCard(card)
             }
         }
@@ -43,13 +39,26 @@ struct SubscriptionPlanCardsView: View {
     private func cardContent(_ card: SubscriptionPlanCardModel) -> some View {
         VStack(alignment: .leading, spacing: TokenSpacing._4) {
             PlanTitleView(card.title)
-            PlanPriceView(planPrice(card.price))
+            PlanPriceView(card.price)
             PlanFeatureListView {
                 PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                 PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
             }
+            buyButton(card)
+        }
+    }
+
+    @ViewBuilder
+    private func buyButton(_ card: SubscriptionPlanCardModel) -> some View {
+        let title = Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title)
+        if card.hasOffer {
+            Button(title, action: {
+                // [IOS-12185]: Handle buy action
+            })
+                .buttonStyle(BrandButtonStyle())
+        } else {
             MEGAButton(
-                Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title),
+                title,
                 type: card.isPrimaryAction ? .primary : .secondary,
                 action: {
                     // [IOS-12185]: Handle buy action
@@ -57,26 +66,11 @@ struct SubscriptionPlanCardsView: View {
             )
         }
     }
-
-    private func planPrice(_ price: SubscriptionPlanCardModel.Price) -> PlanPrice {
-        switch price {
-        case let .monthly(price):
-            .monthly(.init(pricePerMonth: price))
-        case let .yearly(price, billing):
-            .yearly(.init(pricePerMonth: price, billingCaption: billing))
-        case let .discount(originalPrice, discountedPrice, description):
-            .discountMonthly(.init(
-                originalPrice: originalPrice,
-                discountedPrice: discountedPrice,
-                billingCaption: description
-            ))
-        }
-    }
 }
 
 #Preview {
     ScrollView {
-        SubscriptionPlanCardsView()
+        SubscriptionPlanCardsView(cards: SubscriptionRevampMockData.planCards)
             .padding()
     }
 }

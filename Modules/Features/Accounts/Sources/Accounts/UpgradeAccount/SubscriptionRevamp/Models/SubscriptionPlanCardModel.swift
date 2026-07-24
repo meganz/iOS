@@ -1,12 +1,8 @@
-struct SubscriptionPlanCardModel: Identifiable, Equatable {
-    enum Price: Equatable {
-        case monthly(price: String)
-        case yearly(price: String, billing: String)
-        case discount(originalPrice: String, discountedPrice: String, description: String)
-    }
+import MEGAUIComponent
 
+struct SubscriptionPlanCardModel: Identifiable, Equatable {
     let title: String
-    let price: Price
+    let price: PlanPrice
     let storage: String
     let transfer: String
     let ribbonText: String?
@@ -14,9 +10,16 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
 
     var id: String { title }
 
+    var hasOffer: Bool {
+        switch price {
+        case .discountMonthly, .discountYearly: true
+        case .monthly, .yearly: false
+        }
+    }
+
     init(
         title: String,
-        price: Price,
+        price: PlanPrice,
         storage: String,
         transfer: String,
         ribbonText: String? = nil,
