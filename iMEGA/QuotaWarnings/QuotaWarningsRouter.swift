@@ -146,7 +146,12 @@ private final class QuotaWarningDialogHostingController<Content: View>: UIHostin
         navigationController?.navigationBar.isHidden = true
     }
     
-    isolated deinit {
-        QuotaWarningsRouter.isDialogPresenting = false
+    // Plain deinit + Task instead of `isolated deinit`: the Swift 6.3 optimizer
+    // crashes (EarlyPerfInliner) on isolated deinit in a generic class when
+    // archiving with -O, which breaks Release builds.
+    deinit {
+        Task { @MainActor in
+            QuotaWarningsRouter.isDialogPresenting = false
+        }
     }
 }
