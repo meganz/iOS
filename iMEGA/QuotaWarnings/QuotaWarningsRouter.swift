@@ -146,7 +146,9 @@ private final class QuotaWarningDialogHostingController<Content: View>: UIHostin
         navigationController?.navigationBar.isHidden = true
     }
     
-    isolated deinit {
-        QuotaWarningsRouter.isDialogPresenting = false
+    deinit {
+        Task { @MainActor in
+            QuotaWarningsRouter.isDialogPresenting = false
+        }
     }
 }
