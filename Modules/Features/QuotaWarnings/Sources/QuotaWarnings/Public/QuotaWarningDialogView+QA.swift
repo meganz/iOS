@@ -1,4 +1,4 @@
-#if DEBUG || QA_CONFIG
+// Not `#if`-guarded — see the note in QAQuotaDialogUseCase.swift (QA config builds packages as release).
 import MEGAAppPresentation
 
 public extension QuotaWarningDialogView.Dependency {
@@ -12,4 +12,3 @@ public extension QuotaWarningDialogView.Dependency {
         self.planPurchaser = planPurchaser
     }
 }
-#endif

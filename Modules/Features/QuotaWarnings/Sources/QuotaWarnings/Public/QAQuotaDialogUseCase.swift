@@ -1,4 +1,6 @@
-#if DEBUG || QA_CONFIG
+// Not wrapped in `#if DEBUG` — the QA configuration builds packages as release, so a compile-time
+// guard would strip these types while the QA app target still references them. Unreachable in
+// production: the only entry point is the QA settings screen, gated app-side.
 import Foundation
 import MEGADomain
 
@@ -135,4 +137,3 @@ private actor SequenceCursor {
         return step
     }
 }
-#endif
