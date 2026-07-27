@@ -30,7 +30,6 @@ extension TransferStatusSnapshot {
     }
 }
 
-@available(iOS 16.2, *)
 extension TransferLiveActivityAttributes.ContentState {
     static func fixture(
         progressFraction: Double = 0.5,

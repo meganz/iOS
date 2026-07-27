@@ -2,7 +2,6 @@ import ActivityKit
 import Foundation
 import MEGASwift
 
-@available(iOS 16.2, *)
 protocol TransferLiveActivityProviding: Sendable {
     /// Starts a new Live Activity and returns its identifier.
     func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async throws -> String
@@ -25,14 +24,12 @@ protocol TransferLiveActivityProviding: Sendable {
     var activeActivityId: String? { get }
 }
 
-@available(iOS 16.2, *)
 struct TransferLiveActivityProvider {
     private static let requestQueue = DispatchQueue(label: "nz.mega.transfer.liveactivity.request", qos: .userInitiated)
 }
 
 // MARK: - TransferLiveActivityProviding
 
-@available(iOS 16.2, *)
 extension TransferLiveActivityProvider: TransferLiveActivityProviding {
 
     func request(initialState: TransferLiveActivityAttributes.ContentState, staleDate: Date?) async throws -> String {

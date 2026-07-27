@@ -1,7 +1,6 @@
 import ActivityKit
 import Foundation
 
-@available(iOS 16.2, *)
 public struct TransferLiveActivityAttributes: ActivityAttributes {
 
     public struct ContentState: Codable, Hashable, Sendable {

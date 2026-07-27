@@ -94,8 +94,8 @@ struct MiniPlayerView: View {
         .tabViewStyle(.page(indexDisplayMode: .never))
         .frame(maxWidth: .infinity)
         .onAppear { displayIndex = vm.currentIndex }
-        .onChange(of: displayIndex) { requestSwitch(to: $0) }
-        .onChange(of: vm.currentIndex) { reconcile(to: $0) }
+        .onChange(of: displayIndex) { _, newIndex in requestSwitch(to: newIndex) }
+        .onChange(of: vm.currentIndex) { _, newIndex in reconcile(to: newIndex) }
     }
 
     private func trackLabel(_ track: MiniPlayerTrack, index: Int) -> some View {

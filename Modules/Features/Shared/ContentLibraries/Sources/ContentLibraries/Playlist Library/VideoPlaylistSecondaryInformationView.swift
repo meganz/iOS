@@ -106,7 +106,6 @@ public struct VideoPlaylistSecondaryInformationView: View {
     .preferredColorScheme(.dark)
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .landscapeLeft) {
     VideoPlaylistSecondaryInformationView(
         videosCount: "24 videos",

@@ -32,11 +32,7 @@ struct PhotoCellContent: View {
         // node instead of keeping the placeholder's no-op task. See `nodeLoadIdentity`.
         .task(id: viewModel.nodeLoadIdentity) { await viewModel.startLoadingThumbnail() }
         .task(id: viewModel.nodeLoadIdentity) {
-            if #available(iOS 16, *) {
-                await viewModel.monitorInheritedSensitivityChanges()
-            } else {
-                await viewModel.monitorPhotoSensitivityChanges()
-            }
+            await viewModel.monitorInheritedSensitivityChanges()
         }
     }
     

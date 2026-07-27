@@ -25,11 +25,13 @@ public final class MEGASlider: UISlider {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+        registerForAppearanceChanges()
     }
 
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
         configure()
+        registerForAppearanceChanges()
     }
 
     private func configure() {
@@ -44,10 +46,9 @@ public final class MEGASlider: UISlider {
         setThumbImage(thumbImage(bgColor: thColor, radius: highlightedThumbRadius), for: .highlighted)
     }
 
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
-            configure()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (slider: MEGASlider, _: UITraitCollection) in
+            slider.configure()
         }
     }
 
@@ -222,13 +223,11 @@ public struct MEGASliderView: UIViewRepresentable {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .fixedLayout(width: 300, height: 50)) {
     @Previewable @State var value: Double = 0.4
     MEGASliderView(value: $value, tapToSeekEnabled: true)
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .fixedLayout(width: 300, height: 50)) {
     @Previewable @State var value: Double = 0.4
     MEGASliderView(value: $value)

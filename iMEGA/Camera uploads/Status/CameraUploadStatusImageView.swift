@@ -48,7 +48,7 @@ struct CameraUploadStatusImageView: View {
                         .animation(viewModel.shouldRotateStatusImage ? statusImageAnimation : .linear(duration: 0), value: shouldRotate)
                         .onAppear { update(shouldRotate: viewModel.shouldRotateStatusImage) }
                         .onDisappear { update(shouldRotate: false) }
-                        .onChange(of: viewModel.shouldRotateStatusImage) { update(shouldRotate: $0) }
+                        .onChange(of: viewModel.shouldRotateStatusImage) { _, shouldRotate in update(shouldRotate: shouldRotate) }
                 }
                 .offset(x: 8,
                         y: 8)

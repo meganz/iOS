@@ -97,7 +97,7 @@ struct RevampedSearchResultRowView: View {
                     .padding(.trailing, Constants.moreButtonTrailingInset)
             }
             .listRowBackground(rowBackground)
-            .onChange(of: isPendingFlash) { pending in
+            .onChange(of: isPendingFlash) { _, pending in
                 if pending { onReadyToFlash() }
             }
             .onAppear {

@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "MediaImport",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(name: "MediaImport", targets: ["MediaImport"])
     ],

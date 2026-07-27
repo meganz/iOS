@@ -47,7 +47,7 @@ struct WarningBannerView: View {
             GeometryReader { geometry in
                 bannerBgColor
                     .onAppear { viewModel.onHeightChange?(geometry.size.height) }
-                    .onChange(of: geometry.size.height) { newHeight in
+                    .onChange(of: geometry.size.height) { _, newHeight in
                         viewModel.onHeightChange?(newHeight)
                     }
             }

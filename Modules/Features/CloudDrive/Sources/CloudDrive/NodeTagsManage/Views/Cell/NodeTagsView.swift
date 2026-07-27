@@ -146,7 +146,7 @@ struct NodeTagsView: View {
                 .onAppear {
                     viewModel.viewHeight = proxy.size.height
                 }
-                .onChange(of: proxy.size.height) { newValue in
+                .onChange(of: proxy.size.height) { _, newValue in
                     viewModel.viewHeight = newValue
                 }
         }

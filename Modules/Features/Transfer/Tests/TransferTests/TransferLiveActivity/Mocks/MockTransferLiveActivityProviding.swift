@@ -3,7 +3,6 @@ import Foundation
 import MEGASwift
 @testable import Transfer
 
-@available(iOS 16.2, *)
 final class MockTransferLiveActivityProviding: TransferLiveActivityProviding, @unchecked Sendable {
 
     struct RequestCall: Equatable {

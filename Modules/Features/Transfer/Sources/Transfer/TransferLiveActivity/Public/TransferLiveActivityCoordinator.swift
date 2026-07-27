@@ -1,6 +1,5 @@
 import Foundation
 
-@available(iOS 16.2, *)
 @MainActor
 public final class TransferLiveActivityCoordinator {
 

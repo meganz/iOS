@@ -96,7 +96,7 @@ public struct BorderedTextEditorView: View {
                                 errorState = .reachedMaxCharLimit
                             }
                         }
-                        .onChange(of: textInput) { text in
+                        .onChange(of: textInput) { _, text in
                             if hasReachedMaxLimit {
                                 errorState = .reachedMaxCharLimit
                             } else {
@@ -115,7 +115,7 @@ public struct BorderedTextEditorView: View {
                             }
 
                         }
-                        .onChange(of: showMinLimitOrEmptyError) { showError in
+                        .onChange(of: showMinLimitOrEmptyError) { _, showError in
                             guard showError else { return }
                             
                             if config.isRequired, textInput.isEmpty {

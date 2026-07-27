@@ -5,7 +5,6 @@ import MEGAAppSDKRepo
 import MEGAL10n
 import MEGASwift
 
-@available(iOS 16.2, *)
 @MainActor
 final class TransferLiveActivityManager {
 

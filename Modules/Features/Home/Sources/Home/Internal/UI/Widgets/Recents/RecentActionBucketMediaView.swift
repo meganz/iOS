@@ -77,11 +77,11 @@ struct RecentActionBucketMediaView: View {
             .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
-            .onChange(of: viewModel.editMode) { mode in
+            .onChange(of: viewModel.editMode) { _, mode in
                 navigator.tabBarHidden = mode.isEditing
                 miniPlayerVisibility.isHidden = mode.isEditing
             }
-            .onChange(of: viewModel.isBucketEmpty) { isEmpty in
+            .onChange(of: viewModel.isBucketEmpty) { _, isEmpty in
                 guard isEmpty else { return }
                 navigator.removeLast()
             }

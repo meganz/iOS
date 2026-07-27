@@ -31,7 +31,7 @@ public struct SnackBarView: View {
                             self.snackBar = nil
                         }
                     }
-                    .onChange(of: snackBar) { _ in
+                    .onChange(of: snackBar) { _, _ in
                         restartAutoHideSubject.send(())
                     }
             }

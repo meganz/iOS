@@ -33,7 +33,6 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     struct Shim: View {
         @Environment(\.colorScheme) private var colorScheme

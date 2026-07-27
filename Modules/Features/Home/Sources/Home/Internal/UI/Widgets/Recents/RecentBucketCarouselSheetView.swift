@@ -38,16 +38,10 @@ struct RecentBucketCarouselSheetView: View {
         contentHeight > 0 ? contentHeight : Self.estimatedHeight
     }
 
-    @ViewBuilder
     private var sheetContent: some View {
-        let base = content
+        content
             .onPreferenceChange(ContentHeightPreferenceKey.self) { contentHeight = $0 }
-
-        if #available(iOS 16.4, *) {
-            base.presentationBackground(TokenColors.Background.page.swiftUI)
-        } else {
-            base
-        }
+            .presentationBackground(TokenColors.Background.page.swiftUI)
     }
 
     private var content: some View {

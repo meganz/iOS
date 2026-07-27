@@ -25,12 +25,12 @@ struct SearchResultsListView<Header: View>: View {
                     nonselectableListContent(proxy: proxy)
                 }
             }
-            .onChange(of: rowHighlighter.scrollToResultId) { resultId in
+            .onChange(of: rowHighlighter.scrollToResultId) { _, resultId in
                 scrollToHighlightedRow(resultId: resultId, proxy: proxy)
             }
             // When the list goes from empty to non-empty
             // if a auto-scroll is pending, fire it.
-            .onChange(of: viewModel.listItems.isEmpty) { isEmpty in
+            .onChange(of: viewModel.listItems.isEmpty) { _, isEmpty in
                 guard !isEmpty, let pendingResultId = rowHighlighter.scrollToResultId else { return }
                 scrollToHighlightedRow(resultId: pendingResultId, proxy: proxy)
             }
@@ -68,21 +68,15 @@ struct SearchResultsListView<Header: View>: View {
     
     @ViewBuilder
     private func selectableListContent(proxy: ScrollViewProxy) -> some View {
-        let list = List(selection: $viewModel.selectedRowIds) {
+        List(selection: $viewModel.selectedRowIds) {
             listSectionContent(proxy: proxy)
         }
-        .onChange(of: editMode?.wrappedValue) { newMode in
+        .onChange(of: editMode?.wrappedValue) { _, newMode in
             if newMode == .active {
                 viewModel.handleEditingChanged(true)
             }
         }
-
-        if #available(iOS 17.0, *) {
-            list
-                .contentMargins(.top, 0, for: .scrollContent)
-        } else {
-            list
-        }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
 
     @ViewBuilder
@@ -101,16 +95,10 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private func nonselectableListContent(proxy: ScrollViewProxy) -> some View {
-        let list = List {
+        List {
             listSectionContent(proxy: proxy)
         }
-
-        if #available(iOS 17.0, *) {
-            list
-                .contentMargins(.top, 0, for: .scrollContent)
-        } else {
-            list
-        }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
 
     @ViewBuilder

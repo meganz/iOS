@@ -36,7 +36,7 @@ struct ScrollStatusMonitorModifier: ViewModifier {
     @Binding var isScrolling: Bool
     func body(content: Content) -> some View {
         content
-            .onChange(of: store.isScrolling) { value in
+            .onChange(of: store.isScrolling) { _, value in
                 isScrolling = value
             }
     }

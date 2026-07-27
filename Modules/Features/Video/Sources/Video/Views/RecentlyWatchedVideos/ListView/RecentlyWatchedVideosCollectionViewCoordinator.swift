@@ -132,22 +132,6 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
         .margins(.all, 0)
     }
     
-    private func configureHeaderCellBelowiOS16(text: String, cell: UICollectionViewCell) {
-        let cellView = RecentlyWatchedVideosHeaderView(text: text)
-        let cellHostingController = UIHostingController(rootView: cellView)
-        cellHostingController.view.backgroundColor = .clear
-        cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
-        
-        NSLayoutConstraint.activate([
-            cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            cellHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
-    }
-    
     // MARK: - Cell setup
     
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel) {
@@ -164,28 +148,6 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
         }
         .margins(.all, 0)
         cell.clipsToBounds = true
-    }
-    
-    private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell) {
-        let cellView = VideoCellView(
-            viewModel: cellViewModel,
-            selection: self.videoSelection(),
-            onTappedCheckMark: {},
-            videoConfig: videoConfig
-        )
-        
-        let cellHostingController = UIHostingController(rootView: cellView)
-        cellHostingController.view.backgroundColor = .clear
-        cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
-        
-        NSLayoutConstraint.activate([
-            cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            cellHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
     }
     
     // Unfortunately, SwiftUI could not have optional @StateObject so we still need to pass this down.

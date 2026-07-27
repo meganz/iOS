@@ -23,10 +23,10 @@ struct SearchResultsThumbnailView<Header: View>: View {
                     header()
                     gridView(items: viewModel.listItems, geometryProxy: geometryProxy, scrollProxy: scrollProxy)
                 }
-                .onChange(of: rowHighlighter.scrollToResultId) { resultId in
+                .onChange(of: rowHighlighter.scrollToResultId) { _, resultId in
                     scrollToHighlightedRow(resultId: resultId, proxy: scrollProxy)
                 }
-                .onChange(of: viewModel.listItems.isEmpty) { isEmpty in
+                .onChange(of: viewModel.listItems.isEmpty) { _, isEmpty in
                     guard !isEmpty, let pendingResultId = rowHighlighter.scrollToResultId else { return }
                     scrollToHighlightedRow(resultId: pendingResultId, proxy: scrollProxy)
                 }

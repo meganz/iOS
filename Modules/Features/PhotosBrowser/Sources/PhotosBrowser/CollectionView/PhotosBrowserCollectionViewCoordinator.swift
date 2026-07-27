@@ -102,13 +102,6 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
         .margins(.all, 0)
     }
     
-    private func configureCellBelowiOS16(cell: UICollectionViewCell, with entity: PhotosBrowserLibraryEntity) {
-        let cellHostingController = UIHostingController(rootView: PhotosBrowserImageCellContent(viewModel: PhotosBrowserImageCellContentViewModel(entity: entity)))
-        cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.wrap(cellHostingController.view)
-    }
-    
     private func updateCurrentIndex(to newIndex: Int) {
         guard representer.viewModel.currentIndex != newIndex else { return }
         

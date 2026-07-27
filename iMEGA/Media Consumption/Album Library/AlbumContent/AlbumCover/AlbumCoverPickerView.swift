@@ -31,11 +31,11 @@ struct AlbumCoverPickerView: View {
         .onDisappear {
             viewModel.cancelLoading()
         }
-        .onChange(of: viewModel.isDismiss, perform: { newValue in
+        .onChange(of: viewModel.isDismiss) { _, newValue in
             if newValue {
                 dismiss()
             }
-        })
+        }
         .edgesIgnoringSafeArea(.vertical)
         .background(TokenColors.Background.page.swiftUI)
     }

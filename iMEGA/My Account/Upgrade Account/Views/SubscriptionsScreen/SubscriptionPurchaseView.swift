@@ -24,7 +24,7 @@ struct SubscriptionPurchaseView: View {
             .onLoad {
                 viewModel.onLoad()
             }
-            .onChange(of: viewModel.isDismiss) { newValue in
+            .onChange(of: viewModel.isDismiss) { _, newValue in
                 if newValue {
                     dismiss()
                     onDismiss()

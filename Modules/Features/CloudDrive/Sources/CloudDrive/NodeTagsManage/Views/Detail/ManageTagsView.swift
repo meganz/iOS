@@ -17,8 +17,8 @@ struct ManageTagsView: View {
         ZStack {
             content
                 .background(TokenColors.Background.page.swiftUI)
-                .onChange(of: viewModel.shouldDismiss) {
-                    if $0 { dismiss() }
+                .onChange(of: viewModel.shouldDismiss) { _, shouldDismiss in
+                    if shouldDismiss { dismiss() }
                 }
                 .task {
                     await viewModel.loadAllTags()
@@ -75,7 +75,7 @@ struct ManageTagsView: View {
             .onSubmit {
                 hasFocus = false
             }
-            .onChange(of: viewModel.tagName) { updatedTagName in
+            .onChange(of: viewModel.tagName) { _, updatedTagName in
                 viewModel.onTagNameChanged(with: updatedTagName)
             }
             .padding(.vertical, TokenSpacing._3)
@@ -98,11 +98,7 @@ struct ManageTagsView: View {
     }
     
     private var textViewPlaceHolder: Text {
-        if #available(iOS 17.0, *) {
-            Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.inputPlaceHolder).foregroundStyle(TokenColors.Text.placeholder.swiftUI)
-        } else {
-            Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.inputPlaceHolder).foregroundColor(TokenColors.Text.placeholder.swiftUI)
-        }
+        Text(Strings.Localizable.CloudDrive.NodeInfo.NodeTags.AddTags.inputPlaceHolder).foregroundStyle(TokenColors.Text.placeholder.swiftUI)
     }
     
     private var bottomView: some View {

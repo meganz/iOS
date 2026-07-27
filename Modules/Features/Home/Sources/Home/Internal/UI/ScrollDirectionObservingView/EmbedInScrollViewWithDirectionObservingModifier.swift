@@ -30,7 +30,7 @@ public struct EmbedInScrollViewWithDirectionObservingModifier: ViewModifier {
                                 contentHeightGap
                             )
                             Color.clear
-                                .onChange(of: minY) { newVal in
+                                .onChange(of: minY) { _, newVal in
                                     // When contentSize's height is still smaller than scrollView's height, we disable scrolling down handler
                                     if contentHeightGap > 0 {
                                         isScrollingDown = false

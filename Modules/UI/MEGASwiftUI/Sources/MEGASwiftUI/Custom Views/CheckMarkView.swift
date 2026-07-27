@@ -66,19 +66,11 @@ public struct CheckMarkView: View {
         }
     }
     
-    @ViewBuilder
     private var designTokenCheckMarkCircleBackgroundView: some View {
-        if #available(iOS 17.0, *) {
-            Circle()
-                .fill(foregroundColor)
-                .stroke(borderColor, lineWidth: markedSelected ? 0 : 1)
-                .frame(width: 22, height: 22)
-        } else {
-            Circle()
-                .fill(foregroundColor)
-                .frame(width: 22, height: 22)
-                .overlay(Circle().stroke(borderColor, lineWidth: markedSelected ? 0 : 1))
-        }
+        Circle()
+            .fill(foregroundColor)
+            .stroke(borderColor, lineWidth: markedSelected ? 0 : 1)
+            .frame(width: 22, height: 22)
     }
 }
 

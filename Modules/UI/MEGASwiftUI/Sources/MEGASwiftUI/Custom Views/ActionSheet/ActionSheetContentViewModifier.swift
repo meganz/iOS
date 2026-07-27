@@ -20,14 +20,9 @@ struct ActionSheetContentViewModifier<HeaderView: View>: ViewModifier {
             })
     }
     
-    @ViewBuilder
     private func bottomView() -> some View {
-        if #available(iOS 16.4, *) {
-            bottomSheetView()
-                .presentationCornerRadius(16)
-        } else {
-            bottomSheetView()
-        }
+        bottomSheetView()
+            .presentationCornerRadius(16)
     }
     
     private func bottomSheetView() -> some View {

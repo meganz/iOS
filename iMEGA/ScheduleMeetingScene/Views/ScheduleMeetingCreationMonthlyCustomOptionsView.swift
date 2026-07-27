@@ -66,7 +66,7 @@ struct ScheduleMeetingCreationMonthlyCustomPickerView: View {
                 }
             }
             .pickerStyle(.wheel)
-            .onChange(of: selectedWeekNumber) { newValue in
+            .onChange(of: selectedWeekNumber) { _, newValue in
                 viewModel.selected(weekNumber: newValue, andWeekDay: selectedWeekSymbol)
             }
             
@@ -80,7 +80,7 @@ struct ScheduleMeetingCreationMonthlyCustomPickerView: View {
                 }
             }
             .pickerStyle(.wheel)
-            .onChange(of: selectedWeekSymbol) { newValue in
+            .onChange(of: selectedWeekSymbol) { _, newValue in
                 viewModel.selected(weekNumber: selectedWeekNumber, andWeekDay: newValue)
             }
         }

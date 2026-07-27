@@ -56,7 +56,7 @@ public struct Shimmer: ViewModifier {
                     stopShimmering()
                 }
             }
-            .onChange(of: isActive) { newValue in
+            .onChange(of: isActive) { _, newValue in
                 if newValue {
                     startShimmering()
                 } else {
@@ -100,7 +100,6 @@ public extension View {
     .shimmering()
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     VStack(alignment: .leading) {
         Text("← Right-to-left layout direction").font(.body)

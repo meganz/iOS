@@ -139,8 +139,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
-            node: photo)
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
@@ -148,7 +146,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         let sut = makeSUT(
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
@@ -172,8 +169,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: !photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
-            node: photo)
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
@@ -181,7 +176,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         let sut = makeSUT(
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
@@ -209,8 +203,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         
         let monitorInheritedSensitivityForNode = SingleItemAsyncSequence(item: photo.isMarkedSensitive)
             .eraseToAnyAsyncThrowingSequence()
-        let nodeUseCase = MockNodeDataUseCase(
-            node: photo)
         let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
             monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode
         )
@@ -218,7 +210,6 @@ final class PhotoCardViewModelTests: XCTestCase {
         let sut = makeSUT(
             coverPhoto: photo,
             thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase)
         
         let exp = expectation(description: "Should not update image container")
@@ -240,126 +231,17 @@ final class PhotoCardViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
-        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        
-        let (nodeSensitivityStream, nodeSensitivityContinuation) = AsyncStream.makeStream(of: Bool.self)
-        let (inheritedStream, _) = AsyncThrowingStream.makeStream(of: Bool.self)
-        
-        let nodeUseCase = MockNodeDataUseCase(
-            node: photo)
-        
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence()
-        )
-        
-        let sut = makeSUT(
-            coverPhoto: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase)
-        
-        var expectedImageContainers = [
-            imageContainer.toSensitiveImageContaining(isSensitive: false),
-            imageContainer.toSensitiveImageContaining(isSensitive: true)
-        ]
-        
-        let exp = expectation(description: "Should update image container with sensitivity")
-        exp.expectedFulfillmentCount = expectedImageContainers.count
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(expectedImageContainers.removeFirst()))
-            exp.fulfill()
-        }
-        
-        let startedExp = expectation(description: "started")
-        let cancelledExp = expectation(description: "cancelled")
-        let task = Task {
-            startedExp.fulfill()
-            await sut.monitorPhotoSensitivityChanges()
-            cancelledExp.fulfill()
-        }
-        await fulfillment(of: [startedExp], timeout: 0.1)
-        
-        try await Task.sleep(nanoseconds: 50_000_000)
-        nodeSensitivityContinuation.yield(true)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        await fulfillment(of: [cancelledExp], timeout: 0.5)
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testMonitorPhotoSensitivityChanges_nodeNotSensitiveInheritUpdated_shouldUpdateTheImageContainer() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
-        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        
-        let (nodeSensitivityStream, _) = AsyncStream.makeStream(of: Bool.self)
-        let (inheritedStream, inheritedContinuation) = AsyncThrowingStream.makeStream(of: Bool.self)
-        let nodeUseCase = MockNodeDataUseCase(
-            node: photo)
-        
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence()
-        )
-        
-        let sut = makeSUT(
-            coverPhoto: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase)
-        
-        var expectedImageContainers = [
-            imageContainer.toSensitiveImageContaining(isSensitive: false),
-            imageContainer.toSensitiveImageContaining(isSensitive: true)
-        ]
-        
-        let exp = expectation(description: "Should update image container with sensitivity")
-        exp.expectedFulfillmentCount = expectedImageContainers.count
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(expectedImageContainers.removeFirst()))
-            exp.fulfill()
-        }
-        
-        let startedExp = expectation(description: "started")
-        let cancelledExp = expectation(description: "cancelled")
-        let task = Task {
-            startedExp.fulfill()
-            await sut.monitorPhotoSensitivityChanges()
-            cancelledExp.fulfill()
-        }
-        await fulfillment(of: [startedExp], timeout: 0.1)
-        
-        try await Task.sleep(nanoseconds: 50_000_000)
-        inheritedContinuation.yield(true)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        await fulfillment(of: [cancelledExp], timeout: 0.5)
-        subscription.cancel()
-    }
-    
-    @MainActor
     private func makeSUT(
         coverPhoto: NodeEntity? = nil,
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> PhotoCardViewModel {
         let sut = PhotoCardViewModel(
-            coverPhoto: coverPhoto, 
+            coverPhoto: coverPhoto,
             thumbnailLoader: thumbnailLoader,
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)

@@ -134,7 +134,7 @@ public struct FavouritesView: View {
         .task {
             viewModel.onTask()
         }
-        .onChange(of: viewModel.editMode) { editMode in
+        .onChange(of: viewModel.editMode) { _, editMode in
             tabBarHidden = editMode.isEditing
             miniPlayerVisibility.isHidden = editMode.isEditing
         }

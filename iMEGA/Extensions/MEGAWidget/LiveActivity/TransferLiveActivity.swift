@@ -5,7 +5,6 @@ import SwiftUI
 import Transfer
 import WidgetKit
 
-@available(iOS 16.2, *)
 struct TransferLiveActivity: Widget {
     private let deepLinkURL = URL(string: "mega://widget.liveactivity.transfers")
 
@@ -35,7 +34,6 @@ struct TransferLiveActivity: Widget {
 
 // MARK: - Expanded
 
-@available(iOS 16.2, *)
 private struct ExpandedContent: View {
     let viewState: TransferLiveActivityViewState
 
@@ -81,7 +79,6 @@ private struct ExpandedContent: View {
 
 // MARK: - Compact / Minimal
 
-@available(iOS 16.2, *)
 private struct CompactLeading: View {
     let viewState: TransferLiveActivityViewState
 
@@ -95,7 +92,6 @@ private struct CompactLeading: View {
     }
 }
 
-@available(iOS 16.2, *)
 private struct CompactTrailing: View {
     let viewState: TransferLiveActivityViewState
 
@@ -109,7 +105,6 @@ private struct CompactTrailing: View {
     }
 }
 
-@available(iOS 16.2, *)
 private struct Minimal: View {
     let viewState: TransferLiveActivityViewState
 
@@ -130,7 +125,6 @@ private struct Minimal: View {
 
 // MARK: - Helpers
 
-@available(iOS 16.2, *)
 private struct IconBadge: View {
     let icon: Image
     let tint: Color

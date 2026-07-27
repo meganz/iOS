@@ -89,7 +89,7 @@ struct SmallShortcutWidgetView: View {
     }
 }
 
-struct ShortcutView_iOS16: View {
+struct MediumShortcutTileView: View {
     let shortcut: ShortcutDetail
     
     @Environment(\.widgetRenderingMode) private var widgetRenderingMode
@@ -160,7 +160,7 @@ struct MediumShortcutsWidgetView: View {
     
     @ViewBuilder
     private func buildShortcutView(shortcut: ShortcutDetail) -> some View {
-        ShortcutView_iOS16(shortcut: shortcut)
+        MediumShortcutTileView(shortcut: shortcut)
     }
 }
 
@@ -181,14 +181,12 @@ struct ShortcutsWidgetView: View {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(as: .systemMedium) {
     ShortcutsWidget()
 } timeline: {
     ShortcutsWidgetEntry(date: Date.now, shortcuts: ShortcutDetail.availableShortcuts)
 }
 
-@available(iOS 17.0, *)
 #Preview(as: .systemSmall) {
     ShortcutsWidget()
 } timeline: {

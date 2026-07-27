@@ -5,7 +5,6 @@ import SwiftUI
 import Transfer
 import WidgetKit
 
-@available(iOS 16.2, *)
 struct TransferLiveActivityLockScreenView: View {
     let viewState: TransferLiveActivityViewState
 

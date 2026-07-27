@@ -74,22 +74,13 @@ public struct VideoListView: View {
             .background(videoConfig.colorAssets.pageBackgroundColor)
     }
     
-    @ViewBuilder
     private func bottomView() -> some View {
-        if #available(iOS 16.4, *) {
-            iOS16SupportBottomSheetView()
-                .presentationCornerRadius(16)
-        } else {
-            iOS16SupportBottomSheetView()
-        }
-    }
-    
-    private func iOS16SupportBottomSheetView() -> some View {
         bottomSheetView()
             .presentationDetents([ .height(presentationDetentsHeight) ])
             .presentationDragIndicator(.visible)
+            .presentationCornerRadius(16)
     }
-    
+
     @ViewBuilder
     private func bottomSheetView() -> some View {
         if let newlySelectedChip = viewModel.newlySelectedChip {

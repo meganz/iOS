@@ -111,7 +111,7 @@ struct ChatRoomsListView: View {
                     .onAppear {
                         viewModel.updateMeetingListFrame(geo.frame(in: .global))
                     }
-                    .onChange(of: geo.frame(in: .global)) { _ in
+                    .onChange(of: geo.frame(in: .global)) { _, _ in
                         viewModel.updateMeetingListFrame(geo.frame(in: .global))
                     }
             }
@@ -213,7 +213,7 @@ struct ChatRoomsListView: View {
                     , alignment: .center
                 )
                 .background()
-                .scrollBounceBasedOnSize
+                .scrollBounceBehavior(.basedOnSize)
             } else {
                 LoadingSpinner()
             }
@@ -243,7 +243,7 @@ struct ChatRoomsListView: View {
                                                 .onDisappear {
                                                     viewModel.updateTipOffsetY(for: futureMeeting, meetingframeInGlobal: nil)
                                                 }
-                                                .onChange(of: geo.frame(in: .global)) { _ in
+                                                .onChange(of: geo.frame(in: .global)) { _, _ in
                                                     viewModel.updateTipOffsetY(for: futureMeeting, meetingframeInGlobal: geo.frame(in: .global))
                                                 }
                                                 

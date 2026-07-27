@@ -41,7 +41,7 @@ struct FocusableTextDescriptionView: View {
         .font(.footnote)
         .lineSpacing(-2)
         .focused($focused)
-        .onChange(of: focused) { isFocused in
+        .onChange(of: focused) { _, isFocused in
             onChange(isFocused)
         }
         .foregroundStyle(focused ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI)

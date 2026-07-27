@@ -19,7 +19,7 @@ struct WaitingRoomView: View {
             .onAppear {
                 viewModel.screenSize = proxy.size
             }
-            .onChange(of: proxy.size) { newSize in
+            .onChange(of: proxy.size) { _, newSize in
                 viewModel.screenSize = newSize
             }
         }

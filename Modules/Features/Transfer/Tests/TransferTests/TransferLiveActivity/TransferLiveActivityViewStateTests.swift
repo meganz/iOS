@@ -7,7 +7,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func statusText_whenNotStale_matchesStateStatusText() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(statusText: "Uploading files")
         let sut = TransferLiveActivityViewState(state: state, isStale: false)
 
@@ -16,7 +15,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func speed_whenNotStale_matchesFormattedSpeed() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(formattedSpeed: "3.4 MB/s")
         let sut = TransferLiveActivityViewState(state: state, isStale: false)
 
@@ -27,7 +25,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func statusText_whenStale_isNotUnderlyingStatusText() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(statusText: "Uploading files")
         let sut = TransferLiveActivityViewState(state: state, isStale: true)
 
@@ -37,7 +34,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func speed_whenStale_isEmpty() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(formattedSpeed: "3.4 MB/s")
         let sut = TransferLiveActivityViewState(state: state, isStale: true)
 
@@ -48,7 +44,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test(arguments: [true, false])
     func progressFraction_passesThroughRegardlessOfStaleness(isStale: Bool) {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(progressFraction: 0.42)
         let sut = TransferLiveActivityViewState(state: state, isStale: isStale)
 
@@ -57,7 +52,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test(arguments: [true, false])
     func percentageText_passesThroughRegardlessOfStaleness(isStale: Bool) {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(percentageText: "42%")
         let sut = TransferLiveActivityViewState(state: state, isStale: isStale)
 
@@ -66,7 +60,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test(arguments: [true, false])
     func fileCountText_passesThroughRegardlessOfStaleness(isStale: Bool) {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(fileCountText: "1 of 3")
         let sut = TransferLiveActivityViewState(state: state, isStale: isStale)
 
@@ -77,7 +70,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func accessibilityDescription_joinsNonEmptyFieldsWithComma() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(
             statusText: "Uploading files",
             percentageText: "42%",
@@ -91,7 +83,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func accessibilityDescription_skipsEmptyFields() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(
             statusText: "Paused",
             percentageText: "42%",
@@ -105,7 +96,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func accessibilityDescription_whenStale_dropsSpeed() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(
             percentageText: "42%",
             fileCountText: "1 of 3",
@@ -120,7 +110,6 @@ struct TransferLiveActivityViewStateTests {
 
     @Test
     func compactAccessibilityDescription_includesStatusAndPercentageOnly() {
-        guard #available(iOS 16.2, *) else { return }
         let state = TransferLiveActivityAttributes.ContentState.fixture(
             statusText: "Uploading files",
             percentageText: "42%",

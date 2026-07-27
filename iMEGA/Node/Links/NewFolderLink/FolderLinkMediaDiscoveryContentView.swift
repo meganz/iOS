@@ -27,18 +27,18 @@ struct FolderLinkMediaDiscoveryContentView: FolderLinkMediaDiscoveryContent {
     
     var body: some View {
         MediaDiscoveryContentView(viewModel: mediaDiscoveryContentViewModel)
-            .onChange(of: viewModel.sortOrder) { order in
+            .onChange(of: viewModel.sortOrder) { _, order in
                 Task {
                     await mediaDiscoveryContentViewModel.update(sortOrder: SortOrderType(megaSortOrderType: order.toMEGASortOrderType()))
                 }
             }
-            .onChange(of: viewModel.editMode) { mode in
+            .onChange(of: viewModel.editMode) { _, mode in
                 contentViewModel.editMode = mode
             }
-            .onChange(of: contentViewModel.editMode) { mode in
+            .onChange(of: contentViewModel.editMode) { _, mode in
                 viewModel.editMode = mode
             }
-            .onChange(of: contentViewModel.selectedPhotos) { photos in
+            .onChange(of: contentViewModel.selectedPhotos) { _, photos in
                 viewModel.updateSelectedPhotos(photos)
             }
             .onReceive(viewModel.$selectAll.dropFirst()) { _ in

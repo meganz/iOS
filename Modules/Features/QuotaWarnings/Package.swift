@@ -10,7 +10,7 @@ private let settings: [SwiftSetting] = [
 let package = Package(
     name: "QuotaWarnings",
     platforms: [
-        .macOS(.v12), .iOS(.v16)
+        .macOS(.v12), .iOS(.v17)
     ],
     products: [
         .library(

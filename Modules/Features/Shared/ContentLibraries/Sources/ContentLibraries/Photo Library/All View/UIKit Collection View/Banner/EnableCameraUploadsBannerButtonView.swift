@@ -71,7 +71,6 @@ public struct EnableCameraUploadsBannerButtonView: View {
         .preferredColorScheme(.dark)
 }
 
-@available(iOS 17.0, *)
 #Preview("Landscape", traits: .landscapeLeft) {
     EnableCameraUploadsBannerButtonView()
 }

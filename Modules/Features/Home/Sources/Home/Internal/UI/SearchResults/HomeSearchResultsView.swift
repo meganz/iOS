@@ -34,8 +34,8 @@ struct HomeSearchResultsView: View {
     var body: some View {
         SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
             .background()
-            .onChange(of: searchText) {
-                viewModel.searchText = $0
+            .onChange(of: searchText) { _, newText in
+                viewModel.searchText = newText
             }
             .onReceive(viewModel.$selection.compactMap { $0 }) {
                 dependency.searchResultsSelectionHandler.handle(selection: $0)

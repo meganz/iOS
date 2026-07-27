@@ -64,27 +64,16 @@ public struct LocationInfoMapTile<ID: Hashable>: View {
             .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
     
-    @ViewBuilder
     func map(marker: LocationInfoMapMarker<ID>) -> some View {
         let region = MKCoordinateRegion(
             center: marker.location.coordinate,
             span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)
         )
-        if #available(iOS 17.0, *) {
-            Map(initialPosition: .region(region),
-                bounds: nil,
-                interactionModes: [],
-                scope: nil) {
-                Marker(marker.locationTitle, coordinate: marker.location.coordinate)
-            }
-        } else {
-            Map(coordinateRegion: .constant(region),
-                interactionModes: [],
-                showsUserLocation: false,
-                userTrackingMode: .constant(.none),
-                annotationItems: [marker]) { marker in
-                MapMarker(coordinate: marker.location.coordinate)
-            }
+        return Map(initialPosition: .region(region),
+                   bounds: nil,
+                   interactionModes: [],
+                   scope: nil) {
+            Marker(marker.locationTitle, coordinate: marker.location.coordinate)
         }
     }
 }

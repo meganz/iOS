@@ -86,20 +86,11 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     }
     
     private func registerForTraitChanges() {
-        guard #available(iOS 17.0, *) else { return }
         registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { [weak self] (viewController: RecentlyWatchedVideosViewController, previousTraitCollection: UITraitCollection) in
             self?.handleTraitCollectionChange(previousTraitCollection, newestTraitCollection: viewController.traitCollection)
         })
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if #unavailable(iOS 17.0) {
-            guard let previousTraitCollection else { return }
-            handleTraitCollectionChange(previousTraitCollection, newestTraitCollection: traitCollection)
-        }
-    }
-    
+
     private func handleTraitCollectionChange(_ previousTraitCollection: UITraitCollection, newestTraitCollection: UITraitCollection) {
         if newestTraitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
             forceNavigationBarUpdateIfNeeded()

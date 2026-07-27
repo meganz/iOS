@@ -12,7 +12,6 @@ import SwiftUI
 public class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
     private let thumbnailLoader: any ThumbnailLoaderProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
@@ -20,12 +19,10 @@ public class PhotoCardViewModel: ObservableObject {
     
     init(coverPhoto: NodeEntity?,
          thumbnailLoader: some ThumbnailLoaderProtocol,
-         nodeUseCase: some NodeUseCaseProtocol,
          sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
          remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.coverPhoto = coverPhoto
         self.thumbnailLoader = thumbnailLoader
-        self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
@@ -73,25 +70,6 @@ public class PhotoCardViewModel: ObservableObject {
         }
     }
     
-    /// Monitor photo node and inherited sensitivity changes
-    /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
-    
-    func monitorPhotoSensitivityChanges() async {
-        guard let coverPhoto else {
-            return
-        }
-        // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
-        _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
-        
-        do {
-            for try await isSensitive in photoSensitivityChanges(for: coverPhoto) {
-                await updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isSensitive))
-            }
-        } catch {
-            MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
-        }
-    }
-    
     // MARK: - Private
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
         guard !isShowingThumbnail(container) else { return }
@@ -116,31 +94,5 @@ public class PhotoCardViewModel: ObservableObject {
                 try await self?.sensitiveNodeUseCase.isInheritingSensitivity(node: photo) ?? false
             }
             .eraseToAnyAsyncThrowingSequence()
-    }
-    
-    /// Async sequence will yield photo sensitivity and inherited sensitivity changes. It will immediately yield the current photo sensitivity if true otherwise the  inherited sensitivity since it could have changed since thumbnail loaded
-    /// - Parameters:
-    ///   - photo: Photo NodeEntity to monitor
-    private func photoSensitivityChanges(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-
-        // Need to fetch the latest version of the node.
-        // This is a architecture bug with the SwiftUI version iOS 15 and below
-        // The NodeEntity does not update in this model, due to the way the SwiftUI view has been built
-        // If used in iOS16 +, this is not an issue as this VM gets recreated on reloads and scrolling away
-        let node = nodeUseCase.nodeForHandle(photo.handle) ?? photo
-            
-        return combineLatest(
-            sensitiveNodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
-            monitorInheritedSensitivity(for: node)
-        )
-        .map { isPhotoSensitive, isInheritingSensitive in
-            if isPhotoSensitive {
-                true
-            } else {
-                isInheritingSensitive
-            }
-        }
-        .removeDuplicates()
-        .eraseToAnyAsyncThrowingSequence()
     }
 }

@@ -60,8 +60,7 @@ public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlayl
     private func makeDataSource(for collectionView: UICollectionView) -> DiffableDataSource {
         let cellRegistration = CellRegistration { [weak self] cell, _, rowItem in
             guard let self else { return }
-            let cellViewModel = cellViewModel(for: rowItem)
-            configureCell(cell, cellViewModel: cellViewModel, rowItem: rowItem)
+            configureCell(cell, rowItem: rowItem)
         }
         
         return DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
@@ -84,43 +83,18 @@ public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlayl
     
     // MARK: - Cell setup
     
-    private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoPlaylistCellViewModel, rowItem: RowItem) {
+    private func configureCell(_ cell: UICollectionViewCell, rowItem: RowItem) {
         prepareCellForReuse(cell)
-        
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration {
-                cellView(for: rowItem)
-            }
-            .margins(.all, 0)
-            cell.clipsToBounds = true
-        } else {
-            configureCellBelowiOS16(cellViewModel: cellViewModel, cell: cell, rowItem: rowItem)
+
+        cell.contentConfiguration = UIHostingConfiguration {
+            cellView(for: rowItem)
         }
+        .margins(.all, 0)
+        cell.clipsToBounds = true
     }
-    
-    private func configureCellBelowiOS16(cellViewModel: VideoPlaylistCellViewModel, cell: UICollectionViewCell, rowItem: RowItem) {
-        let cellView = cellView(for: rowItem)
-        
-        let cellHostingController = UIHostingController(rootView: cellView)
-        cellHostingController.view.backgroundColor = .clear
-        cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.backgroundColor = TokenColors.Background.page
-        
-        NSLayoutConstraint.activate([
-            cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            cellHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
-    }
-    
+
     private func prepareCellForReuse(_ cell: UICollectionViewCell) {
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = nil
-        } else {
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-        }
+        cell.contentConfiguration = nil
     }
     
     @ViewBuilder

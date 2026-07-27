@@ -54,8 +54,8 @@ struct AlbumContentPickerView: View {
                   message: Text(Strings.Localizable.CameraUploads.Albums.AddItems.Alert.LimitReached.message(viewModel.selectLimit)),
                   dismissButton: .default(Text(Strings.Localizable.ok)))
         }
-        .onChange(of: viewModel.shouldDismiss) {
-            if $0 {
+        .onChange(of: viewModel.shouldDismiss) { _, shouldDismiss in
+            if shouldDismiss {
                 dismiss()
             }
         }

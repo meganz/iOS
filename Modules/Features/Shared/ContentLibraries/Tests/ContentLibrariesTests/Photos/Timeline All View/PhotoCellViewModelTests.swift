@@ -971,135 +971,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         subscription.cancel()
     }
     
-    @MainActor
-    func disable_testMonitorPhotoSensitivityChanges_nodeUseCaseNotProvided_shouldNotUpdateThumbnail() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
-        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        
-        let sut = makeSUT(
-            photo: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nil)
-        
-        let exp = expectation(description: "Should not update image container")
-        exp.isInverted = true
-        
-        let subscription = thumbnailContainerUpdates(on: sut) { _ in
-            exp.fulfill()
-        }
-        
-        let cancelledExp = expectation(description: "cancelled")
-        let task = Task {
-            await sut.monitorPhotoSensitivityChanges()
-            cancelledExp.fulfill()
-        }
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        await fulfillment(of: [cancelledExp], timeout: 0.5)
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func disabled_testMonitorPhotoSensitivityChanges_nodeSensitivityUpdated_shouldUpdateTheImageContainer() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
-        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        
-        let (nodeSensitivityStream, nodeSensitivityContinuation) = AsyncStream.makeStream(of: Bool.self)
-        let (inheritedStream, _) = AsyncThrowingStream.makeStream(of: Bool.self)
-        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
-        
-        let sut = makeSUT(
-            photo: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase)
-        
-        var expectedImageContainers = [
-            imageContainer.toSensitiveImageContaining(isSensitive: false),
-            imageContainer.toSensitiveImageContaining(isSensitive: true)
-        ]
-        
-        let exp = expectation(description: "Should update image container with sensitivity")
-        exp.expectedFulfillmentCount = expectedImageContainers.count
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(expectedImageContainers.removeFirst()))
-            exp.fulfill()
-        }
-        
-        let startedExp = expectation(description: "started")
-        let cancelledExp = expectation(description: "cancelled")
-        let task = Task {
-            startedExp.fulfill()
-            await sut.monitorPhotoSensitivityChanges()
-            cancelledExp.fulfill()
-        }
-        await fulfillment(of: [startedExp], timeout: 0.1)
-        
-        try await Task.sleep(nanoseconds: 50_000_000)
-        nodeSensitivityContinuation.yield(true)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        await fulfillment(of: [cancelledExp], timeout: 0.5)
-        subscription.cancel()
-    }
-    
-    @MainActor
-    func testMonitorPhotoSensitivityChanges_nodeNotSensitiveInheritUpdated_shouldUpdateTheImageContainer() async throws {
-        let photo = NodeEntity(handle: 65, isMarkedSensitive: false)
-        let imageContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
-        
-        let (nodeSensitivityStream, _) = AsyncStream.makeStream(of: Bool.self)
-        let (inheritedStream, inheritedContinuation) = AsyncThrowingStream.makeStream(of: Bool.self)
-        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isInheritingSensitivityResult: .success(false),
-            monitorInheritedSensitivityForNode: inheritedStream.eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: nodeSensitivityStream.eraseToAnyAsyncSequence())
-        
-        let sut = makeSUT(
-            photo: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: imageContainer),
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase)
-        
-        var expectedImageContainers = [
-            imageContainer.toSensitiveImageContaining(isSensitive: false),
-            imageContainer.toSensitiveImageContaining(isSensitive: true)
-        ]
-        
-        let exp = expectation(description: "Should update image container with sensitivity")
-        exp.expectedFulfillmentCount = expectedImageContainers.count
-        
-        let subscription = thumbnailContainerUpdates(on: sut) {
-            XCTAssertTrue($0.isEqual(expectedImageContainers.removeFirst()))
-            exp.fulfill()
-        }
-        
-        let startedExp = expectation(description: "started")
-        let cancelledExp = expectation(description: "cancelled")
-        let task = Task {
-            startedExp.fulfill()
-            await sut.monitorPhotoSensitivityChanges()
-            cancelledExp.fulfill()
-        }
-        await fulfillment(of: [startedExp], timeout: 0.1)
-        
-        try await Task.sleep(nanoseconds: 50_000_000)
-        inheritedContinuation.yield(true)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
-        task.cancel()
-        await fulfillment(of: [cancelledExp], timeout: 0.5)
-        subscription.cancel()
-    }
-    
     // MARK: - Skeleton placeholder short-circuit
 
     @MainActor
@@ -1156,39 +1027,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         let finishedExp = expectation(description: "returns without cancellation")
         Task {
             await sut.monitorInheritedSensitivityChanges()
-            finishedExp.fulfill()
-        }
-
-        await fulfillment(of: [finishedExp], timeout: 1.0)
-        await fulfillment(of: [noUpdateExp], timeout: 0.5)
-        subscription.cancel()
-    }
-
-    @MainActor
-    func testMonitorPhotoSensitivityChanges_placeholderNode_returnsImmediatelyWithoutUpdating() async {
-        let photo = NodeEntity.timelinePlaceholder(offset: 0, date: Date(timeIntervalSince1970: 0))
-        let nodeUseCase = MockNodeDataUseCase(nodes: [photo])
-        let sensitiveNodeUseCase = MockSensitiveNodeUseCase(
-            isInheritingSensitivityResult: .success(true),
-            monitorInheritedSensitivityForNode: SingleItemAsyncSequence(item: true)
-                .eraseToAnyAsyncThrowingSequence(),
-            sensitivityChangesForNode: SingleItemAsyncSequence(item: true)
-                .eraseToAnyAsyncSequence())
-
-        let sut = makeSUT(
-            photo: photo,
-            thumbnailLoader: MockThumbnailLoader(initialImage: ImageContainer(image: Image("folder"), type: .thumbnail)),
-            nodeUseCase: nodeUseCase,
-            sensitiveNodeUseCase: sensitiveNodeUseCase)
-
-        let noUpdateExp = expectation(description: "Should not update image container")
-        noUpdateExp.isInverted = true
-        let subscription = thumbnailContainerUpdates(on: sut) { _ in noUpdateExp.fulfill() }
-
-        // Both use cases are non-nil, so the placeholder guard is what short-circuits here.
-        let finishedExp = expectation(description: "returns without cancellation")
-        Task {
-            await sut.monitorPhotoSensitivityChanges()
             finishedExp.fulfill()
         }
 
@@ -1277,7 +1115,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         photo: NodeEntity,
         viewModel: PhotoLibraryModeAllViewModel? = nil,
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
-        nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)? = nil,
         configuration: ContentLibraries.Configuration = .mockConfiguration(),
         file: StaticString = #filePath,
@@ -1288,7 +1125,6 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: viewModel ?? PhotoLibraryModeAllViewModel(
                 libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary(photoByYearList: []))),
             thumbnailLoader: thumbnailLoader,
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             configuration: configuration)
         addTeardownBlock { [weak sut] in

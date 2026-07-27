@@ -67,7 +67,7 @@ struct TabContainerView: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
             .id(layoutID)
-            .onChange(of: geometry.safeAreaInsets) { _ in
+            .onChange(of: geometry.safeAreaInsets) { _, _ in
                 guard #available(iOS 26.0, *) else { return }
                 refreshLayoutID()
             }
@@ -81,13 +81,13 @@ struct TabContainerView: View {
                 refreshLayoutID()
             }
         }
-        .onChange(of: syncModel.showsTabView) { showsTabView in
+        .onChange(of: syncModel.showsTabView) { _, showsTabView in
             if showsTabView {
                 refreshLayoutID()
             }
         }
-        .onChange(of: currentTab) {
-            didChangeCurrentTab($0)
+        .onChange(of: currentTab) { _, newTab in
+            didChangeCurrentTab(newTab)
         }
         .onAppear {
             guard #available(iOS 26.0, *) else { return }

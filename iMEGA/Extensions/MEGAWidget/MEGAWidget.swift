@@ -16,8 +16,6 @@ struct MEGAWidgetsBundle: SwiftUI.WidgetBundle {
         FavouritesQuickAccessWidget()
         RecentsQuickAccessWidget()
         OfflineQuickAccessWidget()
-        if #available(iOS 16.2, *) {
-            TransferLiveActivity()
-        }
+        TransferLiveActivity()
     }
 }

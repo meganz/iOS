@@ -18,16 +18,14 @@ public final class PhotoMonthCardViewModel: PhotoCardViewModel {
 
     public init(photoByMonth: PhotoByMonth,
                 thumbnailLoader: some ThumbnailLoaderProtocol,
-                nodeUseCase: some NodeUseCaseProtocol,
                 sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
                 remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photoByMonth = photoByMonth
         title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
-        
+
         super.init(
             coverPhoto: photoByMonth.coverPhoto,
             thumbnailLoader: thumbnailLoader,
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )

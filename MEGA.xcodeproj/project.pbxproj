@@ -17146,19 +17146,18 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 18.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-Wno-quoted-include-in-framework-header";
+				OTHER_CFLAGS = "-Wno-quoted-include-in-framework-header -Wno-error=deprecated-declarations -Wno-error=deprecated-implementations";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500 -warnings-as-errors -Wwarning DeprecatedDeclaration";
 				SDKROOT = iphoneos;
 				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_STRICT_CONCURRENCY = targeted;
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -17210,12 +17209,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 18.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-Wno-quoted-include-in-framework-header",
+					"-Wno-error=deprecated-declarations",
+					"-Wno-error=deprecated-implementations",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
@@ -17263,7 +17264,7 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17280,7 +17281,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev 1760050756";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
 				USER_HEADER_SEARCH_PATHS = (
@@ -17324,7 +17324,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17379,7 +17379,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17396,7 +17396,7 @@
 					"-Xlinker",
 					"-no_application_extension",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION -warnings-as-errors -Wwarning DeprecatedDeclaration";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGANotifications 1760050800";
@@ -17435,7 +17435,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17483,7 +17483,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17537,7 +17537,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17582,7 +17582,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17627,7 +17627,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17675,7 +17675,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17690,7 +17690,7 @@
 					"-no_application_extension",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION -warnings-as-errors -Wwarning DeprecatedDeclaration";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAShare 1760050790";
@@ -17735,7 +17735,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17776,7 +17776,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17789,7 +17789,7 @@
 					"-Xlinker",
 					"-no_application_extension",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG -warnings-as-errors -Wwarning DeprecatedDeclaration";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPickerFileProvider 1760050781";
@@ -17823,7 +17823,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17866,7 +17866,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17906,7 +17906,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17945,7 +17945,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17983,7 +17983,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18033,7 +18033,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18089,7 +18089,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18161,12 +18161,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 18.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-Wno-quoted-include-in-framework-header",
+					"-Wno-error=deprecated-declarations",
+					"-Wno-error=deprecated-implementations",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
@@ -18213,7 +18215,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18275,7 +18277,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18325,7 +18327,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18377,7 +18379,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18429,7 +18431,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18478,7 +18480,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

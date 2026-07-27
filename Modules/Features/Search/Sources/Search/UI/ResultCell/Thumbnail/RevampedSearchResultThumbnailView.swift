@@ -81,7 +81,7 @@ struct RevampedSearchResultThumbnailView: View {
                 .opacity(highlighted || isFlashing ? 1 : 0)
         )
         .animation(.easeInOut(duration: Constants.flashHighlightFadeOutDuration), value: isFlashing)
-        .onChange(of: isPendingFlash) { pending in
+        .onChange(of: isPendingFlash) { _, pending in
             if pending { onReadyToFlash() }
         }
         .onAppear {

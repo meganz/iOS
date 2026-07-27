@@ -9,7 +9,7 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "NodeBackgroundDownloader",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v17)
     ],
     products: [
         .library(

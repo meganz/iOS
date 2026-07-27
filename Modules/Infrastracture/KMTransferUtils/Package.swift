@@ -10,7 +10,7 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "KMTransferUtils",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v17)
     ],
     products: [
         .library(

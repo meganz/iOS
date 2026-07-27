@@ -10,7 +10,7 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "MEGAAssets",
     platforms: [
-        .macOS(.v10_15), .iOS(.v16)
+        .macOS(.v10_15), .iOS(.v17)
     ],
     products: [
         .library(

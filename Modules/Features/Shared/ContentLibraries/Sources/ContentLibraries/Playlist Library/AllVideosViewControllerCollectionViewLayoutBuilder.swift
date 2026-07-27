@@ -88,11 +88,7 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
     }
     
     private func makeSingleColumnLayoutGroup(from groupSize: NSCollectionLayoutSize, item: NSCollectionLayoutItem) -> NSCollectionLayoutGroup {
-        if #available(iOS 16.0, *) {
-            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
-        } else {
-            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        }
+        NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
     }
     
     private func makeMultiColumnLayout(columnCount: Int) -> NSCollectionLayoutSection {
@@ -103,12 +99,8 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(cellHeight))
         
-        let group = if #available(iOS 16.0, *) {
-            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: columnCount)
-        } else {
-            NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columnCount)
-        }
-        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: columnCount)
+
         group.interItemSpacing = .fixed(24)
         
         let section = NSCollectionLayoutSection(group: group)

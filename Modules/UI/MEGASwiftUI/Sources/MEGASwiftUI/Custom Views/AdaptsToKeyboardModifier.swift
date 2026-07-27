@@ -73,7 +73,7 @@ struct AdaptsToKeyboardModifier: ViewModifier {
         GeometryReader { geometry in
             content
                 .padding(.bottom, self.keyboardHandler.bottomPadding)
-                .onChange(of: self.keyboardHandler.newKeyboardHeight) { height in
+                .onChange(of: self.keyboardHandler.newKeyboardHeight) { _, height in
                     self.keyboardHandler.updateBottomPadding(
                         bottomViewInset: geometry.safeAreaInsets.bottom,
                         newKeyboardHeight: height

@@ -38,13 +38,7 @@ struct PhotoCard<Content: View>: View {
         .cornerRadius(12)
         .contentShape(Rectangle())
         .task { await viewModel.loadThumbnail() }
-        .task {
-            if #available(iOS 16, *) {
-                await viewModel.monitorInheritedSensitivityChanges()
-            } else {
-                await viewModel.monitorPhotoSensitivityChanges()
-            }
-        }
+        .task { await viewModel.monitorInheritedSensitivityChanges() }
     }
     
     private var badgeBackgroundColor: Color {

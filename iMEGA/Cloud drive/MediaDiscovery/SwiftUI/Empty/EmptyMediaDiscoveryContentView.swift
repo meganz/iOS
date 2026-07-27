@@ -89,7 +89,6 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .defaultLayout) {
     EmptyMediaDiscoveryContentView(
         image: MEGAAssets.UIImage.folderEmptyState,

@@ -57,7 +57,6 @@ struct WaitingRoomControl: View {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     WaitingRoomControlsView(isVideoEnabled: .constant(false),
                             isMicrophoneMuted: .constant(true),

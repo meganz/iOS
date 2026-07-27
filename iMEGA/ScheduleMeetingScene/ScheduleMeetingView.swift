@@ -47,7 +47,7 @@ struct ScheduleMeetingView: View {
                         .frame(height: 0)
                         .id(bottomViewID)
                 }
-                .onChange(of: viewModel.meetingDescription) { _ in
+                .onChange(of: viewModel.meetingDescription) { _, _ in
                     scrollToBottom(proxy: proxy)
                 }
                 .onReceive(

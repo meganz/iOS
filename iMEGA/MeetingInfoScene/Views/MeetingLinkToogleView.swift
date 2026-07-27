@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct MeetingLinkToogleView: View {
     let image: String
     let text: String

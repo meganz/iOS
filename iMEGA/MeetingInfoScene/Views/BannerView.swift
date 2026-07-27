@@ -89,7 +89,6 @@ struct BannerView: View {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     VStack {
         BannerView(

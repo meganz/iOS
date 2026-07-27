@@ -140,10 +140,6 @@ struct AlbumContentRouter: AlbumContentRouting {
                 libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())
             ),
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(),
-            nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: nodeRepository),
             sensitiveNodeUseCase: SensitiveNodeUseCase(
                 nodeRepository: nodeRepository,
                 accountUseCase: AccountUseCase(

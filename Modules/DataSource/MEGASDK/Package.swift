@@ -5,6 +5,8 @@ import PackageDescription
 let package = Package(
     name: "MEGASDK",
     platforms: [
+        // Stays at .v16 because MEGASharedRepo packages (still .v16) depend on this package;
+        // bump to .v17 together with MEGASharedRepo.
         .iOS(.v16)
     ],
     products: [

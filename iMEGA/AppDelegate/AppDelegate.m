@@ -77,7 +77,7 @@
 
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
-@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
+@property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager;
 
 @property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
 @property (nonatomic, strong) SpotlightIndexer *spotlightIndexer;

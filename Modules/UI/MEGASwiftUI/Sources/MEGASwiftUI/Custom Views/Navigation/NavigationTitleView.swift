@@ -35,7 +35,6 @@ public struct NavigationTitleView: View {
     }
 }
 
-@available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     NavigationTitleView(title: "Test Title.jpeg", subtitle: "Album Link")
 }

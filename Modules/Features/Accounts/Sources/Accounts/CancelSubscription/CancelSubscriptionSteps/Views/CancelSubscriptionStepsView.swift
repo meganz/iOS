@@ -42,7 +42,7 @@ struct CancelSubscriptionStepsView: View {
         .task {
             viewModel.setupStepList()
         }
-        .onChange(of: viewModel.shouldDismiss) { shouldDismiss in
+        .onChange(of: viewModel.shouldDismiss) { _, shouldDismiss in
             if shouldDismiss {
                 presentationMode.wrappedValue.dismiss()
             }

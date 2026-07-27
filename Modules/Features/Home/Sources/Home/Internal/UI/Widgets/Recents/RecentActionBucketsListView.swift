@@ -100,12 +100,8 @@ struct RecentActionBucketsListView: View {
     }
     
     @ViewBuilder func resultsContent(sections: [RecentActionBucketSection]) -> some View {
-        if #available(iOS 17.0, *) {
-            bucketsContent(sections: sections)
-                .listSectionSpacing(0)
-        } else {
-            bucketsContent(sections: sections)
-        }
+        bucketsContent(sections: sections)
+            .listSectionSpacing(0)
     }
     
     private var moreOptionsButton: some View {

@@ -37,7 +37,7 @@ public struct SearchBarView: View {
                     }
                 )
                 .focused($isSearchFieldFocused)
-                .onChange(of: isSearchFieldFocused) { focused in
+                .onChange(of: isSearchFieldFocused) { _, focused in
                     isEditing = focused
                 }
 

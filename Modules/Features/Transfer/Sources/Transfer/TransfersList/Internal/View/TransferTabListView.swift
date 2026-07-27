@@ -43,7 +43,7 @@ struct TransferTabListView: View {
 
     @ViewBuilder
     private var listContent: some View {
-        let list = List {
+        List {
             ForEach(viewModel.rows) { row in
                 TransferResultRowView(viewModel: row, onCancelled: onTransferCancelled, onRetried: onTransferRetried)
                     .listRowInsets(EdgeInsets())
@@ -53,12 +53,6 @@ struct TransferTabListView: View {
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
-
-        if #available(iOS 17.0, *) {
-            list
-                .contentMargins(.top, 0, for: .scrollContent)
-        } else {
-            list
-        }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
 }

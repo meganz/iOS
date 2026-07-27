@@ -5,7 +5,6 @@ import SwiftUI
 
 // MARK: - ContentState rendering
 
-@available(iOS 16.2, *)
 public extension TransferLiveActivityAttributes.ContentState {
 
     var statusIcon: Image {
@@ -48,7 +47,6 @@ public extension TransferLiveActivityAttributes.ContentState {
 
 /// Resolves the staleness fork in a single place so the views never branch on
 /// `isStale` themselves and just render bound values.
-@available(iOS 16.2, *)
 public struct TransferLiveActivityViewState {
     public let state: TransferLiveActivityAttributes.ContentState
     public let isStale: Bool

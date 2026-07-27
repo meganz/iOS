@@ -12,7 +12,7 @@ let package = Package(
     name: "Video",
     platforms: [
         .macOS(.v10_15),
-        .iOS(.v16)
+        .iOS(.v17)
     ],
     products: [
         .library(

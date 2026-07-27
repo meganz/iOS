@@ -30,7 +30,6 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
             photoSelection: AlbumCoverPickerPhotoSelection(),
             viewModel: viewModel,
             thumbnailLoader: MockThumbnailLoader(),
-            nodeUseCase: MockNodeDataUseCase(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase()
         )
         

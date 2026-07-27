@@ -42,7 +42,7 @@ struct CancellationSurveyView: View {
                     .padding(EdgeInsets(top: 10, leading: 16, bottom: 60, trailing: 16))
                 }
                 .adaptsToKeyboard()
-                .onChange(of: viewModel.isOtherFieldFocused) { isFocused in
+                .onChange(of: viewModel.isOtherFieldFocused) { _, isFocused in
                     guard isFocused else { return }
                     withAnimation {
                         scrollProxy.scrollTo(viewModel.otherReasonID, anchor: .center)
@@ -50,7 +50,7 @@ struct CancellationSurveyView: View {
                 }
             }
         }
-        .onChange(of: viewModel.shouldDismiss) { shouldDismiss in
+        .onChange(of: viewModel.shouldDismiss) { _, shouldDismiss in
             if shouldDismiss {
                 presentationMode.wrappedValue.dismiss()
             }
@@ -173,7 +173,7 @@ struct CancellationSurveyView: View {
                 )
             )
             .id(viewModel.otherReasonID)
-            .onChange(of: viewModel.dismissKeyboard) { dismiss in
+            .onChange(of: viewModel.dismissKeyboard) { _, dismiss in
                 guard dismiss else { return }
                 hideKeyboard()
                 viewModel.dismissKeyboard = false

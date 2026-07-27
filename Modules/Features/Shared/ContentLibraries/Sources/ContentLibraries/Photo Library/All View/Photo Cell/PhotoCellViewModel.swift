@@ -74,7 +74,6 @@ open class PhotoCellViewModel: ObservableObject {
     // MARK: private state
     private let photo: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
-    private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?
     private let selection: PhotoSelection
     private let configuration: ContentLibraries.Configuration
@@ -83,13 +82,11 @@ open class PhotoCellViewModel: ObservableObject {
     public init(photo: NodeEntity,
                 viewModel: PhotoLibraryModeAllViewModel,
                 thumbnailLoader: some ThumbnailLoaderProtocol,
-                nodeUseCase: (any NodeUseCaseProtocol)?,
                 sensitiveNodeUseCase: (any SensitiveNodeUseCaseProtocol)?,
                 configuration: ContentLibraries.Configuration = ContentLibraries.configuration) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailLoader = thumbnailLoader
-        self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.configuration = configuration
         self.useLegacyFavoriteStyle = viewModel.libraryViewModel.contentMode == .album
@@ -164,24 +161,6 @@ open class PhotoCellViewModel: ObservableObject {
         do {
             for try await isInheritingSensitivity in monitorInheritedSensitivity(for: photo) {
                 updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isInheritingSensitivity))
-            }
-        } catch {
-            MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
-        }
-    }
-    
-    /// Monitor photo node and inherited sensitivity changes
-    /// - Important: This is only required for iOS 15 since the photo library is using the `PhotoScrollPosition` as an `id` see `PhotoLibraryModeAllGridView`
-    func monitorPhotoSensitivityChanges() async {
-        guard !isPlaceholder,
-              nodeUseCase != nil,
-              sensitiveNodeUseCase != nil else { return }
-        // Don't monitor node sensitivity changes if the thumbnail is placeholder. This will wait infinitely if the thumbnail is placeholder
-        _ = await $thumbnailContainer.values.contains(where: { @Sendable in $0.type != .placeholder })
-        
-        do {
-            for try await isSensitive in photoSensitivityChanges(for: photo) {
-                updateThumbnailContainerIfNeeded(thumbnailContainer.toSensitiveImageContaining(isSensitive: isSensitive))
             }
         } catch {
             MEGALogError("[\(type(of: self))] failed to retrieve inherited sensitivity for photo: \(error.localizedDescription)")
@@ -273,36 +252,5 @@ open class PhotoCellViewModel: ObservableObject {
                 try await sensitiveNodeUseCase.isInheritingSensitivity(node: photo)
             }
             .eraseToAnyAsyncThrowingSequence()
-    }
-    
-    /// Async sequence will yield photo sensitivity and inherited sensitivity changes. It will immediately yield the current photo sensitivity if true otherwise the  inherited sensitivity since it could have changed since thumbnail loaded
-    /// - Parameters:
-    ///   - photo: Photo NodeEntity to monitor
-    private func photoSensitivityChanges(for photo: NodeEntity) -> AnyAsyncThrowingSequence<Bool, any Error> {
-        
-        guard let nodeUseCase,
-              let sensitiveNodeUseCase else {
-            return EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
-        }
-        
-        // Need to fetch the latest version of the node.
-        // This is a architecture bug with the SwiftUI version iOS 15 and below
-        // The NodeEntity does not update in this model, due to the way the SwiftUI view has been built
-        // If used in iOS16 +, this is not an issue as this VM gets recreated on reloads and scrolling away
-        let node = nodeUseCase.nodeForHandle(photo.handle) ?? photo
-        
-        return combineLatest(
-            sensitiveNodeUseCase.sensitivityChanges(for: node).prepend(node.isMarkedSensitive),
-            monitorInheritedSensitivity(for: node)
-        )
-        .map { isPhotoSensitive, isInheritingSensitive in
-            if isPhotoSensitive {
-                true
-            } else {
-                isInheritingSensitive
-            }
-        }
-        .removeDuplicates()
-        .eraseToAnyAsyncThrowingSequence()
     }
 }

@@ -22,16 +22,14 @@ public final class PhotoDayCardViewModel: PhotoCardViewModel {
     
     public init(photoByDay: PhotoByDay,
                 thumbnailLoader: some ThumbnailLoaderProtocol,
-                nodeUseCase: some NodeUseCaseProtocol,
                 sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
                 remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.photoByDay = photoByDay
         title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
-        
+
         super.init(
             coverPhoto: photoByDay.coverPhoto,
             thumbnailLoader: thumbnailLoader,
-            nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )

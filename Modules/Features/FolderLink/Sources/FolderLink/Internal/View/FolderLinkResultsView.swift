@@ -164,7 +164,7 @@ struct FolderLinkResultsSearchableView: View {
     
     var body: some View {
         SearchResultsContainerView(viewModel: viewModel)
-            .onChange(of: isSearching) { isSearching in
+            .onChange(of: isSearching) { _, isSearching in
                 searchBecameActive = isSearching
             }
     }

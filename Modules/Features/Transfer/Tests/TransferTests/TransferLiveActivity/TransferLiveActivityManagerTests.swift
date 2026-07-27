@@ -11,7 +11,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func firstActiveSnapshot_callsRequestWithStaleDateApproximatelyNowPlus8Seconds() async throws {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -29,7 +28,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func firstPausedSnapshot_callsRequestWithNilStaleDate() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -43,7 +41,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func firstErrorSnapshot_callsRequestWithNilStaleDate() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -56,7 +53,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func firstOverquotaSnapshot_callsRequestWithNilStaleDate() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -69,7 +65,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func firstCompletedSnapshot_doesNotStartActivity() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -85,7 +80,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func activitiesNotEnabled_skipsRequest() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.areActivitiesEnabled = false
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -98,7 +92,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func hasActiveActivityFromSystem_skipsRequest() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.hasActiveActivity = true
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -113,7 +106,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func startMonitoringWithExistingActivityId_adoptsAndDoesNotCallRequest() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.activeActivityId = "already-running"
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -130,7 +122,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func sameStateSnapshotWithinThrottleWindow_doesNotPushExtraUpdate() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -146,7 +137,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func stateChangeSnapshot_pushesUpdateImmediately() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -165,7 +155,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func nilSnapshotAfterActive_doesNotCallEndImmediately() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -183,7 +172,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func dismissedStateUpdate_resetsManagerSoNextSnapshotStartsFreshActivity() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -202,7 +190,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func endedStateUpdate_resetsManagerSoNextSnapshotStartsFreshActivity() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -223,7 +210,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func uploadOnlySnapshot_setsDirectionUploading() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -235,7 +221,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func downloadOnlySnapshot_setsDirectionDownloading() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -247,7 +232,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func mixedSnapshot_setsDirectionMixed() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -259,7 +243,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func zeroActiveCounts_setsDirectionNil() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -277,7 +260,6 @@ struct TransferLiveActivityManagerTests {
         (1.0, "100%")
     ])
     func percentageText_clampsAt99UntilProgressReachesOne(progress: Double, expected: String) async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -289,7 +271,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func pausedSnapshot_hasEmptyFormattedSpeed() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -303,7 +284,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func rapidSnapshots_onlyRequestOnce() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -317,7 +297,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func deniedStartFailure_blocksFurtherSnapshotsUntilEnablementChanges() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.requestError = ActivityAuthorizationError.denied
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -343,7 +322,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func transientStartFailure_doesNotBlockAndRetriesWithoutEnablementChange() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.requestError = ActivityAuthorizationError.targetMaximumExceeded
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -362,7 +340,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func snapshotChangesWhileRequestPending_reconcilesToLatestState() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.pauseRequest = true
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -383,7 +360,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func completedWhileRequestPending_pushesCompletedAndSchedulesEnd() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.provider.pauseRequest = true
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
@@ -405,7 +381,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func updateAfterActiveStateRestoration_carriesFutureStaleDate() async throws {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -425,7 +400,6 @@ struct TransferLiveActivityManagerTests {
 
     @Test
     func completedSnapshotAfterActive_pushesCompletedUpdateAndSchedulesEnd() async {
-        guard #available(iOS 16.2, *) else { return }
         let env = makeSUT()
         env.sut.startMonitoring(snapshotPublisher: env.subject.eraseToAnyPublisher())
 
@@ -444,14 +418,12 @@ struct TransferLiveActivityManagerTests {
 
     // MARK: - Helpers
 
-    @available(iOS 16.2, *)
     private struct SUT {
         let sut: TransferLiveActivityManager
         let provider: MockTransferLiveActivityProviding
         let subject: PassthroughSubject<TransferStatusSnapshot?, Never>
     }
 
-    @available(iOS 16.2, *)
     private func makeSUT() -> SUT {
         let provider = MockTransferLiveActivityProviding()
         let manager = TransferLiveActivityManager(activityProvider: provider)

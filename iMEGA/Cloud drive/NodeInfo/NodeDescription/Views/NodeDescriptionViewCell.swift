@@ -85,9 +85,7 @@ final class NodeDescriptionViewCell: UITableViewCell {
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.returnKeyType = .done
         textView.delegate = self
-        if #available(iOS 17.0, *) {
-            textView.inlinePredictionType = .no
-        }
+        textView.inlinePredictionType = .no
     }
     
     private func textColor(isPlaceholderText: Bool) -> UIColor {
