@@ -38,8 +38,7 @@ struct RecommendedPlanPriceMapperTests {
             )
         )))
         #expect(result == .discountMonthly(.init(
-            originalPrice: "€59.94",
-            discountedPrice: "€29.94 for 6 months",
+            priceLine: "[A]€59.94[/A] €29.94 for 6 months",
             billingCaption: "Billed at €29.94 for the first 6 months, €9.99/month after"
         )))
     }
@@ -54,8 +53,7 @@ struct RecommendedPlanPriceMapperTests {
             )
         )))
         #expect(result == .discountMonthly(.init(
-            originalPrice: "€9.99",
-            discountedPrice: "€4.99/month",
+            priceLine: "[A]€9.99[/A] €4.99/month",
             billingCaption: "Billed at €4.99/month for the first 6 months, €9.99/month after"
         )))
     }
@@ -70,8 +68,7 @@ struct RecommendedPlanPriceMapperTests {
             )
         )))
         #expect(result == .discountMonthly(.init(
-            originalPrice: "€9.99",
-            discountedPrice: "€0.00 for 1 month",
+            priceLine: "[A]€9.99[/A] €0.00 for 1 month",
             billingCaption: "Billed at €0.00 for the first 1 month, €9.99/month after"
         )))
     }
@@ -89,8 +86,7 @@ struct RecommendedPlanPriceMapperTests {
         )))
         #expect(result == .discountYearly(.init(
             pricePerMonth: "€4.99/month",
-            originalPrice: "€120.00",
-            discountedPrice: "€59.88 for 1 year",
+            priceLine: "[A]€120.00[/A] €59.88 for 1 year",
             billingCaption: "Billed at €59.88 for the first year, €120.00 charged yearly after"
         )))
     }
@@ -106,9 +102,24 @@ struct RecommendedPlanPriceMapperTests {
         )))
         #expect(result == .discountYearly(.init(
             pricePerMonth: "€4.99/month",
-            originalPrice: "€59.94",
-            discountedPrice: "€29.94 for 6 months",
+            priceLine: "[A]€59.94[/A] €29.94 for 6 months",
             billingCaption: "Billed at €29.94 for the first 6 months, €119.88 charged yearly after"
+        )))
+    }
+
+    @Test func discountYearly_recurring_rendersPerYear() {
+        let result = sut.map(.discountYearly(.init(
+            yearly: .init(price: dec("120"), currency: "EUR"),
+            offer: .init(
+                originalPrice: dec("120"),
+                discountPercentage: 50,
+                schedule: .recurring(price: dec("59.88"), period: .init(unit: .year, value: 1), periodCount: 2)
+            )
+        )))
+        #expect(result == .discountYearly(.init(
+            pricePerMonth: "€4.99/month",
+            priceLine: "[A]€120.00[/A] €59.88/year",
+            billingCaption: "Billed at €59.88 for the first 2 years, €120.00 charged yearly after"
         )))
     }
 

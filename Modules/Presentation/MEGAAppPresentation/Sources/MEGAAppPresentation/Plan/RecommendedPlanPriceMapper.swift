@@ -31,10 +31,8 @@ public struct RecommendedPlanPriceMapper {
     }
 
     private func discountMonthly(_ model: SubscriptionPlanPrice.DiscountMonthly) -> PlanPriceModel.DiscountMonthly {
-        let currencyCode = model.monthly.currency
-        return PlanPriceModel.DiscountMonthly(
-            originalPrice: formattedCurrency(model.offer.originalPrice, currencyCode),
-            discountedPrice: discountedPrice(model.offer.schedule, currencyCode),
+        PlanPriceModel.DiscountMonthly(
+            priceLine: discountedPriceLine(model.offer, model.monthly.currency),
             billingCaption: monthlyDiscountBillingCaption(model)
         )
     }
@@ -43,20 +41,39 @@ public struct RecommendedPlanPriceMapper {
         let currencyCode = model.yearly.currency
         return .init(
             pricePerMonth: perMonth(model.offer.schedule.pricePerMonth, currencyCode),
-            originalPrice: formattedCurrency(model.offer.originalPrice, currencyCode),
-            discountedPrice: discountedPrice(model.offer.schedule, currencyCode),
+            priceLine: discountedPriceLine(model.offer, currencyCode),
             billingCaption: yearlyDiscountBillingCaption(model)
         )
     }
 
-    private func discountedPrice(_ schedule: OfferBillingSchedule, _ currencyCode: String) -> String {
+    /// Fills the localised discounted price sentence, e.g. "[A]€59.94[/A] €29.94 for 6 months".
+    private func discountedPriceLine(_ offer: SubscriptionPlanPrice.Offer, _ currencyCode: String) -> String {
+        discountedPriceSentence(offer.schedule)
+            .replacingOccurrences(of: "[A]", with: "[A]\(formattedCurrency(offer.originalPrice, currencyCode))[/A]")
+            .replacingOccurrences(of: "[B]", with: formattedCurrency(offer.schedule.price, currencyCode))
+    }
+
+    private func discountedPriceSentence(_ schedule: OfferBillingSchedule) -> String {
         switch schedule {
-        case let .recurring(price, period, _):
-            perCycle(price, currencyCode: currencyCode, periodUnit: period.unit)
-        case let .prepaid(price, period):
-            forSpan(price, currencyCode: currencyCode, period: period)
-        case let .free(period):
-            forSpan(Decimal(0), currencyCode: currencyCode, period: period)
+        case let .recurring(_, period, _): perCycleDiscountSentence(period.unit)
+        case let .prepaid(_, period): forSpanDiscountSentence(period)
+        case let .free(period): forSpanDiscountSentence(period)
+        }
+    }
+
+    /// "[A] [B]/month" | "[A] [B]/year"
+    private func perCycleDiscountSentence(_ periodUnit: BillingPeriodUnit) -> String {
+        switch periodUnit {
+        case .month: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.discountPriceMonthlyRate
+        case .year: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.discountPriceYearlyRate
+        }
+    }
+
+    /// "[A] [B] for x months" | "[A] [B] for x years"
+    private func forSpanDiscountSentence(_ period: BillingPeriod) -> String {
+        switch period.unit {
+        case .month: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.discountPriceForMonths(period.value)
+        case .year: Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.discountPriceForYears(period.value)
         }
     }
 
@@ -134,44 +151,9 @@ public struct RecommendedPlanPriceMapper {
         }
     }
 
-    private func perCycle(_ price: Decimal, currencyCode: String, periodUnit: BillingPeriodUnit) -> String {
-        switch periodUnit {
-        case .month:
-            perMonth(price, currencyCode)
-        case .year:
-            perYear(price, currencyCode)
-        }
-    }
-
-    private func forSpan(_ price: Decimal, currencyCode: String, period: BillingPeriod) -> String {
-        switch period.unit {
-        case .month:
-            forMonths(period.value, price, currencyCode)
-        case .year:
-            forYears(period.value, price, currencyCode)
-        }
-    }
-
     /// "XX/month"
     private func perMonth(_ value: Decimal, _ currencyCode: String) -> String {
         Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedCurrency(value, currencyCode))
-    }
-
-    /// "XX/year"
-    private func perYear(_ value: Decimal, _ currencyCode: String) -> String {
-        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerYear(formattedCurrency(value, currencyCode))
-    }
-
-    /// "XX for 1 month" | "XX for x months"
-    private func forMonths(_ months: Int, _ value: Decimal, _ currencyCode: String) -> String {
-        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyForMonths(months)
-            .replacingOccurrences(of: "[A]", with: formattedCurrency(value, currencyCode))
-    }
-
-    /// "XX for 1 year" | "XX for x years"
-    private func forYears(_ years: Int, _ value: Decimal, _ currencyCode: String) -> String {
-        Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyForYears(years)
-            .replacingOccurrences(of: "[A]", with: formattedCurrency(value, currencyCode))
     }
 
     /// Use rounding rule toNearestOrEven to keep consistent with current halfEven rounding mode.

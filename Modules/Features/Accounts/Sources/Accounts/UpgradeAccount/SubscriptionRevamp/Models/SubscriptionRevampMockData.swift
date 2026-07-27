@@ -26,8 +26,7 @@ enum SubscriptionRevampMockData {
             SubscriptionPlanCardModel(
                 title: "Pro II",
                 price: .discountMonthly(.init(
-                    originalPrice: "€19.99",
-                    discountedPrice: "€14.99/month",
+                    priceLine: "[A]€19.99[/A] €14.99/month",
                     billingCaption: "Discount price for the first 12 months"
                 )),
                 storage: "8 TB storage",

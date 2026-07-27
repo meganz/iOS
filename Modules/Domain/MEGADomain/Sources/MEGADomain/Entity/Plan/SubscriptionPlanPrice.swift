@@ -35,6 +35,18 @@ public enum OfferBillingSchedule: Equatable, Sendable {
         guard totalMonths > 0 else { return totalPrice }
         return totalPrice / Decimal(totalMonths)
     }
+
+    /// The amount charged for one `period`:
+    /// - Each instalment of a pay-as-you-go offer,
+    /// - The single up-front charge of a prepaid one
+    /// - Nothing during a free trial.
+    public var price: Decimal {
+        switch self {
+        case let .recurring(price, _, _): price
+        case let .prepaid(price, _): price
+        case .free: 0
+        }
+    }
 }
 
 /// The business-resolved pricing of a subscription plan, ready to be formatted for display.

@@ -5130,3 +5130,7 @@
 "link.password.alert.message"="Enter the password to open this link. Don’t have it? Contact the sender.";
 /* Small badge/tag shown above the title on the revamped promotional upgrade header */
 "subscriptionPurchase.revamp.promo.specialOffer"="Special offer";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/month";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/year";

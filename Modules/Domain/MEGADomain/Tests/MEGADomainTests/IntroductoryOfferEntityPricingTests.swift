@@ -4,7 +4,8 @@ import MEGADomainMock
 import Testing
 
 /// Exercises the offer's derived pricing through `IntroductoryOfferEntity.billingSchedule`
-/// (`OfferBillingSchedule` is the single source of truth for `totalMonths` / `totalPrice` / `pricePerMonth`).
+/// (`OfferBillingSchedule` is the single source of truth for `totalMonths` / `totalPrice` /
+/// `pricePerMonth` / `price`).
 struct IntroductoryOfferEntityPricingTests {
 
     // MARK: - totalMonths
@@ -114,6 +115,46 @@ struct IntroductoryOfferEntityPricingTests {
             paymentMode: .freeTrial
         )
         #expect(offer.billingSchedule.pricePerMonth == 0)
+    }
+
+    // MARK: - price (the charge for one period)
+
+    @Test
+    func price_payAsYouGo_isOneInstalmentNotTheTotal() {
+        // 3 monthly instalments of 2: the charge for one period is 2, the whole offer costs 6.
+        let offer = IntroductoryOfferEntity(
+            price: 2,
+            period: .init(unit: .month, value: 1),
+            periodCount: 3,
+            paymentMode: .payAsYouGo
+        )
+        let schedule = offer.billingSchedule
+        #expect(schedule.price == 2)
+        #expect(schedule.totalPrice == 6)
+    }
+
+    @Test
+    func price_payUpFront_isTheSingleChargeCoveringTheWholePeriod() {
+        let offer = IntroductoryOfferEntity(
+            price: 30,
+            period: .init(unit: .month, value: 6),
+            periodCount: 1,
+            paymentMode: .payUpFront
+        )
+        let schedule = offer.billingSchedule
+        #expect(schedule.price == 30)
+        #expect(schedule.price == schedule.totalPrice)
+    }
+
+    @Test
+    func price_freeTrial_isZeroEvenWhenTheOfferCarriesAPrice() {
+        let offer = IntroductoryOfferEntity(
+            price: 99,
+            period: .init(unit: .month, value: 1),
+            periodCount: 1,
+            paymentMode: .freeTrial
+        )
+        #expect(offer.billingSchedule.price == 0)
     }
 
     @Test
