@@ -193,6 +193,13 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
 // MARK: - Revamped mini player (audioPlayerRevamp)
 
 extension MainTabBarController {
+    private var currentBottomOverlayPresenter: (any BottomOverlayPresenterProtocol)? {
+        guard let nav = selectedViewController as? UINavigationController else {
+            return selectedViewController as? (any BottomOverlayPresenterProtocol)
+        }
+        return nav.viewControllers.last as? (any BottomOverlayPresenterProtocol) ?? nav as? (any BottomOverlayPresenterProtocol)
+    }
+
     @objc func setupRevampedMiniPlayerIfNeeded() {
         guard isAudioPlayerRevampEnabled, miniPlayerOverlayCoordinator == nil else { return }
 
@@ -201,8 +208,13 @@ extension MainTabBarController {
         coordinator.onAttach = { [weak self] hostViewController, height in
             guard let self, let pill = hostViewController.view else { return }
             addChild(hostViewController)
+            let shouldHideInitially = currentBottomOverlayPresenter == nil
             updateOverlayLayout { [weak self] in
-                self?.addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: height)
+                guard let self else { return }
+                addSubviewToOverlay(pill, type: .audioPlayer, priority: .high, height: height)
+                if shouldHideInitially {
+                    bottomOverlayManager?.setItemVisibility(for: .audioPlayer, hidden: true)
+                }
             }
             hostViewController.didMove(toParent: self)
         }
