@@ -717,9 +717,9 @@ private struct MusicModeControlsSection: View {
                 size: secondaryIconSize,
                 isAccented: isShuffleOn,
                 isDisabled: isShuffleDisabled,
+                showsActiveDot: isShuffleOn,
                 action: onShuffle
             )
-            .overlay(alignment: .bottom) { activeDot(isVisible: isShuffleOn) }
             .padding(TokenSpacing._5)
             Spacer()
             iconButton(
@@ -743,18 +743,20 @@ private struct MusicModeControlsSection: View {
                 image: repeatMode == .one ? MEGAAssets.Image.audioRepeatOne : MEGAAssets.Image.audioRepeat,
                 size: secondaryIconSize,
                 isAccented: repeatMode != .off,
+                showsActiveDot: repeatMode != .off,
                 action: onRepeat
             )
-            .overlay(alignment: .bottom) { activeDot(isVisible: repeatMode != .off) }
             .padding(TokenSpacing._5)
         }
         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
     }
 
-    private func iconButton(image: Image, size: CGFloat, isAccented: Bool, isDisabled: Bool = false, action: @escaping () -> Void) -> some View {
+
+    private func iconButton(image: Image, size: CGFloat, isAccented: Bool, isDisabled: Bool = false, showsActiveDot: Bool = false, action: @escaping () -> Void) -> some View {
         image
             .foregroundStyle(isAccented ? TokenColors.Icon.brand.swiftUI : TokenColors.Icon.primary.swiftUI)
             .frame(width: size)
+            .overlay(alignment: .bottom) { activeDot(isVisible: showsActiveDot) }
             .contentShape(Rectangle())
             .onTapGesture(perform: action)
             .controlDisabled(loadingState == .loading || isDisabled)
