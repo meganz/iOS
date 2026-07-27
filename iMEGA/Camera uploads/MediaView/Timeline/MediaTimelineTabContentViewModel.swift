@@ -122,12 +122,20 @@ final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentV
 
 extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
     var navigationBarUpdatePublisher: AnyPublisher<Void, Never>? {
-        timelineViewModel.photoLibraryContentViewModel.$library
+        let emptyStateChanges = timelineViewModel.photoLibraryContentViewModel.$library
             .map(\.isEmpty)
             .removeDuplicates()
             .dropFirst()
             .map { _ in () }
-            .merge(with: updateNavigationBarButtonsPassthroughSubject.eraseToAnyPublisher())
+            .eraseToAnyPublisher()
+
+        // A sort order applied from the stored preference rather than from the menu has no other
+        // refresh trigger, so without this the sort menu would keep its checkmark on the previous
+        // option. The menu path is already covered by `MediaTabViewModel.sortMenu(didSelect:)`.
+        let sortOrderChanges = timelineViewModel.preferenceDrivenSortOrderUpdates
+
+        return emptyStateChanges
+            .merge(with: sortOrderChanges, updateNavigationBarButtonsPassthroughSubject.eraseToAnyPublisher())
             .eraseToAnyPublisher()
     }
     
