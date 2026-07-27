@@ -720,6 +720,57 @@ struct NewTimelineViewModelTests {
     }
     
     @MainActor
+    @Suite("Sort Order Persistence")
+    struct SortOrderPersistence {
+        @Test("Selecting a sort order saves it against the camera upload explorer feed key")
+        func savesSelectedSortOrder() {
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+            sut.updateSortOrder(.modificationAsc)
+
+            #expect(sortOrderPreferenceUseCase.messages.contains(
+                .save(sortOrder: .modificationAsc, for: .cameraUploadExplorerFeed)))
+        }
+
+        @Test("Selecting the current sort order again saves nothing")
+        func unchangedSortOrderIsNotSaved() {
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+            sut.updateSortOrder(.modificationDesc)
+
+            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+        }
+
+        @Test("The stored sort order is restored before the first load, normalising orders the menu doesn't offer",
+              arguments: [
+                (stored: SortOrderEntity.modificationAsc, expected: SortOrderEntity.modificationAsc),
+                (stored: .modificationDesc, expected: .modificationDesc),
+                (stored: .defaultAsc, expected: .modificationDesc),
+                (stored: .none, expected: .modificationDesc)
+              ])
+        func restoresStoredSortOrder(stored: SortOrderEntity, expected: SortOrderEntity) {
+            let sut = makeSUT(
+                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: stored))
+
+            #expect(sut.sortOrder == expected)
+        }
+
+        @Test("A sort order changed elsewhere is picked up by the monitor")
+        func monitorAppliesExternalSortOrderChange() async {
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+            // Another screen sorting by oldest — reaches this feed when the user's sorting basis is "same for all".
+            sortOrderPreferenceUseCase.save(sortOrder: .modificationAsc, for: .homeVideos)
+
+            await sut.monitorSortOrder()
+
+            #expect(sut.sortOrder == .modificationAsc)
+        }
+    }
+
+    @MainActor
     @Test
     func updatePhotoFilter() async {
         let contentConsumption = MockContentConsumptionUserAttributeUseCase()
@@ -802,6 +853,7 @@ struct NewTimelineViewModelTests {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(),
         mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
         tracker: some AnalyticsTracking = MockTracker()
     ) -> NewTimelineViewModel {
@@ -813,6 +865,7 @@ struct NewTimelineViewModelTests {
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             mediaTimelineUseCase: mediaTimelineUseCase,
             tracker: tracker
         )

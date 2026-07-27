@@ -45,6 +45,11 @@ enum MediaTabTimelineFactory {
             nodeRepository: NodeRepository.newRepo
         )
         
+        let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+        )
+
         let monitorCameraUploadUseCase = MonitorCameraUploadUseCase(
             cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
@@ -73,6 +78,7 @@ enum MediaTabTimelineFactory {
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             mediaTimelineUseCase: mediaTimelineUseCase)
         
         return MediaTimelineTabContentViewModel(
