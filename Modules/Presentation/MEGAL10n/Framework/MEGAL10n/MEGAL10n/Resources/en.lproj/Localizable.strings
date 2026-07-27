@@ -5122,3 +5122,9 @@
 "videoPlayer.airPlay.indicator.playingOnDevice"="This video is playing on an external device";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Expiring";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Enter the key to open this link. Don’t have it? Contact the sender.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Enter password";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Enter the password to open this link. Don’t have it? Contact the sender.";
