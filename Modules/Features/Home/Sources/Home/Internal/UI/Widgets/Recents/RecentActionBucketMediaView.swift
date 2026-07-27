@@ -25,7 +25,6 @@ struct RecentActionBucketMediaView: View {
     private let headerTitle: String
     @EnvironmentObject var navigator: HomeNavigation
     @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
-    @EnvironmentObject var tabBarSafeAreaInsetCompensation: TabBarSafeAreaInsetCompensation
     
     init(
         headerTitle: String,
@@ -97,7 +96,7 @@ struct RecentActionBucketMediaView: View {
                 // behind it (see TabBarSafeAreaInsetCompensation).
                 // The mini player height is added too.
                 showLocationButton
-                    .padding(.bottom, miniPlayerVisibility.height + tabBarSafeAreaInsetCompensation.value)
+                    .tabBarAndMiniPlayerAware()
             }
     }
 

@@ -24,7 +24,6 @@ struct RecentActionBucketItemsView: View {
     private let dependency: Dependency
     @EnvironmentObject var navigator: HomeNavigation
     @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
-    @EnvironmentObject var tabBarSafeAreaInsetCompensation: TabBarSafeAreaInsetCompensation
     
     init(dependency: Dependency) {
         self.dependency = dependency
@@ -104,7 +103,7 @@ struct RecentActionBucketItemsView: View {
                 // left behind the tab bar after a background/foreground cycle around edit mode.
                 // The mini player height is added too
                 showLocationButton
-                    .padding(.bottom, miniPlayerVisibility.height + tabBarSafeAreaInsetCompensation.value)
+                    .tabBarAndMiniPlayerAware()
             }
             .pageBackground()
     }
