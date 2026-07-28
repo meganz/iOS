@@ -7,11 +7,6 @@ import MEGAUIComponent
 import SwiftUI
 
 public struct TransfersListView: View {
-    private enum Constants {
-        /// 24pt icon in 12pt padding, from the design's bottom toolbar button.
-        static let actionButtonDiameter: CGFloat = 48
-    }
-
     @StateObject private var viewModel: TransfersListViewModel
     /// Observed directly rather than republished through the screen view model, so
     /// the select-mode count and action enablement update in the same frame as the
@@ -208,7 +203,9 @@ public struct TransfersListView: View {
                 .foregroundStyle(isEnabled
                     ? TokenColors.Icon.primary.swiftUI
                     : TokenColors.Icon.disabled.swiftUI)
-                .frame(width: Constants.actionButtonDiameter, height: Constants.actionButtonDiameter)
+                // The design builds this button as its 24pt icon inset by
+                // spacing/4 on every side, which lands the circle at 48pt.
+                .padding(TokenSpacing._4)
         }
         .glassCircleBackground()
         .disabled(!isEnabled)
