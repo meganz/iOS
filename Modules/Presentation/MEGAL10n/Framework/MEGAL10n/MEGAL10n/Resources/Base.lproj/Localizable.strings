@@ -5128,6 +5128,8 @@
 "link.password.alert.title"="Enter password";
 /* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
 "link.password.alert.message"="Enter the password to open this link. Don’t have it? Contact the sender.";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Save to MEGA";
 /* Small badge/tag shown above the title on the revamped promotional upgrade header */
 "subscriptionPurchase.revamp.promo.specialOffer"="Special offer";
 /* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
