@@ -11,6 +11,7 @@ import SwiftUI
 struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
     let viewModel: UpgradePlansViewModel
+    let dismissAction: () -> Void
 
     // [IOS-12292]: Handle computation of default selectedCycle
     @State private var selectedCycle: SubscriptionCycleEntity = .yearly
@@ -30,7 +31,7 @@ struct SubscriptionContentSectionsView: View {
             SubscriptionBenefitsListView()
                 .padding(.top, TokenSpacing._4)
             if let freePlanCard = viewModel.freePlanCard {
-                SubscriptionFreePlanCardView(model: freePlanCard)
+                SubscriptionFreePlanCardView(model: freePlanCard, action: dismissAction)
                     .padding(.vertical, TokenSpacing._5)
             }
             SubscriptionDetailsView()

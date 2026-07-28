@@ -8,17 +8,20 @@ import MEGAL10n
 @MainActor
 public final class UpgradePlansViewModel {
     private let isPromo: Bool
+    private let viewType: RevampUpgradePlansViewType
     private let accountDetails: AccountDetailsEntity
     private let plans: [PlanEntity]
     private let displayName: @Sendable (AccountTypeEntity) -> String
 
     init(
         isPromo: Bool = false,
+        viewType: RevampUpgradePlansViewType,
         accountDetails: AccountDetailsEntity,
         plans: [PlanEntity],
         displayName: @escaping @Sendable (AccountTypeEntity) -> String
     ) {
         self.isPromo = isPromo
+        self.viewType = viewType
         self.accountDetails = accountDetails
         self.plans = plans
         self.displayName = displayName
@@ -50,7 +53,11 @@ public final class UpgradePlansViewModel {
     }
 
     var freePlanCard: SubscriptionFreePlanCardModel? {
-        SubscriptionRevampMockData.freePlanCard
+        guard case .onboarding(let isFreeAccountFirstLogin) = viewType else { return nil }
+        return SubscriptionFreePlanCardModel(
+            maxStorageSize: accountDetails.storageMax,
+            isExistingFreeAccount: isFreeAccountFirstLogin
+        )
     }
 
     // MARK: - Plan cards

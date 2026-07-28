@@ -4,8 +4,7 @@ public enum RevampUpgradePlansViewType: Equatable, Sendable {
 }
 
 extension RevampUpgradePlansViewType {
-    /// Onboarding shows the "Maybe later" dismiss control; upgrade shows the close button.
-    var usesMaybeLaterButton: Bool {
+    var isOnboarding: Bool {
         if case .onboarding = self { return true }
         return false
     }

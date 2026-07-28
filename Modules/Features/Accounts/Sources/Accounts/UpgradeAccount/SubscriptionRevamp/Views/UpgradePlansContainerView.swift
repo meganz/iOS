@@ -6,14 +6,9 @@ import SwiftUI
 /// carries its own purchase alerts / snackbar via `revampContentPresentation`.
 public struct UpgradePlansContainerView: View {
     @StateObject private var viewModel: UpgradePlansContainerViewModel
-    private var onDismiss: @MainActor () -> Void
 
-    public init(
-        dependency: RevampUpgradePlansDependency,
-        onDismiss: @escaping @MainActor () -> Void
-    ) {
+    public init(dependency: RevampUpgradePlansDependency) {
         _viewModel = StateObject(wrappedValue: UpgradePlansContainerViewModel(dependency: dependency))
-        self.onDismiss = onDismiss
     }
 
     public var body: some View {
@@ -23,7 +18,7 @@ public struct UpgradePlansContainerView: View {
             }
             .onAppear { viewModel.onAppear() }
             .onReceive(viewModel.$isDismiss) { isDismiss in
-                if isDismiss { onDismiss() }
+                if isDismiss { viewModel.dependency.dismissAction() }
             }
             .alert(
                 viewModel.alertType?.title ?? "",

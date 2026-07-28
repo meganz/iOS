@@ -21,6 +21,7 @@ public struct RevampUpgradePlansDependency: Sendable {
     let openURL: @Sendable (URL) async -> Void
     let notifyPurchaseSucceeded: @Sendable () -> Void
     let purchaseCompleteBehavior: PurchaseCompleteBehavior
+    let dismissAction: @MainActor () -> Void
     let termsAndPoliciesPresenter: any TermsAndPoliciesPresenting
 
     public init(
@@ -43,6 +44,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         },
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
+        dismissAction: @MainActor @escaping () -> Void = {},
     ) {
         self.fetchUseCase = fetchUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -60,6 +62,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.openURL = openURL
         self.notifyPurchaseSucceeded = notifyPurchaseSucceeded
         self.purchaseCompleteBehavior = purchaseCompleteBehavior
+        self.dismissAction = dismissAction
         self.termsAndPoliciesPresenter = termsAndPoliciesPresenter
     }
 }

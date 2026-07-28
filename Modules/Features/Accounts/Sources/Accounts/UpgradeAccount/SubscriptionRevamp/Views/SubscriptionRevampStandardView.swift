@@ -33,7 +33,7 @@ public struct SubscriptionStandardView: View {
             headerImage
         } content: {
             titleHeader
-            SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel)
+            SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel, dismissAction: dismissAction)
         }
     }
 

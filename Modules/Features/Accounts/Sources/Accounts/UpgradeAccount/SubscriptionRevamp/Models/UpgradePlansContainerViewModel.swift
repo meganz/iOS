@@ -40,7 +40,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
     func dismiss() {
         guard !isDismiss else { return }
-        if dependency.viewType.usesMaybeLaterButton {
+        if dependency.viewType.isOnboarding {
             dependency.tracker.trackAnalyticsEvent(with: MaybeLaterUpgradeAccountButtonPressedEvent())
         }
         isDismiss = true
@@ -59,6 +59,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             let hasPromo = plans.contains { $0.introductoryOffer != nil || $0.hasValidPromotionalOffer }
             let contentViewModel = UpgradePlansViewModel(
                 isPromo: hasPromo,
+                viewType: dependency.viewType,
                 accountDetails: accountDetails,
                 plans: plans,
                 displayName: dependency.accountDisplayName

@@ -94,6 +94,6 @@ struct SubscriptionNavigationHeader: View {
 extension SubscriptionNavigationHeader.CloseButtonType {
     /// Upgrading users get a back button; onboarding users get "Maybe later".
     init(viewType: RevampUpgradePlansViewType) {
-        self = viewType.usesMaybeLaterButton ? .maybeLater : .close
+        self = viewType.isOnboarding ? .maybeLater : .close
     }
 }

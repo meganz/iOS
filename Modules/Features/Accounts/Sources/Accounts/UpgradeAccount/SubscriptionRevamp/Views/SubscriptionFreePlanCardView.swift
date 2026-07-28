@@ -7,6 +7,7 @@ import SwiftUI
 /// rows and a secondary call to action, in the shared plan card container.
 struct SubscriptionFreePlanCardView: View {
     let model: SubscriptionFreePlanCardModel
+    let action: () -> Void
 
     var body: some View {
         PlanCardContainer {
@@ -16,7 +17,7 @@ struct SubscriptionFreePlanCardView: View {
                 MEGAButton(
                     model.primaryButtonTitle,
                     type: .secondary,
-                    action: {} // [IOS-12185]: Wire the free plan onboarding flow
+                    action: action
                 )
             }
         }
@@ -60,6 +61,6 @@ struct SubscriptionFreePlanCardView: View {
 }
 
 #Preview {
-    SubscriptionFreePlanCardView(model: SubscriptionRevampMockData.freePlanCard)
+    SubscriptionFreePlanCardView(model: SubscriptionRevampMockData.freePlanCard, action: {})
         .padding()
 }

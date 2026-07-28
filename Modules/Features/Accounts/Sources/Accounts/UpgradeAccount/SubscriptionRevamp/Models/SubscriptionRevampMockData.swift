@@ -37,7 +37,8 @@ enum SubscriptionRevampMockData {
 
     static var freePlanCard: SubscriptionFreePlanCardModel {
         SubscriptionFreePlanCardModel(
-            maxStorageSize: 21474836480
+            maxStorageSize: 21474836480,
+            isExistingFreeAccount: false
         )
     }
 

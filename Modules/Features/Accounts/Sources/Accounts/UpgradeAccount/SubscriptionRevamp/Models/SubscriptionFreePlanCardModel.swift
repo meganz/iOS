@@ -4,9 +4,14 @@ import MEGASwift
 /// subscription pages to users eligible for the free tier.
 struct SubscriptionFreePlanCardModel: Equatable {
     let maxStorageSize: Int64
+    let isExistingFreeAccount: Bool
 
     var cardTitle: String {
-        Strings.Localizable.SubscriptionPurchase.FreePlanCard.title
+        if isExistingFreeAccount {
+            Strings.Localizable.SubscriptionPurchase.FreePlanCard.Title.upgrade
+        } else {
+            Strings.Localizable.SubscriptionPurchase.FreePlanCard.title
+        }
     }
 
     var storageTitle: String {
@@ -20,6 +25,10 @@ struct SubscriptionFreePlanCardModel: Equatable {
     }
 
     var primaryButtonTitle: String {
-        Strings.Localizable.SubscriptionPurchase.FreePlanCard.Button.title
+        if isExistingFreeAccount {
+            Strings.Localizable.SubscriptionPurchase.FreePlanCard.Button.Title.upgrade
+        } else {
+            Strings.Localizable.SubscriptionPurchase.FreePlanCard.Button.title
+        }
     }
 }

@@ -36,7 +36,7 @@ public struct SubscriptionPromoView: View {
                 promoHero
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
-                SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel)
+                SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel, dismissAction: dismissAction)
             }
         )
     }
