@@ -1,12 +1,12 @@
 import MEGADomain
 
 public final class MockStoreKitOfferUseCase: StoreKitOfferUseCaseProtocol {
-    private let introductoryOfferDict: [PlanEntity: IntroductoryOfferEntity]
-    private let promotionalOfferDict: [PlanEntity: PromotionalOfferEntity]
+    private let introductoryOfferDict: [PlanEntity: SubscriptionOfferEntity]
+    private let promotionalOfferDict: [PlanEntity: SubscriptionOfferEntity]
 
     public init(
-        introductoryOfferDict: [PlanEntity: IntroductoryOfferEntity] = [PlanEntity: IntroductoryOfferEntity](),
-        promotionalOfferDict: [PlanEntity: PromotionalOfferEntity] = [PlanEntity: PromotionalOfferEntity]()
+        introductoryOfferDict: [PlanEntity: SubscriptionOfferEntity] = [PlanEntity: SubscriptionOfferEntity](),
+        promotionalOfferDict: [PlanEntity: SubscriptionOfferEntity] = [PlanEntity: SubscriptionOfferEntity]()
     ) {
         self.introductoryOfferDict = introductoryOfferDict
         self.promotionalOfferDict = promotionalOfferDict
@@ -14,7 +14,7 @@ public final class MockStoreKitOfferUseCase: StoreKitOfferUseCaseProtocol {
 
     public func fetchOffers(
         for plans: [PlanEntity]
-    ) async -> (introductory: [PlanEntity: IntroductoryOfferEntity], promotional: [PlanEntity: PromotionalOfferEntity]) {
+    ) async -> (introductory: [PlanEntity: SubscriptionOfferEntity], promotional: [PlanEntity: SubscriptionOfferEntity]) {
         (introductoryOfferDict, promotionalOfferDict)
     }
 }

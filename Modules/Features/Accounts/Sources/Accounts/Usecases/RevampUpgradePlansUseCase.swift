@@ -7,28 +7,19 @@ public protocol RevampUpgradePlansUseCaseProtocol: Sendable {
 }
 
 public struct RevampUpgradePlansUseCase: RevampUpgradePlansUseCaseProtocol {
-    private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
-    private let introductoryOfferUseCase: any StoreKitOfferUseCaseProtocol
+    private let productsUseCase: any AccountPlanProductsUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
 
     public init(
-        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        introductoryOfferUseCase: some StoreKitOfferUseCaseProtocol,
+        productsUseCase: some AccountPlanProductsUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol
     ) {
-        self.purchaseUseCase = purchaseUseCase
-        self.introductoryOfferUseCase = introductoryOfferUseCase
+        self.productsUseCase = productsUseCase
         self.accountUseCase = accountUseCase
     }
 
     public func plans() async -> [PlanEntity] {
-        var plans = await purchaseUseCase.accountPlanProducts()
-        let offers = await introductoryOfferUseCase.fetchOffers(for: plans)
-        for index in plans.indices {
-            plans[index].introductoryOffer = offers.introductory[plans[index]]
-            plans[index].promotionalOffer = offers.promotional[plans[index]]
-        }
-        return plans
+        await productsUseCase.availablePlans()
     }
 
     public func currentAccountDetails() async throws -> AccountDetailsEntity {

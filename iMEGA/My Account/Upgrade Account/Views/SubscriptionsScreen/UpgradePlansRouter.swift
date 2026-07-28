@@ -43,8 +43,10 @@ final class UpgradePlansRouter {
     func build() -> UIViewController {
         let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
         let fetchUseCase = RevampUpgradePlansUseCase(
-            purchaseUseCase: purchaseUseCase,
-            introductoryOfferUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo),
+            productsUseCase: AccountPlanProductsUseCase(
+                purchaseUseCase: purchaseUseCase,
+                offerUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo)
+            ),
             accountUseCase: accountUseCase
         )
 

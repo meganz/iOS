@@ -1,8 +1,8 @@
 import MEGADomain
 import StoreKit
 
-extension IntroductoryOfferEntity {
-    public static func from(storeKitOffer: Product.SubscriptionOffer) -> IntroductoryOfferEntity? {
+extension SubscriptionOfferEntity {
+    public static func from(storeKitOffer: Product.SubscriptionOffer) -> SubscriptionOfferEntity? {
         let price = storeKitOffer.price
         let period = storeKitOffer.period
         let periodCount = storeKitOffer.periodCount
@@ -26,7 +26,7 @@ extension IntroductoryOfferEntity {
         default: .payAsYouGo
         }
 
-        return IntroductoryOfferEntity(
+        return SubscriptionOfferEntity(
             price: price,
             period: billingPeriod,
             periodCount: periodCount,

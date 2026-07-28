@@ -1,6 +1,6 @@
 import Foundation
 
-public struct IntroductoryOfferEntity: Sendable {
+public struct SubscriptionOfferEntity: Sendable {
     /// How the introductory `price` is charged. Mirrors StoreKit's `Product.SubscriptionOffer.PaymentMode`.
     ///
     /// This determines how to interpret `price`:

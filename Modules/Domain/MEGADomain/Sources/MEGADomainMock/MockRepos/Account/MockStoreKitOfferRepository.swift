@@ -5,12 +5,12 @@ public final class MockStoreKitOfferRepository: StoreKitOfferRepositoryProtocol 
         MockStoreKitOfferRepository()
     }
 
-    private let expectedMapping: [PlanEntity: IntroductoryOfferEntity]
-    private let expectedPromotionalMapping: [PlanEntity: PromotionalOfferEntity]
+    private let expectedMapping: [PlanEntity: SubscriptionOfferEntity]
+    private let expectedPromotionalMapping: [PlanEntity: SubscriptionOfferEntity]
 
     public init(
-        expectedMapping: [PlanEntity: IntroductoryOfferEntity] = [:],
-        expectedPromotionalMapping: [PlanEntity: PromotionalOfferEntity] = [:]
+        expectedMapping: [PlanEntity: SubscriptionOfferEntity] = [:],
+        expectedPromotionalMapping: [PlanEntity: SubscriptionOfferEntity] = [:]
     ) {
         self.expectedMapping = expectedMapping
         self.expectedPromotionalMapping = expectedPromotionalMapping
@@ -18,7 +18,7 @@ public final class MockStoreKitOfferRepository: StoreKitOfferRepositoryProtocol 
 
     public func fetchOffers(
         for plans: [PlanEntity]
-    ) async -> (introductory: [PlanEntity: IntroductoryOfferEntity], promotional: [PlanEntity: PromotionalOfferEntity]) {
+    ) async -> (introductory: [PlanEntity: SubscriptionOfferEntity], promotional: [PlanEntity: SubscriptionOfferEntity]) {
         (expectedMapping, expectedPromotionalMapping)
     }
 }

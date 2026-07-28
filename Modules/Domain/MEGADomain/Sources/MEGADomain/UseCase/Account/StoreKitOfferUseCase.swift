@@ -2,7 +2,7 @@ public protocol StoreKitOfferUseCaseProtocol: Sendable {
     /// The eligible introductory and promotional offers for the given plans.
     func fetchOffers(
         for plans: [PlanEntity]
-    ) async -> (introductory: [PlanEntity: IntroductoryOfferEntity], promotional: [PlanEntity: PromotionalOfferEntity])
+    ) async -> (introductory: [PlanEntity: SubscriptionOfferEntity], promotional: [PlanEntity: SubscriptionOfferEntity])
 }
 
 public struct StoreKitOfferUseCase<T: StoreKitOfferRepositoryProtocol>: StoreKitOfferUseCaseProtocol {
@@ -14,7 +14,7 @@ public struct StoreKitOfferUseCase<T: StoreKitOfferRepositoryProtocol>: StoreKit
 
     public func fetchOffers(
         for plans: [PlanEntity]
-    ) async -> (introductory: [PlanEntity: IntroductoryOfferEntity], promotional: [PlanEntity: PromotionalOfferEntity]) {
+    ) async -> (introductory: [PlanEntity: SubscriptionOfferEntity], promotional: [PlanEntity: SubscriptionOfferEntity]) {
         await repository.fetchOffers(for: plans)
     }
 }

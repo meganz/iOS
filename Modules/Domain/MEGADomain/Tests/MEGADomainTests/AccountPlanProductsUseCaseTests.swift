@@ -8,23 +8,49 @@ struct AccountPlanProductsUseCaseTests {
         PlanEntity(type: type, currency: "EUR", subscriptionCycle: cycle)
     }
 
-    private func makeSUT(plans: [PlanEntity], offers: [PlanEntity: IntroductoryOfferEntity]) -> AccountPlanProductsUseCase {
+    private func makeSUT(
+        plans: [PlanEntity],
+        offers: [PlanEntity: SubscriptionOfferEntity] = [:],
+        promotionalOffers: [PlanEntity: SubscriptionOfferEntity] = [:]
+    ) -> AccountPlanProductsUseCase {
         AccountPlanProductsUseCase(
             purchaseUseCase: MockAccountPlanPurchaseUseCase(accountPlanProducts: plans),
-            introductoryOfferUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: offers)
+            offerUseCase: MockStoreKitOfferUseCase(introductoryOfferDict: offers, promotionalOfferDict: promotionalOffers)
         )
     }
 
     @Test func availablePlans_mergesFetchedOffersOntoMatchingPlans() async {
         let proI = plan(type: .proI, cycle: .yearly)
         let proII = plan(type: .proII, cycle: .yearly)
-        let offer = IntroductoryOfferEntity(price: 50, period: .init(unit: .month, value: 12), periodCount: 1, paymentMode: .payUpFront)
+        let offer = SubscriptionOfferEntity(price: 50, period: .init(unit: .month, value: 12), periodCount: 1, paymentMode: .payUpFront)
 
         let result = await makeSUT(plans: [proI, proII], offers: [proI: offer]).availablePlans()
 
         #expect(result.count == 2)
         #expect(result.first { $0.type == .proI }?.introductoryOffer?.price == 50)
         #expect(result.first { $0.type == .proII }?.introductoryOffer == nil)
+    }
+
+    @Test func availablePlans_mergesFetchedPromotionalOffersOntoMatchingPlans() async {
+        let proI = plan(type: .proI, cycle: .yearly)
+        let proII = plan(type: .proII, cycle: .yearly)
+        let promo = SubscriptionOfferEntity(price: 30, period: .init(unit: .month, value: 12), periodCount: 1, paymentMode: .payUpFront)
+
+        let result = await makeSUT(plans: [proI, proII], promotionalOffers: [proI: promo]).availablePlans()
+
+        #expect(result.first { $0.type == .proI }?.promotionalOffer?.price == 30)
+        #expect(result.first { $0.type == .proII }?.promotionalOffer == nil)
+    }
+
+    @Test func availablePlans_mergesBothIntroductoryAndPromotionalOffers() async {
+        let proI = plan(type: .proI, cycle: .yearly)
+        let intro = SubscriptionOfferEntity(price: 10, period: .init(unit: .month, value: 12), periodCount: 1, paymentMode: .payUpFront)
+        let promo = SubscriptionOfferEntity(price: 20, period: .init(unit: .month, value: 12), periodCount: 1, paymentMode: .payUpFront)
+
+        let result = await makeSUT(plans: [proI], offers: [proI: intro], promotionalOffers: [proI: promo]).availablePlans()
+
+        #expect(result.first?.introductoryOffer?.price == 10)
+        #expect(result.first?.promotionalOffer?.price == 20)
     }
 
     @Test func availablePlans_noOffers_leavesPlansUnchanged() async {

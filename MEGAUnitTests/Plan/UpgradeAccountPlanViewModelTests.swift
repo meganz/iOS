@@ -1220,7 +1220,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     @MainActor
     func testHasIntroductoryOffersToShow_withIntroOffers_shouldBeTrue() async {
-        let introOffer = IntroductoryOfferEntity(
+        let introOffer = SubscriptionOfferEntity(
             price: 80,
             period: .init(unit: .year, value: 1),
             periodCount: 1

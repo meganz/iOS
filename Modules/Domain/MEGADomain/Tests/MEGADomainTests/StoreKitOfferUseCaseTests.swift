@@ -10,12 +10,12 @@ struct StoreKitOfferUseCaseTests {
         let plan2 = PlanEntity(productIdentifier: "plan2", type: .proII, subscriptionCycle: .yearly)
         let plan3 = PlanEntity(productIdentifier: "plan3", type: .proIII, subscriptionCycle: .monthly)
         
-        let offer1 = IntroductoryOfferEntity(
+        let offer1 = SubscriptionOfferEntity(
             price: 80,
             period: .init(unit: .year, value: 1),
             periodCount: 1
         )
-        let offer2 = IntroductoryOfferEntity(
+        let offer2 = SubscriptionOfferEntity(
             price: 8,
             period: .init(unit: .month, value: 1),
             periodCount: 3
@@ -57,8 +57,8 @@ struct StoreKitOfferUseCaseTests {
     }
 }
 
-extension IntroductoryOfferEntity: Equatable {
-    public static func == (lhs: IntroductoryOfferEntity, rhs: IntroductoryOfferEntity) -> Bool {
+extension SubscriptionOfferEntity: Equatable {
+    public static func == (lhs: SubscriptionOfferEntity, rhs: SubscriptionOfferEntity) -> Bool {
         lhs.price == rhs.price &&
         lhs.period.unit == rhs.period.unit &&
         lhs.period.value == rhs.period.value &&

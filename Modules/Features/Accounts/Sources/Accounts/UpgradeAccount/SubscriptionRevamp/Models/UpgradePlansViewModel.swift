@@ -115,18 +115,9 @@ public final class UpgradePlansViewModel: ObservableObject {
     }
 
     // MARK: - Offers
-
-    private var introOfferPlans: [PlanEntity] {
-        plans.filter { $0.introductoryOffer != nil }
-    }
-
-    private var promoOfferPlans: [PlanEntity] {
-        plans.filter { $0.hasValidPromotionalOffer }
-    }
-
     /// Introductory offers take global priority for the layout decision; promo offers only count when there are no intro offers
     private var discountedPlans: [PlanEntity] {
-        introOfferPlans.isEmpty ? promoOfferPlans : introOfferPlans
+        plans.filter { $0.applicableOffer != nil }
     }
 
     /// The single discounted plan when `offerCount == 1`; `nil` for zero or multiple (rendered inline).

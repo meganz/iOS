@@ -27,13 +27,13 @@ public struct PlanEntity: Sendable {
     public var appStorePrice: PlanPriceEntity
 
     // The introductory offer available to this plan, sourced from StoreKit
-    public var introductoryOffer: IntroductoryOfferEntity?
+    public var introductoryOffer: SubscriptionOfferEntity?
 
     // The mobile offer available to this plan, sourced from API.
     public var mobileOffer: MobileOfferEntity?
 
     // The promotion offer available to this plan, sourced from StoreKit
-    public var promotionalOffer: PromotionalOfferEntity?
+    public var promotionalOffer: SubscriptionOfferEntity?
 
     public var mobileOfferLabel: String? // [IOS-12265]: Remove mobileOfferLabel, use mobileOffer instead
 
@@ -109,10 +109,10 @@ public struct PlanEntity: Sendable {
         transfer: String = "",
         price: Decimal = 0,
         formattedPrice: String = "",
-        introductoryOffer: IntroductoryOfferEntity? = nil,
+        introductoryOffer: SubscriptionOfferEntity? = nil,
         mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil,
-        promotionalOffer: PromotionalOfferEntity? = nil
+        promotionalOffer: SubscriptionOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -142,10 +142,10 @@ public struct PlanEntity: Sendable {
         transferLimit: Int = 0,
         apiPrice: PlanPriceEntity? = nil,
         appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
-        introductoryOffer: IntroductoryOfferEntity? = nil,
+        introductoryOffer: SubscriptionOfferEntity? = nil,
         mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil,
-        promotionalOffer: PromotionalOfferEntity? = nil
+        promotionalOffer: SubscriptionOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type

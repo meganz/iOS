@@ -78,7 +78,7 @@ public struct RecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCaseProtoc
     }
     
     private func effectivePricePerMonth(_ plan: PlanEntity) -> Decimal {
-        if let offer = plan.introductoryOffer { return offer.billingSchedule.pricePerMonth }
+        if let offer = plan.applicableOffer { return offer.billingSchedule.pricePerMonth }
         return plan.subscriptionCycle == .yearly ? plan.price / 12 : plan.price
     }
 }

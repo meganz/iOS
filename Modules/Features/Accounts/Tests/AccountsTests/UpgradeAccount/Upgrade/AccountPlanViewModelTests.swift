@@ -105,7 +105,7 @@ struct AccountPlanViewModelTests {
         @MainActor
         @Test
         func yearlyPlanWithIntroOffer() {
-            let introOffer = IntroductoryOfferEntity(
+            let introOffer = SubscriptionOfferEntity(
                 price: 50,
                 period: .init(unit: .year, value: 1),
                 periodCount: 1
@@ -130,7 +130,7 @@ struct AccountPlanViewModelTests {
         @Test
         @MainActor
         func monthlyPlanWithIntroOffer() {
-            let introOffer = IntroductoryOfferEntity(
+            let introOffer = SubscriptionOfferEntity(
                 price: 8,
                 period: .init(unit: .month, value: 1),
                 periodCount: 1
@@ -189,7 +189,7 @@ struct AccountPlanViewModelTests {
             type: .proI,
             subscriptionCycle: .yearly,
             appStorePrice: .init(price: 100, formattedPrice: "$100", currency: "USD"),
-            introductoryOffer: IntroductoryOfferEntity(
+            introductoryOffer: SubscriptionOfferEntity(
                 price: 80, // 20% off
                 period: .init(unit: .year, value: 1),
                 periodCount: 1

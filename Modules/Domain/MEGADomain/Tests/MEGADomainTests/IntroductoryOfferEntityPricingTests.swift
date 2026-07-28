@@ -3,10 +3,10 @@ import MEGADomain
 import MEGADomainMock
 import Testing
 
-/// Exercises the offer's derived pricing through `IntroductoryOfferEntity.billingSchedule`
+/// Exercises the offer's derived pricing through `SubscriptionOfferEntity.billingSchedule`
 /// (`OfferBillingSchedule` is the single source of truth for `totalMonths` / `totalPrice` /
 /// `pricePerMonth` / `price`).
-struct IntroductoryOfferEntityPricingTests {
+struct SubscriptionOfferEntityPricingTests {
 
     // MARK: - totalMonths
 
@@ -27,7 +27,7 @@ struct IntroductoryOfferEntityPricingTests {
         expected: Int
     ) {
         // Default payment mode is pay-as-you-go (`.recurring`), which folds `periodCount` into the span.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             period: .init(unit: unit, value: value),
             periodCount: periodCount
         )
@@ -38,7 +38,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func totalPrice_payUpFront_isTheSingleCharge() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -49,7 +49,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func totalPrice_payAsYouGo_isPricePerPeriodTimesCount() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 2,
             period: .init(unit: .month, value: 1),
             periodCount: 3,
@@ -60,7 +60,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func totalPrice_freeTrial_isZero() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 99,
             period: .init(unit: .month, value: 1),
             periodCount: 1,
@@ -73,7 +73,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func pricePerMonth_yearlyPayUpFront_dividesByTwelve() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 120,
             period: .init(unit: .year, value: 1),
             periodCount: 1,
@@ -84,7 +84,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func pricePerMonth_payAsYouGoMonthly_isThePerPeriodPrice() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 2,
             period: .init(unit: .month, value: 1),
             periodCount: 3,
@@ -97,7 +97,7 @@ struct IntroductoryOfferEntityPricingTests {
     @Test
     func pricePerMonth_multiMonthPeriod_dividesByPeriodValue() {
         // A 6-month period priced up front at 30 → 5/month.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -108,7 +108,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func pricePerMonth_freeTrial_isZero() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 0,
             period: .init(unit: .month, value: 1),
             periodCount: 1,
@@ -122,7 +122,7 @@ struct IntroductoryOfferEntityPricingTests {
     @Test
     func price_payAsYouGo_isOneInstalmentNotTheTotal() {
         // 3 monthly instalments of 2: the charge for one period is 2, the whole offer costs 6.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 2,
             period: .init(unit: .month, value: 1),
             periodCount: 3,
@@ -135,7 +135,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func price_payUpFront_isTheSingleChargeCoveringTheWholePeriod() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -148,7 +148,7 @@ struct IntroductoryOfferEntityPricingTests {
 
     @Test
     func price_freeTrial_isZeroEvenWhenTheOfferCarriesAPrice() {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 99,
             period: .init(unit: .month, value: 1),
             periodCount: 1,
@@ -160,7 +160,7 @@ struct IntroductoryOfferEntityPricingTests {
     @Test
     func pricePerMonth_whenTotalMonthsIsZero_fallsBackToTotalPriceWithoutDividingByZero() {
         // Zero-length period → totalMonths 0. pricePerMonth must not divide by zero.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 0),
             periodCount: 1,

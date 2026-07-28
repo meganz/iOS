@@ -21,7 +21,7 @@ struct PlanEntityTests {
         introPrice: Decimal,
         expectedPercentage: Int
     ) {
-        let introOffer = IntroductoryOfferEntity(
+        let introOffer = SubscriptionOfferEntity(
             price: introPrice,
             period: .init(unit: .year, value: 1),
             periodCount: 1
@@ -38,7 +38,7 @@ struct PlanEntityTests {
 
     @Test
     func introDiscountPercentage_whenFullPriceIsZero_shouldBeNil() {
-        let introOffer = IntroductoryOfferEntity(
+        let introOffer = SubscriptionOfferEntity(
             price: 0,
             period: .init(unit: .year, value: 1),
             periodCount: 1

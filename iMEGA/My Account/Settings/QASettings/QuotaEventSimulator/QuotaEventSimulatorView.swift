@@ -606,9 +606,9 @@ private struct QAOffer: Hashable {
     var price: Decimal = 0
     var durationMonths: Int = 12
 
-    func toEntity() -> IntroductoryOfferEntity? {
+    func toEntity() -> SubscriptionOfferEntity? {
         guard let paymentMode = type.paymentMode else { return nil }
-        return IntroductoryOfferEntity(
+        return SubscriptionOfferEntity(
             price: type == .freeTrial ? 0 : price,
             period: .init(unit: .month, value: type == .payAsYouGo ? 1 : durationMonths),
             periodCount: type == .payAsYouGo ? durationMonths : 1,
@@ -634,7 +634,7 @@ private enum QAOfferType: String, CaseIterable, Hashable {
 
     var label: String { rawValue }
 
-    var paymentMode: IntroductoryOfferEntity.PaymentMode? {
+    var paymentMode: SubscriptionOfferEntity.PaymentMode? {
         switch self {
         case .none: nil
         case .payUpFront: .payUpFront

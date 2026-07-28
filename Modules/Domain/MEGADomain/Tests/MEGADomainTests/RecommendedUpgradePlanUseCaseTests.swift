@@ -20,7 +20,7 @@ struct RecommendedUpgradePlanUseCaseTests {
         storage: String = "",
         transfer: String = "",
         mobileOfferLabel: String? = nil,
-        offer: IntroductoryOfferEntity? = nil,
+        offer: SubscriptionOfferEntity? = nil,
         productIdentifier: String = ""
     ) -> PlanEntity {
         PlanEntity(
@@ -40,8 +40,8 @@ struct RecommendedUpgradePlanUseCaseTests {
     }
 
     /// Pay-up-front offer of `total` covering `months`, i.e. a real discount vs the full price.
-    private func prepaidOffer(total: Decimal, months: Int) -> IntroductoryOfferEntity {
-        IntroductoryOfferEntity(price: total, period: .init(unit: .month, value: months), periodCount: 1, paymentMode: .payUpFront)
+    private func prepaidOffer(total: Decimal, months: Int) -> SubscriptionOfferEntity {
+        SubscriptionOfferEntity(price: total, period: .init(unit: .month, value: months), periodCount: 1, paymentMode: .payUpFront)
     }
 
     // MARK: - Free → cheapest yearly
@@ -273,6 +273,52 @@ struct RecommendedUpgradePlanUseCaseTests {
         ]
         let result = sut.recommend(for: .build(proLevel: .free), from: plans)
         #expect(result?.name == "Small")
+    }
+
+    // MARK: - Promotional offer (per-month price)
+
+    private func signedMobileOffer() -> MobileOfferEntity {
+        MobileOfferEntity(
+            id: "promo", useAsTitle: false, label: nil, discountPercentage: 50,
+            flags: 0, reshowTimeout: nil, expiryDate: nil, iosOfferId: "promo",
+            iosSignature: .init(offerId: "promo", keyId: "key", nonce: "nonce", timestamp: 0, signature: "sig")
+        )
+    }
+
+    private func promoPlan(
+        type: AccountTypeEntity,
+        name: String,
+        price: Decimal,
+        promo: SubscriptionOfferEntity,
+        signed: Bool = true
+    ) -> PlanEntity {
+        PlanEntity(
+            type: type, name: name, currency: "EUR", subscriptionCycle: .yearly,
+            storageLimit: 2048, transferLimit: 2048, price: price,
+            mobileOffer: signed ? signedMobileOffer() : nil,
+            promotionalOffer: promo
+        )
+    }
+
+    @Test func validPromotionalOffer_lowersPerMonth_andWins() {
+        // Pro III with a signed promo at 10/mo (from 25/mo) undercuts every regular plan, same as an intro discount.
+        let plans = [
+            plan(type: .proI, name: "Pro I", cycle: .yearly, price: 150),   // 12.5/mo
+            plan(type: .proII, name: "Pro II", cycle: .yearly, price: 200), // 16.67/mo
+            promoPlan(type: .proIII, name: "Pro III", price: 300, promo: prepaidOffer(total: 120, months: 12)) // 10/mo
+        ]
+        let result = sut.recommend(for: .build(proLevel: .proI, subscriptionCycle: .yearly), from: plans)
+        #expect(result?.name == "Pro III")
+    }
+
+    @Test func unsignedPromotionalOffer_isIgnored_forPerMonth() {
+        // Without a signature the promo is not a valid offer, so Pro III's full 25/mo applies and Pro I wins.
+        let plans = [
+            plan(type: .proI, name: "Pro I", cycle: .yearly, price: 150),   // 12.5/mo — cheapest
+            promoPlan(type: .proIII, name: "Pro III", price: 300, promo: prepaidOffer(total: 120, months: 12), signed: false) // 25/mo
+        ]
+        let result = sut.recommend(for: .build(proLevel: .proI, subscriptionCycle: .yearly), from: plans)
+        #expect(result?.name == "Pro I")
     }
 
     // MARK: - Entity mapping

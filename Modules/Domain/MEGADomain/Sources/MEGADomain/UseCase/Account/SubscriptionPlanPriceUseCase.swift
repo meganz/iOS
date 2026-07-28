@@ -33,7 +33,7 @@ public struct SubscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCaseProtocol
 
     // MARK: - Intro offer
 
-    private func introOfferPrice(for plan: PlanEntity, offer: IntroductoryOfferEntity) -> SubscriptionPlanPrice {
+    private func introOfferPrice(for plan: PlanEntity, offer: SubscriptionOfferEntity) -> SubscriptionPlanPrice {
         let schedule = offer.billingSchedule
         let percentage = discountPercentage(fullPrice: plan.price, schedule: schedule, cycle: plan.subscriptionCycle)
         return discountPrice(for: plan, schedule: schedule, percentage: percentage)
@@ -41,7 +41,7 @@ public struct SubscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCaseProtocol
 
     // MARK: - Promo offer
 
-    private func promoOfferPrice(for plan: PlanEntity, offer: PromotionalOfferEntity) -> SubscriptionPlanPrice {
+    private func promoOfferPrice(for plan: PlanEntity, offer: SubscriptionOfferEntity) -> SubscriptionPlanPrice {
         let schedule = offer.billingSchedule
         // Promotional offers take the discount percentage straight from the API (`mobileOffer`),
         // falling back to the computed formula only when the API doesn't provide one.

@@ -7,8 +7,8 @@ import Testing
 @Suite("UpgradePlansViewModel - default cycle selection")
 struct UpgradePlansViewModelTests {
 
-    private func introOffer() -> IntroductoryOfferEntity {
-        IntroductoryOfferEntity(price: 1, period: .init(unit: .month, value: 1), periodCount: 1, paymentMode: .payAsYouGo)
+    private func introOffer() -> SubscriptionOfferEntity {
+        SubscriptionOfferEntity(price: 1, period: .init(unit: .month, value: 1), periodCount: 1, paymentMode: .payAsYouGo)
     }
 
     private func plan(_ cycle: SubscriptionCycleEntity, discounted: Bool = false) -> PlanEntity {

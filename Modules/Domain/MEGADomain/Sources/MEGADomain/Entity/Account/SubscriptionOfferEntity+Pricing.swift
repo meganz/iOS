@@ -1,6 +1,6 @@
 import Foundation
 
-public extension IntroductoryOfferEntity {
+public extension SubscriptionOfferEntity {
     /// The billing schedule (payment mode + period) this offer resolves to.
     ///
     /// This is the single source of truth for the offer's derived amounts — read `totalMonths`,

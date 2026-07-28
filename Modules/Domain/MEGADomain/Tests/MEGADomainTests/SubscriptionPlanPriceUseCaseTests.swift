@@ -10,7 +10,7 @@ struct SubscriptionPlanPriceUseCaseTests {
         currency: String = "EUR",
         subscriptionCycle: SubscriptionCycleEntity,
         price: Decimal,
-        introductoryOffer: IntroductoryOfferEntity? = nil
+        introductoryOffer: SubscriptionOfferEntity? = nil
     ) -> PlanEntity {
         PlanEntity(
             currency: currency,
@@ -41,7 +41,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func monthlyPlan_payUpFront_mapsToPrepaidSchedule() {
         // 6-month up-front offer at 30 total; full monthly 10.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -60,7 +60,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func monthlyPlan_payAsYouGo_mapsToRecurringSchedule() {
         // 6 × 1-month periods at 5 each; full monthly 10.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 5,
             period: .init(unit: .month, value: 1),
             periodCount: 6,
@@ -79,7 +79,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func monthlyPlan_freeTrial_mapsToFreeSchedule() {
         // 1-month free trial; full monthly 10.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 0,
             period: .init(unit: .month, value: 1),
             periodCount: 1,
@@ -100,7 +100,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func yearlyPlan_payUpFrontOneYear_mapsToPrepaidSchedule() {
         // 1-year up-front offer at 60; full yearly 120.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 60,
             period: .init(unit: .year, value: 1),
             periodCount: 1,
@@ -119,7 +119,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func yearlyPlan_payAsYouGoOneYear_mapsToRecurringSchedule() {
         // Per Apple's table, a yearly plan's pay-as-you-go offer is 1 year.
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 60,
             period: .init(unit: .year, value: 1),
             periodCount: 1,
@@ -138,7 +138,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func yearlyPlan_sixMonthOffer_strikethroughIsPrecise() {
         // Full yearly 119.88 → 6-month struck price must be exactly 59.94 (multiply-before-divide).
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: Decimal(string: "29.94")!,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -172,7 +172,7 @@ struct SubscriptionPlanPriceUseCaseTests {
         ]
     )
     func discountPercentage_yearly(fullPrice: Decimal, introPrice: Decimal, expected: Int) {
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: introPrice,
             period: .init(unit: .year, value: 1),
             periodCount: 1,
@@ -189,7 +189,7 @@ struct SubscriptionPlanPriceUseCaseTests {
 
     @Test func discountPercentage_isZeroForDegenerateOffer() {
         // Non-positive full price → guard avoids dividing by zero and yields 0 (ribbon treats as no discount).
-        let offer = IntroductoryOfferEntity(
+        let offer = SubscriptionOfferEntity(
             price: 30,
             period: .init(unit: .month, value: 6),
             periodCount: 1,
@@ -224,7 +224,7 @@ struct SubscriptionPlanPriceUseCaseTests {
             subscriptionCycle: .monthly,
             price: 10,
             mobileOffer: mobileOffer(discountPercentage: apiDiscountPercentage),
-            promotionalOffer: PromotionalOfferEntity(
+            promotionalOffer: SubscriptionOfferEntity(
                 price: 5,
                 period: .init(unit: .month, value: 1),
                 periodCount: 6,

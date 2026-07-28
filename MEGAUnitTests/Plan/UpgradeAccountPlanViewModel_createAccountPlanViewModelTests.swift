@@ -225,7 +225,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     @MainActor
     func testCreateAccountPlanViewModel_withIntroductoryOffer_shouldReturnIntroOfferTag() {
         let details = AccountDetailsEntity.build(proLevel: .free)
-        let introOffer = IntroductoryOfferEntity(
+        let introOffer = SubscriptionOfferEntity(
             price: 80,
             period: .init(unit: .year, value: 1),
             periodCount: 1
@@ -280,7 +280,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     @MainActor
     func testCreateAccountPlanViewModel_introOfferTakesPrecedenceOverRecommended() {
         let details = AccountDetailsEntity.build(proLevel: .free)
-        let introOffer = IntroductoryOfferEntity(
+        let introOffer = SubscriptionOfferEntity(
             price: 50,
             period: .init(unit: .year, value: 1),
             periodCount: 1
