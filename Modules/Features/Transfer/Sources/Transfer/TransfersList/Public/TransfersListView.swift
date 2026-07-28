@@ -8,14 +8,9 @@ import SwiftUI
 
 public struct TransfersListView: View {
     @StateObject private var viewModel: TransfersListViewModel
-    /// Observed directly rather than republished through the screen view model, so
-    /// the select-mode count and action enablement update in the same frame as the
-    /// tap that changed the selection.
-    @ObservedObject private var selection: TransferSelection
 
     init(viewModel: TransfersListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        _selection = ObservedObject(wrappedValue: viewModel.selection)
     }
 
     public var body: some View {
@@ -72,10 +67,7 @@ public struct TransfersListView: View {
                     selectAllButton
                 }
                 ToolbarItem(placement: .principal) {
-                    Text(selectModeTitle)
-                        .font(.headline)
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                        .lineLimit(1)
+                    SelectModeTitle(selection: viewModel.selection)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     doneButton
@@ -121,19 +113,17 @@ public struct TransfersListView: View {
     }
 
     // MARK: - Select mode
-
-    /// "Select items" until the first row is ticked, then the plural-aware
-    /// "N item(s) selected", as the design frames show.
-    private var selectModeTitle: String {
-        let count = selection.count
-        return count == 0
-            ? Strings.Localizable.selectTitle
-            : Strings.Localizable.General.Format.itemsSelected(count)
-    }
+    //
+    // The pieces that read the selection observe it from their own small views,
+    // built here in `body` from `viewModel.selection`. Holding an
+    // `@ObservedObject` on this view instead would capture it at init time,
+    // while `@StateObject` keeps whichever view model it was first given — so a
+    // re-created view with a different view model would render one generation's
+    // selection while the tab list mutated another's.
 
     private var selectAllButton: some View {
         Button {
-            selection.toggleSelectAll()
+            viewModel.selection.toggleSelectAll()
         } label: {
             MEGAAssets.Image.checkCircle
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -167,7 +157,8 @@ public struct TransfersListView: View {
     private var selectModeActionButtons: some View {
         HStack(spacing: 0) {
             if viewModel.selectedTab == .failed {
-                selectModeActionButton(
+                SelectModeActionButton(
+                    selection: viewModel.selection,
                     icon: MEGAAssets.Image.rotateCcw,
                     label: Strings.Localizable.retry,
                     action: viewModel.retrySelectedTransfers
@@ -176,13 +167,15 @@ public struct TransfersListView: View {
             Spacer()
             switch viewModel.selectedTab {
             case .active:
-                selectModeActionButton(
+                SelectModeActionButton(
+                    selection: viewModel.selection,
                     icon: MEGAAssets.Image.rubbishBinInMenu,
                     label: Strings.Localizable.cancel,
                     action: viewModel.cancelSelectedTransfers
                 )
             case .completed, .failed:
-                selectModeActionButton(
+                SelectModeActionButton(
+                    selection: viewModel.selection,
                     icon: MEGAAssets.Image.monoEraserMediumThinOutline,
                     label: Strings.Localizable.clear,
                     action: viewModel.clearSelectedTransfers
@@ -190,26 +183,6 @@ public struct TransfersListView: View {
             }
         }
         .padding(TokenSpacing._5)
-    }
-
-    private func selectModeActionButton(
-        icon: Image,
-        label: String,
-        action: @escaping @MainActor () -> Void
-    ) -> some View {
-        let isEnabled = !selection.isEmpty
-        return Button(action: action) {
-            icon
-                .foregroundStyle(isEnabled
-                    ? TokenColors.Icon.primary.swiftUI
-                    : TokenColors.Icon.disabled.swiftUI)
-                // The design builds this button as its 24pt icon inset by
-                // spacing/4 on every side, which lands the circle at 48pt.
-                .padding(TokenSpacing._4)
-        }
-        .glassCircleBackground()
-        .disabled(!isEnabled)
-        .accessibilityLabel(label)
     }
 
     private func icon(for action: TransferMoreMenuAction) -> Image {
@@ -318,5 +291,54 @@ private extension View {
         } else {
             background(TokenColors.Background.surface1.swiftUI, in: Circle())
         }
+    }
+}
+
+/// "Select items" until the first row is ticked, then the plural-aware
+/// "N item(s) selected", as the design frames show.
+private struct SelectModeTitle: View {
+    @ObservedObject var selection: TransferSelection
+
+    var body: some View {
+        Text(title)
+            .font(.headline)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            .lineLimit(1)
+    }
+
+    private var title: String {
+        let count = selection.count
+        return count == 0
+            ? Strings.Localizable.selectTitle
+            : Strings.Localizable.General.Format.itemsSelected(count)
+    }
+}
+
+/// One floating glass circle from the design's bottom toolbar, enabled only
+/// while something is selected. Observes the selection itself so enablement
+/// lands in the same frame as the tap that changed it.
+private struct SelectModeActionButton: View {
+    @ObservedObject var selection: TransferSelection
+    let icon: Image
+    let label: String
+    let action: @MainActor () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            icon
+                .foregroundStyle(isEnabled
+                    ? TokenColors.Icon.primary.swiftUI
+                    : TokenColors.Icon.disabled.swiftUI)
+                // The design builds this button as its 24pt icon inset by
+                // spacing/4 on every side, which lands the circle at 48pt.
+                .padding(TokenSpacing._4)
+        }
+        .glassCircleBackground()
+        .disabled(!isEnabled)
+        .accessibilityLabel(label)
+    }
+
+    private var isEnabled: Bool {
+        !selection.isEmpty
     }
 }

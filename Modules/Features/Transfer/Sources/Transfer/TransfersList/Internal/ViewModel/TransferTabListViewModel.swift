@@ -25,7 +25,7 @@ final class TransferTabListViewModel: ObservableObject {
     /// `listedTags` in step with the rows the tab lists; the removal path does so
     /// synchronously (never behind the flush throttle) so a selected row that
     /// finishes stops counting in the same frame.
-    let selection: TransferSelection
+    private let selection: TransferSelection
 
     private let tab: TransfersTab
     private let dependency: TransferTabDependency
