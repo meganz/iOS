@@ -11,11 +11,11 @@ public struct SubscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCaseProtocol
     public func planPrice(for plan: PlanEntity) -> SubscriptionPlanPrice {
         // Introductory offers take priority over promotional offers on the same plan.
         if let introductoryOffer = plan.introductoryOffer {
-            return discountPrice(for: plan, schedule: introductoryOffer.billingSchedule)
+            return introOfferPrice(for: plan, offer: introductoryOffer)
         }
 
         if plan.hasValidPromotionalOffer, let promotionalOffer = plan.promotionalOffer {
-            return discountPrice(for: plan, schedule: promotionalOffer.billingSchedule)
+            return promoOfferPrice(for: plan, offer: promotionalOffer)
         }
         return nonDiscountPrice(for: plan)
     }
@@ -31,11 +31,33 @@ public struct SubscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCaseProtocol
         }
     }
 
-    // MARK: - Discount
+    // MARK: - Intro offer
 
-    private func discountPrice(for plan: PlanEntity, schedule: OfferBillingSchedule) -> SubscriptionPlanPrice {
-        let totalMonths = Decimal(schedule.totalMonths)
+    private func introOfferPrice(for plan: PlanEntity, offer: IntroductoryOfferEntity) -> SubscriptionPlanPrice {
+        let schedule = offer.billingSchedule
         let percentage = discountPercentage(fullPrice: plan.price, schedule: schedule, cycle: plan.subscriptionCycle)
+        return discountPrice(for: plan, schedule: schedule, percentage: percentage)
+    }
+
+    // MARK: - Promo offer
+
+    private func promoOfferPrice(for plan: PlanEntity, offer: PromotionalOfferEntity) -> SubscriptionPlanPrice {
+        let schedule = offer.billingSchedule
+        // Promotional offers take the discount percentage straight from the API (`mobileOffer`),
+        // falling back to the computed formula only when the API doesn't provide one.
+        let percentage = plan.mobileOffer?.discountPercentage
+            ?? discountPercentage(fullPrice: plan.price, schedule: schedule, cycle: plan.subscriptionCycle)
+        return discountPrice(for: plan, schedule: schedule, percentage: percentage)
+    }
+
+    // MARK: - Discount price builder
+
+    private func discountPrice(
+        for plan: PlanEntity,
+        schedule: OfferBillingSchedule,
+        percentage: Int
+    ) -> SubscriptionPlanPrice {
+        let totalMonths = Decimal(schedule.totalMonths)
 
         switch plan.subscriptionCycle {
         case .yearly:

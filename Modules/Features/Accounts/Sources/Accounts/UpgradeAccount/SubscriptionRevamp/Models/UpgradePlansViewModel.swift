@@ -1,17 +1,22 @@
+import Combine
 import MEGADomain
-import MEGAL10n
 
 /// Shared presentation model backing both redesigned subscription pages.
 ///
 /// The standard and promo pages use the same type; promo-only content
 /// (`promoHeader`, `highlightedPlanCard`) is `nil` on the standard page.
 @MainActor
-public final class UpgradePlansViewModel {
+public final class UpgradePlansViewModel: ObservableObject {
     private let isPromo: Bool
     private let viewType: RevampUpgradePlansViewType
     private let accountDetails: AccountDetailsEntity
-    private let plans: [PlanEntity]
+    let plans: [PlanEntity]
+    /// The user's current billing cycle, used to build the cycle picker and its default selection.
+    let currentCycle: SubscriptionCycleEntity
     private let displayName: @Sendable (AccountTypeEntity) -> String
+
+    /// The billing cycle currently selected in the picker, seeded from the default selection.
+    @Published var selectedCycle: SubscriptionCycleEntity
 
     init(
         isPromo: Bool = false,
@@ -24,7 +29,9 @@ public final class UpgradePlansViewModel {
         self.viewType = viewType
         self.accountDetails = accountDetails
         self.plans = plans
+        self.currentCycle = accountDetails.subscriptionCycle
         self.displayName = displayName
+        self.selectedCycle = Self.resolveDefaultCycle(plans: plans, currentCycle: accountDetails.subscriptionCycle)
     }
 
     private var currentPlanPresenter: SubscriptionCurrentPlanPresenter {
@@ -52,6 +59,43 @@ public final class UpgradePlansViewModel {
         currentPlanPresenter.currentPlanViewModel
     }
 
+    // MARK: - Default cycle selection
+
+    /// The billing cycle to preselect in priority order:
+    /// 1. discounts on both cycles -> the cycle matching the user's current plan,
+    /// 2. a discount on a single cycle -> that cycle,
+    /// 3. no discount -> the user's current cycle, or yearly when the user has none (e.g. free).
+    var defaultSelectedCycle: SubscriptionCycleEntity {
+        Self.resolveDefaultCycle(plans: plans, currentCycle: currentCycle)
+    }
+
+    private static func resolveDefaultCycle(
+        plans: [PlanEntity],
+        currentCycle: SubscriptionCycleEntity
+    ) -> SubscriptionCycleEntity {
+        switch (hasDiscountedPlan(.monthly, in: plans), hasDiscountedPlan(.yearly, in: plans)) {
+        case (true, false): .monthly
+        case (false, true): .yearly
+        case (true, true), (false, false): userCycle(currentCycle) ?? .yearly
+        }
+    }
+
+    private static func hasDiscountedPlan(_ cycle: SubscriptionCycleEntity, in plans: [PlanEntity]) -> Bool {
+        plans.contains { $0.subscriptionCycle == cycle && isDiscounted($0) }
+    }
+
+    private static func isDiscounted(_ plan: PlanEntity) -> Bool {
+        plan.introductoryOffer != nil || plan.hasValidPromotionalOffer
+    }
+
+    private static func userCycle(_ cycle: SubscriptionCycleEntity) -> SubscriptionCycleEntity? {
+        switch cycle {
+        case .monthly: .monthly
+        case .yearly: .yearly
+        case .none: nil
+        }
+    }
+
     var freePlanCard: SubscriptionFreePlanCardModel? {
         guard case .onboarding(let isFreeAccountFirstLogin) = viewType else { return nil }
         return SubscriptionFreePlanCardModel(
@@ -69,20 +113,6 @@ public final class UpgradePlansViewModel {
             displayName: displayName
         ).cards(for: cycle)
     }
-
-    // MARK: - Billing cycle
-
-    private var cyclePresenter: SubscriptionCyclePresenter {
-        SubscriptionCyclePresenter(plans: plans)
-    }
-
-    var cycleOptions: [SubscriptionCycleEntity] { cyclePresenter.options }
-
-    func cycleTitle(_ cycle: SubscriptionCycleEntity) -> String {
-        cyclePresenter.title(for: cycle)
-    }
-
-    var savingText: String? { cyclePresenter.savingText }
 
     // MARK: - Offers
 

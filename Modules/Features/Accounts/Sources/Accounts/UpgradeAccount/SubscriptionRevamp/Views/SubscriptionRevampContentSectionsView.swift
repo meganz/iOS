@@ -10,11 +10,8 @@ import SwiftUI
 /// from the features list downward lives here.
 struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
-    let viewModel: UpgradePlansViewModel
+    @ObservedObject var viewModel: UpgradePlansViewModel
     let dismissAction: () -> Void
-
-    // [IOS-12292]: Handle computation of default selectedCycle
-    @State private var selectedCycle: SubscriptionCycleEntity = .yearly
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -26,7 +23,7 @@ struct SubscriptionContentSectionsView: View {
             }
             cyclePicker
                 .padding(.top, TokenSpacing._3)
-            SubscriptionPlanCardsView(cards: viewModel.planCards(for: selectedCycle))
+            SubscriptionPlanCardsView(cards: viewModel.planCards(for: viewModel.selectedCycle))
                 .padding(.top, TokenSpacing._3)
             SubscriptionBenefitsListView()
                 .padding(.top, TokenSpacing._4)
@@ -44,10 +41,8 @@ struct SubscriptionContentSectionsView: View {
 
     private var cyclePicker: some View {
         SubscriptionCyclePickerView(
-            options: viewModel.cycleOptions,
-            selection: $selectedCycle,
-            title: viewModel.cycleTitle,
-            savingText: viewModel.savingText
+            dependency: .init(plans: viewModel.plans),
+            selection: $viewModel.selectedCycle
         )
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, TokenSpacing._7)

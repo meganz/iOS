@@ -3,8 +3,17 @@ import MEGADomain
 import MEGAL10n
 
 /// Presents the billing-cycle picker: the available cycles, their titles, and the yearly saving text.
-struct SubscriptionCyclePresenter {
+struct SubscriptionCycleViewModel {
     let plans: [PlanEntity]
+    private let priceUseCase: any SubscriptionPlanPriceUseCaseProtocol
+
+    init(
+        plans: [PlanEntity],
+        priceUseCase: any SubscriptionPlanPriceUseCaseProtocol = SubscriptionPlanPriceUseCase()
+    ) {
+        self.plans = plans
+        self.priceUseCase = priceUseCase
+    }
 
     var options: [SubscriptionCycleEntity] {
         let available = Set(plans.map(\.subscriptionCycle))
@@ -20,11 +29,23 @@ struct SubscriptionCyclePresenter {
     }
 
     var savingText: String? {
-        guard let percentage = maxYearlySavingPercentage, percentage > 0 else { return nil }
+        guard let percentage = savingPercentage, percentage > 0 else { return nil }
         return Strings.Localizable.SubscriptionPurchase.Revamp.Cycle.saving("\(percentage)%")
     }
 
-    // [IOS-12292]: Compute the correct percentage in case offers are present
+    /// When any plan carries an offer, the saving reflects the offer with the highest discount;
+    /// otherwise it falls back to the yearly-vs-monthly base saving.
+    private var savingPercentage: Int? {
+        maxOfferDiscountPercentage ?? maxYearlySavingPercentage
+    }
+
+    private var maxOfferDiscountPercentage: Int? {
+        plans
+            .filter { $0.subscriptionCycle == .yearly }
+            .compactMap { priceUseCase.planPrice(for: $0).discountPercentage }
+            .max()
+    }
+
     private var maxYearlySavingPercentage: Int? {
         let monthlyPriceByType = Dictionary(
             plans.filter { $0.subscriptionCycle == .monthly }.map { ($0.type, $0.price) },

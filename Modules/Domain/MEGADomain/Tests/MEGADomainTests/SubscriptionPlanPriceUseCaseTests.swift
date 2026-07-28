@@ -198,4 +198,50 @@ struct SubscriptionPlanPriceUseCaseTests {
         let result = sut.planPrice(for: plan(subscriptionCycle: .yearly, price: 0, introductoryOffer: offer))
         #expect(result.discountPercentage == 0)
     }
+
+    // MARK: - Promotional offer discount percentage
+
+    private func mobileOffer(discountPercentage: Int) -> MobileOfferEntity {
+        MobileOfferEntity(
+            id: "promo",
+            useAsTitle: false,
+            label: nil,
+            discountPercentage: discountPercentage,
+            flags: 0,
+            reshowTimeout: nil,
+            expiryDate: nil,
+            iosOfferId: "offer-id",
+            iosSignature: MobileOfferIosSignatureEntity(
+                offerId: "offer-id", keyId: "key", nonce: "nonce", timestamp: 0, signature: "sig"
+            )
+        )
+    }
+
+    private func promoPlan(apiDiscountPercentage: Int) -> PlanEntity {
+        // A payAsYouGo promo of 5/month against a 10/month plan computes to 50%.
+        PlanEntity(
+            currency: "EUR",
+            subscriptionCycle: .monthly,
+            price: 10,
+            mobileOffer: mobileOffer(discountPercentage: apiDiscountPercentage),
+            promotionalOffer: PromotionalOfferEntity(
+                price: 5,
+                period: .init(unit: .month, value: 1),
+                periodCount: 6,
+                paymentMode: .payAsYouGo
+            )
+        )
+    }
+
+    @Test func promotionalOffer_usesApiDiscountPercentage_notBillingCycleFormula() {
+        // API says 40%; the billing-cycle formula would compute 50% → the API value is used.
+        let result = sut.planPrice(for: promoPlan(apiDiscountPercentage: 40))
+        #expect(result.discountPercentage == 40)
+    }
+
+    @Test func promotionalOffer_usesApiDiscountPercentageDirectly_evenWhenZero() {
+        // The formula would compute 50%, but the API value (0) is used as-is; no fallback.
+        let result = sut.planPrice(for: promoPlan(apiDiscountPercentage: 0))
+        #expect(result.discountPercentage == 0)
+    }
 }

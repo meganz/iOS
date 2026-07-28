@@ -1,29 +1,23 @@
 import MEGADesignToken
 import MEGADomain
-import MEGAL10n
 import SwiftUI
 
-public struct SubscriptionCyclePickerView: View {
-    private let options: [SubscriptionCycleEntity]
-    private let title: (SubscriptionCycleEntity) -> String
-    @Binding private var selection: SubscriptionCycleEntity
-    private let savingText: String?
-
-    public init(
-        options: [SubscriptionCycleEntity] = [.monthly, .yearly],
-        selection: Binding<SubscriptionCycleEntity>,
-        title: @escaping (SubscriptionCycleEntity) -> String,
-        savingText: String? = nil
-    ) {
-        self.options = options
-        self._selection = selection
-        self.title = title
-        self.savingText = savingText
+struct SubscriptionCyclePickerView: View {
+    struct Dependency {
+        let plans: [PlanEntity]
     }
 
-    public var body: some View {
+    private let viewModel: SubscriptionCycleViewModel
+    @Binding private var selection: SubscriptionCycleEntity
+
+    init(dependency: Dependency, selection: Binding<SubscriptionCycleEntity>) {
+        self.viewModel = SubscriptionCycleViewModel(plans: dependency.plans)
+        self._selection = selection
+    }
+
+    var body: some View {
         HStack(spacing: TokenSpacing._1) {
-            ForEach(options, id: \.self) { option in
+            ForEach(viewModel.options, id: \.self) { option in
                 segment(for: option)
             }
         }
@@ -39,11 +33,11 @@ public struct SubscriptionCyclePickerView: View {
             selection = option
         } label: {
             HStack(spacing: TokenSpacing._2) {
-                Text(title(option))
+                Text(viewModel.title(for: option))
                     .font(isSelected ? .caption.weight(.semibold) : .caption)
                     .foregroundStyle(isSelected ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI)
 
-                if option == .yearly, let savingText {
+                if option == .yearly, let savingText = viewModel.savingText {
                     Text(savingText)
                         .font(.caption)
                         .foregroundStyle(TokenColors.Text.brand.swiftUI)
@@ -56,21 +50,4 @@ public struct SubscriptionCyclePickerView: View {
         }
         .buttonStyle(.plain)
     }
-}
-
-private struct SubscriptionCyclePickerPreview: View {
-    @State private var selection: SubscriptionCycleEntity = .yearly
-
-    var body: some View {
-        SubscriptionCyclePickerView(
-            selection: $selection,
-            title: { $0 == .monthly ? Strings.Localizable.monthly : Strings.Localizable.yearly },
-            savingText: Strings.Localizable.SubscriptionPurchase.Revamp.Cycle.saving("16%")
-        )
-        .padding()
-    }
-}
-
-#Preview {
-    SubscriptionCyclePickerPreview()
 }
