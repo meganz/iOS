@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGADomainMock
@@ -146,6 +147,98 @@ struct TransferTabListViewModelTests {
         #expect(sut.rows.map(\.id) == [2])
     }
 
+    // MARK: - Selection
+
+    @Test func snapshotMakesItsRowsSelectable() async {
+        let selection = TransferSelection()
+        let sut = makeSUT(
+            snapshot: [
+                .init(type: .download, tag: 1, state: .active),
+                .init(type: .upload, tag: 2, state: .active)
+            ],
+            selection: selection
+        )
+
+        await sut.monitorTransferEvents()
+        selection.toggleSelectAll()
+
+        #expect(selection.selectedTags == [1, 2])
+    }
+
+    @Test func startedRowBecomesSelectableOnceFlushed() async {
+        let selection = TransferSelection()
+        let sut = makeSUT(
+            snapshot: [.init(type: .download, tag: 1, state: .active)],
+            events: [.started(.init(type: .upload, tag: 2, state: .active))],
+            selection: selection
+        )
+
+        await sut.monitorTransferEvents()
+        selection.toggleSelectAll()
+
+        #expect(selection.selectedTags == [1, 2])
+    }
+
+    @Test func finishOnActiveTabPrunesTheSelectionWithoutWaitingForAFlush() async {
+        // A throttle that never fires: the removal can't reach `rows`, yet the
+        // selection must drop the finished tag immediately — pruning is not
+        // allowed to hide behind the flush, or the top-bar count goes stale.
+        let selection = TransferSelection()
+        let sut = makeSUT(
+            snapshot: [
+                .init(type: .download, tag: 1, state: .active),
+                .init(type: .upload, tag: 2, state: .active)
+            ],
+            events: [.finished(.init(type: .download, tag: 1, state: .complete))],
+            selection: selection,
+            throttle: { _ in Empty().eraseToAnyPublisher() }
+        )
+        await sut.monitorTransferEvents()
+
+        #expect(selection.listedTags == [2])
+        #expect(selection.selectedTags.isEmpty)
+    }
+
+    @Test func finishOnActiveTabDropsThatRowFromAnExistingSelection() async {
+        let selection = TransferSelection()
+        let sut = makeSUT(
+            snapshot: [
+                .init(type: .download, tag: 1, state: .active),
+                .init(type: .upload, tag: 2, state: .active)
+            ],
+            events: [.finished(.init(type: .download, tag: 1, state: .complete))],
+            selection: selection,
+            throttle: { _ in Empty().eraseToAnyPublisher() }
+        )
+        selection.setListedTags([1, 2])
+        selection.selectedTags = [1, 2]
+
+        await sut.monitorTransferEvents()
+
+        #expect(selection.selectedTags == [2])
+    }
+
+    @Test func clearedReSnapshotConvergesTheSelectionOnTheSurvivingRows() async {
+        let selection = TransferSelection()
+        let itemsUseCase = SequencedItemsUseCase(
+            snapshotsByCall: [
+                [
+                    .init(type: .download, tag: 1, state: .active),
+                    .init(type: .upload, tag: 2, state: .active)
+                ],
+                [.init(type: .upload, tag: 2, state: .active)]
+            ],
+            events: [.cleared]
+        )
+        let sut = makeSUT(tab: .active, itemsUseCase: itemsUseCase, selection: selection)
+        selection.setListedTags([1, 2])
+        selection.selectedTags = [1, 2]
+
+        await sut.monitorTransferEvents()
+
+        #expect(selection.selectedTags == [2])
+    }
+
     // MARK: - Teardown
 
     @Test func monitorEndPrunesThisTabsRowsFromTheSharedRegistry() async {
@@ -169,7 +262,9 @@ struct TransferTabListViewModelTests {
         tab: TransfersTab = .active,
         snapshot: [TransferEntity] = [],
         events: [TransferTabEvent] = [],
-        registry: TransferRegistry = TransferRegistry()
+        registry: TransferRegistry = TransferRegistry(),
+        selection: TransferSelection = TransferSelection(),
+        throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
     ) -> TransferTabListViewModel {
         makeSUT(
             tab: tab,
@@ -177,14 +272,18 @@ struct TransferTabListViewModelTests {
                 snapshot: snapshot,
                 events: events.async.eraseToAnyAsyncSequence()
             ),
-            registry: registry
+            registry: registry,
+            selection: selection,
+            throttle: throttle
         )
     }
 
     private func makeSUT(
         tab: TransfersTab,
         itemsUseCase: some MonitorTransferTabItemsUseCaseProtocol,
-        registry: TransferRegistry = TransferRegistry()
+        registry: TransferRegistry = TransferRegistry(),
+        selection: TransferSelection = TransferSelection(),
+        throttle: @escaping TransferTabListViewModel.FlushPublisherThrottle = { $0 }
     ) -> TransferTabListViewModel {
         TransferTabListViewModel(
             tab: tab,
@@ -196,7 +295,8 @@ struct TransferTabListViewModelTests {
                 rowRouter: MockTransferRowRouting(),
                 clearTransfersUseCase: MockClearTransfersUseCase()
             ),
-            throttle: { $0 }
+            selection: selection,
+            throttle: throttle
         )
     }
 }

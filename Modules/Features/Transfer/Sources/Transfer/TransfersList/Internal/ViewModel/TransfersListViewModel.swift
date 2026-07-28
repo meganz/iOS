@@ -6,11 +6,27 @@ import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
+import SwiftUI
 
 @MainActor
 public final class TransfersListViewModel: ObservableObject {
     @Published public var selectedTab: TransfersTab = .active
     @Published public private(set) var isAllPaused: Bool
+
+    /// Select mode. The screen owns only this flag: the selected tags live in
+    /// `selection` and are kept in step by the listed tab's view model.
+    @Published var editMode: EditMode = .inactive
+
+    /// Shared select-mode selection. The view observes it directly — no
+    /// republishing hop — so the count and action enablement land in the same
+    /// frame as the tap that changed them.
+    let selection = TransferSelection()
+
+    /// Dismisses the screen when it is presented modally; nil when pushed. Owned
+    /// by SwiftUI (rendered as the leading Close outside select mode) so select
+    /// mode can hand the leading slot to select-all: a presenter-attached UIKit
+    /// bar item can only be rendered beside a SwiftUI one, never replaced by it.
+    let onClose: (@MainActor () -> Void)?
 
     /// Drives the cancel-all confirmation alert. Cancel is the only destructive action
     /// that prompts (clear-all and retry-all run immediately, per design).
@@ -45,7 +61,8 @@ public final class TransfersListViewModel: ObservableObject {
         monitorPresenceUseCase: some MonitorTransferTabPresenceUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         transferQuotaUseCase: some TransferQuotaUseCaseProtocol,
-        transferControlUseCase: some TransferControlUseCaseProtocol
+        transferControlUseCase: some TransferControlUseCaseProtocol,
+        onClose: (@MainActor () -> Void)? = nil
     ) {
         self.dependency = dependency
         self.transferListUseCase = transferListUseCase
@@ -53,6 +70,7 @@ public final class TransfersListViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.transferQuotaUseCase = transferQuotaUseCase
         self.transferControlUseCase = transferControlUseCase
+        self.onClose = onClose
         self.isAllPaused = transferListUseCase.areTransfersPaused()
         self.isTransferOverquota = transferQuotaUseCase.isOverquota
         self.isStorageOverquota = Self.isOverStorageQuota(accountStorageUseCase)
@@ -68,6 +86,11 @@ public final class TransfersListViewModel: ObservableObject {
     func observeTabPresence() async {
         for await presence in monitorPresenceUseCase.presenceUpdates {
             self.presence = presence
+            // Selecting on a tab that just emptied would strand the user on a
+            // select-mode bar over an empty state, with nothing left to act on.
+            if isSelectModeActive, isCurrentTabEmpty {
+                exitSelectMode()
+            }
         }
     }
 
@@ -213,14 +236,48 @@ public final class TransfersListViewModel: ObservableObject {
         !menuActions.isEmpty
     }
 
+    // MARK: - Select mode
+
+    var isSelectModeActive: Bool {
+        editMode.isEditing
+    }
+
     func enterSelectMode() {
-        // Select mode: IOS-11933
+        editMode = .active
+    }
+
+    /// The Done button, and the fallback for when the listed tab runs dry while
+    /// selecting (e.g. every selected Active transfer finishes).
+    func exitSelectMode() {
+        editMode = .inactive
+        selection.clear()
+    }
+
+    // MARK: - Select-mode actions
+    //
+    // Rendered and enabled-when-something-is-selected here; running them on the
+    // selected subset lands with IOS-12220. Until then the screen ships behind
+    // the `newTransfers` feature flag, so the inert buttons stay internal.
+
+    /// Active tab: cancel the selected transfers.
+    func cancelSelectedTransfers() {
+        // IOS-12220
+    }
+
+    /// Completed and Failed tabs: clear the selected transfers.
+    func clearSelectedTransfers() {
+        // IOS-12220
+    }
+
+    /// Failed tab: retry the selected transfers.
+    func retrySelectedTransfers() {
+        // IOS-12220
     }
 
     // MARK: - Confirmation dialog
 
     /// Cancel is the only action that prompts. Opens the dialog from the More menu;
-    /// the selected-subset variant arrives with select mode (IOS-11933).
+    /// the selected-subset variant arrives with IOS-12220.
     func requestCancelAllConfirmation() {
         isPresentingCancelAllConfirmation = true
     }

@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGASwift
 import MEGASwiftUI
+import SwiftUI
 import Testing
 @testable import Transfer
 
@@ -189,6 +190,80 @@ struct TransfersListViewModelPresenceTests {
 
         #expect(!sut.hasActiveTransfers)
         #expect(sut.hasCompletedTransfers)
+    }
+}
+
+@Suite("TransfersListViewModel select mode")
+@MainActor
+struct TransfersListViewModelSelectModeTests {
+
+    @Test func freshlyConstructed_isNotSelecting() {
+        let sut = makeSUT()
+
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+    }
+
+    @Test func enterSelectMode_activatesEditMode() {
+        let sut = makeSUT()
+
+        sut.enterSelectMode()
+
+        #expect(sut.isSelectModeActive)
+        #expect(sut.editMode == .active)
+    }
+
+    @Test func exitSelectMode_deactivatesEditModeAndClearsTheSelection() {
+        let sut = makeSUT()
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [1, 2]
+
+        sut.exitSelectMode()
+
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+    }
+
+    @Test func presenceUpdate_emptyingTheSelectedTab_exitsSelectMode() async {
+        // Every selected Active transfer finishing must not strand the user on a
+        // select-mode bar above an empty state.
+        let updates = [
+            TransferTabPresence(hasActive: false, hasCompleted: true, hasFailed: false)
+        ].async.eraseToAnyAsyncSequence()
+        let sut = makeSUT(presenceUpdates: updates)
+        sut.selectedTab = .active
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [1]
+
+        await sut.observeTabPresence()
+
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+    }
+
+    @Test func presenceUpdate_keepingTheSelectedTabPopulated_staysInSelectMode() async {
+        let updates = [
+            TransferTabPresence(hasActive: true, hasCompleted: false, hasFailed: false)
+        ].async.eraseToAnyAsyncSequence()
+        let sut = makeSUT(presenceUpdates: updates)
+        sut.selectedTab = .active
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [1]
+
+        await sut.observeTabPresence()
+
+        #expect(sut.isSelectModeActive)
+        #expect(sut.selection.selectedTags == [1])
+    }
+
+    @Test func onClose_isNilUnlessAModalPresenterSuppliesIt() {
+        #expect(makeSUT().onClose == nil)
+
+        var closed = false
+        let modal = makeSUT(onClose: { closed = true })
+        modal.onClose?()
+
+        #expect(closed)
     }
 }
 
@@ -516,7 +591,8 @@ private func makeSUT(
     transferQuotaUseCase: MockTransferQuotaUseCase = MockTransferQuotaUseCase(),
     rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
     transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
-    itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase()
+    itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase(),
+    onClose: (@MainActor () -> Void)? = nil
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
         hasActive: hasActiveTransfers,
@@ -535,7 +611,8 @@ private func makeSUT(
         ),
         accountStorageUseCase: accountStorageUseCase,
         transferQuotaUseCase: transferQuotaUseCase,
-        transferControlUseCase: transferControlUseCase
+        transferControlUseCase: transferControlUseCase,
+        onClose: onClose
     )
 }
 

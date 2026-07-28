@@ -21,6 +21,12 @@ final class TransferTabListViewModel: ObservableObject {
     /// before the first rows appear.
     @Published private(set) var isLoaded = false
 
+    /// Select-mode selection, shared with the screen. This view model keeps its
+    /// `listedTags` in step with the rows the tab lists; the removal path does so
+    /// synchronously (never behind the flush throttle) so a selected row that
+    /// finishes stops counting in the same frame.
+    let selection: TransferSelection
+
     private let tab: TransfersTab
     private let dependency: TransferTabDependency
     private let throttle: FlushPublisherThrottle
@@ -37,6 +43,7 @@ final class TransferTabListViewModel: ObservableObject {
     init(
         tab: TransfersTab,
         dependency: TransferTabDependency,
+        selection: TransferSelection = TransferSelection(),
         throttle: @escaping FlushPublisherThrottle = {
             $0.throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
                 .eraseToAnyPublisher()
@@ -44,6 +51,7 @@ final class TransferTabListViewModel: ObservableObject {
     ) {
         self.tab = tab
         self.dependency = dependency
+        self.selection = selection
         self.throttle = throttle
         rowStateBuilder = TransferRowStateBuilder(
             tab: tab,
@@ -115,6 +123,9 @@ final class TransferTabListViewModel: ObservableObject {
         guard presentIds.remove(id) != nil else { return }
         dependency.registry.remove(id: id)
         removedIds.insert(id)
+        // O(1) and synchronous: the flush below is throttled, and a selected row
+        // that just left must drop out of the top-bar count immediately.
+        selection.dropListedTag(id)
         scheduleFlush()
     }
 
@@ -128,6 +139,11 @@ final class TransferTabListViewModel: ObservableObject {
             removedIds.removeAll()
         }
         rows = orderedIds.compactMap { dependency.registry.rowViewModel(for: $0) }
+        // Derived from `rows`, not `presentIds`: the selectable set has to be
+        // exactly what is on screen, or select-all and the count drift apart.
+        // Rows inserted since the last flush become selectable here; removals
+        // already pruned themselves synchronously.
+        selection.setListedTags(Set(rows.map(\.id)))
     }
 
     private func pruneRows() {
@@ -157,6 +173,10 @@ final class TransferTabListViewModel: ObservableObject {
             registry.remove(id: id)
         }
         rows = orderedIds.compactMap { registry.rowViewModel(for: $0) }
+        // A re-snapshot (e.g. after a clear) can drop rows wholesale; converge the
+        // selection on what is now listed. Derived from `rows`, like the flush
+        // path, so the selectable set is always exactly what is on screen.
+        selection.setListedTags(Set(rows.map(\.id)))
         isLoaded = true
     }
 }

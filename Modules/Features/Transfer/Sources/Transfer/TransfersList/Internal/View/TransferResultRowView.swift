@@ -27,6 +27,14 @@ struct TransferResultRowView: View {
     let onRetried: @MainActor () -> Void
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
+    @Environment(\.editMode) private var editMode
+
+    /// In select mode the row shows the native leading checkbox and nothing may
+    /// compete with the tap that toggles it, so the trailing control is dropped
+    /// and the row's own gestures are masked off.
+    private var isSelecting: Bool {
+        editMode?.wrappedValue.isEditing == true
+    }
 
     /// Pause/resume is disabled while all transfers are paused or transfer quota is
     /// exhausted (nothing can progress until the user upgrades).
@@ -72,7 +80,9 @@ struct TransferResultRowView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                trailingAction
+                if !isSelecting {
+                    trailingAction
+                }
             }
             .padding(TokenSpacing._4)
 
@@ -82,14 +92,23 @@ struct TransferResultRowView: View {
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            if isCompleted { viewModel.openFile() }
-        }
+        // Masked rather than removed while selecting: an `if` around the gesture
+        // and swipe modifiers would be a structural change, so entering select
+        // mode would tear down and rebuild every visible row. A masked-off
+        // gesture stops consuming the tap, leaving it to the list's selection.
+        .gesture(
+            TapGesture().onEnded {
+                if isCompleted { viewModel.openFile() }
+            },
+            including: isSelecting ? .none : .all
+        )
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            swipeAction
+            if !isSelecting {
+                swipeAction
+            }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            if viewModel.state.isRetryable {
+            if !isSelecting, viewModel.state.isRetryable {
                 retrySwipeAction
             }
         }

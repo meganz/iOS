@@ -14,9 +14,14 @@ public enum TransfersListViewControllerFactory {
     /// - Parameter rowRouter: app-implemented navigation for per-row actions (View in
     ///   folder, Open with, Share link, open file); none of those destinations are
     ///   constructible from this package, so the app injects the router.
+    /// - Parameter onClose: modal presenters pass their dismissal here instead of
+    ///   attaching a UIKit bar button, so the screen can render Close as a SwiftUI
+    ///   toolbar item and hand that slot to select-all while selecting. Pass nil
+    ///   when pushing, to keep the standard back button.
     public static func make(
         nodeUseCase: some NodeUseCaseProtocol,
-        rowRouter: some TransferRowRouting
+        rowRouter: some TransferRowRouting,
+        onClose: (@MainActor () -> Void)? = nil
     ) -> UIViewController {
         let inventoryUseCase = TransferInventoryUseCase(
             transferInventoryRepository: TransferInventoryRepository.newRepo,
@@ -83,7 +88,8 @@ public enum TransfersListViewControllerFactory {
                 accountRepository: AccountRepository.newRepo,
                 nodeTransferRepository: NodeTransferRepository.newRepo
             ),
-            transferControlUseCase: DependencyInjection.transferControlUseCase
+            transferControlUseCase: DependencyInjection.transferControlUseCase,
+            onClose: onClose
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))
         host.hidesBottomBarWhenPushed = true
