@@ -33,7 +33,12 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
 
         let rootVC: UIViewController
         var rowRouter: TransferRowActionRouter?
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+        // Filled in once the navigation controller below exists; the revamped
+        // screen renders Close itself and calls this, rather than us attaching a
+        // UIKit bar button it could not swap out while selecting.
+        var dismissModal: (@MainActor () -> Void)?
+        let isNewTransfers = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers)
+        if isNewTransfers {
             let router = TransferRowActionRouter()
             rowRouter = router
             rootVC = TransfersListViewControllerFactory.make(
@@ -42,7 +47,8 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
                 ),
-                rowRouter: router
+                rowRouter: router,
+                onClose: { dismissModal?() }
             )
         } else {
             let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
@@ -56,7 +62,13 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
         let navigationController = MEGANavigationController(rootViewController: rootVC)
         // Transfers is presented inside this modal nav; row actions push/present from it.
         rowRouter?.navigationController = navigationController
-        navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
+        if isNewTransfers {
+            dismissModal = { [weak navigationController] in
+                navigationController?.dismiss(animated: true)
+            }
+        } else {
+            navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
+        }
         CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers from nav bar indicator")
         UIApplication.mnz_visibleViewController().present(navigationController, animated: true)
     }
