@@ -18,8 +18,6 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let onClose: @MainActor () -> Void
-        /// Gates the link revamp: the loading skeleton, the reworked decryption key dialog copy
-        /// and the redesigned unavailable link state.
         let isLinkRevampEnabled: Bool
 
         public init(
@@ -237,6 +235,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
             sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
             nodeActionHandler: dependency.nodeActionHandler,
+            isLinkRevampEnabled: dependency.isLinkRevampEnabled,
             selectionHandler: { selection in
                 if selection.result.isFolder {
                     navigationPath.append(NavigationRoute.folder(selection.result.id))

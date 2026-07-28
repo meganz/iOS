@@ -16,6 +16,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
         let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let isLinkRevampEnabled: Bool
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let dismissContent: () -> DismissButton
@@ -27,6 +28,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
                 searchResultsProvidingBuilder: searchResultsProvidingBuilder,
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 nodeActionHandler: nodeActionHandler,
+                isLinkRevampEnabled: isLinkRevampEnabled,
                 selectionHandler: selectionHandler,
                 dismissContent: dismissContent
             )

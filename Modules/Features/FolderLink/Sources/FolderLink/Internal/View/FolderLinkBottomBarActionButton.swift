@@ -39,3 +39,18 @@ struct FolderLinkBottomBarActionButton: View {
         .labelStyle(.iconOnly)
     }
 }
+
+/// The same actions as `FolderLinkBottomBarActionButton`, but labelled with title and icon so they
+/// can live inside a `Menu`. Used for the actions that no longer fit the two anchored buttons.
+struct FolderLinkBottomBarActionMenuButton: View {
+    let action: FolderLinkBottomBarAction
+    @Binding var selection: FolderLinkBottomBarAction?
+
+    var body: some View {
+        Button {
+            selection = action
+        } label: {
+            Label(title: { Text(action.title) }, icon: { action.icon })
+        }
+    }
+}

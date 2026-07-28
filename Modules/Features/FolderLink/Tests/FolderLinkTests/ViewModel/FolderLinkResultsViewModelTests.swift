@@ -311,6 +311,30 @@ final class FolderLinkResultsViewModelTests {
             
             XCTAssertEqual(receivedSearchText, newSearchText)
         }
+
+        func testWhenSearchCollapsesShouldClearSearchText() {
+            // Given
+            let sut = makeSUT()
+            sut.searchBecameActive = true
+            sut.searchText = "some text"
+
+            // When
+            sut.searchBecameActive = false
+
+            // Then
+            XCTAssertEqual(sut.searchText, "")
+        }
+
+        func testWhenSearchIsActiveShouldKeepSearchText() {
+            // Given
+            let sut = makeSUT()
+
+            // When
+            sut.searchBecameActive = true
+            sut.searchText = "some text"
+
+            // Then
+            XCTAssertEqual(sut.searchText, "some text")
+        }
     }
 }
-

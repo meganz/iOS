@@ -68,7 +68,7 @@ package final class FolderLinkResultsViewModel: ObservableObject {
 
     @Published package var editMode: EditMode = .inactive
     @Published package var searchText: String = ""
-    @Published var searchBecameActive: Bool = false
+    @Published package var searchBecameActive: Bool = false
     @Published var selection: SearchResultSelection?
     @Published var nodeAction: FolderLinkNodeAction?
     @Published package var nodesAction: FolderLinkNodesAction?
@@ -285,6 +285,18 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         $searchBecameActive
             .sink { [searchResultsContainerViewModel] isActive in
                 searchResultsContainerViewModel.searchActiveDidChange(isActive)
+            }
+            .store(in: &cancellables)
+
+        /// The search field is taken down when it collapses back into the navigation bar, so the query has
+        /// to be dropped explicitly, otherwise the results stay filtered by a term that is no longer
+        /// visible anywhere.
+        $searchBecameActive
+            .dropFirst()
+            .removeDuplicates()
+            .filter { !$0 }
+            .sink { [weak self] _ in
+                self?.searchText = ""
             }
             .store(in: &cancellables)
     }
