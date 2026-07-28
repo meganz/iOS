@@ -585,11 +585,19 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
+    BOOL isLinkRevampEnabled = MEGALinkManager.isLinkRevampEnabled;
+    NSString *passwordAlertTitle = isLinkRevampEnabled
+        ? LocalizedString(@"link.password.alert.title", @"Title of the dialog asking for the password of a password protected link")
+        : LocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.");
+    
     MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
         MEGALinkManager.linkURL = [NSURL URLWithString:request.text];
         [MEGALinkManager processLinkURL:[NSURL URLWithString:request.text]];
     } onError:^(MEGARequest *request) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        NSString *errorTitle = isLinkRevampEnabled
+            ? LocalizedString(@"passwordWrong", @"Error text shown when you introduce a wrong password on the confirmation proccess")
+            : passwordAlertTitle;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:errorTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [MEGALinkManager showEncryptedLinkAlert:request.link];
         }]];
@@ -597,7 +605,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:LocalizedString(@"If you do not have the password, contact the creator of the link.", @"This dialog message is used on the Password Decrypt dialog as an instruction for the user.") preferredStyle:UIAlertControllerStyleAlert];
+    NSString *passwordAlertMessage = isLinkRevampEnabled
+        ? LocalizedString(@"link.password.alert.message", @"Message of the dialog asking for the password of a password protected link")
+        : LocalizedString(@"If you do not have the password, contact the creator of the link.", @"This dialog message is used on the Password Decrypt dialog as an instruction for the user.");
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:passwordAlertTitle message:passwordAlertMessage preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = LocalizedString(@"Enter the password", @"This placeholder text is used on the Password Decrypt dialog as an instruction for the user.");
         [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -606,9 +617,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         };
         textField.secureTextEntry = YES;
     }];
-    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    NSString *confirmTitle = isLinkRevampEnabled
+        ? LocalizedString(@"decrypt", @"Button title to try to decrypt the link")
+        : LocalizedString(@"ok", @"");
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdk.shared decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
-    }]];
+    }];
+    confirmAction.enabled = !isLinkRevampEnabled;
+    [alertController addAction:confirmAction];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
         MEGALinkManager.secondaryLinkURL = nil;

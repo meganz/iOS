@@ -36,11 +36,13 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
     
     private func attachFolderLinkView() {
         navigationController?.navigationBar.isHidden = true
+        // The local flag is read here, at the composition root, and nowhere else.
+        let isLinkRevampEnabled = MEGALinkManager.isLinkRevampEnabled
         let folderLinkViewController = UIHostingController(
             rootView: FolderLinkView(
-                dependency: buildDependency(link: link),
+                dependency: buildDependency(link: link, isLinkRevampEnabled: isLinkRevampEnabled),
                 linkUnavailableContent: { reason in
-                    FolderLinkUnavailableView(reason: reason)
+                    FolderLinkUnavailableView(reason: reason, isLinkRevampEnabled: isLinkRevampEnabled)
                 },
                 miniPlayerContent: {
                     FolderLinkMiniPlayerView(viewModel: $0)
@@ -60,7 +62,7 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
         folderLinkViewController.didMove(toParent: self)
     }
     
-    private func buildDependency<MiniPlayer>(link: String) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView, MiniPlayer>.Dependency {
+    private func buildDependency<MiniPlayer>(link: String, isLinkRevampEnabled: Bool) -> FolderLinkView<FolderLinkUnavailableView, FolderLinkMediaDiscoveryContentView, MiniPlayer>.Dependency {
         let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
             preferenceUseCase: PreferenceUseCase.default,
             sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
@@ -77,6 +79,7 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,
             nodeActionHandler: nodeActionHandler,
+            isLinkRevampEnabled: isLinkRevampEnabled,
             mediaDiscoveryContent: {
                 FolderLinkMediaDiscoveryContentView(viewModel: $0)
             },

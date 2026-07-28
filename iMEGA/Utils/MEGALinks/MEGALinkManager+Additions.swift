@@ -384,6 +384,13 @@ extension MEGALinkManager {
     }
 }
 
+// MARK: - Link Revamp
+extension MEGALinkManager {
+    @objc static var isLinkRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .linkRevamp)
+    }
+}
+
 // MARK: - FolderLink
 extension MEGALinkManager {
     @objc static func newFolderLinkViewController(link: String) -> UIViewController {

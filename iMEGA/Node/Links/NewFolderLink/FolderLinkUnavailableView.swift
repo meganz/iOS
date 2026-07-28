@@ -1,7 +1,20 @@
 import FolderLink
 import SwiftUI
 
-struct FolderLinkUnavailableView: UIViewRepresentable {
+struct FolderLinkUnavailableView: View {
+    let reason: LinkUnavailableReason
+    let isLinkRevampEnabled: Bool
+    
+    var body: some View {
+        if isLinkRevampEnabled {
+            FolderLinkUnavailableContentView(reason: reason)
+        } else {
+            LegacyFolderLinkUnavailableView(reason: reason)
+        }
+    }
+}
+
+private struct LegacyFolderLinkUnavailableView: UIViewRepresentable {
     let reason: LinkUnavailableReason
     
     func makeUIView(context: Context) -> UIView {
@@ -29,5 +42,5 @@ struct FolderLinkUnavailableView: UIViewRepresentable {
 }
 
 #Preview {
-    FolderLinkUnavailableView(reason: .downETD)
+    FolderLinkUnavailableView(reason: .downETD, isLinkRevampEnabled: true)
 }

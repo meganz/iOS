@@ -18,7 +18,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let onClose: @MainActor () -> Void
-        
+        /// Gates the link revamp: the loading skeleton, the reworked decryption key dialog copy
+        /// and the redesigned unavailable link state.
+        let isLinkRevampEnabled: Bool
+
         public init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
@@ -27,6 +30,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
+            isLinkRevampEnabled: Bool,
             @ViewBuilder mediaDiscoveryContent: @escaping (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery,
             onClose: @escaping @MainActor () -> Void
         ) {
@@ -37,6 +41,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
             self.nodeActionHandler = nodeActionHandler
+            self.isLinkRevampEnabled = isLinkRevampEnabled
             self.mediaDiscoveryContent = mediaDiscoveryContent
             self.onClose = onClose
         }
@@ -93,11 +98,20 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     }
     
     @ViewBuilder
+    private var loadingIndicator: some View {
+        if dependency.isLinkRevampEnabled {
+            FolderLinkLoadingView()
+        } else {
+            ProgressView()
+                .opacity(viewModel.askingForDecryptionKey || viewModel.notifyInvalidDecryptionKey ? 0 : 1)
+        }
+    }
+
+    @ViewBuilder
     private var content: some View {
         switch viewModel.viewState {
         case .loading:
-            ProgressView()
-                .opacity(viewModel.askingForDecryptionKey || viewModel.notifyInvalidDecryptionKey ? 0 : 1)
+            loadingIndicator
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(TokenColors.Background.page.swiftUI)
                 .onFirstLoad {
@@ -107,6 +121,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 }
                 .askingForDecryptionKeyAlert(
                     isPresented: $viewModel.askingForDecryptionKey,
+                    isLinkRevampEnabled: dependency.isLinkRevampEnabled,
                     confirm: { text in
                         Task {
                             await viewModel.confirmDecryptionKey(text)

@@ -5,6 +5,7 @@ import SwiftUI
 extension View {
     func askingForDecryptionKeyAlert(
         isPresented: Binding<Bool>,
+        isLinkRevampEnabled: Bool,
         confirm: @MainActor @escaping (String) -> Void,
         cancel: @MainActor @escaping () -> Void
     ) -> some View {
@@ -14,7 +15,9 @@ extension View {
             affirmativeButtonTitle: Strings.Localizable.decrypt,
             affirmativeButtonInitiallyEnabled: false,
             destructiveButtonTitle: Strings.Localizable.cancel,
-            message: Strings.Localizable.decryptionKeyAlertMessage,
+            message: isLinkRevampEnabled
+                ? Strings.Localizable.Link.DecryptionKey.Alert.message
+                : Strings.Localizable.decryptionKeyAlertMessage,
             action: { text in
                 if let text {
                     confirm(text)
