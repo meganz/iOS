@@ -113,26 +113,29 @@ class MessageInputBar: UIView {
 
         MainActor.assumeIsolated {
             configureViews()
+            registerForTraitChanges()
         }
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return .zero
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+
+    private func registerForTraitChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (inputBar: MessageInputBar, _: UITraitCollection) in
+            inputBar.updateAppearance()
         }
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            if editViewHeightConstraint.constant > 0 { calculateEditViewHeight() }
-            calculateAddButtonBotomSpacing()
-            calculateTopEditViewSpacing()
-            self.messageTextView.expandedHeight = self.expandedHeight
+
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (inputBar: MessageInputBar, _: UITraitCollection) in
+            inputBar.updateLayoutForContentSizeCategoryChange()
         }
+    }
+
+    private func updateLayoutForContentSizeCategoryChange() {
+        if editViewHeightConstraint.constant > 0 { calculateEditViewHeight() }
+        calculateAddButtonBotomSpacing()
+        calculateTopEditViewSpacing()
+        messageTextView.expandedHeight = expandedHeight
     }
     
     // MARK: - interface method.

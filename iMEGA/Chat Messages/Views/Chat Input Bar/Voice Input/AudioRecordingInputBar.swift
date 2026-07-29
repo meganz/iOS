@@ -53,6 +53,7 @@ class AudioRecordingInputBar: UIView {
             audioWavesholderView.wrap(audioWavesView)
             trashView.imageView.image = MEGAAssets.UIImage.rubbishBin.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
             updateAppearance()
+            registerForAppearanceChanges()
 
             audioRecorder.updateHandler = {[weak self] timeString, level in
                 guard let `self` = self else {
@@ -71,11 +72,9 @@ class AudioRecordingInputBar: UIView {
         }
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (inputBar: AudioRecordingInputBar, _: UITraitCollection) in
+            inputBar.updateAppearance()
         }
     }
     

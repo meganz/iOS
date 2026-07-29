@@ -55,6 +55,14 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         MainActor.assumeIsolated {
             configureImages()
             updateAppearance()
+            registerForAppearanceChanges()
+        }
+    }
+
+    /// `updateAppearance` refreshes both token colors and `preferredFont` based fonts, so both trait groups have to be observed.
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance + [UITraitPreferredContentSizeCategory.self]) { (headerView: ChatViewIntroductionHeaderView, _: UITraitCollection) in
+            headerView.updateAppearance()
         }
     }
     
@@ -157,12 +165,6 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             let status = chatRoomUseCase.userStatus(forUserHandle: userHandle)
             statusView.backgroundColor = status.uiColor
         }
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        updateAppearance()
     }
     
     private func setAttributedText(with string: String, label: UILabel) {

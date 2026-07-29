@@ -40,6 +40,13 @@ class ChatTitleView: UIView {
         super.awakeFromNib()
         MainActor.assumeIsolated {
             updateAppearance()
+            registerForAppearanceChanges()
+        }
+    }
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (titleView: ChatTitleView, _: UITraitCollection) in
+            titleView.updateAppearance()
         }
     }
     
@@ -108,11 +115,4 @@ class ChatTitleView: UIView {
         subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(traitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.updateAppearance()
-        }
-    }
 }

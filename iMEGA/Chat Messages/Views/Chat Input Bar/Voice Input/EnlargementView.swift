@@ -32,6 +32,13 @@ class EnlargementView: UIView {
             originalHeight = heightConstraint.constant
             originalPlaceholderValue = placeholderConstraint.constant
             updateAppearance()
+            registerForAppearanceChanges()
+        }
+    }
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: EnlargementView, _: UITraitCollection) in
+            view.updateAppearance()
         }
     }
     
@@ -78,14 +85,6 @@ class EnlargementView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = width / 2.0
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     private func removeAllTapGestures() {

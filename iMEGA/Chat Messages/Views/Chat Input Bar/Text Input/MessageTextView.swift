@@ -87,14 +87,13 @@ class MessageTextView: UITextView {
         
         MainActor.assumeIsolated {
             configureViews()
+            registerForAppearanceChanges()
         }
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (textView: MessageTextView, _: UITraitCollection) in
+            textView.updateAppearance()
         }
     }
     

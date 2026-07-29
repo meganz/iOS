@@ -59,13 +59,13 @@ class ChatBottomNewMessageIndicatorView: UIView {
         }
         backgroundView.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
         addSubview(rootFlexContainer)
+        registerForAppearanceChanges()
     }
-    
-    // This override is needed as CGColors do not update automatically when appearance changes
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            badgeLabel.layer.borderColor = TokenColors.Text.inverseAccent.cgColor
+
+    // This registration is needed as CGColors do not update automatically when appearance changes
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: ChatBottomNewMessageIndicatorView, _: UITraitCollection) in
+            view.badgeLabel.layer.borderColor = TokenColors.Text.inverseAccent.cgColor
         }
     }
     

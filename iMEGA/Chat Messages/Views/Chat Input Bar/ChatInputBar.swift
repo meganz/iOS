@@ -168,21 +168,23 @@ class ChatInputBar: UIView {
         
         addMessageInputBar()
         keyboardFrameChangeObserver = keyboardFrameChangedNotification()
+        registerForSizeClassChanges()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if let previousTraitCollection = previousTraitCollection,
-            traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass
-                || traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass {
-            
-            if let voiceClipInputBar = voiceClipInputBar,
-                voiceClipInputBar.superview != nil,
-                let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) {
-                voiceClipInputBarHeightConstraint.constant = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
-            }
+
+    private func registerForSizeClassChanges() {
+        registerForTraitChanges([UITraitVerticalSizeClass.self, UITraitHorizontalSizeClass.self]) { (inputBar: ChatInputBar, _: UITraitCollection) in
+            inputBar.updateVoiceClipInputBarHeight()
         }
+    }
+
+    private func updateVoiceClipInputBarHeight() {
+        guard let voiceClipInputBar = voiceClipInputBar,
+              voiceClipInputBar.superview != nil,
+              let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) else {
+            return
+        }
+
+        voiceClipInputBarHeightConstraint.constant = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
     }
     
     isolated deinit {

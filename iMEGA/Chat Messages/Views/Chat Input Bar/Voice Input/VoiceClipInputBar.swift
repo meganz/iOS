@@ -40,16 +40,15 @@ class VoiceClipInputBar: UIView {
             
             audioWavesView = AudioWavesView.instanceFromNib
             audioWavesholderView.wrap(audioWavesView)
-            
+
             updateAppearance()
+            registerForAppearanceChanges()
         }
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (inputBar: VoiceClipInputBar, _: UITraitCollection) in
+            inputBar.updateAppearance()
         }
     }
     
