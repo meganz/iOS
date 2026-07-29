@@ -11,19 +11,22 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     let loadThumbnailResults: [HandleEntity: Result<ThumbnailEntity, any Error>]
     let loadPreviewResult: Result<ThumbnailEntity, any Error>
     let loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), any Error>
-    
+    let hasCachedPreviewOrOriginal: Bool
+
     public init(cachedThumbnails: [ThumbnailEntity] = [],
                 generatedCachingThumbnail: ThumbnailEntity = ThumbnailEntity(url: URL(string: "https://MEGA.NZ")!, type: .thumbnail),
                 loadThumbnailResult: Result<ThumbnailEntity, any Error> = .failure(GenericErrorEntity()),
                 loadThumbnailResults: [HandleEntity: Result<ThumbnailEntity, any Error>] = [:],
                 loadPreviewResult: Result<ThumbnailEntity, any Error> = .failure(GenericErrorEntity()),
-                loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), any Error> = .failure(GenericErrorEntity())) {
+                loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), any Error> = .failure(GenericErrorEntity()),
+                hasCachedPreviewOrOriginal: Bool = true) {
         self.cachedThumbnails = cachedThumbnails
         self.generatedCachingThumbnail = generatedCachingThumbnail
         self.loadThumbnailResult = loadThumbnailResult
         self.loadThumbnailResults = loadThumbnailResults
         self.loadPreviewResult = loadPreviewResult
         self.loadThumbnailAndPreviewResult = loadThumbnailAndPreviewResult
+        self.hasCachedPreviewOrOriginal = hasCachedPreviewOrOriginal
     }
     
     public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity? {
@@ -75,7 +78,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     }
     
     public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
-        generatedCachingThumbnail.url.absoluteString
+        hasCachedPreviewOrOriginal ? generatedCachingThumbnail.url.absoluteString : nil
     }
     
     // MARK: Helper

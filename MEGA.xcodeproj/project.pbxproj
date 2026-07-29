@@ -1414,11 +1414,14 @@
 		9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9480283D2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift */; };
 		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9482F73C2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */; };
+		88ADCA6EE1FFAB22278F511E /* OfflineAwareNodeTapDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */; };
+		38D4935BCBD716450DD59835 /* OfflineFileOpenGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC452E93EC28C4938572FD0 /* OfflineFileOpenGuardTests.swift */; };
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
 		94872E952C08886600DC76E6 /* UsageViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94872E942C08886600DC76E6 /* UsageViewRouter.swift */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		948A0E962C9ED7A7004DDF55 /* MockMegaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */; };
+		BDA5B44E31224E94F519C9B1 /* MockOfflineFileOpenGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AA0410F81115A842380B18 /* MockOfflineFileOpenGuard.swift */; };
 		948AE4A42C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */; };
 		948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948B29492CA1671D00428787 /* MockFileManager.swift */; };
 		948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */; };
@@ -2665,6 +2668,8 @@
 		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
 		C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */; };
 		CD0FF1E5C0DD12225BA88A01 /* CloudDriveOfflineModeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */; };
+		C63FAA6DC8DE398DF87D0F6A /* OfflineAwareNodeTapDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */; };
+		CA2E12D813A8EE81C5DEECBA /* OfflineFileOpenGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
 		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
@@ -4224,9 +4229,12 @@
 		9480283D2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInfoViewRouter.swift; sourceTree = "<group>"; };
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModelTests.swift; sourceTree = "<group>"; };
+		E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAwareNodeTapDispatcherTests.swift; sourceTree = "<group>"; };
+		5EC452E93EC28C4938572FD0 /* OfflineFileOpenGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileOpenGuardTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		94872E942C08886600DC76E6 /* UsageViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewRouter.swift; sourceTree = "<group>"; };
 		948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMegaStore.swift; sourceTree = "<group>"; };
+		59AA0410F81115A842380B18 /* MockOfflineFileOpenGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOfflineFileOpenGuard.swift; sourceTree = "<group>"; };
 		948AE4A32C664AB8000B14C7 /* ChatRoomsEmptyViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactory.swift; sourceTree = "<group>"; };
 		948B29492CA1671D00428787 /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		948BCE022C206ECE00B719B2 /* MockCameraSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraSwitcher.swift; sourceTree = "<group>"; };
@@ -5491,6 +5499,8 @@
 		C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandlerTests.swift; sourceTree = "<group>"; };
 		C70D09D7707039EB5A91C3AD /* QuotaEventSimulatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEventSimulatorView.swift; sourceTree = "<group>"; };
 		CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveOfflineModeGate.swift; sourceTree = "<group>"; };
+		18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAwareNodeTapDispatcher.swift; sourceTree = "<group>"; };
+		3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileOpenGuard.swift; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MasterKeyViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -6200,6 +6210,8 @@
 				A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */,
 				9482F73B2B5EAB400061BAD5 /* NodeBrowserViewModelTests.swift */,
 				BF5F118B2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift */,
+				E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */,
+				5EC452E93EC28C4938572FD0 /* OfflineFileOpenGuardTests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
 				0E9DBE2C2E4BF56100BF62F6 /* QuickActionsMenuDelegateHandlerTests.swift */,
 				943385382D4A7497002E7E61 /* RecentListHeaderViewModelFactoryTests.swift */,
@@ -8327,6 +8339,7 @@
 				94A144612C9DE58800C34A98 /* MockChatUploader.swift */,
 				948B29492CA1671D00428787 /* MockFileManager.swift */,
 				948A0E952C9ED7A3004DDF55 /* MockMegaStore.swift */,
+				59AA0410F81115A842380B18 /* MockOfflineFileOpenGuard.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				834B51912C9D91E5002E46FB /* MockTimerSequenceFactory.swift */,
 				94A7E9902EA74F7800258E5D /* MockTrackEntity.swift */,
@@ -10636,6 +10649,8 @@
 				94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */,
 				94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */,
 				94B09E512B84CC86007D6B84 /* NodeSource.swift */,
+				18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */,
+				3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */,
 				94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */,
 				94B09E502B84CC86007D6B84 /* RefreshMenuTriggering.swift */,
 				94B09E522B84CC86007D6B84 /* RubbishBinMenuDelegateHandler.swift */,
@@ -15598,6 +15613,7 @@
 				83DE6D1C298940CF000503CC /* OccurrenceView.swift in Sources */,
 				5BE689AB2419135400462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
+				C63FAA6DC8DE398DF87D0F6A /* OfflineAwareNodeTapDispatcher.swift in Sources */,
 				BFB6B4052ECF07FF00D7026D /* OfflineCollectionHeaderView.swift in Sources */,
 				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
 				C4789ED3270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift in Sources */,
@@ -15607,6 +15623,7 @@
 				A882983C29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */,
 				C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */,
 				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
+				CA2E12D813A8EE81C5DEECBA /* OfflineFileOpenGuard.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				BFB6B4972ED4443700D7026D /* OfflineHeaderViewHosting.swift in Sources */,
 				A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */,
@@ -16745,6 +16762,7 @@
 				A8F29E6F2D958279002774A7 /* MockNodeSensitivityChecker.swift in Sources */,
 				947064742D3281D700C89D7F /* MockNotificationsViewRouter.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
+				BDA5B44E31224E94F519C9B1 /* MockOfflineFileOpenGuard.swift in Sources */,
 				9437CEC42CB0080F0051F947 /* MockOfflineFilesUseCase.swift in Sources */,
 				0EAF3FB82D68086E007D4E9C /* MockOverDiskQuotaChecker.swift in Sources */,
 				B5316F982CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift in Sources */,
@@ -16802,9 +16820,11 @@
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
+				88ADCA6EE1FFAB22278F511E /* OfflineAwareNodeTapDispatcherTests.swift in Sources */,
 				94EF2DCE2CAD9FC00061071E /* OfflineFileEntity.swift in Sources */,
 				94CFB3C02D11E2A30064D846 /* OfflineFileFetcherRepositoryTests.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				38D4935BCBD716450DD59835 /* OfflineFileOpenGuardTests.swift in Sources */,
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
 				C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */,

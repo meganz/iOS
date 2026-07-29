@@ -6,6 +6,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import MEGAUIComponent
 import Search
 import SwiftUI
@@ -84,8 +85,14 @@ final class NodeBrowserViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
     let noInternetViewModel: LegacyNoInternetViewModel?
-    let isNewOfflineModeEnabled: Bool
-    
+
+    /// Shown in place of opening a file that has no local copy while offline (IOS-12227).
+    /// Deliberately routed through SwiftUI's `.snackBar(_:)` rather than
+    /// `UIViewController.showSnackBar`: on a `UIHostingController` the latter resolves its host
+    /// to the enclosing `UINavigationController` and adds the snack bar as a child view
+    /// controller, which leaves the navigation stack needing two Back taps.
+    @Published var snackBar: SnackBar?
+
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private var networkConnectivityTask: Task<Void, Never>?
     private let storageFullModalAlertViewRouter: any StorageFullModalAlertViewRouting
@@ -203,7 +210,6 @@ final class NodeBrowserViewModel: ObservableObject {
         self.sortOrderProvider = sortOrderProvider
         self.sortOrder = sortOrderProvider()
         self.networkMonitorUseCase = networkMonitorUseCase
-        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
         // Legacy full-page cover only when the new offline mode is off; reconnect-refresh
         // is handled by monitorNetworkConnectivity() in both modes, hence no callback here
         self.noInternetViewModel = isNewOfflineModeEnabled
@@ -640,6 +646,10 @@ final class NodeBrowserViewModel: ObservableObject {
         }
 
         return true
+    }
+
+    func showFileUnavailableOfflineSnackBar() {
+        snackBar = SnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
     }
 
     /// Refreshes the content once connectivity comes back, waiting for the node to be loaded

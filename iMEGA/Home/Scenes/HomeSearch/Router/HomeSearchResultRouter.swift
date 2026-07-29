@@ -25,6 +25,10 @@ protocol NodeRouting {
 
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?)
 
+    /// Same as above, for callers that already hold the entity: passing it in `resolvedNode` skips
+    /// the lookup, so the node opens without an extra hop. Pass nil to have the router resolve it.
+    func didTapNode(nodeHandle: HandleEntity, resolvedNode: NodeEntity?, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?)
+
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, sourcePage: NodeSourcePage)
 
     func didTapNode(nodeHandle: HandleEntity, sourcePage: NodeSourcePage)
@@ -90,24 +94,45 @@ final class HomeSearchResultRouter: NodeRouting {
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
-        Task {
-            guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
-            if node.isFile, node.isTakenDown {
-                showTakenDownAlert()
-            } else if node.isFile, !node.isNodeKeyDecrypted {
-                UIApplication.mnz_visibleViewController()
-                    .showSnackBar(snackBar: SnackBar(message: Strings.Localizable.CloudDrive.FolderLink.SnackBar.undecryptedFileOpenError))
-            } else {
-                nodeOpener.openNode(
-                    nodeHandle: nodeHandle,
-                    allNodes: allNodeHandles,
-                    config: .init(
-                        displayMode: displayMode,
-                        sourcePage: sourcePage,
-                        isFromSharedItem: isFromSharedItem,
-                        warningViewModel: warningViewModel)
-                )
+        didTapNode(
+            nodeHandle: nodeHandle,
+            resolvedNode: nil,
+            allNodeHandles: allNodeHandles,
+            displayMode: displayMode,
+            sourcePage: sourcePage,
+            isFromSharedItem: isFromSharedItem,
+            warningViewModel: warningViewModel
+        )
+    }
+
+    func didTapNode(nodeHandle: HandleEntity, resolvedNode: NodeEntity?, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
+        guard let resolvedNode else {
+            Task {
+                guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
+                open(node, allNodeHandles: allNodeHandles, displayMode: displayMode, sourcePage: sourcePage, isFromSharedItem: isFromSharedItem, warningViewModel: warningViewModel)
             }
+            return
+        }
+
+        open(resolvedNode, allNodeHandles: allNodeHandles, displayMode: displayMode, sourcePage: sourcePage, isFromSharedItem: isFromSharedItem, warningViewModel: warningViewModel)
+    }
+
+    private func open(_ node: NodeEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, sourcePage: NodeSourcePage, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel?) {
+        if node.isFile, node.isTakenDown {
+            showTakenDownAlert()
+        } else if node.isFile, !node.isNodeKeyDecrypted {
+            UIApplication.mnz_visibleViewController()
+                .showSnackBar(snackBar: SnackBar(message: Strings.Localizable.CloudDrive.FolderLink.SnackBar.undecryptedFileOpenError))
+        } else {
+            nodeOpener.openNode(
+                nodeHandle: node.handle,
+                allNodes: allNodeHandles,
+                config: .init(
+                    displayMode: displayMode,
+                    sourcePage: sourcePage,
+                    isFromSharedItem: isFromSharedItem,
+                    warningViewModel: warningViewModel)
+            )
         }
     }
 

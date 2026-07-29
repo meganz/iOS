@@ -584,7 +584,24 @@ struct CloudDriveViewControllerFactory {
         }
 
         let initialViewMode = viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
-        let searchBridge = makeSearchBridge(nodeSource: nodeSource, config: overriddenConfig)
+        let networkMonitorUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+        let isNewOfflineModeEnabled = CloudDriveOfflineModeGate.isNewOfflineModeEnabled
+        let offlineFileOpenGuard = OfflineFileOpenGuard(
+            isNewOfflineModeEnabled: isNewOfflineModeEnabled,
+            networkMonitorUseCase: networkMonitorUseCase,
+            nodeUseCase: nodeUseCase,
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        )
+        let nodeTapDispatcher = OfflineAwareNodeTapDispatcher(
+            offlineFileOpenGuard: offlineFileOpenGuard,
+            nodeUseCase: nodeUseCase
+        )
+
+        let searchBridge = makeSearchBridge(
+            nodeSource: nodeSource,
+            config: overriddenConfig,
+            nodeTapDispatcher: nodeTapDispatcher
+        )
         let searchConfig = makeSearchConfig(nodeSource: nodeSource, config: overriddenConfig)
 
         let contentUnavailableViewModelProvider = CloudDriveContentUnavailableViewModelProvider(
@@ -689,8 +706,6 @@ struct CloudDriveViewControllerFactory {
             }
         }
 
-        let networkMonitorUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
-
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,
             nodeUpdatesProvider: nodeUpdatesProvider
@@ -716,7 +731,7 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             searchResultsContainerViewModel: searchResultsContainerViewModel,
             networkMonitorUseCase: networkMonitorUseCase,
-            isNewOfflineModeEnabled: CloudDriveOfflineModeGate.isNewOfflineModeEnabled,
+            isNewOfflineModeEnabled: isNewOfflineModeEnabled,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
@@ -734,6 +749,10 @@ struct CloudDriveViewControllerFactory {
             onNodeStructureChanged: onNodeStructureChanged,
             onMoreOptionsButtonTapped: moreOptionsButtonTapHandler
         )
+
+        nodeTapDispatcher.showFileUnavailableSnackBar = { [weak nodeBrowserViewModel] in
+            nodeBrowserViewModel?.showFileUnavailableOfflineSnackBar()
+        }
 
         mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
             guard let nodeBrowserViewModel else { return }
@@ -890,23 +909,31 @@ struct CloudDriveViewControllerFactory {
     private func makeSearchBridge(
         nodeSource: NodeSource,
         config: NodeBrowserConfig,
+        nodeTapDispatcher: OfflineAwareNodeTapDispatcher
     ) -> SearchBridge {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
         let searchBridge = SearchBridge(
-            selection: { [router] in
-                router.didTapNode(
-                    nodeHandle: $0.result.id,
-                    // the siblings of the selected node are critical to be injected,
-                    // for several features of the app to function, like
-                    // audio player and image gallery
-                    // for more details inspect NodeOpener.swift and it's openNode method
-                    allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
-                    displayMode: config.displayMode?.carriedOverDisplayMode,
-                    sourcePage: $0.isSearchActive ? .search : config.sourcePage,
-                    isFromSharedItem: config.isFromSharedItem ?? false,
-                    warningViewModel: config.warningViewModel
-                )
+            selection: { [router, nodeTapDispatcher] selection in
+                // Stays synchronous unless the offline guard might block this tap (IOS-12227)
+                nodeTapDispatcher.dispatch(
+                    nodeHandle: selection.result.id,
+                    isFolder: selection.result.isFolder
+                ) { resolvedNode in
+                    router.didTapNode(
+                        nodeHandle: selection.result.id,
+                        resolvedNode: resolvedNode,
+                        // the siblings of the selected node are critical to be injected,
+                        // for several features of the app to function, like
+                        // audio player and image gallery
+                        // for more details inspect NodeOpener.swift and it's openNode method
+                        allNodeHandles: selection.nonEmptyOrNilSiblingsIds(),
+                        displayMode: config.displayMode?.carriedOverDisplayMode,
+                        sourcePage: selection.isSearchActive ? .search : config.sourcePage,
+                        isFromSharedItem: config.isFromSharedItem ?? false,
+                        warningViewModel: config.warningViewModel
+                    )
+                }
             },
             context: { [router] result, button in
                 // For non-recents displayMode, we use `config.displayMode?.carriedOverDisplayMode`, which renders `.recents` as nil

@@ -6,7 +6,9 @@ import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGASwift
+import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
 import Search
@@ -350,6 +352,18 @@ class NodeBrowserViewModelTests: XCTestCase {
             isNewOfflineModeEnabled: false
         )
         XCTAssertNotNil(harness.sut.noInternetViewModel)
+    }
+
+    func testShowFileUnavailableOfflineSnackBar_publishesTheSnackBarMessage() {
+        let harness = Harness(node: .rootNode)
+        XCTAssertNil(harness.sut.snackBar)
+
+        harness.sut.showFileUnavailableOfflineSnackBar()
+
+        XCTAssertEqual(
+            harness.sut.snackBar?.message,
+            Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline
+        )
     }
 
     @MainActor

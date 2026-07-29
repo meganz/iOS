@@ -87,6 +87,7 @@ struct NodeBrowserView: View {
                 NodeUploadActionSheetView(viewModel: floatingAddButtonViewModel, isPresented: $floatingAddButtonViewModel.showActions)
             })
         .navigationBarTitleDisplayMode(.inline)
+        .snackBar($viewModel.snackBar)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
         .onLoad { await viewModel.onLoadTask() }
