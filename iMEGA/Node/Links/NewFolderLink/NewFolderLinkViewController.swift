@@ -31,21 +31,31 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard !isAudioPlayerRevampEnabled else { return }
         AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
     }
     
+    private var isAudioPlayerRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp)
+    }
+
     private func attachFolderLinkView() {
         navigationController?.navigationBar.isHidden = true
         // The local flag is read here, at the composition root, and nowhere else.
         let isLinkRevampEnabled = MEGALinkManager.isLinkRevampEnabled
+        let isAudioPlayerRevampEnabled = isAudioPlayerRevampEnabled
         let folderLinkViewController = UIHostingController(
             rootView: FolderLinkView(
                 dependency: buildDependency(link: link, isLinkRevampEnabled: isLinkRevampEnabled),
                 linkUnavailableContent: { reason in
                     FolderLinkUnavailableView(reason: reason, isLinkRevampEnabled: isLinkRevampEnabled)
                 },
-                miniPlayerContent: {
-                    FolderLinkMiniPlayerView(viewModel: $0)
+                miniPlayerContent: { [weak self] viewModel in
+                    FolderLinkMiniPlayerView(
+                        viewModel: viewModel,
+                        isAudioPlayerRevampEnabled: isAudioPlayerRevampEnabled,
+                        presenter: { self }
+                    )
                 }
             )
         )

@@ -221,9 +221,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         }
     }
     
+    /// Sized by the content itself — a mini player that is not showing collapses
+    /// to nothing, so the inset costs nothing when no audio is playing.
     private var miniPlayerView: some View {
         miniPlayerContent(miniPlayerViewModel)
-            .frame(height: miniPlayerViewModel.showing ? miniPlayerViewModel.height : 0)
     }
     
     private func folderLinkResultsDependency<DismissButton>(

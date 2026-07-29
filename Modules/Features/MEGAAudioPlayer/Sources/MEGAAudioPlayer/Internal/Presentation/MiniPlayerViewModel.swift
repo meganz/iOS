@@ -15,6 +15,8 @@ final class MiniPlayerViewModel: ObservableObject {
 
     @Published private(set) var loadingState: PlayerLoadingState = .loading
 
+    @Published private(set) var hasActiveSession: Bool = false
+
     var isPreparing: Bool { loadingState == .loading || loadingState == .ready }
 
     private let service: (any AudioPlaybackServiceProtocol)?
@@ -67,6 +69,12 @@ final class MiniPlayerViewModel: ObservableObject {
 
         service.currentQueuePublisher
             .sink { [weak self] queue in self?.updateQueue(from: queue) }
+            .store(in: &cancellables)
+
+        service.currentSourcePublisher
+            .map { $0 != nil }
+            .removeDuplicates()
+            .sink { [weak self] in self?.hasActiveSession = $0 }
             .store(in: &cancellables)
     }
 
