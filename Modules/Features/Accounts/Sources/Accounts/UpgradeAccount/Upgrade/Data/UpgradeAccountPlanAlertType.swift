@@ -10,6 +10,7 @@ public enum UpgradeAccountPlanAlertType {
     case restore(_ status: AlertStatus)
     case purchase(_ status: AlertStatus)
     case activeSubscription(_ errorType: ActiveSubscriptionError, primaryButtonAction: (() -> Void)?)
+    case promoEnded(primaryButtonAction: (() -> Void)?)
     
     public enum AlertStatus {
         case success, incomplete, failed
@@ -30,9 +31,11 @@ public enum UpgradeAccountPlanAlertType {
             }
         case .activeSubscription:
             return Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.title
+        case .promoEnded:
+            return "This offer has ended" // To be localized later
         }
     }
-    
+
     public var message: String {
         switch self {
         case .restore(let status):
@@ -51,6 +54,9 @@ public enum UpgradeAccountPlanAlertType {
             case .haveCancellablePlan: return Strings.Localizable.Account.Upgrade.AlreadyHaveACancellableSubscription.message
             case .haveNonCancellablePlan: return Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.message
             }
+        case .promoEnded:
+            // To be localized later
+            return "This deal is no longer available. Check our current plans to find one that suits you."
         }
     }
     
@@ -60,12 +66,20 @@ public enum UpgradeAccountPlanAlertType {
             return Strings.Localizable.yes
         }
 
+        if case .promoEnded = self {
+            return "View plans" // To be localized later
+        }
+
         return Strings.Localizable.ok
     }
-    
+
     public var primaryButtonAction: (() -> Void)? {
         if case let .activeSubscription(type, primaryButtonAction) = self,
            case .haveCancellablePlan = type {
+            return primaryButtonAction
+        }
+
+        if case let .promoEnded(primaryButtonAction) = self {
             return primaryButtonAction
         }
 

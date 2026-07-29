@@ -15,6 +15,7 @@ public struct UpgradePlansContainerView: View {
         content
             .onLoad {
                 await viewModel.loadData()
+                await viewModel.monitorPromoExpiry()
             }
             .onAppear { viewModel.onAppear() }
             .onReceive(viewModel.$isDismiss) { isDismiss in

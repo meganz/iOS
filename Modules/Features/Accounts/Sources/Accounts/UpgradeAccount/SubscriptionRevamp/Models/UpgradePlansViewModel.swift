@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MEGADomain
 
 /// Shared presentation model backing both redesigned subscription pages.
@@ -42,23 +43,29 @@ public final class UpgradePlansViewModel: ObservableObject {
         )
     }
 
-    var promoHeader: SubscriptionPromoHeaderViewModel? {
+    private(set) lazy var promoHeader: SubscriptionPromoHeaderViewModel? = {
         guard isPromo else { return nil }
         return SubscriptionPromoHeaderViewModel(plans: plans)
+    }()
+
+    /// The promotional offer's expiry that drives the header countdown, when one applies.
+    /// `nil` for the standard page or for offers that never expire (introductory offers).
+    var promoCountdownDeadline: Date? {
+        promoHeader?.countdownDeadline
     }
 
     /// The featured hero card, shown only when exactly one plan is discounted.
-    var highlightedPlanCard: SubscriptionRevampPromoPlanCardModel? {
+    private(set) lazy var highlightedPlanCard: SubscriptionRevampPromoPlanCardModel? = {
         guard isPromo, let featuredPlan else { return nil }
         return SubscriptionPromoPlanCardPresenter(
             plan: featuredPlan,
             displayName: displayName
         ).cardModel
-    }
+    }()
 
-    var currentPlanViewModel: SubscriptionCurrentPlanViewModel? {
+    private(set) lazy var currentPlanViewModel: SubscriptionCurrentPlanViewModel? = {
         currentPlanPresenter.currentPlanViewModel
-    }
+    }()
 
     // MARK: - Default cycle selection
 

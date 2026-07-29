@@ -15,6 +15,9 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
     let dependency: RevampUpgradePlansDependency
     private var subscriptions = Set<AnyCancellable>()
+    /// Drives the flip to `.standard` once the featured promotional offer lapses.
+    /// Set only while a promo page with a live countdown is shown.
+    private var promoExpiryMonitor: (any PromoExpiryMonitoring)?
 
     @Published public private(set) var viewState: ViewState = .loading
     @Published public var isDismiss = false
@@ -48,6 +51,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
     func loadData() async {
         viewState = .loading
+        promoExpiryMonitor = nil
         await dependency.purchaseUseCase.registerRestoreDelegate()
 
         do {
@@ -55,19 +59,79 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             async let plansResult = dependency.fetchUseCase.plans()
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
-            
+
             let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
-            let contentViewModel = UpgradePlansViewModel(
-                isPromo: hasPromo,
-                viewType: dependency.viewType,
+            guard hasPromo else {
+                viewState = .standard(makeContentViewModel(isPromo: false, accountDetails: accountDetails, plans: plans))
+                return
+            }
+
+            let promoViewModel = makeContentViewModel(isPromo: true, accountDetails: accountDetails, plans: plans)
+            guard let deadline = promoViewModel.promoCountdownDeadline else {
+                viewState = .promo(promoViewModel) // Promo with no countdown, nothing to expire.
+                return
+            }
+
+            let monitor = dependency.promoExpiryMonitorFactory.makeMonitor(
+                deadline: deadline,
                 accountDetails: accountDetails,
-                plans: plans,
-                displayName: dependency.accountDisplayName
+                plans: plans
             )
-            viewState = hasPromo ? .promo(contentViewModel) : .standard(contentViewModel)
+            guard !monitor.hasAlreadyExpired else { // Safeguard in case deadline is earlier than current time
+                viewState = .standard(makeStandardViewModel(from: monitor))
+                return
+            }
+            viewState = .promo(promoViewModel)
+            promoExpiryMonitor = monitor
         } catch {
             showInitialLoadingAlert()
         }
+    }
+
+    /// Waits until the featured promotional offer lapses, then presents the "offer has ended" alert.
+    /// Owned and cancelled by the View's load task, so no long-lived `Task` lives in the view model.
+    func monitorPromoExpiry() async {
+        guard let monitor = promoExpiryMonitor else { return }
+        guard await monitor.waitUntilExpired(),
+              promoExpiryMonitor === monitor, // still the active monitor (no reload superseded it)
+              case .promo = viewState else { return }
+
+        presentAlert(.promoEnded(primaryButtonAction: { [weak self] in self?.handlePromoExpiration() }))
+    }
+
+    /// Invoked from the "offer has ended" alert's button: swaps the promo page for the standard one,
+    /// with expired offers stripped and the user's selected billing cycle carried across.
+    private func handlePromoExpiration() {
+        guard case .promo(let promoViewModel) = viewState, let monitor = promoExpiryMonitor else { return }
+
+        let standardViewModel = makeStandardViewModel(from: monitor)
+        standardViewModel.selectedCycle = promoViewModel.selectedCycle
+        viewState = .standard(standardViewModel)
+        promoExpiryMonitor = nil
+    }
+
+    private func makeContentViewModel(
+        isPromo: Bool,
+        accountDetails: AccountDetailsEntity,
+        plans: [PlanEntity]
+    ) -> UpgradePlansViewModel {
+        UpgradePlansViewModel(
+            isPromo: isPromo,
+            viewType: dependency.viewType,
+            accountDetails: accountDetails,
+            plans: plans,
+            displayName: dependency.accountDisplayName
+        )
+    }
+
+    /// Builds the standard page shown once a promotion has lapsed, sourcing the account details and
+    /// offer-stripped plans from the monitor so no stale discount survives the switch.
+    private func makeStandardViewModel(from monitor: any PromoExpiryMonitoring) -> UpgradePlansViewModel {
+        makeContentViewModel(
+            isPromo: false,
+            accountDetails: monitor.accountDetails,
+            plans: monitor.plansAfterExpiry
+        )
     }
 
     private func observeRestoreResult() {
