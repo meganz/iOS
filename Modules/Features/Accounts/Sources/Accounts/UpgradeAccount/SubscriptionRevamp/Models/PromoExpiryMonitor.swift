@@ -25,7 +25,6 @@ public protocol PromoExpiryMonitoring: AnyObject {
 /// screen: the expiry context, suspending until it lapses, and the offer-stripped plans shown
 /// afterwards. The container view model owns the resulting state transition; this only supplies
 /// the timing and the data.
-@MainActor
 final class PromoExpiryMonitor: PromoExpiryMonitoring {
     private let deadline: Date
     let accountDetails: AccountDetailsEntity
@@ -63,16 +62,7 @@ final class PromoExpiryMonitor: PromoExpiryMonitoring {
 public struct DefaultPromoExpiryMonitorFactory: PromoExpiryMonitorFactory {
     public init() {}
 
-    @MainActor public func makeMonitor(deadline: Date, accountDetails: AccountDetailsEntity, plans: [PlanEntity]) -> any PromoExpiryMonitoring {
+    public func makeMonitor(deadline: Date, accountDetails: AccountDetailsEntity, plans: [PlanEntity]) -> any PromoExpiryMonitoring {
         PromoExpiryMonitor(deadline: deadline, accountDetails: accountDetails, plans: plans)
-    }
-}
-
-package extension PlanEntity {
-    func removingPromotionalOffer() -> PlanEntity {
-        var plan = self
-        plan.promotionalOffer = nil
-        plan.mobileOffer = nil
-        return plan
     }
 }

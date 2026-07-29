@@ -167,7 +167,7 @@ private struct MockPromoExpiryMonitorFactory: PromoExpiryMonitorFactory {
     var hasAlreadyExpired = false
     var expires = true
 
-    @MainActor func makeMonitor(deadline: Date, accountDetails: AccountDetailsEntity, plans: [PlanEntity]) -> any PromoExpiryMonitoring {
+    func makeMonitor(deadline: Date, accountDetails: AccountDetailsEntity, plans: [PlanEntity]) -> any PromoExpiryMonitoring {
         MockPromoExpiryMonitor(
             hasAlreadyExpired: hasAlreadyExpired,
             expires: expires,

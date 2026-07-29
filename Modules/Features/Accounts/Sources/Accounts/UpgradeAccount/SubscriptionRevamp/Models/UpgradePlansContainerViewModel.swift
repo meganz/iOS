@@ -88,20 +88,16 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         }
     }
 
-    /// Waits until the featured promotional offer lapses, then presents the "offer has ended" alert.
-    /// Owned and cancelled by the View's load task, so no long-lived `Task` lives in the view model.
     func monitorPromoExpiry() async {
         guard let monitor = promoExpiryMonitor else { return }
         guard await monitor.waitUntilExpired(),
               promoExpiryMonitor === monitor, // still the active monitor (no reload superseded it)
               case .promo = viewState else { return }
 
-        presentAlert(.promoEnded(primaryButtonAction: { [weak self] in self?.handlePromoExpiration() }))
+        presentAlert(.promoEnded(primaryButtonAction: { [weak self] in self?.expiredPromoAlertButtonTapped() }))
     }
 
-    /// Invoked from the "offer has ended" alert's button: swaps the promo page for the standard one,
-    /// with expired offers stripped and the user's selected billing cycle carried across.
-    private func handlePromoExpiration() {
+    private func expiredPromoAlertButtonTapped() {
         guard case .promo(let promoViewModel) = viewState, let monitor = promoExpiryMonitor else { return }
 
         let standardViewModel = makeStandardViewModel(from: monitor)
