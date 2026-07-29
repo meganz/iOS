@@ -58,7 +58,7 @@ public struct SubscriptionPromoView: View {
     @ViewBuilder
     private var promoHero: some View {
         if let promoHeader = viewModel.promoHeader {
-            SubscriptionPromoHeaderView(model: promoHeader)
+            SubscriptionPromoHeaderView(viewModel: promoHeader)
                 .blendIntoHeader(offset: TokenSpacing._16, isCompact: verticalSizeClass == .compact)
         }
     }

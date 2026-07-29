@@ -42,8 +42,9 @@ public final class UpgradePlansViewModel: ObservableObject {
         )
     }
 
-    var promoHeader: SubscriptionPromoHeaderModel? {
-        isPromo ? SubscriptionRevampMockData.promoHeader : nil
+    var promoHeader: SubscriptionPromoHeaderViewModel? {
+        guard isPromo else { return nil }
+        return SubscriptionPromoHeaderViewModel(plans: plans)
     }
 
     /// The featured hero card, shown only when exactly one plan is discounted.

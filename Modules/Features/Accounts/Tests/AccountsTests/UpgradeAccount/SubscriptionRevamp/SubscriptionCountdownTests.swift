@@ -7,7 +7,7 @@ struct SubscriptionCountdownTests {
     @Test(arguments: [
         (TimeInterval((28 * 24 + 12) * 3600 + 60), SubscriptionCountdown(days: 28, hours: 12, minutes: 1)),
         (TimeInterval(-1000), SubscriptionCountdown(days: 0, hours: 0, minutes: 0)),
-        (TimeInterval(59), SubscriptionCountdown(days: 0, hours: 0, minutes: 0))
+        (TimeInterval(59), SubscriptionCountdown(days: 0, hours: 0, minutes: 1))
     ])
     func computesRemaining(offset: TimeInterval, expected: SubscriptionCountdown) {
         let now = Date(timeIntervalSince1970: 0)

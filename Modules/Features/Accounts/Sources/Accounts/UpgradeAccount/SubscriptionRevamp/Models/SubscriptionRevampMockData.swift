@@ -41,14 +41,4 @@ enum SubscriptionRevampMockData {
             isExistingFreeAccount: false
         )
     }
-
-    static var promoHeader: SubscriptionPromoHeaderModel {
-        SubscriptionPromoHeaderModel(
-            tag: "Special offer",
-            title: "Black Friday - 50% off",
-            subtitle: "€119.88 for the first year",
-            validUntil: "Offer ends on 11 August 2026",
-            deadline: Date.now.addingTimeInterval(60 * 60 * 24 * 28)
-        )
-    }
 }

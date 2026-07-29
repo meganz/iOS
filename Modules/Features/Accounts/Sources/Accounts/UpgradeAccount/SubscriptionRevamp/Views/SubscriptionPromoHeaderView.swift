@@ -1,62 +1,41 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAUIComponent
 import SwiftUI
 
 struct SubscriptionPromoHeaderView: View {
-    private let model: SubscriptionPromoHeaderModel
+    private let viewModel: SubscriptionPromoHeaderViewModel
 
-    init(model: SubscriptionPromoHeaderModel) {
-        self.model = model
+    init(viewModel: SubscriptionPromoHeaderViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            MEGABadge(text: model.tag, type: .megaPrimary, size: .small, icon: nil)
+            MEGABadge(text: viewModel.tag, type: .megaPrimary, size: .small, icon: nil)
 
-            Text(model.title)
+            Text(viewModel.title)
                 .font(.title.bold())
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .padding(.vertical, TokenSpacing._4)
 
-            Text(model.subtitle)
+            Text(viewModel.subtitle)
                 .font(.title2.bold())
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .padding(.bottom, TokenSpacing._4)
 
-            Text(model.validUntil)
-                .font(.body)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                .padding(.bottom, TokenSpacing._2)
-
-            SubscriptionCountdownTimerView(deadline: model.deadline)
-                .padding(.top, TokenSpacing._2)
+            if let validUntil = viewModel.validUntil {
+                Text(validUntil)
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .padding(.bottom, TokenSpacing._2)
+            }
+            
+            if let deadline = viewModel.countdownDeadline {
+                SubscriptionCountdownTimerView(deadline: deadline)
+                    .padding(.top, TokenSpacing._2)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-}
-
-#Preview("Discount offer") {
-    SubscriptionPromoHeaderView(
-        model: SubscriptionPromoHeaderModel(
-            tag: "Special offer",
-            title: "Black Friday - 50% off",
-            subtitle: "€119.88 for the first year",
-            validUntil: "valid until July 11, 2026",
-            deadline: .now.addingTimeInterval(60 * 60 * 24 * 28)
-        )
-    )
-    .padding()
-}
-
-#Preview("Pay upfront") {
-    SubscriptionPromoHeaderView(
-        model: SubscriptionPromoHeaderModel(
-            tag: "Special offer",
-            title: "Flash Deal - 50% off",
-            subtitle: "€29.94 of Pro I for 6 months",
-            validUntil: "valid until July 11, 2026",
-            deadline: .now.addingTimeInterval(60 * 60 * 24 * 28)
-        )
-    )
-    .padding()
 }

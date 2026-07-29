@@ -9,8 +9,12 @@ struct SubscriptionOfferBadgePresenter {
     }
 
     func badge(for plan: PlanEntity) -> String? {
-        guard let percentage = priceUseCase.planPrice(for: plan).discountPercentage else { return nil }
+        guard let percentage = discountPercentage(for: plan) else { return nil }
         return badgeText(label: plan.mobileOffer?.label, percentage: percentage)
+    }
+
+    func discountPercentage(for plan: PlanEntity) -> Int? {
+        priceUseCase.planPrice(for: plan).discountPercentage
     }
 
     private func badgeText(label: String?, percentage: Int) -> String {
