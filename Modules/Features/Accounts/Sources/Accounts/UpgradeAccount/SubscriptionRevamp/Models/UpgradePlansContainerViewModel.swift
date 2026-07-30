@@ -56,7 +56,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
             
-            let hasPromo = plans.contains { $0.applicableOffer != nil }
+            let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
             let contentViewModel = UpgradePlansViewModel(
                 isPromo: hasPromo,
                 viewType: dependency.viewType,

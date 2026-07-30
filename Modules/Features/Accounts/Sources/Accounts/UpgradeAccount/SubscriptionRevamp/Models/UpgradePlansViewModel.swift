@@ -109,7 +109,7 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     func planCards(for cycle: SubscriptionCycleEntity) -> [SubscriptionPlanCardModel] {
         SubscriptionPlanCardsPresenter(
-            plans: plans,
+            plans: plans.filter { !$0.isCurrentPlan(for: accountDetails) },
             featuredPlan: featuredPlan,
             displayName: displayName
         ).cards(for: cycle)
@@ -122,7 +122,9 @@ public final class UpgradePlansViewModel: ObservableObject {
     }
 
     /// The single discounted plan when `offerCount == 1`; `nil` for zero or multiple (rendered inline).
+    /// Never the user's current plan, so the hero card cannot feature a plan the user already owns.
     private var featuredPlan: PlanEntity? {
-        discountedPlans.count == 1 ? discountedPlans.first : nil
+        guard discountedPlans.count == 1, let plan = discountedPlans.first, !plan.isCurrentPlan(for: accountDetails) else { return nil }
+        return plan
     }
 }
