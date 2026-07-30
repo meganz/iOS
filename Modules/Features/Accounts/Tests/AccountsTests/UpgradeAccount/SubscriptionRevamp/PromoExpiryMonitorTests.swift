@@ -71,7 +71,7 @@ struct PromoExpiryMonitorTests {
         let stripped = sut.plansAfterExpiry
         #expect(stripped.count == 1)
         #expect(stripped.first?.promotionalOffer == nil)
-        #expect(stripped.first?.mobileOffer == nil)
+        #expect(stripped.first?.mobileOffer != nil) // mobileOffer is retained; only promotionalOffer is stripped
         #expect(stripped.first?.introductoryOffer?.price == 5)
         #expect(stripped.first?.price == 10)
     }
@@ -117,9 +117,9 @@ struct PlanEntityPromotionExpiryTests {
         #expect(sut.removingPromotionalOffer().promotionalOffer == nil)
     }
 
-    @Test func removesMobileOffer() {
+    @Test func keepsMobileOffer() {
         let sut = plan(promotional: SubscriptionOfferEntity(price: 20), mobileOffer: mobileOffer())
-        #expect(sut.removingPromotionalOffer().mobileOffer == nil)
+        #expect(sut.removingPromotionalOffer().mobileOffer != nil)
     }
 
     @Test func strippedPlanHasNoValidPromotionalOffer() {

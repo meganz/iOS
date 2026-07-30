@@ -35,14 +35,14 @@ struct UpgradePlansContainerViewModelTests {
 
     // MARK: - monitorPromoExpiry
 
-    @Test("When the monitored offer lapses, the offer-ended alert is presented")
+    @Test("When the monitored offer lapses, it flips to standard and presents the offer-ended alert")
     func monitorPromoExpiry_whenOfferLapses_presentsPromoEndedAlert() async {
         let sut = makeSUT(plans: [promoPlan()], monitorExpires: true)
         await sut.loadData()
         await sut.monitorPromoExpiry()
         #expect(sut.isAlertPresented)
         #expect(sut.alertType?.isPromoEnded == true)
-        #expect(sut.viewState.isPromo) // still promo until the user taps through
+        #expect(sut.viewState.isStandard) // flips immediately; the alert is only informational
     }
 
     @Test("A cancelled wait presents no alert and stays on the promo page")
@@ -54,8 +54,8 @@ struct UpgradePlansContainerViewModelTests {
         #expect(sut.viewState.isPromo)
     }
 
-    @Test("Tapping View plans flips to the standard page carrying the selected cycle")
-    func promoEndedAlertAction_flipsToStandardCarryingCycle() async {
+    @Test("When the offer lapses, the flip to standard carries the selected cycle")
+    func monitorPromoExpiry_flipsToStandardCarryingCycle() async {
         let sut = makeSUT(plans: [promoPlan()], monitorExpires: true)
         await sut.loadData()
 
@@ -66,10 +66,9 @@ struct UpgradePlansContainerViewModelTests {
         promoViewModel.selectedCycle = .monthly
 
         await sut.monitorPromoExpiry()
-        sut.alertType?.primaryButtonAction?()
 
         guard case .standard(let standardViewModel) = sut.viewState else {
-            Issue.record("Expected the standard page after tapping View plans")
+            Issue.record("Expected the standard page after the offer lapsed")
             return
         }
         #expect(standardViewModel.selectedCycle == .monthly)
