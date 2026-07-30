@@ -3329,6 +3329,7 @@ public enum Strings {
     }
     public enum Link {
       public enum Button {
+        public static let copyToOffline: Swift.String
         public static let saveToMega: Swift.String
       }
       public enum DecryptionKey {

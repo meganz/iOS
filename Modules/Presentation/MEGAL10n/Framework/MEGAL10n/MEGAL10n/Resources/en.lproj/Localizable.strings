@@ -5136,3 +5136,5 @@
 "upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/month";
 /* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
 "upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/year";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Copy to Offline";
