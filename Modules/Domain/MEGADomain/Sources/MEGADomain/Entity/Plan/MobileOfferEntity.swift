@@ -31,13 +31,13 @@ public struct MobileOfferEntity: Sendable, Equatable {
     /// The offer identifier, e.g. `black-friday-2025`.
     public let id: String
 
-    /// Whether the offer label should be used as the title.
+    /// Whether the offer label should be used as the title. This value is used by both Introductory offers and Promotional offers.
     public let useAsTitle: Bool
 
-    /// Localized campaign label to display, or `nil` when not provided.
+    /// Localized campaign label to display, or `nil` when not provided. This value is used by both Introductory offers and Promotional offers.
     public let label: String?
 
-    /// Discount percentage to display to the customer (0 when not provided).
+    /// Discount percentage to display to the customer (0 when not provided). Only used for promotional offers.
     public let discountPercentage: Int
 
     /// Client feature-flag bitmask (always present, normally 0).
@@ -46,13 +46,13 @@ public struct MobileOfferEntity: Sendable, Equatable {
     /// How long before the offer may be reshown, or `nil` when not provided.
     public let reshowTimeout: TimeInterval?
 
-    /// When the offer expires, or `nil` when not provided.
+    /// When the offer expires, or `nil` when not provided. This value is used by both Introductory offers and Promotional offers.
     public let expiryDate: Date?
 
     /// Store offer identifier for iOS clients, or `nil` when not provided.
     public let iosOfferId: String?
 
-    /// Signed StoreKit payload for redeeming the offer, or `nil` when not provided.
+    /// Signed StoreKit payload for redeeming the offer, or `nil` when not provided. Only used for promotional offers.
     public let iosSignature: MobileOfferIosSignatureEntity?
 
     public init(

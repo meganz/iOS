@@ -10,7 +10,7 @@ public enum UpgradeAccountPlanAlertType {
     case restore(_ status: AlertStatus)
     case purchase(_ status: AlertStatus)
     case activeSubscription(_ errorType: ActiveSubscriptionError, primaryButtonAction: (() -> Void)?)
-    case promoEnded(primaryButtonAction: (() -> Void)?)
+    case promoEnded
     
     public enum AlertStatus {
         case success, incomplete, failed
@@ -76,10 +76,6 @@ public enum UpgradeAccountPlanAlertType {
     public var primaryButtonAction: (() -> Void)? {
         if case let .activeSubscription(type, primaryButtonAction) = self,
            case .haveCancellablePlan = type {
-            return primaryButtonAction
-        }
-
-        if case let .promoEnded(primaryButtonAction) = self {
             return primaryButtonAction
         }
 

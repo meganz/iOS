@@ -54,6 +54,8 @@ final class PromoExpiryMonitor: PromoExpiryMonitoring {
     /// The plans for the post-expiry standard page, with the lapsed offers stripped so no stale
     /// discount ribbon or discounted price survives the switch.
     var plansAfterExpiry: [PlanEntity] {
+        /// Per backend contract, API will all have same expiration date, so after expiration it's guaranteed
+        /// that all promotional offers are no longer valid and are safe to be stripped out.
         plans.map { $0.removingPromotionalOffer() }
     }
 }

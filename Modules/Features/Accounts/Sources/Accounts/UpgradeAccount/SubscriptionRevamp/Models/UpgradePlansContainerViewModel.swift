@@ -92,18 +92,16 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         guard let monitor = promoExpiryMonitor else { return }
         guard await monitor.waitUntilExpired(),
               promoExpiryMonitor === monitor, // still the active monitor (no reload superseded it)
-              case .promo = viewState else { return }
+              case .promo(let promoViewModel) = viewState else { return }
 
-        presentAlert(.promoEnded(primaryButtonAction: { [weak self] in self?.expiredPromoAlertButtonTapped() }))
-    }
-
-    private func expiredPromoAlertButtonTapped() {
-        guard case .promo(let promoViewModel) = viewState, let monitor = promoExpiryMonitor else { return }
-
+        // Strip the lapsed offers and flip to standard immediately - the correctness-critical transition
+        // must not be gated on the alert, which can be dropped when another alert is already on screen.
         let standardViewModel = makeStandardViewModel(from: monitor)
         standardViewModel.selectedCycle = promoViewModel.selectedCycle
         viewState = .standard(standardViewModel)
         promoExpiryMonitor = nil
+
+        presentAlert(.promoEnded)
     }
 
     private func makeContentViewModel(
