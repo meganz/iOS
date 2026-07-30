@@ -4,7 +4,6 @@ public extension PlanEntity {
     func removingPromotionalOffer() -> PlanEntity {
         var plan = self
         plan.promotionalOffer = nil
-        plan.mobileOffer = nil
         return plan
     }
 }
