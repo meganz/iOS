@@ -4847,7 +4847,7 @@
 /* Alert confirm button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.selectMore"="アクセス権を更新";
 /* The title displayed in Home's account details widget */
-"home.widgets.accountDetails.nameTitle"="こんにちは、％@さん！";
+"home.widgets.accountDetails.nameTitle"="こんにちは、%@さん！";
 /* The text for the storage usage displayed in Home's account details widget */
 "home.widgets.accountDetails.storageUsage"="%2$@中%1$@使用";
 /* Snackbar shown when user switches to monthly tab and the selected plan (e.g. Pro Lite) is only available with yearly billing. %@ is the plan name. */
