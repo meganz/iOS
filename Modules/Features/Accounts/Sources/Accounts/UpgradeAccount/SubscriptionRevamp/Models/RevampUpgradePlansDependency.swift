@@ -49,7 +49,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
         dismissAction: @MainActor @escaping () -> Void = {},
-        promoExpiryMonitorFactory: any PromoExpiryMonitorFactory = DefaultPromoExpiryMonitorFactory()
+        promoExpiryMonitorFactory: some PromoExpiryMonitorFactory = DefaultPromoExpiryMonitorFactory()
     ) {
         self.fetchUseCase = fetchUseCase
         self.purchaseUseCase = purchaseUseCase

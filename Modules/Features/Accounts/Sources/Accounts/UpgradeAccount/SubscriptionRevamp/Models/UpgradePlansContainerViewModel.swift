@@ -120,7 +120,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
     /// Builds the standard page shown once a promotion has lapsed, sourcing the account details and
     /// offer-stripped plans from the monitor so no stale discount survives the switch.
-    private func makeStandardViewModel(from monitor: any PromoExpiryMonitoring) -> UpgradePlansViewModel {
+    private func makeStandardViewModel(from monitor: some PromoExpiryMonitoring) -> UpgradePlansViewModel {
         makeContentViewModel(
             isPromo: false,
             accountDetails: monitor.accountDetails,
