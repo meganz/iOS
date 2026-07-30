@@ -266,6 +266,7 @@ extension MEGAAssets {
         public static var cloudDownload: SwiftUI.Image { MEGAImageBundle.cloudDownload }
         public static var copy01: SwiftUI.Image { MEGAImageBundle.copy01 }
         public static var cornerUpLeft: SwiftUI.Image { MEGAImageBundle.cornerUpLeft }
+        public static var downloadToDisk: SwiftUI.Image { MEGAImageBundle.downloadToDisk }
         public static var edit: SwiftUI.Image { MEGAImageBundle.edit }
         public static var eye: SwiftUI.Image { MEGAImageBundle.eye }
         public static var eyeOffMono: SwiftUI.Image { MEGAImageBundle.eyeOffMono }
@@ -291,6 +292,7 @@ extension MEGAAssets {
         public static var squares4: SwiftUI.Image { MEGAImageBundle.squares4 }
         public static var tagSimple: SwiftUI.Image { MEGAImageBundle.tagSimple }
         public static var trash: SwiftUI.Image { MEGAImageBundle.trash }
+        public static var uploadToCloud: SwiftUI.Image { MEGAImageBundle.uploadToCloud }
         public static var glassCloud: SwiftUI.Image { MEGAImageBundle.glassCloud }
         public static var glassFolder: SwiftUI.Image { MEGAImageBundle.glassFolder }
         public static var glassHardDrive: SwiftUI.Image { MEGAImageBundle.glassHardDrive }
@@ -782,6 +784,7 @@ extension MEGAAssets {
         public static var cloudDownload: UIKit.UIImage { MEGAUIImageBundle.cloudDownload }
         public static var copy01: UIKit.UIImage { MEGAUIImageBundle.copy01 }
         public static var cornerUpLeft: UIKit.UIImage { MEGAUIImageBundle.cornerUpLeft }
+        public static var downloadToDisk: UIKit.UIImage { MEGAUIImageBundle.downloadToDisk }
         public static var edit: UIKit.UIImage { MEGAUIImageBundle.edit }
         public static var externalLink: UIKit.UIImage { MEGAUIImageBundle.externalLink }
         public static var eye: UIKit.UIImage { MEGAUIImageBundle.eye }
@@ -808,6 +811,7 @@ extension MEGAAssets {
         public static var squares4: UIKit.UIImage { MEGAUIImageBundle.squares4 }
         public static var tagSimple: UIKit.UIImage { MEGAUIImageBundle.tagSimple }
         public static var trash: UIKit.UIImage { MEGAUIImageBundle.trash }
+        public static var uploadToCloud: UIKit.UIImage { MEGAUIImageBundle.uploadToCloud }
         public static var glassCloud: UIKit.UIImage { MEGAUIImageBundle.glassCloud }
         public static var glassFolder: UIKit.UIImage { MEGAUIImageBundle.glassFolder }
         public static var glassHardDrive: UIKit.UIImage { MEGAUIImageBundle.glassHardDrive }
