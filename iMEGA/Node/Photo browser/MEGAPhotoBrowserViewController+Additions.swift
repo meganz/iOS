@@ -86,9 +86,14 @@ extension MEGAPhotoBrowserViewController {
             }
 
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
+                // Nodes belonging to the folder-link SDK have to be authorized before they can be streamed,
+                // otherwise their local link carries no node key and the HTTP server answers 404
                 let allVideoNodes = dataProvider.allPhotos.filter { node in
                     let fileName = node.name ?? ""
                     return fileName.fileExtensionGroup.isVideo
+                }
+                .map { node in
+                    api == MEGASdk.sharedFolderLink ? (api.authorizeNode(node) ?? node) : node
                 }
                 let playerViewModel = MEGAPlayerViewModel(
                     player: MEGAAVPlayer.liveValue(
