@@ -37,6 +37,8 @@ public struct MEGAUIImageBundle {
     public static var removeShare: UIImage { UIImage.removeShare }
     public static var search: UIImage { UIImage.search }
     public static var cancelTransfers: UIImage { UIImage.cancelTransfers }
+    public static var downloadToDisk: UIImage { UIImage.downloadToDisk }
+    public static var uploadToCloud: UIImage { UIImage.uploadToCloud }
     public static var `import`: UIImage { UIImage.import }
     public static var versions: UIImage { UIImage.versions }
     public static var history: UIImage { UIImage.history }

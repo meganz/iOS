@@ -326,6 +326,8 @@ public struct MEGAImageBundle {
     public static var audioClock: Image { Image(.audioClock) }
     public static var audioClockStop: Image { Image(.audioClockStop) }
     public static var audioForward15: Image { Image(.audioForward15) }
+    public static var downloadToDisk: Image { Image(.downloadToDisk) }
+    public static var uploadToCloud: Image { Image(.uploadToCloud) }
     public static var monoQueueLineMediumThinOutline: Image { Image(.monoQueueLineMediumThinOutline) }
     public static var monoWaveformSmallThinOutline: Image { Image(.monoWaveformSmallThinOutline) }
     public static var monoPlayMediumThinOutline: Image { Image(.monoPlayMediumThinOutline) }
