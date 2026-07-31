@@ -71,6 +71,10 @@ extension AppDelegate {
         })
     }
     
+    @objc func showStreamingOverQuotaModalAlert() {
+        showTransferOverQuotaModalAlert(mode: .streamingExceeded)
+    }
+    
     private func handleMultiFactorAuthCheck(_ result: Result<MEGARequest, MEGAError>) {
         switch result {
         case .success(let request):
@@ -764,17 +768,17 @@ extension AppDelegate {
             Task {
                 do {
                     _ = try await accountUseCase.refreshCurrentAccountDetails()
-                    showTransferQuotaModalAlert(mode: alertDisplayMode)
+                    showTransferOverQuotaModalAlert(mode: alertDisplayMode)
                 } catch {
                     MEGALogError("[Transfer Quota Dialog] No user account details with error \(error)")
                 }
             }
         } else {
-            showTransferQuotaModalAlert(mode: alertDisplayMode)
+            showTransferOverQuotaModalAlert(mode: alertDisplayMode)
         }
     }
     
-    private func showTransferQuotaModalAlert(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
+    private func showTransferOverQuotaModalAlert(mode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
         QuotaWarningsRouter().presentTransferQuotaWarning(mode: mode)
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
     }
