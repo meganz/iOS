@@ -34,7 +34,8 @@
     self.twoDaysAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-2 toDate:NSDate.date options:0];
     
     [self updateAppearance];
-    
+    [self registerForAppearanceChanges];
+
     [self configureImages];
 }
 
@@ -69,15 +70,11 @@
     }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearance)];
+}
 
 - (void)updateAppearance {
     self.backgroundColor = [UIColor pageBackgroundColor];

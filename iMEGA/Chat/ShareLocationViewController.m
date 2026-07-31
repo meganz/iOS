@@ -92,7 +92,8 @@
     [self updateAppearance];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
-    
+    [self registerForAppearanceChanges];
+
     [self configureImages];
 }
 
@@ -101,16 +102,16 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
-        [self updateAppearance];
-    }
+#pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearanceAndSearchBar)];
 }
 
-#pragma mark - Private
+- (void)updateAppearanceAndSearchBar {
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
+    [self updateAppearance];
+}
 
 - (void)configureImages {
     [self.locationButton setImage:[UIImage megaImageWithNamed:@"location"] forState:UIControlStateNormal];

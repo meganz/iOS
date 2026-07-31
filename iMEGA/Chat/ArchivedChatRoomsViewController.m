@@ -61,6 +61,7 @@
     [MEGAChatSdk.shared addChatCallDelegate:self];
     
     [self updateAppearance];
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,15 +90,6 @@
 
     [MEGAChatSdk.shared removeChatDelegate:self];
     [MEGAChatSdk.shared removeChatCallDelegate:self];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
-    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -169,6 +161,15 @@
 }
 
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearanceAndSearchBar)];
+}
+
+- (void)updateAppearanceAndSearchBar {
+    [self updateAppearance];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
+}
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.systemBackgroundColor;

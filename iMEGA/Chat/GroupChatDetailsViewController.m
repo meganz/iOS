@@ -51,6 +51,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
 
     [self updateAppearance];
+    [self registerForAppearanceChanges];
     [self populateSections];
 }
 
@@ -80,20 +81,16 @@
     return YES;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 - (void)reloadData {
     [self populateSections];
     [self.tableView reloadData];
 }
 
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearance)];
+}
 
 - (void)populateSections {
     NSMutableArray *sections = NSMutableArray.new;
