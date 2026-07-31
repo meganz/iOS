@@ -30,9 +30,16 @@ class AddToChatMenuView: UIView {
         super.awakeFromNib()
         MainActor.assumeIsolated {
             updateAppearance()
+            registerForAppearanceChanges()
         }
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: AddToChatMenuView, _: UITraitCollection) in
+            view.updateAppearance()
+        }
+    }
+
     func disable(_ disable: Bool) {
         disabled = disable
         imageView.alpha = disable ? 0.5 : 1.0
@@ -42,14 +49,6 @@ class AddToChatMenuView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         imageBackgroundView.layer.cornerRadius = imageBackgroundView.bounds.width / CGFloat(2.0)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     private func updateAppearance() {

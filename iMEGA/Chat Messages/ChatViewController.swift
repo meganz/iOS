@@ -260,8 +260,23 @@ class ChatViewController: MessagesViewController {
             })
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopVoiceRecording), name: UIApplication.willResignActiveNotification, object: nil)
+        registerForAppearanceChanges()
     }
-    
+
+    /// `updateAppearance` refreshes both token colors and `preferredFont` based fonts of the messages, so both trait groups have to be observed.
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance + [UITraitPreferredContentSizeCategory.self]) { (viewController: ChatViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+        }
+    }
+
+    private func updateAppearance() {
+        setupLiquidGlassNavigationBar()
+        messagesCollectionView.reloadData()
+        startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
+        startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+    }
+
     static func backButtonMenuTitle(chatTitle: String?, isOneToOne: Bool) -> String {
         let title = chatTitle ?? ""
         
@@ -417,21 +432,6 @@ class ChatViewController: MessagesViewController {
     
     @objc func stopVoiceRecording() {
         chatInputBar.cancelRecordingIfNeeded()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) ||
-                traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else {
-            return
-        }
-
-        setupLiquidGlassNavigationBar()
-        messagesCollectionView.reloadData()
-        startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
-        startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
-        
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {

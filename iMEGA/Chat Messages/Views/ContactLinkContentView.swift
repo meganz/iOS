@@ -1,6 +1,5 @@
 import MEGAAppSDKRepo
 import MEGADesignToken
-import MEGAUIKit
 import UIKit
 
 class ContactLinkContentView: UIView {
@@ -20,9 +19,16 @@ class ContactLinkContentView: UIView {
         super.awakeFromNib()
         MainActor.assumeIsolated {
             updateAppearance(with: traitCollection)
+            registerForAppearanceChanges()
         }
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: ContactLinkContentView, _: UITraitCollection) in
+            view.updateAppearance(with: view.traitCollection)
+        }
+    }
+
     private func updateAppearance(with trait: UITraitCollection) {
         backgroundColor = .mnz_chatRichLinkContentBubble(trait)
         titleLabel.textColor = UIColor.label
@@ -50,16 +56,5 @@ class ContactLinkContentView: UIView {
     func hideLoading() {
         activityIndicatorView.stopAnimating()
         activityIndicatorView.isHidden = true
-    }
-}
-
-extension ContactLinkContentView: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        updateAppearance(with: currentTrait)
     }
 }

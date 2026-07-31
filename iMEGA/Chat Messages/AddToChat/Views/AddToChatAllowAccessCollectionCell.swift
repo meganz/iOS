@@ -14,17 +14,16 @@ class AddToChatAllowAccessCollectionCell: UICollectionViewCell {
             allowAccessTextLabel.text = Strings.Localizable.Chat.Photos.allowPhotoAccessMessage
             allowAccessImageView.image = MEGAAssets.UIImage.image(named: "Allow Acess")
             updateAppearance()
+            registerForAppearanceChanges()
         }
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (cell: AddToChatAllowAccessCollectionCell, _: UITraitCollection) in
+            cell.updateAppearance()
         }
     }
-    
+
     private func updateAppearance() {
         allowAccessTextLabel.textColor = .mnz_toolbarTextColor(traitCollection)
     }

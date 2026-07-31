@@ -86,18 +86,20 @@ class RichPreviewDialogView: UIView {
         }
         
         addSubview(rootFlexContainer)
+        registerForAppearanceChanges()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        registerForAppearanceChanges()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        updateAppearance()
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: RichPreviewDialogView, _: UITraitCollection) in
+            view.updateAppearance()
+        }
     }
-    
+
     private func configureView() {
         switch message?.warningDialog {
         case .initial:

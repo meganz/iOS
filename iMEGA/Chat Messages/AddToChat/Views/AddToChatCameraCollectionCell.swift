@@ -25,9 +25,16 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         
         MainActor.assumeIsolated {
             updateAppearance()
+            registerForAppearanceChanges()
         }
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (cell: AddToChatCameraCollectionCell, _: UITraitCollection) in
+            cell.updateAppearance()
+        }
+    }
+
     func prepareToShowLivefeed() {
         guard permissionHandler.isVideoPermissionAuthorized else {
             return
@@ -86,14 +93,6 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         previewLayer.frame = liveFeedView.layer.bounds
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     private func animateFading() {

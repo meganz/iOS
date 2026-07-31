@@ -71,17 +71,30 @@ final class ChatViewAttachmentCell: MessageContentCell {
         labelsStackView.addArrangedSubview(detailLabel)
         messageContainerView.addSubview(labelsStackView)
         setupConstraints()
+        registerForAppearanceChanges()
     }
-    
+
+    /// `updateAppearance` refreshes both token colors and `preferredFont` based fonts, so both trait groups have to be observed.
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance + [UITraitPreferredContentSizeCategory.self]) { (cell: ChatViewAttachmentCell, _: UITraitCollection) in
+            cell.updateAppearance()
+        }
+    }
+
     private func configureUI() {
         titleLabel.text = attachmentViewModel?.title
         detailLabel.text = attachmentViewModel?.subtitle
         attachmentViewModel?.set(imageView: imageView)
-        titleLabel.textColor = attachmentViewModel?.isFromCurrentSender == true ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-        titleLabel.apply(style: .footnote, weight: .bold)
-        detailLabel.textColor = attachmentViewModel?.isFromCurrentSender == true ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
+        updateAppearance()
     }
-    
+
+    private func updateAppearance() {
+        let textColor = attachmentViewModel?.isFromCurrentSender == true ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
+        titleLabel.textColor = textColor
+        titleLabel.apply(style: .footnote, weight: .bold)
+        detailLabel.textColor = textColor
+    }
+
     override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         
@@ -90,14 +103,6 @@ final class ChatViewAttachmentCell: MessageContentCell {
         }
         
         self.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        titleLabel.textColor = attachmentViewModel?.isFromCurrentSender == true ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
-        titleLabel.apply(style: .footnote, weight: .bold)
-        detailLabel.textColor = attachmentViewModel?.isFromCurrentSender == true ? TokenColors.Text.inverseAccent : TokenColors.Text.primary
     }
     
     func sizeThatFits() -> CGSize {

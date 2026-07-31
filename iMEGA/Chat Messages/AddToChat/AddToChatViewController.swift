@@ -86,8 +86,9 @@ class AddToChatViewController: UIViewController {
         }
         
         updateAppearance()
+        registerForAppearanceChanges()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -189,14 +190,12 @@ class AddToChatViewController: UIViewController {
         return menusWidth + menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: AddToChatViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
         }
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
