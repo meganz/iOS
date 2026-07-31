@@ -28,9 +28,13 @@ public struct QuotaWarningDialogView: View {
 
         public init(
             accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+            pricingRequester: some PricingRequesting,
             planPurchaser: some PlanPurchasing
         ) {
-            self.quotaDialogUseCase = QuotaDialogUseCaseFactory.make(accountPlanPurchaseUseCase: accountPlanPurchaseUseCase)
+            self.quotaDialogUseCase = QuotaDialogUseCaseFactory.make(
+                accountPlanPurchaseUseCase: accountPlanPurchaseUseCase,
+                pricingRequester: pricingRequester
+            )
             self.planPurchaser = planPurchaser
         }
 

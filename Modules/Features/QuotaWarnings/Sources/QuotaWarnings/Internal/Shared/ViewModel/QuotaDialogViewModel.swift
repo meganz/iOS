@@ -39,6 +39,9 @@ final class QuotaDialogViewModel: ObservableObject {
                     currentPlan: mapper.currentPlan(accountDetails: accountDetails)
                 )
             }
+        } catch is CancellationError {
+            // The view disappeared, or a logout tore the products down. Either way this dialog is
+            // on its way out, so leave the state alone rather than flashing an error at it.
         } catch {
             viewState = .error
         }

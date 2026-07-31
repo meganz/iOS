@@ -5,14 +5,6 @@ import MEGASdk
 import StoreKit
 
 extension MEGAPurchase {
-    func requestPricingAsync() async {
-        guard products == nil || products.isEmpty else { return }
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            _ = DelegateHolder(purchase: self, continuation: continuation)
-            self.requestPricing()
-        }
-    }
-
     @objc func addPayment(forProduct product: SKProduct, applyPromotionalOffer: Bool) {
         let paymentRequest = SKMutablePayment(product: product)
         paymentRequest.applicationUsername = MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? 0) ?? ""
@@ -83,22 +75,5 @@ extension MEGAPurchase {
             return index
         }
         return nil
-    }
-
-    private final class DelegateHolder: NSObject, MEGAPurchasePricingDelegate {
-        let continuation: CheckedContinuation<Void, Never>
-        let purchase: MEGAPurchase
-
-        init(purchase: MEGAPurchase, continuation: CheckedContinuation<Void, Never>) {
-            self.purchase = purchase
-            self.continuation = continuation
-            super.init()
-            purchase.addPricingsDelegate(self)
-        }
-
-        func pricingsReady() {
-            continuation.resume()
-            purchase.removePricingsDelegate(self)
-        }
     }
 }

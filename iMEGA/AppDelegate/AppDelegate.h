@@ -35,8 +35,9 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)setAccountFirstLogin:(BOOL)isFirstLogin;
 
 // Implemented in AppDelegate.m. Declared here so the MEGAPurchasePricingDelegate
-// conformance (declared in a Swift extension) can find the witness.
+// conformance (declared in a Swift extension) can find the witnesses.
 - (void)pricingsReady;
+- (void)pricingsFailed;
 
 @end
 

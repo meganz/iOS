@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGADomainMock
-import Testing
 @testable import QuotaWarnings
+import Testing
 
 @Suite("QuotaDialogUseCase")
 struct QuotaDialogUseCaseTests {
@@ -21,7 +21,8 @@ struct QuotaDialogUseCaseTests {
         QuotaDialogUseCase(
             accountUseCase: MockAccountUseCase(accountDetailsResult: .success(account)),
             accountPlanProductsUseCase: MockAccountPlanProductsUseCase(),
-            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: recommendation)
+            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: recommendation),
+            pricingRequester: MockPricingRequester()
         )
     }
 
@@ -49,7 +50,8 @@ struct QuotaDialogUseCaseTests {
         let sut = QuotaDialogUseCase(
             accountUseCase: MockAccountUseCase(accountDetailsResult: .failure(.generic)),
             accountPlanProductsUseCase: MockAccountPlanProductsUseCase(),
-            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: entity())
+            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: entity()),
+            pricingRequester: MockPricingRequester()
         )
 
         await #expect(throws: (any Error).self) {

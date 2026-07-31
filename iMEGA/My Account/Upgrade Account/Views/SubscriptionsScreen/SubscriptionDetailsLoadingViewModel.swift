@@ -8,11 +8,14 @@ struct SubscriptionDetailsLoadingViewModel {
         case dismiss
     }
     private let accountUseCase: any AccountUseCaseProtocol
-    private let purchase: MEGAPurchase
+    private let pricingRequester: any PricingRequesting
 
-    init(accountUseCase: some AccountUseCaseProtocol, purchase: MEGAPurchase = .sharedInstance()) {
+    init(
+        accountUseCase: some AccountUseCaseProtocol,
+        pricingRequester: some PricingRequesting = PricingRequester.shared
+    ) {
         self.accountUseCase = accountUseCase
-        self.purchase = purchase
+        self.pricingRequester = pricingRequester
     }
 
     func determineRoute() async -> Route {
@@ -20,7 +23,7 @@ struct SubscriptionDetailsLoadingViewModel {
               accountDetails.proLevel == .free else {
             return .dismiss
         }
-        await purchase.requestPricingAsync()
+        try? await pricingRequester.requestPricing()
         return .goPro(accountDetails)
     }
 

@@ -16,6 +16,8 @@
 @property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;
 @property (nonatomic, strong, nullable) NSArray<SKPaymentTransaction *> *submittingTransactions;
 @property (nonatomic, strong, nullable) SKProductsRequest *productsRequest;
+
+- (void)notifyPricingsFailedWithErrorCode:(MEGAPurchasePricingErrorCode)errorCode;
 @end
 
 @implementation MEGAPurchase
@@ -68,15 +70,39 @@
         }
         self.products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         self.iOSProductIdentifiers = [productIdentifieres copy];
+        if (self.productsRequest) {
+            [self.productsRequest cancel];
+            self.productsRequest = nil;
+        }
         self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         self.productsRequest.delegate = self;
         [self.productsRequest start];
 
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
+        [self notifyPricingsFailedWithErrorCode:MEGAPurchasePricingErrorCodePaymentsDisabled];
     }
 }
 
+- (void)notifyPricingsFailedWithErrorCode:(MEGAPurchasePricingErrorCode)errorCode {
+    MEGALogError(@"[StoreKit] Pricings will not become ready, error code %ld", (long)errorCode);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingDelegates) {
+            [pricingsDelegate pricingsFailed];
+        }
+    });
+}
+
+- (void)cancelPricingRequest {
+    if (self.productsRequest) {
+        MEGALogDebug(@"[StoreKit] Cancelling the products request");
+        [self.productsRequest cancel];
+        self.productsRequest = nil;
+    }
+}
+
+/// Empties the catalogue. The loaded products stop being valid, so `PricingRequester.cancel` has to be
+/// called alongside this, otherwise the next pricing request reuses this emptied catalogue.
 - (void)removeAllProducts {
     [self.products removeAllObjects];
 }
@@ -183,6 +209,9 @@
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     MEGALogError(@"[StoreKit] Request did fail with error %@", error);
+    if (self.productsRequest == request) {
+        [self notifyPricingsFailedWithErrorCode:MEGAPurchasePricingErrorCodeProductsRequestFailed];
+    }
     [self checkForExpiredOrCancellation];
 }
 
@@ -337,7 +366,10 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
-        if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        if (request.type == MEGARequestTypeGetPricing) {
+            MEGALogError(@"[StoreKit] Get pricing failed with error: %@ - %ld", error.name, (long)error.type);
+            [self notifyPricingsFailedWithErrorCode:MEGAPurchasePricingErrorCodePricingRequestFailed];
+        } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
             if (error.type == MEGAErrorTypeApiEExist) {
                 MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@ - %ld, but it is expected when downgrading subscription", error.name, (long)error.type);

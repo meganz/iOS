@@ -1,7 +1,9 @@
+@preconcurrency import Combine
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
+import MEGASwift
 import QuotaWarnings
 import SwiftUI
 import UIKit
@@ -108,6 +110,7 @@ import UIKit
         let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
         let dependency: QuotaWarningDialogView.Dependency = QuotaWarningDialogView.Dependency(
             accountPlanPurchaseUseCase: purchaseUseCase,
+            pricingRequester: PricingRequester.shared,
             planPurchaser: PlanPurchaser(purchaseUseCase: purchaseUseCase, postPurchaseDelay: 0)
         )
         let hostingController = QuotaWarningDialogHostingController(
@@ -143,6 +146,7 @@ import UIKit
                 // Purchase completed on the pushed subscription page → dismiss the whole quota dialog
                 // (this navigation controller), not just pop back to the now-stale dialog.
                 navigationController?.dismiss(animated: true)
+                QuotaWarningsRouter.isDialogPresenting = false
             }
         ).start()
     }

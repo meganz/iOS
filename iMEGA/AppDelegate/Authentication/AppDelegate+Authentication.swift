@@ -61,7 +61,9 @@ extension AppDelegate {
         
         QuickAccessWidgetManager.reloadAllWidgetsContent()
         
-        MEGAPurchase.sharedInstance().requestPricing()
+        Task {
+            try await PricingRequester.shared.requestPricing()
+        }
 
         createKMTransferFile()
     }

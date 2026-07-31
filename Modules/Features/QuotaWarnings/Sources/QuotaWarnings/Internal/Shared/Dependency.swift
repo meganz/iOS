@@ -4,7 +4,8 @@ import MEGARepo
 
 enum QuotaDialogUseCaseFactory {
     static func make(
-        accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol
+        accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        pricingRequester: some PricingRequesting
     ) -> QuotaDialogUseCase {
         QuotaDialogUseCase(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
@@ -14,7 +15,8 @@ enum QuotaDialogUseCaseFactory {
             ),
             recommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCase(
                 subscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCase()
-            )
+            ),
+            pricingRequester: pricingRequester
         )
     }
 }

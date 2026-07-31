@@ -175,7 +175,9 @@ import UIKit
             tableView.reloadData()
         }
     }
-    
+
+    nonisolated func pricingsFailed() {}
+
     // MARK: - Private
     
     private func setupColors() {

@@ -2670,6 +2670,8 @@
 		CD0FF1E5C0DD12225BA88A01 /* CloudDriveOfflineModeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */; };
 		C63FAA6DC8DE398DF87D0F6A /* OfflineAwareNodeTapDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */; };
 		CA2E12D813A8EE81C5DEECBA /* OfflineFileOpenGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */; };
+		D2D3A4016DBB6940AEB7A37B /* PricingRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */; };
+		D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
 		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
@@ -4094,6 +4096,8 @@
 		84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Highlight.swift"; sourceTree = "<group>"; };
 		84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderSession.swift; sourceTree = "<group>"; };
 		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
+		92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingRequester.swift; sourceTree = "<group>"; };
+		92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingRequesterTests.swift; sourceTree = "<group>"; };
 		940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryTests.swift; sourceTree = "<group>"; };
 		940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveBottomToolbarFactoryTests.swift; sourceTree = "<group>"; };
@@ -10458,6 +10462,7 @@
 			isa = PBXGroup;
 			children = (
 				0EEB9B2F2E5C074400CB27EA /* Mock */,
+				92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */,
 			);
 			path = UpgradeAccount;
 			sourceTree = "<group>";
@@ -11570,6 +11575,7 @@
 				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
 				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
 				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
+				92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */,
 			);
 			path = MEGAPurchase;
 			sourceTree = "<group>";
@@ -15741,6 +15747,7 @@
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
+				D2D3A4016DBB6940AEB7A37B /* PricingRequester.swift in Sources */,
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
 				A5629FDF2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */,
 				259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */,
@@ -16853,6 +16860,7 @@
 				258BA6322CCA36C400349CD2 /* PhotosViewModelTests.swift in Sources */,
 				4C3ECC662EF54822005830F9 /* PlaylistTabViewModelTests.swift in Sources */,
 				53A2552D2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift in Sources */,
+				D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,

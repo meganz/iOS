@@ -1219,6 +1219,8 @@
 
 }
 
+- (void)pricingsFailed {}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)sdk userList:(MEGAUserList *)userList {
@@ -1565,6 +1567,7 @@
         case MEGARequestTypeLogout: {
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
+            [self cancelPricingRequest];
             [MEGAPurchase.sharedInstance removeAllProducts];
             [self.quickAccessWidgetManager stopWidgetManager];
             if (request.flag || sessionInvalidateInOtherClient) {

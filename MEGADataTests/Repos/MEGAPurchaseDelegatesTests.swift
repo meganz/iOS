@@ -149,5 +149,7 @@ private final class MockRestoreDelegate: NSObject, MEGARestoreDelegate {
 }
 
 private final class MockPricingDelegate: NSObject, MEGAPurchasePricingDelegate {
+    func pricingsFailed() {}
+
     func pricingsReady() {}
 }

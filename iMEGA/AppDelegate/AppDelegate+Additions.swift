@@ -41,6 +41,12 @@ extension AppDelegate {
         MEGAAudioPlayerSession.stop()
     }
 
+    /// Cancels the pricing request on logout, so the next one reloads the products for whoever logs in next
+    /// instead of reusing the catalogue `MEGAPurchase.removeAllProducts` is about to empty.
+    @objc func cancelPricingRequest() {
+        PricingRequester.shared.cancel()
+    }
+
     @objc func audioPlayerAppWillTerminate() {
         MEGAAudioPlayerSession.appWillTerminate()
     }
