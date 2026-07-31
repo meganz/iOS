@@ -1305,6 +1305,10 @@
             [self handleFatalErrorWithEvent:event];
             break;
             
+        case EventStreamOverquota:
+            [self showStreamingOverQuotaModalAlert];
+            break;
+
         default:
             break;
     }
