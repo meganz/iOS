@@ -43,6 +43,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     private(set) var transferType: CancellableTransferType
     private(set) var isFolderLink: Bool
     private var wrapper: CancellableTransferControllerWrapper<CancellableTransferViewModel>?
+    private weak var presentedAlert: UIAlertController?
 
     init(presenter: UIViewController, transfers: [CancellableTransfer], transferType: CancellableTransferType, isFolderLink: Bool = false) {
         self.presenter = presenter
@@ -93,18 +94,27 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func showTransfersAlert() {
-        guard let presenter = presenter, let wrapper = wrapper?.cancelAlertController() else { return }
-        presenter.present(wrapper, animated: true)
+        guard let presenter = presenter, let alert = wrapper?.cancelAlertController() else { return }
+        presentedAlert = alert
+        presenter.present(alert, animated: true)
+    }
+    
+    /// Whether `presenter?.dismiss()` would close this router's own cancel-transfer alert.
+    private var canDismissTransfersAlert: Bool {
+        guard let presented = presenter?.presentedViewController, presented === presentedAlert else {
+            return false
+        }
+        return presented.presentedViewController == nil
     }
     
     func transferSuccess(with message: String, dismiss: Bool) {
-        if dismiss {
+        if dismiss, canDismissTransfersAlert {
             presenter?.dismiss(animated: true)
         }
     }
     
     func transferCancelled(with message: String, dismiss: Bool) {
-        if dismiss {
+        if dismiss, canDismissTransfersAlert {
             presenter?.dismiss(animated: true, completion: {
                 SVProgressHUD.showInfo(withStatus: message)
             })
@@ -114,7 +124,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func transferFailed(error: String, dismiss: Bool) {
-        if dismiss {
+        if dismiss, canDismissTransfersAlert {
             presenter?.dismiss(animated: true, completion: {
                 SVProgressHUD.showError(withStatus: error)
             })
@@ -124,7 +134,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func transferCompletedWithError(error: String, dismiss: Bool) {
-        if dismiss {
+        if dismiss, canDismissTransfersAlert {
             presenter?.dismiss(animated: true, completion: {
                 SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
             })
