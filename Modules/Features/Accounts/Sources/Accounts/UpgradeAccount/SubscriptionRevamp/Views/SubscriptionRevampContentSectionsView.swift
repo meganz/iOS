@@ -15,7 +15,7 @@ struct SubscriptionContentSectionsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            SubscriptionProFeaturesView()
+            SubscriptionProFeaturesView(viewModel: .init(plans: viewModel.plans))
                 .padding(.top, TokenSpacing._3)
             if let currentPlan = viewModel.currentPlanViewModel {
                 SubscriptionCurrentPlanView(viewModel: currentPlan)

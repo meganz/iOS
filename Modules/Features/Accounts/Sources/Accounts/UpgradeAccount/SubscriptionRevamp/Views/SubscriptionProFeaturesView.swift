@@ -5,24 +5,21 @@ import SwiftUI
 
 struct SubscriptionProFeaturesView: View {
 
-    private let maxPlanStorage: String
-    private let maxPlanTransfer: String
+    private let viewModel: SubscriptionProFeaturesViewModel
 
-    // [IOS-12185]: compute actual maxPlanStorage and maxPlanTransfer
-    init(maxPlanStorage: String = "20 TB", maxPlanTransfer: String = "240 TB") {
-        self.maxPlanStorage = maxPlanStorage
-        self.maxPlanTransfer = maxPlanTransfer
+    init(viewModel: SubscriptionProFeaturesViewModel) {
+        self.viewModel = viewModel
     }
 
     private var features: [SubscriptionProFeature] {
         [
             SubscriptionProFeature(
                 icon: MEGAAssets.Image.subscriptionFeatureCloud,
-                title: Strings.Localizable.SubscriptionPurchase.Feature.Storage.description(maxPlanStorage)
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Storage.description(viewModel.maxPlanStorage)
             ),
             SubscriptionProFeature(
                 icon: MEGAAssets.Image.subscriptionFeatureTransfers,
-                title: Strings.Localizable.SubscriptionPurchase.Feature.Transfer.description(maxPlanTransfer)
+                title: Strings.Localizable.SubscriptionPurchase.Feature.Transfer.description(viewModel.maxPlanTransfer)
             ),
             SubscriptionProFeature(
                 icon: MEGAAssets.Image.subscriptionFeatureVPN,
@@ -71,6 +68,6 @@ private struct SubscriptionProFeatureRow: View {
 }
 
 #Preview {
-    SubscriptionProFeaturesView()
-    .padding()
+    SubscriptionProFeaturesView(viewModel: .init(plans: []))
+        .padding()
 }
