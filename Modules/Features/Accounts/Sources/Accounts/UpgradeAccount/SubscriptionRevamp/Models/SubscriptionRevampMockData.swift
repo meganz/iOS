@@ -10,6 +10,7 @@ enum SubscriptionRevampMockData {
     static var planCards: [SubscriptionPlanCardModel] {
         [
             SubscriptionPlanCardModel(
+                productIdentifier: "pro.lite.yearly",
                 title: "Pro Lite",
                 price: .yearly(.init(pricePerMonth: "€3.33/month", billingCaption: "€40.01 charged yearly")),
                 storage: "400 GB storage",
@@ -18,12 +19,14 @@ enum SubscriptionRevampMockData {
                 isPrimaryAction: true
             ),
             SubscriptionPlanCardModel(
+                productIdentifier: "pro.i.monthly",
                 title: "Pro I",
                 price: .monthly(.init(pricePerMonth: "€9.99/month")),
                 storage: "2 TB storage",
                 transfer: "2 TB transfer"
             ),
             SubscriptionPlanCardModel(
+                productIdentifier: "pro.ii.monthly",
                 title: "Pro II",
                 price: .discountMonthly(.init(
                     priceLine: "[A]€19.99[/A] €14.99/month",

@@ -17,6 +17,7 @@ struct SubscriptionPlanCardsPresenter {
             .filter { $0.subscriptionCycle == cycle && $0 != featuredPlan }
             .map { plan in
                 SubscriptionPlanCardModel(
+                    productIdentifier: plan.productIdentifier,
                     title: displayName(plan.type),
                     price: resolver.planPrice(for: plan),
                     storage: plan.storage,

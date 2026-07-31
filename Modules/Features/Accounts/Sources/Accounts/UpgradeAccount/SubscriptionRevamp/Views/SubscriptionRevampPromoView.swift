@@ -80,10 +80,9 @@ public struct SubscriptionPromoView: View {
                         PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                         PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
                     }
-                    Button(card.buttonTitle, action: {
+                    BrandButton(title: card.buttonTitle) {
                         // [IOS-12185]: Handle buy action
-                    })
-                        .buttonStyle(BrandButtonStyle())
+                    }
                 }
             }
             .frame(maxWidth: .infinity)

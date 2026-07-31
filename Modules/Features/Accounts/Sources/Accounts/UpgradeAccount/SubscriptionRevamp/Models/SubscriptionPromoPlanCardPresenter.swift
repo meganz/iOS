@@ -10,6 +10,7 @@ struct SubscriptionPromoPlanCardPresenter {
     var cardModel: SubscriptionRevampPromoPlanCardModel {
         let name = displayName(plan.type)
         return SubscriptionRevampPromoPlanCardModel(
+            productIdentifier: plan.productIdentifier,
             ribbonText: SubscriptionOfferBadgePresenter().badge(for: plan) ?? "",
             title: name,
             price: SubscriptionPlanPriceResolver().planPrice(for: plan),

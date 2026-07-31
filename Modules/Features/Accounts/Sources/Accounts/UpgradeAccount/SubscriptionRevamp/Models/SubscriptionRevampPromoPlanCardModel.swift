@@ -1,6 +1,7 @@
 import MEGAUIComponent
 
 struct SubscriptionRevampPromoPlanCardModel: Equatable {
+    let productIdentifier: String
     let ribbonText: String
     let title: String
     let price: PlanPrice

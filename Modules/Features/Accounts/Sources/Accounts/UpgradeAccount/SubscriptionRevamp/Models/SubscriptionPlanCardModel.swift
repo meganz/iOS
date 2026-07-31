@@ -1,6 +1,7 @@
 import MEGAUIComponent
 
 struct SubscriptionPlanCardModel: Identifiable, Equatable {
+    let productIdentifier: String
     let title: String
     let price: PlanPrice
     let storage: String
@@ -8,7 +9,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
     let ribbonText: String?
     let isPrimaryAction: Bool
 
-    var id: String { title }
+    var id: String { productIdentifier }
 
     var hasOffer: Bool {
         switch price {
@@ -18,6 +19,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
     }
 
     init(
+        productIdentifier: String,
         title: String,
         price: PlanPrice,
         storage: String,
@@ -25,6 +27,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
         ribbonText: String? = nil,
         isPrimaryAction: Bool = false
     ) {
+        self.productIdentifier = productIdentifier
         self.title = title
         self.price = price
         self.storage = storage

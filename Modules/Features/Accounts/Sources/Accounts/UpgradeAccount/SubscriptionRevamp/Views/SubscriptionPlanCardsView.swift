@@ -52,10 +52,9 @@ struct SubscriptionPlanCardsView: View {
     private func buyButton(_ card: SubscriptionPlanCardModel) -> some View {
         let title = Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title)
         if card.hasOffer {
-            Button(title, action: {
+            BrandButton(title: title) {
                 // [IOS-12185]: Handle buy action
-            })
-                .buttonStyle(BrandButtonStyle())
+            }
         } else {
             MEGAButton(
                 title,
