@@ -28,6 +28,7 @@ extension EventEntity.EventType {
         case .networkActivity: 22
         case .transfersResumed: 23
         case .lastPurge: 24
+        case .streamingOverQuota: 25
         }
     }
 }
@@ -122,6 +123,7 @@ extension Event {
         case .networkActivity: EventEntity.EventType.networkActivity
         case .transfersResumed: EventEntity.EventType.transfersResumed
         case .lastPurge: EventEntity.EventType.lastPurge
+        case .streamOverquota: EventEntity.EventType.streamingOverQuota
         @unknown default:  nil
         }
     }
