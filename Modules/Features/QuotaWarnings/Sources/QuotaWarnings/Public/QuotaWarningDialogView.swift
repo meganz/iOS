@@ -17,7 +17,7 @@ public enum TransferQuotaSeverity: Equatable, Sendable {
 }
 
 public struct QuotaWarningDialogView: View {
-    public enum Kind {
+    public enum Kind: Sendable {
         case storage(StorageQuotaSeverity)
         case transfer(TransferQuotaSeverity)
     }

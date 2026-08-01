@@ -278,6 +278,14 @@
         "identifier" : "MEGARepoTests",
         "name" : "MEGARepoTests"
       }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/QuotaWarnings",
+        "identifier" : "QuotaWarningsTests",
+        "name" : "QuotaWarningsTests"
+      }
     }
   ],
   "version" : 1

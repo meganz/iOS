@@ -1,6 +1,9 @@
+import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGASdk
+import QuotaWarnings
 
 extension AppDelegate {
     @objc func expiredAccountTitle() -> String {
@@ -54,5 +57,28 @@ extension AppDelegate {
     
     @objc func postDidFinishFetchAccountDetailsNotification(accountDetails: MEGAAccountDetails?) {
         NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails?.toAccountDetailsEntity())
+    }
+
+    /// Called once the main tab bar is the window root, so the dialog has a stable presenter.
+    @objc func checkStorageAlmostFullOnAppOpen() {
+        showStorageAlmostFullDialogIfNeeded(useCase: .onAppOpen)
+    }
+
+    /// Called from `onTransferFinish` for a successful upload.
+    @objc func showStorageAlmostFullWarningAfterSuccessfulUpload() {
+        showStorageAlmostFullDialogIfNeeded(useCase: .afterSuccessfulUpload)
+    }
+
+    private func showStorageAlmostFullDialogIfNeeded(useCase: StorageAlmostFullDialogUseCase) {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp) else { return }
+        Task { @MainActor in
+            do {
+                guard try await useCase.shouldShowDialog(),
+                      QuotaWarningsRouter().presentStorageDialog(severity: .almostFull) else { return }
+                useCase.recordDialogShown()
+            } catch {
+                MEGALogError("[Storage quota] Could not refresh the storage state: \(error)")
+            }
+        }
     }
 }

@@ -768,6 +768,11 @@
 }
 
 - (void)showStorageQuotaWarningIfNeeded {
+    [self checkStorageAlmostFullOnAppOpen];
+    [self showDeferredStorageEventDialogIfNeeded];
+}
+
+- (void)showDeferredStorageEventDialogIfNeeded {
     if (self.storageEventToDisplayLater) {
         [[QuotaWarningsRouter.alloc init] presentStorageQuotaWarningWithEvent:self.storageEventToDisplayLater];
         self.storageEventToDisplayLater = nil;
@@ -1767,8 +1772,14 @@
     
     if ([transfer type] == MEGATransferTypeDownload) {
         [[[SaveNodeUseCaseOCWrapper alloc] initWithSaveMediaToPhotoFailureHandler:self] saveNodeIfNeededFrom:transfer];
-        
+
         [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
+    }
+
+    /// error.type == MEGAErrorTypeApiOk check not really needed due to the early return in the above if (error.type)
+    /// However, put it here for safety in case that early return is mistakenly removed, or the code move around.
+    if (error.type == MEGAErrorTypeApiOk && transfer.type == MEGATransferTypeUpload) {
+        [self showStorageAlmostFullWarningAfterSuccessfulUpload];
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];

@@ -1,7 +1,7 @@
 import Foundation
 import MEGAPreference
 
-public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
+public enum PreferenceKeyEntity: String, PreferenceKeyProtocol, Sendable {
     case dontShowAgainAddPhoneNumber
     case backupHeartbeatRegistrationId
     case lastPSARequestTimestamp
@@ -58,4 +58,8 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case lastKnownProLevel
     case homeWidgetConfigs = "HomeWidgetsCustomizationConfigs"
     case homePromotionalDialogShown
+    case storageAlmostFullOnAppOpenDialogShownCount
+    case storageAlmostFullOnAppOpenDialogLastShownDate
+    case storageAlmostFullAfterUploadDialogShownCount
+    case storageAlmostFullAfterUploadDialogLastShownDate
 }

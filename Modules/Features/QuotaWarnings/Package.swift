@@ -31,7 +31,8 @@ let package = Package(
         .package(path: "../../Repository/MEGARepo"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
-        .package(path: "../../MEGASharedRepo/MEGAInfrastructure")
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
+        .package(path: "../../MEGASharedRepo/MEGAPreference")
     ],
     targets: [
         .target(
@@ -46,7 +47,8 @@ let package = Package(
                            "MEGARepo",
                            "MEGAUIComponent",
                            "MEGASwift",
-                           "MEGAInfrastructure"],
+                           "MEGAInfrastructure",
+                           "MEGAPreference"],
             swiftSettings: settings
         ),
         .target(
@@ -60,7 +62,9 @@ let package = Package(
                            "QuotaWarningsMock",
                            "MEGADomain",
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
-                           "MEGAUIComponent"],
+                           "MEGASwift",
+                           "MEGAUIComponent",
+                           .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")],
             swiftSettings: settings
         )
     ],

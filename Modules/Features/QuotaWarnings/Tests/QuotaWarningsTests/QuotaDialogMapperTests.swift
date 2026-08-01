@@ -39,7 +39,7 @@ struct StorageQuotaDialogMapperTests {
         let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 100% full")
-        #expect(header.subtitle.text == "You've run out of storage space. Upgrade your plan to continue uploading")
+        #expect(header.subtitle.text == "You’ve run out of storage space. Upgrade your plan to continue uploading")
     }
 
     @Test func header_noUpgrade_showsManageCopyRegardlessOfSeverity() {
@@ -114,7 +114,7 @@ struct TransferQuotaDialogMapperTests {
         let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
         let header = sut.header(accountDetails: .build(transferUsed: 80, transferMax: 100, proLevel: .proI), canUpgrade: true)
 
-        #expect(header.title == "You've used 80% of your transfer quota")
+        #expect(header.title == "You’ve used 80% of your transfer quota")
     }
 
     @Test func header_exceeded_showsExceededTitle() {

@@ -40,6 +40,28 @@ struct QuotaEventSimulatorView: View {
 
     @State private var isPresentingDialog = false
 
+    // MARK: - Display limit (the real once-a-day-per-trigger cap on the storage almost-full dialog)
+    /// A capped trigger, identified by the label shown in the Display limit section.
+    private struct CappedTrigger: Identifiable {
+        let id: String
+        let useCase: StorageAlmostFullDialogUseCase
+    }
+
+    private static let cappedTriggers: [CappedTrigger] = [
+        CappedTrigger(id: "On app open", useCase: .onAppOpen),
+        CappedTrigger(id: "After a successful upload", useCase: .afterSuccessfulUpload)
+    ]
+
+    // MARK: - Real SDK storage event (goes through AppDelegate onEvent:, unlike Start)
+    @State private var eventScenario: DebugQuotaEventSimulator.StorageScenario = .almostFull
+    @State private var eventSendCount = 1
+    @State private var eventInterval: TimeInterval = 0
+
+    @State private var allowanceStates: [String: QADailyAllowanceState] = [:]
+    /// What each trigger's date picker shows — seeded from the stored date, or now when there is none.
+    @State private var lastShownDateEdits: [String: Date] = [:]
+    @State private var isPresentingLimitResetAlert = false
+
     var body: some View {
         List {
             currentPlanSection
@@ -49,10 +71,19 @@ struct QuotaEventSimulatorView: View {
             planListSection
             recommendationSection
             startSection
+            storageEventSection
+            displayLimitSection
         }
         .listStyle(.grouped)
         .navigationTitle("Quota dialog simulator")
         .sheet(isPresented: $isPresentingDialog) { dialog }
+        .onAppear(perform: refreshDisplayLimitStatus)
+        .alert("Daily limit reset", isPresented: $isPresentingLimitResetAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Today's counts are cleared. The storage almost-full dialog can show once again "
+                 + "from each real trigger.")
+        }
     }
 
     // MARK: - Sections
@@ -157,6 +188,121 @@ struct QuotaEventSimulatorView: View {
     private var startSection: some View {
         Section {
             Button("Start") { isPresentingDialog = true }
+        }
+    }
+
+    /// Synthesizes a real SDK `EventStorage` and feeds it to `AppDelegate onEvent:`, so the whole
+    /// production path runs — deferral while the tab bar is not yet root, the router's
+    /// already-presenting guard, the daily allowance. Unlike **Start** above, which skips all of it.
+    private var storageEventSection: some View {
+        Section {
+            qaPicker("Event", selection: $eventScenario, options: DebugQuotaEventSimulator.StorageScenario.allCases) {
+                $0.title
+            }
+            qaPicker("Send", selection: $eventSendCount, options: QAConstants.eventSendCounts) {
+                $0 == 1 ? "Once" : "\($0) times"
+            }
+            qaPicker("Interval", selection: $eventInterval, options: QAConstants.eventIntervals, label: qaDelayLabel)
+            Button("Send") {
+                DebugQuotaEventSimulator.shared.start(
+                    .storage(eventScenario),
+                    count: eventSendCount,
+                    interval: eventInterval
+                )
+            }
+            Button("Stop repeating", role: .destructive) {
+                DebugQuotaEventSimulator.shared.stop()
+            }
+        } header: {
+            header("Send storage event")
+        } footer: {
+            Text("Fires the event through the real AppDelegate path, so the daily allowance below applies. "
+                 + "Interval waits before each send, including the first — use it to dismiss this page and "
+                 + "watch the dialog land elsewhere; the run keeps going after you leave. At 0s the sends are "
+                 + "back to back, so the already-presenting guard swallows all but the first.")
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
+    }
+
+    /// The real app caps the storage almost-full dialog at once a calendar day *per trigger*. Reports
+    /// whether each allowance is spent, and clears them on demand.
+    /// Note neither affects **Start** above, which presents the dialog directly rather than through
+    /// the real trigger, so the cap never applies there.
+    private var displayLimitSection: some View {
+        Section {
+            ForEach(Self.cappedTriggers) { trigger in
+                DisclosureGroup {
+                    infoRow("Shown count", shownCountText(for: trigger.id))
+                    infoRow("Last shown", lastShownText(for: trigger.id))
+                    DatePicker(
+                        "Move last shown to",
+                        selection: lastShownDateBinding(for: trigger),
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    Button("Clear this trigger's count") {
+                        trigger.useCase._resetDailyCount()
+                        refreshDisplayLimitStatus()
+                    }
+                } label: {
+                    infoRow(trigger.id, displayLimitStatus(for: trigger.id))
+                }
+            }
+            Button("Reset storage almost-full daily limits") {
+                StorageAlmostFullDialogUseCase._resetAllDailyCounts()
+                refreshDisplayLimitStatus()
+                isPresentingLimitResetAlert = true
+            }
+        } header: {
+            header("Display limit")
+        } footer: {
+            Text("The storage almost-full dialog shows at most once a day (00:00–23:59) per trigger, and "
+                 + "the two triggers have separate allowances. To test the same-day rule without waiting "
+                 + "for midnight: trigger the dialog once, then move Last shown to another day — the count "
+                 + "stays, but it no longer counts as today, so the dialog can show again. "
+                 + "Trigger points without an allowance — over-quota error, album import — are "
+                 + "unrestricted, as is Start above, which bypasses the router entirely.")
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
+    }
+
+    private func displayLimitStatus(for triggerName: String) -> String {
+        guard let state = allowanceStates[triggerName] else { return "—" }
+        return state.isAvailable ? "Can still show today" : "Limit reached — won't show again today"
+    }
+
+    private func shownCountText(for triggerName: String) -> String {
+        guard let state = allowanceStates[triggerName] else { return "—" }
+        guard let dailyLimit = state.dailyLimit else { return "\(state.shownCount) (uncapped)" }
+        return "\(state.shownCount) / \(dailyLimit)"
+    }
+
+    private func lastShownText(for triggerName: String) -> String {
+        guard let lastShownDate = allowanceStates[triggerName]?.lastShownDate else { return "Never" }
+        return lastShownDate.formatted(date: .abbreviated, time: .shortened)
+    }
+
+    /// Writes straight through to the stored preference, so the picker doubles as the editor — QA
+    /// picks a date and the next real trigger already sees it.
+    private func lastShownDateBinding(for trigger: CappedTrigger) -> Binding<Date> {
+        Binding(
+            get: { lastShownDateEdits[trigger.id] ?? Date() },
+            set: { newDate in
+                lastShownDateEdits[trigger.id] = newDate
+                trigger.useCase._setLastShownDate(newDate)
+                refreshDisplayLimitStatus()
+            }
+        )
+    }
+
+    /// Re-reads the production allowances. Called on appear and after every edit here — otherwise the
+    /// counts only ever move via real triggers elsewhere in the app.
+    private func refreshDisplayLimitStatus() {
+        for trigger in Self.cappedTriggers {
+            let state = trigger.useCase._allowanceState
+            allowanceStates[trigger.id] = state
+            // Keep whatever QA already picked when nothing is stored, so a cleared trigger does not
+            // snap the picker back to now mid-edit.
+            lastShownDateEdits[trigger.id] = state.lastShownDate ?? lastShownDateEdits[trigger.id] ?? Date()
         }
     }
 
@@ -654,6 +800,9 @@ private enum QAConstants {
     static let dataSizesGB = [20, 200, 400, 1024, 2048, 8192, 16384]
     static let usageSizesGB = [0, 1, 4, 10, 19, 100, 500, 1024, 2048]
     static let stepDelays: [TimeInterval] = [0, 0.5, 1, 2, 3, 5]
+    /// How many times the storage event simulator fires, and how long it waits before each send.
+    static let eventSendCounts = [1, 2, 3, 5, 10]
+    static let eventIntervals: [TimeInterval] = [0, 1, 3, 5, 10, 30]
     /// Allowance used for the current plan when Free is selected (no catalog entry to derive limits from).
     static let freeAllowanceGB = 20
     // Exact string decimals so floored per-month figures don't drift by a cent.
