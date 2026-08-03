@@ -119,6 +119,7 @@
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
 		0E827D062EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E827D052EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift */; };
 		0E827D2A2EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */; };
+		BF1A70D22F0000010000AA01 /* UIViewController+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
 		0E8C8EA22ED7B03D0083918C /* MockCameraUploadProgressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */; };
@@ -239,6 +240,10 @@
 		140ADEC42F3DA18C00392C1F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 140ADEC32F3DA18C00392C1F /* FirebaseCrashlytics */; };
 		141C6BA52FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141C6BA42FBB2D37000CCFBB /* MEGAAudioPlayerActionsHandler.swift */; };
 		14770A74F52C5392A976C340 /* QuotaWarningsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */; };
+		BF1A70D42F0000010000AA02 /* AudioTearDownHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D32F0000010000AA02 /* AudioTearDownHandlerFactory.swift */; };
+		BF1A70D62F0000010000AA03 /* RevampedAudioTearDownHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A70D52F0000010000AA03 /* RevampedAudioTearDownHandler.swift */; };
+		A1D5F0C24E7B41A9B3C60002 /* LegacyAudioTearDownHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5F0C24E7B41A9B3C60001 /* LegacyAudioTearDownHandler.swift */; };
+		A1D5F0C24E7B41A9B3C60004 /* AudioTearDownHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5F0C24E7B41A9B3C60003 /* AudioTearDownHandlerTests.swift */; };
 		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
 		14C0336E2FBAD9C200BC12C1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 14C0336D2FBAD9C200BC12C1 /* FirebaseAnalytics */; };
 		14C131092FAF21640021D501 /* MEGAAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 14C131082FAF21640021D501 /* MEGAAudioPlayer */; };
@@ -2930,6 +2935,7 @@
 		0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E827D052EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressTableViewModelTests.swift; sourceTree = "<group>"; };
 		0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInProgressRowViewModelTests.swift; sourceTree = "<group>"; };
+		BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraUploadProgressRouter.swift; sourceTree = "<group>"; };
@@ -5015,6 +5021,10 @@
 		B6DFECCE2607D96D00B0829B /* DiskFullBlockingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewModel.swift; sourceTree = "<group>"; };
 		B6DFECDB2607D9B100B0829B /* DiskFullBlockingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewRouter.swift; sourceTree = "<group>"; };
 		B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaWarningsRouter.swift; sourceTree = "<group>"; };
+		BF1A70D32F0000010000AA02 /* AudioTearDownHandlerFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioTearDownHandlerFactory.swift; sourceTree = "<group>"; };
+		BF1A70D52F0000010000AA03 /* RevampedAudioTearDownHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RevampedAudioTearDownHandler.swift; sourceTree = "<group>"; };
+		A1D5F0C24E7B41A9B3C60001 /* LegacyAudioTearDownHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegacyAudioTearDownHandler.swift; sourceTree = "<group>"; };
+		A1D5F0C24E7B41A9B3C60003 /* AudioTearDownHandlerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AudioTearDownHandlerTests.swift; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
 		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
@@ -8776,9 +8786,36 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		A1D5F0C24E7B41A9B3C60005 /* Dismiss */ = {
+			isa = PBXGroup;
+			children = (
+				BF1A70D32F0000010000AA02 /* AudioTearDownHandlerFactory.swift */,
+				A1D5F0C24E7B41A9B3C60001 /* LegacyAudioTearDownHandler.swift */,
+				BF1A70D52F0000010000AA03 /* RevampedAudioTearDownHandler.swift */,
+			);
+			path = Dismiss;
+			sourceTree = "<group>";
+		};
+		A1D5F0C24E7B41A9B3C60006 /* QuotaWarnings */ = {
+			isa = PBXGroup;
+			children = (
+				A1D5F0C24E7B41A9B3C60007 /* Dismiss */,
+			);
+			path = QuotaWarnings;
+			sourceTree = "<group>";
+		};
+		A1D5F0C24E7B41A9B3C60007 /* Dismiss */ = {
+			isa = PBXGroup;
+			children = (
+				A1D5F0C24E7B41A9B3C60003 /* AudioTearDownHandlerTests.swift */,
+			);
+			path = Dismiss;
+			sourceTree = "<group>";
+		};
 		71A0BCC8CCB9DCD286243D27 /* QuotaWarnings */ = {
 			isa = PBXGroup;
 			children = (
+				A1D5F0C24E7B41A9B3C60005 /* Dismiss */,
 				B6E0EB8AAD504DF62C3B578C /* QuotaWarningsRouter.swift */,
 			);
 			path = QuotaWarnings;
@@ -11693,6 +11730,7 @@
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
+				BF1A70D12F0000010000AA01 /* UIViewController+AdditionsTests.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
 			);
 			path = Utils;
@@ -12155,6 +12193,7 @@
 				259FA4002A3A946500C038B2 /* Profile */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
 				C4D675122BB2CF0F000A1F79 /* QuickActions */,
+				A1D5F0C24E7B41A9B3C60006 /* QuotaWarnings */,
 				949704B12AB425AC00B2CA3A /* Rename */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
@@ -14654,6 +14693,7 @@
 				9428430D2AA7CFDD00278048 /* AudioSessionRepository.swift in Sources */,
 				94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */,
 				940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */,
+				BF1A70D42F0000010000AA02 /* AudioTearDownHandlerFactory.swift in Sources */,
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				BFE149732C7410F60024555A /* AutoGrowingTextView.swift in Sources */,
@@ -15233,6 +15273,7 @@
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				C464FDE22D9CB79F00274FCD /* LayoutAttributesAnimator.swift in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
+				A1D5F0C24E7B41A9B3C60002 /* LegacyAudioTearDownHandler.swift in Sources */,
 				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
 				A873E85B26E2228400CBB174 /* LegacyFileVersioningViewModel.swift in Sources */,
 				BF0B5E0B2BB2C88B00ADE274 /* LegacyNoInternetViewModel.swift in Sources */,
@@ -15832,6 +15873,7 @@
 				9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */,
 				9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
+				BF1A70D62F0000010000AA03 /* RevampedAudioTearDownHandler.swift in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */,
 				C4EDB73826655229006A114F /* RoundedView.swift in Sources */,
@@ -16580,6 +16622,7 @@
 				24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
 				941622362D6E311200A14516 /* AudioQueueLoaderTests.swift in Sources */,
+				A1D5F0C24E7B41A9B3C60004 /* AudioTearDownHandlerTests.swift in Sources */,
 				2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */,
 				0E43E1462B2F9F860079700A /* AVViewModelTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
@@ -16927,6 +16970,7 @@
 				94B1FC4E2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift in Sources */,
 				94D5DA9D2D15DC760031C2CD /* TransfersWidgetViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
+				BF1A70D22F0000010000AA01 /* UIViewController+AdditionsTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,

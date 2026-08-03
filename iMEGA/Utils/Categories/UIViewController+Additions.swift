@@ -62,6 +62,26 @@ extension UIViewController {
         isViewLoaded && (view.window != nil)
     }
     
+    /// Walks down the modal stack from this controller to the topmost one that can present right now.
+    ///
+    /// Unlike `UIApplication.mnz_presentingViewController()`, the walk stops before a controller that is off window
+    /// or on its way out. Those are the states in which `present(_:animated:)` does nothing but log
+    /// `Attempt to present … whose view is not in the window hierarchy`, leaving the caller to believe it succeeded.
+    /// - Returns: The controller to present on, or `nil` when nothing in the stack can take a presentation.
+    func topPresentableViewController() -> UIViewController? {
+        var candidate = self
+
+        while let presented = candidate.presentedViewController, presented.isViewReady(), !presented.isBeingDismissed, !presented.isBeingPresented {
+            candidate = presented
+        }
+
+        /// The walk stops on a controller still holding a modal only when that modal is off window or on its way
+        /// out. UIKit refuses a second presentation until it is gone, so there is nothing presentable right now.
+        guard candidate.isViewReady(), candidate.presentedViewController == nil else { return nil }
+
+        return candidate
+    }
+
     func presenterViewController() -> UIViewController? {
         guard var viewController = presentedViewController else {
             return self

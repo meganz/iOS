@@ -3,6 +3,7 @@ import Foundation
 @testable import MEGAAudioPlayer
 import Testing
 
+@MainActor
 @Suite("PlaybackEngine audio interruption parsing")
 struct PlaybackEngineInterruptionTests {
 

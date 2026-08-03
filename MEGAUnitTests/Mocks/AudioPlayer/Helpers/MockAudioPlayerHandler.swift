@@ -32,6 +32,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var initMiniPlayerCallCount = 0
     var refreshCurrentItemState_calledTimes = 0
     var closePlayer_calledTimes = 0
+    var dismissFullScreenPlayer_calledTimes = 0
+    var playerAlive = true
     var resettingAudioPlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
     var shuffle = false
@@ -176,7 +178,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {}
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }
-    func isPlayerAlive() -> Bool { true }
+    func isPlayerAlive() -> Bool { playerAlive }
     func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol) {}
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
@@ -197,7 +199,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     }
     func currentSpeedMode() -> SpeedMode { .normal }
     
-    @MainActor func dismissFullScreenPlayer() async {}
+    @MainActor func dismissFullScreenPlayer() async {
+        dismissFullScreenPlayer_calledTimes += 1
+    }
     
     func resettingAudioPlayer(shouldResetPlayback: Bool) {
         resettingAudioPlayer_calledTimes += 1

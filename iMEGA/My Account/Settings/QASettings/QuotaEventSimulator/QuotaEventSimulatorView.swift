@@ -76,7 +76,7 @@ struct QuotaEventSimulatorView: View {
         }
         .listStyle(.grouped)
         .navigationTitle("Quota dialog simulator")
-        .sheet(isPresented: $isPresentingDialog) { dialog }
+        .sheet(isPresented: $isPresentingDialog, onDismiss: didDismissDialog) { dialog }
         .onAppear(perform: refreshDisplayLimitStatus)
         .alert("Daily limit reset", isPresented: $isPresentingLimitResetAlert) {
             Button("OK", role: .cancel) {}
@@ -317,6 +317,16 @@ struct QuotaEventSimulatorView: View {
                 onViewAllPlans: {}
             )
         }
+    }
+
+    /// The QA sheet bypasses `QuotaWarningsRouter`, so run the same dismiss handlers it would compose.
+    /// Fires for the close button and for swipe-to-dismiss alike, which is what lets QA verify side
+    /// effects such as the audio teardown on `transfer(.streamingExceeded)`.
+    private func didDismissDialog() {
+        QuotaDialogDismissHandler(
+            kind: scenario.kind,
+            dependency: .init(audioTearDownHandler: AudioTearDownHandlerFactory.make())
+        ).dismiss()
     }
 
     // MARK: - Wiring

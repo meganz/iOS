@@ -127,20 +127,34 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                     appDelegate?.showUpgradePlanPageFromAds()
                 })
             }
-            presenter.present(audioPlayerViewController, animated: true) {
+            present(audioPlayerViewController) {
                 Task {
                     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                     await appDelegate.showAdMobConsentIfNeeded()
                 }
             }
         default:
-            presenter.present(build(), animated: true, completion: nil)
+            present(build())
         }
     }
-    
+
+    private func present(_ viewController: UIViewController, completion: (() -> Void)? = nil) {
+        viewController.presentationController?.delegate = self
+        presenter.present(viewController, animated: true, completion: completion)
+    }
+
     // MARK: - UI Actions
+    /// Always runs `completion`, including when there is nothing left to dismiss.
+    /// Callers rely on the completion to release resources, or resume a continuation with it, which would otherwise suspend forever.
     func dismiss(completion: @escaping () -> Void) {
-        baseViewController?.dismiss(animated: true, completion: completion)
+        guard let baseViewController,
+              baseViewController.presentingViewController != nil,
+              !baseViewController.isBeingDismissed else {
+            completion()
+            return
+        }
+
+        baseViewController.dismiss(animated: true, completion: completion)
     }
     
     func goToPlaylist(parentNodeName: String) {
@@ -223,5 +237,13 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 break // we do not track other events here yet
             }
         }
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension AudioPlayerViewRouter: UIAdaptivePresentationControllerDelegate {
+    /// This is needed beacuse a swipe down dismissal never routes through `dismiss()`
+    @objc func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        AudioPlayerManager.shared.clearFullScreenPlayerResources()
     }
 }

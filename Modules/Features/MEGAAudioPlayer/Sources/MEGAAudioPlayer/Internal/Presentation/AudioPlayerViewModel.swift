@@ -143,6 +143,22 @@ final class AudioPlayerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$currentSource)
 
+        // The session ending is what closes this screen — `stop()` clears the source, and a player with
+        // nothing loaded has nothing to show. Keeps the teardown one-way: callers end the session and the
+        // screen follows, so no one outside needs a reference to the player's view controller.
+        // `dropFirst()` skips the replayed current value, which would otherwise dismiss a screen that is
+        // still starting up, before its first source arrives.
+        service.currentSourcePublisher
+            .map { $0 == nil }
+            .removeDuplicates()
+            .dropFirst()
+            .filter { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.onDismiss?()
+            }
+            .store(in: &cancellables)
+
         service.currentQueuePublisher
             .map(\.tracks)
             .removeDuplicates { $0.map(\.id) == $1.map(\.id) }

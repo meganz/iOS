@@ -40,4 +40,12 @@ extension UIApplication {
     var isBackgroundState: Bool {
         UIApplication.shared.applicationState == .background
     }
+
+    /// The topmost view controller that can present modally right now, or `nil` when there is none.
+    ///
+    /// Prefer this over `mnz_presentingViewController()`, which returns whatever sits at the top of the modal stack
+    /// even while it is being dismissed or has left the window.
+    @MainActor static func topPresentableViewController() -> UIViewController? {
+        mnz_keyWindow()?.rootViewController?.topPresentableViewController()
+    }
 }
