@@ -12,7 +12,7 @@ struct RecommendedPlanFooterView: View {
     let recommendedPlan: RecommendedPlan
     let onViewAllPlans: @MainActor () -> Void
 
-    @StateObject private var purchaseViewModel: RecommendedPlanPurchaseViewModel
+    @StateObject private var purchaseViewModel: PlanPurchaseViewModel
 
     init(
         recommendedPlan: RecommendedPlan,
@@ -23,7 +23,7 @@ struct RecommendedPlanFooterView: View {
         self.recommendedPlan = recommendedPlan
         self.onViewAllPlans = onViewAllPlans
         _purchaseViewModel = StateObject(
-            wrappedValue: RecommendedPlanPurchaseViewModel(
+            wrappedValue: PlanPurchaseViewModel(
                 planPurchaser: dependency.planPurchaser,
                 onPurchased: onPurchased
             )
@@ -49,33 +49,7 @@ struct RecommendedPlanFooterView: View {
             allowMaxWidthForWideScreen: true
         )
         .disabled(purchaseViewModel.isPurchasing)
-        .alert(item: $purchaseViewModel.presentedAlert, content: makeAlert)
-    }
-
-    private func makeAlert(_ alert: RecommendedPlanPurchaseViewModel.PurchaseAlert) -> Alert {
-        switch alert {
-        case .failed:
-            Alert(
-                title: Text(Strings.Localizable.failedPurchaseTitle),
-                message: Text(Strings.Localizable.failedPurchaseMessage),
-                dismissButton: .default(Text(Strings.Localizable.ok))
-            )
-        case .activeCancellableSubscription(let confirmCancelAndBuy):
-            Alert(
-                title: Text(Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.title),
-                message: Text(Strings.Localizable.Account.Upgrade.AlreadyHaveACancellableSubscription.message),
-                primaryButton: .default(Text(Strings.Localizable.yes)) {
-                    Task { await confirmCancelAndBuy() }
-                },
-                secondaryButton: .cancel(Text(Strings.Localizable.no))
-            )
-        case .activeNonCancellableSubscription:
-            Alert(
-                title: Text(Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.title),
-                message: Text(Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.message),
-                dismissButton: .default(Text(Strings.Localizable.ok))
-            )
-        }
+        .planPurchaseAlert(purchaseViewModel)
     }
 }
 

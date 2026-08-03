@@ -66,7 +66,6 @@ final class UpgradePlansRouter {
             appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion,
             isFromAds: isFromAds,
             notifyPurchaseSucceeded: {
-                NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
                 NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
             },
             purchaseCompleteBehavior: purchaseCompleteBehavior,

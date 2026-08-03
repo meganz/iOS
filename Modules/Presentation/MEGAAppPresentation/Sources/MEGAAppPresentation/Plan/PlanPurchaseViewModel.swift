@@ -1,17 +1,18 @@
 import Combine
-import MEGAAppPresentation
-import MEGADomain
-import SwiftUI
 
+/// Drives a one-tap plan purchase and reports it through a single piece of state. Shared by the quota
+/// dialog and the revamp subscription page so a purchase behaves the same wherever it is started.
+/// It owns the busy flag that disables every buy button while a purchase is in flight and the alert
+/// the host presents when a purchase needs confirmation or fails.
 @MainActor
-final class RecommendedPlanPurchaseViewModel: ObservableObject {
-    /// Alert the footer presents in reaction to a purchase attempt.
-    enum PurchaseAlert: Identifiable {
+public final class PlanPurchaseViewModel: ObservableObject {
+    /// Alert the host presents in reaction to a purchase attempt.
+    public enum PurchaseAlert: Identifiable {
         case failed
         case activeCancellableSubscription(confirmCancelAndBuy: @MainActor () async -> Void)
         case activeNonCancellableSubscription
 
-        var id: String {
+        public var id: String {
             switch self {
             case .failed: "failed"
             case .activeCancellableSubscription: "activeCancellableSubscription"
@@ -20,14 +21,14 @@ final class RecommendedPlanPurchaseViewModel: ObservableObject {
         }
     }
 
-    @Published var isPurchasing = false
-    @Published var presentedAlert: PurchaseAlert?
+    @Published public private(set) var isPurchasing = false
+    @Published public var presentedAlert: PurchaseAlert?
 
     private let planPurchaser: any PlanPurchasing
     private let onPurchased: @MainActor () -> Void
     private var subscriptions = Set<AnyCancellable>()
 
-    init(
+    public init(
         planPurchaser: any PlanPurchasing,
         onPurchased: @escaping @MainActor () -> Void
     ) {
@@ -36,7 +37,7 @@ final class RecommendedPlanPurchaseViewModel: ObservableObject {
         observeOutcomes()
     }
 
-    func purchase(productIdentifier: String) async {
+    public func purchase(productIdentifier: String) async {
         isPurchasing = true
         await planPurchaser.purchase(productIdentifier: productIdentifier)
     }

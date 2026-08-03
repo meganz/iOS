@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 
 /// Owns loading and the loading/standard/promo state switching for the revamp
@@ -18,6 +19,17 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     /// Drives the flip to `.standard` once the featured promotional offer lapses.
     /// Set only while a promo page with a live countdown is shown.
     private var promoExpiryMonitor: (any PromoExpiryMonitoring)?
+
+    private(set) lazy var purchaseViewModel = PlanPurchaseViewModel(
+        planPurchaser: dependency.planPurchaserFactory.makePurchaser(
+            purchaseUseCase: dependency.purchaseUseCase,
+            subscriptionsUseCase: dependency.subscriptionsUseCase,
+            accountUseCase: dependency.accountUseCase
+        ),
+        onPurchased: { [weak self] in
+            self?.purchaseDidSucceed()
+        }
+    )
 
     @Published public private(set) var viewState: ViewState = .loading
     @Published public var isDismiss = false
@@ -143,6 +155,18 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.presentAlert(.restore(.failed)) }
             .store(in: &subscriptions)
+    }
+
+    private func purchaseDidSucceed() {
+        dependency.notifyPurchaseSucceeded()
+        // [IOS-12341]: Handle non-loading state of AccountMenuView's .currentPlan and .storageUsed rows
+        switch dependency.purchaseCompleteBehavior {
+        case .dismiss:
+            guard !isDismiss else { return }
+            isDismiss = true
+        case let .perform(action):
+            action()
+        }
     }
 
     private func presentAlert(_ type: UpgradeAccountPlanAlertType) {

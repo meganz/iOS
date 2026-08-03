@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -12,15 +13,18 @@ public struct SubscriptionStandardView: View {
 
     private let dependency: RevampUpgradePlansDependency
     private let viewModel: UpgradePlansViewModel
+    private let purchaseViewModel: PlanPurchaseViewModel
     private let dismissAction: () -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
         viewModel: UpgradePlansViewModel,
+        purchaseViewModel: PlanPurchaseViewModel,
         dismissAction: @escaping () -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
+        self.purchaseViewModel = purchaseViewModel
         self.dismissAction = dismissAction
     }
 
@@ -33,8 +37,14 @@ public struct SubscriptionStandardView: View {
             headerImage
         } content: {
             titleHeader
-            SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel, dismissAction: dismissAction)
+            SubscriptionContentSectionsView(
+                dependency: dependency,
+                viewModel: viewModel,
+                purchaseViewModel: purchaseViewModel,
+                dismissAction: dismissAction
+            )
         }
+        .planPurchaseAlert(purchaseViewModel)
     }
 
     private var headerImage: some View {

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -7,6 +8,7 @@ import SwiftUI
 /// Renders the list of ``SubscriptionPlanCardModel`` variants; shared by the promo and standard pages.
 struct SubscriptionPlanCardsView: View {
     let cards: [SubscriptionPlanCardModel]
+    let purchaseViewModel: PlanPurchaseViewModel
 
     var body: some View {
         VStack(spacing: TokenSpacing._4) {
@@ -48,28 +50,12 @@ struct SubscriptionPlanCardsView: View {
         }
     }
 
-    @ViewBuilder
     private func buyButton(_ card: SubscriptionPlanCardModel) -> some View {
-        let title = Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title)
-        if card.hasOffer {
-            BrandButton(title: title) {
-                // [IOS-12185]: Handle buy action
-            }
-        } else {
-            MEGAButton(
-                title,
-                type: card.isPrimaryAction ? .primary : .secondary,
-                action: {
-                    // [IOS-12185]: Handle buy action
-                }
-            )
-        }
-    }
-}
-
-#Preview {
-    ScrollView {
-        SubscriptionPlanCardsView(cards: SubscriptionRevampMockData.planCards)
-            .padding()
+        PlanPurchaseButton(
+            purchaseViewModel: purchaseViewModel,
+            title: Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title),
+            productIdentifier: card.productIdentifier,
+            style: card.hasOffer ? .brand : .mega(card.isPrimaryAction ? .primary : .secondary)
+        )
     }
 }

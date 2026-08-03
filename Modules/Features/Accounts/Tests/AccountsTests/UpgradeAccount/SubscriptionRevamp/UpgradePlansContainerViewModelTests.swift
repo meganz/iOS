@@ -1,5 +1,6 @@
 @testable import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -74,13 +75,68 @@ struct UpgradePlansContainerViewModelTests {
         #expect(standardViewModel.selectedCycle == .monthly)
     }
 
+    // MARK: - Purchase outcomes
+
+    @Test("A successful purchase notifies the host exactly once")
+    func purchaseSucceeded_notifiesTheHostExactlyOnce() async {
+        let purchaser = MockPlanPurchasing()
+        await confirmation("The host is notified of the purchase") { notified in
+            let sut = makeSUT(
+                plans: [standardPlan()],
+                purchaser: purchaser,
+                notifyPurchaseSucceeded: { notified() }
+            )
+            send(.succeeded, from: purchaser, to: sut)
+        }
+    }
+
+    @Test("A successful purchase dismisses the page by default")
+    func purchaseSucceeded_withDismissBehavior_dismissesThePage() {
+        let purchaser = MockPlanPurchasing()
+        let sut = makeSUT(plans: [standardPlan()], purchaser: purchaser)
+
+        send(.succeeded, from: purchaser, to: sut)
+
+        #expect(sut.isDismiss)
+    }
+
+    @Test("A successful purchase runs the host action instead of dismissing the page")
+    func purchaseSucceeded_withPerformBehavior_runsTheActionAndKeepsThePage() async {
+        let purchaser = MockPlanPurchasing()
+        await confirmation("The host action runs") { performed in
+            let sut = makeSUT(
+                plans: [standardPlan()],
+                purchaser: purchaser,
+                purchaseCompleteBehavior: .perform { performed() }
+            )
+
+            send(.succeeded, from: purchaser, to: sut)
+
+            #expect(sut.isDismiss == false)
+        }
+    }
+
+    @Test("A failed purchase surfaces the failure alert and keeps the page")
+    func purchaseFailed_presentsTheFailureAlertAndKeepsThePage() {
+        let purchaser = MockPlanPurchasing()
+        let sut = makeSUT(plans: [standardPlan()], purchaser: purchaser)
+
+        send(.failed, from: purchaser, to: sut)
+
+        #expect(sut.purchaseViewModel.presentedAlert?.isFailed == true)
+        #expect(sut.isDismiss == false)
+    }
+
     // MARK: - SUT
 
     private func makeSUT(
         plans: [PlanEntity],
         accountDetails: AccountDetailsEntity = .build(),
         hasAlreadyExpired: Bool = false,
-        monitorExpires: Bool = true
+        monitorExpires: Bool = true,
+        purchaser: MockPlanPurchasing = MockPlanPurchasing(),
+        notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) -> UpgradePlansContainerViewModel {
         let fetchUseCase = MockRevampUpgradePlansUseCase(plansResult: plans, accountDetails: accountDetails)
         let dependency = makeDependency(
@@ -89,15 +145,30 @@ struct UpgradePlansContainerViewModelTests {
             promoExpiryMonitorFactory: MockPromoExpiryMonitorFactory(
                 hasAlreadyExpired: hasAlreadyExpired,
                 expires: monitorExpires
-            )
+            ),
+            planPurchaserFactory: MockPlanPurchaserFactory(purchaser: purchaser),
+            notifyPurchaseSucceeded: notifyPurchaseSucceeded,
+            purchaseCompleteBehavior: purchaseCompleteBehavior
         )
         return UpgradePlansContainerViewModel(dependency: dependency)
+    }
+
+    private func send(
+        _ outcome: PlanPurchaseOutcome,
+        from purchaser: MockPlanPurchasing,
+        to sut: UpgradePlansContainerViewModel
+    ) {
+        _ = sut.purchaseViewModel
+        purchaser.send(outcome)
     }
 
     private func makeDependency(
         fetchUseCase: some RevampUpgradePlansUseCaseProtocol,
         accountDetails: AccountDetailsEntity,
-        promoExpiryMonitorFactory: some PromoExpiryMonitorFactory
+        promoExpiryMonitorFactory: some PromoExpiryMonitorFactory,
+        planPurchaserFactory: some PlanPurchaserFactory,
+        notifyPurchaseSucceeded: @Sendable @escaping () -> Void,
+        purchaseCompleteBehavior: PurchaseCompleteBehavior
     ) -> RevampUpgradePlansDependency {
         RevampUpgradePlansDependency(
             fetchUseCase: fetchUseCase,
@@ -113,7 +184,10 @@ struct UpgradePlansContainerViewModelTests {
             domainName: "mega.nz",
             appVersion: "1.0",
             isFromAds: false,
-            promoExpiryMonitorFactory: promoExpiryMonitorFactory
+            notifyPurchaseSucceeded: notifyPurchaseSucceeded,
+            purchaseCompleteBehavior: purchaseCompleteBehavior,
+            promoExpiryMonitorFactory: promoExpiryMonitorFactory,
+            planPurchaserFactory: planPurchaserFactory
         )
     }
 
@@ -217,4 +291,8 @@ private extension UpgradePlansContainerViewModel.ViewState {
 
 private extension UpgradeAccountPlanAlertType {
     var isPromoEnded: Bool { if case .promoEnded = self { true } else { false } }
+}
+
+private extension PlanPurchaseViewModel.PurchaseAlert {
+    var isFailed: Bool { if case .failed = self { true } else { false } }
 }

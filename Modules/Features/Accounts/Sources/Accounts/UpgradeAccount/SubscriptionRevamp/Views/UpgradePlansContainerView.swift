@@ -46,12 +46,14 @@ public struct UpgradePlansContainerView: View {
             SubscriptionStandardView(
                 dependency: viewModel.dependency,
                 viewModel: contentViewModel,
+                purchaseViewModel: viewModel.purchaseViewModel,
                 dismissAction: { viewModel.dismiss() }
             )
         case .promo(let contentViewModel):
             SubscriptionPromoView(
                 dependency: viewModel.dependency,
                 viewModel: contentViewModel,
+                purchaseViewModel: viewModel.purchaseViewModel,
                 dismissAction: { viewModel.dismiss() }
             )
         }

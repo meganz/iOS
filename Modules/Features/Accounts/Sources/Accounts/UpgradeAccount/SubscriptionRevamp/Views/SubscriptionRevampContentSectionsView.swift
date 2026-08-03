@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import SwiftUI
@@ -11,6 +12,7 @@ import SwiftUI
 struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
     @ObservedObject var viewModel: UpgradePlansViewModel
+    let purchaseViewModel: PlanPurchaseViewModel
     let dismissAction: () -> Void
 
     var body: some View {
@@ -23,8 +25,11 @@ struct SubscriptionContentSectionsView: View {
             }
             cyclePicker
                 .padding(.top, TokenSpacing._3)
-            SubscriptionPlanCardsView(cards: viewModel.planCards(for: viewModel.selectedCycle))
-                .padding(.top, TokenSpacing._3)
+            SubscriptionPlanCardsView(
+                cards: viewModel.planCards(for: viewModel.selectedCycle),
+                purchaseViewModel: purchaseViewModel
+            )
+            .padding(.top, TokenSpacing._3)
             SubscriptionBenefitsListView()
                 .padding(.top, TokenSpacing._4)
             if let freePlanCard = viewModel.freePlanCard {

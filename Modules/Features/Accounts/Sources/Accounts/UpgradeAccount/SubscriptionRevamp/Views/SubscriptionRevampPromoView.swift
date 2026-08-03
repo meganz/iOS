@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAUIComponent
@@ -13,15 +14,18 @@ public struct SubscriptionPromoView: View {
 
     private let dependency: RevampUpgradePlansDependency
     private let viewModel: UpgradePlansViewModel
+    private let purchaseViewModel: PlanPurchaseViewModel
     private let dismissAction: () -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
         viewModel: UpgradePlansViewModel,
+        purchaseViewModel: PlanPurchaseViewModel,
         dismissAction: @escaping () -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
+        self.purchaseViewModel = purchaseViewModel
         self.dismissAction = dismissAction
     }
 
@@ -36,9 +40,15 @@ public struct SubscriptionPromoView: View {
                 promoHero
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
-                SubscriptionContentSectionsView(dependency: dependency, viewModel: viewModel, dismissAction: dismissAction)
+                SubscriptionContentSectionsView(
+                    dependency: dependency,
+                    viewModel: viewModel,
+                    purchaseViewModel: purchaseViewModel,
+                    dismissAction: dismissAction
+                )
             }
         )
+        .planPurchaseAlert(purchaseViewModel)
     }
 
     private var promoBanner: some View {
@@ -80,9 +90,12 @@ public struct SubscriptionPromoView: View {
                         PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
                         PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
                     }
-                    BrandButton(title: card.buttonTitle) {
-                        // [IOS-12185]: Handle buy action
-                    }
+                    PlanPurchaseButton(
+                        purchaseViewModel: purchaseViewModel,
+                        title: card.buttonTitle,
+                        productIdentifier: card.productIdentifier,
+                        style: .brand
+                    )
                 }
             }
             .frame(maxWidth: .infinity)

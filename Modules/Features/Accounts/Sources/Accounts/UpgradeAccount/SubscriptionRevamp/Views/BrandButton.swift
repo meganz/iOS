@@ -9,8 +9,8 @@ import SwiftUI
 /// The metrics and `state` handling mirror `MEGAButton` so the two stay consistent.
 struct BrandButton: View {
     let title: String
-    var state: MEGAButtonState = .default
-    var accessibilityIdentifier: String?
+    let state: MEGAButtonState
+    let accessibilityIdentifier: String?
     let action: () -> Void
 
     var body: some View {
@@ -45,13 +45,4 @@ struct BrandButton: View {
             }
         }
     }
-}
-
-#Preview {
-    VStack(spacing: TokenSpacing._4) {
-        BrandButton(title: "Get Pro I") {}
-        BrandButton(title: "Get Pro I", state: .disabled) {}
-        BrandButton(title: "Get Pro I", state: .load) {}
-    }
-    .padding()
 }

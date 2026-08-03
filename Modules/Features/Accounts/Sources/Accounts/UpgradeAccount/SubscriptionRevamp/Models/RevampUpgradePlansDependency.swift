@@ -28,6 +28,10 @@ public struct RevampUpgradePlansDependency: Sendable {
     /// resolves deterministically instead of sleeping until a deadline.
     let promoExpiryMonitorFactory: any PromoExpiryMonitorFactory
 
+    /// Builds the plan purchaser. Defaults to the real factory; tests and previews inject one
+    /// returning a scripted purchaser instead of going through StoreKit.
+    let planPurchaserFactory: any PlanPurchaserFactory
+
     public init(
         fetchUseCase: some RevampUpgradePlansUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
@@ -49,7 +53,8 @@ public struct RevampUpgradePlansDependency: Sendable {
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
         dismissAction: @MainActor @escaping () -> Void = {},
-        promoExpiryMonitorFactory: some PromoExpiryMonitorFactory = DefaultPromoExpiryMonitorFactory()
+        promoExpiryMonitorFactory: some PromoExpiryMonitorFactory = DefaultPromoExpiryMonitorFactory(),
+        planPurchaserFactory: some PlanPurchaserFactory = DefaultPlanPurchaserFactory()
     ) {
         self.fetchUseCase = fetchUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -70,5 +75,6 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.dismissAction = dismissAction
         self.termsAndPoliciesPresenter = termsAndPoliciesPresenter
         self.promoExpiryMonitorFactory = promoExpiryMonitorFactory
+        self.planPurchaserFactory = planPurchaserFactory
     }
 }
