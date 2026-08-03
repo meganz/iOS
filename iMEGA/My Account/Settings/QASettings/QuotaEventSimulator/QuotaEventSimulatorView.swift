@@ -470,8 +470,8 @@ private extension QuotaEventSimulatorView {
         var kind: QuotaWarningDialogView.Kind {
             switch self {
             case .storageAlmostFull: .storage(.almostFull)
-            case .storageFull: .storage(.full)
-            case .storageFullUploadAttempt: .storage(.fullUploadAttempt)
+            case .storageFull: .storage(.full(.storageState))
+            case .storageFullUploadAttempt: .storage(.full(.uploadAttempt))
             case .transferLimitedDownload: .transfer(.limitedDownload)
             case .transferLimitedStreaming: .transfer(.limitedStreaming)
             case .transferDownloadExceeded: .transfer(.downloadExceeded)

@@ -4,9 +4,15 @@ import SwiftUI
 
 public enum StorageQuotaSeverity: Equatable, Sendable {
     case almostFull
-    case full
-    /// Storage is full and the user just attempted an upload/action that was blocked (over-quota API error).
-    case fullUploadAttempt
+    case full(FullTrigger)
+
+    /// What brought up a full-storage dialog. Only affects the copy, not the severity itself.
+    public enum FullTrigger: Equatable, Sendable {
+        /// Surfaced on login/reload from the SDK storage state.
+        case storageState
+        /// The user just attempted an upload that was blocked (over-quota API error).
+        case uploadAttempt
+    }
 }
 
 public enum TransferQuotaSeverity: Equatable, Sendable {
@@ -106,7 +112,16 @@ extension QuotaWarningDialogView.Dependency {
 #Preview("Storage — full") {
     QuotaWarningDialogView(
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
-        kind: .storage(.full),
+        kind: .storage(.full(.storageState)),
+        onClose: {},
+        onViewAllPlans: {}
+    )
+}
+
+#Preview("Storage — full, upload attempt") {
+    QuotaWarningDialogView(
+        dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
+        kind: .storage(.full(.uploadAttempt)),
         onClose: {},
         onViewAllPlans: {}
     )
@@ -115,7 +130,7 @@ extension QuotaWarningDialogView.Dependency {
 #Preview("No upgrade") {
     QuotaWarningDialogView(
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase(plan: nil)),
-        kind: .storage(.full),
+        kind: .storage(.full(.storageState)),
         onClose: {},
         onViewAllPlans: {}
     )

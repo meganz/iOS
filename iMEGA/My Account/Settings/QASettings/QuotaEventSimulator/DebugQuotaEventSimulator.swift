@@ -123,7 +123,7 @@ final class DebugQuotaEventSimulator {
         // The upload-attempt copy isn't an SDK storage state, so present its severity directly
         // instead of synthesizing an `EventStorage`.
         if scenario == .fullUploadAttempt {
-            QuotaWarningsRouter().presentStorageDialog(severity: .fullUploadAttempt)
+            QuotaWarningsRouter().presentStorageDialog(severity: .full(.uploadAttempt))
             return
         }
         guard let simulator = UIApplication.shared.delegate as? (any QAQuotaEventSimulating) else { return }

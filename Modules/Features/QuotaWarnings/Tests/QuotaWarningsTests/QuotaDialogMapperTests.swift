@@ -26,16 +26,16 @@ struct StorageQuotaDialogMapperTests {
         #expect(header.subtitle.text == "Upgrade your plan before you run out of space")
     }
 
-    @Test func header_full_showsFullCopy() {
-        let sut = StorageQuotaDialogMapper(severity: .full)
+    @Test func header_fullFromStorageState_showsFullCopy() {
+        let sut = StorageQuotaDialogMapper(severity: .full(.storageState))
         let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 100% full")
         #expect(header.subtitle.text == "Upgrade your plan to get more storage and upload more files")
     }
 
-    @Test func header_fullUploadAttempt_showsRunOutOfSpaceCopy() {
-        let sut = StorageQuotaDialogMapper(severity: .fullUploadAttempt)
+    @Test func header_fullFromUploadAttempt_showsRunOutOfSpaceCopy() {
+        let sut = StorageQuotaDialogMapper(severity: .full(.uploadAttempt))
         let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 100% full")
@@ -43,7 +43,7 @@ struct StorageQuotaDialogMapperTests {
     }
 
     @Test func header_noUpgrade_showsManageCopyRegardlessOfSeverity() {
-        for severity in [StorageQuotaSeverity.almostFull, .full, .fullUploadAttempt] {
+        for severity in [StorageQuotaSeverity.almostFull, .full(.storageState), .full(.uploadAttempt)] {
             let sut = StorageQuotaDialogMapper(severity: severity)
             let header = sut.header(accountDetails: .build(storageUsed: 100, storageMax: 100), canUpgrade: false)
 
@@ -53,7 +53,7 @@ struct StorageQuotaDialogMapperTests {
     }
 
     @Test func header_full_overHundredPercent_showsActualPercentUncapped() {
-        let sut = StorageQuotaDialogMapper(severity: .full)
+        let sut = StorageQuotaDialogMapper(severity: .full(.storageState))
         let header = sut.header(accountDetails: .build(storageUsed: 120, storageMax: 100), canUpgrade: true)
 
         #expect(header.title == "Your storage is 120% full")
@@ -67,7 +67,7 @@ struct StorageQuotaDialogMapperTests {
     }
 
     @Test func currentPlan_usesStorageUsageAndSeverityStatus() {
-        let sut = StorageQuotaDialogMapper(severity: .full)
+        let sut = StorageQuotaDialogMapper(severity: .full(.storageState))
         let currentPlan = sut.currentPlan(accountDetails: .build(storageUsed: 90, storageMax: 100))
 
         #expect(currentPlan.quota.status == .full)

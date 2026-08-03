@@ -131,7 +131,7 @@ extension QuotaWarningsRouter {
             if isRedesignEnabled {
                 // Only red reaches this path — almost full is checked on app open and after a
                 // successful upload instead. The ternary is left as defensive code.
-                let severity: StorageQuotaSeverity = event.number == StorageState.orange.rawValue ? .almostFull : .full
+                let severity: StorageQuotaSeverity = event.number == StorageState.orange.rawValue ? .almostFull : .full(.storageState)
                 presentStorageDialog(severity: severity)
             } else {
                 // Old logic, copied over
@@ -147,7 +147,10 @@ extension QuotaWarningsRouter {
     @objc func presentStorageQuotaWarning(error: MEGAError, legacyMode: CustomModalAlertMode) {
         Task { @MainActor in
             if isRedesignEnabled {
-                presentStorageDialog(severity: error.type == .apiEOverQuota ? .full : .almostFull)
+                // `storageUploadQuotaError` is the only mode raised by a blocked upload, so it is
+                // the only one that gets the "continue uploading" copy.
+                let trigger: StorageQuotaSeverity.FullTrigger = legacyMode == .storageUploadQuotaError ? .uploadAttempt : .storageState
+                presentStorageDialog(severity: error.type == .apiEOverQuota ? .full(trigger) : .almostFull)
             } else {
                 CustomModalAlertRouter(
                     legacyMode,

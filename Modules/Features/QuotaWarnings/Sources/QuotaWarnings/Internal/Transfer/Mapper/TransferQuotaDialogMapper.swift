@@ -103,11 +103,30 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         case .downloadExceeded, .streamingExceeded: .full
         }
 
+        /// Bcause transfer quota limit is not available for free user,
+        /// Hardcode the total bytes such that the used percentage is 100% for full, otherwise 80%
+        let totalBytes = if accountDetails.isFree {
+            if status == .full {
+                Int64(100)
+            } else {
+                Int64(Double(accountDetails.transferUsed) * 1.25)
+            }
+        } else {
+            accountDetails.transferMax
+        }
+        
+        /// Displayed the used transfer quota only because transfer quota limit is not available.
+        let style: QuotaUsageStyle = if accountDetails.isFree {
+            .usedOnly
+        } else {
+            .usedOfTotal
+        }
+        
         return QuotaProgress(
             status: status,
             usedBytes: accountDetails.transferUsed,
-            totalBytes: accountDetails.transferMax,
-            style: accountDetails.proLevel == .free ? .usedOnly : .usedOfTotal
+            totalBytes: totalBytes,
+            style: style
         )
     }
 }

@@ -50,9 +50,9 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
         let text = switch severity {
         case .almostFull:
             Strings.Localizable.QuotaWarning.Storage.AlmostFull.subtitle
-        case .full:
+        case .full(.storageState):
             Strings.Localizable.QuotaWarning.Storage.Full.subtitle
-        case .fullUploadAttempt:
+        case .full(.uploadAttempt):
             Strings.Localizable.QuotaWarning.Storage.Full.Uploading.subtitle
         }
         return .plain(text)
@@ -61,7 +61,7 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
     private func currentQuotaProgress(accountDetails: AccountDetailsEntity) -> QuotaProgress {
         let status: QuotaStatus = switch severity {
         case .almostFull: .almostFull
-        case .full, .fullUploadAttempt: .full
+        case .full: .full
         }
 
         return QuotaProgress(
