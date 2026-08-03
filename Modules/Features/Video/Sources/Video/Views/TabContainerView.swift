@@ -137,6 +137,7 @@ private func makeNullViewModel() -> VideoListViewModel {
         contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: Preview_PhotoLibraryUseCase()),
         selection: VideoSelection(),
         fileSearchUseCase: Preview_FilesSearchUseCase(),
+        sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
         thumbnailLoader: Preview_ThumbnailLoader(),
         sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
         nodeUseCase: Preview_NodeUseCase(),

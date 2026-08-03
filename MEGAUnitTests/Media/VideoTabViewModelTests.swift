@@ -454,6 +454,7 @@ final class VideoTabViewModelTests: XCTestCase {
             contentProvider: MockVideoListViewModelContentProvider(),
             selection: videoSelection,
             fileSearchUseCase: MockFilesSearchUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeDataUseCase(),

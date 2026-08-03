@@ -71,6 +71,7 @@ public class VideoRevampFactory {
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: videoSelection,
             fileSearchUseCase: fileSearchUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,

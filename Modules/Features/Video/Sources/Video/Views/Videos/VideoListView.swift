@@ -34,6 +34,13 @@ public struct VideoListView: View {
         )
     }
 
+    private var sortOrderSelection: Binding<MEGAUIComponent.SortOrder> {
+        Binding(
+            get: { viewModel.sortOrder },
+            set: { viewModel.didSelectSortOrder($0) }
+        )
+    }
+
     private var selectedDurationFilterOptionString: Binding<String> {
         Binding(
             get: { viewModel.selectedDurationFilterOption.stringValue },
@@ -127,7 +134,7 @@ public struct VideoListView: View {
     @ViewBuilder
     private func sortHeaderView() -> some View {
         ResultsHeaderView(height: 44, leftView: {
-            SortHeaderView(config: viewModel.sortHeaderConfig, selection: $viewModel.sortOrder)
+            SortHeaderView(config: viewModel.sortHeaderConfig, selection: sortOrderSelection)
         })
     }
 
@@ -162,6 +169,7 @@ public struct VideoListView: View {
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: Preview_PhotoLibraryUseCase()),
             selection: VideoSelection(),
             fileSearchUseCase: Preview_FilesSearchUseCase(),
+            sortOrderPreferenceUseCase: Preview_SortOrderPreferenceUseCase(),
             thumbnailLoader: Preview_ThumbnailLoader(),
             sensitiveNodeUseCase: Preview_SensitiveNodeUseCase(),
             nodeUseCase: Preview_NodeUseCase(),
