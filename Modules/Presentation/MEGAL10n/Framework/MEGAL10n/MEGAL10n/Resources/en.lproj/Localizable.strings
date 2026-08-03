@@ -5138,3 +5138,11 @@
 "upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/year";
 /* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
 "link.button.copyToOffline"="Copy to Offline";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="This offer has ended";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="Offer ends on %@";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="View plans";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="This deal is no longer available. Check our current plans to find one that suits you.";

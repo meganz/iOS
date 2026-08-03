@@ -41,8 +41,7 @@ struct SubscriptionPromoHeaderViewModel {
 
     var validUntil: String? {
         guard let expiryDate = featuredPlan?.mobileOffer?.expiryDate else { return nil }
-        // To be localized later
-        return "Offer ends on \(dateFormatter.localisedString(from: expiryDate))"
+        return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.offerEndsOn(dateFormatter.localisedString(from: expiryDate))
     }
 
     var countdownDeadline: Date? {

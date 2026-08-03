@@ -32,7 +32,7 @@ public enum UpgradeAccountPlanAlertType {
         case .activeSubscription:
             return Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.title
         case .promoEnded:
-            return "This offer has ended" // To be localized later
+            return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.offerEnded
         }
     }
 
@@ -55,8 +55,7 @@ public enum UpgradeAccountPlanAlertType {
             case .haveNonCancellablePlan: return Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.message
             }
         case .promoEnded:
-            // To be localized later
-            return "This deal is no longer available. Check our current plans to find one that suits you."
+            return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.OfferEnded.message
         }
     }
     
@@ -67,7 +66,7 @@ public enum UpgradeAccountPlanAlertType {
         }
 
         if case .promoEnded = self {
-            return "View plans" // To be localized later
+            return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.Button.viewPlans
         }
 
         return Strings.Localizable.ok
