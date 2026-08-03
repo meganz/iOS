@@ -99,7 +99,6 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
                 apiPrice: price(atProductIndex: index),
                 apiCurrencyCode: purchase.currency.localCurrencyName,
                 useAPIPrice: useAPIPrice,
-                mobileOfferLabel: mobileOffer?.label,
                 mobileOffer: mobileOffer
             )
             accountPlans.append(plan)

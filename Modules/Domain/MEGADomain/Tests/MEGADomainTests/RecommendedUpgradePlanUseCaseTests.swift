@@ -19,7 +19,7 @@ struct RecommendedUpgradePlanUseCaseTests {
         transferLimit: Int = 2048,
         storage: String = "",
         transfer: String = "",
-        mobileOfferLabel: String? = nil,
+        mobileOffer: MobileOfferEntity? = nil,
         offer: SubscriptionOfferEntity? = nil,
         productIdentifier: String = ""
     ) -> PlanEntity {
@@ -35,13 +35,27 @@ struct RecommendedUpgradePlanUseCaseTests {
             transfer: transfer,
             price: price,
             introductoryOffer: offer,
-            mobileOfferLabel: mobileOfferLabel
+            mobileOffer: mobileOffer
         )
     }
 
     /// Pay-up-front offer of `total` covering `months`, i.e. a real discount vs the full price.
     private func prepaidOffer(total: Decimal, months: Int) -> SubscriptionOfferEntity {
         SubscriptionOfferEntity(price: total, period: .init(unit: .month, value: months), periodCount: 1, paymentMode: .payUpFront)
+    }
+
+    private func campaign(label: String?, useAsTitle: Bool = true) -> MobileOfferEntity {
+        MobileOfferEntity(
+            id: "campaign",
+            useAsTitle: useAsTitle,
+            label: label,
+            discountPercentage: 20,
+            flags: 0,
+            reshowTimeout: nil,
+            expiryDate: nil,
+            iosOfferId: nil,
+            iosSignature: nil
+        )
     }
 
     // MARK: - Free → cheapest yearly
@@ -328,7 +342,7 @@ struct RecommendedUpgradePlanUseCaseTests {
             plan(
                 type: .proI, name: "Pro I", cycle: .yearly, price: 100,
                 storageLimit: 2048, transferLimit: 2048, storage: "2 TB", transfer: "2 TB",
-                mobileOfferLabel: "Black Friday", productIdentifier: "pro1.yearly"
+                productIdentifier: "pro1.yearly"
             )
         ]
         let result = sut.recommend(for: .build(proLevel: .free), from: plans)
@@ -337,6 +351,55 @@ struct RecommendedUpgradePlanUseCaseTests {
         #expect(result?.storageLimit == 2048)
         #expect(result?.transfer == "2 TB")
         #expect(result?.transferLimit == 2048)
+    }
+
+    @Test func recommendedEntity_carriesMobileOfferLabel_whenPlanHasIntroOffer() {
+        let plans = [
+            plan(
+                type: .proI, name: "Pro I", cycle: .yearly, price: 100,
+                mobileOffer: campaign(label: "Black Friday"),
+                offer: prepaidOffer(total: 80, months: 12)
+            )
+        ]
+        let result = sut.recommend(for: .build(proLevel: .free), from: plans)
+        #expect(result?.mobileOfferLabel == "Black Friday")
+    }
+
+    @Test func recommendedEntity_carriesMobileOfferLabel_whenPlanHasSignedPromo() {
+        let plans = [
+            PlanEntity(
+                type: .proI, name: "Pro I", currency: "EUR", subscriptionCycle: .yearly,
+                storageLimit: 2048, transferLimit: 2048, price: 100,
+                mobileOffer: MobileOfferEntity(
+                    id: "promo", useAsTitle: true, label: "Black Friday", discountPercentage: 50,
+                    flags: 0, reshowTimeout: nil, expiryDate: nil, iosOfferId: "promo",
+                    iosSignature: .init(offerId: "promo", keyId: "key", nonce: "nonce", timestamp: 0, signature: "sig")
+                ),
+                promotionalOffer: prepaidOffer(total: 80, months: 12)
+            )
+        ]
+        let result = sut.recommend(for: .build(proLevel: .free), from: plans)
+        #expect(result?.mobileOfferLabel == "Black Friday")
+    }
+
+    @Test func recommendedEntity_omitsMobileOfferLabel_whenPlanHasNoApplicableOffer() {
+        let plans = [
+            plan(type: .proI, name: "Pro I", cycle: .yearly, price: 100, mobileOffer: campaign(label: "Black Friday"))
+        ]
+        let result = sut.recommend(for: .build(proLevel: .free), from: plans)
+        #expect(result?.mobileOfferLabel == nil)
+    }
+
+    /// `useAsTitle` drives the revamp title, not this label, so it must not gate the value.
+    @Test func recommendedEntity_carriesMobileOfferLabel_whenLabelIsNotFlaggedAsTitle() {
+        let plans = [
+            plan(
+                type: .proI, name: "Pro I", cycle: .yearly, price: 100,
+                mobileOffer: campaign(label: "Black Friday", useAsTitle: false),
+                offer: prepaidOffer(total: 80, months: 12)
+            )
+        ]
+        let result = sut.recommend(for: .build(proLevel: .free), from: plans)
         #expect(result?.mobileOfferLabel == "Black Friday")
     }
 }

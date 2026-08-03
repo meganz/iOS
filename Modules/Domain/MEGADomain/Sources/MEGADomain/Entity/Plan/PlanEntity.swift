@@ -35,8 +35,6 @@ public struct PlanEntity: Sendable {
     // The promotion offer available to this plan, sourced from StoreKit
     public var promotionalOffer: SubscriptionOfferEntity?
 
-    public var mobileOfferLabel: String? // [IOS-12265]: Remove mobileOfferLabel, use mobileOffer instead
-
     public var price: Decimal { appStorePrice.price }
     public var formattedPrice: String { appStorePrice.formattedPrice }
     public var currency: String { appStorePrice.currency }
@@ -65,6 +63,10 @@ public struct PlanEntity: Sendable {
         subscriptionCycle == .yearly
             ? numberFormatter.string(for: price)
             : nil
+    }
+
+    public var mobileOfferLabel: String? {
+        applicableOffer != nil ? mobileOffer?.label : nil
     }
 
     private var numberFormatter: NumberFormatter {
@@ -110,7 +112,6 @@ public struct PlanEntity: Sendable {
         price: Decimal = 0,
         formattedPrice: String = "",
         introductoryOffer: SubscriptionOfferEntity? = nil,
-        mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil,
         promotionalOffer: SubscriptionOfferEntity? = nil
     ) {
@@ -128,7 +129,6 @@ public struct PlanEntity: Sendable {
             currency: currency
         )
         self.introductoryOffer = introductoryOffer
-        self.mobileOfferLabel = mobileOfferLabel
         self.mobileOffer = mobileOffer
         self.promotionalOffer = promotionalOffer
     }
@@ -143,7 +143,6 @@ public struct PlanEntity: Sendable {
         apiPrice: PlanPriceEntity? = nil,
         appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
         introductoryOffer: SubscriptionOfferEntity? = nil,
-        mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil,
         promotionalOffer: SubscriptionOfferEntity? = nil
     ) {
@@ -158,7 +157,6 @@ public struct PlanEntity: Sendable {
         self.apiPrice = apiPrice
         self.appStorePrice = appStorePrice
         self.introductoryOffer = introductoryOffer
-        self.mobileOfferLabel = mobileOfferLabel
         self.mobileOffer = mobileOffer
         self.promotionalOffer = promotionalOffer
     }

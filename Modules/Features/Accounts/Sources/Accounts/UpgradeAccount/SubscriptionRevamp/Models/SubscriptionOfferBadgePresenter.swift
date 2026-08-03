@@ -10,7 +10,7 @@ struct SubscriptionOfferBadgePresenter {
 
     func badge(for plan: PlanEntity) -> String? {
         guard let percentage = discountPercentage(for: plan) else { return nil }
-        return badgeText(label: plan.mobileOffer?.label, percentage: percentage)
+        return badgeText(label: plan.mobileOfferLabel, percentage: percentage)
     }
 
     func discountPercentage(for plan: PlanEntity) -> Int? {

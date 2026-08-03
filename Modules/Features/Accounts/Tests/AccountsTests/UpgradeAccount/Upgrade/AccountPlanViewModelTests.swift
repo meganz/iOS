@@ -47,7 +47,7 @@ struct AccountPlanViewModelTests {
         @Test
         @MainActor
         func introOfferWithDiscount_withBlackFridayMobileOfferLabel_shouldShowSpecialOfferLabel() {
-            let plan = discountedPlanEntity(mobileOfferLabel: "Black Friday deal")
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: "Black Friday deal"))
             let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel("Black Friday deal", "20%")
 
             let sut = makeSUT(plan: plan, planTag: .introOffer)
@@ -58,7 +58,7 @@ struct AccountPlanViewModelTests {
         @Test
         @MainActor
         func introOfferWithDiscount_withCyberMondayMobileOfferLabel_shouldShowSpecialOfferLabel() {
-            let plan = discountedPlanEntity(mobileOfferLabel: "Cyber Monday deal")
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: "Cyber Monday deal"))
             let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel("Cyber Monday deal", "20%")
 
             let sut = makeSUT(plan: plan, planTag: .introOffer)
@@ -69,7 +69,7 @@ struct AccountPlanViewModelTests {
         @Test
         @MainActor
         func introOfferWithDiscount_withCustomMobileOfferLabel_shouldShowSpecialOfferLabel() {
-            let plan = discountedPlanEntity(mobileOfferLabel: "Easter Sale")
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: "Easter Sale"))
             let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel("Easter Sale", "20%")
 
             let sut = makeSUT(plan: plan, planTag: .introOffer)
@@ -91,8 +91,30 @@ struct AccountPlanViewModelTests {
         @Test
         @MainActor
         func introOfferWithDiscount_withEmptyMobileOfferLabel_shouldShowSpecialOffer() {
-            let plan = discountedPlanEntity(mobileOfferLabel: "")
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: ""))
             let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer("20%")
+
+            let sut = makeSUT(plan: plan, planTag: .introOffer)
+
+            #expect(sut.planBadge?.text == expected)
+        }
+
+        @Test
+        @MainActor
+        func introOfferWithDiscount_withNilMobileOfferLabel_shouldShowSpecialOffer() {
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: nil))
+            let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer("20%")
+
+            let sut = makeSUT(plan: plan, planTag: .introOffer)
+
+            #expect(sut.planBadge?.text == expected)
+        }
+
+        @Test
+        @MainActor
+        func introOfferWithDiscount_whenLabelIsNotFlaggedAsTitle_shouldStillShowSpecialOfferLabel() {
+            let plan = discountedPlanEntity(mobileOffer: campaign(label: "Black Friday deal", useAsTitle: false))
+            let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOfferLabel("Black Friday deal", "20%")
 
             let sut = makeSUT(plan: plan, planTag: .introOffer)
 
@@ -184,7 +206,7 @@ struct AccountPlanViewModelTests {
         )
     }
 
-    private static func discountedPlanEntity(mobileOfferLabel: String? = nil) -> PlanEntity {
+    private static func discountedPlanEntity(mobileOffer: MobileOfferEntity? = nil) -> PlanEntity {
         PlanEntity(
             type: .proI,
             subscriptionCycle: .yearly,
@@ -194,7 +216,21 @@ struct AccountPlanViewModelTests {
                 period: .init(unit: .year, value: 1),
                 periodCount: 1
             ),
-            mobileOfferLabel: mobileOfferLabel
+            mobileOffer: mobileOffer
+        )
+    }
+
+    private static func campaign(label: String?, useAsTitle: Bool = true) -> MobileOfferEntity {
+        MobileOfferEntity(
+            id: "campaign",
+            useAsTitle: useAsTitle,
+            label: label,
+            discountPercentage: 20,
+            flags: 0,
+            reshowTimeout: nil,
+            expiryDate: nil,
+            iosOfferId: nil,
+            iosSignature: nil
         )
     }
 }

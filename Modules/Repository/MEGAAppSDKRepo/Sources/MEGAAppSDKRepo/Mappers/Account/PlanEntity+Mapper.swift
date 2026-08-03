@@ -10,7 +10,6 @@ extension SKProduct {
         apiPrice: Decimal? = nil,
         apiCurrencyCode: String? = nil,
         useAPIPrice: Bool = false,
-        mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil
     ) -> PlanEntity {
         PlanEntity(
@@ -20,7 +19,6 @@ extension SKProduct {
             apiPrice: apiPrice,
             apiCurrencyCode: apiCurrencyCode,
             useAPIPrice: useAPIPrice,
-            mobileOfferLabel: mobileOfferLabel,
             mobileOffer: mobileOffer
         )
     }
@@ -61,11 +59,9 @@ fileprivate extension PlanEntity {
         apiPrice: Decimal?,
         apiCurrencyCode: String?,
         useAPIPrice: Bool,
-        mobileOfferLabel: String? = nil,
         mobileOffer: MobileOfferEntity? = nil
     ) {
         self.init(productIdentifier: product.productIdentifier)
-        self.mobileOfferLabel = mobileOfferLabel
         self.mobileOffer = mobileOffer
 
         let productIdentifier = product.productIdentifier
