@@ -6,6 +6,7 @@ public enum SortOrderPreferenceKeyEntity: String {
     case homeVideoPlaylists
     case videoPlaylistContent
     case homeFavourites
+    case albumContent
     
     public var appearancePreferenceKeyEntity: AppearancePreferenceKeyEntity {
         switch self {
@@ -19,6 +20,8 @@ public enum SortOrderPreferenceKeyEntity: String {
             return .videoPlaylistContent
         case .homeFavourites:
             return .homeFavourites
+        case .albumContent:
+            return .albumContent
         }
     }
 }
