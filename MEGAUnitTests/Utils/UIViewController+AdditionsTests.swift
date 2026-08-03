@@ -28,6 +28,15 @@ final class UIViewControllerAdditionsTests: XCTestCase {
         XCTAssertNil(root.topPresentableViewController())
     }
 
+    func testTopPresentableViewController_whenTopIsBeingPresented_shouldReturnTop() {
+        let window = UIWindow()
+        let (root, _, top) = makeStack(in: window)
+        top.stubbedIsBeingPresented = true
+
+        // It is presentable a moment later, so callers wait for its transition instead of losing the presentation.
+        XCTAssertIdentical(root.topPresentableViewController(), top)
+    }
+
     func testTopPresentableViewController_whenTopIsOffWindow_shouldReturnNil() {
         let window = UIWindow()
         let (root, _, top) = makeStack(in: window)
@@ -75,7 +84,9 @@ final class UIViewControllerAdditionsTests: XCTestCase {
 private final class MockPresentingViewController: UIViewController {
     var stubbedPresentedViewController: UIViewController?
     var stubbedIsBeingDismissed = false
+    var stubbedIsBeingPresented = false
 
     override var presentedViewController: UIViewController? { stubbedPresentedViewController }
     override var isBeingDismissed: Bool { stubbedIsBeingDismissed }
+    override var isBeingPresented: Bool { stubbedIsBeingPresented }
 }

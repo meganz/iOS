@@ -67,11 +67,15 @@ extension UIViewController {
     /// Unlike `UIApplication.mnz_presentingViewController()`, the walk stops before a controller that is off window
     /// or on its way out. Those are the states in which `present(_:animated:)` does nothing but log
     /// `Attempt to present … whose view is not in the window hierarchy`, leaving the caller to believe it succeeded.
+    ///
+    /// A controller that is still animating in is returned: it will be presentable a moment later, and dropping it
+    /// would lose every dialog raised during a presentation animation. UIKit can drop a presentation made into that
+    /// animation, so present on the result with `presentWhenSettled(_:animated:)` rather than `present(_:animated:)`.
     /// - Returns: The controller to present on, or `nil` when nothing in the stack can take a presentation.
     func topPresentableViewController() -> UIViewController? {
         var candidate = self
 
-        while let presented = candidate.presentedViewController, presented.isViewReady(), !presented.isBeingDismissed, !presented.isBeingPresented {
+        while let presented = candidate.presentedViewController, presented.isViewReady(), !presented.isBeingDismissed {
             candidate = presented
         }
 
@@ -80,6 +84,20 @@ extension UIViewController {
         guard candidate.isViewReady(), candidate.presentedViewController == nil else { return nil }
 
         return candidate
+    }
+
+    /// Presents `viewController` once the receiver is settled.
+    ///
+    /// A controller that is still animating in is a valid presenter a moment later, but UIKit can drop a presentation made into its in flight transition.
+    func presentWhenSettled(_ viewController: UIViewController, animated: Bool = true) {
+        guard let transitionCoordinator else {
+            present(viewController, animated: animated)
+            return
+        }
+
+        transitionCoordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            self?.present(viewController, animated: animated)
+        }
     }
 
     func presenterViewController() -> UIViewController? {

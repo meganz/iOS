@@ -38,9 +38,10 @@ import UIKit
         ///  The successful upload trigger will be skipped to next upload.
         guard !QuotaWarningsRouter.isLockScreenPresenting else { return false }
 
-        /// Resolve the presenter before claiming the slot below. Presenting on a controller that is mid transition
-        /// or off window is a silent no-op, and claiming first would then strand the slot and block every later
-        /// dialog. Skipping this trigger is the same outcome the dialog has today, minus the lockout.
+        /// Resolve the presenter before claiming the slot below. Presenting on a controller that is off window is a
+        /// silent no-op, and claiming first would then strand the slot and block every later dialog. Skipping this
+        /// trigger is the same outcome the dialog has today, minus the lockout. A presenter that is still animating
+        /// in is fine here - `presentWhenSettled(_:animated:)` waits for its transition instead of dropping the dialog.
         guard let presenter = UIApplication.topPresentableViewController() else {
             MEGALogError("[QuotaWarningsRouter]: No view controller available to present the quota dialog")
             return false
@@ -84,7 +85,7 @@ import UIKit
         let navigationController = MEGANavigationController(rootViewController: hostingController)
         presentedNavigationController = navigationController
         navigationController.presentationController?.delegate = hostingController
-        presenter.present(navigationController, animated: true)
+        presenter.presentWhenSettled(navigationController)
         return true
     }
 
