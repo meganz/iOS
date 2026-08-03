@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGASwift
 import MEGATest
+import MEGAUIComponent
 import Testing
 @preconcurrency @testable import Video
 import XCTest
@@ -30,11 +31,11 @@ final class VideoListViewModelTests: XCTestCase {
     @MainActor
     func testMonitorSortOrderChanged_whenHasNoSortOrderChanged_doesNotReloadVideos() async {
         // Arrange
-        let (sut, _, photoLibraryUseCase, syncModel) = makeSUT()
+        let (sut, _, photoLibraryUseCase, _) = makeSUT()
         var subscriptions = Set<AnyCancellable>()
         let sortOrderExp = expectation(description: "sort order changed")
         sortOrderExp.isInverted = true
-        syncModel.$videoRevampSortOrderType
+        sut.$sortOrder
             .dropFirst()
             .sink { _ in
                 sortOrderExp.fulfill()
@@ -67,25 +68,25 @@ final class VideoListViewModelTests: XCTestCase {
     @MainActor
     func testMonitorSortOrderChanged_whenHasSortOrderChanged_reloadVideos() async throws {
         // Arrange
-        let (sut, _, photoLibraryUseCase, syncModel) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
+        let (sut, _, photoLibraryUseCase, _) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
 
         let onViewAppearTaskStarted = expectation(description: "onViewAppear task started")
-        trackTaskCancellation { @MainActor in 
+        trackTaskCancellation { @MainActor in
             onViewAppearTaskStarted.fulfill()
             await sut.onViewAppear()
         }
         await fulfillment(of: [onViewAppearTaskStarted], timeout: 0.5)
-        
-        let sortOrderExp = expectation(description: "Expected favouriteAsc and labelDesc sort order change events")
-        
+
+        let sortOrderExp = expectation(description: "Expected labelDesc sort order change event")
+
         var subscriptions = Set<AnyCancellable>()
-        syncModel.$videoRevampSortOrderType
-            .compactMap { $0 }
+        sut.$sortOrder
+            .dropFirst()
             .sink { _ in
                 sortOrderExp.fulfill()
             }
             .store(in: &subscriptions)
-        
+
         let messagesExp = expectation(description: "spy expectation")
         messagesExp.expectedFulfillmentCount = 2
         var receivedMessages: [MockPhotoLibraryUseCase.Message]?
@@ -99,17 +100,110 @@ final class VideoListViewModelTests: XCTestCase {
                 messagesExp.fulfill()
             }
             .store(in: &subscriptions)
-        
+
         // Act
-        syncModel.videoRevampSortOrderType = .labelDesc
-    
+        sut.didSelectSortOrder(SortOrder(key: .label, direction: .descending))
+
         // Assert
         await fulfillment(of: [sortOrderExp, messagesExp], timeout: 1)
-        
+
         XCTAssertEqual(receivedMessages, [.media, .media])
         subscriptions = []
     }
-    
+
+    @MainActor
+    func testSearch_whenHostScreenWritesRawSortOrderToSyncModel_doesNotFollowIt() async {
+        // The legacy tab container publishes the raw stored order into the shared sync model; the list
+        // must keep querying in the normalised order its sort header displays.
+        let (sut, _, photoLibraryUseCase, syncModel) = makeSUT(photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: [], succesfullyLoadMedia: true))
+
+        let onViewAppearTaskStarted = expectation(description: "onViewAppear task started")
+        trackTaskCancellation { @MainActor in
+            onViewAppearTaskStarted.fulfill()
+            await sut.onViewAppear()
+        }
+        await fulfillment(of: [onViewAppearTaskStarted], timeout: 0.5)
+
+        var subscriptions = Set<AnyCancellable>()
+        let messagesExp = expectation(description: "spy expectation")
+        messagesExp.assertForOverFulfill = false
+        var receivedMessages: [MockPhotoLibraryUseCase.Message] = []
+        await photoLibraryUseCase.$messages
+            .receive(on: DispatchQueue.main)
+            .filter { !$0.isEmpty }
+            .sink { messages in
+                receivedMessages = messages
+                messagesExp.fulfill()
+            }
+            .store(in: &subscriptions)
+
+        // Act
+        syncModel.videoRevampSortOrderType = .creationAsc
+
+        await fulfillment(of: [messagesExp], timeout: 1)
+
+        // Assert
+        XCTAssertEqual(receivedMessages, [.media], "Expect to not re-search on a host-owned sort order write")
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .name))
+        subscriptions = []
+    }
+
+    // MARK: - Sort order persistence
+
+    @MainActor
+    func testInit_whenSortOrderPreferenceIsStored_appliesStoredSortOrder() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .sizeDesc)
+
+        let (sut, _, _, _) = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .size, direction: .descending))
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages.first, .sortOrder(key: .homeVideos))
+    }
+
+    @MainActor
+    func testInit_whenStoredSortOrderIsNotOfferedBySortHeader_fallsBackToNameAscending() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc)
+
+        let (sut, _, _, _) = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .name))
+    }
+
+    @MainActor
+    func testDidSelectSortOrder_whenUserPicksOrder_savesSortOrderPreference() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc)
+        let (sut, _, _, _) = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        sut.didSelectSortOrder(SortOrder(key: .label, direction: .descending))
+
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .label, direction: .descending))
+        XCTAssertTrue(sortOrderPreferenceUseCase.messages.contains(.save(sortOrder: .labelDesc, for: .homeVideos)))
+    }
+
+    @MainActor
+    func testMonitorSortOrderPreference_whenOrderChangesElsewhereToUnsupportedOrder_appliesFallbackWithoutSavingItBack() async {
+        // "Same for all" sorting: another screen picks an order the video sort header can't display
+        let sortOrderPreferenceUseCase = SortOrderPreferenceUseCaseStub(initialSortOrder: .sizeDesc)
+        let (sut, _, _, _) = makeSUT(sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .size, direction: .descending))
+
+        let sortOrderExp = expectation(description: "sort order synced from preference")
+        let cancellable = sut.$sortOrder
+            .dropFirst()
+            .sink { _ in sortOrderExp.fulfill() }
+
+        sortOrderPreferenceUseCase.emit(.creationAsc)
+
+        await fulfillment(of: [sortOrderExp], timeout: 1)
+        cancellable.cancel()
+
+        XCTAssertEqual(sut.sortOrder, SortOrder(key: .name))
+        XCTAssertTrue(
+            sortOrderPreferenceUseCase.savedSortOrders.isEmpty,
+            "Expect a preference-driven sync to not overwrite the order the user chose elsewhere"
+        )
+    }
+
     // MARK: - onViewAppear
     
     @MainActor
@@ -283,6 +377,7 @@ final class VideoListViewModelTests: XCTestCase {
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -320,6 +415,7 @@ final class VideoListViewModelTests: XCTestCase {
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: MockFilesSearchUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -980,6 +1076,7 @@ final class VideoListViewModelTests: XCTestCase {
             onNodesUpdateResult: nil
         ),
         photoLibraryUseCase: some MockPhotoLibraryUseCase = MockPhotoLibraryUseCase(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
@@ -994,6 +1091,7 @@ final class VideoListViewModelTests: XCTestCase {
             contentProvider: VideoListViewModelContentProvider(photoLibraryUseCase: photoLibraryUseCase),
             selection: VideoSelection(),
             fileSearchUseCase: fileSearchUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             thumbnailLoader: MockThumbnailLoader(),
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
@@ -1031,5 +1129,47 @@ final class VideoListViewModelTests: XCTestCase {
         DurationChipFilterOptionType.allCases
             .filter { $0 != .allDurations }
             .randomElement() ?? .between10And60Seconds
+    }
+}
+
+/// Sort order preference double whose monitor keeps emitting, so a preference change made *after* the
+/// view model is created can be simulated — which `MockSortOrderPreferenceUseCase` cannot do.
+private final class SortOrderPreferenceUseCaseStub: SortOrderPreferenceUseCaseProtocol {
+    private let subject: CurrentValueSubject<SortOrderEntity, Never>
+    private(set) var savedSortOrders: [SortOrderEntity] = []
+
+    init(initialSortOrder: SortOrderEntity) {
+        subject = CurrentValueSubject(initialSortOrder)
+    }
+
+    /// Simulates another screen changing the sort order.
+    func emit(_ sortOrder: SortOrderEntity) {
+        subject.send(sortOrder)
+    }
+
+    func sortOrder(for key: SortOrderPreferenceKeyEntity) -> SortOrderEntity {
+        subject.value
+    }
+
+    func sortOrder(for nodeHandle: HandleEntity?) -> SortOrderEntity {
+        subject.value
+    }
+
+    func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) {
+        savedSortOrders.append(sortOrder)
+        subject.send(sortOrder)
+    }
+
+    func save(sortOrder: SortOrderEntity, for nodeHandle: HandleEntity) {
+        savedSortOrders.append(sortOrder)
+        subject.send(sortOrder)
+    }
+
+    func monitorSortOrder(for key: SortOrderPreferenceKeyEntity) -> AnyPublisher<SortOrderEntity, Never> {
+        subject.eraseToAnyPublisher()
+    }
+
+    func monitorSortOrder(for nodeHandle: HandleEntity) -> AnyPublisher<SortOrderEntity, Never> {
+        subject.eraseToAnyPublisher()
     }
 }

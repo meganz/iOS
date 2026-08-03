@@ -51,12 +51,14 @@ public final class VideoListViewModel: ObservableObject {
     @Published var isSheetPresented = false
     @Published public var selectedLocationFilterOption: LocationChipFilterOptionType = .allLocation
     @Published public var selectedDurationFilterOption: DurationChipFilterOptionType = .allDurations
-    @Published var sortOrder: MEGAUIComponent.SortOrder
+    @Published private(set) var sortOrder: MEGAUIComponent.SortOrder
     var newlySelectedChip: ChipContainerViewModel?
 
     private let contentProvider: any VideoListViewModelContentProviderProtocol
     private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let sortOptions: [SortOption]
     let sortHeaderConfig: SortHeaderConfig
     
     private var subscriptions = Set<AnyCancellable>()
@@ -79,12 +81,14 @@ public final class VideoListViewModel: ObservableObject {
         contentProvider: some VideoListViewModelContentProviderProtocol,
         selection: VideoSelection,
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.thumbnailLoader = thumbnailLoader
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.nodeUseCase = nodeUseCase
@@ -94,15 +98,20 @@ public final class VideoListViewModel: ObservableObject {
 
         self.contentProvider = contentProvider
 
+        let sortOptions = VideoSortOptionsFactory.makeAll()
+        self.sortOptions = sortOptions
         self.sortHeaderConfig = SortHeaderConfig(
             title: Strings.Localizable.sortTitle,
-            options: VideoSortOptionsFactory.makeAll()
+            options: sortOptions
         )
-        
-        let sortOrderEntity: MEGADomain.SortOrderEntity = syncModel.videoRevampSortOrderType ?? .defaultAsc
-        self.sortOrder = sortOrderEntity.toUIComponentSortOrderEntity()
-        
-        subscribeToSortOrder()
+
+        // Read the stored preference synchronously so the very first search already runs in the saved order
+        let storedSortOrder = Self.supportedSortOrder(
+            sortOrderPreferenceUseCase.sortOrder(for: .homeVideos).toUIComponentSortOrderEntity(),
+            in: sortOptions)
+        self.sortOrder = storedSortOrder
+
+        monitorSortOrderPreference()
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToSelectedVideos()
@@ -122,9 +131,12 @@ public final class VideoListViewModel: ObservableObject {
             
     @MainActor
     private func monitorSearchChanges() async {
-        // Observe Sort Order Changes
-        let sortOrder = syncModel.$videoRevampSortOrderType
-            .map { $0 ?? .defaultAsc }
+        // Observe Sort Order Changes. Sourced from our own normalised `sortOrder` rather than the
+        // shared `syncModel`: the host screen writes the raw stored order there (which can be an
+        // order this list can't display), so following it would query in an order the sort header
+        // doesn't show.
+        let sortOrder = $sortOrder
+            .map { $0.toDomainSortOrderEntity() }
             .removeDuplicates()
         
         // Observe Search Text Changes
@@ -240,14 +252,54 @@ public final class VideoListViewModel: ObservableObject {
             .search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
     }
     
-    private func subscribeToSortOrder() {
-        $sortOrder
-            .dropFirst()
+    /// The user picked an order in the sort header — the only path that writes it to storage.
+    func didSelectSortOrder(_ newSortOrder: MEGAUIComponent.SortOrder) {
+        guard applySortOrder(newSortOrder) else { return }
+        sortOrderPreferenceUseCase.save(sortOrder: newSortOrder.toDomainSortOrderEntity(), for: .homeVideos)
+    }
+
+    /// Keeps the sort header in step with the stored preference: it emits the saved order on
+    /// subscription and again whenever it changes elsewhere — which happens when the user's sorting
+    /// basis is "same for all" and another screen changes the sort.
+    ///
+    /// Deliberately does not save: the incoming order is only coerced for display, and writing that
+    /// coerced value back would overwrite the order the user actually chose on the other screen.
+    private func monitorSortOrderPreference() {
+        sortOrderPreferenceUseCase
+            .monitorSortOrder(for: .homeVideos)
+            .receive(on: DispatchQueue.main)
+            .map { [sortOptions] in
+                Self.supportedSortOrder($0.toUIComponentSortOrderEntity(), in: sortOptions)
+            }
             .removeDuplicates()
-            .sink { [syncModel] order in
-                syncModel.videoRevampSortOrderType = order.toDomainSortOrderEntity()
+            .sink { [weak self] order in
+                self?.applySortOrder(order)
             }
             .store(in: &subscriptions)
+    }
+
+    /// Applies `newSortOrder` to the header and the search query, returning whether it actually moved.
+    ///
+    /// Only ``sortOrder`` is written: `syncModel.videoRevampSortOrderType` is owned by the host screen
+    /// (the legacy tab container keeps its context menu in sync with the raw stored order there), and
+    /// a second writer publishing this normalised value would fight it.
+    @discardableResult
+    private func applySortOrder(_ newSortOrder: MEGAUIComponent.SortOrder) -> Bool {
+        guard sortOrder != newSortOrder else { return false }
+        sortOrder = newSortOrder
+        return true
+    }
+
+    /// The stored preference can hold an order the video sort header doesn't offer — a "same for all"
+    /// order set by another screen (date added, for instance). Anything unsupported shows, and sorts,
+    /// as the default name order, matching what the header is able to display.
+    ///
+    /// `SortOption.id` is its sort key.
+    private nonisolated static func supportedSortOrder(
+        _ sortOrder: MEGAUIComponent.SortOrder,
+        in options: [SortOption]
+    ) -> MEGAUIComponent.SortOrder {
+        options.contains { $0.id == sortOrder.key } ? sortOrder : MEGAUIComponent.SortOrder(key: .name)
     }
     
     private func subscribeToEditingMode() {

@@ -57,6 +57,7 @@ let package = Package(
                 "MEGADomain",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGATest",
+                "MEGAUIComponent",
                 .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ],
             swiftSettings: settings

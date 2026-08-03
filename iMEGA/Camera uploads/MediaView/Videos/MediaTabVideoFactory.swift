@@ -54,6 +54,11 @@ struct MediaTabVideoFactory {
             nodeIconUseCase: NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared)
         )
 
+        let sortOrderPreferenceUseCase = SortOrderPreferenceUseCase(
+            preferenceUseCase: PreferenceUseCase.default,
+            sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+        )
+
         let videoListViewModel = VideoListViewModel(
             syncModel: syncModel,
             contentProvider: VideoListViewModelContentProvider(
@@ -61,6 +66,7 @@ struct MediaTabVideoFactory {
             ),
             selection: videoSelection,
             fileSearchUseCase: fileSearchUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
