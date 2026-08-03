@@ -843,9 +843,10 @@ class NodeActionBuilderTests {
             .setDisplayMode(.nodeInsideFolderLink)
             .setIsFile(true)
             .setIsMediaFile(true)
+            .setIsLinkRevampEnabled(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .saveToPhotos]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .saveToPhotos, .download]) == true)
     }
     
     @Test
@@ -853,8 +854,55 @@ class NodeActionBuilderTests {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInsideFolderLink)
             .setIsFile(true)
+            .setIsLinkRevampEnabled(true)
             .build()
         
+        #expect(isEqual(nodeActionTypes: [.import, .exportFile, .download]) == true)
+    }
+
+    @Test
+    func testFolderLinkChildFolder() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeInsideFolderLink)
+            .setIsFile(false)
+            .setIsLinkRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.import, .download]) == true)
+    }
+
+    @Test
+    func testFolderLinkChildFileWithSelectionEnabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeInsideFolderLink)
+            .setIsFile(true)
+            .setIsMediaFile(true)
+            .setIsSelectionEnabled(true)
+            .setIsLinkRevampEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.select, .import, .saveToPhotos, .download]) == true)
+    }
+
+    @Test
+    func testFolderLinkChildMediaFileWithRevampDisabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeInsideFolderLink)
+            .setIsFile(true)
+            .setIsMediaFile(true)
+            .setIsSelectionEnabled(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.import, .download, .saveToPhotos]) == true)
+    }
+
+    @Test
+    func testFolderLinkChildFileWithRevampDisabled() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.nodeInsideFolderLink)
+            .setIsFile(true)
+            .build()
+
         #expect(isEqual(nodeActionTypes: [.import, .download]) == true)
     }
     

@@ -214,6 +214,23 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.General.downloadToOffline, image: .download, type: .download)
     }
     
+    /// Folder link calls importing a node Save to MEGA and making it available offline Copy to Offline.
+    /// The wording is its own, so these keep `downloadAction()` and `importAction()` untouched for the
+    /// screens that still use them.
+    class func saveToMegaAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.Link.Button.saveToMega, image: .saveToMega, type: .import)
+    }
+
+    class func copyToOfflineAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.Link.Button.copyToOffline, image: .copyToOffline, type: .download)
+    }
+
+    /// Saving a non-media file to the device, through the system share sheet where Save to Files lives.
+    /// Media keeps `saveToPhotosAction()`, which sends it straight to the Photos library.
+    class func downloadToDeviceAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.download, image: .downloadToDevice, type: .exportFile)
+    }
+    
     class func infoAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.info, image: .info, type: .info)
     }
@@ -419,6 +436,9 @@ private extension UIImage {
     }
 
     static var download: UIImage { MEGAAssets.UIImage.arrowDownCircle }
+    static var copyToOffline: UIImage { MEGAAssets.UIImage.cloudDownload }
+    static var saveToMega: UIImage { MEGAAssets.UIImage.uploadToCloud }
+    static var downloadToDevice: UIImage { MEGAAssets.UIImage.downloadToDisk }
     static var shareLink: UIImage { MEGAAssets.UIImage.link01 }
     static var manageLink: UIImage { MEGAAssets.UIImage.linkGear }
     static var removelink: UIImage { MEGAAssets.UIImage.linkOff02 }

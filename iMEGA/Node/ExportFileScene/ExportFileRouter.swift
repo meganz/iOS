@@ -11,11 +11,13 @@ final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?
     private let sender: Any?
     private let popoverSourceRect: CGRect?
-    
-    init(presenter: UIViewController, sender: Any?, popoverSourceRect: CGRect? = nil) {
+    private let isFolderLink: Bool
+
+    init(presenter: UIViewController, sender: Any?, popoverSourceRect: CGRect? = nil, isFolderLink: Bool = false) {
         self.presenter = presenter
         self.sender = sender
         self.popoverSourceRect = popoverSourceRect
+        self.isFolderLink = isFolderLink
     }
     
     // MARK: - Dispatch actions without viewcontroller -
@@ -38,7 +40,12 @@ final class ExportFileRouter: ExportFileViewRouting {
     // MARK: - Private -
     private func createViewModel() -> ExportFileViewModel {
         let exportFileUC = ExportFileUseCase(
-            downloadFileRepository: DownloadFileRepository.newRepo,
+            // A folder link node lives in its own SDK instance, so the download that backs the export
+            // has to be told where to look for it.
+            downloadFileRepository: DownloadFileRepository(
+                sdk: .sharedSdk,
+                sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil
+            ),
             offlineFilesRepository: OfflineFilesRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,
             thumbnailRepository: ThumbnailRepository.newRepo,

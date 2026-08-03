@@ -767,7 +767,7 @@ extension MEGAPhotoBrowserViewController {
                 sender: sender
             )
         default:
-            exportFile(from: node, sender: sender)
+            exportFile(from: node, sender: sender, isFolderLink: displayMode == .nodeInsideFolderLink)
         }
     }
     

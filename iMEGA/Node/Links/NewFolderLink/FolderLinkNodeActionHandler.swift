@@ -9,7 +9,11 @@ final class FolderLinkNodeActionHandler: FolderLinkNodeActionHandlerProtocol {
     weak var navigationController: UINavigationController?
     private let sdk: MEGASdk
     private var sendLinkDelegate: SendLinkToChatsDelegate?
-    
+    /// Kept from the action whose sheet is on screen so the Select row can be handed back to the folder
+    /// link: the sheet's delegate reports the node, not the action it came from. Cleared once it fires,
+    /// and replaced by the next sheet, so it never outlives the presentation it belongs to for long.
+    private var presentedNodeSelectHandler: (@MainActor () -> Void)?
+
     init(navigationController: UINavigationController?, sdk: MEGASdk = MEGASdk.sharedFolderLink) {
         self.navigationController = navigationController
         self.sdk = sdk
@@ -17,6 +21,7 @@ final class FolderLinkNodeActionHandler: FolderLinkNodeActionHandlerProtocol {
     
     func handle(action: FolderLinkNodeAction) {
         guard let node = sdk.node(forHandle: action.handle) else { return }
+        presentedNodeSelectHandler = action.selectHandler
         showActions(for: node, from: action.sender)
     }
     
@@ -41,6 +46,7 @@ final class FolderLinkNodeActionHandler: FolderLinkNodeActionHandlerProtocol {
             displayMode: .nodeInsideFolderLink,
             isIncoming: false,
             isBackupNode: backupRepository.isBackupNode(node.toNodeEntity()),
+            isSelectionEnabled: true,
             sender: sender
         )
 
@@ -57,6 +63,11 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
             importNodes([node])
         case .saveToPhotos:
             saveToPhotos([node])
+        case .exportFile:
+            exportNode(node, from: sender)
+        case .select:
+            presentedNodeSelectHandler?()
+            presentedNodeSelectHandler = nil
         default:
             break
         }
@@ -91,6 +102,14 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
         ).start()
     }
     
+    /// Saving a non-media file to the device goes through the system share sheet, where Save to Files
+    /// lives. The node sits in the folder link SDK, hence the flag.
+    private func exportNode(_ node: MEGANode, from sender: Any) {
+        guard let navigationController else { return }
+        ExportFileRouter(presenter: navigationController, sender: sender, isFolderLink: true)
+            .export(node: node.toNodeEntity())
+    }
+
     private func saveToPhotos(_ nodes: [MEGANode]) {
         SaveToPhotosCoordinator
             .customProgressSVGErrorMessageDisplay(

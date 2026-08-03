@@ -22,7 +22,7 @@ struct FolderLinkAnchoredButtons: View {
                 },
                 MEGAButton(
                     Strings.Localizable.Link.Button.saveToMega,
-                    icon: MEGAAssets.Image.folderArrow,
+                    icon: MEGAAssets.Image.uploadToCloud,
                     type: .primary,
                     state: buttonState
                 ) {

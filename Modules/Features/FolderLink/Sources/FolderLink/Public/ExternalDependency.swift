@@ -14,6 +14,9 @@ public enum LinkUnavailableReason: Error, Sendable, Equatable {
 public struct FolderLinkNodeAction {
     public let handle: HandleEntity
     public let sender: UIButton
+    /// Called when the Select row of the node's action sheet is picked. Selection belongs to the folder
+    /// link itself rather than to the sheet, so the sheet hands it back instead of acting on it.
+    public let selectHandler: @MainActor () -> Void
 }
 
 public enum FolderLinkNodesAction: Equatable {

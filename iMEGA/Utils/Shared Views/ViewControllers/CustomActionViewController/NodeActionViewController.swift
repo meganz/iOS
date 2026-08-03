@@ -119,6 +119,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
             .setIsBackupNode(isBackupNode)
             .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
+            .setIsLinkRevampEnabled(MEGALinkManager.isLinkRevampEnabled)
             .build()
     }
     
@@ -647,6 +648,10 @@ class NodeActionViewController: ActionSheetViewController {
                 .setShowInLocation(showInLocation)
                 .setIsAudioFileLink(isAudioFileLink)
                 .setIsSelectionEnabled(isSelectionEnabled)
+                // Read here rather than in the builder so the builder stays free of feature flags, and
+                // so every folder link sheet — the list rows and the photo browser — follows the flag
+                // without each call site having to pass it.
+                .setIsLinkRevampEnabled(MEGALinkManager.isLinkRevampEnabled)
                 .setIsFolderEmpty(node.isFolder() && viewModel.isEmptyFolder(nodeHandle: node.handle))
                 .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
                 .build()

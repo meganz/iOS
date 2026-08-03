@@ -39,6 +39,7 @@ final class NodeActionBuilder {
     private var showInLocation: Bool = false
     private var isAudioFileLink: Bool = false
     private var isSelectionEnabled: Bool = false
+    private var isLinkRevampEnabled: Bool = false
     private var isFolderEmpty = false
     private var isNodeKeyDecrypted = true
     private var showsBulkFavouriteAction = false
@@ -220,6 +221,11 @@ final class NodeActionBuilder {
         return self
     }
 
+    func setIsLinkRevampEnabled(_ isLinkRevampEnabled: Bool) -> NodeActionBuilder {
+        self.isLinkRevampEnabled = isLinkRevampEnabled
+        return self
+    }
+
     func setIsFolderEmpty(_ isFolderEmpty: Bool) -> NodeActionBuilder {
         self.isFolderEmpty = isFolderEmpty
         return self
@@ -331,13 +337,41 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
+    /// The folder link rows follow the revamp design: Select, then Save to MEGA, Download and Copy to
+    /// Offline. Select is only offered where there is a list to select in, which is why it hangs off the
+    /// same flag the other display modes use — the photo browser opens this sheet too.
     private func nodeInsideFolderLinkActions() -> [NodeAction] {
+        guard isLinkRevampEnabled else {
+            return legacyNodeInsideFolderLinkActions()
+        }
+
+        var nodeActions: [NodeAction] = []
+
+        if isSelectionEnabled {
+            nodeActions.append(.selectAction())
+        }
+        
+        nodeActions.append(.saveToMegaAction())
+        
+        // Only a file can be saved to the device; a folder just gets the two MEGA-side actions. Media
+        // keeps saying Save to Photos, since that is where it lands — Download is for everything else.
+        if isFile {
+            nodeActions.append(isMediaFile ? .saveToPhotosAction() : .downloadToDeviceAction())
+        }
+
+        nodeActions.append(.copyToOfflineAction())
+
+        return nodeActions
+    }
+
+    /// What the sheet offered before the revamp, kept for as long as the flag can be turned off.
+    private func legacyNodeInsideFolderLinkActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = [.importAction(), .downloadAction()]
 
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }
-        
+
         return nodeActions
     }
     

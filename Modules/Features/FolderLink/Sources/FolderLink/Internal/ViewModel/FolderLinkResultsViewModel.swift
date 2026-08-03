@@ -95,7 +95,9 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         let searchBridge = SearchBridge { [weak self] selection in
             self?.selection = selection
         } context: { [weak self] result, button in
-            self?.nodeAction = FolderLinkNodeAction(handle: result.id, sender: button)
+            self?.nodeAction = FolderLinkNodeAction(handle: result.id, sender: button) { [weak self] in
+                self?.selectNode(handle: result.id)
+            }
         } chipTapped: { chip, selected in
             print(chip, selected)
         } sortingOrder: { [sortOrder] in
@@ -301,6 +303,17 @@ package final class FolderLinkResultsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    /// Selecting a node from its action sheet both enters edit mode and ticks that node: Search reports
+    /// the editing change back through the bridge, which is what moves `editMode` along.
+    func selectNode(handle: HandleEntity) {
+        switch viewMode {
+        case .list, .grid:
+            searchResultsContainerViewModel.selectResult(with: handle)
+        case .mediaDiscovery:
+            break
+        }
+    }
+
     /// edit mode of Search and MediaDiscovery is independent so here we only handle for list and grid view mode.
     /// For mediaDiscovery view mode, it is handled in FolderLinkMediaDiscoveryViewModel
     func toggleSelectAll() {
