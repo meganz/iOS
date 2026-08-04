@@ -82,7 +82,7 @@ struct SubscriptionPlanCardsPresenterTests {
     func withExternalPurchase_planWithAPIPriceAndNoOffer_carriesTheTitle() throws {
         let sut = makeSUT(plans: [externalPurchasePlan()], externalPurchase: ExternalPurchasePresenter())
         let card = try #require(sut.cards(for: .monthly).first)
-        #expect(card.externalPurchaseTitle == Strings.Localizable.SubscriptionPurchase.Revamp.Button.BuyOnWebsite.saveUpTo("15%"))
+        #expect(card.externalPurchaseTitle == Strings.Localizable.SubscriptionPurchase.Revamp.Button.BuyOnWebsite.saveUpTo("10%"))
     }
 
     @Test("A discounted plan carries no buy on our website title")
