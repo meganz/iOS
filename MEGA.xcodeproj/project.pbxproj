@@ -3167,7 +3167,6 @@
 		258DC66C2C789604007B0025 /* NodeInfoLocationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoLocationViewModelTests.swift; sourceTree = "<group>"; };
 		2590021C2C605778004A421C /* SpotlightContentIndexerActorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActorTests.swift; sourceTree = "<group>"; };
 		2591C1372C5B91DA00E37ABD /* SpotlightContentIndexerActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightContentIndexerActor.swift; sourceTree = "<group>"; };
-		2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
 		25A4E4E82BD8B83700B3F308 /* NodeTableViewCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -6692,14 +6691,6 @@
 			path = Spotlight;
 			sourceTree = "<group>";
 		};
-		2599D0C22BE202E8003DC13C /* FileExplorer */ = {
-			isa = PBXGroup;
-			children = (
-				2599D0C32BE202F9003DC13C /* FilesExplorerViewModelTests.swift */,
-			);
-			path = FileExplorer;
-			sourceTree = "<group>";
-		};
 		259FA4002A3A946500C038B2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -8653,7 +8644,6 @@
 		5DFC8DC324ECF35C00DDA006 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				2599D0C22BE202E8003DC13C /* FileExplorer */,
 				94712EF22A9C8F7B00B5F2C9 /* Search */,
 				534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */,
 				6D01A3C52C08443B00089BA8 /* HomeLocalisationTests.swift */,
