@@ -59,6 +59,54 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testDispatchChangeSortOrder_onSortOrderDifferent_savesSortOrderPreference() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+        let sut = makeAlbumContentViewModel(album: albumEntity,
+                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
+                                            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        sut.dispatch(.changeSortOrder(.oldest))
+
+        XCTAssertTrue(sortOrderPreferenceUseCase.messages.contains(.save(sortOrder: .modificationAsc, for: .albumContent)))
+    }
+
+    @MainActor
+    func testInit_whenSortOrderPreferenceIsStored_appliesStoredSortOrder() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationAsc)
+        let sut = makeAlbumContentViewModel(album: albumEntity,
+                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
+                                            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        let exp = expectation(description: "should not call any commands, the stored order is already applied")
+        exp.isInverted = true
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.changeSortOrder(.oldest))
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [.sortOrder(key: .albumContent)])
+    }
+
+    @MainActor
+    func testInit_whenStoredSortOrderIsNotOfferedByAlbum_fallsBackToNewest() {
+        let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .labelAsc)
+        let sut = makeAlbumContentViewModel(album: albumEntity,
+                                            albumContentsUseCase: MockAlbumContentUseCase(photos: []),
+                                            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase)
+
+        let exp = expectation(description: "should not call any commands, newest is already applied")
+        exp.isInverted = true
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.changeSortOrder(.newest))
+
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(sortOrderPreferenceUseCase.messages, [.sortOrder(key: .albumContent)])
+    }
+    
+    @MainActor
     func testDispatchChangeFilter_onFilterTheSame_shouldDoNothing() {
         let sut = makeAlbumContentViewModel(album: albumEntity,
                                             albumContentsUseCase: MockAlbumContentUseCase(photos: []))
@@ -417,6 +465,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -433,6 +482,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             featureFlagProvider: featureFlagProvider)
     }
     
@@ -883,6 +933,7 @@ struct AlbumContentViewModelTestSuite {
         tracker: some AnalyticsTracking = MockTracker(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol = MockAlbumCoverUseCase(),
         thumbnailLoader: some ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
@@ -899,6 +950,7 @@ struct AlbumContentViewModelTestSuite {
             tracker: tracker,
             albumCoverUseCase: albumCoverUseCase,
             thumbnailLoader: thumbnailLoader,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             featureFlagProvider: featureFlagProvider)
     }
     

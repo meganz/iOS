@@ -79,7 +79,11 @@ struct AlbumContentRouter: AlbumContentRouting {
             newAlbumPhotosToAdd: newAlbumPhotos,
             albumCoverUseCase: AlbumCoverUseCase(
                 nodeRepository: nodeRepository),
-            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .album))
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .album),
+            sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                preferenceUseCase: PreferenceUseCase.default,
+                sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+            ))
         return AlbumContentViewController(viewModel: viewModel)
     }
     

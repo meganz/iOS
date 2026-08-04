@@ -78,9 +78,10 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumCoverUseCase: any AlbumCoverUseCaseProtocol
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
-    private var selectedSortOrder: SortOrderType = .newest
+    private var selectedSortOrder: SortOrderType
     private var selectedFilter: FilterType = .allMedia
     private var addAdditionalPhotosTask: Task<Void, Never>?
     private var newAlbumPhotosToAdd: [NodeEntity]?
@@ -150,6 +151,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
         albumCoverUseCase: some AlbumCoverUseCaseProtocol,
         thumbnailLoader: some ThumbnailLoaderProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
@@ -166,7 +168,10 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentDataProvider = albumContentDataProvider
         self.albumCoverUseCase = albumCoverUseCase
         self.thumbnailLoader = thumbnailLoader
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.featureFlagProvider = featureFlagProvider
+        // Read the stored preference synchronously so the album is shown in the saved order right away
+        self.selectedSortOrder = Self.supportedSortOrder(sortOrderPreferenceUseCase.sortOrder(for: .albumContent))
     }
     
     // MARK: - Dispatch action
@@ -377,7 +382,15 @@ final class AlbumContentViewModel: ViewModelType {
     private func updateSortOrder(_ sortOrder: SortOrderType) {
         guard sortOrder != selectedSortOrder else { return }
         selectedSortOrder = sortOrder
+        sortOrderPreferenceUseCase.save(sortOrder: sortOrder.toSortOrderEntity(), for: .albumContent)
         showAlbumPhotos()
+    }
+
+    /// The stored preference can hold an order album content doesn't offer — its `.defaultAsc` fallback,
+    /// or a "same for all" order set by another screen. Both the sort header and the context menu only
+    /// offer newest / oldest, so anything but oldest shows, and sorts, as newest.
+    private static func supportedSortOrder(_ sortOrder: SortOrderEntity) -> SortOrderType {
+        sortOrder == .modificationAsc ? .oldest : .newest
     }
     
     private func updateFilter(_ filter: FilterType) {
