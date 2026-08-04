@@ -9,6 +9,8 @@ struct SubscriptionPlanCardsPresenter {
     /// The discounted plan shown as the hero card, to be excluded from `func card()`
     let featuredPlan: PlanEntity?
     let displayName: @Sendable (AccountTypeEntity) -> String
+    /// Maps the "buy on our website" button; `nil` when the capability is unavailable (non-US storefront or flag off).
+    let externalPurchase: ExternalPurchasePresenter?
 
     func cards(for cycle: SubscriptionCycleEntity) -> [SubscriptionPlanCardModel] {
         let resolver = SubscriptionPlanPriceResolver()
@@ -22,7 +24,8 @@ struct SubscriptionPlanCardsPresenter {
                     price: resolver.planPrice(for: plan),
                     storage: plan.storage,
                     transfer: plan.transfer,
-                    ribbonText: badgePresenter.badge(for: plan)
+                    ribbonText: badgePresenter.badge(for: plan),
+                    externalPurchaseTitle: externalPurchase?.externalPurchaseTitle(for: plan)
                 )
             }
     }

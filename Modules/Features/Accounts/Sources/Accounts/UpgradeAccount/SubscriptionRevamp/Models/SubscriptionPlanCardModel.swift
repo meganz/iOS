@@ -8,6 +8,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
     let transfer: String
     let ribbonText: String?
     let isPrimaryAction: Bool
+    let externalPurchaseTitle: String?
 
     var id: String { productIdentifier }
 
@@ -25,7 +26,8 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
         storage: String,
         transfer: String,
         ribbonText: String? = nil,
-        isPrimaryAction: Bool = false
+        isPrimaryAction: Bool = false,
+        externalPurchaseTitle: String? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.title = title
@@ -34,5 +36,6 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
         self.transfer = transfer
         self.ribbonText = ribbonText
         self.isPrimaryAction = isPrimaryAction
+        self.externalPurchaseTitle = externalPurchaseTitle
     }
 }

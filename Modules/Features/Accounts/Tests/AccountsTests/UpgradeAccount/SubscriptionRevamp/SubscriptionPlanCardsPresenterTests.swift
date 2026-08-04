@@ -1,5 +1,6 @@
 @testable import Accounts
 import MEGADomain
+import MEGAL10n
 import Testing
 
 @Suite("SubscriptionPlanCardsPresenter - standard plan card list")
@@ -16,12 +17,14 @@ struct SubscriptionPlanCardsPresenterTests {
 
     private func makeSUT(
         plans: [PlanEntity],
-        featuredPlan: PlanEntity? = nil
+        featuredPlan: PlanEntity? = nil,
+        externalPurchase: ExternalPurchasePresenter? = nil
     ) -> SubscriptionPlanCardsPresenter {
         SubscriptionPlanCardsPresenter(
             plans: plans,
             featuredPlan: featuredPlan,
-            displayName: { $0.toAccountTypeDisplayName() }
+            displayName: { $0.toAccountTypeDisplayName() },
+            externalPurchase: externalPurchase
         )
     }
 
@@ -65,5 +68,60 @@ struct SubscriptionPlanCardsPresenterTests {
         #expect(card.transfer == "2 TB")
         #expect(card.ribbonText == nil)
         #expect(card.hasOffer == false)
+    }
+
+    // MARK: - Buy on our website
+
+    @Test("Without the external purchase capability no card offers the buy on our website button")
+    func withoutExternalPurchase_cardsHaveNoExternalPurchaseTitle() {
+        let sut = makeSUT(plans: [externalPurchasePlan()])
+        #expect(sut.cards(for: .monthly).map(\.externalPurchaseTitle) == [nil])
+    }
+
+    @Test("A plan with an API price and no offer carries the buy on our website title")
+    func withExternalPurchase_planWithAPIPriceAndNoOffer_carriesTheTitle() throws {
+        let sut = makeSUT(plans: [externalPurchasePlan()], externalPurchase: ExternalPurchasePresenter())
+        let card = try #require(sut.cards(for: .monthly).first)
+        #expect(card.externalPurchaseTitle == Strings.Localizable.SubscriptionPurchase.Revamp.Button.BuyOnWebsite.saveUpTo("15%"))
+    }
+
+    @Test("A discounted plan carries no buy on our website title")
+    func withExternalPurchase_planWithOffer_carriesNoTitle() {
+        let sut = makeSUT(
+            plans: [externalPurchasePlan(introductoryOffer: introOffer())],
+            externalPurchase: ExternalPurchasePresenter()
+        )
+        #expect(sut.cards(for: .monthly).map(\.externalPurchaseTitle) == [nil])
+    }
+
+    @Test("A plan without an API price carries no buy on our website title")
+    func withExternalPurchase_planWithoutAPIPrice_carriesNoTitle() {
+        let sut = makeSUT(plans: [externalPurchasePlan(apiPrice: nil)], externalPurchase: ExternalPurchasePresenter())
+        #expect(sut.cards(for: .monthly).map(\.externalPurchaseTitle) == [nil])
+    }
+
+    // MARK: - Buy on our website fixtures
+
+    private func externalPurchasePlan(
+        apiPrice: PlanPriceEntity? = PlanPriceEntity(price: 9, formattedPrice: "$9.00", currency: "USD"),
+        introductoryOffer: SubscriptionOfferEntity? = nil
+    ) -> PlanEntity {
+        PlanEntity(
+            productIdentifier: "pro1.oneMonth",
+            type: .proI,
+            subscriptionCycle: .monthly,
+            apiPrice: apiPrice,
+            appStorePrice: PlanPriceEntity(price: 10, formattedPrice: "$10.00", currency: "USD"),
+            introductoryOffer: introductoryOffer
+        )
+    }
+
+    private func introOffer() -> SubscriptionOfferEntity {
+        SubscriptionOfferEntity(
+            price: 5,
+            period: .init(unit: .month, value: 1),
+            periodCount: 1,
+            paymentMode: .payAsYouGo
+        )
     }
 }

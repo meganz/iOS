@@ -47,6 +47,7 @@ struct SubscriptionPlanCardsView: View {
                 PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
             }
             buyButton(card)
+            externalPurchaseButton(card)
         }
     }
 
@@ -57,5 +58,12 @@ struct SubscriptionPlanCardsView: View {
             productIdentifier: card.productIdentifier,
             style: card.hasOffer ? .brand : .mega(card.isPrimaryAction ? .primary : .secondary)
         )
+    }
+
+    @ViewBuilder
+    private func externalPurchaseButton(_ card: SubscriptionPlanCardModel) -> some View {
+        if let externalPurchaseTitle = card.externalPurchaseTitle {
+            ExternalPurchaseButton(title: externalPurchaseTitle)
+        }
     }
 }

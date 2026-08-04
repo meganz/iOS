@@ -5146,3 +5146,5 @@
 "subscriptionPurchase.revamp.promo.button.viewPlans"="View plans";
 /* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
 "subscriptionPurchase.revamp.promo.offerEnded.message"="This deal is no longer available. Check our current plans to find one that suits you.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Buy on our website and save up to %@";

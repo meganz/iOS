@@ -15,6 +15,8 @@ public final class UpgradePlansViewModel: ObservableObject {
     /// The user's current billing cycle, used to build the cycle picker and its default selection.
     let currentCycle: SubscriptionCycleEntity
     private let displayName: @Sendable (AccountTypeEntity) -> String
+    /// Whether "buy on our website" is offered at all, so the button can be mapped onto the cards.
+    private let isExternalPurchaseAvailable: Bool
 
     /// The billing cycle currently selected in the picker, seeded from the default selection.
     @Published var selectedCycle: SubscriptionCycleEntity
@@ -24,7 +26,8 @@ public final class UpgradePlansViewModel: ObservableObject {
         viewType: RevampUpgradePlansViewType,
         accountDetails: AccountDetailsEntity,
         plans: [PlanEntity],
-        displayName: @escaping @Sendable (AccountTypeEntity) -> String
+        displayName: @escaping @Sendable (AccountTypeEntity) -> String,
+        isExternalPurchaseAvailable: Bool = false
     ) {
         self.isPromo = isPromo
         self.viewType = viewType
@@ -32,6 +35,7 @@ public final class UpgradePlansViewModel: ObservableObject {
         self.plans = plans
         self.currentCycle = accountDetails.subscriptionCycle
         self.displayName = displayName
+        self.isExternalPurchaseAvailable = isExternalPurchaseAvailable
         self.selectedCycle = Self.resolveDefaultCycle(plans: plans, currentCycle: accountDetails.subscriptionCycle)
     }
 
@@ -118,7 +122,8 @@ public final class UpgradePlansViewModel: ObservableObject {
         SubscriptionPlanCardsPresenter(
             plans: plans.filter { !$0.isCurrentPlan(for: accountDetails) },
             featuredPlan: featuredPlan,
-            displayName: displayName
+            displayName: displayName,
+            externalPurchase: isExternalPurchaseAvailable ? ExternalPurchasePresenter() : nil
         ).cards(for: cycle)
     }
 

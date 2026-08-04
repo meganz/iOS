@@ -5032,6 +5032,11 @@ public enum Strings {
         public enum Badge {
           public static let expiring: Swift.String
         }
+        public enum Button {
+          public enum BuyOnWebsite {
+            public static func saveUpTo(_ p1: Any) -> Swift.String
+          }
+        }
         public enum Countdown {
           public static func days(_ p1: Swift.Int) -> Swift.String
           public static func hours(_ p1: Swift.Int) -> Swift.String

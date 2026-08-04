@@ -19,6 +19,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     /// Drives the flip to `.standard` once the featured promotional offer lapses.
     /// Set only while a promo page with a live countdown is shown.
     private var promoExpiryMonitor: (any PromoExpiryMonitoring)?
+    /// Whether "buy on our website" is offered at all, resolved once per load.
+    private var isExternalPurchaseAvailable = false
 
     private(set) lazy var purchaseViewModel = PlanPurchaseViewModel(
         planPurchaser: dependency.planPurchaserFactory.makePurchaser(
@@ -69,8 +71,10 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         do {
             async let accountDetailsResult = dependency.fetchUseCase.currentAccountDetails()
             async let plansResult = dependency.fetchUseCase.plans()
+            async let externalPurchaseAvailability = dependency.externalPurchaseUseCase.shouldProvideExternalPurchase()
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
+            isExternalPurchaseAvailable = await externalPurchaseAvailability
 
             let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
             guard hasPromo else {
@@ -126,7 +130,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             viewType: dependency.viewType,
             accountDetails: accountDetails,
             plans: plans,
-            displayName: dependency.accountDisplayName
+            displayName: dependency.accountDisplayName,
+            isExternalPurchaseAvailable: isExternalPurchaseAvailable
         )
     }
 
