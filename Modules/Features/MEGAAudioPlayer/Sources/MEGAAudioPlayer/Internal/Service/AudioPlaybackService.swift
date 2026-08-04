@@ -58,6 +58,9 @@ final class AudioPlaybackService {
 
     private enum Constants {
         static let minimumResumableDuration: TimeInterval = 6 * 60
+        /// How close to `duration` counts as "the track has run out" — the
+        /// reported position rarely lands exactly on `duration`.
+        static let endOfTrackTolerance: TimeInterval = 0.1
     }
 
     init(
@@ -404,7 +407,11 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func togglePlayPause() {
-        engine.togglePlayPause()
+        if status == .paused, isAtEndOfQueue {
+            advanceToNextTrack(wrapAround: true)
+        } else {
+            engine.togglePlayPause()
+        }
     }
 
     func seek(toSeconds seconds: TimeInterval) {
@@ -468,9 +475,10 @@ extension AudioPlaybackService: PlaybackControllable {
         case .all:
             advanceToNextTrack(wrapAround: true)
         case .off:
-            if isOnLastTrack {
-                rewindToStartAndPause()
-            } else {
+            // On the last track the engine has already stopped at the end;
+            // leaving the playhead there makes the scrubber read as "finished"
+            // and the next play tap restart the queue.
+            if !isOnLastTrack {
                 advanceToNextTrack(wrapAround: false)
             }
         }
@@ -481,9 +489,13 @@ extension AudioPlaybackService: PlaybackControllable {
         return !queue.tracks.isEmpty && queue.currentIndex >= queue.tracks.count - 1
     }
 
-    private func rewindToStartAndPause() {
-        engine.seek(toSeconds: 0)
-        engine.pause()
+    /// `true` when the playhead has run out on the last track with repeat off —
+    /// the queue is finished, so play means "next + play" rather than "resume".
+    private var isAtEndOfQueue: Bool {
+        guard repeatMode == .off, isOnLastTrack,
+              let duration = engine.duration,
+              duration > Constants.endOfTrackTolerance else { return false }
+        return engine.currentTime >= duration - Constants.endOfTrackTolerance
     }
 
     private func advanceToNextTrack(wrapAround: Bool) {
@@ -576,13 +588,15 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     func stop() {
+        guard currentSource != nil else { return }
+        
+        currentSource = nil
         saveCurrentPlaybackPositionIfNeeded()
         clearResumeState()
         metadataTask?.cancel()
         metadataTask = nil
         Task { [metadataCache] in await metadataCache.removeAll() }
         playGeneration += 1
-        currentSource = nil
         unshuffledQueue = nil
         isShuffleOnSubject.send(false)
         playbackQueue = .empty

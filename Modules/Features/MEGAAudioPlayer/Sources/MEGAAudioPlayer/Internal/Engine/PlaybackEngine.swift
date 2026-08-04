@@ -226,12 +226,14 @@ extension PlaybackEngine {
 
 // MARK: - Interruption Notification Parsing
 
+/// Pure `userInfo` decoding — no player state involved, so it stays off the
+/// main actor and is callable from any context.
 extension PlaybackEngine {
-    static func interruptionType(from notification: Notification) -> AVAudioSession.InterruptionType? {
+    nonisolated static func interruptionType(from notification: Notification) -> AVAudioSession.InterruptionType? {
         notification.rawRepresentable(forKey: AVAudioSessionInterruptionTypeKey)
     }
 
-    static func interruptionOptions(from notification: Notification) -> AVAudioSession.InterruptionOptions {
+    nonisolated static func interruptionOptions(from notification: Notification) -> AVAudioSession.InterruptionOptions {
         notification.rawRepresentable(forKey: AVAudioSessionInterruptionOptionKey) ?? []
     }
 }
