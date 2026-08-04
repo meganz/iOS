@@ -161,7 +161,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                 Label {
                     Text(Strings.Localizable.selectAll)
                 } icon: {
-                    MEGAAssets.Image.checkStack
+                    selectAllIcon
                         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 }
                 .labelStyle(.iconOnly)
@@ -170,6 +170,11 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         } else {
             dependency.dismissContent()
         }
+    }
+    
+    /// The revamp swaps the stacked squares for the ticked circle the design shows.
+    private var selectAllIcon: Image {
+        dependency.isLinkRevampEnabled ? MEGAAssets.Image.checkCircle : MEGAAssets.Image.checkStack
     }
     
     @ViewBuilder
@@ -276,6 +281,32 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     
     @ViewBuilder
     private var bottomBar: some View {
+        if dependency.isLinkRevampEnabled {
+            selectionToolbar
+        } else {
+            legacyBottomBar
+        }
+    }
+    
+    @ViewBuilder
+    private var selectionToolbar: some View {
+        FolderLinkBottomBarActionButton(action: .makeAvailableOffline, selection: $viewModel.bottomBarAction)
+
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .downloadToFiles, selection: $viewModel.bottomBarAction)
+
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
+
+        if viewModel.shouldIncludeSaveToPhotosBottomAction {
+            Spacer()
+            FolderLinkBottomBarActionButton(action: .saveToPhotos, selection: $viewModel.bottomBarAction)
+        }
+    }
+
+    
+    @ViewBuilder
+    private var legacyBottomBar: some View {
         FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
         
         Spacer()

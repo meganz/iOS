@@ -24,6 +24,7 @@ public enum FolderLinkNodesAction: Equatable {
     case makeAvailableOffline(Set<HandleEntity>)
     case sendToChat(String)
     case saveToPhotos(Set<HandleEntity>)
+    case downloadToFiles(Set<HandleEntity>)
 }
 
 public protocol FolderLinkBuilderProtocol: Sendable {

@@ -176,6 +176,7 @@ final class FolderLinkMediaDiscoveryViewModelTests {
             let testcases: [(FolderLinkNodesAction, FolderLinkBottomBarAction)] = [
                 (.addToCloudDrive([1, 2]), .addToCloudDrive),
                 (.makeAvailableOffline([1, 2]), .makeAvailableOffline),
+                (.downloadToFiles([1, 2]), .downloadToFiles),
                 (.saveToPhotos([1, 2]), .saveToPhotos)
             ]
             

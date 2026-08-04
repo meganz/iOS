@@ -167,6 +167,7 @@ final class FolderLinkResultsViewModelTests {
             let testcases: [(FolderLinkNodesAction, FolderLinkBottomBarAction)] = [
                 (.addToCloudDrive([parentHandle]), .addToCloudDrive),
                 (.makeAvailableOffline([parentHandle]), .makeAvailableOffline),
+                (.downloadToFiles([parentHandle]), .downloadToFiles),
                 (.saveToPhotos([parentHandle]), .saveToPhotos)
             ]
             
@@ -195,6 +196,7 @@ final class FolderLinkResultsViewModelTests {
             let testcases: [(FolderLinkNodesAction, FolderLinkBottomBarAction)] = [
                 (.addToCloudDrive(childrenHandles), .addToCloudDrive),
                 (.makeAvailableOffline(childrenHandles), .makeAvailableOffline),
+                (.downloadToFiles(childrenHandles), .downloadToFiles),
                 (.saveToPhotos(childrenHandles), .saveToPhotos)
             ]
             

@@ -136,6 +136,8 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                     FolderLinkNodesAction.addToCloudDrive(nodes)
                 case .makeAvailableOffline:
                     FolderLinkNodesAction.makeAvailableOffline(nodes)
+                case .downloadToFiles:
+                    FolderLinkNodesAction.downloadToFiles(nodes)
                 case .saveToPhotos:
                     FolderLinkNodesAction.saveToPhotos(nodes)
                 }

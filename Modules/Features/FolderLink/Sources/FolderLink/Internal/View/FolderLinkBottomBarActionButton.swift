@@ -5,10 +5,12 @@ import SwiftUI
 extension FolderLinkBottomBarAction {
     var title: String {
         switch self {
-        case .addToCloudDrive:
-            Strings.Localizable.importToCloudDrive
         case .makeAvailableOffline:
             Strings.Localizable.General.downloadToOffline
+        case .downloadToFiles:
+            Strings.Localizable.download
+        case .addToCloudDrive:
+            Strings.Localizable.Link.Button.saveToMega
         case .saveToPhotos:
             Strings.Localizable.saveToPhotos
         }
@@ -16,10 +18,12 @@ extension FolderLinkBottomBarAction {
     
     var icon: Image {
         switch self {
-        case .addToCloudDrive:
-            Image(uiImage: MEGAAssets.UIImage.folderArrow)
         case .makeAvailableOffline:
             Image(uiImage: MEGAAssets.UIImage.cloudDownload)
+        case .downloadToFiles:
+            Image(uiImage: MEGAAssets.UIImage.downloadToDisk)
+        case .addToCloudDrive:
+            Image(uiImage: MEGAAssets.UIImage.uploadToCloud)
         case .saveToPhotos:
             Image(uiImage: MEGAAssets.UIImage.photosApp)
         }

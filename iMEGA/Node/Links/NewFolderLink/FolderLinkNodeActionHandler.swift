@@ -33,6 +33,8 @@ final class FolderLinkNodeActionHandler: FolderLinkNodeActionHandlerProtocol {
             downloadNodes(nodeHandles: nodeHandles)
         case let .saveToPhotos(nodeHandles):
             saveToPhotos(nodeHandles: nodeHandles)
+        case let .downloadToFiles(nodeHandles):
+            exportNodes(nodeHandles: nodeHandles)
         case let .sendToChat(link):
             showSendToChat(link: link)
         }
@@ -86,6 +88,17 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
     private func saveToPhotos(nodeHandles: Set<HandleEntity>) {
         let nodes = nodeHandles.compactMap { sdk.node(forHandle: $0) }
         saveToPhotos(nodes)
+    }
+    
+    /// Placeholder until IOS-12333 builds the real Download flow. `ExportFileRouter` only exports files,
+    /// so a selected folder is silently dropped here — the SDK has no compressed download, so covering
+    /// folders means downloading the tree and archiving it on device, which IOS-12333 owns along with
+    /// the behaviour design picks for mixed file and folder selections.
+    private func exportNodes(nodeHandles: Set<HandleEntity>) {
+        guard let navigationController else { return }
+        let nodes = nodeHandles.compactMap { sdk.node(forHandle: $0) }
+        ExportFileRouter(presenter: navigationController, sender: navigationController.view, isFolderLink: true)
+            .export(nodes: nodes.toNodeEntities())
     }
     
     private func downloadNodes(_ nodes: [MEGANode]) {

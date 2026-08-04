@@ -14,6 +14,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         let handle: HandleEntity
         let link: String
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let isLinkRevampEnabled: Bool
         let content: (FolderLinkMediaDiscoveryViewModel) -> Content
         let dismissContent: () -> DismissButton
     }
@@ -100,7 +101,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                 Label {
                     Text(Strings.Localizable.selectAll)
                 } icon: {
-                    MEGAAssets.Image.checkStack
+                    selectAllIcon
                         .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                 }
                 .labelStyle(.iconOnly)
@@ -109,6 +110,11 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         } else {
             dependency.dismissContent()
         }
+    }
+    
+    /// The revamp swaps the stacked squares for the ticked circle the design shows.
+    private var selectAllIcon: Image {
+        dependency.isLinkRevampEnabled ? MEGAAssets.Image.checkCircle : MEGAAssets.Image.checkStack
     }
     
     @ViewBuilder
@@ -145,6 +151,29 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
     
     @ViewBuilder
     private var bottomBar: some View {
+        if dependency.isLinkRevampEnabled {
+            selectionToolbar
+        } else {
+            legacyBottomBar
+        }
+    }
+    
+    @ViewBuilder
+    private var selectionToolbar: some View {
+        FolderLinkBottomBarActionButton(action: .makeAvailableOffline, selection: $viewModel.bottomBarAction)
+        
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .downloadToFiles, selection: $viewModel.bottomBarAction)
+        
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
+        
+        Spacer()
+        FolderLinkBottomBarActionButton(action: .saveToPhotos, selection: $viewModel.bottomBarAction)
+    }
+    
+    @ViewBuilder
+    private var legacyBottomBar: some View {
         FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
         
         Spacer()

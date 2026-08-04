@@ -39,6 +39,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
                 handle: handle,
                 link: link,
                 nodeActionHandler: nodeActionHandler,
+                isLinkRevampEnabled: isLinkRevampEnabled,
                 content: mediaDiscoveryContent,
                 dismissContent: dismissContent
             )
