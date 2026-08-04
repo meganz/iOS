@@ -40,6 +40,9 @@ final class NewTimelineViewModel: ObservableObject {
 
     private let initialHydrationWindowSize = 60
 
+    /// How long the visible range must stay put before its window is fetched.
+    private let visibleWindowSettleInterval: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(100)
+
     /// Bumped only when the query changes (filter/sort) and the skeleton is rebuilt from scratch.
     /// Every in-flight hydration captures it and is discarded if it changed — a different query
     /// invalidates even a handle-anchored page. (The design doc calls this `timelineGeneration`.)
@@ -594,7 +597,7 @@ final class NewTimelineViewModel: ObservableObject {
         guard mediaTimelineUseCase != nil else { return }
         let visibleRanges = photoLibraryContentViewModel.visiblePhotoIndexRange
             .compactMap { $0 }
-            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .debounce(for: visibleWindowSettleInterval, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .values
 
