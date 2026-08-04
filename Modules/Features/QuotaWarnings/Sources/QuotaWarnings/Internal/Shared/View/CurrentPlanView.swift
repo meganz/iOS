@@ -46,7 +46,8 @@ struct CurrentPlanView: View {
             usedBytes: 16 * 1_073_741_824,
             totalBytes: 20 * 1_073_741_824,
             style: .usedOnly
-        )
+        ),
+        freeUser: true
     ))
     .padding()
 }
@@ -59,7 +60,8 @@ struct CurrentPlanView: View {
             usedBytes: 2_199_023_255_552,
             totalBytes: 2_199_023_255_552,
             style: .usedOfTotal
-        )
+        ),
+        freeUser: false
     ))
     .padding()
 }

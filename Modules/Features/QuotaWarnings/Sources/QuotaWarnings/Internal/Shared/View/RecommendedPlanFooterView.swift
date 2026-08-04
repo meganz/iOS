@@ -7,10 +7,13 @@ import SwiftUI
 struct RecommendedPlanFooterView: View {
     struct Dependency {
         let planPurchaser: any PlanPurchasing
+        let trackingUseCase: any QuotaDialogTrackingUseCaseProtocol
     }
 
     let recommendedPlan: RecommendedPlan
     let onViewAllPlans: @MainActor () -> Void
+
+    private let trackingUseCase: any QuotaDialogTrackingUseCaseProtocol
 
     @StateObject private var purchaseViewModel: PlanPurchaseViewModel
 
@@ -21,6 +24,7 @@ struct RecommendedPlanFooterView: View {
         onViewAllPlans: @escaping @MainActor () -> Void
     ) {
         self.recommendedPlan = recommendedPlan
+        self.trackingUseCase = dependency.trackingUseCase
         self.onViewAllPlans = onViewAllPlans
         _purchaseViewModel = StateObject(
             wrappedValue: PlanPurchaseViewModel(
@@ -38,12 +42,16 @@ struct RecommendedPlanFooterView: View {
                     type: .primary,
                     action: {
                         Task { await purchaseViewModel.purchase(productIdentifier: recommendedPlan.productIdentifier) }
+                        trackingUseCase.trackUpgradeTapped()
                     }
                 ),
                 MEGAButton(
                     Strings.Localizable.QuotaWarning.RecommendedPlan.Button.viewAllPlans,
                     type: .textOnly,
-                    action: onViewAllPlans
+                    action: {
+                        onViewAllPlans()
+                        trackingUseCase.trackViewAllPlansTapped()
+                    }
                 )
             ],
             allowMaxWidthForWideScreen: true
@@ -65,7 +73,14 @@ struct RecommendedPlanFooterView: View {
             transferText: "2 TB transfer",
             quotaProgress: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal)
         ),
-        dependency: .init(planPurchaser: PreviewPlanPurchasing()),
+        dependency: .init(
+            planPurchaser: PreviewPlanPurchasing(),
+            trackingUseCase: QuotaDialogTrackingUseCase(
+                kind: .storage(.almostFull),
+                isFreeUser: true,
+                tracker: NoOpAnalyticsTracker()
+            )
+        ),
         onPurchased: {},
         onViewAllPlans: {}
     )

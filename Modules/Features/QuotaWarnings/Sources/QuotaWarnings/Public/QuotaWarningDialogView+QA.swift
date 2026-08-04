@@ -10,5 +10,7 @@ public extension QuotaWarningDialogView.Dependency {
     ) {
         self.quotaDialogUseCase = quotaDialogUseCase
         self.planPurchaser = planPurchaser
+        /// Keeps QA not sending real events
+        self.tracker = NoOpAnalyticsTracker()
     }
 }

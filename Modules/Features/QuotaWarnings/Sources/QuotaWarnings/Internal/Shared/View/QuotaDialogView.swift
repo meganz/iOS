@@ -8,17 +8,20 @@ struct QuotaDialogView<
     RecommendedPlanCard: View,
     Footer: View
 >: View {
+    private let trackingUseCase: any QuotaDialogTrackingUseCaseProtocol
     private let header: Header
     private let currentPlanCard: CurrentPlanCard
     private let recommendedPlanCard: RecommendedPlanCard?
     private let footer: Footer
 
     init(
+        trackingUseCase: some QuotaDialogTrackingUseCaseProtocol,
         @ViewBuilder header: () -> Header,
         @ViewBuilder currentPlanCard: () -> CurrentPlanCard,
         @ViewBuilder recommendedPlanCard: () -> RecommendedPlanCard,
         @ViewBuilder footer: () -> Footer
     ) {
+        self.trackingUseCase = trackingUseCase
         self.header = header()
         self.currentPlanCard = currentPlanCard()
         self.recommendedPlanCard = recommendedPlanCard()
@@ -48,15 +51,18 @@ struct QuotaDialogView<
                 }
         }
         .background(TokenColors.Background.page.swiftUI)
+        .onAppear { trackingUseCase.trackScreenView() }
     }
 }
 
 extension QuotaDialogView where RecommendedPlanCard == EmptyView {
     init(
+        trackingUseCase: some QuotaDialogTrackingUseCaseProtocol,
         @ViewBuilder header: () -> Header,
         @ViewBuilder currentPlanCard: () -> CurrentPlanCard,
         @ViewBuilder footer: () -> Footer
     ) {
+        self.trackingUseCase = trackingUseCase
         self.header = header()
         self.currentPlanCard = currentPlanCard()
         self.recommendedPlanCard = nil

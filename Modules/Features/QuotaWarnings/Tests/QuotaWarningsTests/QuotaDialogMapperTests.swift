@@ -76,6 +76,16 @@ struct StorageQuotaDialogMapperTests {
         #expect(currentPlan.quota.totalBytes == 100)
     }
 
+    /// The tier the dialog's analytics events are keyed on. Read off `CurrentPlan` by the view, which
+    /// builds `QuotaDialogTrackingUseCase` from it.
+    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
+    func currentPlan_carriesTheAccountTier(proLevel: AccountTypeEntity, freeUser: Bool) {
+        let sut = StorageQuotaDialogMapper(severity: .almostFull)
+        let currentPlan = sut.currentPlan(accountDetails: .build(proLevel: proLevel))
+
+        #expect(currentPlan.freeUser == freeUser)
+    }
+
     @Test func recommendedPlan_isGreenProgressOverPlanStorageAndBestForYouRibbon() {
         let sut = StorageQuotaDialogMapper(severity: .almostFull)
         let account = AccountDetailsEntity.build(storageUsed: 50, storageMax: 100)
@@ -152,5 +162,13 @@ struct TransferQuotaDialogMapperTests {
 
         #expect(currentPlan.quota.style == .usedOfTotal)
         #expect(currentPlan.quota.status == .full)
+    }
+
+    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
+    func currentPlan_carriesTheAccountTier(proLevel: AccountTypeEntity, freeUser: Bool) {
+        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+        let currentPlan = sut.currentPlan(accountDetails: .build(proLevel: proLevel))
+
+        #expect(currentPlan.freeUser == freeUser)
     }
 }

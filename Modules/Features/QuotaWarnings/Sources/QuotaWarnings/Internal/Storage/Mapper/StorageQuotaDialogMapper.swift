@@ -24,7 +24,8 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
         CurrentPlan(
             name: accountDetails.proLevel.toAccountTypeDisplayName(),
-            quota: currentQuotaProgress(accountDetails: accountDetails)
+            quota: currentQuotaProgress(accountDetails: accountDetails),
+            freeUser: accountDetails.isFree
         )
     }
 

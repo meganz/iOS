@@ -1,15 +1,13 @@
 import MEGADomain
 import MEGADomainMock
+@testable import QuotaWarnings
 import SwiftUI
 import Testing
-@testable import QuotaWarnings
 
 @MainActor
 @Suite("QuotaDialogViewModel")
 struct QuotaDialogViewModelTests {
-    private func makeSUT(
-        result: Result<QuotaUpgradeOption, any Error>
-    ) -> QuotaDialogViewModel {
+    private func makeSUT(result: Result<QuotaUpgradeOption, any Error>) -> QuotaDialogViewModel {
         QuotaDialogViewModel(
             useCase: MockQuotaDialogUseCase(result: result),
             mapper: StubQuotaDialogMapper()
@@ -56,6 +54,38 @@ struct QuotaDialogViewModelTests {
             return
         }
     }
+
+    // MARK: - Tier
+
+    /// The tier the analytics events are keyed on rides on the loaded `CurrentPlan`, so the view can build
+    /// the tracking use case without the view model holding tracking state.
+    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
+    func load_available_carriesTheLoadedTierOnTheCurrentPlan(proLevel: AccountTypeEntity, freeUser: Bool) async {
+        let sut = makeSUT(
+            result: .success(.available(accountDetails: .build(proLevel: proLevel), recommendedPlan: entity()))
+        )
+
+        await sut.load()
+
+        guard case let .upgradeAvailable(_, currentPlan, _) = sut.viewState else {
+            Issue.record("Expected .upgradeAvailable, got \(sut.viewState)")
+            return
+        }
+        #expect(currentPlan.freeUser == freeUser)
+    }
+
+    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
+    func load_unavailable_carriesTheLoadedTierOnTheCurrentPlan(proLevel: AccountTypeEntity, freeUser: Bool) async {
+        let sut = makeSUT(result: .success(.unavailable(accountDetails: .build(proLevel: proLevel))))
+
+        await sut.load()
+
+        guard case let .noUpgradeAvailable(_, currentPlan) = sut.viewState else {
+            Issue.record("Expected .noUpgradeAvailable, got \(sut.viewState)")
+            return
+        }
+        #expect(currentPlan.freeUser == freeUser)
+    }
 }
 
 // MARK: - Doubles
@@ -75,7 +105,11 @@ private struct StubQuotaDialogMapper: QuotaDialogMapping {
         QuotaDialogHeader(image: Image(systemName: "photo"), title: Self.headerTitle, subtitle: .plain(""))
     }
     func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
-        CurrentPlan(name: "current", quota: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal))
+        CurrentPlan(
+            name: "current",
+            quota: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal),
+            freeUser: accountDetails.isFree
+        )
     }
     func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan {
         RecommendedPlan(

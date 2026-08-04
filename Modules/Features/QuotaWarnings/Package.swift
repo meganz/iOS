@@ -32,7 +32,8 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
-        .package(path: "../../MEGASharedRepo/MEGAPreference")
+        .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -48,7 +49,8 @@ let package = Package(
                            "MEGAUIComponent",
                            "MEGASwift",
                            "MEGAInfrastructure",
-                           "MEGAPreference"],
+                           "MEGAPreference",
+                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")],
             swiftSettings: settings
         ),
         .target(
@@ -64,6 +66,8 @@ let package = Package(
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            "MEGASwift",
                            "MEGAUIComponent",
+                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
+                           .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")],
             swiftSettings: settings
         )

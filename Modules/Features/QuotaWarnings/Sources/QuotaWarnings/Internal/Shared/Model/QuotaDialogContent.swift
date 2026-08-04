@@ -9,6 +9,7 @@ enum QuotaUsageStyle {
 struct CurrentPlan: Equatable {
     let name: String
     let quota: QuotaProgress
+    let freeUser: Bool
 }
 
 struct RecommendedPlan: Equatable {

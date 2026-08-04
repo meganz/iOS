@@ -31,6 +31,9 @@ public struct QuotaWarningDialogView: View {
     public struct Dependency {
         let quotaDialogUseCase: any QuotaDialogUseCaseProtocol
         let planPurchaser: any PlanPurchasing
+        /// Not a parameter of the public initialiser: production always tracks for real, and only the
+        /// in-module preview and QA seams below substitute a tracker that discards events.
+        let tracker: any AnalyticsTracking
 
         public init(
             accountPlanPurchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
@@ -42,13 +45,15 @@ public struct QuotaWarningDialogView: View {
                 pricingRequester: pricingRequester
             )
             self.planPurchaser = planPurchaser
+            self.tracker = DIContainer.tracker
         }
 
         func storageDialogDependency(_ severity: StorageQuotaSeverity) -> QuotaDialogContentView.Dependency {
             QuotaDialogContentView.Dependency(
                 useCase: quotaDialogUseCase,
                 mapper: StorageQuotaDialogMapper(severity: severity),
-                planPurchaser: planPurchaser
+                planPurchaser: planPurchaser,
+                tracker: tracker
             )
         }
 
@@ -56,12 +61,14 @@ public struct QuotaWarningDialogView: View {
             QuotaDialogContentView.Dependency(
                 useCase: quotaDialogUseCase,
                 mapper: TransferQuotaDialogMapper(severity: severity),
-                planPurchaser: planPurchaser
+                planPurchaser: planPurchaser,
+                tracker: tracker
             )
         }
     }
     
     private let dependency: QuotaDialogContentView.Dependency
+    private let kind: Kind
     private let onClose: @MainActor () -> Void
     private let onViewAllPlans: @MainActor () -> Void
 
@@ -77,6 +84,7 @@ public struct QuotaWarningDialogView: View {
         case .transfer(let severity):
             dependency.transferDialogDependency(severity)
         }
+        self.kind = kind
         self.onClose = onClose
         self.onViewAllPlans = onViewAllPlans
     }
@@ -84,6 +92,7 @@ public struct QuotaWarningDialogView: View {
     public var body: some View {
         QuotaDialogContentView(
             dependency: dependency,
+            kind: kind,
             onClose: onClose,
             onViewAllPlans: onViewAllPlans
         )
@@ -97,6 +106,7 @@ extension QuotaWarningDialogView.Dependency {
     init(previewUseCase: PreviewQuotaDialogUseCase) {
         self.quotaDialogUseCase = previewUseCase
         self.planPurchaser = PreviewPlanPurchasing()
+        self.tracker = NoOpAnalyticsTracker()
     }
 }
 
