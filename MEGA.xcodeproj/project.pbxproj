@@ -792,8 +792,6 @@
 		5D8DC6B1248CB0C40067A4F9 /* CornerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6B0248CB0C40067A4F9 /* CornerStyle.swift */; };
 		5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */; };
 		5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D94D701251368FB00B103EC /* SDKNodeClient.swift */; };
-		5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9DE5B5254BE9E300FA69C8 /* MEGASearchBarView.swift */; };
-		5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */; };
 		5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */; };
 		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
@@ -802,10 +800,6 @@
 		5DBAC841248778DA0050996E /* OverDiskQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDiskQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDiskQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDiskQuotaWarningView.xib */; };
 		5DC0FD4D24D903A4004DB649 /* ButtonStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC0FD4C24D903A4004DB649 /* ButtonStyleFactory.swift */; };
-		5DC4DE0B24DB7DF900D9AD16 /* ExploreButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC4DE0A24DB7DF900D9AD16 /* ExploreButtonView.swift */; };
-		5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC4DE0C24DBC27900D9AD16 /* ExploreViewStack.swift */; };
-		5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DC4DE0E24DBC29600D9AD16 /* ExploreViewStack.xib */; };
-		5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC4DE1024DBE20F00D9AD16 /* ExploreViewStyleFactory.swift */; };
 		5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4B2F0257DEAE000A01306 /* HomeBannerRouter.swift */; };
 		5DD4D71525076802004C0CFE /* NodeShareRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4D71425076802004C0CFE /* NodeShareRouter.swift */; };
 		5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6B16F24D6D51D00F14515 /* Reader.swift */; };
@@ -1912,8 +1906,6 @@
 		B575517A2CCB6B7000E65123 /* RecoveryKeyViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57551792CCB6B7000E65123 /* RecoveryKeyViewRouter.swift */; };
 		B575517D2CCB7EBF00E65123 /* MockRecoveryKeyViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B575517C2CCB7EBC00E65123 /* MockRecoveryKeyViewRouter.swift */; };
 		B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */; };
-		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
-		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
 		B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */; };
 		B581A0992D13E64D006229C1 /* MEGAConnectivity in Frameworks */ = {isa = PBXBuildFile; productRef = B581A0982D13E64D006229C1 /* MEGAConnectivity */; };
@@ -1963,9 +1955,6 @@
 		B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */; };
 		B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */; };
 		B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */; };
-		B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */; };
-		B5FE691328698C5C00A1725C /* FavouritesExplorerGridSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */; };
-		B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
@@ -3638,8 +3627,6 @@
 		5D8DC6B0248CB0C40067A4F9 /* CornerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerStyle.swift; sourceTree = "<group>"; };
 		5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStatedStyle.swift; sourceTree = "<group>"; };
 		5D94D701251368FB00B103EC /* SDKNodeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodeClient.swift; sourceTree = "<group>"; };
-		5D9DE5B5254BE9E300FA69C8 /* MEGASearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASearchBarView.swift; sourceTree = "<group>"; };
-		5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGASearchBarView.xib; sourceTree = "<group>"; };
 		5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenFactory.swift; sourceTree = "<group>"; };
 		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
@@ -3648,10 +3635,6 @@
 		5DBAC840248778DA0050996E /* OverDiskQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDiskQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaWarningView.xib; sourceTree = "<group>"; };
 		5DC0FD4C24D903A4004DB649 /* ButtonStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleFactory.swift; sourceTree = "<group>"; };
-		5DC4DE0A24DB7DF900D9AD16 /* ExploreButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreButtonView.swift; sourceTree = "<group>"; };
-		5DC4DE0C24DBC27900D9AD16 /* ExploreViewStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewStack.swift; sourceTree = "<group>"; };
-		5DC4DE0E24DBC29600D9AD16 /* ExploreViewStack.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreViewStack.xib; sourceTree = "<group>"; };
-		5DC4DE1024DBE20F00D9AD16 /* ExploreViewStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewStyleFactory.swift; sourceTree = "<group>"; };
 		5DD4B2F0257DEAE000A01306 /* HomeBannerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBannerRouter.swift; sourceTree = "<group>"; };
 		5DD4D71425076802004C0CFE /* NodeShareRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeShareRouter.swift; sourceTree = "<group>"; };
 		5DD6B16F24D6D51D00F14515 /* Reader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reader.swift; sourceTree = "<group>"; };
@@ -4745,8 +4728,6 @@
 		B57551792CCB6B7000E65123 /* RecoveryKeyViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyViewRouter.swift; sourceTree = "<group>"; };
 		B575517C2CCB7EBC00E65123 /* MockRecoveryKeyViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecoveryKeyViewRouter.swift; sourceTree = "<group>"; };
 		B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Additions.swift"; sourceTree = "<group>"; };
-		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
-		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouter.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
@@ -4795,9 +4776,6 @@
 		B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
-		B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridViewController.swift; sourceTree = "<group>"; };
-		B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridSource.swift; sourceTree = "<group>"; };
-		B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
@@ -8255,7 +8233,6 @@
 				5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */,
 				5DC0FD4C24D903A4004DB649 /* ButtonStyleFactory.swift */,
 				5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */,
-				5DC4DE1024DBE20F00D9AD16 /* ExploreViewStyleFactory.swift */,
 				5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */,
 				5DF9910825789B5400DDDA83 /* PageControlStyleFactoory.swift */,
 				5D7D53462551263C00D3582E /* TextFieldStyleFactory.swift */,
@@ -8384,12 +8361,8 @@
 			isa = PBXGroup;
 			children = (
 				BF5E34152559E39A0055395E /* ExplorerContainerState */,
-				5D62D89824D150590004301A /* ExploreView */,
-				5D9DE5B2254BE9C400FA69C8 /* SearchController */,
 				BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */,
 				BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */,
-				B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */,
-				B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */,
 				BF5E33BD2558D99C0055395E /* FilesExplorerContainerViewController.swift */,
 				BF6E080A2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift */,
 				BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */,
@@ -8459,16 +8432,6 @@
 			children = (
 			);
 			path = Banner;
-			sourceTree = "<group>";
-		};
-		5D62D89824D150590004301A /* ExploreView */ = {
-			isa = PBXGroup;
-			children = (
-				5DC4DE0A24DB7DF900D9AD16 /* ExploreButtonView.swift */,
-				5DC4DE0C24DBC27900D9AD16 /* ExploreViewStack.swift */,
-				5DC4DE0E24DBC29600D9AD16 /* ExploreViewStack.xib */,
-			);
-			path = ExploreView;
 			sourceTree = "<group>";
 		};
 		5D646600248909D5006030A5 /* Theme */ = {
@@ -8587,15 +8550,6 @@
 			path = Node;
 			sourceTree = "<group>";
 		};
-		5D9DE5B2254BE9C400FA69C8 /* SearchController */ = {
-			isa = PBXGroup;
-			children = (
-				5D9DE5B5254BE9E300FA69C8 /* MEGASearchBarView.swift */,
-				5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */,
-			);
-			path = SearchController;
-			sourceTree = "<group>";
-		};
 		5DA253F524AF794E004DA739 /* ThemeColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -8646,9 +8600,6 @@
 				BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */,
 				BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */,
 				BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */,
-				B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */,
-				B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */,
-				B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */,
 				BF5E345E255A2E1A0055395E /* FilesExplorerGridSource.swift */,
 				BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */,
 				BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */,
@@ -14240,7 +14191,6 @@
 				83784A202B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
-				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
 				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
@@ -14264,7 +14214,6 @@
 				BF66DFE32613E7BE00066F35 /* MeetingParticipantTableViewCell.xib in Resources */,
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
-				5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
 				BF99A3D524A994CB0035A183 /* MessageOptionItemTableCell.xib in Resources */,
@@ -15102,20 +15051,12 @@
 				2F9F112B2508A43300896DFF /* ErrorKey.swift in Sources */,
 				2F9F11182508A3E800896DFF /* ErrorModel.swift in Sources */,
 				83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */,
-				5DC4DE0B24DB7DF900D9AD16 /* ExploreButtonView.swift in Sources */,
 				BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */,
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
-				5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */,
-				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
 				83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */,
 				839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */,
-				B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
-				B5FE691328698C5C00A1725C /* FavouritesExplorerGridSource.swift in Sources */,
-				B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */,
-				B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */,
-				B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */,
 				BFD971252F46BDCA0038892A /* FavouritesNodesActionHandler.swift in Sources */,
 				A563A52E2F6A6A0C00DD8BFD /* FavouritesNodeSelectionHandler.swift in Sources */,
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
@@ -15484,7 +15425,6 @@
 				A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */,
 				A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */,
-				5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */,
 				C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */,
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,

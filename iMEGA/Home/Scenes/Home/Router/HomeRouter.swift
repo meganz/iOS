@@ -164,30 +164,6 @@ final class HomeRouter: HomeRouterProtocol {
         CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download).start()
     }
 
-    // MARK: - Show Favourites Explorer View Controller
-    
-    func favouriteExplorerSelected() {
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .favourites).start()
-    }
-    
-    // MARK: - Show Documents Explorer View Controller
-    
-    func documentsExplorerSelected() {
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .allDocs).start()
-    }
-    
-    // MARK: - Show Audio Explorer View Controller
-    
-    func audioExplorerSelected() {
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .audio).start()
-    }
-    
-    // MARK: - Show Audio Explorer View Controller
-    
-    func videoExplorerSelected() {
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .video).start()
-    }
-
     // MARK: - Display Upload Source Selection Action Sheet
 
     private func presentUploadOptionActionSheet(

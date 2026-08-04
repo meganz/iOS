@@ -7,5 +7,4 @@ public enum ExplorerTypeEntity {
     // mapping done in ExplorerTypeEntity+Mapper.swift, not the same as documents
     // which excludes pdf/presentations/spreadsheets
     case allDocs
-    case favourites
 }

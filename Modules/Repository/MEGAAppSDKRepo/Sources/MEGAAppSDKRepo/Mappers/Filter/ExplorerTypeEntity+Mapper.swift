@@ -9,7 +9,6 @@ extension ExplorerTypeEntity {
         // that contains pdf/spreadsheets/presentation/documents
         case .allDocs: return .allDocs
         case .video: return .video
-        case .favourites: return .unknown
         }
     }
 }

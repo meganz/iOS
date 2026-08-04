@@ -78,13 +78,7 @@ extension FilesExplorerListSourceProtocol {
             }
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
-            
-            guard explorerType == .favourites,
-                  node.name?.fileExtensionGroup.isVisualMedia == true else {
-                delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
-                return
-            }
-            delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes.multiMediaNodeList())
+            delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
         }
     }
     

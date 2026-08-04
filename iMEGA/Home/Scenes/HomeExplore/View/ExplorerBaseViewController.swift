@@ -82,45 +82,7 @@ class ExplorerBaseViewController: UIViewController {
         toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
     }
     
-    func configureFavouriteToolbarButtons() {
-        if explorerToolbarConfigurator == nil {
-            explorerToolbarConfigurator = FavouriteExplorerToolbarConfigurator(
-                downloadAction: downloadBarButtonPressed,
-                shareLinkAction: shareLinkBarButtonPressed,
-                moveAction: moveBarButtonPressed,
-                copyAction: copyBarButtonPressed,
-                deleteAction: deleteButtonPressed,
-                moreAction: didPressedMoreBarButton,
-                favouriteAction: didPressedFavouriteBarButton
-            )
-        }
-        
-        toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
-    }
-    
     // MARK: - Toolbar Button actions
-    private func didPressedFavouriteBarButton(_ button: UIBarButtonItem) {
-        guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
-            return
-        }
-        
-        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
-        
-        selectedNodes.forEach { node in
-            if node.isFavourite {
-                Task {
-                    try await favoriteUseCase.unFavourite(node: node.toNodeEntity())
-                }
-            } else {
-                Task {
-                    try await favoriteUseCase.favourite(node: node.toNodeEntity())
-                }
-            }
-        }
-        endEditingMode()
-    }
-    
     private func favourite(nodes: [MEGANode]) {
         let nodeEntities = nodes.toNodeEntities()
         let favouriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)

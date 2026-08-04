@@ -68,8 +68,6 @@ final class FilesExplorerViewModel: ViewModelType {
         case .video:
             assert(false, "Invalid viewConfiguration for: \(explorerType)")
             return nil
-        case .favourites:
-            return FavouritesExplorerViewConfiguration()
         }
     }
     
@@ -210,9 +208,8 @@ final class FilesExplorerViewModel: ViewModelType {
         do {
             let nodes: [NodeEntity] = try await startSearch(
                 text: text,
-                formatType: explorerType.toNodeFormatEntity(),
-                favouritesOnly: explorerType == .favourites)
-            
+                formatType: explorerType.toNodeFormatEntity())
+
             let megaNodes = await toMEGANode(from: nodes)
             updateListenerForFilesDownload(withNodes: nodes)
             invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
@@ -223,7 +220,7 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
     
-    private func startSearch(text: String?, formatType: NodeFormatEntity, favouritesOnly: Bool = false) async throws -> [NodeEntity] {
+    private func startSearch(text: String?, formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         try await useCase.search(
             filter: .recursive(
                 searchText: text,
@@ -234,7 +231,7 @@ final class FilesExplorerViewModel: ViewModelType {
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
                 formatType: explorerType.toNodeFormatEntity(),
                 sensitiveFilterOption: await sensitiveDisplayPreferenceUseCase.excludeSensitives() ? .nonSensitiveOnly : .disabled,
-                favouriteFilterOption: favouritesOnly ? .onlyFavourites : .disabled,
+                favouriteFilterOption: .disabled,
                 useAndForTextQuery: false
             ),
             cancelPreviousSearchIfNeeded: true
