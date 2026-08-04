@@ -65,18 +65,26 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         initialise()
-        
+
         setupViewForDesignToken()
+        registerForAppearanceChanges()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
         initialise()
         setupViewForDesignToken()
+        registerForAppearanceChanges()
     }
 
     // MARK: - Privates
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: MEGASearchBarView, _: UITraitCollection) in
+            view.setupViewForDesignToken()
+        }
+    }
 
     private func initialise() {
         guard let contentView = loadedViewFromNibContent() else { return }
@@ -137,22 +145,6 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     override func resignFirstResponder() -> Bool {
         return searchField.resignFirstResponder()
     }
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension MEGASearchBarView: TraitEnvironmentAware {
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        setupViewForDesignToken()
-    }
-
-    func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory) {}
 }
 
 // MARK: - UITextFieldDelegate

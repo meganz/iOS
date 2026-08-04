@@ -22,14 +22,22 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
         super.init(frame: frame)
         addStackView()
         setupView(with: traitCollection)
+        registerForAppearanceChanges()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         addStackView()
         setupView(with: traitCollection)
+        registerForAppearanceChanges()
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: ExploreViewStack, _: UITraitCollection) in
+            view.setupView(with: view.traitCollection)
+        }
+    }
+
     // MARK: Actions
     
     @IBAction func cardTapped(_ sender: UIButton) {
@@ -72,19 +80,5 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
             backgroundColor = defaultColor
             subviews.first?.backgroundColor = defaultColor
         }
-    }
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension ExploreViewStack: TraitEnvironmentAware {
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        setupView(with: currentTrait)
     }
 }

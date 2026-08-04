@@ -19,14 +19,26 @@ class ExplorerBaseViewController: UIViewController {
     
     var displayMode: DisplayMode { .unknown }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        registerForAppearanceChanges()
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         if isToolbarShown {
             endEditingMode()
         }
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: ExplorerBaseViewController, _: UITraitCollection) in
+            AppearanceManager.forceToolbarUpdate(viewController.toolbar)
+        }
+    }
+
     func showToolbar() {
         guard let tabBarController = tabBarController, toolbar.superview == nil else { return }
         
@@ -323,17 +335,6 @@ class ExplorerBaseViewController: UIViewController {
     
     func endEditingMode() {
         fatalError("endEditingMode() method needs to be implemented by the subclass")
-    }
-}
-
-extension ExplorerBaseViewController: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceToolbarUpdate(toolbar)
     }
 }
 

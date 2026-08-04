@@ -51,17 +51,16 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
         addLongPressGesture(to: collectionView)
+        registerForContentSizeCategoryChanges()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            dtCollectionManager?.resetCollectionItems()
-            collectionView.collectionViewLayout.invalidateLayout()
+
+    private func registerForContentSizeCategoryChanges() {
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (viewController: FilesExplorerGridViewController, _: UITraitCollection) in
+            viewController.dtCollectionManager?.resetCollectionItems()
+            viewController.collectionView.collectionViewLayout.invalidateLayout()
         }
     }
-    
+
     override func toggleSelectAllNodes() {
         gridSource?.toggleSelectAllNodes()
         configureToolbarButtons()

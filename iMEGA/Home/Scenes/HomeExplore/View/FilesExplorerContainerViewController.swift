@@ -67,8 +67,15 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         configureNavigationBarButtons()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
+        registerForAppearanceChanges()
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: FilesExplorerContainerViewController, _: UITraitCollection) in
+            AppearanceManager.forceSearchBarUpdate(viewController.searchController.searchBar)
+        }
+    }
+
     // MARK: - Bar Buttons    
     func updateTitle(_ title: String?) {
         self.title = title
@@ -213,17 +220,6 @@ extension FilesExplorerContainerViewController: UISearchResultsUpdating {
         }
         
         currentState.updateSearchResults(for: searchText)
-    }
-}
-
-extension FilesExplorerContainerViewController: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar)
     }
 }
 
