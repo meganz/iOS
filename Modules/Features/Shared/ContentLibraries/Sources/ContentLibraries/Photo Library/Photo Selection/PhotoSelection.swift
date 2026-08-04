@@ -70,8 +70,11 @@ public final class PhotoSelection: ObservableObject {
     
     @Published var isSelectionDisabled = false
     
+    /// Replace the whole selection. Keyed by handle, so a repeated node is one entry rather than a
+    /// reason to trap — `uniqueKeysWithValues` would `fatalError` on a caller that passes the same
+    /// node twice, which is not a meaningful failure for a set of selected photos.
     public func setSelectedPhotos(_ photos: [NodeEntity]) {
-        self.photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
+        self.photos = Dictionary(photos.map { ($0.handle, $0) }, uniquingKeysWith: { first, _ in first })
     }
     
     public func toggleEditMode() {

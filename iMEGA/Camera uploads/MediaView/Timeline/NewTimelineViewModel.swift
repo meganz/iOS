@@ -171,7 +171,7 @@ final class NewTimelineViewModel: ObservableObject {
                 }
             }
             .eraseToAnyAsyncSequence()
-            .debounce(for: .milliseconds(300))
+            .debounce(for: .milliseconds(100))
 
         for await sections in sectionUpdates {
             showEmptyStateView = sections.isEmpty
@@ -609,7 +609,9 @@ final class NewTimelineViewModel: ObservableObject {
     func hydrateVisibleWindow(_ range: Range<Int>) async {
         lastVisibleRange = range
         let current = photoLibraryContentViewModel.library
+        let revisionBefore = libraryRevision
         guard let hydrated = await hydratedVisibleWindow(of: current, range: range) else { return }
+        guard libraryRevision == revisionBefore else { return }
         commitLibrary(hydrated)
     }
 
@@ -728,6 +730,7 @@ final class NewTimelineViewModel: ObservableObject {
               versionsStillValid(capturedVersions) else { return nil }
         let photos = library.allPhotos
 
+        var occupiedHandles = Set(photos.lazy.filter { !$0.isTimelinePlaceholder }.map(\.handle))
         var replacements: [Int: NodeEntity] = [:]
         for result in results {
             guard let start = spliceStart(for: result, in: photos) else { continue }
@@ -736,6 +739,9 @@ final class NewTimelineViewModel: ObservableObject {
                 // Only fill placeholder slots — never overwrite an already-hydrated real node or
                 // overflow past the tree, whatever the SDK returned.
                 guard photos.indices.contains(index), photos[index].isTimelinePlaceholder else { continue }
+                // `insert` doubles as the duplicate check: not inserted ⇒ this handle is already
+                // live in the tree, or an earlier run in this same batch already placed it.
+                guard occupiedHandles.insert(node.handle).inserted else { continue }
                 replacements[index] = node
             }
         }

@@ -60,6 +60,11 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
     private let monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>
     private let excludeSensitivesResult: Bool
     private let recorder: MediaTimelineUseCaseRecorder?
+    /// Runs inside every media fetch, just before the stubbed result is returned, so a test can
+    /// mutate state while the subject is suspended on that fetch and assert how it reacts to losing
+    /// the race (e.g. a reactive pass committing a new library mid-hydration). Re-entrant: a hook
+    /// that itself triggers a fetch is called again, so one-shot it in the test when that matters.
+    private let onFetch: (@MainActor () async -> Void)?
 
     public init(
         dateSectionsResult: Result<[MediaDateSectionEntity], any Error> = .success([]),
@@ -68,7 +73,8 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         mediaWindowResult: Result<[NodeEntity], any Error> = .success([]),
         monitorDateSectionsSequence: AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> = EmptyAsyncSequence<Result<[MediaDateSectionEntity], any Error>>().eraseToAnyAsyncSequence(),
         excludeSensitivesResult: Bool = true,
-        recorder: MediaTimelineUseCaseRecorder? = nil
+        recorder: MediaTimelineUseCaseRecorder? = nil,
+        onFetch: (@MainActor () async -> Void)? = nil
     ) {
         self.dateSectionsResult = dateSectionsResult
         self.mediaPageResult = mediaPageResult
@@ -77,6 +83,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         self.monitorDateSectionsSequence = monitorDateSectionsSequence
         self.excludeSensitivesResult = excludeSensitivesResult
         self.recorder = recorder
+        self.onFetch = onFetch
     }
 
     public func dateSections(
@@ -94,6 +101,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(after: lastNode, limit: limit))
+        await onFetch?()
         return try mediaPageResult.get()
     }
 
@@ -104,6 +112,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(before: firstNode, limit: limit))
+        await onFetch?()
         return try mediaPageBeforeResult.get()
     }
 
@@ -115,6 +124,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(section: section, offset: offset, limit: limit))
+        await onFetch?()
         return try mediaWindowResult.get()
     }
 

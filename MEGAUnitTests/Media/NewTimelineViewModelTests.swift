@@ -334,6 +334,84 @@ struct NewTimelineViewModelTests {
             #expect(await recorder.windowCalls == [.init(section: sections[0], offset: 0, limit: 3)])
         }
 
+        /// Runs a reactive section pass from inside a mock fetch, exactly once. Must be armed
+        /// explicitly: the initial load issues its own first-page fetch, and the reactive pass this
+        /// triggers issues another — neither should consume the shot.
+        @MainActor
+        private final class ReactivePassTrigger {
+            var sut: NewTimelineViewModel?
+            private var isArmed = false
+
+            func arm() { isArmed = true }
+
+            func fireOnce() async {
+                guard isArmed else { return }
+                isArmed = false
+                await sut?.monitorTimelineSections()
+            }
+        }
+
+        @Test("A hydration whose library moved during the fetch is discarded instead of reverting the newer commit")
+        func hydrateVisibleWindowDiscardsResultWhenLibraryMovedDuringFetch() async {
+            // The real race: the user is parked in day2, a Camera-Upload insert grows day1 off-screen,
+            // and the reactive pass commits the re-projected skeleton while this hydration is still
+            // awaiting its page. Committing the stale result would revert that reproject, leaving the
+            // library's slot count out of step with `dateSections` — a desync `sameShape` can never
+            // detect (it compares incoming sections against `dateSections`, never against the
+            // library), so later windows splice at the wrong offset and duplicate a node.
+            let trigger = ReactivePassTrigger()
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 2)), // 4 slots
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "d2a.jpg", handle: 20, hasThumbnail: true),
+                        NodeEntity(name: "d2b.jpg", handle: 21, hasThumbnail: true)
+                    ]),
+                    monitorDateSectionsSequence: Self.sectionStream(Self.sections(day1: 3, day2: 2)),
+                    onFetch: { await trigger.fireOnce() }))
+            trigger.sut = sut
+            await sut.loadPhotos()
+            trigger.arm() // only race the scroll-driven hydration, not the initial load
+
+            // 2..<4 lies entirely inside day2, so the day1-only reshape bumps no version this
+            // hydration captured: `versionsStillValid` passes and only the library-revision check
+            // can reject the stale result.
+            await sut.hydrateVisibleWindow(2..<4)
+
+            // day1: 3 + day2: 2 — the reproject survived, so the library still matches `dateSections`.
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.count == 5)
+        }
+
+        @Test("A run whose fetched page overlaps an already-hydrated node skips the duplicate but still splices the new one")
+        func hydrateVisibleWindowNeverAliasesAnAlreadyHydratedNode() async {
+            // A slot's *position* comes from the `dateSections` counts, its *content* from a separate
+            // media query — two snapshots that can disagree. Here day2's window returns a node (10)
+            // that is already live in day1, alongside a genuinely new one (99). Writing 10 a second
+            // time would put the same node at two visible positions, which crashes duplicate-key
+            // consumers (e.g. the collection view's visible-position lookup).
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.sections(day1: 2, day2: 2)), // 4 slots
+                    mediaWindowResult: .success([
+                        NodeEntity(name: "stale.jpg", handle: 10, hasThumbnail: true), // already at slot 0
+                        NodeEntity(name: "new.jpg", handle: 99, hasThumbnail: true)
+                    ])))
+            await sut.loadPhotos() // an empty first page leaves a pure 4-slot skeleton
+            sut.photoLibraryContentViewModel.library = sut.photoLibraryContentViewModel.library
+                .replacingPhotos(from: 0, with: [NodeEntity(name: "a.jpg", handle: 10, hasThumbnail: true)])
+
+            // Slots 2, 3 are an isolated cold run (both neighbours are placeholders) → offset fetch.
+            await sut.hydrateVisibleWindow(2..<4)
+
+            let photos = sut.photoLibraryContentViewModel.library.allPhotos
+            let realHandles = photos.filter { !$0.isTimelinePlaceholder }.map(\.handle)
+            #expect(realHandles == [10, 99]) // stale copy of 10 dropped, 99 still landed
+            #expect(Set(realHandles).count == realHandles.count) // no node aliased into two slots
+            // The skipped slot stays open, so a later authoritative fetch can fill it correctly.
+            #expect(photos[2].isTimelinePlaceholder)
+            #expect(photos[3].handle == 99)
+        }
+
         @Test("A shape-neutral reload preserves hydrated nodes instead of flashing back to placeholders")
         func reloadWithUnchangedShapePreservesHydration() async {
             let reals = [

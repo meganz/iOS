@@ -80,13 +80,17 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
 
     private func refreshPlan(to sections: [PhotoDateSection]) -> RefreshPlan {
         guard let collectionView else { return .none }
+        // A visibility lookup — "is this position on screen right now" has one answer, so a repeated
+        // key must never trap. The library can transiently hold the same node in two slots (a splice
+        // writing an already-hydrated node into a second placeholder), and a zoom-in makes both
+        // copies visible at once; `uniqueKeysWithValues` turned that into a crash.
         let visiblePositions = Dictionary(
-            uniqueKeysWithValues:
-                collectionView.indexPathsForVisibleItems.compactMap {
-                    self.photoLibraryDataSource.position(at: $0)
-                }.map {
-                    ($0, true)
-                }
+            collectionView.indexPathsForVisibleItems.compactMap {
+                photoLibraryDataSource.position(at: $0)
+            }.map {
+                ($0, true)
+            },
+            uniquingKeysWith: { first, _ in first }
         )
 
         // A structural change (section add/remove, header/date change, or item-count change) needs
