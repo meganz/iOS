@@ -160,7 +160,7 @@ private final class QuotaWarningDialogHostingController: UIHostingController<Quo
 // MARK: - Legacy flow compatibility
 extension QuotaWarningsRouter {
     private var isRedesignEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp)
     }
 
     @objc func presentStorageQuotaWarning(event: MEGAEvent) {

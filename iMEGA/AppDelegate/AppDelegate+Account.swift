@@ -70,8 +70,10 @@ extension AppDelegate {
     }
 
     private func showStorageAlmostFullDialogIfNeeded(useCase: StorageAlmostFullDialogUseCase) {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp) else { return }
         Task { @MainActor in
+            // Although the app-open trigger fires as the tab bar becomes root,
+            // read the flag after readiness so the dialog is not skipped
+            guard await DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabledAfterReady(for: .iosQuotaWarningsRevamp) else { return }
             do {
                 guard try await useCase.shouldShowDialog(),
                       QuotaWarningsRouter().presentStorageDialog(severity: .almostFull) else { return }

@@ -56,7 +56,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showStorageQuotaWillExceed = false
 
     private var isQuotaWarningsRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningsRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp)
     }
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
