@@ -30,14 +30,13 @@ final class VerifyEmailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(checkIfBlocked), name:
             UIApplication.willEnterForegroundNotification, object: nil)
         configureUI()
+        registerForContentSizeCategoryChanges()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            localizeLabels()
-            boldenText()
+    private func registerForContentSizeCategoryChanges() {
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (viewController: VerifyEmailViewController, _: UITraitCollection) in
+            viewController.localizeLabels()
+            viewController.boldenText()
         }
     }
 

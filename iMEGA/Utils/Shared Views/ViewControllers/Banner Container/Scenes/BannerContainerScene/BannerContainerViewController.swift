@@ -19,24 +19,25 @@ final class BannerContainerViewController: UIViewController {
         }
         
         viewModel.dispatch(.onViewDidLoad(traitCollection))
+        registerForTraitChangesAffectingBanner()
+    }
+
+    /// The banner styles itself from the trait collection and sizes its label from `preferredFont`,
+    /// so both trait groups have to be observed.
+    private func registerForTraitChangesAffectingBanner() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: BannerContainerViewController, _: UITraitCollection) in
+            viewController.viewModel.dispatch(.onTraitCollectionDidChange(viewController.traitCollection))
+        }
+
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (viewController: BannerContainerViewController, _: UITraitCollection) in
+            viewController.updateLabelsFontSizes()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         viewModel.dispatch(.onViewWillAppear)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            viewModel.dispatch(.onTraitCollectionDidChange(traitCollection))
-        }
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            updateLabelsFontSizes()
-        }
     }
     
     private func configureBannerView(message: String, backgroundColor: UIColor, textColor: UIColor, actionIcon: UIImage?) {

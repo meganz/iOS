@@ -12,19 +12,20 @@ final class OverDiskQuotaWarningView: UIView, NibOwnerLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView(with: traitCollection)
+        registerForAppearanceChanges()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView(with: traitCollection)
+        registerForAppearanceChanges()
     }
-    
+
     // MARK: - Dark Mode
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if previousTraitCollection != traitCollection {
-            setupTraitCollectionAwareView(with: traitCollection)
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: OverDiskQuotaWarningView, _: UITraitCollection) in
+            view.setupTraitCollectionAwareView(with: view.traitCollection)
         }
     }
 

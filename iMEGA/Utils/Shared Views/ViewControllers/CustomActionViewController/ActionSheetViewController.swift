@@ -101,6 +101,15 @@ class ActionSheetViewController: UIViewController {
         backgroundView.addGestureRecognizer(tapRecognizer)
         
         configureActionTableView()
+        registerForAppearanceChanges()
+    }
+
+    /// Registered here rather than in each subclass: `updateAppearance()` is overridable, so the
+    /// handler dispatches to whichever subclass is on screen.
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: ActionSheetViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+        }
     }
     
     func configurePresentationStyle(from sender: Any) {
@@ -131,14 +140,6 @@ class ActionSheetViewController: UIViewController {
             self?.layoutViews(to: size)
             self?.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     func updateAppearance() {

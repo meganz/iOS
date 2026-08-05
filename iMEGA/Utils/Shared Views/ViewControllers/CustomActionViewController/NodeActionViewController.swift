@@ -455,14 +455,6 @@ class NodeActionViewController: ActionSheetViewController {
         }
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
-    }
-    
     override func updateAppearance() {
         super.updateAppearance()
         

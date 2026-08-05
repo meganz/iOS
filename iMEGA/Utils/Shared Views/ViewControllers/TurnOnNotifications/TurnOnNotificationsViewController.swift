@@ -118,8 +118,9 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        colorAppearanceDidChange(to: traitCollection, from: nil)
-        
+        updateAppearance()
+        registerForAppearanceChanges()
+
         viewModel.invokeCommand = { [weak self] command in
             DispatchQueue.main.async { self?.executeCommand(command) }
         }
@@ -247,15 +248,16 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     }
 }
 
-extension TurnOnNotificationsViewController: TraitEnvironmentAware {
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+extension TurnOnNotificationsViewController {
+    fileprivate func updateAppearance() {
         view.backgroundColor = TokenColors.Background.page
         openSettingsButton.mnz_setupPrimary()
         dismissButton.mnz_setupCancel()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+
+    fileprivate func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: TurnOnNotificationsViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+        }
     }
 }

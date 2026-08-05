@@ -44,8 +44,9 @@ final class TextEditorViewController: UIViewController {
         }
         
         viewModel.dispatch(.setUpView)
+        registerForTraitChangesAffectingEditor()
     }
-    
+
     private func setupTextView() {
         view.backgroundColor = TokenColors.Background.page
         textView.backgroundColor = TokenColors.Background.page
@@ -61,16 +62,16 @@ final class TextEditorViewController: UIViewController {
         registerForNotifications()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            viewModel.dispatch(.setUpView)
+    /// The editor rebuilds its view for a new content size category and restyles the iOS 26
+    /// navigation bar for a new colour appearance, so both trait groups have to be observed.
+    private func registerForTraitChangesAffectingEditor() {
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (viewController: TextEditorViewController, _: UITraitCollection) in
+            viewController.viewModel.dispatch(.setUpView)
         }
 
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: TextEditorViewController, _: UITraitCollection) in
             if #available(iOS 26.0, *),
-               let navigationBar = navigationController?.navigationBar {
+               let navigationBar = viewController.navigationController?.navigationBar {
                 AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
             }
         }

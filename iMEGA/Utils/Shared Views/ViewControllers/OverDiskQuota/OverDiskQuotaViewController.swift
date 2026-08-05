@@ -192,8 +192,15 @@ final class OverDiskQuotaViewController: UIViewController {
         storageFullImageView.image = MEGAAssets.UIImage.image(named: "StorageFull")
         
         setupTraitCollectionAwareView(with: traitCollection)
-        
+        registerForAppearanceChanges()
+
         viewModel?.dispatch(.onViewDidLoad)
+    }
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: OverDiskQuotaViewController, _: UITraitCollection) in
+            viewController.setupTraitCollectionAwareView(with: viewController.traitCollection)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -326,18 +333,4 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 private extension Selector {
     static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton)
     static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton)
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension OverDiskQuotaViewController: TraitEnvironmentAware {
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        setupTraitCollectionAwareView(with: currentTrait)
-    }
 }

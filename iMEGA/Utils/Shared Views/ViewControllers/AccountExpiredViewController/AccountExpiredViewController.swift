@@ -19,6 +19,13 @@ class AccountExpiredViewController: UIViewController {
         super.viewDidLoad()
         getAccountDetails()
         updateAppearance()
+        registerForAppearanceChanges()
+    }
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: AccountExpiredViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,14 +38,6 @@ class AccountExpiredViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         MEGASdk.shared.remove(self)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
     
     // MARK: - Set contents
