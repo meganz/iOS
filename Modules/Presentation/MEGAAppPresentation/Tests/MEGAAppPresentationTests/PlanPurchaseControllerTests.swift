@@ -29,8 +29,10 @@ struct PlanPurchaseControllerTests {
         )
         let sut = PlanPurchaser(
             purchaseUseCase: purchaseUseCase,
-            subscriptionsUseCase: subscriptionsUseCase,
-            accountUseCase: accountUseCase,
+            eligibilityChecker: PlanPurchaseEligibilityChecker(
+                subscriptionsUseCase: subscriptionsUseCase,
+                accountUseCase: accountUseCase
+            ),
             tracker: MockTracker(),
             postPurchaseDelay: postPurchaseDelay
         )

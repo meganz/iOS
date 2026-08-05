@@ -109,13 +109,14 @@ struct PlanPurchaseViewModelTests {
     func purchaseAlert_identifiersAreDistinct() {
         let ids = Set(
             [
-                PlanPurchaseViewModel.PurchaseAlert.failed,
+                PlanPurchaseAlert.failed,
+                .websitePurchaseFailed,
                 .activeCancellableSubscription(confirmCancelAndBuy: {}),
                 .activeNonCancellableSubscription
             ].map(\.id)
         )
 
-        #expect(ids.count == 3)
+        #expect(ids.count == 4)
     }
 
     // MARK: - SUT

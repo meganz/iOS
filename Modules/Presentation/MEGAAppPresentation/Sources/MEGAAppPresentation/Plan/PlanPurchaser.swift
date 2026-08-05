@@ -46,9 +46,7 @@ public protocol PlanPurchasing {
 @MainActor
 public final class PlanPurchaser: PlanPurchasing {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
-    private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
-    private let accountUseCase: any AccountUseCaseProtocol
-    private let validationUseCase: any AccountSubscriptionValidationUseCaseProtocol
+    private let eligibilityChecker: any PlanPurchaseEligibilityChecking
     private let tracker: any AnalyticsTracking
     /// Delay between the purchase succeeding (side effects run immediately) and emitting `.succeeded`
     /// (which drives dismissal). Mirrors the legacy screen's 1s window for `.accountDidPurchasedPlan`
@@ -67,16 +65,12 @@ public final class PlanPurchaser: PlanPurchasing {
 
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
-        subscriptionsUseCase: some SubscriptionsUseCaseProtocol = SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
-        accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo),
-        validationUseCase: some AccountSubscriptionValidationUseCaseProtocol = AccountSubscriptionValidationUseCase(),
+        eligibilityChecker: some PlanPurchaseEligibilityChecking = PlanPurchaseEligibilityChecker(),
         tracker: some AnalyticsTracking,
         postPurchaseDelay: TimeInterval = 1
     ) {
         self.purchaseUseCase = purchaseUseCase
-        self.subscriptionsUseCase = subscriptionsUseCase
-        self.accountUseCase = accountUseCase
-        self.validationUseCase = validationUseCase
+        self.eligibilityChecker = eligibilityChecker
         self.tracker = tracker
         self.postPurchaseDelay = postPurchaseDelay
         observePurchaseResult()
@@ -91,7 +85,7 @@ public final class PlanPurchaser: PlanPurchasing {
     public func purchase(productIdentifier: String) async {
         guard !isPurchaseInFlight else { return }
 
-        switch eligibility(for: accountUseCase.currentAccountDetails) {
+        switch eligibilityChecker.eligibility() {
         case .purchasable:
             await runDirectPurchase(productIdentifier: productIdentifier)
         case .hasCancellableSubscription:
@@ -116,33 +110,18 @@ public final class PlanPurchaser: PlanPurchasing {
     private func runCancelThenPurchase(productIdentifier: String) async {
         guard !isPurchaseInFlight else { return }
         beginPurchasing()
-        do {
-            try await cancelActiveSubscription()
-        } catch {
-            handlePurchaseError(error)
+        guard await eligibilityChecker.cancelActiveSubscription() else {
+            handlePurchaseError(.subscriptionCancellationFailed)
+            return
+        }
+        guard await eligibilityChecker.refreshedEligibility() == .purchasable else {
+            handlePurchaseError(.subscriptionStillActive)
             return
         }
         await startStoreKitPurchase(productIdentifier: productIdentifier)
     }
 
     // MARK: - Purchase steps
-
-    private func eligibility(for details: AccountDetailsEntity?) -> PlanPurchaseEligibility {
-        guard let details else { return .purchasable }
-        return validationUseCase.eligibility(for: details)
-    }
-
-    private func cancelActiveSubscription() async throws(PurchaseFlowError) {
-        do {
-            try await subscriptionsUseCase.cancelSubscriptions()
-        } catch {
-            throw .subscriptionCancellationFailed
-        }
-        let refreshed = try? await accountUseCase.refreshCurrentAccountDetails()
-        guard eligibility(for: refreshed) == .purchasable else {
-            throw .subscriptionStillActive
-        }
-    }
 
     private func startStoreKitPurchase(productIdentifier: String) async {
         await purchaseUseCase.registerPurchaseDelegate()

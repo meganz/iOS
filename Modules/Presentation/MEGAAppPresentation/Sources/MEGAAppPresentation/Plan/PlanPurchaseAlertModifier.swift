@@ -4,19 +4,24 @@ import SwiftUI
 /// Presents the purchase confirmation / error alert driven by ``PlanPurchaseViewModel``.
 ///
 /// Applied once per page so a purchase started from any button on that page surfaces the same alert.
-private struct PlanPurchaseAlertModifier: ViewModifier {
-    @ObservedObject var viewModel: PlanPurchaseViewModel
+private struct PlanPurchaseAlertModifier<ViewModel: PlanPurchaseAlertPresenting>: ViewModifier {
+    @ObservedObject var viewModel: ViewModel
 
     func body(content: Content) -> some View {
         content.alert(item: $viewModel.presentedAlert, content: makeAlert)
     }
 
-    private func makeAlert(_ alert: PlanPurchaseViewModel.PurchaseAlert) -> Alert {
+    private func makeAlert(_ alert: PlanPurchaseAlert) -> Alert {
         switch alert {
         case .failed:
             Alert(
                 title: Text(Strings.Localizable.failedPurchaseTitle),
                 message: Text(Strings.Localizable.failedPurchaseMessage),
+                dismissButton: .default(Text(Strings.Localizable.ok))
+            )
+        case .websitePurchaseFailed:
+            Alert(
+                title: Text(Strings.Localizable.somethingWentWrong),
                 dismissButton: .default(Text(Strings.Localizable.ok))
             )
         case .activeCancellableSubscription(let confirmCancelAndBuy):
@@ -39,7 +44,7 @@ private struct PlanPurchaseAlertModifier: ViewModifier {
 }
 
 public extension View {
-    func planPurchaseAlert(_ viewModel: PlanPurchaseViewModel) -> some View {
+    func planPurchaseAlert(_ viewModel: some PlanPurchaseAlertPresenting) -> some View {
         modifier(PlanPurchaseAlertModifier(viewModel: viewModel))
     }
 }

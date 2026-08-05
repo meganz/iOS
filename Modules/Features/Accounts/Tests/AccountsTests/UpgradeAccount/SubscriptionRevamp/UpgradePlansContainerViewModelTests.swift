@@ -293,6 +293,6 @@ private extension UpgradeAccountPlanAlertType {
     var isPromoEnded: Bool { if case .promoEnded = self { true } else { false } }
 }
 
-private extension PlanPurchaseViewModel.PurchaseAlert {
+private extension PlanPurchaseAlert {
     var isFailed: Bool { if case .failed = self { true } else { false } }
 }

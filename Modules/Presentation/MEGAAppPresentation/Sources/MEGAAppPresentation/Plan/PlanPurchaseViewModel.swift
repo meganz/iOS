@@ -5,24 +5,9 @@ import Combine
 /// It owns the busy flag that disables every buy button while a purchase is in flight and the alert
 /// the host presents when a purchase needs confirmation or fails.
 @MainActor
-public final class PlanPurchaseViewModel: ObservableObject {
-    /// Alert the host presents in reaction to a purchase attempt.
-    public enum PurchaseAlert: Identifiable {
-        case failed
-        case activeCancellableSubscription(confirmCancelAndBuy: @MainActor () async -> Void)
-        case activeNonCancellableSubscription
-
-        public var id: String {
-            switch self {
-            case .failed: "failed"
-            case .activeCancellableSubscription: "activeCancellableSubscription"
-            case .activeNonCancellableSubscription: "activeNonCancellableSubscription"
-            }
-        }
-    }
-
+public final class PlanPurchaseViewModel: ObservableObject, PlanPurchaseAlertPresenting {
     @Published public private(set) var isPurchasing = false
-    @Published public var presentedAlert: PurchaseAlert?
+    @Published public var presentedAlert: PlanPurchaseAlert?
 
     private let planPurchaser: any PlanPurchasing
     private let onPurchased: @MainActor () -> Void

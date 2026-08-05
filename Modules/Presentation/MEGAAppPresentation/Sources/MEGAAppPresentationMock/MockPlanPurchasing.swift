@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MEGAAppPresentation
 import MEGADomain
 
@@ -23,9 +24,15 @@ public final class MockPlanPurchasing: PlanPurchasing {
 
 public struct MockPlanPurchaserFactory: PlanPurchaserFactory {
     private let purchaser: MockPlanPurchasing
+    private let externalPurchaser: MockExternalPlanPurchasing
 
-    public init(purchaser: MockPlanPurchasing) {
+    @MainActor
+    public init(
+        purchaser: MockPlanPurchasing,
+        externalPurchaser: MockExternalPlanPurchasing = MockExternalPlanPurchasing()
+    ) {
         self.purchaser = purchaser
+        self.externalPurchaser = externalPurchaser
     }
 
     @MainActor
@@ -35,5 +42,18 @@ public struct MockPlanPurchaserFactory: PlanPurchaserFactory {
         accountUseCase: some AccountUseCaseProtocol
     ) -> any PlanPurchasing {
         purchaser
+    }
+
+    @MainActor
+    public func makeExternalPurchaser(
+        linkProvider: some ExternalPurchaseLinkProviding,
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        domainName: String,
+        appVersion: String,
+        canOpenURL: @escaping @Sendable (URL) async -> Bool,
+        openURL: @escaping @Sendable (URL) async -> Void
+    ) -> any ExternalPlanPurchasing {
+        externalPurchaser
     }
 }
