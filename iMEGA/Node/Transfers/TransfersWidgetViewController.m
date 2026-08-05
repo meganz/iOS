@@ -93,6 +93,8 @@ static TransfersWidgetViewController* instance = nil;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
     
     [self handleTransferSelectionForTag:self.inProgressButton.tag];
+
+    [self registerForTraitChangesAffectingTransfersList];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -144,18 +146,6 @@ static TransfersWidgetViewController* instance = nil;
     [super viewDidDisappear:animated];
     if (self.tableView.isEditing) {
         [self switchEdit];
-    }
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self reloadView];
-        [self configureLiquidGlassNavigationBar];
-        [AppearanceManager forceToolbarUpdate:self.toolbar];
-    } else if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self reloadView];
     }
 }
 
@@ -463,6 +453,19 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 #pragma mark - Private
+
+/// The cells restyle themselves from the trait collection and size their labels from `preferredFont`,
+/// so both trait groups have to be observed.
+- (void)registerForTraitChangesAffectingTransfersList {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(reloadViewAndUpdateBars)];
+    [self registerForTraitChanges:@[UITraitPreferredContentSizeCategory.class] withTarget:self action:@selector(reloadView)];
+}
+
+- (void)reloadViewAndUpdateBars {
+    [self reloadView];
+    [self configureLiquidGlassNavigationBar];
+    [AppearanceManager forceToolbarUpdate:self.toolbar];
+}
 
 - (void)configureImages {
     self.cancelBarButtonItem.image = [UIImage megaImageWithNamed:@"cancelTransfers"];

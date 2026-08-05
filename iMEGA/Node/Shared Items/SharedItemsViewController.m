@@ -101,6 +101,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
     
     [self configureButtons];
+
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,13 +143,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self setupLiquidGlassNavigationBarWith:[UIColor surface1Background]];
-    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -593,6 +588,14 @@
 }
 
 #pragma mark - Utils
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(setupNavigationBarAppearance)];
+}
+
+- (void)setupNavigationBarAppearance {
+    [self setupLiquidGlassNavigationBarWith:[UIColor surface1Background]];
+}
 
 - (void)selectSegment:(NSUInteger)index {
     if (index == 0) {

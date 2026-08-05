@@ -111,14 +111,7 @@
     [self.closeButton setImage:[UIImage megaImageWithNamed:@"upgradeSecurityClose"] forState:UIControlStateNormal];
     self.closeButton.hidden = !self.isShowCloseButton;
     [self updateAppearance];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+    [self registerForAppearanceChanges];
 }
 
 - (void)setDetailLabelText:(NSString*)detail {
@@ -152,6 +145,10 @@
 }
 
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearance)];
+}
 
 - (void)updateAppearance {
     self.mainView.backgroundColor = [UIColor pageBackgroundColor];

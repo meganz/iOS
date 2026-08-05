@@ -31,7 +31,9 @@
         self.navigationItem.rightBarButtonItem = cancel;
     }
     
-    [AppearanceManager forceSearchBarUpdate:self.searchBar];
+    [self forceSearchBarUpdate];
+
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -51,15 +53,15 @@
     [super viewDidDisappear:animated];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchBar];
-    }
+#pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(forceSearchBarUpdate)];
 }
 
-#pragma mark - Private
+- (void)forceSearchBarUpdate {
+    [AppearanceManager forceSearchBarUpdate:self.searchBar];
+}
 
 - (void)iPadCancelSearch {
     [self dismissViewControllerAnimated:YES completion:nil];

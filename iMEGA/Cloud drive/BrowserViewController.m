@@ -69,6 +69,7 @@
     
     [self navigateToCurrentTargetActionBrowser];
     [self setupLayoutForLiquidGlass];
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,21 +108,21 @@
     } completion:nil];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
-        
-        [self updateAppearance];
+#pragma mark - Private
 
-        [self.tableView reloadData];
-    }
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(forceBarsAndTableUpdate)];
 }
 
-#pragma mark - Private
+- (void)forceBarsAndTableUpdate {
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+    [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
+
+    [self updateAppearance];
+
+    [self.tableView reloadData];
+}
 
 - (BrowserViewModel *)viewModel {
     if (_viewModel == nil) {

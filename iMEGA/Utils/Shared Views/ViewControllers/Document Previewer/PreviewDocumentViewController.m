@@ -59,7 +59,8 @@
     
     [self configureNavigation];
     [self updateAppearance];
-    
+    [self registerForAppearanceChanges];
+
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
     self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
@@ -125,18 +126,18 @@
     
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-        [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
-        
-        [self updateAppearance];
-    }
+#pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(forceBarsAndAppearanceUpdate)];
 }
 
-#pragma mark - Private
+- (void)forceBarsAndAppearanceUpdate {
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+    [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
+
+    [self updateAppearance];
+}
 
 - (void)configureNavigation {
     [self setTitle:[self.node nameAfterDecryptionCheck]];

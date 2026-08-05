@@ -15,13 +15,14 @@ extension CustomModalAlertViewController {
 
 // MARK: - UITextViewDelegate
 extension CustomModalAlertViewController: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        
-        if let invalidURL = URL(string: "invalid://urlLink"), url == invalidURL {
-            viewModel.invalidLinkTapped()
-            return false
+    public func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
+        guard case .link(let url) = textItem.content,
+              let invalidURL = URL(string: "invalid://urlLink"),
+              url == invalidURL else {
+            return defaultAction
         }
-        
-        return true
+
+        viewModel.invalidLinkTapped()
+        return nil
     }
 }

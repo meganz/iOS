@@ -24,6 +24,8 @@
     
     [self updateAppearance];
     
+    [self registerForAppearanceChanges];
+
     [self trackScreenView];
 }
 
@@ -42,12 +44,8 @@
     }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearance)];
 }
 
 - (PasswordReminderViewModel *)viewModel {

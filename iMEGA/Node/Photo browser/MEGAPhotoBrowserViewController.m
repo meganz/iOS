@@ -155,6 +155,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];
+
+    [self registerForTraitChangesAffectingBrowser];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -236,21 +238,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self onViewWillDisappear];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateNavigationBar:self.navigationBar];
-        [AppearanceManager forceToolbarUpdate:self.toolbar];
-        
-        [self updateAppearance];
-    }
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self reloadTitleWithCompletionHandler:^{}];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -349,6 +336,24 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 #pragma mark - Private
+
+/// The bars restyle themselves from the trait collection and the title sizes itself from
+/// `preferredFont`, so both trait groups have to be observed.
+- (void)registerForTraitChangesAffectingBrowser {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateBarsAndAppearance)];
+    [self registerForTraitChanges:@[UITraitPreferredContentSizeCategory.class] withTarget:self action:@selector(reloadTitle)];
+}
+
+- (void)updateBarsAndAppearance {
+    [self updateNavigationBar:self.navigationBar];
+    [AppearanceManager forceToolbarUpdate:self.toolbar];
+
+    [self updateAppearance];
+}
+
+- (void)reloadTitle {
+    [self reloadTitleWithCompletionHandler:^{}];
+}
 
 - (void)shareFileLink {
     NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;

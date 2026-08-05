@@ -15,16 +15,7 @@
     self.view.backgroundColor = UIColor.systemBackgroundColor;
     self.interactivePopGestureRecognizer.delegate = self;
     self.delegate = self;
-    
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationBar];
-        [AppearanceManager forceToolbarUpdate:self.toolbar];
-    }
+    [self registerForAppearanceChanges];
 }
 
 #pragma mark - Public
@@ -48,6 +39,15 @@
     [super pushViewController:viewController animated:animated];
 }
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(forceBarsUpdate)];
+}
+
+- (void)forceBarsUpdate {
+    [AppearanceManager forceNavigationBarUpdate:self.navigationBar];
+    [AppearanceManager forceToolbarUpdate:self.toolbar];
+}
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"cancel", @"") style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
