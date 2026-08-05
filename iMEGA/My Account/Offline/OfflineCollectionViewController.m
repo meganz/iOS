@@ -33,6 +33,7 @@ static NSString *kPath = @"kPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupCollectionView];
+    [self registerForContentSizeCategoryChanges];
     
 }
 
@@ -43,13 +44,13 @@ static NSString *kPath = @"kPath";
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {}];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self.dtCollectionManager resetCollectionItems];
-        [self.collectionView.collectionViewLayout invalidateLayout];
-    }
+- (void)registerForContentSizeCategoryChanges {
+    [self registerForTraitChanges:@[UITraitPreferredContentSizeCategory.class] withTarget:self action:@selector(reloadCollectionItemSizes)];
+}
+
+- (void)reloadCollectionItemSizes {
+    [self.dtCollectionManager resetCollectionItems];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 #pragma mark - CollectionView UI Setup

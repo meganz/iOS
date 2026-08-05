@@ -170,11 +170,11 @@ extension OfflineViewController {
         searchBar.barTintColor = TokenColors.Background.surface1
     }
 
-    @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *) {
-            configureNavigationBar()
-        }
+    /// `configureNavigationBar()` also resets the title and back button, which is not gated by
+    /// availability, so keep the iOS 26 check here to match what the old override did.
+    @objc func handleColorAppearanceChange() {
+        guard #available(iOS 26.0, *) else { return }
+        configureNavigationBar()
     }
 
     // MARK: - Private

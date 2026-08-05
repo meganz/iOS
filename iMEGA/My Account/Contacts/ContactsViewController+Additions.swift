@@ -337,13 +337,6 @@ extension ContactsViewController {
         setupLiquidGlassNavigationBar(with: TokenColors.Background.surface1)
     }
 
-    @objc func handleTraitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *) {
-            configureLiquidGlassNavigationBar()
-        }
-    }
-
     @objc func markNavigationBarNeedsLayoutForLiquidGlass() {
         guard #available(iOS 26.0, *) else {
             return

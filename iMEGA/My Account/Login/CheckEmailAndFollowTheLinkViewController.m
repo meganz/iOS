@@ -37,6 +37,7 @@
     [super viewDidLoad];
     
     [self updateAppearance];
+    [self registerForAppearanceChanges];
     
     self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
@@ -75,15 +76,11 @@
     [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
-    }
-}
-
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearance)];
+}
 
 - (void)dismissKeyboard {
     [self.emailInputView.inputTextField resignFirstResponder];

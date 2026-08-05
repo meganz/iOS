@@ -35,6 +35,7 @@
     [super viewDidLoad];
     
     [self setupColors];
+    [self registerForContentSizeCategoryChanges];
     
     if ([MEGASdk.shared mnz_isProAccount]) {
         self.tableView.tableFooterView = nil;
@@ -61,12 +62,8 @@
      [MEGASdk.shared getRubbishBinAutopurgePeriodWithDelegate:self];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
-        [self setupTableViewHeaderAndFooter];
-    }
+- (void)registerForContentSizeCategoryChanges {
+    [self registerForTraitChanges:@[UITraitPreferredContentSizeCategory.class] withTarget:self action:@selector(setupTableViewHeaderAndFooter)];
 }
 
 - (void)setupTableViewHeaderAndFooter {

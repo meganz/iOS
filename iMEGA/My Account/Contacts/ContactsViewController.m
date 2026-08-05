@@ -114,6 +114,7 @@
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     [self configureLiquidGlassNavigationBar];
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(configureLiquidGlassNavigationBar)];
 
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
     
@@ -195,11 +196,6 @@
             self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    [self handleTraitCollectionDidChange:previousTraitCollection];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

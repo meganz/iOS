@@ -36,6 +36,7 @@
     [super viewDidLoad];
     
     [self updateAppearance];
+    [self registerForAppearanceChanges];
     
     switch (self.urlType) {
         case URLTypeConfirmationLink:
@@ -89,15 +90,15 @@
     [self registerForKeyboardNotifications];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(applyAppearanceChanges)];
+}
+
+- (void)applyAppearanceChanges {
+    [AppearanceManager setupAppearance:self.traitCollection];
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-        
-        [self updateAppearance];
-    }
+    [self updateAppearance];
 }
 
 #pragma mark - IBActions

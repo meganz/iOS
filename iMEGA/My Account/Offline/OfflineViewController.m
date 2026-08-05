@@ -66,6 +66,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateViewModeHeader];
 
     [self configureNavigationBar];
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(handleColorAppearanceChange)];
     
     [self configureNavigationBarButtons];
     
@@ -147,11 +148,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self refreshMiniPlayerIfNeeded];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    [self handleTraitCollectionDidChange:previousTraitCollection];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

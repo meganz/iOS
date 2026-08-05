@@ -30,6 +30,7 @@
     [self addMEGAGlobalDelegate];
     [self setupBottomOverlayIfNeeded];
     [self setupRevampedMiniPlayerIfNeeded];
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -39,6 +40,9 @@
     [self refreshBottomConstraint];
     [self.tabBar setNeedsLayout];
     [self.tabBar layoutIfNeeded];
+    // Moved off traitCollectionDidChange: the badge frame is derived from the laid-out tab bar
+    // button, so it belongs with the rest of the tab bar layout rather than with trait changes.
+    [self updatePhoneImageBadgeFrame];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,16 +84,15 @@
     }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(applyAppearanceChanges)];
+}
+
+- (void)applyAppearanceChanges {
+    [AppearanceManager setupAppearance:self.traitCollection];
     
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        
-        //Force appearance changes on the tab bar
-        [AppearanceManager setupTabbar:self.tabBar];
-    }
-    [self updatePhoneImageBadgeFrame];
+    //Force appearance changes on the tab bar
+    [AppearanceManager setupTabbar:self.tabBar];
 }
 
 #pragma mark - Public
