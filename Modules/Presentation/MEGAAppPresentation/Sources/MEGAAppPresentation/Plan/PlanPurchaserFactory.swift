@@ -20,7 +20,8 @@ public struct DefaultPlanPurchaserFactory: PlanPurchaserFactory {
         PlanPurchaser(
             purchaseUseCase: purchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
-            accountUseCase: accountUseCase
+            accountUseCase: accountUseCase,
+            tracker: DIContainer.tracker
         )
     }
 }

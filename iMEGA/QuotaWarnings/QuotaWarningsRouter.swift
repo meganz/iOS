@@ -73,7 +73,11 @@ import UIKit
         let dependency: QuotaWarningDialogView.Dependency = QuotaWarningDialogView.Dependency(
             accountPlanPurchaseUseCase: purchaseUseCase,
             pricingRequester: PricingRequester.shared,
-            planPurchaser: PlanPurchaser(purchaseUseCase: purchaseUseCase, postPurchaseDelay: 0)
+            planPurchaser: PlanPurchaser(
+                purchaseUseCase: purchaseUseCase,
+                tracker: DIContainer.tracker,
+                postPurchaseDelay: 0
+            )
         )
         let hostingController = QuotaWarningDialogHostingController(
             dependency: dependency,

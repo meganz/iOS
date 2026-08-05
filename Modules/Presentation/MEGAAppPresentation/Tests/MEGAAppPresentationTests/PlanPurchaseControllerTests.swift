@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import Testing
@@ -30,6 +31,7 @@ struct PlanPurchaseControllerTests {
             purchaseUseCase: purchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
             accountUseCase: accountUseCase,
+            tracker: MockTracker(),
             postPurchaseDelay: postPurchaseDelay
         )
         return (sut, purchaseUseCase, subscriptionsUseCase)

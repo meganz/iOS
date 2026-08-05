@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -48,6 +49,7 @@ public final class PlanPurchaser: PlanPurchasing {
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let validationUseCase: any AccountSubscriptionValidationUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     /// Delay between the purchase succeeding (side effects run immediately) and emitting `.succeeded`
     /// (which drives dismissal). Mirrors the legacy screen's 1s window for `.accountDidPurchasedPlan`
     /// observers; pass `0` to dismiss immediately (e.g. the quota dialog, whose host does not observe it).
@@ -68,12 +70,14 @@ public final class PlanPurchaser: PlanPurchasing {
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol = SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
         accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo),
         validationUseCase: some AccountSubscriptionValidationUseCaseProtocol = AccountSubscriptionValidationUseCase(),
+        tracker: some AnalyticsTracking,
         postPurchaseDelay: TimeInterval = 1
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountUseCase = accountUseCase
         self.validationUseCase = validationUseCase
+        self.tracker = tracker
         self.postPurchaseDelay = postPurchaseDelay
         observePurchaseResult()
     }
@@ -182,8 +186,7 @@ public final class PlanPurchaser: PlanPurchasing {
 
     private func handlePurchaseSucceeded() {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
-
-        // IOS-12213: fire UpgradeAccountPurchaseSucceededEvent
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
 
         guard postPurchaseDelay > 0 else {
             purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
@@ -202,12 +205,12 @@ public final class PlanPurchaser: PlanPurchasing {
     }
 
     private func handlePurchaseError(_ error: PurchaseFlowError) {
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
         endPurchasing()
         switch error {
         case .cancelledByUser:
             outcomesSubject.send(.cancelled)
         case .subscriptionCancellationFailed, .subscriptionStillActive, .storeKitPurchaseFailed:
-            // IOS-12213: fire UpgradeAccountPurchaseFailedEvent(reason: error)
             outcomesSubject.send(.failed)
         }
     }
