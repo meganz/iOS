@@ -127,6 +127,7 @@
                                                object:nil];
     
     [AppearanceManager setupAppearance:self.traitCollection];
+    [self registerForAppearanceChanges];
     [SVProgressHUD setViewForExtension:self.view];
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
@@ -243,13 +244,13 @@
     MEGALogError(@"Share extension received memory warning");
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-    }
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearanceAndNavigationBar)];
+}
+
+- (void)updateAppearanceAndNavigationBar {
+    [AppearanceManager setupAppearance:self.traitCollection];
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
 }
 
 - (void)resetSdks {

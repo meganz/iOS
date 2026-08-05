@@ -23,20 +23,22 @@
     self.descriptionLabel.text = LocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
     
     [self.openButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
-}
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-        
-        [self updateAppearance];
-    }
+    [self registerForAppearanceChanges];
 }
 
 #pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearanceAndNavigationBar)];
+}
+
+- (void)updateAppearanceAndNavigationBar {
+    [AppearanceManager setupAppearance:self.traitCollection];
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+
+    [self updateAppearance];
+}
 
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor pageBackgroundColor];

@@ -46,6 +46,8 @@
     self.chatReady = MEGAChatSdk.shared.initState == MEGAChatInitOnlineSession && MEGAChatSdk.shared.activeChatListItems.size == 0;
     
     [self initializeCameraUploadsNode];
+
+    [self registerForAppearanceChanges];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,18 +67,18 @@
     [self.tableView reloadData];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager setupAppearance:self.traitCollection];
-        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
-        
-        [self updateAppearance];
-    }
+#pragma mark - Private
+
+- (void)registerForAppearanceChanges {
+    [self registerForTraitChanges:UITraitCollection.systemTraitsAffectingColorAppearance withTarget:self action:@selector(updateAppearanceAndNavigationBar)];
 }
 
-#pragma mark - Private
+- (void)updateAppearanceAndNavigationBar {
+    [AppearanceManager setupAppearance:self.traitCollection];
+    [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
+
+    [self updateAppearance];
+}
 
 - (void)hideKeyboard {
     [self.view endEditing:YES];

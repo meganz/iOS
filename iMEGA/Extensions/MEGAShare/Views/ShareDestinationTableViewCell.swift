@@ -7,6 +7,14 @@ class ShareDestinationTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     var showActivityIndicator = false
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        MainActor.assumeIsolated {
+            registerForAppearanceChanges()
+        }
+    }
+    
     func set(name: String,
              image: UIImage,
              isEnabled: Bool = true,
@@ -29,10 +37,9 @@ class ShareDestinationTableViewCell: UITableViewCell {
         updateAppearance()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (cell: ShareDestinationTableViewCell, _: UITraitCollection) in
+            cell.updateAppearance()
         }
     }
     
