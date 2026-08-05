@@ -8,7 +8,7 @@ import QuotaWarnings
 struct RevampedAudioTearDownHandler: QuotaDialogDismissHandling {
     private let endSession: @MainActor () -> Void
 
-    init(endSession: @escaping @MainActor () -> Void = MEGAAudioPlayerSession.endActiveSession) {
+    init(endSession: @escaping @MainActor () -> Void = MEGAAudioPlayerSession.stop) {
         self.endSession = endSession
     }
 
