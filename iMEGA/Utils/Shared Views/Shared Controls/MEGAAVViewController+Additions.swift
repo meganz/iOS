@@ -123,8 +123,10 @@ extension MEGAAVViewController {
                 // bitrate throttle lower bound: 15_000_000 bps
                 if totalBitrate > 15_000_000 {
                     applyThrottleBitrate(totalBitrate: totalBitrate, playbackRate: player?.rate ?? 1.0)
-                    subscriptions.add(bindPlayerRateForThrottle(totalBitrate: totalBitrate))
+                    bindPlayerRateForThrottle(totalBitrate: totalBitrate)
                 } else {
+                    throttleRateCancellable = nil
+                    apiForStreaming?.httpServerSetThrottleBitrate(0)
                     MEGALogInfo("[Throttle] Not high bitrate:\(totalBitrate), throttle not set")
                 }
             } catch {
@@ -154,24 +156,25 @@ extension MEGAAVViewController {
         MEGALogInfo("[Throttle] Set throttle bitrate to \(throttleBps) bps (rate=\(rate) x3, total: \(String(format: "%.1f", totalBitrate)) bps)")
     }
 
+    /// Typed accessor over `throttleRateSubscription`, which the header declares as `id` because
+    /// `AnyCancellable` has no Objective-C representation.
+    private var throttleRateCancellable: AnyCancellable? {
+        get { throttleRateSubscription as? AnyCancellable }
+        set { throttleRateSubscription = newValue }
+    }
+
     /// Observes `AVPlayer.rate` and re-applies the throttle whenever the playback rate changes.
     ///
     /// Only non-zero rates are forwarded, so pauses don't reset the throttle.
     ///
     /// - Parameter totalBitrate: Combined estimated data rate of all media tracks, in bits per second.
-    /// - Returns: A set containing the rate-observer subscription; retain it to keep the binding alive.
-    private func bindPlayerRateForThrottle(totalBitrate: Float) -> NSMutableSet {
-        var subscriptions = Set<AnyCancellable>()
-
-        player?.publisher(for: \.rate)
+    private func bindPlayerRateForThrottle(totalBitrate: Float) {
+        throttleRateCancellable = player?.publisher(for: \.rate)
             .removeDuplicates()
             .filter { $0 > 0 } // only when playing
             .sink { [weak self] rate in
                 self?.applyThrottleBitrate(totalBitrate: totalBitrate, playbackRate: rate)
             }
-            .store(in: &subscriptions)
-
-        return NSMutableSet(set: subscriptions)
     }
     
     private func bindPlayerExternalPlayback() -> NSSet {
@@ -220,6 +223,8 @@ extension MEGAAVViewController {
         // Reset throttle so it doesn't affect next video
         apiForStreaming?.httpServerSetThrottleBitrate(0)
         player = nil
+        // The rate observer retains the player it observes, so drop it alongside the bag.
+        throttleRateCancellable = nil
         subscriptions.removeAllObjects()
     }
     

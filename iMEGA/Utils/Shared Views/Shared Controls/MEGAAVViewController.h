@@ -18,6 +18,10 @@
 @property (nonatomic, copy, nullable) NSString *fileLink;
 @property (nonatomic, assign) BOOL isFromAlbumLink;
 @property (nonatomic, strong, nonnull) NSMutableSet *subscriptions;
+/// Holds the single `AVPlayer.rate` observer that keeps the streaming throttle in sync with playback speed.
+/// Typed `id` because it stores a Swift `AnyCancellable`, which has no Objective-C representation.
+/// Kept out of `subscriptions` so a re-registration replaces the observer in place instead of stacking another one.
+@property (nonatomic, strong, nullable) id throttleRateSubscription;
 @property (nonatomic, assign) NSTimeInterval startTimeStamp;
 @property (nonatomic, strong, nullable) VideoMetricsTracker *metricsTracker;
 
