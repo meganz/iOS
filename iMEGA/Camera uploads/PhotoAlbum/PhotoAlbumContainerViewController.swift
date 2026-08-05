@@ -90,8 +90,15 @@ final class PhotoAlbumContainerViewController: UIViewController {
         observeShowSnackBar()
 
         view.backgroundColor = TokenColors.Background.page
+        registerForAppearanceChanges()
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: PhotoAlbumContainerViewController, _: UITraitCollection) in
+            viewController.updateSearchBarAppearance(traitCollection: viewController.traitCollection)
+        }
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -567,17 +574,6 @@ extension PhotoAlbumContainerViewController {
     private func updateSearchBarAppearance(traitCollection: UITraitCollection) {
         AppearanceManager.forceSearchBarUpdate(
             searchController.searchBar)
-    }
-}
-
-extension PhotoAlbumContainerViewController: TraitEnvironmentAware {
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        updateSearchBarAppearance(traitCollection: currentTrait)
     }
 }
 

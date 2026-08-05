@@ -47,6 +47,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         setUpBoundsChangeHandler()
         setupViewModel()
         adjustHeightOfTopAndBottomView()
+        registerForSizeClassChanges()
         setVisibility(false)
         setNavigationAndToolbarColor()
         setupActivityIndicator()
@@ -87,9 +88,9 @@ final class SlideShowViewController: UIViewController, ViewType {
         super.viewWillDisappear(animated)
         viewModel.dispatch(.onViewWillDisappear)
     }
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            adjustHeightOfTopAndBottomView()
+    private func registerForSizeClassChanges() {
+        registerForTraitChanges([UITraitVerticalSizeClass.self, UITraitHorizontalSizeClass.self]) { (viewController: SlideShowViewController, _: UITraitCollection) in
+            viewController.adjustHeightOfTopAndBottomView()
         }
     }
 

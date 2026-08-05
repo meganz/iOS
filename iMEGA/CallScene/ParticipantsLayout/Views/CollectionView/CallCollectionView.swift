@@ -27,8 +27,11 @@ class CallCollectionView: UICollectionView {
         return blurEffectView
     }()
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    /// Keeps the blur layer pinned to the visible rect. This used to hang off `traitCollectionDidChange`,
+    /// which fires on trait changes rather than size changes and so missed resizes that leave the size
+    /// classes untouched, such as dragging an iPad split-view divider.
+    override func layoutSubviews() {
+        super.layoutSubviews()
         updateBlurViewBounds()
     }
     

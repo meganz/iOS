@@ -109,8 +109,15 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupNavigationBar()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
+        registerForAppearanceChanges()
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: VideoRevampTabContainerViewController, _: UITraitCollection) in
+            AppearanceManager.forceSearchBarUpdate(viewController.searchController.searchBar)
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         resetsTraitOverridesIfNeeded()
@@ -609,20 +616,6 @@ extension VideoRevampTabContainerViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         viewModel.dispatch(.searchBarAction(.searchBarTextDidEndEditing))
-    }
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-    
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar)
     }
 }
 

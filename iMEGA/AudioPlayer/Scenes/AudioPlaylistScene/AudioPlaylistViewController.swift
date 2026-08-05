@@ -47,15 +47,21 @@ final class AudioPlaylistViewController: UIViewController {
         
         viewModel.dispatch(.onViewDidLoad)
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
+        registerForAppearanceChanges()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.dispatch(.onViewWillDisappear)
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: AudioPlaylistViewController, _: UITraitCollection) in
+            viewController.updateNavigationBarAppearance()
+        }
+    }
+
+    private func updateNavigationBarAppearance() {
         if #available(iOS 26.0, *) {
             setupLiquidGlassNavigationBar(with: TokenColors.Background.page)
         } else {
@@ -63,13 +69,13 @@ final class AudioPlaylistViewController: UIViewController {
             let currentAppearance = navigationBar.standardAppearance
             currentAppearance.backgroundColor = TokenColors.Background.page
             currentAppearance.shadowColor = .clear
-            
+
             navigationController?.navigationBar.standardAppearance = currentAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = currentAppearance
             navigationController?.navigationBar.compactAppearance = currentAppearance
         }
     }
-    
+
     // MARK: - Private functions
     private func configureToolbar() {
         let removeItem = UIBarButtonItem(

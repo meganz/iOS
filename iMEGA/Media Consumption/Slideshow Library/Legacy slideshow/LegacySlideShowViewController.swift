@@ -32,6 +32,7 @@ final class LegacySlideShowViewController: UIViewController, ViewType {
         collectionView.updateLayout()
 
         adjustHeightOfTopAndBottomView()
+        registerForSizeClassChanges()
         setVisibility(false)
         setNavigationAndToolbarColor()
         setupActivityIndicator()
@@ -84,9 +85,9 @@ final class LegacySlideShowViewController: UIViewController, ViewType {
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            adjustHeightOfTopAndBottomView()
+    private func registerForSizeClassChanges() {
+        registerForTraitChanges([UITraitVerticalSizeClass.self, UITraitHorizontalSizeClass.self]) { (viewController: LegacySlideShowViewController, _: UITraitCollection) in
+            viewController.adjustHeightOfTopAndBottomView()
         }
     }
 

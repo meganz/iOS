@@ -90,10 +90,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
         }
         
         viewModel.dispatch(.onViewReady)
-        
+
         view.backgroundColor = TokenColors.Background.page
+        registerForAppearanceChanges()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.dispatch(.onViewWillAppear)
@@ -109,14 +110,12 @@ final class AlbumContentViewController: UIViewController, ViewType {
         viewModel.dispatch(.onViewWillDisappear)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setupLiquidGlassNavigationBar()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: AlbumContentViewController, _: UITraitCollection) in
+            viewController.setupLiquidGlassNavigationBar()
         }
     }
-    
+
     // MARK: - Internal
     
     func selectedNodes() -> [MEGANode]? {
