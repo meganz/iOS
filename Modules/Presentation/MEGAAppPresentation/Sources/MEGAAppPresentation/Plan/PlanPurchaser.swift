@@ -182,17 +182,19 @@ public final class PlanPurchaser: PlanPurchasing {
 
     private func handlePurchaseSucceeded() {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
-        purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
+
         // IOS-12213: fire UpgradeAccountPurchaseSucceededEvent
 
         guard postPurchaseDelay > 0 else {
+            purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
             endPurchasing()
             outcomesSubject.send(.succeeded)
             return
         }
         dismissTask?.cancel()
         dismissTask = Task { [weak self, delay = postPurchaseDelay] in
-            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            try? await Task.sleep(for: .seconds(delay))
+            self?.purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
             guard !Task.isCancelled else { return }
             self?.endPurchasing()
             self?.outcomesSubject.send(.succeeded)
