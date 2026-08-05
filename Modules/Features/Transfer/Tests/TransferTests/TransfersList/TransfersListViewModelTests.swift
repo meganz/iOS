@@ -2,6 +2,8 @@ import AsyncAlgorithms
 import Foundation
 import MEGADomain
 import MEGADomainMock
+import MEGAInfrastructure
+import MEGAInfrastructureMocks
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -211,6 +213,39 @@ struct TransfersListViewModelSelectModeTests {
 
         #expect(sut.isSelectModeActive)
         #expect(sut.editMode == .active)
+    }
+
+    @Test func enterSelectModePreselecting_activatesEditModeWithThatRowTicked() {
+        let sut = makeSUT()
+
+        sut.enterSelectMode(preselecting: 7)
+
+        #expect(sut.isSelectModeActive)
+        #expect(sut.selection.selectedTags == [7])
+        #expect(sut.selection.count == 1)
+    }
+
+    @Test func enterSelectModePreselecting_firesHapticFeedbackOnCommit() {
+        let haptics = MockHapticFeedbackUseCase()
+        let sut = makeSUT(hapticFeedbackUseCase: haptics)
+
+        sut.enterSelectMode(preselecting: 7)
+
+        #expect(haptics.feedbacks == [HapticFeedbackType.light])
+    }
+
+    @Test func enterSelectModePreselecting_whileAlreadySelecting_isIgnored() {
+        // In select mode a press belongs to the checkbox; re-entering would tick a
+        // second row on a gesture the user reads as a plain tap.
+        let haptics = MockHapticFeedbackUseCase()
+        let sut = makeSUT(hapticFeedbackUseCase: haptics)
+        sut.enterSelectMode(preselecting: 7)
+
+        sut.enterSelectMode(preselecting: 9)
+
+        #expect(sut.selection.selectedTags == [7])
+        // Only the first entry fired; the second call short-circuited.
+        #expect(haptics.feedbacks == [HapticFeedbackType.light])
     }
 
     @Test func exitSelectMode_deactivatesEditModeAndClearsTheSelection() {
@@ -592,6 +627,7 @@ private func makeSUT(
     rowRouter: MockTransferRowRouting = MockTransferRowRouting(),
     transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
     itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase(),
+    hapticFeedbackUseCase: MockHapticFeedbackUseCase = MockHapticFeedbackUseCase(),
     onClose: (@MainActor () -> Void)? = nil
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
@@ -612,6 +648,7 @@ private func makeSUT(
         accountStorageUseCase: accountStorageUseCase,
         transferQuotaUseCase: transferQuotaUseCase,
         transferControlUseCase: transferControlUseCase,
+        hapticFeedbackUseCase: hapticFeedbackUseCase,
         onClose: onClose
     )
 }

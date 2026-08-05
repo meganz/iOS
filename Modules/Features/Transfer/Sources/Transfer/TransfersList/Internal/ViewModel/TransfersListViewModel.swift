@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAInfrastructure
 import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
@@ -50,6 +51,7 @@ public final class TransfersListViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let transferQuotaUseCase: any TransferQuotaUseCaseProtocol
     private let transferControlUseCase: any TransferControlUseCaseProtocol
+    private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
 
     private var isStorageOverquota: Bool
     /// Session-only: the transfer banner reappears on next launch if still over quota.
@@ -62,6 +64,7 @@ public final class TransfersListViewModel: ObservableObject {
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         transferQuotaUseCase: some TransferQuotaUseCaseProtocol,
         transferControlUseCase: some TransferControlUseCaseProtocol,
+        hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol,
         onClose: (@MainActor () -> Void)? = nil
     ) {
         self.dependency = dependency
@@ -70,6 +73,7 @@ public final class TransfersListViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.transferQuotaUseCase = transferQuotaUseCase
         self.transferControlUseCase = transferControlUseCase
+        self.hapticFeedbackUseCase = hapticFeedbackUseCase
         self.onClose = onClose
         self.isAllPaused = transferListUseCase.areTransfersPaused()
         self.isTransferOverquota = transferQuotaUseCase.isOverquota
@@ -244,6 +248,13 @@ public final class TransfersListViewModel: ObservableObject {
 
     func enterSelectMode() {
         editMode = .active
+    }
+
+    func enterSelectMode(preselecting tag: Int) {
+        guard !isSelectModeActive else { return }
+        hapticFeedbackUseCase.generateHapticFeedback(.light)
+        editMode = .active
+        selection.select(tag)
     }
 
     /// The Done button, and the fallback for when the listed tab runs dry while

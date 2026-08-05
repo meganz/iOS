@@ -371,6 +371,7 @@ extension MEGAAssets {
         public static var monoAirplayMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoAirplayMediumThinOutline }
         public static var monoChevronDownMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoChevronDownMediumThinOutline }
         public static var monoMoreHorizontalMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoMoreHorizontalMediumThinOutline }
+        public static var monoCheckSquareMediumThinOutline: SwiftUI.Image { MEGAImageBundle.monoCheckSquareMediumThinOutline }
     }
 }
 
@@ -879,5 +880,6 @@ extension MEGAAssets {
         public static var monoAirplayMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoAirplayMediumThinOutline }
         public static var monoChevronDownMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoChevronDownMediumThinOutline }
         public static var monoMoreHorizontalMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoMoreHorizontalMediumThinOutline }
+        public static var monoCheckSquareMediumThinOutline: UIKit.UIImage { MEGAUIImageBundle.monoCheckSquareMediumThinOutline }
     }
 }

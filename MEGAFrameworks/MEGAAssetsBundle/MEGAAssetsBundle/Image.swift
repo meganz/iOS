@@ -354,4 +354,5 @@ public struct MEGAImageBundle {
     public static var monoAirplayMediumThinOutline: Image { Image(.monoAirplayMediumThinOutline) }
     public static var monoChevronDownMediumThinOutline: Image { Image(.monoChevronDownMediumThinOutline) }
     public static var monoMoreHorizontalMediumThinOutline: Image { Image(.monoMoreHorizontalMediumThinOutline) }
+    public static var monoCheckSquareMediumThinOutline: Image { Image(.monoCheckSquareMediumThinOutline) }
 }

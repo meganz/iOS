@@ -102,7 +102,7 @@ public struct TransfersListView: View {
                                     }
                                 }
                             } label: {
-                                MEGAAssets.Image.moreVerticalMediumThinOutline
+                                MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                             }
                         }
@@ -240,7 +240,8 @@ public struct TransfersListView: View {
             dependency: viewModel.dependency,
             selection: viewModel.selection,
             onTransferCancelled: { viewModel.didCancelTransfer($0) },
-            onTransferRetried: { viewModel.didRetryTransfers() }
+            onTransferRetried: { viewModel.didRetryTransfers() },
+            onRowSelectRequested: { viewModel.enterSelectMode(preselecting: $0) }
         )
             .id(viewModel.selectedTab)
             .environment(\.editMode, $viewModel.editMode)

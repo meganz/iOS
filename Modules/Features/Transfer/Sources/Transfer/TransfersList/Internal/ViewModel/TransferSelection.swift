@@ -43,6 +43,11 @@ final class TransferSelection: ObservableObject {
         selectedTags.removeAll()
     }
 
+    func select(_ tag: Int) {
+        guard !selectedTags.contains(tag) else { return }
+        selectedTags.insert(tag)
+    }
+
     /// Replaces the listed tags and drops any selection that left the list.
     /// Called on the paths that re-derive the whole list (snapshot, flush).
     func setListedTags(_ tags: Set<Int>) {

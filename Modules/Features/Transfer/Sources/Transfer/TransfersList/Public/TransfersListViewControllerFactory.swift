@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAInfrastructure
 import MEGAPreference
 import MEGARepo
 import SwiftUI
@@ -89,6 +90,7 @@ public enum TransfersListViewControllerFactory {
                 nodeTransferRepository: NodeTransferRepository.newRepo
             ),
             transferControlUseCase: DependencyInjection.transferControlUseCase,
+            hapticFeedbackUseCase: HapticFeedbackUseCase(),
             onClose: onClose
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))

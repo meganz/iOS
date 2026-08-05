@@ -28,6 +28,7 @@ let package = Package(
         .package(path: "../../UI/MEGAUIKit"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
@@ -48,6 +49,7 @@ let package = Package(
                 "MEGAUIKit",
                 "MEGAUIComponent",
                 "MEGAConnectivity",
+                "MEGAInfrastructure",
                 "MEGADesignToken",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]
@@ -61,6 +63,7 @@ let package = Package(
                 "MEGARepo",
                 "MEGASwift",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ]
         )

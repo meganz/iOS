@@ -510,4 +510,5 @@ public struct MEGAUIImageBundle {
     public static var monoAirplayMediumThinOutline: UIImage { UIImage.monoAirplayMediumThinOutline }
     public static var monoChevronDownMediumThinOutline: UIImage { UIImage.monoChevronDownMediumThinOutline }
     public static var monoMoreHorizontalMediumThinOutline: UIImage { UIImage.monoMoreHorizontalMediumThinOutline }
+    public static var monoCheckSquareMediumThinOutline: UIImage { UIImage.monoCheckSquareMediumThinOutline }
 }

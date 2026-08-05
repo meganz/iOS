@@ -2,6 +2,7 @@ import Foundation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -25,9 +26,14 @@ struct TransferResultRowView: View {
     /// Invoked after a retry (leading swipe or sheet action) lands in the engine;
     /// the screen shows the retry snackbar.
     let onRetried: @MainActor () -> Void
+    /// Invoked when Select is chosen from the tap-and-hold menu; the screen enters
+    /// select mode with this row pre-selected.
+    let onSelectRequested: @MainActor () -> Void
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
     @Environment(\.editMode) private var editMode
+    /// The row's width as laid out in the list, measured for the tap-and-hold preview.
+    @State private var rowWidth: CGFloat = 0
 
     /// In select mode the row shows the native leading checkbox and nothing may
     /// compete with the tap that toggles it, so the trailing control is dropped
@@ -46,6 +52,18 @@ struct TransferResultRowView: View {
         viewModel.state.status == .completed
     }
 
+    /// Width of the lifted card in the tap-and-hold preview: the row inset by the
+    /// design's 16pt gutter on both sides. `nil` until the row has been laid out once, which leaves
+    /// the frame unconstrained rather than collapsing it to zero.
+    private var previewWidth: CGFloat? {
+        rowWidth > 0 ? rowWidth - TokenSpacing._5 * 2 : nil
+    }
+
+    /// The lifted card's corner radius. UIKit masks the preview to this path, so
+    /// the card needs no clip of its own; left to itself it rounds a preview more
+    /// heavily than the design does.
+    private let previewCornerRadius: CGFloat = 10
+
     /// Terminal states render a static, row with no progress bar.
     private var isReadOnly: Bool {
         switch viewModel.state.status {
@@ -55,6 +73,56 @@ struct TransferResultRowView: View {
     }
 
     var body: some View {
+        rowContent
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onChange(of: proxy.size.width, initial: true) { _, width in
+                        rowWidth = width
+                    }
+            }
+        }
+        .contentShape(Rectangle())
+        // Read off the row, not off the preview content: this is where SwiftUI
+        // takes the path from when it hands UIKit the lifted preview's parameters.
+        .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: previewCornerRadius))
+        // Masked rather than removed while selecting: an `if` around the gesture
+        // and swipe modifiers would be a structural change, so entering select
+        // mode would tear down and rebuild every visible row. A masked-off
+        // gesture stops consuming the tap, leaving it to the list's selection.
+        .gesture(
+            TapGesture().onEnded {
+                if isCompleted { viewModel.openFile() }
+            },
+            including: isSelecting ? .none : .all
+        )
+        .contextMenu {
+            if !isSelecting {
+                selectMenuItem
+            }
+        } preview: {
+            rowContent
+                .frame(width: previewWidth)
+                .background(TokenColors.Background.page.swiftUI)
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            if !isSelecting {
+                swipeAction
+            }
+        }
+        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+            if !isSelecting, viewModel.state.isRetryable {
+                retrySwipeAction
+            }
+        }
+        .task(id: viewModel.thumbnailRetryTrigger) {
+            await viewModel.loadThumbnail()
+        }
+    }
+
+    /// The row's visuals, with no gestures or list wiring attached. Shared with the
+    /// tap-and-hold preview so the lifted platter can't drift from the real row.
+    private var rowContent: some View {
         VStack(spacing: 0) {
             HStack(spacing: TokenSpacing._4) {
                 leadingThumbnail
@@ -91,29 +159,23 @@ struct TransferResultRowView: View {
                     .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
             }
         }
-        .contentShape(Rectangle())
-        // Masked rather than removed while selecting: an `if` around the gesture
-        // and swipe modifiers would be a structural change, so entering select
-        // mode would tear down and rebuild every visible row. A masked-off
-        // gesture stops consuming the tap, leaving it to the list's selection.
-        .gesture(
-            TapGesture().onEnded {
-                if isCompleted { viewModel.openFile() }
-            },
-            including: isSelecting ? .none : .all
-        )
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            if !isSelecting {
-                swipeAction
+    }
+
+    /// The single entry in the tap-and-hold menu.
+    ///
+    /// Title and icon are all we get to choose: the cell is a native `UIAction`, so
+    /// the system owns its layout, shape and material. The design's cell (title
+    /// leading, icon trailing, 12pt corners) is how iOS 18 draws this; iOS 26 draws
+    /// the same menu as a glass capsule with the icon leading instead.
+    private var selectMenuItem: some View {
+        Button {
+            onSelectRequested()
+        } label: {
+            Label {
+                Text(Strings.Localizable.select)
+            } icon: {
+                MEGAAssets.Image.monoCheckSquareMediumThinOutline
             }
-        }
-        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            if !isSelecting, viewModel.state.isRetryable {
-                retrySwipeAction
-            }
-        }
-        .task(id: viewModel.thumbnailRetryTrigger) {
-            await viewModel.loadThumbnail()
         }
     }
 
@@ -183,7 +245,7 @@ struct TransferResultRowView: View {
             Button {
                 viewModel.presentActions(onRetried: onRetried)
             } label: {
-                MEGAAssets.Image.moreVerticalMediumThinOutline
+                MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 24, height: 24)
             }
@@ -224,7 +286,7 @@ struct TransferResultRowView: View {
         switch viewModel.state.status {
         case .active, .queued: MEGAAssets.Image.pauseMediumThinOutline
         case .paused: MEGAAssets.Image.monoPlayMediumThinOutline
-        case .completed, .failed, .cancelled: MEGAAssets.Image.moreVerticalMediumThinOutline
+        case .completed, .failed, .cancelled: MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
         }
     }
 }

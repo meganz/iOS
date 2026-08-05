@@ -10,13 +10,17 @@ struct TransferTabListView: View {
     private let emptyStateTitle: String
     private let onTransferCancelled: (TransferEntity) -> Void
     private let onTransferRetried: @MainActor () -> Void
+    /// Carries the tag of the row whose tap-and-hold menu chose Select up to the
+    /// screen, which enters select mode with it pre-selected.
+    private let onRowSelectRequested: @MainActor (Int) -> Void
 
     init(
         tab: TransfersTab,
         dependency: TransferTabDependency,
         selection: TransferSelection,
         onTransferCancelled: @escaping (TransferEntity) -> Void,
-        onTransferRetried: @MainActor @escaping () -> Void
+        onTransferRetried: @MainActor @escaping () -> Void,
+        onRowSelectRequested: @MainActor @escaping (Int) -> Void
     ) {
         _viewModel = StateObject(
             wrappedValue: TransferTabListViewModel(tab: tab, dependency: dependency, selection: selection)
@@ -25,6 +29,7 @@ struct TransferTabListView: View {
         emptyStateTitle = tab.emptyStateTitle
         self.onTransferCancelled = onTransferCancelled
         self.onTransferRetried = onTransferRetried
+        self.onRowSelectRequested = onRowSelectRequested
     }
 
     var body: some View {
@@ -55,7 +60,12 @@ struct TransferTabListView: View {
         // in a second `List` on mode changes would reset the scroll position.
         List(selection: $selection.selectedTags) {
             ForEach(viewModel.rows) { row in
-                TransferResultRowView(viewModel: row, onCancelled: onTransferCancelled, onRetried: onTransferRetried)
+                TransferResultRowView(
+                    viewModel: row,
+                    onCancelled: onTransferCancelled,
+                    onRetried: onTransferRetried,
+                    onSelectRequested: { onRowSelectRequested(row.id) }
+                )
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
                     // Selected rows carry the design's surface-1 highlight in
