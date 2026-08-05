@@ -10,6 +10,9 @@ import SwiftUI
 @MainActor
 final class NewTimelineViewModel: ObservableObject {
     @Published private(set) var loadPhotosTaskId = UUID()
+    /// Identifies the *query* (filter + sort) the reactive section monitor is subscribed to, as
+    /// opposed to ``loadPhotosTaskId`` which drives a reload.
+    @Published private(set) var timelineQueryId = UUID()
     @Published private(set) var showEmptyStateView = false
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
@@ -66,9 +69,21 @@ final class NewTimelineViewModel: ObservableObject {
     /// instead of reverting it.
     private var libraryRevision = 0
 
-    private(set) var photoFilterOptions: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
-    
-    private(set) var sortOrder: SortOrderEntity = .modificationDesc
+    /// Re-keys ``timelineQueryId`` on every real change, so the section monitor can never keep
+    /// counting a photo set the rest of the screen no longer queries.
+    private(set) var photoFilterOptions: PhotosFilterOptionsEntity = [.allMedia, .allLocations] {
+        didSet {
+            guard oldValue != photoFilterOptions else { return }
+            timelineQueryId = UUID()
+        }
+    }
+
+    private(set) var sortOrder: SortOrderEntity = .modificationDesc {
+        didSet {
+            guard oldValue != sortOrder else { return }
+            timelineQueryId = UUID()
+        }
+    }
     
     var preferenceDrivenSortOrderUpdates: AnyPublisher<Void, Never> {
         preferenceDrivenSortOrderSubject.eraseToAnyPublisher()

@@ -17,7 +17,7 @@ struct NewTimelineView: View {
         .task {
             await viewModel.monitorUpdates()
         }
-        .task(id: viewModel.loadPhotosTaskId) {
+        .task(id: viewModel.timelineQueryId) {
             await viewModel.monitorTimelineSections()
         }
         .task {

@@ -351,6 +351,41 @@ struct NewTimelineViewModelTests {
             }
         }
 
+        @Test("Loading the saved filter re-keys the section monitor, so it can't keep counting the default filter's photo set")
+        func loadingSavedFiltersRekeysTheSectionMonitor() async {
+            // The View starts `monitorTimelineSections()` keyed on `timelineQueryId`, and that monitor
+            // captures the filter when it subscribes. The saved filter arrives asynchronously during
+            // the first `loadPhotos()`, i.e. after the monitor already subscribed with the default
+            // `[.allMedia, .allLocations]`. Without a re-key the monitor keeps counting a wider photo
+            // set than the skeleton and every page fetch use, and the surplus counts become slots no
+            // node can ever fill — placeholders stranded mid-grid.
+            let saved = TimelineUserAttributeEntity(
+                mediaType: .images, location: .cameraUploads, usePreference: true)
+            let sut = makeSUT(
+                contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
+                    timelineUserAttributeEntity: saved),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections())))
+            let queryIdBefore = sut.timelineQueryId
+
+            await sut.loadPhotos()
+
+            #expect(sut.photoFilterOptions == saved.toPhotoFilterOptionsEntity()) // filter did change
+            #expect(sut.timelineQueryId != queryIdBefore) // …so the monitor is re-subscribed
+        }
+
+        @Test("A sort-order change re-keys the section monitor")
+        func sortOrderChangeRekeysTheSectionMonitor() {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections())))
+            let queryIdBefore = sut.timelineQueryId
+
+            sut.updateSortOrder(.modificationAsc)
+
+            #expect(sut.timelineQueryId != queryIdBefore)
+        }
+
         @Test("A hydration whose library moved during the fetch is discarded instead of reverting the newer commit")
         func hydrateVisibleWindowDiscardsResultWhenLibraryMovedDuringFetch() async {
             // The real race: the user is parked in day2, a Camera-Upload insert grows day1 off-screen,
