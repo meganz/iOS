@@ -10,15 +10,23 @@ import XCTest
 final class FolderLinkMediaDiscoveryViewModelTests {
     static func makeSUT(
         handle: HandleEntity = 0,
+        link: String = "https://mega.nz/folders/abc",
         titleUseCase: MockFolderLinkTitleUseCase = MockFolderLinkTitleUseCase(),
         trackingUseCase: MockFolderLinkTrackingUseCase = MockFolderLinkTrackingUseCase(),
+        editModeUseCase: MockFolderLinkEditModeUseCase = MockFolderLinkEditModeUseCase(),
+        bottomBarUseCase: MockFolderLinkBottomBarUseCase = MockFolderLinkBottomBarUseCase(),
+        quickActionUseCase: MockFolderLinkQuickActionUseCase = MockFolderLinkQuickActionUseCase(),
         viewMode: SearchResultsViewMode = .list,
         viewModeUpdate: @escaping (SearchResultsViewMode) -> Void = { _ in }
     ) -> FolderLinkMediaDiscoveryViewModel {
         let dependency = FolderLinkMediaDiscoveryViewModel.Dependency(
             handle: handle,
+            link: link,
             titleUseCase: titleUseCase,
-            trackingUseCase: trackingUseCase
+            trackingUseCase: trackingUseCase,
+            editModeUseCase: editModeUseCase,
+            bottomBarUseCase: bottomBarUseCase,
+            quickActionUseCase: quickActionUseCase
         )
         let viewModeBinding: Binding<SearchResultsViewMode> = Binding(
             get: { viewMode },
@@ -141,38 +149,66 @@ final class FolderLinkMediaDiscoveryViewModelTests {
             XCTAssertTrue(sut.shouldShowBottomBar)
         }
         
-        func testShouldEnableBottomBarWhenSelectionIsNotEmpty() {
-            // Given
-            let sut = makeSUT()
-            sut.editMode = .active
-            XCTAssertTrue(sut.selectedPhotos.isEmpty)
-            XCTAssertTrue(sut.bottomBarDisabled)
-            
-            // When
-            sut.updateSelectedPhotos([NodeEntity()])
-            
-            // Then
-            XCTAssertFalse(sut.bottomBarDisabled)
+        func testBottomBarDisabledComesFromUseCase() {
+            func assertBottomBarDisabled(_ disabled: Bool) {
+                let bottomBarUseCase = MockFolderLinkBottomBarUseCase(bottomBarDisabled: disabled)
+                let sut = makeSUT(bottomBarUseCase: bottomBarUseCase)
+                XCTAssertEqual(sut.bottomBarDisabled, disabled)
+            }
+
+            for disabled in [true, false] {
+                assertBottomBarDisabled(disabled)
+            }
         }
-        
-        func testBottomBarAction() {
-            func assertEqual(nodesAction: FolderLinkNodesAction, when bottomBarAction: FolderLinkBottomBarAction, with photos: [NodeEntity]) {
+
+        func testBottomBarDisabledUpdatesWhenSelectedPhotosOrEditModeChanges() async {
+            // Given
+            let expectation = XCTestExpectation(description: "$bottomBarDisabled should change when selectedPhotos or editMode changes")
+            expectation.expectedFulfillmentCount = 4
+            let bottomBarUseCase = MockFolderLinkBottomBarUseCase()
+            let sut = makeSUT(bottomBarUseCase: bottomBarUseCase)
+            let subscription = sut
+                .$bottomBarDisabled
+                .sink { _ in
+                    expectation.fulfill()
+                }
+
+            // When
+            sut.editMode = .active
+            sut.updateSelectedPhotos([NodeEntity(handle: 1)])
+            sut.editMode = .inactive
+
+            await fulfillment(of: [expectation], timeout: 1)
+
+            // Then
+            // shouldDisableBottomBar is called 4 times: first open, enter edit mode, selection changed, exit edit mode
+            XCTAssertEqual(bottomBarUseCase.shouldDisableBottomBarCalledArguments.count, 4)
+
+            subscription.cancel()
+        }
+
+        func testShouldIncludeSaveToPhotosBottomActionComesFromUseCase() {
+            for included in [true, false] {
+                let bottomBarUseCase = MockFolderLinkBottomBarUseCase(saveToPhotoActionIncluded: included)
+                let sut = makeSUT(bottomBarUseCase: bottomBarUseCase)
+                XCTAssertEqual(sut.shouldIncludeSaveToPhotosBottomAction, included)
+            }
+        }
+
+        func testBottomBarAction_whenEditing_shouldUseSelectedPhotos() {
+            func assertEqual(nodesAction: FolderLinkNodesAction, when bottomBarAction: FolderLinkBottomBarAction) {
                 // Given
-                let sut = makeSUT()
-                sut.updateSelectedPhotos(photos)
-                
+                let sut = makeSUT(handle: parentHandle)
+                sut.editMode = .active
+                sut.updateSelectedPhotos([NodeEntity(handle: 1), NodeEntity(handle: 2)])
+
                 // When
                 sut.bottomBarAction = bottomBarAction
                 
                 // Then
                 XCTAssertEqual(nodesAction, sut.nodesAction)
             }
-            
-            let photos = [
-                NodeEntity(handle: 1),
-                NodeEntity(handle: 2)
-            ]
-            
+
             let testcases: [(FolderLinkNodesAction, FolderLinkBottomBarAction)] = [
                 (.addToCloudDrive([1, 2]), .addToCloudDrive),
                 (.makeAvailableOffline([1, 2]), .makeAvailableOffline),
@@ -181,9 +217,74 @@ final class FolderLinkMediaDiscoveryViewModelTests {
             ]
             
             for (nodesAction, bottomBarAction) in testcases {
-                assertEqual(nodesAction: nodesAction, when: bottomBarAction, with: photos)
+                assertEqual(nodesAction: nodesAction, when: bottomBarAction)
             }
         }
+
+        /// The anchored buttons of the revamp act while browsing, where nothing is selected, so they have
+        /// to cover the folder itself rather than the empty selection.
+        func testBottomBarAction_whenNotEditing_shouldUseParentNodeOnly() {
+            func assertEqual(nodesAction: FolderLinkNodesAction, when bottomBarAction: FolderLinkBottomBarAction) {
+                // Given
+                let sut = makeSUT(handle: parentHandle)
+                sut.editMode = .inactive
+                sut.updateSelectedPhotos([NodeEntity(handle: 1), NodeEntity(handle: 2)])
+
+                // When
+                sut.bottomBarAction = bottomBarAction
+
+                // Then
+                XCTAssertEqual(nodesAction, sut.nodesAction)
+            }
+
+            let testcases: [(FolderLinkNodesAction, FolderLinkBottomBarAction)] = [
+                (.addToCloudDrive([parentHandle]), .addToCloudDrive),
+                (.makeAvailableOffline([parentHandle]), .makeAvailableOffline),
+                (.downloadToFiles([parentHandle]), .downloadToFiles),
+                // Save to Photos cannot actually take a folder — this pins the interim mapping, not a
+                // working flow, and IOS-11735 is expected to change both it and this expectation.
+                (.saveToPhotos([parentHandle]), .saveToPhotos)
+            ]
+
+            for (nodesAction, bottomBarAction) in testcases {
+                assertEqual(nodesAction: nodesAction, when: bottomBarAction)
+            }
+        }
+
+        private let parentHandle: HandleEntity = 100
+    }
+
+    /// The more options sheet acts on the folder rather than on a selection, so its rows always cover the
+    /// folder's own handle no matter what is selected.
+    @MainActor
+    final class QuickActionTests: XCTestCase {
+        func testQuickAction() {
+            func assertEqual(nodesAction: FolderLinkNodesAction, when quickAction: FolderLinkQuickAction) {
+                // Given
+                let sut = makeSUT(handle: parentHandle, link: link)
+                sut.editMode = .active
+                sut.updateSelectedPhotos([NodeEntity(handle: 1), NodeEntity(handle: 2)])
+
+                // When
+                sut.quickAction = quickAction
+
+                // Then
+                XCTAssertEqual(nodesAction, sut.nodesAction)
+            }
+
+            let testcases: [(FolderLinkNodesAction, FolderLinkQuickAction)] = [
+                (.addToCloudDrive([parentHandle]), .addToCloudDrive),
+                (.makeAvailableOffline([parentHandle]), .makeAvailableOffline),
+                (.sendToChat(link), .sendToChat)
+            ]
+
+            for (nodesAction, quickAction) in testcases {
+                assertEqual(nodesAction: nodesAction, when: quickAction)
+            }
+        }
+
+        private let parentHandle: HandleEntity = 100
+        private let link = "https://mega.nz/folders/abc"
     }
     
     @MainActor

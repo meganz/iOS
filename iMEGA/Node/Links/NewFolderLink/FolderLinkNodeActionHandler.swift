@@ -90,9 +90,9 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
         saveToPhotos(nodes)
     }
     
-    /// Placeholder until IOS-12333 builds the real Download flow. `ExportFileRouter` only exports files,
+    /// Placeholder until IOS-11735 builds the real Download flow. `ExportFileRouter` only exports files,
     /// so a selected folder is silently dropped here — the SDK has no compressed download, so covering
-    /// folders means downloading the tree and archiving it on device, which IOS-12333 owns along with
+    /// folders means downloading the tree and archiving it on device, which IOS-11735 owns along with
     /// the behaviour design picks for mixed file and folder selections.
     private func exportNodes(nodeHandles: Set<HandleEntity>) {
         guard let navigationController else { return }

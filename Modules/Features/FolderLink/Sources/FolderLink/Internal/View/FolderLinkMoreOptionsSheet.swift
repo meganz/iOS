@@ -222,6 +222,41 @@ struct FolderLinkMoreOptionsSheet: View {
     }
 }
 
+/// The navigation bar button that opens the sheet, shared by the list/grid and the gallery screens.
+struct FolderLinkMoreOptionsLabel: View {
+    var body: some View {
+        Label {
+            Text(Strings.Localizable.more)
+        } icon: {
+            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+        }
+        .labelStyle(.iconOnly)
+    }
+}
+
+extension View {
+    /// Installs the revamped more options sheet, so both screens that show it present it the same way.
+    func folderLinkMoreOptionsSheet(
+        isPresented: Binding<Bool>,
+        title: String,
+        subtitle: String?,
+        link: String,
+        config: FolderLinkMoreOptionsConfig,
+        selectionHandler: @escaping (FolderLinkMoreOption) -> Void
+    ) -> some View {
+        sheet(isPresented: isPresented) {
+            FolderLinkMoreOptionsSheet(
+                title: title,
+                subtitle: subtitle,
+                link: link,
+                options: config.options,
+                disabledOptions: config.disabledOptions,
+                selectionHandler: selectionHandler
+            )
+        }
+    }
+}
+
 private struct ContentHeightPreferenceKey: PreferenceKey {
     static var defaultValue: CGFloat { 0 }
 

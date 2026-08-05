@@ -102,16 +102,14 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
             .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
             }
-            .sheet(isPresented: $isMoreOptionsSheetPresented) {
-                FolderLinkMoreOptionsSheet(
-                    title: viewModel.title,
-                    subtitle: viewModel.subtitle,
-                    link: dependency.link,
-                    options: moreOptions,
-                    disabledOptions: disabledMoreOptions,
-                    selectionHandler: handle(moreOption:)
-                )
-            }
+            .folderLinkMoreOptionsSheet(
+                isPresented: $isMoreOptionsSheetPresented,
+                title: viewModel.title,
+                subtitle: viewModel.subtitle,
+                link: dependency.link,
+                config: moreOptionsConfig,
+                selectionHandler: viewModel.handle(moreOption:)
+            )
             .environment(\.editMode, $viewModel.editMode)
             // The pre-revamp search field reports through the isSearching environment value, the collapsed
             // one through this. Either way the view model hears about it the same way.
@@ -189,9 +187,9 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
             Button {
                 isMoreOptionsSheetPresented = true
             } label: {
-                moreOptionsLabel
+                FolderLinkMoreOptionsLabel()
             }
-            .disabled(moreOptionsMenuDisabled)
+            .disabled(moreOptionsConfig.isMoreOptionsButtonDisabled)
         } else {
             Menu {
                 Section {
@@ -217,68 +215,22 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                     }
                 }
             } label: {
-                moreOptionsLabel
+                FolderLinkMoreOptionsLabel()
             }
-            .disabled(moreOptionsMenuDisabled)
+            // The pre-revamp menu holds no folder-wide action, so it keeps its original gating.
+            .disabled(!viewModel.shouldEnableMoreOptionsMenu || !networkConnected)
         }
     }
 
-    private var moreOptionsLabel: some View {
-        Label {
-            Text(Strings.Localizable.more)
-        } icon: {
-            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
-        }
-        .labelStyle(.iconOnly)
+    private var moreOptionsConfig: FolderLinkMoreOptionsConfig {
+        FolderLinkMoreOptionsConfig(
+            canSelect: viewModel.shouldEnableMoreOptionsMenu,
+            showsQuickActions: viewModel.shouldShowQuickActionsMenu,
+            includesDownload: viewModel.shouldIncludeSaveToPhotosBottomAction,
+            isNetworkConnected: networkConnected
+        )
     }
 
-    /// The rows of the revamped more options sheet, in the order the design lists them. Save to Photos
-    /// lost its bottom bar slot to the two anchored buttons, so the sheet is where it lives now.
-    private var moreOptions: [FolderLinkMoreOption] {
-        var options: [FolderLinkMoreOption] = [.select]
-        guard viewModel.shouldShowQuickActionsMenu else { return options }
-
-        options.append(.saveToMEGA)
-        if viewModel.shouldIncludeSaveToPhotosBottomAction {
-            options.append(.download)
-        }
-        options.append(contentsOf: [.copyToOffline, .shareLink, .sendToChat])
-        return options
-    }
-
-    /// Selecting needs something to select; the other rows of the sheet do not.
-    private var disabledMoreOptions: Set<FolderLinkMoreOption> {
-        viewModel.shouldEnableMoreOptionsMenu ? [] : [.select]
-    }
-
-    private func handle(moreOption: FolderLinkMoreOption) {
-        switch moreOption {
-        case .select:
-            viewModel.editMode = .active
-        case .saveToMEGA:
-            viewModel.quickAction = .addToCloudDrive
-        case .copyToOffline:
-            viewModel.quickAction = .makeAvailableOffline
-        case .sendToChat:
-            viewModel.quickAction = .sendToChat
-        case .download:
-            viewModel.bottomBarAction = .saveToPhotos
-        case .shareLink:
-            // Handled by the ShareLink the sheet renders for this row.
-            break
-        }
-    }
-    
-    /// The revamped sheet took over Share link from the bottom bar, where it stayed enabled for a folder
-    /// with no children, so it cannot be gated on Select alone any more — it is disabled only once every
-    /// row it holds is. The pre-revamp menu holds no such action, so it keeps its original gating.
-    private var moreOptionsMenuDisabled: Bool {
-        guard showsRevampedChrome else {
-            return !viewModel.shouldEnableMoreOptionsMenu || !networkConnected
-        }
-        return !networkConnected || (!viewModel.shouldEnableMoreOptionsMenu && !viewModel.shouldShowQuickActionsMenu)
-    }
-    
     @ViewBuilder
     private var bottomBar: some View {
         if dependency.isLinkRevampEnabled {

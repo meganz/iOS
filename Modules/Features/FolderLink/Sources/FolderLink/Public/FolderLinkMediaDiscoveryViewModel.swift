@@ -19,24 +19,40 @@ import SwiftUI
 public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
     package struct Dependency {
         let handle: HandleEntity
+        let link: String
         let titleUseCase: any FolderLinkTitleUseCaseProtocol
         let trackingUseCase: any FolderLinkTrackingUseCaseProtocol
-        
+        let editModeUseCase: any FolderLinkEditModeUseCaseProtocol
+        let bottomBarUseCase: any FolderLinkBottomBarUseCaseProtocol
+        let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
+
         package init(
             handle: HandleEntity,
+            link: String,
             titleUseCase: some FolderLinkTitleUseCaseProtocol,
-            trackingUseCase: some FolderLinkTrackingUseCaseProtocol
+            trackingUseCase: some FolderLinkTrackingUseCaseProtocol,
+            editModeUseCase: some FolderLinkEditModeUseCaseProtocol,
+            bottomBarUseCase: some FolderLinkBottomBarUseCaseProtocol,
+            quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol
         ) {
             self.handle = handle
+            self.link = link
             self.titleUseCase = titleUseCase
             self.trackingUseCase = trackingUseCase
+            self.editModeUseCase = editModeUseCase
+            self.bottomBarUseCase = bottomBarUseCase
+            self.quickActionUseCase = quickActionUseCase
         }
-        
-        init(handle: HandleEntity) {
+
+        init(handle: HandleEntity, link: String) {
             self.init(
                 handle: handle,
+                link: link,
                 titleUseCase: FolderLinkTitleUseCase(),
-                trackingUseCase: FolderLinkTrackingUseCase()
+                trackingUseCase: FolderLinkTrackingUseCase(),
+                editModeUseCase: FolderLinkEditModeUseCase(),
+                bottomBarUseCase: FolderLinkBottomBarUseCase(),
+                quickActionUseCase: FolderLinkQuickActionUseCase()
             )
         }
     }
@@ -54,14 +70,23 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
     @Published package var selectedPhotos: [NodeEntity] = []
     @Published package var title: String = ""
     @Published package var subtitle: String?
-    @Published package var bottomBarDisabled: Bool = false
+    @Published package var bottomBarDisabled: Bool = true
     @Published package var shouldShowBottomBar: Bool = false
-    @Published var shouldEnableMoreOptionsMenu: Bool = true
+    @Published package var shouldIncludeSaveToPhotosBottomAction: Bool = false
+    @Published package var quickAction: FolderLinkQuickAction?
     @Published package var bottomBarAction: FolderLinkBottomBarAction?
     @Published package var nodesAction: FolderLinkNodesAction?
     @Binding package var viewMode: SearchResultsViewMode
     package let viewModeViewModel: SearchResultsHeaderViewModeViewModel
-    
+
+    var shouldEnableMoreOptionsMenu: Bool {
+        dependency.editModeUseCase.canEnterEditModeWhenOpeningFolder(dependency.handle)
+    }
+
+    var shouldShowQuickActionsMenu: Bool {
+        dependency.quickActionUseCase.shouldEnableQuickActions(for: dependency.handle)
+    }
+
     private var subscriptions: Set<AnyCancellable> = []
     private let dependency: Dependency
     
@@ -117,20 +142,51 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
         $editMode
             .map { $0.isEditing }
             .assign(to: &$shouldShowBottomBar)
-        
-        $shouldShowBottomBar
-            .filter { $0 }
-            .combineLatest($selectedPhotos)
-            .map { _, photos in
-                photos.isEmpty
+
+        // Browsing drives the anchored buttons, which act on the folder itself, so the disabled state is
+        // no longer computed for the editing state alone.
+        $selectedPhotos
+            .combineLatest($editMode)
+            .map { photos, editMode in
+                dependency.bottomBarUseCase.shouldDisableBottomBar(
+                    handle: dependency.handle,
+                    editingState: editMode.isEditing ? .active(photos) : .inactive
+                )
             }
             .assign(to: &$bottomBarDisabled)
-        
+
+        $selectedPhotos
+            .combineLatest($editMode)
+            .map { photos, editMode in
+                dependency.bottomBarUseCase.shouldIncludeSaveToPhotosAction(
+                    handle: dependency.handle,
+                    editingState: editMode.isEditing ? .active(Set(photos.map(\.handle))) : .inactive
+                )
+            }
+            .assign(to: &$shouldIncludeSaveToPhotosBottomAction)
+
+        // The more options sheet acts on the folder rather than on a selection, so unlike the bottom bar
+        // actions these always carry the folder's own handle.
+        $quickAction
+            .compactMap { $0 }
+            .map { action in
+                switch action {
+                case .addToCloudDrive:
+                    FolderLinkNodesAction.addToCloudDrive([dependency.handle])
+                case .makeAvailableOffline:
+                    FolderLinkNodesAction.makeAvailableOffline([dependency.handle])
+                case .sendToChat:
+                    FolderLinkNodesAction.sendToChat(dependency.link)
+                }
+            }
+            .assign(to: &$nodesAction)
+
         $bottomBarAction
             .compactMap { $0 }
             .compactMap { [weak self] action in
                 guard let self else { return nil }
-                let nodes = Set(selectedPhotos.map(\.handle))
+                // Browsing has no selection: the anchored buttons and the sheet act on the folder itself.
+                let nodes = editMode.isEditing ? Set(selectedPhotos.map(\.handle)) : [dependency.handle]
                 return switch action {
                 case .addToCloudDrive:
                     FolderLinkNodesAction.addToCloudDrive(nodes)
@@ -139,6 +195,12 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                 case .downloadToFiles:
                     FolderLinkNodesAction.downloadToFiles(nodes)
                 case .saveToPhotos:
+                    // While browsing, this hands Save to Photos the folder itself rather than the media
+                    // inside it, and `SaveMediaToPhotosUseCase` downloads whatever it is given as a file
+                    // instead of walking the tree — so the sheet's Download row does nothing for a folder.
+                    // The list/grid screen maps it the same way, and IOS-11735 reworks Download for
+                    // folders (download the tree, then archive it on device), so this is left to that
+                    // ticket rather than fixed for gallery mode alone and split from list/grid.
                     FolderLinkNodesAction.saveToPhotos(nodes)
                 }
             }
@@ -172,3 +234,7 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
         self.selectedPhotos = photos
     }
 }
+
+// MARK: - FolderLinkMoreOptionsHandling
+
+extension FolderLinkMediaDiscoveryViewModel: FolderLinkMoreOptionsHandling {}

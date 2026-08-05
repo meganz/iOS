@@ -21,7 +21,13 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
     
     @StateObject private var viewModel: FolderLinkMediaDiscoveryViewModel
     @Environment(\.networkConnected) var networkConnected
-    
+
+    /// Held as `@State` rather than in the view model because it is flipped by a navigation bar button,
+    /// whose action runs outside a SwiftUI transaction: a `@Published` write from there invalidates the
+    /// view before it stores the new value, so the view re-reads the old one and is never invalidated
+    /// again. `@State` stores first, then invalidates.
+    @State private var isMoreOptionsSheetPresented = false
+
     private let dependency: Dependency
     
     init(
@@ -31,7 +37,10 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         self.dependency = dependency
         _viewModel = StateObject(
             wrappedValue: FolderLinkMediaDiscoveryViewModel(
-                dependency: FolderLinkMediaDiscoveryViewModel.Dependency(handle: dependency.handle),
+                dependency: FolderLinkMediaDiscoveryViewModel.Dependency(
+                    handle: dependency.handle,
+                    link: dependency.link
+                ),
                 viewMode: viewMode
             )
         )
@@ -44,6 +53,9 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         }
         .noNetworkConnection()
         .navigationBarBackButtonHidden(true)
+        .safeAreaInset(edge: .bottom) {
+            anchoredButtons
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 topBarLeadingItem
@@ -69,8 +81,32 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         .onReceive(viewModel.$nodesAction.compactMap { $0 }) { action in
             dependency.nodeActionHandler.handle(action: action)
         }
+        .folderLinkMoreOptionsSheet(
+            isPresented: $isMoreOptionsSheetPresented,
+            title: viewModel.title,
+            subtitle: viewModel.subtitle,
+            link: dependency.link,
+            config: moreOptionsConfig,
+            selectionHandler: viewModel.handle(moreOption:)
+        )
     }
     
+    /// Selection mode keeps the pre-revamp chrome — its redesign belongs to a separate ticket. Unlike the
+    /// list/grid screen, gallery mode has no search button: its content is already the whole media set.
+    private var showsRevampedChrome: Bool {
+        dependency.isLinkRevampEnabled && !viewModel.editMode.isEditing
+    }
+
+    @ViewBuilder
+    private var anchoredButtons: some View {
+        if showsRevampedChrome {
+            FolderLinkAnchoredButtons(
+                selection: $viewModel.bottomBarAction,
+                isDisabled: viewModel.bottomBarDisabled || !networkConnected
+            )
+        }
+    }
+
     private var headerView: some View {
         ResultsHeaderView(
             height: 44,
@@ -125,6 +161,13 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
             } label: {
                 Text(Strings.Localizable.cancel)
             }
+        } else if showsRevampedChrome {
+            Button {
+                isMoreOptionsSheetPresented = true
+            } label: {
+                FolderLinkMoreOptionsLabel()
+            }
+            .disabled(moreOptionsConfig.isMoreOptionsButtonDisabled)
         } else {
             Menu {
                 Section {
@@ -145,10 +188,20 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                     Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
                 }
             }
+            // The pre-revamp menu holds no folder-wide action, so it keeps its original gating.
             .disabled(!viewModel.shouldEnableMoreOptionsMenu || !networkConnected)
         }
     }
     
+    private var moreOptionsConfig: FolderLinkMoreOptionsConfig {
+        FolderLinkMoreOptionsConfig(
+            canSelect: viewModel.shouldEnableMoreOptionsMenu,
+            showsQuickActions: viewModel.shouldShowQuickActionsMenu,
+            includesDownload: viewModel.shouldIncludeSaveToPhotosBottomAction,
+            isNetworkConnected: networkConnected
+        )
+    }
+
     @ViewBuilder
     private var bottomBar: some View {
         if dependency.isLinkRevampEnabled {

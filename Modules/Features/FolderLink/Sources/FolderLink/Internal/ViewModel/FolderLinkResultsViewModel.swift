@@ -342,3 +342,7 @@ package final class FolderLinkResultsViewModel: ObservableObject {
         }
     }
 }
+
+// MARK: - FolderLinkMoreOptionsHandling
+
+extension FolderLinkResultsViewModel: FolderLinkMoreOptionsHandling {}
