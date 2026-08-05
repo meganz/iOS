@@ -38,13 +38,12 @@ class CookieSettingsTableViewController: UITableViewController {
         }
         
         configView()
+        registerForAppearanceChanges()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setupLiquidGlassNavigationBar()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: CookieSettingsTableViewController, _: UITraitCollection) in
+            viewController.setupLiquidGlassNavigationBar()
         }
     }
 

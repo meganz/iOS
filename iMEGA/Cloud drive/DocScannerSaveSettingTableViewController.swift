@@ -112,8 +112,10 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
         if #available(iOS 26.0, *) {
             clearBackBarButton()
         }
+
+        registerForAppearanceChanges()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -124,11 +126,10 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
         }
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-            
-            tableView.reloadData()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: DocScannerSaveSettingTableViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+            viewController.tableView.reloadData()
         }
     }
 

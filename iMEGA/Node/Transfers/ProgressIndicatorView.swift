@@ -43,23 +43,24 @@ final class ProgressIndicatorView: UIView {
         configureView()
         configureDelegate()
         setupBindings()
+        registerForAppearanceChanges()
         progressIndicatorViewModel.configureData()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureLayers()
         configureView()
         setupBindings()
+        registerForAppearanceChanges()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: ProgressIndicatorView, _: UITraitCollection) in
+            view.updateAppearance()
         }
     }
-    
+
     // MARK: - Private
     
     private func setupBindings() {

@@ -57,15 +57,18 @@ final class AccountMenuViewNavigationController: MEGANavigationController, Accou
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 26.0, *) {
-            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        updateNavigationBarAppearance()
+        registerForAppearanceChanges()
+    }
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (navigationController: AccountMenuViewNavigationController, _: UITraitCollection) in
+            navigationController.updateNavigationBarAppearance()
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-           #available(iOS 26.0, *) {
+    private func updateNavigationBarAppearance() {
+        if #available(iOS 26.0, *) {
             AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
     }

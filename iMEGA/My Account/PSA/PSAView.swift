@@ -75,9 +75,16 @@ final class PSAView: UIView, PSAViewType {
             
             imageDefaultWidth = imageViewWidthConstraint.constant
             titleLabelDefaultLeadingSpace = titleLabelLeadingConstraint.constant
+            registerForAppearanceChanges()
         }
     }
-    
+
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (view: PSAView, _: UITraitCollection) in
+            view.setupView(with: view.traitCollection)
+        }
+    }
+
     func executeCommand(_ command: PSAViewModel.Command) {
         switch command {
         case .configView(let psaEntity):
@@ -125,19 +132,5 @@ final class PSAView: UIView, PSAViewType {
         }
         
         viewModel?.dispatch(.dismiss(psaView: self, psaEntity: psaEntity))
-    }
-}
-
-// MARK: - TraitEnvironmentAware
-
-extension PSAView: TraitEnvironmentAware {
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
-    }
-
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        setupView(with: currentTrait)
     }
 }

@@ -49,8 +49,9 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
         super.viewDidLoad()
         
         setupViews()
-        colorAppearanceDidChange(to: traitCollection, from: nil)
-        
+        updateAppearance()
+        registerForAppearanceChanges()
+
         viewModel.invokeCommand = { [weak self] command in
             DispatchQueue.main.async { self?.executeCommand(command) }
         }
@@ -92,11 +93,12 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
     // MARK: view configuration
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .portrait }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    private func registerForAppearanceChanges() {
+        registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: DiskFullBlockingViewController, _: UITraitCollection) in
+            viewController.updateAppearance()
+        }
     }
-    
+
     // MARK: UI actions
     @objc private func didTapManageButton() {
         viewModel.dispatch(.manage)
@@ -131,8 +133,8 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
     override func showDetailViewController(_ vc: UIViewController, sender: Any?) { return }
 }
 
-extension DiskFullBlockingViewController: TraitEnvironmentAware {
-    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+extension DiskFullBlockingViewController {
+    fileprivate func updateAppearance() {
         view.backgroundColor = TokenColors.Background.page
         manageButton.mnz_setupPrimary()
     }
