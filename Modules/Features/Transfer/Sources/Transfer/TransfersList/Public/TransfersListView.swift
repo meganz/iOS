@@ -49,13 +49,18 @@ public struct TransfersListView: View {
         .navigationBarBackButtonHidden(viewModel.isSelectModeActive)
         .snackBar($viewModel.snackBar)
         .alert(
-            Strings.Localizable.Transfers.Confirmation.CancelAll.title,
-            isPresented: $viewModel.isPresentingCancelAllConfirmation
-        ) {
-            Button(Strings.Localizable.Transfers.Confirmation.CancelAll.confirm, role: .destructive) {
-                viewModel.confirmCancelAll()
+            viewModel.presentingCancelConfirmation?.title ?? "",
+            isPresented: isPresentingCancelConfirmation,
+            presenting: viewModel.presentingCancelConfirmation
+        ) { confirmation in
+            Button(confirmation.confirmTitle, role: confirmation.isConfirmDestructive ? .destructive : nil) {
+                Task { await viewModel.confirmCancel(confirmation) }
             }
             Button(Strings.Localizable.dismiss, role: .cancel) {}
+        } message: { confirmation in
+            if let message = confirmation.message {
+                Text(message)
+            }
         }
         .toolbar {
             // Both leading buttons are SwiftUI-owned so select mode can swap one
@@ -112,6 +117,18 @@ public struct TransfersListView: View {
         }
     }
 
+    /// The alert's presentation binding, derived from the scope the view model holds:
+    /// one dialog serves both cancel entry points, and dismissing it clears the pending scope.
+    private var isPresentingCancelConfirmation: Binding<Bool> {
+        Binding(
+            get: { viewModel.presentingCancelConfirmation != nil },
+            set: { isPresented in
+                guard !isPresented else { return }
+                viewModel.presentingCancelConfirmation = nil
+            }
+        )
+    }
+
     // MARK: - Select mode
     //
     // The pieces that read the selection observe it from their own small views,
@@ -153,7 +170,8 @@ public struct TransfersListView: View {
     /// 1250-44043): the destructive action bottom-trailing, and on Failed a retry
     /// button bottom-leading. Rendered as a safe-area inset rather than an
     /// overlay so the list can scroll clear of them and the last row stays
-    /// reachable. Running the actions on the selection lands with IOS-12220.
+    /// reachable. Each button acts on the selected subset and leaves select mode;
+    /// only cancel goes through the confirmation dialog first.
     private var selectModeActionButtons: some View {
         HStack(spacing: 0) {
             if viewModel.selectedTab == .failed {
@@ -171,7 +189,7 @@ public struct TransfersListView: View {
                     selection: viewModel.selection,
                     icon: MEGAAssets.Image.rubbishBinInMenu,
                     label: Strings.Localizable.cancel,
-                    action: viewModel.cancelSelectedTransfers
+                    action: viewModel.confirmCancelSelectedTransfers
                 )
             case .completed, .failed:
                 SelectModeActionButton(
@@ -197,7 +215,7 @@ public struct TransfersListView: View {
     private func handle(_ action: TransferMoreMenuAction) {
         switch action {
         case .select: viewModel.enterSelectMode()
-        case .cancelAll: viewModel.requestCancelAllConfirmation()
+        case .cancelAll: viewModel.confirmCancelAllTransfers()
         case .clearAll: viewModel.clearAllTransfers()
         case .retryAll: Task { await viewModel.retryAllTransfers() }
         }

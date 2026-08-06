@@ -93,20 +93,20 @@ struct TransfersListViewModelMoreMenuTests {
 
     // MARK: - Cancel-all confirmation
 
-    @Test func requestCancelAll_presentsDialog() {
+    @Test func requestCancelAll_presentsDialogScopedToEveryTransfer() {
         let sut = makeSUT()
 
-        sut.requestCancelAllConfirmation()
+        sut.confirmCancelAllTransfers()
 
-        #expect(sut.isPresentingCancelAllConfirmation)
+        #expect(sut.presentingCancelConfirmation == .all)
     }
 
-    @Test func confirmCancelAll_cancelsTransfers() {
+    @Test func confirmCancelAll_cancelsTransfers() async {
         let useCase = MockTransferListUseCase()
         let sut = makeSUT(useCase: useCase)
-        sut.requestCancelAllConfirmation()
+        sut.confirmCancelAllTransfers()
 
-        sut.confirmCancelAll()
+        await sut.confirmCancel(.all)
 
         #expect(useCase.cancelTransfersCalledTimes == 1)
     }
@@ -114,10 +114,10 @@ struct TransfersListViewModelMoreMenuTests {
     @Test func dismissingDialog_runsNoAction() {
         let useCase = MockTransferListUseCase()
         let sut = makeSUT(useCase: useCase)
-        sut.requestCancelAllConfirmation()
+        sut.confirmCancelAllTransfers()
 
         // Tapping Dismiss flips the binding without confirming.
-        sut.isPresentingCancelAllConfirmation = false
+        sut.presentingCancelConfirmation = nil
 
         #expect(useCase.cancelTransfersCalledTimes == 0)
     }
@@ -299,6 +299,169 @@ struct TransfersListViewModelSelectModeTests {
         modal.onClose?()
 
         #expect(closed)
+    }
+}
+
+@Suite("TransfersListViewModel select-mode actions")
+@MainActor
+struct TransfersListViewModelSelectModeActionsTests {
+
+    // MARK: - Cancel selected
+
+    @Test func requestCancelSelected_presentsDialogScopedToTheSelection() {
+        let sut = makeSUT()
+        sut.enterSelectMode()
+
+        sut.confirmCancelSelectedTransfers()
+
+        #expect(sut.presentingCancelConfirmation == .selected)
+        // Nothing runs until the dialog is confirmed.
+        #expect(sut.isSelectModeActive)
+    }
+
+    @Test func confirmCancelSelected_cancelsOnlyTheSelectedRowsAndExitsSelectMode() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(
+            snapshot: [TransferEntity(tag: 3), TransferEntity(tag: 5), TransferEntity(tag: 8)]
+        )
+        let sut = makeSUT(transferControlUseCase: transferControlUseCase, itemsUseCase: itemsUseCase)
+        sut.selectedTab = .active
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [3, 5]
+
+        await sut.confirmCancel(.selected)
+
+        #expect(transferControlUseCase.cancelledTransfers.map(\.tag) == [3, 5])
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+        // Bulk cancel has no Undo: the dialog is the safeguard.
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func confirmCancelSelected_skipsSelectedTagsThatLeftTheTab() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        // Tag 3 finished while the user was selecting, so it is gone from the inventory.
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(snapshot: [TransferEntity(tag: 5)])
+        let sut = makeSUT(transferControlUseCase: transferControlUseCase, itemsUseCase: itemsUseCase)
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [3, 5]
+
+        await sut.confirmCancel(.selected)
+
+        #expect(transferControlUseCase.cancelledTransfers.map(\.tag) == [5])
+    }
+
+    @Test func confirmCancelSelected_withNothingSelected_cancelsNothingAndStillExits() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(snapshot: [TransferEntity(tag: 3)])
+        let sut = makeSUT(transferControlUseCase: transferControlUseCase, itemsUseCase: itemsUseCase)
+        sut.enterSelectMode()
+
+        await sut.confirmCancel(.selected)
+
+        #expect(transferControlUseCase.cancelledTransfers.isEmpty)
+        #expect(!sut.isSelectModeActive)
+    }
+
+    @Test func confirmCancelSelected_whenTheEngineRejectsOneCancel_runsTheRestAnyway() async {
+        let transferControlUseCase = MockTransferControlUseCase()
+        transferControlUseCase.cancelError = CancellationError()
+        let itemsUseCase = MockMonitorTransferTabItemsUseCase(
+            snapshot: [TransferEntity(tag: 3), TransferEntity(tag: 5)]
+        )
+        let sut = makeSUT(transferControlUseCase: transferControlUseCase, itemsUseCase: itemsUseCase)
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [3, 5]
+
+        await sut.confirmCancel(.selected)
+
+        #expect(transferControlUseCase.cancelledTransfers.map(\.tag) == [3, 5])
+        #expect(!sut.isSelectModeActive)
+    }
+
+    // MARK: - Clear selected
+
+    @Test func clearSelected_clearsOnlyTheSelectedTagsExitsSelectModeAndShowsNoSnackBar() {
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(clearTransfersUseCase: clearUseCase)
+        sut.selectedTab = .completed
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [3, 5]
+
+        sut.clearSelectedTransfers()
+
+        #expect(clearUseCase.clearedTransferTagSets == [[3, 5]])
+        // Never the whole tab.
+        #expect(clearUseCase.clearCompletedTransfersCalledTimes == 0)
+        #expect(clearUseCase.clearFailedTransfersCalledTimes == 0)
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+        #expect(sut.snackBar == nil)
+    }
+
+    @Test func clearSelected_withNothingSelected_clearsNothingAndStillExits() {
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(clearTransfersUseCase: clearUseCase)
+        sut.enterSelectMode()
+
+        sut.clearSelectedTransfers()
+
+        #expect(clearUseCase.clearedTransferTagSets.isEmpty)
+        #expect(!sut.isSelectModeActive)
+    }
+
+    // MARK: - Retry selected
+
+    @Test func retrySelected_requeuesTheSelectionClearsTheRequeuedEntriesShowsSnackBarAndExits() {
+        let transferControlUseCase = MockTransferControlUseCase()
+        // Tag 8's upload source is gone: requested but not re-queued, so not cleared.
+        transferControlUseCase.retryTransfersResult = [3, 5]
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(
+            clearTransfersUseCase: clearUseCase,
+            transferControlUseCase: transferControlUseCase
+        )
+        sut.selectedTab = .failed
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [3, 5, 8]
+
+        sut.retrySelectedTransfers()
+
+        #expect(transferControlUseCase.retryTransfersReceivedTagSets == [[3, 5, 8]])
+        #expect(clearUseCase.clearedTransferTagSets == [[3, 5]])
+        #expect(sut.snackBar != nil)
+        #expect(sut.snackBar?.action == nil)
+        #expect(!sut.isSelectModeActive)
+        #expect(sut.selection.isEmpty)
+    }
+
+    @Test func retrySelected_whenNothingIsRetryable_clearsNothingAndShowsNoSnackBar() {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let clearUseCase = MockClearTransfersUseCase()
+        let sut = makeSUT(
+            clearTransfersUseCase: clearUseCase,
+            transferControlUseCase: transferControlUseCase
+        )
+        sut.enterSelectMode()
+        sut.selection.selectedTags = [8]
+
+        sut.retrySelectedTransfers()
+
+        #expect(transferControlUseCase.retryTransfersReceivedTagSets == [[8]])
+        #expect(clearUseCase.clearedTransferTagSets.isEmpty)
+        #expect(sut.snackBar == nil)
+        #expect(!sut.isSelectModeActive)
+    }
+
+    @Test func retrySelected_withNothingSelected_retriesNothingAndStillExits() {
+        let transferControlUseCase = MockTransferControlUseCase()
+        let sut = makeSUT(transferControlUseCase: transferControlUseCase)
+        sut.enterSelectMode()
+
+        sut.retrySelectedTransfers()
+
+        #expect(transferControlUseCase.retryTransfersReceivedTagSets.isEmpty)
+        #expect(!sut.isSelectModeActive)
     }
 }
 

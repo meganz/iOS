@@ -29,9 +29,9 @@ public final class TransfersListViewModel: ObservableObject {
     /// bar item can only be rendered beside a SwiftUI one, never replaced by it.
     let onClose: (@MainActor () -> Void)?
 
-    /// Drives the cancel-all confirmation alert. Cancel is the only destructive action
-    /// that prompts (clear-all and retry-all run immediately, per design).
-    @Published var isPresentingCancelAllConfirmation = false
+    /// The cancel confirmation currently on screen, and what confirming it applies
+    /// to; `nil` while no dialog is up.
+    @Published var presentingCancelConfirmation: CancelConfirmation?
 
     @Published var snackBar: SnackBar?
 
@@ -265,38 +265,73 @@ public final class TransfersListViewModel: ObservableObject {
     }
 
     // MARK: - Select-mode actions
-    //
-    // Rendered and enabled-when-something-is-selected here; running them on the
-    // selected subset lands with IOS-12220. Until then the screen ships behind
-    // the `newTransfers` feature flag, so the inert buttons stay internal.
-
+    
     /// Active tab: cancel the selected transfers.
-    func cancelSelectedTransfers() {
-        // IOS-12220
+    private func cancelSelectedTransfers() async {
+        let transfers = await selectedTransfers(on: .active)
+        exitSelectMode()
+        for transfer in transfers {
+            do {
+                try await transferControlUseCase.cancelTransfer(transfer)
+            } catch {
+                MEGALogError("[Transfer] cancel failed for tag \(transfer.tag): \(error)")
+            }
+        }
     }
 
-    /// Completed and Failed tabs: clear the selected transfers.
+    /// Completed and Failed tabs: clears the selected entries from the
+    /// completed-transfers cache in one pass (a single cleared signal, so the tab
+    /// re-queries once). No snackbar, matching clear-all and the per-row clear.
     func clearSelectedTransfers() {
-        // IOS-12220
+        let tags = selection.selectedTags
+        exitSelectMode()
+        guard !tags.isEmpty else { return }
+        dependency.clearTransfersUseCase.clearTransfers(tags: tags)
     }
 
-    /// Failed tab: retry the selected transfers.
+    /// Failed tab: re-queues the selected transfers, clears the re-queued entries and
+    /// confirms with the retry snackbar — the sequence Retry all runs, scoped to the
+    /// selection. Uploads whose staged source is gone are skipped, so their rows stay.
+    /// The tags need no extra scoping: the selection only ever holds tags the tab
+    /// lists, which is the filtering Retry all has to do against the cache.
     func retrySelectedTransfers() {
-        // IOS-12220
+        let tags = selection.selectedTags
+        exitSelectMode()
+        guard !tags.isEmpty else { return }
+        let retriedTags = transferControlUseCase.retryTransfers(tags: tags)
+        guard !retriedTags.isEmpty else { return }
+        dependency.clearTransfersUseCase.clearTransfers(tags: retriedTags)
+        didRetryTransfers()
+    }
+
+    /// Resolves the selected row ids to the tab's entities. The rows were rendered
+    /// from an earlier snapshot, so the inventory is re-read here: a tag that has
+    /// since left the tab (e.g. a transfer that finished while the user was
+    /// selecting) resolves to nothing and is skipped.
+    private func selectedTransfers(on tab: TransfersTab) async -> [TransferEntity] {
+        let tags = selection.selectedTags
+        guard !tags.isEmpty else { return [] }
+        return await dependency.itemsUseCase.snapshot(for: tab).filter { tags.contains($0.tag) }
     }
 
     // MARK: - Confirmation dialog
 
     /// Cancel is the only action that prompts. Opens the dialog from the More menu;
-    /// the selected-subset variant arrives with IOS-12220.
-    func requestCancelAllConfirmation() {
-        isPresentingCancelAllConfirmation = true
+    func confirmCancelAllTransfers() {
+        presentingCancelConfirmation = .all
     }
 
-    /// Runs the confirmed cancel-all. SwiftUI clears `isPresentingCancelAllConfirmation`
-    /// when the alert dismisses, so no manual reset is needed here.
-    func confirmCancelAll() {
-        cancelAllTransfers()
+    func confirmCancelSelectedTransfers() {
+        presentingCancelConfirmation = .selected
+    }
+
+    /// Runs the confirmed cancel. SwiftUI clears `presentingCancelConfirmation` when the
+    /// alert dismisses, so no manual reset is needed here.
+    func confirmCancel(_ confirmation: CancelConfirmation) async {
+        switch confirmation {
+        case .all: cancelAllTransfers()
+        case .selected: await cancelSelectedTransfers()
+        }
     }
 
     // MARK: - Bulk actions
