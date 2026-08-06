@@ -2765,7 +2765,7 @@
 /* File extension: .3g2. Commercial names should be stay on English */
 "general.filetype.3g2"="Multimedya";
 /* File extension: .7z. Commercial names should be stay on English */
-"general.filetype.7z"="7-Zip sıkıştırılmış";
+"general.filetype.7z"="Sıkıştırılmış 7-Zip";
 /* File extensions: .accdb, .db, .dbf and .pdb. Commercial names should be stay on English */
 "general.filetype.database"="Veritabanı";
 /* File extension: .aif and .aiff. Is not a commercial name, but a standard */
@@ -2817,7 +2817,7 @@
 /* File extension: .eps. Commercial names should be stay on English */
 "general.filetype.eps"="EPS fotoğrafı";
 /* File extension: .exe. Commercial names should be stay on English */
-"general.filetype.exe"="Yürütülebilir";
+"general.filetype.exe"="Çalıştırılabilir dosya";
 /* File extension: .flac. Commercial names should be stay on English */
 "general.filetype.flac"="Kayıpsız ses";
 /* File extension: .flv. Commercial names should be stay on English */
@@ -2825,7 +2825,7 @@
 /* File extension: .fnt. Commercial names should be stay on English */
 "general.filetype.fnt"="Windows yazı tipi";
 /* File extension: .fon. Commercial names should be stay on English */
-"general.filetype.fon"="Yazı Tipi";
+"general.filetype.fon"="Yazı tipi";
 /* File extension: .gadget. Commercial names should be stay on English */
 "general.filetype.gadget"="Windows gadget’ı";
 /* File extension: .gif. Commercial names should be stay on English */
@@ -5085,46 +5085,72 @@
 /* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
 "quotaWarning.error.button.tryAgain"="Tekrar dene";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
-"subscriptionPurchase.button.getPlan"="Al %@";
+"subscriptionPurchase.button.getPlan"="%@ al";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="En fazla %@ transfer kotasından yararlanın.";
+"subscriptionPurchase.feature.transfer.description"="%@’a varan aktarım kotasının keyfini çıkarın";
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
-"cloudDrive.offline.fileNotAvailableOffline"="Dosya çevrimdışı mevcut değildir.";
+"cloudDrive.offline.fileNotAvailableOffline"="Dosya çevrim dışı kullanılamıyor";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Depolama alanınız %d%% dolu.";
+"quotaWarning.storage.title"="Depolama alanınız %%%d dolu";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Transfer kotanızın %d%%'lik kısmını kullandınız.";
+"quotaWarning.transfer.percentUsed.title"="Aktarım kotanızın %%%d’sini kullandınız";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="Sonuç olarak indirme işleminiz kesintiye uğrayabilir. Daha fazla transfer kotası elde etmek için planınızı yükseltin. %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="Sonuç olarak indirme işleminiz kesintiye uğrayabilir. Daha fazla aktarım kotası elde etmek için planınızı yükseltin. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="İndirmeye devam etmek için planınızı yükseltin ve daha fazla transfer kotası alın. %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="İndirmeye devam etmek için planınızı yükseltin ve daha fazla aktarım kotası alın. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="Medya oynatımına devam etmek için planınızı yükseltin ve daha fazla transfer kotası alın. %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="Medya oynatımına devam etmek için planınızı yükseltin ve daha fazla aktarım kotası alın. %@";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
-"quotaWarning.recommendedPlan.tag.bestForYou"="Sizin için en iyi";
+"quotaWarning.recommendedPlan.tag.bestForYou"="Sizin için en iyisi";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="X11X sürümüne yükseltin.";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="%@ planına yükselt";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.title"="Bağlantı kurulamadı.";
+"quotaWarning.error.title"="Bağlanılamadı";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="Depolama ve transfer kullanımınızı kontrol etmek için daha sonra yeniden deneyin ve gerektiğinde planınızı yükseltin.";
+"quotaWarning.error.subtitle"="Depolama ve aktarım kullanımınızı kontrol etmek için daha sonra yeniden deneyin ve gerektiğinde planınızı yükseltin.";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
-"videoPlayer.airPlay.indicator.playingOnDevice"="Bu video harici bir cihazda oynatılıyor.";
+"videoPlayer.airPlay.indicator.playingOnDevice"="Bu video harici bir cihazda oynatılıyor";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="Depolama alanınız doldu. Yüklemeye devam etmek için planınızı yükseltin.";
+"quotaWarning.storage.full.uploading.subtitle"="Depolama alanınız doldu. Yüklemeye devam etmek için planınızı yükseltin";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="Bulut sürücüsünde yer açın veya daha fazla depolama için %@ üzerinden planınızı yönetin.";
+"quotaWarning.storage.manage.subtitle"="Bulut depolamada yer açın veya daha fazla depolama alanı için planınızı %@ üzerinden yönetin";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="Sonuç olarak medya oynatımı kesintiye uğrayabilir. Daha fazla transfer kotası elde etmek için planınızı yükseltin. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="Sonuç olarak medya oynatımı kesintiye uğrayabilir. Daha fazla aktarım kotası elde etmek için planınızı yükseltin. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="Sonuç olarak indirme işleminiz kesintiye uğrayabilir. Daha fazla transfer kotası için planınızı %@ üzerinden yönetin.";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="Sonuç olarak indirme işleminiz kesintiye uğrayabilir. Daha fazla aktarım kotası için planınızı %@ üzerinden yönetin";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Sonuç olarak medya oynatımı kesintiye uğrayabilir. Daha fazla transfer kotası için planınızı %@ üzerinden yönetin.";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Sonuç olarak medya oynatımı kesintiye uğrayabilir. Daha fazla aktarım kotası için planınızı %@ üzerinden yönetin";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="İndirmeye devam etmek için planınızı %@ üzerinden yönetin ve daha fazla transfer kotası elde edin.";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="İndirmeye devam etmek için planınızı %@ üzerinden yönetin ve daha fazla aktarım kotası elde edin";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Medya oynatmaya devam etmek için daha fazla transfer kotası almak üzere planınızı %@ üzerinden yönetin";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Medya oynatmaya devam etmek için daha fazla aktarım kotası almak üzere planınızı %@ üzerinden yönetin";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Süresi doluyor";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Bu bağlantıyı açmak için anahtarı girin. Anahtarınız yok mu? Gönderenle iletişime geçin.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Şifreyi girin";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Bu bağlantıyı açmak için şifreyi girin. Şifreniz yok mu? Gönderenle iletişime geçin.";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Özel teklif";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/ay";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/yıl";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Planları görüntüle";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="MEGA’ya kaydet";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Çevrim dışına kopyala";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Bu teklif sona erdi";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="Teklif %@ tarihinde sona eriyor";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Bu teklif artık geçerli değil. Bunun yerine planlarımıza göz atın.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Veya web sitemizde %@ tasarruf edin";

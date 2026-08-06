@@ -215,7 +215,7 @@
 /* folder link has expired */
 "cloudDrive.folderLink.hasExpired"="Il link è scaduto";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Nessuna connessione ad Internet";
+"noInternetConnection"="Nessuna connessione Internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Cartella vuota";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -885,7 +885,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Perderai tutti i dati associati a questo account. Sei sicuro di voler procedere?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Se non riesci ad accedere alla tua casella di posta elettronica, contatta support@mega.io";
+"ifYouCantAccessYourEmailAccount"="Se non riesci ad accedere alla tua casella di posta elettronica, contatta il supporto su https://mega.nz/support";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link di cancellazione scaduto.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -3003,7 +3003,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Devi attendere 10 minuti prima di inviare un altro report";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Attendi e riprova più tardi oppure contatta il nostro team di supporto tramite support@mega.io se il problema persiste";
+"help.reportIssue.fail.too.many.request.message"="Attendi e riprova più tardi oppure contatta il supporto su https://mega.nz/support se il problema persiste";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sei sicuro di voler annullare il caricamento della tua segnalazione?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3011,7 +3011,7 @@
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Descrivi il problema in almeno 30 caratteri";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Impossibile connettersi ad Internet. Controlla la tua connessione e riprova.";
+"general.NoIntenerConnection"="Impossibile connettersi Internet. Controlla la tua connessione e riprova.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Mostra nella schermata principale";
 /* Label indicating storage over quota */
@@ -4731,7 +4731,7 @@
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Immagine salvata sul tuo dispositivo";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Picture-in-picture";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Riavvolgi fino a 60 giorni di dati eliminati";
 /* Subscription benefit for for calls and meetings */
@@ -4787,7 +4787,7 @@
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
 "cameraUploads.progress.banner.paused.highThermalState.subtitle"="I Caricamenti da fotocamera sono in pausa, la temperatura del dispositivo è troppo alta. I caricamenti riprenderanno una volta che il dispositivo si sarà raffreddato.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Caricamenti da fotocamera sospesi, nessuna connessione a Internet";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Caricamenti da fotocamera sospesi, nessuna connessione Internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Attiva connessione dati";
 /* Camera Uploads Banner Storage Full Title */
@@ -4831,19 +4831,19 @@
 /* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="Grande";
 /* Title of Photo's compact zoom scale title */
-"media.photoLibrary.zoom.compact.title"="compatto";
+"media.photoLibrary.zoom.compact.title"="Compatto";
 /* Title of Photo's smallest zoom scale title */
-"media.photoLibrary.zoom.smallest.title"="più piccolo";
+"media.photoLibrary.zoom.smallest.title"="Più piccolo";
 /* Header title for the Date field in the album content sorting controls */
 "media.photoLibrary.album.sorting.date"="Data";
 /* Alert title in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.title"="Accesso limitato alle foto";
 /* Alert body in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.message"="Alcune foto che hai selezionato non sono disponibili per MEGA. Vuoi aggiornare le impostazioni di accesso?";
+"photo.picker.alert.limitAccess.message"="Alcune foto che hai selezionato non sono disponibili per MEGA. Vuoi modificare le impostazioni di accesso?";
 /* Alert cancel button in Photo Picker shown when selected photos lack permission. */
 "photo.picker.alert.limitAccess.availableOnly"="Carica le foto disponibili";
 /* Alert confirm button in Photo Picker shown when selected photos lack permission. */
-"photo.picker.alert.limitAccess.selectMore"="Aggiorna l'accesso";
+"photo.picker.alert.limitAccess.selectMore"="Modifica accesso";
 /* Add items */
 "general.addItems"="Aggiungi oggetti";
 /* The title displayed in Home's account details widget */
@@ -4865,7 +4865,7 @@
 /* Snackbar message shown after the user hides recent activity */
 "home.recent.hideRecentActivity.snackbar.message"="La tua attività recente è stata nascosta";
 /* Alert message shown when confirming the action to clear all recent activity */
-"home.recent.clearRecentActivity.alert.message"="Sei sicuro di voler cancellare tutte le attività recenti? Questo non può essere annullato.";
+"home.recent.clearRecentActivity.alert.message"="Vuoi veramente cancellare tutte le attività recenti? Questo non può essere annullato.";
 /* Label that indicates who added a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.addedByLabel"="Aggiunto da %@";
 /* Snackbar message shown after the user clears all recent activity */
@@ -4897,13 +4897,13 @@
 /* The no search results title in subtitle selection page */
 "videoPlayer.subtitles.select.search.noResults"="Nessun risultato";
 /* The add subtitle from Cloud drive option in subtitle menu */
-"videoPlayer.subtitles.menu.addFromCloudDrive"="Aggiungi sottotitolo dal Cloud Drive";
+"videoPlayer.subtitles.menu.addFromCloudDrive"="Aggiungi sottotitoli dal Cloud drive";
 /* The add subtitle button in subtitle selection page */
-"videoPlayer.subtitles.select.addSubtitle"="Aggiungi sottotitolo";
+"videoPlayer.subtitles.select.addSubtitle"="Aggiungi sottotitoli";
 /* The empty state content in subtitle selection page */
-"videoPlayer.subtitles.select.empty.content"="Carica sottotitoli in formato SRT sul tuo Cloud Drive";
+"videoPlayer.subtitles.select.empty.content"="Carica sottotitoli in formato SRT sul tuo Cloud drive";
 /* The error state title in subtitle selection page */
-"videoPlayer.subtitles.select.error.title"="Impossibile aggiungere sottotitolo";
+"videoPlayer.subtitles.select.error.title"="Impossibile aggiungere sottotitoli";
 /* The error state content in subtitle selection page */
 "videoPlayer.subtitles.select.error.content"="C'è stato un problema con il file dei sottotitoli.\nSeleziona un file di sottotitoli diverso o riprova.";
 /* Label that indicates where recent action bucket files are added to. %@ is a placeholder for a folder name */
@@ -4921,7 +4921,7 @@
 /* The input message to instruct user to enter the MEGA link */
 "openLink.inputMessage"="Incolla un link MEGA qualsiasi per aprirlo";
 /* The title for menu action button that will show the recent activity */
-"home.recent.menu.action.showRecentActivity"="Mostra l'attività recente";
+"home.recent.menu.action.showRecentActivity"="Mostra attività recente";
 /* Custom offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: %2$@ di sconto";
 /* Label suffix for the default connection option, shown as e.g. '4 (Default)' */
@@ -4931,17 +4931,17 @@
 /* Status text shown in the transfer Live Activity when files are being uploaded */
 "transfer.liveActivity.uploadingFiles"="Caricamento dei file";
 /* Section header in transfers settings */
-"settings.transfers.connections.title"="Connessioni per il trasferimento";
+"settings.transfers.connections.title"="Connessioni per i trasferimenti";
 /* Description in transfers settings explaining what parallel connections do */
 "settings.transfers.connections.description"="Imposta il numero massimo di connessioni parallele utilizzate per i trasferimenti attivi. Valori più elevati possono accelerare i trasferimenti di file di grandi dimensioni, ma aumentano il consumo di batteria e di memoria.";
 /* Title for the download connections row in transfers settings */
-"settings.transfers.connections.download.title"="Connessioni di download";
+"settings.transfers.connections.download.title"="Connessioni in download";
 /* Title for the upload connections row in transfers settings */
-"settings.transfers.connections.upload.title"="Connessioni di caricamento";
+"settings.transfers.connections.upload.title"="Connessioni in upload";
 /* Label suffix for connection option 1, shown as '1 (Best for slow networks)' */
 "settings.transfers.connections.option.bestForSlowNetworks"="Ideale per reti lente";
 /* Label suffix for connection option 8, shown as '8 (Higher battery and data usage)' */
-"settings.transfers.connections.option.higherUsage"="Maggiore consumo di batteria e traffico dati.";
+"settings.transfers.connections.option.higherUsage"="Maggiore consumo di batteria e traffico dati";
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Il trasferimento richiede attenzione";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -4961,11 +4961,11 @@
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Modalità musica";
 /* Title of the Active tab in the Transfers screen, listing transfers currently in progress. */
-"transfers.tab.active"="Attiva";
+"transfers.tab.active"="Attivi";
 /* Title of the Completed tab in the Transfers screen, listing transfers that have completed successfully. */
-"transfers.tab.completed"="Completato";
+"transfers.tab.completed"="Completati";
 /* Title of the Failed tab in the Transfers screen, listing transfers that failed or were cancelled. */
-"transfers.tab.failed"="Fallito";
+"transfers.tab.failed"="Falliti";
 /* Empty-state label shown on the Transfers screen when there are no transfers in any tab. */
 "transfers.emptyState.noTransfers"="Nessun trasferimento";
 /* Empty-state label shown on the Completed tab of the Transfers screen when there are no completed transfers. */
@@ -5009,17 +5009,17 @@
 /* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
 "cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Saranno caricati solo le foto e i video aggiunti dopo l'attivazione di questa opzione.";
 /* Title of the confirmation dialog shown before cancelling the selected transfers */
-"transfers.confirmation.cancelSelected.title"="Annulla i trasferimenti?";
+"transfers.confirmation.cancelSelected.title"="Annullare i trasferimenti?";
 /* Body of the confirmation dialog shown before cancelling the selected transfers */
 "transfers.confirmation.cancelSelected.message"="I trasferimenti selezionati verranno annullati.";
 /* Title of the confirmation dialog shown before cancelling every active transfer */
-"transfers.confirmation.cancelAll.title"="Annulla tutti i trasferimenti?";
+"transfers.confirmation.cancelAll.title"="Annullare tutti i trasferimenti?";
 /* Confirm button on the dialog shown before cancelling every active transfer */
 "transfers.confirmation.cancelAll.confirm"="Annulla tutto";
 /* Header of the What's new promotional dialog in Home screen */
-"home.promotionalDialog.header"="Novità";
+"home.promotionalDialog.header"="Cosa c'è di nuovo";
 /* Title of the What's new promotional dialog in Home screen */
-"home.promotionalDialog.title"="Personalizza la tua schermata Home";
+"home.promotionalDialog.title"="Personalizza la tua Home";
 /* Subtitle of the What's new promotional dialog in Home screen */
 "home.promotionalDialog.subtitle"="Scegli cosa vedere e organizzalo per adattarlo a come usi MEGA";
 /* Title of Explore button */
@@ -5027,15 +5027,15 @@
 /* The title of the purge banner caused by account inactivity */
 "cloudDrive.purgeBanner.inactivity.title"="Il tuo account è stato inattivo per troppo tempo";
 /* The subtitle of the purge banner caused by account inactivity */
-"cloudDrive.purgeBanner.inactivity.subtitle"="Poiché il tuo account è stato inattivo per oltre %@ mesi, i tuoi file sono stati rimossi in base alla nostra politica di inattività.";
+"cloudDrive.purgeBanner.inactivity.subtitle"="Poiché il tuo account è stato inattivo per oltre %@ mesi, i tuoi file sono stati rimossi in base alla nostra Politica sull'inattività.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
-"home.customization.disableLastWidget.snackbar.message"="Almeno una sezione deve rimanere accesa.";
+"home.customization.disableLastWidget.snackbar.message"="Almeno una sezione deve rimanere attiva";
 /* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
-"transfers.snackbar.allPaused"="Tutti i trasferimenti sono stati sospesi";
+"transfers.snackbar.allPaused"="Tutti i trasferimenti sono stati messi in pausa";
 /* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
 "cloudDrive.navigationBar.updating"="Aggiornamento…";
 /* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.transfer.title"="Ottieni più quota di trasferimento";
+"transfers.overQuotaBanner.transfer.title"="Ottieni più banda di trasferimento";
 /* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
 "transfers.overQuotaBanner.storage.title"="Ottieni più spazio di archiviazione";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
@@ -5045,7 +5045,7 @@
 /* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
 "media.audio.player.sleepTimer.title"="Timer di spegnimento";
 /* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
-"media.audio.player.sleepTimer.option.endOfTrack"="Fine traccia";
+"media.audio.player.sleepTimer.option.endOfTrack"="Fine della traccia";
 /* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
 "media.audio.player.sleepTimer.option.turnOff"="Spegni";
 /* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
@@ -5077,17 +5077,17 @@
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
 "subscriptionPurchase.revamp.cycle.yearly"="Abbonamento annuale";
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
-"subscriptionPurchase.revamp.cycle.saving"="Risparmia fino a %@";
+"subscriptionPurchase.revamp.cycle.saving"="Risparmia fino al %@";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Il tuo spazio di archiviazione è %d%% pieno";
+"quotaWarning.storage.title"="Il tuo spazio di archiviazione è pieno al %d%%";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
 "quotaWarning.error.title"="Impossibile connettersi";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
 "subscriptionPurchase.button.getPlan"="Ottieni %@";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
-"subscriptionPurchase.title"="Aggiorna a MEGA Pro";
+"subscriptionPurchase.title"="Effettua l'upgrade a MEGA Pro";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="Goditi fino a %@ quota di trasferimento";
+"subscriptionPurchase.feature.transfer.description"="Ottieni fino a %@ di banda di trasferimento";
 /* Description for the MEGA VPN Pro feature on the subscription purchase page. */
 "subscriptionPurchase.feature.vpn.description"="Rimani al sicuro online con MEGA VPN";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
@@ -5095,36 +5095,50 @@
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
 "cloudDrive.offline.fileNotAvailableOffline"="File non disponibile offline";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="Di conseguenza, il tuo download potrebbe essere interrotto. Aggiorna il tuo piano per ottenere una quota di trasferimento maggiore. %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="Come risultato il tuo download potrebbe essere interrotto. Effettua l'upgrade del tuo piano per ottenere una banda di trasferimento maggiore. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="Per continuare il download, aggiorna il tuo piano per ottenere una quota di trasferimento maggiore. %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="Per continuare il download, effettua l'upgrade del tuo piano per ottenere una banda di trasferimento maggiore. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="Per continuare la riproduzione multimediale, aggiorna il tuo piano per ottenere una quota di trasferimento maggiore. %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="Per continuare la riproduzione del file multimediale, effettua l'upgrade del tuo piano per ottenere una banda di trasferimento maggiore. %@";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
-"quotaWarning.recommendedPlan.tag.bestForYou"="Il meglio per te";
+"quotaWarning.recommendedPlan.tag.bestForYou"="Migliore per te";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="Aggiorna a %@";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="Effettua l'upgrade a %@";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="Riprova più tardi per controllare l'uso dello spazio di archiviazione e del trasferimento, e aggiorna il piano se necessario.";
+"quotaWarning.error.subtitle"="Riprova più tardi per controllare l'uso dello spazio di archiviazione e della banda di trasferimento, ed effettua l'upgrade del tuo piano se necessario.";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Hai utilizzato %d%% della tua quota di trasferimento";
+"quotaWarning.transfer.percentUsed.title"="Hai utilizzato il %d%% della tua banda di trasferimento";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="Hai esaurito lo spazio di archiviazione. Aggiorna il tuo piano per continuare a caricare";
+"quotaWarning.storage.full.uploading.subtitle"="Hai esaurito lo spazio di archiviazione. Effettua l'upgrade del tuo piano per continuare a caricare";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="Libera spazio nel Cloud Drive, oppure gestisci il tuo piano su %@ per avere più spazio di archiviazione";
+"quotaWarning.storage.manage.subtitle"="Libera spazio nel Cloud drive, oppure gestisci il tuo piano su %@ per avere più spazio di archiviazione";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="Di conseguenza, la riproduzione multimediale potrebbe essere interrotta. Aggiorna il tuo piano per ottenere più quota di trasferimento. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="Come risultato la riproduzione del file multimediale potrebbe essere interrotta. Effettua l'upgrade del tuo piano per ottenere più banda di trasferimento. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="Di conseguenza, il download potrebbe essere interrotto. Gestisci il tuo piano su %@ per avere più quota di trasferimento.";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="Come risultato il tuo download potrebbe essere interrotto. Gestisci il tuo piano su %@ per avere più banda di trasferimento.";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Di conseguenza, la riproduzione multimediale potrebbe essere interrotta. Gestisci il tuo piano su %@ per avere più quota di trasferimento.";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Come risultato la riproduzione del file multimediale potrebbe essere interrotta. Gestisci il tuo piano su %@ per avere più banda di trasferimento";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Per continuare il download, gestisci il tuo piano su %@ per avere più quota di trasferimento";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Per continuare il download, gestisci il tuo piano su %@ per avere più banda di trasferimento";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Per continuare la riproduzione multimediale, gestisci il tuo piano su %@ per avere più quota di trasferimento";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Per continuare la riproduzione del file multimediale, gestisci il tuo piano su %@ per avere più banda di trasferimento";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
 "videoPlayer.airPlay.indicator.playingOnDevice"="Questo video è in riproduzione su un dispositivo esterno";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="In scadenza";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Inserisci la chiave per aprire questo link. Non la possiedi? Contatta il mittente.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Inserisci password";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Inserisci la password per aprire questo link. Non la possiedi? Contatta il mittente.";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Offerta speciale";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/mese";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/anno";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Vedi piani";

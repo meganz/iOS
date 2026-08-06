@@ -335,7 +335,7 @@
 /* Error message shown when enabling geolocation failed */
 "chat.map.location.enableGeolocationFailedError"="啟用地理位置失敗。錯誤：%@";
 /* Menu option from the `Add` section that allows the user to share voice clip */
-"Voice Clip"="語音剪輯";
+"Voice Clip"="語音訊息";
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="新的文字檔案";
 /* Hint text shown on the new text file alert. */
@@ -2043,7 +2043,7 @@
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="此資料夾已認定需被移除。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="侵權移除申訴";
+"Dispute Takedown"="撤除下架申訴";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="用戶管理只能在電腦版瀏覽器進行。";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="共享時的額外安全性";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
+"ads.adFree.content.additionalSecurity.message"="透過我們的密碼管理器與高速VPN，讓您的線上日常更安全、更快速、更輕鬆";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="查看Pro方案";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@傳輸配額";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="每年計費%@";
+"subscriptionPurchase.plan.billedYearly"="按年計費%@";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍後";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4779,7 +4779,7 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/秒";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="每年計費";
+"upgradeAccountPlan.plan.yearly.footer"="按年計費";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="只要%@/月";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
@@ -4985,7 +4985,7 @@
 /* The title of the Continue where you left widget in Customise Home screen */
 "home.customization.widget.continueWhereYouLeftOff"="從上次中斷的地方繼續";
 /* The title of the Do more with MEGA widget in Customise Home screen */
-"home.customization.widget.doMoreWithMega"="MEGA助您提升生產力";
+"home.customization.widget.doMoreWithMega"="MEGA常用功能";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="已檢視的連結";
 /* The title of the Account status widget in Customise Home screen */
@@ -5059,7 +5059,7 @@
 /* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
 "subscriptionPurchase.revamp.cycle.monthly"="每月訂閱";
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.yearly"="每年訂閱";
+"subscriptionPurchase.revamp.cycle.yearly"="年繳訂閱";
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
 "subscriptionPurchase.revamp.cycle.saving"="最多可省%@";
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
@@ -5075,39 +5075,39 @@
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="您的傳輸配額即將用完";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="您已使用了 %d%% 的傳輸配額";
+"quotaWarning.transfer.percentUsed.title"="您已使用%d%%的傳輸配額";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="因此，您的下載可能會被中斷。升級您的方案以獲得更多傳輸配額。 %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="因此，您的下載可能會中斷。升級方案以取得更多傳輸配額。%@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="若要繼續下載，請升級您的方案以取得更多傳輸配額。 %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="若要繼續下載，升級方案以取得更多傳輸配額。%@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="如要繼續媒體播放，請升級您的方案以取得更多傳輸配額。 %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="若要繼續媒體播放，升級方案以取得更多傳輸配額。%@";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
 "quotaWarning.recommendedPlan.tag.bestForYou"="最適合您";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="升級至 %@";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="升級到%@";
 /* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
 "quotaWarning.recommendedPlan.button.viewAllPlans"="查看全部方案";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
 "quotaWarning.error.title"="無法連線";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="稍後再試以檢查您的儲存與傳輸使用情況，如有需要，請升級您的方案。";
+"quotaWarning.error.subtitle"="稍後再試以查看您的儲存空間與傳輸使用狀況，並視需要升級方案。";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
-"subscriptionPurchase.button.getPlan"="取得 %@";
+"subscriptionPurchase.button.getPlan"="取得%@";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
-"subscriptionPurchase.title"="升級至 MEGA Pro";
+"subscriptionPurchase.title"="升級至MEGA Pro";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="享有高達 %@ 的傳輸配額";
+"subscriptionPurchase.feature.transfer.description"="享有高達%@的傳輸配額";
 /* Description for the MEGA VPN Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.vpn.description"="使用 MEGA VPN，線上更安全";
+"subscriptionPurchase.feature.vpn.description"="使用MEGA VPN守護您的上網安全";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="在空間用完之前升級您的方案";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.pass.description"="使用 MEGA Pass，讓密碼更安全";
+"subscriptionPurchase.feature.pass.description"="使用MEGA Pass安全保管您的密碼";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="您的儲存空間已滿 %d%%";
+"quotaWarning.storage.title"="您的儲存空間已使用%d%%";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
 "videoPlayer.airPlay.indicator.playingOnDevice"="此影片正在外部裝置上播放";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
@@ -5115,16 +5115,30 @@
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
 "quotaWarning.storage.full.uploading.subtitle"="您的存儲空間已用完。升級您的方案以繼續上傳";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="請在雲端硬碟中騰出空間，或前往 %@ 管理您的方案以獲取更多存儲空間";
+"quotaWarning.storage.manage.subtitle"="清理雲端硬碟空間，或前往%@管理您的方案以取得更多儲存空間";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="因此，媒體播放可能會中斷。升級您的方案以獲取更多傳輸配額。 %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="因此，媒體播放可能會中斷。升級方案以取得更多傳輸配額。%@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="因此，您的下載可能會中斷。前往 %@ 管理您的方案以獲取更多傳輸配額";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="因此，您的下載可能會中斷。前往%@管理您的方案以取得更多傳輸配額";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="因此，媒體播放可能會中斷。前往 %@ 管理您的方案以獲取更多傳輸配額";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="因此，媒體播放可能會中斷。前往%@管理您的方案以取得更多傳輸配額";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="如要繼續下載，請前往 %@ 管理您的方案以獲取更多傳輸配額";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="若要繼續下載，請前往%@管理您的方案以取得更多傳輸配額";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="如要繼續媒體播放，請前往 %@ 管理您的方案以獲取更多傳輸配額";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="若要繼續媒體播放，請前往%@管理您的方案以取得更多傳輸配額";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="即將到期";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="請輸入金鑰開啟連結。若無金鑰，請聯繫發送者。";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="輸入密碼";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="請輸入金鑰開啟連結。若無金鑰，請聯繫發送者。";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="限時優惠";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/月";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/年";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="檢視方案";

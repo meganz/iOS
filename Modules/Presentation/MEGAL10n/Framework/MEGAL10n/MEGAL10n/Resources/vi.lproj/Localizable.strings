@@ -5055,19 +5055,19 @@
 /* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
 "account.profile.expiry.future"="Hết hạn vào %@";
 /* Section header above the list of Pro plan features on the revamped upgrade page */
-"subscriptionPurchase.revamp.features.title"="Tại[w]sao nên dùng Pro?";
+"subscriptionPurchase.revamp.features.title"="Tại sao nên dùng Pro?";
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.yearly"="Gói đăng[w]ký hàng[w]năm";
+"subscriptionPurchase.revamp.cycle.yearly"="Gói đăng ký hàng năm";
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
 "general.undo"="Hoàn tác";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
 "subscriptionPurchase.title"="Nâng cấp lên MEGA Pro";
 /* Description for the MEGA VPN Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.vpn.description"="Giữ an[w]toàn trực[w]tuyến với MEGA VPN";
+"subscriptionPurchase.feature.vpn.description"="Giữ an toàn trực tuyến với MEGA VPN";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.pass.description"="Giữ an[w]toàn cho mật[w]khẩu với MEGA Pass";
+"subscriptionPurchase.feature.pass.description"="Giữ an toàn cho mật khẩu với MEGA Pass";
 /* Short success banner shown when internet connectivity is restored */
-"general.noInternet.backOnline"="Trực[w]tuyến trở lại";
+"general.noInternet.backOnline"="Trực tuyến trở lại";
 /* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
 "quotaWarning.transfer.exceeded.title"="Vượt mức băng thông truyền tải";
 /* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
@@ -5128,3 +5128,5 @@
 "quotaWarning.error.title"="Không thể kết nối";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Sắp hết hạn";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Xem các gói";

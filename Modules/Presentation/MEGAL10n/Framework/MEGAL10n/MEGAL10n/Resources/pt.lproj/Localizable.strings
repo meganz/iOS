@@ -151,7 +151,7 @@
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Abrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="O arquivo que você está tentando baixar é maior do que a memória disponível.";
+"fileTooBigMessage"="O arquivo que você está tentando fazer download é maior do que a memória disponível.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="O arquivo que você está tentando abrir é maior do que a memória disponível.";
 /* Error title shown when you open a file or folder link and it's no longer available */
@@ -193,7 +193,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Fazer download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="A pasta que você está tentando baixar é maior do que a memória disponível.";
+"folderTooBigMessage"="A pasta que você está tentando fazer download é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo “%@” não pode ser criado";
 /*  */
@@ -1697,7 +1697,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Infelizmente a autenticação de dois fatores não pode ser ativada neste dispositivo. Por favor, acesse a App Store para instalar um aplicativo de autenticação.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Você precisa de um aplicativo de autenticação para ativar a 2FA no MEGA. Você pode baixar e instalar os aplicativos Google Authenticator, Duo Mobile, Authy ou Microsoft Authenticator no seu celular ou tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Você precisa de um aplicativo de autenticação para ativar a 2FA no MEGA. Você pode fazer o download e instalar os aplicativos Google Authenticator, Duo Mobile, Authy ou Microsoft Authenticator no seu celular ou tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Autenticação de dois fatores ativada";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -2469,7 +2469,7 @@
 /* Title for password protect link alert */
 "Link Password"="Senha do link";
 /* Message shown when a link is shared having a password */
-"Do you want to share the password for this link?"="Quer compartilhar a senha deste link?";
+"Do you want to share the password for this link?"="Você quer compartilhar a senha deste link?";
 /* Accessibility message when a message is sent in chat */
 "message sent"="mensagem enviada";
 /* Accessibility message when a message sending fails in chat */
@@ -4987,7 +4987,7 @@
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="Links visualizados";
 /* Status text shown in the transfer Live Activity after iOS has suspended the app and transfers can no longer make progress in the background. Prompts the user to reopen MEGA so transfers continue. */
-"transfer.liveActivity.openMEGAToResume"="Abra o MEGA para continuar";
+"transfer.liveActivity.openMEGAToResume"="Acesse o MEGA para continuar";
 /* The title of the Account status widget in Customise Home screen */
 "home.customization.widget.accountStatus"="Status da conta";
 /* Button title to show the location of selected files */
@@ -5128,3 +5128,35 @@
 "quotaWarning.transfer.streamingExceeded.manage.subtitle"="Para continuar reproduzindo mídia, gerencie o seu plano em %@ para obter mais cota de transferência";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Prestes a expirar";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Digite a chave para acessar este link. Não tem a chave? Entre em contato com o proprietário do link.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Digite a senha";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Digite a senha para acessar este link. Não tem a senha? Entre em contato com o proprietário do link.";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Oferta especial";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/mês";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/ano";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Ver os planos";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Salvar no MEGA";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Copiar para Offline";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Esta oferta terminou";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="A oferta termina em %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Esta oferta já não está disponível. Confira os nossos planos.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Ou economize até %@ no nosso site";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="Não foi possível carregar o conteúdo";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Houve um problema ao carregar os seus planos. Tente novamente.";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Tentar novamente";

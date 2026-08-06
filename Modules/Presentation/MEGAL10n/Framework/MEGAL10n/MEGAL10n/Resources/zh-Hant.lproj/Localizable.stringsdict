@@ -3009,7 +3009,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] 於 %d 月</string>
+        <string>[A] %d個月</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
@@ -3023,7 +3023,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] 於 %d 年</string>
+        <string>[A] %d年</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyRecurringMonths</key>
@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>前%d個月以[A]/月計費，之後[B]/月。</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>前%d個月以[A]計費，之後[B]/月。</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3061,7 +3065,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>前 %d 年按 [A]/月計費，之後 [B]/月。</string>
+        <string>前%d年以[A]計費，之後[B]/月。</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>前%d個月以[A]計費，之後按年計費[B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3087,7 +3093,35 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>前 %d 年按 [A]/月計費，之後 [B] 按年收取。</string>
+        <string>前%d年以[A]/月計費，之後按年計費[B]</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個月 只要[A] [B]</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d年 只要[A] [B]</string>
       </dict>
     </dict>
   </dict>

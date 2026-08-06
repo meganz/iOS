@@ -5128,3 +5128,5 @@
 "quotaWarning.transfer.downloadExceeded.manage.subtitle"="要继续下载，请在 %@ 处管理您的计划以获取更多传输配额。";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.transfer.streamingExceeded.manage.subtitle"="要继续媒体播放，请在 %@ 处管理您的计划以获取更多传输配额。";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="查看方案";

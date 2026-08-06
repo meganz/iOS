@@ -4405,7 +4405,7 @@
 /* Title of the invite contact page */
 "inviteContact.title"="Einladen";
 /* Visual media search history empty description */
-"photos.searchHistory.empty.description"="Führen Sie eine Suche nach Mediendateien durch";
+"photos.searchHistory.empty.description"="Probieren Sie die Suche nach Mediendateien aus";
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Ihr Speicher ist voll";
 /* Button title to upgrade when storage is full */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Mehr Sicherheit beim Teilen";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Schützen Sie Datei- und Ordnerlinks mit Passwort und Ablaufdatum.";
+"ads.adFree.content.additionalSecurity.message"="Unser Passwortmanager und unser Hochgeschwindigkeits-VPN machen Ihre Onlineaktivitäten sicherer, schneller und einfacher.";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Pro-Pakete ansehen";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4825,9 +4825,9 @@
 /* The title displayed in the empty view when Cloud Drive non-root folder is empty */
 "cloudDrive.emptyStateTitle.nonRoot"="Dieser Ordner ist leer";
 /* The subtitle title displayed in the empty view in Cloud Drive */
-"cloudDrive.emptyStateSubtitle"="Sichern Sie Inhalte sicher mit Zero-Knowledge-Verschlüsselung";
+"cloudDrive.emptyStateSubtitle"="Sie können hier Ihre Inhalte mit Zero-Knowledge-Verschlüsselung sicher speichern";
 /* Undecrypted file open error snackBar message */
-"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Vorschau für unentschlüsselte Dateien nicht verfügbar";
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Für nicht entschlüsselte Dateien ist keine Vorschau verfügbar";
 /* Title of Photo's large zoom scale title */
 "media.photoLibrary.zoom.large.title"="Groß";
 /* Title of Photo's compact zoom scale title */
@@ -5113,18 +5113,46 @@
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
-"videoPlayer.airPlay.indicator.playingOnDevice"="Dieses Video wird auf einem externen Gerät abgespielt.";
+"videoPlayer.airPlay.indicator.playingOnDevice"="Dieses Video wird auf einem externen Gerät wiedergegeben";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="Ihnen ist der Speicherplatz ausgegangen. Aktualisieren Sie Ihren Plan, um weiterhin hochladen zu können.";
+"quotaWarning.storage.full.uploading.subtitle"="Sie haben keinen Speicherplatz mehr. Upgraden Sie Ihr Paket, um den Upload fortsetzen zu können";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="Schaffen Sie Platz im Cloud Drive oder verwalten Sie Ihren Plan unter %@ für mehr Speicher.";
+"quotaWarning.storage.manage.subtitle"="Schaffen Sie Platz in Ihrem Cloud Drive oder verwalten Sie Ihr Paket auf %@, um mehr Speicherplatz zu erhalten";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="Daraus kann die Medienwiedergabe unterbrochen werden. Aktualisieren Sie Ihren Plan, um mehr Transferkontingent zu erhalten. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="Dies kann zu einer Unterbrechung der Medienwiedergabe führen. Upgraden Sie Ihr Paket, um mehr Transfervolumen zu erhalten. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="Daraus kann Ihr Download unterbrochen werden. Verwalten Sie Ihren Plan unter %@ für mehr Transferkontingent.";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="Dies kann zu einer Unterbrechung Ihres Downloads führen. Verwalten Sie Ihr Paket auf %@, um mehr Transfervolumen zu erhalten";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Daraus kann die Medienwiedergabe unterbrochen werden. Verwalten Sie Ihren Plan unter %@ für mehr Transferkontingent.";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Dies kann zu einer Unterbrechung der Medienwiedergabe führen. Verwalten Sie Ihr Paket auf %@, um mehr Transfervolumen zu erhalten";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Um Ihren Download fortzusetzen, verwalten Sie Ihren Plan unter %@ für mehr Transferkontingent.";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Verwalten Sie Ihr Paket auf %@, um mehr Transfervolumen zu erhalten und Ihren Download fortzusetzen";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Um die Medienwiedergabe fortzusetzen, verwalten Sie Ihren Plan unter %@ für mehr Transferkontingent.";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Verwalten Sie Ihr Paket auf %@, um mehr Transfervolumen zu erhalten und die Medienwiedergabe fortzusetzen";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Geben Sie den Schlüssel ein, um diesen Link zu öffnen. Sie haben ihn nicht? Wenden Sie sich an den Sender.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Passwort eingeben";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Geben Sie das Passwort ein, um diesen Link zu öffnen. Sie haben es nicht? Wenden Sie sich an den Sender.";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Sonderaktion";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/Monat";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/Jahr";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Pakete ansehen";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Auf MEGA speichern";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="In Offline-Bereich kopieren";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Dieses Angebot ist abgelaufen";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="Das Angebot endet am %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Dieses Angebot ist nicht mehr verfügbar. Sehen Sie sich stattdessen unsere Pakete an.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Oder sparen Sie bis zu %@ auf unserer Website";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Wiederholen";

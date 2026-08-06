@@ -715,11 +715,11 @@
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="HEIC 사진을 다음으로 저장";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="우리는 가장 호환성이 좋은 형식인, JPG를 추천합니다.";
+"We recommend JPG, as its the most compatible format for photos."="저희는 가장 호환성이 좋은 형식인, JPG를 추천합니다.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="HEVC 동영상을 다음으로 저장";
 /* Footer for HEVC format section */
-"We recommend H.264, as its the most compatible format for videos."="우리는 가장 호환성이 좋은 형식인, H.264를 추천합니다.";
+"We recommend H.264, as its the most compatible format for videos."="저희는 가장 호환성이 좋은 형식인, H.264를 추천합니다.";
 /* Footer for video compression quality */
 "Compression quality when to transcode HEVC videos to H.264 format."="HEVC 동영상을 H.264 형식으로 변환할 때 압축 품질.";
 /* Option title to enable upload videos with Camera Uploads */
@@ -2725,15 +2725,15 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="활성 구독";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="당신은 Apple에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, 구독에서 별도로 취소하여야 합니다. 더 많은 정보는 우리의 도움 센터를 방문하세요.";
+"account.delete.subscription.itunes"="당신은 Apple에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, 구독에서 별도로 취소하여야 합니다. 더 많은 정보는 저희 고객센터를 방문하세요.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="구독 관리";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="당신은 Google에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Google Play에서 별도로 취소하여야 합니다. 더 많은 정보는 우리의 도움 센터를 방문하세요.";
+"account.delete.subscription.googlePlay"="당신은 Google에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Google Play에서 별도로 취소하여야 합니다. 더 많은 정보는 저희 고객센터를 방문하세요.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="Google Play 방문";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="당신은 Huawei에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Huawei AppGallery에서 별도로 취소하여야 합니다. 더 많은 정보는 우리의 도움 센터를 방문하세요.";
+"account.delete.subscription.huaweiAppGallery"="당신은 Huawei에 활성 상태의 MEGA 구독이 있습니다. MEGA가 당신을 위해 처리할 수 없기 때문에, Huawei AppGallery에서 별도로 취소하여야 합니다. 더 많은 정보는 저희 고객센터를 방문하세요.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="AppGallery 방문";
 /* Dialog message shown before deleting an account with active webclient subscription */
@@ -2825,7 +2825,7 @@
 /* File extension: .fnt. Commercial names should be stay on English */
 "general.filetype.fnt"="Windows 서체";
 /* File extension: .fon. Commercial names should be stay on English */
-"general.filetype.fon"="서체";
+"general.filetype.fon"="글꼴";
 /* File extension: .gadget. Commercial names should be stay on English */
 "general.filetype.gadget"="Windows 가젯";
 /* File extension: .gif. Commercial names should be stay on English */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="공유할 때 추가 보안";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
+"ads.adFree.content.additionalSecurity.message"="저희의 암호 관리자와 고속 VPN으로 당신의 온라인 생활을 더 안전하고, 더 빠르고, 더 쉽게 만드세요";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Pro 요금제 보기";
 /* Ad-free experience screen button title that will dismiss page */
@@ -5065,47 +5065,47 @@
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
 "general.undo"="실행 취소";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="저장소가 %d%% 꽉 찼습니다.";
+"quotaWarning.storage.title"="저장소가 %d%% 찼습니다";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="전송 한도의 %d%%를 사용했습니다.";
+"quotaWarning.transfer.percentUsed.title"="전송 할당량의 %d%%를 이용했습니다";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.title"="연결할 수 없습니다.";
+"quotaWarning.error.title"="연결할 수 없습니다";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="저장소 및 전송 사용량을 확인하려면 나중에 다시 시도하고 필요하면 요금제를 업그레이드하세요.";
+"quotaWarning.error.subtitle"="저장소와 전송 이용량을 확인하려면 나중에 다시 시도하고, 필요하면 요금제를 업그레이드하세요.";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
-"subscriptionPurchase.button.getPlan"="%@ 얻기";
+"subscriptionPurchase.button.getPlan"="%@ 구입";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="최대 %@의 전송 한도를 이용하세요.";
+"subscriptionPurchase.feature.transfer.description"="최대 %@의 전송 한도를 이용하세요";
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
-"cloudDrive.offline.fileNotAvailableOffline"="오프라인에서 파일을 사용할 수 없습니다.";
+"cloudDrive.offline.fileNotAvailableOffline"="오프라인에서 파일을 이용할 수 없습니다";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="저장 공간이 부족합니다. 업로드를 계속하려면 요금제를 업그레이드하세요.";
+"quotaWarning.storage.full.uploading.subtitle"="저장 공간이 부족합니다. 업로드를 계속하려면 요금제를 업그레이드하세요";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="클라우드 드라이브에 공간을 확보하거나 더 많은 저장 공간이 필요하면 %@에서 요금제를 관리하세요.";
+"quotaWarning.storage.manage.subtitle"="클라우드 드라이브에 공간을 확보하거나, 더 많은 저장소를 위해 %@에서 요금제를 관리하세요";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="그 결과 다운로드가 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 요금제를 업그레이드하세요. %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="그 결과, 다운로드가 중단될 수 있습니다. 더 많은 전송 할당량을 받으려면 요금제를 업그레이드하세요. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="그 결과 미디어 재생이 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 요금제를 업그레이드하세요. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="그 결과, 미디어 재생이 중단될 수 있습니다. 더 많은 전송 할당량을 받으려면 요금제를 업그레이드하세요. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="다운로드를 계속하려면 요금제를 업그레이드하여 더 많은 전송 한도를 얻으세요. %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="다운로드를 계속하려면, 요금제를 업그레이드하여 더 많은 전송 할당량을 받으세요. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="미디어 재생을 계속하려면 요금제를 업그레이드하여 더 많은 전송 한도를 얻으세요. %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="미디어 재생을 계속하려면, 요금제를 업그레이드하여 더 많은 전송 할당량을 받으세요. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="그 결과 다운로드가 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 %@에서 요금제를 관리하세요.";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="그 결과, 다운로드가 중단될 수 있습니다. 더 많은 전송 할당량을 위해 %@에서 요금제를 관리하세요";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="그 결과 미디어 재생이 중단될 수 있습니다. 더 많은 전송 한도를 얻으려면 %@에서 요금제를 관리하세요.";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="그 결과, 미디어 재생이 중단될 수 있습니다. 더 많은 전송 할당량을 위해 %@에서 요금제를 관리하세요";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="다운로드를 계속하려면 %@에서 요금제를 관리하여 더 많은 전송 한도를 얻으세요.";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="다운로드를 계속 하려면, 더 많은 전송 할당량을 위해 %@에서 요금제를 관리하세요";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="미디어 재생을 계속하려면 %@에서 요금제를 관리하여 더 많은 전송 한도를 확보하세요.";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="다운로드를 계속 하려면, 더 많은 전송 할당량을 위해 %@에서 요금제를 관리하세요";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
-"quotaWarning.recommendedPlan.tag.bestForYou"="당신에게 가장 적합";
+"quotaWarning.recommendedPlan.tag.bestForYou"="당신께 최고";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
-"videoPlayer.airPlay.indicator.playingOnDevice"="이 비디오는 외부 기기에서 재생 중입니다.";
+"videoPlayer.airPlay.indicator.playingOnDevice"="이 동영상은 외부 기기에서 재생 중입니다";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="%@로 업그레이드";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="%@(으)로 업그레이드";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="만료 예정";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
@@ -5115,7 +5115,7 @@
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
 "subscriptionPurchase.feature.pass.description"="MEGA Pass로 암호를 안전하게 지키세요";
 /* Short success banner shown when internet connectivity is restored */
-"general.noInternet.backOnline"="다시 온라인 됨";
+"general.noInternet.backOnline"="다시 연결됨";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="공간이 부족해지기 전에 요금제를 업그레이드하세요";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
@@ -5128,3 +5128,29 @@
 "quotaWarning.recommendedPlan.button.viewAllPlans"="모든 요금제 보기";
 /* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
 "quotaWarning.error.button.tryAgain"="다시 시도";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="이 링크를 열려면 키를 입력하세요. 가지고 있지 않나요? 보낸 사람에게 연락하세요.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="암호 입력";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="이 링크를 열려면 암호를 입력하세요. 가지고 있지 않나요? 보낸 사람에게 연락하세요.";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="특별 할인";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="월 [A] [B]";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="연 [A] [B]";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="요금제 보기";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="MEGA에 저장";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="오프라인에 복사";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="이 할인은 종료되었습니다";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="할인이 %@에 종료됩니다";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="이 할인을 더 이상 이용할 수 없습니다. 그 대신 요금제를 확인해보세요.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="또는 저희 웹사이트에서 최대 %@ 할인을 받으세요";

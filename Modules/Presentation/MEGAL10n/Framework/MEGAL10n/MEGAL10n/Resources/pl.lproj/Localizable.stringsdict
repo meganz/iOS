@@ -3972,5 +3972,41 @@
         <string>[A] za pierwszych %d lat, potem [B] naliczane rocznie</string>
       </dict>
     </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] przez %d miesiąc</string>
+        <key>few</key>
+        <string>[A] [B] przez %d miesiąc</string>
+        <key>many</key>
+        <string>[A] [B] przez %d miesiące</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] przez %d rok</string>
+        <key>few</key>
+        <string>[A] [B] przez %d lata</string>
+        <key>many</key>
+        <string>[A] [B] przez %d lat</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

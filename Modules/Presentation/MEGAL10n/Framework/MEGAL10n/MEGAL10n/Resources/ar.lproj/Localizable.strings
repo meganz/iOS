@@ -5128,3 +5128,5 @@
 "quotaWarning.transfer.streamingExceeded.manage.subtitle"="للاستمرار في تشغيل الوسائط، قم بإدارة خطتك في %@ للحصول على حصة نقل إضافية";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="قريب الانتهاء";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="عرض الباقات";

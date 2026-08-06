@@ -3469,9 +3469,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay için [A]/ay faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk %d ay boyunca [A]/ay, sonrasında [B]/ay üzerinden faturalandırılır</string>
         <key>other</key>
-        <string>İlk %d ay için [A]/ay faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk %d ay boyunca [A]/ay, sonrasında [B]/ay üzerinden faturalandırılır</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3485,9 +3485,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay için [A] faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk %d ay boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
         <key>other</key>
-        <string>İlk %d ay için [A] faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk %d ay boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3501,9 +3501,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk yıl için [A] faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk yıl [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
         <key>other</key>
-        <string>İlk %d yıl için [A] faturalandırılır, sonrasında [B]/ay</string>
+        <string>İlk %d yıl boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3517,9 +3517,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay için [A] faturalandırılır, sonrasında [B] yıllık olarak ücretlendirilir</string>
+        <string>İlk %d ay boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
         <key>other</key>
-        <string>İlk %d ay için [A] faturalandırılır, sonrasında [B] yıllık olarak ücretlendirilir</string>
+        <string>İlk %d ay boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3533,9 +3533,41 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk yıl için [A] faturalandırılır, sonrasında [B] yıllık olarak ücretlendirilir</string>
+        <string>İlk yıl [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
         <key>other</key>
-        <string>İlk %d yıl için [A] faturalandırılır, sonrasında [B] yıllık olarak ücretlendirilir</string>
+        <string>İlk %d yıl boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d ay boyunca [A] yerine [B]</string>
+        <key>other</key>
+        <string>%d ay boyunca [A] yerine [B]</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d yıl boyunca [A] yerine [B]</string>
+        <key>other</key>
+        <string>%d yıl boyunca [A] yerine [B]</string>
       </dict>
     </dict>
   </dict>

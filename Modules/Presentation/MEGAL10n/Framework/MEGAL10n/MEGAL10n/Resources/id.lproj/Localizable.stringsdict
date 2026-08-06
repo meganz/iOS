@@ -3090,5 +3090,33 @@
         <string>Ditagihkan [A] untuk %d tahun pertama, [B] dibebankan setiap tahun setelahnya</string>
       </dict>
     </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[A] [B] for %d months</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[A] [B] for %d years</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

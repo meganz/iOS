@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
+"ads.adFree.content.additionalSecurity.message"="ช่วยให้ชีวิตออนไลน์ของคุณปลอดภัย รวดเร็ว และสะดวกสบายยิ่งขึ้นด้วยตัวจัดการรหัสผ่านและ VPN ความเร็วสูงของเรา";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="ดูแผน Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -5033,41 +5033,41 @@
 /* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
 "media.audio.player.playlist.playingFrom"="เล่นจาก %@";
 /* Title of the sleep timer options menu in the audio player, where the user picks when playback should automatically stop. */
-"media.audio.player.sleepTimer.title"="ตัวจับเวลานอน";
+"media.audio.player.sleepTimer.title"="ตัวตั้งเวลาปิด";
 /* Sleep timer option in the audio player that stops playback when the current track finishes playing. */
-"media.audio.player.sleepTimer.option.endOfTrack"="จบเพลง";
+"media.audio.player.sleepTimer.option.endOfTrack"="เมื่อเล่นจบเพลง";
 /* Sleep timer option in the audio player that cancels / disables the currently active sleep timer. */
-"media.audio.player.sleepTimer.option.turnOff"="ปิด";
+"media.audio.player.sleepTimer.option.turnOff"="ปิดใช้งาน";
 /* Shown in the audio player timestamp area while a sleep timer is running, indicating how much time is left before playback stops. %@ is the remaining time formatted as minutes and seconds (e.g. 14:32). */
-"media.audio.player.sleepTimer.remaining"="ตัวจับเวลานอน %@";
+"media.audio.player.sleepTimer.remaining"="ตัวตั้งเวลาปิด %@";
 /* Navigation bar title for Choose Default Launch Tab screen */
-"home.customization.defaultLaunchTab.title"="แท็บเริ่มต้น";
+"home.customization.defaultLaunchTab.title"="แท็บเริ่มต้นเมื่อเปิดใช้งาน";
 /* Message shown in a snackbar after the user taps the pause-all icon on the Transfers screen, confirming that every transfer has been paused. */
-"transfers.snackbar.allPaused"="หยุดการโอนข้อมูลทั้งหมดชั่วคราวแล้ว";
+"transfers.snackbar.allPaused"="หยุดพักการถ่ายโอนทั้งหมดชั่วคราว";
 /* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
-"cloudDrive.navigationBar.updating"="กำลังอัปเดต…";
+"cloudDrive.navigationBar.updating"="กำลังอัปเดตข้อมูล…";
 /* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.transfer.title"="รับโควต้าการถ่ายโอนเพิ่มขึ้น";
+"transfers.overQuotaBanner.transfer.title"="เพิ่มโควตาการถ่ายโอน";
 /* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.storage.title"="รับพื้นที่จัดเก็บเพิ่ม";
+"transfers.overQuotaBanner.storage.title"="เพิ่มโควตาพื้นที่จัดเก็บ";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.both.title"="รับพื้นที่จัดเก็บและโควตาการถ่ายโอนเพิ่ม";
+"transfers.overQuotaBanner.both.title"="เพิ่มโควตาพื้นที่จัดเก็บและการถ่ายโอน";
 /* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
 "account.profile.expiry.future"="หมดอายุในวันที่ %@";
 /* Section header above the list of Pro plan features on the revamped upgrade page */
-"subscriptionPurchase.revamp.features.title"="ทำไมต้องอัปเกรดเป็น Pro";
+"subscriptionPurchase.revamp.features.title"="เหตุผลที่ควรอัปเกรดเป็น Pro";
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.yearly"="การสมัครใช้งานรายปี";
+"subscriptionPurchase.revamp.cycle.yearly"="การสมัครใช้งานแบบรายปี";
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
 "general.undo"="เลิกทำ";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
 "subscriptionPurchase.title"="อัปเกรดเป็น MEGA Pro";
 /* Description for the MEGA VPN Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.vpn.description"="ท่องอินเทอร์เน็ตอย่างปลอดภัยด้วย MEGA VPN";
+"subscriptionPurchase.feature.vpn.description"="ท่องโลกออนไลน์ได้อย่างปลอดภัยด้วย MEGA VPN";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.pass.description"="ปกป้องรหัสผ่านของคุณให้ปลอดภัยด้วย MEGA Pass";
+"subscriptionPurchase.feature.pass.description"="ปกป้องรหัสผ่านให้ปลอดภัยด้วย MEGA Pass";
 /* Short success banner shown when internet connectivity is restored */
-"general.noInternet.backOnline"="กลับมาออนไลน์อีกครั้ง";
+"general.noInternet.backOnline"="กลับมาเชื่อมต่อออนไลน์แล้ว";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="กรุณาอัปเกรดแผนก่อนที่พื้นที่จัดเก็บจะเต็ม";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
@@ -5075,56 +5075,70 @@
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="โควตาการถ่ายโอนใกล้จะหมดแล้ว";
 /* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
-"quotaWarning.transfer.exceeded.title"="เกินโควต้าการถ่ายโอนแล้ว";
+"quotaWarning.transfer.exceeded.title"="โควตาการถ่ายโอนเกินกำหนด";
 /* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
 "quotaWarning.recommendedPlan.button.viewAllPlans"="ดูแผนการใช้งานทั้งหมด";
 /* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
-"quotaWarning.error.button.tryAgain"="ลองอีกครั้ง";
+"quotaWarning.error.button.tryAgain"="ลองใหม่อีกครั้ง";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="ผลลัพธ์คือ การเล่นสื่ออาจถูกขัดจังหวะ จัดการแผนของคุณที่ %@ เพื่อรับโควตาการถ่ายโอนข้อมูลเพิ่มเติม";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="ด้วยเหตุนี้ การเล่นสื่ออาจหยุดชะงัก จัดการแผนที่ %@ เพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="เพื่อดาวน์โหลดต่อ จัดการแผนของคุณที่ %@ เพื่อรับโควตาการถ่ายโอนข้อมูลเพิ่มเติม";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="หากต้องการดาวน์โหลดต่อ จัดการแผนที่ %@ เพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="เพื่อเล่นสื่อต่อ จัดการแผนของคุณที่ %@ เพื่อรับโควตาการถ่ายโอนข้อมูลเพิ่มเติม";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="หากต้องการเล่นสื่อต่อ จัดการแผนที่ %@ เพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
-"subscriptionPurchase.revamp.badge.expiring"="กำลังจะหมดอายุ";
+"subscriptionPurchase.revamp.badge.expiring"="ใกล้หมดอายุ";
 /* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.monthly"="การสมัครสมาชิกแบบรายเดือน";
+"subscriptionPurchase.revamp.cycle.monthly"="การสมัครใช้งานแบบรายเดือน";
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
-"subscriptionPurchase.revamp.cycle.saving"="ประหยัดได้สูงสุด %@";
+"subscriptionPurchase.revamp.cycle.saving"="ประหยัดได้สูงสุดถึง %@";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
-"subscriptionPurchase.button.getPlan"="รับ %@";
+"subscriptionPurchase.button.getPlan"="เลือก %@";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="เพลิดเพลินกับโควตาการถ่ายโอนสูงสุด %@";
+"subscriptionPurchase.feature.transfer.description"="ใช้งานโควตาการถ่ายโอนได้สูงสุดถึง %@";
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
-"cloudDrive.offline.fileNotAvailableOffline"="ไฟล์ไม่พร้อมใช้งานแบบออฟไลน์";
+"cloudDrive.offline.fileNotAvailableOffline"="ไฟล์นี้ไม่พร้อมใช้งานออฟไลน์";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="พื้นที่เก็บข้อมูลของคุณ %d%% เต็ม";
+"quotaWarning.storage.title"="พื้นที่จัดเก็บเต็ม %d%% แล้ว";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="คุณได้ใช้ %d%% ของโควตการถ่ายโอนของคุณ";
+"quotaWarning.transfer.percentUsed.title"="คุณใช้โควตาการถ่ายโอนไปแล้ว %d%%";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="ดังนั้นการดาวน์โหลดของคุณอาจถูกขัดจังหวะ อัปเกรดแผนของคุณเพื่อรับโควตาการถ่ายโอนที่มากขึ้น %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="ด้วยเหตุนี้ การดาวน์โหลดอาจหยุดชะงัก กรุณาอัปเกรดแผนเพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="เพื่อดำเนินการดาวน์โหลดของคุณต่อไป อัปเกรดแผนของคุณเพื่อรับโควตาการถ่ายโอนที่มากขึ้น %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="หากต้องการดาวน์โหลดต่อ กรุณาอัปเกรดแผนเพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="เพื่อดำเนินการเล่นสื่อของคุณต่อไป อัปเกรดแผนของคุณเพื่อรับโควตาการถ่ายโอนที่มากขึ้น %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="หากต้องการเล่นสื่อต่อ กรุณาอัปเกรดแผนเพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น %@";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
-"quotaWarning.recommendedPlan.tag.bestForYou"="ดีที่สุดสำหรับคุณ";
+"quotaWarning.recommendedPlan.tag.bestForYou"="เหมาะสมที่สุดสำหรับคุณ";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
 "quotaWarning.recommendedPlan.button.upgradeToPlan"="อัปเกรดเป็น %@";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
 "quotaWarning.error.title"="ไม่สามารถเชื่อมต่อได้";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="ลองใหม่ในภายหลังเพื่อตรวจสอบการใช้งานพื้นที่จัดเก็บและการถ่ายโอนของคุณ และอัปเกรดแผนของคุณหากจำเป็น";
+"quotaWarning.error.subtitle"="ลองใหม่อีกครั้งในภายหลังเพื่อตรวจสอบการใช้งานพื้นที่จัดเก็บและการถ่ายโอน พร้อมทั้งอัปเกรดแผนหากจำเป็น";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
-"videoPlayer.airPlay.indicator.playingOnDevice"="วิดีโอนี้กำลังเล่นบนอุปกรณ์ภายนอก";
+"videoPlayer.airPlay.indicator.playingOnDevice"="วิดีโอนี้กำลังเล่นอยู่บนอุปกรณ์ภายนอก";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="คุณหมดพื้นที่จัดเก็บแล้ว อัปเกรดแผนของคุณเพื่อดำเนินการอัป uploading";
+"quotaWarning.storage.full.uploading.subtitle"="พื้นที่จัดเก็บเต็มแล้ว กรุณาอัปเกรดแผนเพื่ออัปโหลดต่อ";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="สร้างพื้นที่ว่างใน Cloud drive หรือจัดการแผนของคุณที่ %@ เพื่อพื้นที่จัดเก็บเพิ่มเติม";
+"quotaWarning.storage.manage.subtitle"="เคลียร์พื้นที่ใน คลาวด์ไดร์ฟ หรือจัดการแผนที่ %@ เพื่อเพิ่มพื้นที่จัดเก็บ";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="ดังนั้นการเล่นสื่ออาจถูกขัดจังหวะ อัปเกรดแผนของคุณเพื่อรับโควตาการถ่ายโอนที่มากขึ้น %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="ด้วยเหตุนี้ การเล่นสื่ออาจหยุดชะงัก กรุณาอัปเกรดแผนเพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="ดังนั้นการดาวน์โหลดของคุณอาจถูกขัดจังหวะ จัดการแผนของคุณที่ %@ เพื่อรับโควตาการถ่ายโอนที่มากขึ้น";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="ด้วยเหตุนี้ การดาวน์โหลดอาจหยุดชะงัก จัดการแผนที่ %@ เพื่อรับโควตาการถ่ายโอนเพิ่มขึ้น";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="ป้อนคีย์เพื่อเปิดลิงก์นี้ หากไม่มีคีย์ กรุณาติดต่อผู้ส่ง";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="ป้อนรหัสผ่าน";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="ป้อนรหัสผ่านเพื่อเปิดลิงก์นี้ หากไม่มีรหัสผ่าน กรุณาติดต่อผู้ส่ง";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="ข้อเสนอพิเศษ";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/เดือน";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/ปี";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="ดูแผน";

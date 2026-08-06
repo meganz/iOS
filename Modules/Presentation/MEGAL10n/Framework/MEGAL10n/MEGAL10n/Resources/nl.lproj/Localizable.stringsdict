@@ -3532,5 +3532,37 @@
         <string>[A] voor de eerste %d jaar, daarna jaarlijks [B]</string>
       </dict>
     </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] voor %d maand</string>
+        <key>other</key>
+        <string>[A] [B] voor %d maanden</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] for %d jaar</string>
+        <key>other</key>
+        <string>[A] [B] voor %d jaar</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

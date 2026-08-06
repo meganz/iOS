@@ -5306,5 +5306,53 @@
         <string>تُفرض رسوم [A] لأول %d سنة، ثم [B] تُحصّل سنويًا بعد ذلك</string>
       </dict>
     </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>[A] [B] لمدة %d شهر</string>
+        <key>one</key>
+        <string>[A] [B] لمدة %d شهر</string>
+        <key>two</key>
+        <string>[A] [B] لمدة %d شهرين</string>
+        <key>few</key>
+        <string>[A] [B] لمدة %d أشهر</string>
+        <key>many</key>
+        <string>[A] [B] لمدة %d شهر</string>
+        <key>other</key>
+        <string>[A] [B] لمدة %d شهر</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>[A] [B] لمدة %d سنة</string>
+        <key>one</key>
+        <string>[A] [B] لمدة %d سنة</string>
+        <key>two</key>
+        <string>[A] [B] لمدة %d سنتين</string>
+        <key>few</key>
+        <string>[A] [B] لمدة %d سنوات</string>
+        <key>many</key>
+        <string>[A] [B] لمدة %d سنة</string>
+        <key>other</key>
+        <string>[A] [B] لمدة %d سنة</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

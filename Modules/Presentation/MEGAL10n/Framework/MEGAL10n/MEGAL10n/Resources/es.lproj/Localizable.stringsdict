@@ -139,11 +139,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Quien tenga este enlace puede ver y descargar lo que contiene.</string>
+        <string>Quien tenga este enlace puede ver y descargar lo que contiene</string>
         <key>many</key>
-        <string>Quien tenga estos enlaces puede ver y descargar lo que contienen.</string>
+        <string>Quien tenga estos enlaces puede ver y descargar lo que contienen</string>
         <key>other</key>
-        <string>Quien tenga estos enlaces puede ver y descargar lo que contienen.</string>
+        <string>Quien tenga estos enlaces puede ver y descargar lo que contienen</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -195,7 +195,7 @@
         <key>one</key>
         <string>Aplicar al duplicado</string>
         <key>many</key>
-        <string>Aplicar a los %d duplicados</string>
+        <string>Aplicar a los %d de duplicados</string>
         <key>other</key>
         <string>Aplicar a los %d duplicados</string>
       </dict>
@@ -3129,7 +3129,7 @@
         <key>one</key>
         <string>[UserName] está esperando para unirse a “[MeetingName]”</string>
         <key>many</key>
-        <string>%d participantes están esperando para unirse a “[MeetingName]”.</string>
+        <string>%d de participantes están esperando para unirse a “[MeetingName]”.</string>
         <key>other</key>
         <string>%d participantes están esperando para unirse a “[MeetingName]”.</string>
       </dict>
@@ -3901,11 +3901,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se factura [A]/mes durante el primer %d mes, después [B]/mes</string>
+        <string>Se cobran [A]/mes durante el primer %d mes, después [B]/mes</string>
         <key>many</key>
-        <string>Se factura [A]/mes durante los primeros %d meses, después [B]/mes</string>
+        <string>Se cobran [A]/mes durante los primeros %d meses, después [B]/mes</string>
         <key>other</key>
-        <string>Se factura [A]/mes durante los primeros %d meses, después [B]/mes</string>
+        <string>Se cobran [A]/mes durante los primeros %d meses, después [B]/mes</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3919,11 +3919,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se factura [A] durante el primer %d mes, después [B]/mes</string>
+        <string>Se cobran [A] durante el primer %d mes, después [B]/mes</string>
         <key>many</key>
-        <string>Se factura [A] durante los primeros %d meses, después [B]/mes</string>
+        <string>Se cobran [A] durante los primeros %d meses, después [B]/mes</string>
         <key>other</key>
-        <string>Se factura [A] durante los primeros %d meses, después [B]/mes</string>
+        <string>Se cobran [A] durante los primeros %d meses, después [B]/mes</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3937,11 +3937,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se factura [A] durante el primer año, después [B]/mes</string>
+        <string>Se cobran [A] durante el primer año, después [B]/mes</string>
         <key>many</key>
-        <string>Se factura [A] durante los primeros %d años, después [B]/mes</string>
+        <string>Se cobran [A] durante los primeros %d años, después [B]/mes</string>
         <key>other</key>
-        <string>Se factura [A] durante los primeros %d años, después [B]/mes</string>
+        <string>Se cobran [A] durante los primeros %d años, después [B]/mes</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3955,11 +3955,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se factura [A] durante el primer %d mes, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante el primer %d mes, después se cobran [B] anualmente</string>
         <key>many</key>
-        <string>Se factura [A] durante los primeros %d meses, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante los primeros %d meses, después se cobran [B] anualmente</string>
         <key>other</key>
-        <string>Se factura [A] durante los primeros %d meses, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante los primeros %d meses, después se cobran [B] anualmente</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3973,11 +3973,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se factura [A] durante el primer año, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante el primer año, después se cobran [B] anualmente</string>
         <key>many</key>
-        <string>Se factura [A] durante los primeros %d años, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante los primeros %d años, después se cobran [B] anualmente</string>
         <key>other</key>
-        <string>Se factura [A] durante los primeros %d años, después se factura [B] anualmente</string>
+        <string>Se cobran [A] durante los primeros %d años, después se cobran [B] anualmente</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] por %d mes</string>
+        <key>many</key>
+        <string>[A] [B] por %d meses</string>
+        <key>other</key>
+        <string>[A] [B] por %d meses</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] para %d año</string>
+        <key>many</key>
+        <string>[A] [B] para %d años</string>
+        <key>other</key>
+        <string>[A] [B] para %d años</string>
       </dict>
     </dict>
   </dict>

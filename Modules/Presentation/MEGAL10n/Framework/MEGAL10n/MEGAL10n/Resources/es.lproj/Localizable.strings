@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="Seguridad adicional al compartir";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Establece contraseñas y fechas de caducidad para los enlaces a carpetas y archivos.";
+"ads.adFree.content.additionalSecurity.message"="Haz que navegar por la web sea más seguro, más rápido y más sencillo con nuestro gestor de contraseñas y VPN de alta velocidad";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Descubre los planes Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4997,7 +4997,7 @@
 /* More menu action on the Transfers screen Active tab to cancel every active transfer */
 "transfers.action.cancelAllTransfers"="Cancelar todas las transferencias";
 /* More menu action on the Transfers screen Completed/Failed tab to clear every transfer from the list */
-"transfers.action.clearAllTransfers"="Eliminar todas las transferencias";
+"transfers.action.clearAllTransfers"="Limpiar todas las transferencias";
 /* More menu action on the Transfers screen Failed tab to retry every failed transfer */
 "transfers.action.retryAllTransfers"="Reintentar todas las transferencias";
 /* The title for the Reset to default action in Customise Home's menu */
@@ -5007,7 +5007,7 @@
 /* Title of the switch in Camera Uploads advanced settings to upload only photos and videos added after the option is turned on */
 "cameraUploads.settings.uploadOnlyNewPhotos.title"="Subir solo fotos nuevas";
 /* Footer text explaining the 'Upload only new photos' switch in Camera Uploads advanced settings */
-"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Sólo las fotos y vídeos añadidos después de activar esta opción se subirán.";
+"cameraUploads.settings.uploadOnlyNewPhotos.subtitle"="Se subirán sólo las fotos y los vídeos añadidos después de activar esta opción.";
 /* Title of the confirmation dialog shown before cancelling the selected transfers */
 "transfers.confirmation.cancelSelected.title"="¿Cancelar transferencias?";
 /* Body of the confirmation dialog shown before cancelling the selected transfers */
@@ -5025,9 +5025,9 @@
 /* Title of Explore button */
 "explore"="Explorar";
 /* The title of the purge banner caused by account inactivity */
-"cloudDrive.purgeBanner.inactivity.title"="Tu cuenta estuvo inactiva durante demasiado tiempo";
+"cloudDrive.purgeBanner.inactivity.title"="Tu cuenta ha estado inactiva durante demasiado tiempo";
 /* The subtitle of the purge banner caused by account inactivity */
-"cloudDrive.purgeBanner.inactivity.subtitle"="Como tu cuenta estuvo inactiva durante más de %@ meses, tus archivos fueron eliminados de acuerdo con nuestra política de inactividad.";
+"cloudDrive.purgeBanner.inactivity.subtitle"="Como tu cuenta ha estado inactiva durante más de %@ meses, tus archivos han sido eliminados de acuerdo con nuestra política de inactividad.";
 /* Snack bar message shown on the Customise Home screen when the user tries to switch off the last enabled section */
 "home.customization.disableLastWidget.snackbar.message"="Al menos una sección debe permanecer activa";
 /* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
@@ -5091,40 +5091,68 @@
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
 "subscriptionPurchase.button.getPlan"="Obtén %@";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="Disfruta de hasta %@ cuota de transferencia.";
+"subscriptionPurchase.feature.transfer.description"="Disfruta de hasta %@ de cuota de transferencia";
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
 "cloudDrive.offline.fileNotAvailableOffline"="Archivo no disponible sin conexión";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Tu almacenamiento está %d%% lleno";
+"quotaWarning.storage.title"="Tu almacenamiento está lleno al %d%%";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Has utilizado %d%% de tu cuota de transferencia";
+"quotaWarning.transfer.percentUsed.title"="Has utilizado el %d%% de tu cuota de transferencia";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="Como resultado, tu descarga podría interrumpirse. Actualiza tu plan para obtener más cuota de transferencia. %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="Como resultado, tu descarga podría interrumpirse. Amplía tu plan para obtener más cuota de transferencia. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="Para continuar tu descarga, actualiza tu plan para obtener más cuota de transferencia. %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="Para continuar tu descarga, amplía tu plan para obtener más cuota de transferencia. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="Para continuar la reproducción de medios, actualiza tu plan para obtener más cuota de transferencia. %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="Para continuar la reproducción de medios, amplía tu plan para obtener más cuota de transferencia. %@";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="Actualiza a %@";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="Amplía a %@";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.title"="No se pudo conectar";
+"quotaWarning.error.title"="No se ha podido conectar";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="Intenta de nuevo más tarde para verificar tu almacenamiento y uso de transferencia, y actualiza tu plan si es necesario.";
+"quotaWarning.error.subtitle"="Intenta de nuevo más tarde para comprobar tu almacenamiento y uso de transferencia y ampliar tu plan si es necesario.";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
 "videoPlayer.airPlay.indicator.playingOnDevice"="Este video se está reproduciendo en un dispositivo externo";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="Se te ha agotado el espacio de almacenamiento. Actualiza tu plan para continuar subiendo";
+"quotaWarning.storage.full.uploading.subtitle"="Se te ha agotado el espacio de almacenamiento. Amplía tu plan para continuar subiendo";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.storage.manage.subtitle"="Haz espacio en Cloud Drive, o gestiona tu plan en %@ para obtener más almacenamiento";
+"quotaWarning.storage.manage.subtitle"="Haz espacio en la Nube, o gestiona tu plan en %@ para obtener más almacenamiento";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="Como resultado, la reproducción de medios puede interrumpirse. Actualiza tu plan para obtener más cuota de transferencia. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="Como resultado, la reproducción de medios puede interrumpirse. Amplía tu plan para obtener más cuota de transferencia. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.transfer.limitedDownload.manage.subtitle"="Como resultado, tu descarga puede interrumpirse. Gestiona tu plan en %@ para obtener más cuota de transferencia";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Como resultado, la reproducción de medios puede interrumpirse. Gestiona tu plan en %@ para obtener más cuota de transferencia";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Como resultado, la reproducción de medios podría interrumpirse. Gestiona tu plan en %@ para obtener más cuota de transferencia";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Para continuar con tu descarga, administra tu plan en %@ para obtener más cuota de transferencia";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Para continuar con tu descarga, gestiona tu plan en %@ para obtener más cuota de transferencia";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Para continuar con la reproducción de medios, administra tu plan en %@ para obtener más cuota de transferencia";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Para continuar con la reproducción de medios, gestiona tu plan en %@ para obtener más cuota de transferencia";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Oferta especial";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Ver planes";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Introduce la clave para abrir este enlace.\n¿No la tienes? Contacta al propietario del enlace.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Introducir contraseña";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Introduce la contraseña para abrir este enlace. ¿No la tienes? Contacta al remitente.";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Guardar en MEGA";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/mes";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/año";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Copiar a Sin conexión";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Esta oferta ha terminado";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="La oferta termina el %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Esta oferta ya no está disponible. Consulta nuestros planes.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="O ahorra hasta un %@ en nuestra página web";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Inténtalo de nuevo";

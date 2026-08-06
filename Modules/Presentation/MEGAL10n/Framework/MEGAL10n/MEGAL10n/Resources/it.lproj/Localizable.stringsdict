@@ -2695,11 +2695,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Valido per %d giorno.</string>
+        <string>Valido per %d giorno</string>
         <key>many</key>
-        <string>Valido per %d di giorni.</string>
+        <string>Valido per %d di giorni</string>
         <key>other</key>
-        <string>Valido per %d giorni.</string>
+        <string>Valido per %d giorni</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -3541,11 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>many</key>
-        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3559,11 +3559,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>many</key>
-        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3577,11 +3577,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>many</key>
-        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d di file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <string>Nonostante ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Effettua l'upgrade a un piano [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3810,6 +3810,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Ora</string>
+        <key>many</key>
+        <string>Ore</string>
         <key>other</key>
         <string>Ore</string>
       </dict>
@@ -3824,6 +3828,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Minuto</string>
+        <key>many</key>
+        <string>Minuti</string>
         <key>other</key>
         <string>Minuti</string>
       </dict>
@@ -3838,6 +3846,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Giorno</string>
+        <key>many</key>
+        <string>Giorni</string>
         <key>other</key>
         <string>Giorni</string>
       </dict>
@@ -3855,7 +3867,7 @@
         <key>one</key>
         <string>[A] per %d mese</string>
         <key>many</key>
-        <string>[A] per %d mesi</string>
+        <string>[A] per %d di mesi</string>
         <key>other</key>
         <string>[A] per %d mesi</string>
       </dict>
@@ -3873,7 +3885,7 @@
         <key>one</key>
         <string>[A] per %d anno</string>
         <key>many</key>
-        <string>[A] per %d anni</string>
+        <string>[A] per %d di anni</string>
         <key>other</key>
         <string>[A] per %d anni</string>
       </dict>
@@ -3961,9 +3973,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Billed at [A] for the first year, [B] charged yearly after</string>
+        <string>Fatturato a [A] per il primo anno, poi [B] fatturato annualmente</string>
+        <key>many</key>
+        <string>Fatturato a [A] per i primi %d anni, poi [B] fatturato annualmente</string>
         <key>other</key>
-        <string>Billed at [A] for the first %d years, [B] charged yearly after</string>
+        <string>Fatturato a [A] per i primi %d anni, poi [B] fatturato annualmente</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] per %d mese</string>
+        <key>many</key>
+        <string>[A] [B] per %d di mesi</string>
+        <key>other</key>
+        <string>[A] [B] per %d mesi</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] per %d anno</string>
+        <key>many</key>
+        <string>[A] [B] per %d di anni</string>
+        <key>other</key>
+        <string>[A] [B] per %d anni</string>
       </dict>
     </dict>
   </dict>

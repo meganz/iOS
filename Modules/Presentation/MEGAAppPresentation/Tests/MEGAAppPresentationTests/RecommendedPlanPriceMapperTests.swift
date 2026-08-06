@@ -69,7 +69,7 @@ struct RecommendedPlanPriceMapperTests {
         )))
         #expect(result == .discountMonthly(.init(
             priceLine: "[A]€9.99[/A] €0.00 for 1 month",
-            billingCaption: "Billed at €0.00 for the first 1 month, €9.99/month after"
+            billingCaption: "Billed at €0.00 for the first month, €9.99/month after"
         )))
     }
 

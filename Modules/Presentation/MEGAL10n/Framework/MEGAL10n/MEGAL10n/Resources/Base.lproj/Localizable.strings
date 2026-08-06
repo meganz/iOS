@@ -4519,7 +4519,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="MEGA Pass and MEGA VPN";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Make your online life safer, faster, and easier with our password manager and high speed VPN";
+"ads.adFree.content.additionalSecurity.message"="Make your online life safer, faster, and easier with our password manager and high-speed VPN";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="View Pro plans";
 /* Ad-free experience screen button title that will dismiss page */
@@ -5145,12 +5145,12 @@
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="View plans";
 /* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
-"subscriptionPurchase.revamp.promo.offerEnded.message"="This deal is no longer available. Check our current plans to find one that suits you.";
+"subscriptionPurchase.revamp.promo.offerEnded.message"="This offer is no longer available. Check out our plans instead.";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
-"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Buy on our website and save up to %@";
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Or save up to %@ on our website";
 /* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
-"subscriptionPurchase.revamp.loadError.title"="Couldn't load content";
+"subscriptionPurchase.revamp.loadError.title"="Couldn’t load content";
 /* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
-"subscriptionPurchase.revamp.loadError.message"="We ran into a problem loading your plans. Please try again";
+"subscriptionPurchase.revamp.loadError.message"="We ran into a problem loading your plans. Please try again.";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Try again";

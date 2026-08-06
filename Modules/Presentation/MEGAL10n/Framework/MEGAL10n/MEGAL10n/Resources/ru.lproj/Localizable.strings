@@ -5128,3 +5128,5 @@
 "videoPlayer.airPlay.indicator.playingOnDevice"="Это видео воспроизводится на внешнем устройстве";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Истекает срок действия";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Смотреть подписки";

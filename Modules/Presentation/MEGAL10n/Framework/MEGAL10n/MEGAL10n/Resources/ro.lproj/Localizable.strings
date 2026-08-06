@@ -5128,3 +5128,5 @@
 "videoPlayer.airPlay.indicator.playingOnDevice"="Acest videoclip rulează pe un dispozitiv extern.";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Expiră în curând.";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Afișați abonamentele";

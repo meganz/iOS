@@ -3469,7 +3469,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Billed at [A]/month for the first %d month, [B]/month after</string>
+        <string>Billed at [A]/month for the first month, [B]/month after</string>
         <key>other</key>
         <string>Billed at [A]/month for the first %d months, [B]/month after</string>
       </dict>
@@ -3485,7 +3485,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Billed at [A] for the first %d month, [B]/month after</string>
+        <string>Billed at [A] for the first month, [B]/month after</string>
         <key>other</key>
         <string>Billed at [A] for the first %d months, [B]/month after</string>
       </dict>
@@ -3517,7 +3517,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Billed at [A] for the first %d month, [B] charged yearly after</string>
+        <string>Billed at [A] for the first month, [B] charged yearly after</string>
         <key>other</key>
         <string>Billed at [A] for the first %d months, [B] charged yearly after</string>
       </dict>

@@ -5128,3 +5128,5 @@
 "quotaWarning.transfer.streamingExceeded.manage.subtitle"="Untuk melanjutkan pemutaran media, kelola paket Anda di %@ untuk kuota transfer yang lebih banyak";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Hampir kedaluwarsa";
+/* Title of the button on the offer expiration alert in revamped Upgrade screen. */
+"subscriptionPurchase.revamp.promo.button.viewPlans"="Lihat rencana";

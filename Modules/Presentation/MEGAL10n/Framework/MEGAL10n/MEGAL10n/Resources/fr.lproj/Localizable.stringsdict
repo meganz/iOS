@@ -3980,5 +3980,41 @@
         <string>Facturé à [A] pendant les %d premières années, puis [B] facturé annuellement</string>
       </dict>
     </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] pour %d mois</string>
+        <key>many</key>
+        <string>[A] [B] pour %d mois</string>
+        <key>other</key>
+        <string>[A] [B] pour %d mois</string>
+      </dict>
+    </dict>
+    <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] [B] pour %d an</string>
+        <key>many</key>
+        <string>[A] [B] pour %d ans</string>
+        <key>other</key>
+        <string>[A] [B] pour %d ans</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
