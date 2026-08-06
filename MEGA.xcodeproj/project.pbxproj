@@ -17156,14 +17156,15 @@
 				MARKETING_VERSION = 18.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-Wno-quoted-include-in-framework-header -Wno-error=deprecated-declarations -Wno-error=deprecated-implementations";
+				OTHER_CFLAGS = "-Wno-quoted-include-in-framework-header";
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500 -warnings-as-errors -Wwarning DeprecatedDeclaration";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
 				SDKROOT = iphoneos;
 				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_STRICT_CONCURRENCY = targeted;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -17221,8 +17222,6 @@
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-Wno-quoted-include-in-framework-header",
-					"-Wno-error=deprecated-declarations",
-					"-Wno-error=deprecated-implementations",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
@@ -17287,6 +17286,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev 1760050756";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
 				SWIFT_VERSION = 6.0;
 				USER_HEADER_SEARCH_PATHS = (
@@ -17402,7 +17402,7 @@
 					"-Xlinker",
 					"-no_application_extension",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION -warnings-as-errors -Wwarning DeprecatedDeclaration";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGANotifications 1760050800";
@@ -17696,7 +17696,7 @@
 					"-no_application_extension",
 					"-ObjC",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION -warnings-as-errors -Wwarning DeprecatedDeclaration";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAShare 1760050790";
@@ -17795,7 +17795,7 @@
 					"-Xlinker",
 					"-no_application_extension",
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG -warnings-as-errors -Wwarning DeprecatedDeclaration";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPickerFileProvider 1760050781";
@@ -18174,8 +18174,6 @@
 				OTHER_CFLAGS = (
 					"-DNDEBUG",
 					"-Wno-quoted-include-in-framework-header",
-					"-Wno-error=deprecated-declarations",
-					"-Wno-error=deprecated-implementations",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=500 -Xfrontend -warn-long-expression-type-checking=500";
