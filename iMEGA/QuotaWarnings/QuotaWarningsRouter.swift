@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAudioPlayer
 import MEGADomain
 import MEGASdk
 import MEGASwift
@@ -234,6 +235,9 @@ extension QuotaWarningsRouter {
                             await AudioPlayerManager.shared.dismissFullScreenPlayer()
                             AudioPlayerManager.shared.closePlayer()
                         }
+                    }
+                    if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+                        MEGAAudioPlayerSession.stop()
                     }
                 }
             ).start()

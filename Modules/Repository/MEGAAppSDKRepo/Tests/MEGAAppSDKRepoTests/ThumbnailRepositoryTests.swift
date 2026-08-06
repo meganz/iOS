@@ -197,7 +197,7 @@ final class ThumbnailRepositoryTests: XCTestCase {
     private func makeImageFile(forNode node: NodeEntity, image: UIImage? = UIImage(systemName: "folder"), type: ThumbnailTypeEntity) throws -> URL {
         let localImage = try XCTUnwrap(image)
         let imageNodeURL = try imagePathURL(forNode: node, type: type)
-        makeFile(path: imageNodeURL.path, contents: localImage.pngData())
+        try makeFile(path: imageNodeURL.path, contents: localImage.pngData())
         return imageNodeURL
     }
     
@@ -232,7 +232,18 @@ final class ThumbnailRepositoryTests: XCTestCase {
             .appendingPathComponent(directory, isDirectory: true)
     }
     
-    private func makeFile(path: String, contents: Data?) {
+    /// Creates the cache directory before writing, because `createFile(atPath:contents:)` fails rather
+    /// than creating intermediate directories. The directory is otherwise only created lazily by
+    /// `ThumbnailRepository` itself — after the fixture is written — so on a machine that has never run
+    /// these tests the write failed, and only passed on a retry because the first run had left the
+    /// directory behind.
+    private func makeFile(path: String, contents: Data?) throws {
+        let fileURL = URL(fileURLWithPath: path)
+        try FileManager.default.createDirectory(
+            at: fileURL.deletingLastPathComponent(),
+            withIntermediateDirectories: true
+        )
+
         let isLocalFileCreated = FileManager.default.createFile(atPath: path, contents: contents)
         XCTAssertTrue(isLocalFileCreated)
     }

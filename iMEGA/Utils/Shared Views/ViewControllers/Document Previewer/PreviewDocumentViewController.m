@@ -363,6 +363,12 @@
     previewDocumentTransfer = nil;
 }
 
+- (void)hideProgressIndicator {
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.progressView.hidden = YES;
+}
+
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -374,6 +380,12 @@
     [self.progressView setHidden:NO];
     float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     [self.progressView setProgress:percentage];
+}
+
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type == MEGAErrorTypeApiEOverQuota) {
+        [self hideProgressIndicator];
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

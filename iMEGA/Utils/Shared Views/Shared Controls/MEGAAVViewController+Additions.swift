@@ -462,6 +462,46 @@ extension MEGAAVViewController {
         trackShareLinkVideoPlayStartedIfNeeded()
         subscriptions.add(bindPlayerTimeControlStatus())
         subscriptions.add(bindPlayerExternalPlayback())
+        subscriptions.add(bindPlayerRateForFailedItemRetry())
+    }
+
+    /// Retries the current node when the user taps play after playback failed.
+    /// Only the zero to non-zero edge counts as a request to play
+    private func bindPlayerRateForFailedItemRetry() -> NSMutableSet {
+        var subscriptions = Set<AnyCancellable>()
+        var previousRate: Float = .zero
+
+        player?.publisher(for: \.rate, options: [.new])
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (rate: Float) in
+                let oldRate: Float = previousRate
+                previousRate = rate
+                guard oldRate == .zero, rate > .zero else { return }
+
+                let itemStatus: Int = self?.player?.currentItem?.status.rawValue ?? -1
+                MEGALogInfo("[MEGAAVViewController]: retry if needed, rate \(oldRate) -> \(rate), current item status: \(itemStatus)")
+
+                self?.retryCurrentItemIfFailed()
+            }
+            .store(in: &subscriptions)
+
+        return NSMutableSet(set: subscriptions)
+    }
+
+    /// A failed `AVPlayerItem` is terminal — `play()` on it neither resumes nor reaches the network, which
+    /// is why the play button looks dead. Rebuilding the item re-issues the streaming request, and it is
+    /// that request which raises the over-quota warning again.
+    private func retryCurrentItemIfFailed() {
+        guard player?.currentItem?.status == .failed,
+              let apiForStreaming,
+              let node else { return }
+
+        setFileUrl(apiForStreaming: apiForStreaming, node: node)
+        guard let fileUrl else { return }
+
+        replacePlayerItemURL(to: fileUrl, for: node)
+        player?.play()
     }
 
     private func trackShareLinkVideoPlayStartedIfNeeded() {

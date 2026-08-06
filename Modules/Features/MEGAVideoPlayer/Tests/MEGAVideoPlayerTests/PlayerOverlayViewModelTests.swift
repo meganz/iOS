@@ -164,7 +164,8 @@ struct PlayerOverlayViewModelTests {
         (.opening, false),
         (.stopped, false),
         (.ended, true),
-        (.error("Test error"), false)
+        // A failed playback keeps its controls: the play button is the only way out of it.
+        (.error("Test error"), true)
     ])
     func autoHideTimer_whenShowControlsAfterThreeSeconds_shouldChangeControlVisibility(
         playerState: PlaybackState,
@@ -188,7 +189,8 @@ struct PlayerOverlayViewModelTests {
         (.opening, false),
         (.stopped, false),
         (.ended, true),
-        (.error("Test error"), false)
+        // A failed playback keeps its controls: the play button is the only way out of it.
+        (.error("Test error"), true)
     ])
     func autoHideTimer_whenControlTappedAndAfterThreeSeconds_shouldChangeControlVisibility(
         playerState: PlaybackState,
@@ -222,6 +224,37 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.seekCallCount == 1)
         #expect(mockPlayer.seekTime == 0)
         #expect(mockPlayer.playCallCount == 1)
+    }
+
+    /// A failed item is terminal, so plain `play()` would neither resume nor reach the network. Rebuilding
+    /// it re-issues the streaming request, which is what raises the over-quota warning again.
+    @Test
+    func didTapPlay_whenError_replaysCurrentNodeInsteadOfPlaying() {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.state = .error("Test error")
+
+        sut.didTapPlay()
+
+        #expect(mockPlayer.replayCurrentNodeCallCount == 1)
+        // Resumes where playback died, so it must not rewind the way `.stopped` and `.ended` do.
+        #expect(mockPlayer.seekCallCount == 0)
+        #expect(mockPlayer.playCallCount == 0)
+    }
+
+    /// Playback can fail while the controls are hidden, leaving the user no play button to reach.
+    @Test
+    func stateChange_whenError_showsControls() async {
+        let mockPlayer = MockVideoPlayer(state: .playing)
+        let sut = makeSUT(player: mockPlayer)
+        sut.viewWillAppear()
+        sut.isControlsVisible = false
+
+        mockPlayer.state = .error("Test error")
+
+        try? await Task.sleep(for: .milliseconds(100))
+
+        #expect(sut.isControlsVisible == true)
     }
 
     @Test

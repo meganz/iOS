@@ -159,6 +159,10 @@ extension PlayerOverlayViewModel {
         switch state {
         case .ended, .stopped:
             player.seek(to: 0)
+        case .error:
+            player.replayCurrentNode()
+            resetAutoHide()
+            return
         default:
             break
         }
@@ -628,9 +632,11 @@ extension PlayerOverlayViewModel {
 
     private var shouldAutoHide: Bool {
         switch state {
-        case .paused, .buffering, .ended:
+        /// `.error` keeps the controls up because the play button is the only way out of a failed
+        /// playback — hiding it would leave the user tapping a blank screen to find it again.
+        case .paused, .buffering, .ended, .error:
             false
-        case .playing, .opening, .stopped, .error:
+        case .playing, .opening, .stopped:
             true
         }
     }
@@ -638,7 +644,8 @@ extension PlayerOverlayViewModel {
     private func handleStateChange(_ newState: PlaybackState) {
         state = newState
         switch newState {
-        case .opening, .ended:
+        /// Playback can fail while the controls are hidden, so bring them back to expose the play button.
+        case .opening, .ended, .error:
             showControls()
         default:
             break

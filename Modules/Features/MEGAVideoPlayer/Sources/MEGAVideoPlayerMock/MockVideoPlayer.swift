@@ -72,6 +72,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var seekResult: Bool = true
     public var playNextCallCount: Int = 0
     public var playPreviousCallCount: Int = 0
+    public var replayCurrentNodeCallCount: Int = 0
     public var changeRateCallCount: Int = 0
     public var changeRateValue: Float = 1.0
     public var setLoopingCallCount: Int = 0
@@ -151,6 +152,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
 
     public func playPrevious() {
         playPreviousCallCount += 1
+    }
+
+    public func replayCurrentNode() {
+        replayCurrentNodeCallCount += 1
     }
 
     public func changeRate(to rate: Float) {

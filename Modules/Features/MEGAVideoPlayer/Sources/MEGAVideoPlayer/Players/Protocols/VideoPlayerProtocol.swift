@@ -44,6 +44,9 @@ public protocol PlaybackControllable {
     func setLooping(_ enabled: Bool)
     func playNext()
     func playPrevious()
+    /// Rebuilds the current node's player item and resumes from the current playback position, used to
+    /// retry after a playback failure where the failed item can no longer be played.
+    func replayCurrentNode()
 }
 
 @MainActor

@@ -312,6 +312,42 @@ extension MEGAAVPlayer: NodeLoadable {
         play()
     }
 
+    /// Retries the current node after a playback failure. A failed `AVPlayerItem` is terminal — `play()`
+    /// on it neither resumes nor issues another request — so the item is rebuilt from a freshly requested
+    /// streaming link, and it is that request which raises the over-quota warning again.
+    ///
+    /// Mirrors `playNode(_:)`, but resumes where playback died rather than at the saved resume position,
+    /// and keeps the node info already on screen.
+    public func replayCurrentNode() {
+        guard let node = currentNode else { return }
+
+        let replayPosition = TimeInterval(currentTime.components.seconds)
+
+        if !streamingUseCase.isStreaming {
+            streamingUseCase.startStreaming()
+        }
+
+        guard let url = streamingUseCase.streamingLink(for: node) else {
+            let errorMessage = "Failed to get streaming link for node"
+            state = .error(errorMessage)
+            playbackDebugMessage(errorMessage)
+            return
+        }
+        state = .opening
+        currentURL = url
+        let itemURL = player.isExternalPlaybackActive ? url.updatedURLWithCurrentAddress() : url
+        let playerItem = AVPlayerItem(url: itemURL)
+        player.replaceCurrentItem(with: playerItem)
+
+        observe(for: playerItem)
+
+        if replayPosition > 0 {
+            seek(to: replayPosition)
+        }
+
+        play()
+    }
+
     private func monitorVideoNodesUpdate(for nodes: [some PlayableNode]) {
         monitorVideoNodesUpdateTask?.cancel()
         monitorVideoNodesUpdateTask = Task { [weak self, videoNodesUseCase] in
@@ -615,7 +651,12 @@ extension MEGAAVPlayer {
             .store(in: &cancellables)
     }
 
+    /// A failed item is terminal, so `.error` has to survive until a fresh item replaces it. The player
+    /// keeps reporting time-control changes after the failure — parking on `.waitingToPlayAtSpecifiedRate`
+    /// or `.paused` — which would otherwise replace `.error` with a spinner that never resolves and leave
+    /// the user no play button to tap.
     private func timeControlStatusUpdated() {
+        if case .error = state { return }
         switch player.timeControlStatus {
         case .playing:
             state = .playing
