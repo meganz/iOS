@@ -6,6 +6,7 @@ import MEGASwiftUI
 import MEGAUIComponent
 import Search
 import SwiftUI
+import Transfer
 
 public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View where LinkUnavailable: View, MediaDiscovery: FolderLinkMediaDiscoveryContent, MiniPlayer: View {
     public struct Dependency {
@@ -16,6 +17,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let fileNodeOpener: any FolderLinkFileNodeOpenerProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
         let onClose: @MainActor () -> Void
         let isLinkRevampEnabled: Bool
@@ -28,6 +30,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             fileNodeOpener: some FolderLinkFileNodeOpenerProtocol,
             nodeActionHandler: some FolderLinkNodeActionHandlerProtocol,
+            transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             isLinkRevampEnabled: Bool,
             @ViewBuilder mediaDiscoveryContent: @escaping (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery,
             onClose: @escaping @MainActor () -> Void
@@ -39,6 +42,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.fileNodeOpener = fileNodeOpener
             self.nodeActionHandler = nodeActionHandler
+            self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.isLinkRevampEnabled = isLinkRevampEnabled
             self.mediaDiscoveryContent = mediaDiscoveryContent
             self.onClose = onClose
@@ -235,6 +239,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
             sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
             nodeActionHandler: dependency.nodeActionHandler,
+            transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
             isLinkRevampEnabled: dependency.isLinkRevampEnabled,
             selectionHandler: { selection in
                 if selection.result.isFolder {

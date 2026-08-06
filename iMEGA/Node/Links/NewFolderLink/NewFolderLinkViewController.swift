@@ -89,6 +89,7 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             fileNodeOpener: fileNodeOpener,
             nodeActionHandler: nodeActionHandler,
+            transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             isLinkRevampEnabled: isLinkRevampEnabled,
             mediaDiscoveryContent: {
                 FolderLinkMediaDiscoveryContentView(viewModel: $0)

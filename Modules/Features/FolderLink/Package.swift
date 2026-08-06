@@ -16,7 +16,8 @@ let package = Package(
     dependencies: [
         // Features
         .package(path: "../Search"),
-        
+        .package(path: "../Transfer"),
+
         // UI
         .package(path: "../../UI/MEGASwiftUI"),
         
@@ -45,6 +46,7 @@ let package = Package(
             name: "FolderLink",
             dependencies: [
                 "Search",
+                "Transfer",
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGADomain",

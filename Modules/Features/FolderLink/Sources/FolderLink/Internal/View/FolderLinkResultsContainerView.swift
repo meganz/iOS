@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import Search
 import SwiftUI
+import Transfer
 
 /// A view that displays folder link nodes and conditionally switches between list/grid and Media Discovery modes.
 /// It Holds the source of truth for the view mode
@@ -16,6 +17,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
         let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let isLinkRevampEnabled: Bool
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
         let mediaDiscoveryContent: (FolderLinkMediaDiscoveryViewModel) -> MediaDiscovery
@@ -28,6 +30,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
                 searchResultsProvidingBuilder: searchResultsProvidingBuilder,
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                 nodeActionHandler: nodeActionHandler,
+                transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 isLinkRevampEnabled: isLinkRevampEnabled,
                 selectionHandler: selectionHandler,
                 dismissContent: dismissContent
@@ -39,6 +42,7 @@ struct FolderLinkResultsContainerView<MediaDiscovery, DismissButton>: View where
                 handle: handle,
                 link: link,
                 nodeActionHandler: nodeActionHandler,
+                transferIndicatorToolbarFactory: transferIndicatorToolbarFactory,
                 isLinkRevampEnabled: isLinkRevampEnabled,
                 content: mediaDiscoveryContent,
                 dismissContent: dismissContent

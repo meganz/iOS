@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAUIComponent
 import Search
 import SwiftUI
+import Transfer
 
 /// A view that displays a folder link in Media Discovery mode.
 /// It shows all media nodes (images and videos) in the currently opened folder, and also in subfolders
@@ -14,6 +15,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         let handle: HandleEntity
         let link: String
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let isLinkRevampEnabled: Bool
         let content: (FolderLinkMediaDiscoveryViewModel) -> Content
         let dismissContent: () -> DismissButton
@@ -71,6 +73,8 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                 moreOptionsButton
             }
             
+            dependency.transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+
             if viewModel.shouldShowBottomBar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     bottomBar

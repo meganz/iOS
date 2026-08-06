@@ -75,13 +75,19 @@ extension BrowserViewController {
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: title)
     }
     
+    /// The account root has no name of its own in the SDK, so the product name stands in for it. Not
+    /// localized — it is a brand name.
+    private var accountRootTitle: String { "MEGA" }
+    
     private
     func navigationBarTitleConfig() -> (copy: String, renderInTitleView: Bool) {
         if isParentBrowser {
             switch browserAction {
             case .documentProvider:
                 return (Strings.Localizable.cloudDrive, false)
-            case .newHomeUpload, .newFileSave, .shareExtension, .selectFolder, .copy, .move, .import, .importFromFolderLink, .openIn, .saveToCloudDrive:
+            case .importFromFolderLink:
+                return (accountRootTitle, false)
+            case .newHomeUpload, .newFileSave, .shareExtension, .selectFolder, .copy, .move, .import, .openIn, .saveToCloudDrive:
                 return (Strings.Localizable.selectDestination, false)
             default:
                 // not sure what to do with this, it's not localized

@@ -339,6 +339,10 @@
         self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
     } else if (self.browserAction == BrowserActionSendFromCloudDrive) {
         self.navigationItem.prompt = [self promptForSelectedCount:self.selectedNodesMutableDictionary.count];
+    } else if (self.browserAction == BrowserActionImportFromFolderLink) {
+        // The first page is titled after the account root rather than the action, so it carries the
+        // destination hint in the prompt, the same way every deeper page already does.
+        self.navigationItem.prompt = LocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     } else if (!self.isParentBrowser
                && self.browserAction != BrowserActionDocumentProvider
                && self.browserAction != BrowserActionShareExtension

@@ -7,6 +7,7 @@ import MEGAPreference
 import MEGASwiftUI
 import Search
 import SwiftUI
+import Transfer
 
 /// A view that uses the Search module to render folder link nodes in either a list or grid layout.
 struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
@@ -16,6 +17,7 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         let searchResultsProvidingBuilder: any FolderLinkSearchResultsProvidingBuilderProtocol
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodeActionHandler: any FolderLinkNodeActionHandlerProtocol
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let isLinkRevampEnabled: Bool
         let selectionHandler: @MainActor (SearchResultSelection) -> Void
         let dismissContent: () -> DismissButton
@@ -87,6 +89,11 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                     moreOptionsButton
                 }
 
+                // Moves next to the back/close button once search and more options fill the trailing side.
+                dependency.transferIndicatorToolbarFactory.toolbarContent(
+                    trailingItemCount: transferIndicatorTrailingItemCount
+                )
+
                 if !showsRevampedChrome {
                     ToolbarItemGroup(placement: .bottomBar) {
                         bottomBar
@@ -121,6 +128,12 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
     /// Selection mode keeps the pre-revamp chrome — its redesign belongs to a separate ticket.
     private var showsRevampedChrome: Bool {
         dependency.isLinkRevampEnabled && !viewModel.editMode.isEditing
+    }
+
+    /// The revamped chrome shows both search and more options on the trailing side, which is what pushes
+    /// the transfer indicator over to the leading side.
+    private var transferIndicatorTrailingItemCount: Int {
+        showsRevampedChrome ? 2 : 1
     }
 
     private var isSearchExpanded: Bool {
@@ -256,7 +269,6 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
         }
     }
 
-    
     @ViewBuilder
     private var legacyBottomBar: some View {
         FolderLinkBottomBarActionButton(action: .addToCloudDrive, selection: $viewModel.bottomBarAction)
