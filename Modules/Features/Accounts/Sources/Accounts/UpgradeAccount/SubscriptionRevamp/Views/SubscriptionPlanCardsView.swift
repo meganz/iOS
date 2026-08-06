@@ -9,6 +9,8 @@ import SwiftUI
 struct SubscriptionPlanCardsView: View {
     let cards: [SubscriptionPlanCardModel]
     let purchaseViewModel: PlanPurchaseViewModel
+    /// `nil` when the website route is unavailable, in which case no card carries the button either.
+    let externalPurchaseViewModel: ExternalPurchaseViewModel?
 
     var body: some View {
         VStack(spacing: TokenSpacing._4) {
@@ -62,8 +64,12 @@ struct SubscriptionPlanCardsView: View {
 
     @ViewBuilder
     private func externalPurchaseButton(_ card: SubscriptionPlanCardModel) -> some View {
-        if let externalPurchaseTitle = card.externalPurchaseTitle {
-            ExternalPurchaseButton(title: externalPurchaseTitle)
+        if let externalPurchaseTitle = card.externalPurchaseTitle, let externalPurchaseViewModel {
+            ExternalPurchaseButton(
+                viewModel: externalPurchaseViewModel,
+                title: externalPurchaseTitle,
+                productIdentifier: card.productIdentifier
+            )
         }
     }
 }

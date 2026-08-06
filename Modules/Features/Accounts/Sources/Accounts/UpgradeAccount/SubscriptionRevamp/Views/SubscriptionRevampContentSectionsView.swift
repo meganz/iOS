@@ -13,6 +13,7 @@ struct SubscriptionContentSectionsView: View {
     let dependency: RevampUpgradePlansDependency
     @ObservedObject var viewModel: UpgradePlansViewModel
     let purchaseViewModel: PlanPurchaseViewModel
+    let externalPurchaseViewModel: ExternalPurchaseViewModel?
     let dismissAction: () -> Void
 
     var body: some View {
@@ -27,7 +28,8 @@ struct SubscriptionContentSectionsView: View {
                 .padding(.top, TokenSpacing._3)
             SubscriptionPlanCardsView(
                 cards: viewModel.planCards(for: viewModel.selectedCycle),
-                purchaseViewModel: purchaseViewModel
+                purchaseViewModel: purchaseViewModel,
+                externalPurchaseViewModel: externalPurchaseViewModel
             )
             .padding(.top, TokenSpacing._3)
             SubscriptionBenefitsListView()

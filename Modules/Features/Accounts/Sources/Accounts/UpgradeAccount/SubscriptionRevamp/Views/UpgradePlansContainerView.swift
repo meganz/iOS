@@ -46,6 +46,7 @@ public struct UpgradePlansContainerView: View {
                 dependency: viewModel.dependency,
                 viewModel: contentViewModel,
                 purchaseViewModel: viewModel.purchaseViewModel,
+                externalPurchaseViewModel: viewModel.externalPurchaseViewModel,
                 dismissAction: { viewModel.dismiss() }
             )
         case .promo(let contentViewModel):
@@ -53,6 +54,7 @@ public struct UpgradePlansContainerView: View {
                 dependency: viewModel.dependency,
                 viewModel: contentViewModel,
                 purchaseViewModel: viewModel.purchaseViewModel,
+                externalPurchaseViewModel: viewModel.externalPurchaseViewModel,
                 dismissAction: { viewModel.dismiss() }
             )
         }

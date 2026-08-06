@@ -15,17 +15,20 @@ public struct SubscriptionPromoView: View {
     private let dependency: RevampUpgradePlansDependency
     private let viewModel: UpgradePlansViewModel
     private let purchaseViewModel: PlanPurchaseViewModel
+    private let externalPurchaseViewModel: ExternalPurchaseViewModel?
     private let dismissAction: () -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
         viewModel: UpgradePlansViewModel,
         purchaseViewModel: PlanPurchaseViewModel,
+        externalPurchaseViewModel: ExternalPurchaseViewModel?,
         dismissAction: @escaping () -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
         self.purchaseViewModel = purchaseViewModel
+        self.externalPurchaseViewModel = externalPurchaseViewModel
         self.dismissAction = dismissAction
     }
 
@@ -44,11 +47,13 @@ public struct SubscriptionPromoView: View {
                     dependency: dependency,
                     viewModel: viewModel,
                     purchaseViewModel: purchaseViewModel,
+                    externalPurchaseViewModel: externalPurchaseViewModel,
                     dismissAction: dismissAction
                 )
             }
         )
         .planPurchaseAlert(purchaseViewModel)
+        .externalPurchaseAlert(externalPurchaseViewModel)
     }
 
     private var promoBanner: some View {

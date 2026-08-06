@@ -35,6 +35,10 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         }
     )
 
+    /// Drives the "buy on our website" buttons. Needs the loaded plans, so it only exists from the first
+    /// successful load, and only when that route is available at all.
+    private(set) var externalPurchaseViewModel: ExternalPurchaseViewModel?
+
     @Published public private(set) var viewState: ViewState = .loading
     @Published public var isDismiss = false
     @Published public var isAlertPresented = false
@@ -81,6 +85,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
             isExternalPurchaseAvailable = await externalPurchaseAvailability
+            externalPurchaseViewModel = makeExternalPurchaseViewModel(plans: plans)
 
             let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
             guard hasPromo else {
@@ -138,6 +143,26 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             plans: plans,
             displayName: dependency.accountDisplayName,
             isExternalPurchaseAvailable: isExternalPurchaseAvailable
+        )
+    }
+
+    private func makeExternalPurchaseViewModel(plans: [PlanEntity]) -> ExternalPurchaseViewModel? {
+        guard isExternalPurchaseAvailable else { return nil }
+
+        return ExternalPurchaseViewModel(
+            purchaser: dependency.planPurchaserFactory.makeExternalPurchaser(
+                linkProvider: ExternalPurchaseLinkProvider(useCase: dependency.externalPurchaseUseCase),
+                purchaseUseCase: dependency.purchaseUseCase,
+                accountUseCase: dependency.accountUseCase,
+                domainName: dependency.domainName,
+                appVersion: dependency.appVersion,
+                canOpenURL: dependency.canOpenURL,
+                openURL: dependency.openURL
+            ),
+            plans: plans,
+            onPurchased: { [weak self] in
+                self?.purchaseDidSucceed()
+            }
         )
     }
 

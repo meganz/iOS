@@ -127,6 +127,63 @@ struct UpgradePlansContainerViewModelTests {
         #expect(sut.isDismiss == false)
     }
 
+    // MARK: - External purchase wiring
+
+    @Test("The website buttons have no view model until the plans are loaded")
+    func externalPurchaseViewModel_beforeLoading_isNil() {
+        let sut = makeSUT(plans: [standardPlan()], isExternalPurchaseAvailable: true)
+        #expect(sut.externalPurchaseViewModel == nil)
+    }
+
+    @Test("An account that is not offered the website route gets no view model")
+    func externalPurchaseViewModel_whenTheRouteIsUnavailable_staysNil() async {
+        let sut = makeSUT(plans: [standardPlan()], isExternalPurchaseAvailable: false)
+
+        await sut.loadData()
+
+        #expect(sut.externalPurchaseViewModel == nil)
+    }
+
+    @Test("An account offered the website route gets a view model once the plans load")
+    func externalPurchaseViewModel_whenTheRouteIsAvailable_isBuiltOnLoad() async {
+        let sut = makeSUT(plans: [standardPlan()], isExternalPurchaseAvailable: true)
+
+        await sut.loadData()
+
+        #expect(sut.externalPurchaseViewModel != nil)
+    }
+
+    @Test("The website buttons are wired to the plans that were loaded")
+    func externalPurchaseViewModel_buysAPlanFromTheLoadedPlans() async throws {
+        let externalPurchaser = MockExternalPlanPurchasing()
+        let sut = makeSUT(
+            plans: [standardPlan(productIdentifier: "pro1.oneYear")],
+            isExternalPurchaseAvailable: true,
+            externalPurchaser: externalPurchaser
+        )
+        await sut.loadData()
+
+        let externalPurchaseViewModel = try #require(sut.externalPurchaseViewModel)
+        await externalPurchaseViewModel.buy(productIdentifier: "pro1.oneYear")
+
+        #expect(externalPurchaser.purchasedPlans.map(\.productIdentifier) == ["pro1.oneYear"])
+    }
+
+    @Test("A completed website purchase settles the page the way an in-app one does")
+    func externalPurchaseSucceeded_dismissesThePage() async {
+        let externalPurchaser = MockExternalPlanPurchasing()
+        let sut = makeSUT(
+            plans: [standardPlan()],
+            isExternalPurchaseAvailable: true,
+            externalPurchaser: externalPurchaser
+        )
+        await sut.loadData()
+
+        externalPurchaser.send(.succeeded)
+
+        #expect(sut.isDismiss)
+    }
+
     // MARK: - SUT
 
     private func makeSUT(
@@ -135,6 +192,8 @@ struct UpgradePlansContainerViewModelTests {
         hasAlreadyExpired: Bool = false,
         monitorExpires: Bool = true,
         purchaser: MockPlanPurchasing = MockPlanPurchasing(),
+        isExternalPurchaseAvailable: Bool = false,
+        externalPurchaser: MockExternalPlanPurchasing = MockExternalPlanPurchasing(),
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
     ) -> UpgradePlansContainerViewModel {
@@ -146,7 +205,11 @@ struct UpgradePlansContainerViewModelTests {
                 hasAlreadyExpired: hasAlreadyExpired,
                 expires: monitorExpires
             ),
-            planPurchaserFactory: MockPlanPurchaserFactory(purchaser: purchaser),
+            planPurchaserFactory: MockPlanPurchaserFactory(
+                purchaser: purchaser,
+                externalPurchaser: externalPurchaser
+            ),
+            isExternalPurchaseAvailable: isExternalPurchaseAvailable,
             notifyPurchaseSucceeded: notifyPurchaseSucceeded,
             purchaseCompleteBehavior: purchaseCompleteBehavior
         )
@@ -167,6 +230,7 @@ struct UpgradePlansContainerViewModelTests {
         accountDetails: AccountDetailsEntity,
         promoExpiryMonitorFactory: some PromoExpiryMonitorFactory,
         planPurchaserFactory: some PlanPurchaserFactory,
+        isExternalPurchaseAvailable: Bool,
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void,
         purchaseCompleteBehavior: PurchaseCompleteBehavior
     ) -> RevampUpgradePlansDependency {
@@ -175,7 +239,9 @@ struct UpgradePlansContainerViewModelTests {
             purchaseUseCase: MockAccountPlanPurchaseUseCase(),
             subscriptionsUseCase: MockSubscriptionsUseCase(),
             accountUseCase: MockAccountUseCase(currentAccountDetails: accountDetails),
-            externalPurchaseUseCase: MockExternalPurchaseUseCase(),
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(
+                shouldProvideExternalPurchase: isExternalPurchaseAvailable
+            ),
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             termsAndPoliciesPresenter: MockTermsAndPoliciesPresenter(),
             tracker: MockTracker(),
@@ -193,8 +259,9 @@ struct UpgradePlansContainerViewModelTests {
 
     // MARK: - Plan fixtures
 
-    private func standardPlan() -> PlanEntity {
+    private func standardPlan(productIdentifier: String = "pro1.oneYear") -> PlanEntity {
         PlanEntity(
+            productIdentifier: productIdentifier,
             type: .proI,
             currency: "EUR",
             subscriptionCycle: .yearly,
