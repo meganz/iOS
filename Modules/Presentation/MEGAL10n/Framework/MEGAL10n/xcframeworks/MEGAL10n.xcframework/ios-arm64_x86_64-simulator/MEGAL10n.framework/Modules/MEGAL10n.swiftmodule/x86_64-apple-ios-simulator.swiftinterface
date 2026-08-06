@@ -5050,6 +5050,13 @@ public enum Strings {
         public enum Features {
           public static let title: Swift.String
         }
+        public enum LoadError {
+          public static let message: Swift.String
+          public static let title: Swift.String
+          public enum Button {
+            public static let tryAgain: Swift.String
+          }
+        }
         public enum Promo {
           public static let offerEnded: Swift.String
           public static func offerEndsOn(_ p1: Any) -> Swift.String

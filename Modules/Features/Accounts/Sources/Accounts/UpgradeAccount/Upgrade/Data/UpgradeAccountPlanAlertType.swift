@@ -11,6 +11,7 @@ public enum UpgradeAccountPlanAlertType {
     case purchase(_ status: AlertStatus)
     case activeSubscription(_ errorType: ActiveSubscriptionError, primaryButtonAction: (() -> Void)?)
     case promoEnded
+    case loadFailed(retryAction: () -> Void, dismissAction: () -> Void)
     
     public enum AlertStatus {
         case success, incomplete, failed
@@ -33,6 +34,8 @@ public enum UpgradeAccountPlanAlertType {
             return Strings.Localizable.Account.Upgrade.AlreadyHaveASubscription.title
         case .promoEnded:
             return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.offerEnded
+        case .loadFailed:
+            return Strings.Localizable.SubscriptionPurchase.Revamp.LoadError.title
         }
     }
 
@@ -56,6 +59,8 @@ public enum UpgradeAccountPlanAlertType {
             }
         case .promoEnded:
             return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.OfferEnded.message
+        case .loadFailed:
+            return Strings.Localizable.SubscriptionPurchase.Revamp.LoadError.message
         }
     }
     
@@ -69,6 +74,10 @@ public enum UpgradeAccountPlanAlertType {
             return Strings.Localizable.SubscriptionPurchase.Revamp.Promo.Button.viewPlans
         }
 
+        if case .loadFailed = self {
+            return Strings.Localizable.SubscriptionPurchase.Revamp.LoadError.Button.tryAgain
+        }
+
         return Strings.Localizable.ok
     }
 
@@ -78,15 +87,31 @@ public enum UpgradeAccountPlanAlertType {
             return primaryButtonAction
         }
 
+        if case let .loadFailed(retryAction, _) = self {
+            return retryAction
+        }
+
         return nil
     }
-    
+
     public var secondaryButtonTitle: String? {
         if case let .activeSubscription(type, _) = self,
            case .haveCancellablePlan = type {
             return Strings.Localizable.no
         }
-        
+
+        if case .loadFailed = self {
+            return Strings.Localizable.cancel
+        }
+
+        return nil
+    }
+
+    public var secondaryButtonAction: (() -> Void)? {
+        if case let .loadFailed(_, dismissAction) = self {
+            return dismissAction
+        }
+
         return nil
     }
 }

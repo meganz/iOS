@@ -13,10 +13,7 @@ public struct UpgradePlansContainerView: View {
 
     public var body: some View {
         content
-            .onLoad {
-                await viewModel.loadData()
-                await viewModel.monitorPromoExpiry()
-            }
+            .onLoad { await viewModel.load() }
             .onAppear { viewModel.onAppear() }
             .onReceive(viewModel.$isDismiss) { isDismiss in
                 if isDismiss { viewModel.dependency.dismissAction() }
@@ -30,7 +27,9 @@ public struct UpgradePlansContainerView: View {
                     alertType.primaryButtonAction?()
                 }
                 if let secondaryButtonTitle = alertType.secondaryButtonTitle {
-                    Button(secondaryButtonTitle, role: .cancel) {}
+                    Button(secondaryButtonTitle, role: .cancel) {
+                        alertType.secondaryButtonAction?()
+                    }
                 }
             } message: { alertType in
                 Text(alertType.message)

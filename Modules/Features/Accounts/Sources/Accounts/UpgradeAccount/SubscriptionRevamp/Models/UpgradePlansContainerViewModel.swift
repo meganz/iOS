@@ -21,6 +21,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     private var promoExpiryMonitor: (any PromoExpiryMonitoring)?
     /// Whether "buy on our website" is offered at all, resolved once per load.
     private var isExternalPurchaseAvailable = false
+    /// Owns the retry triggered from the load error alert, so a new attempt supersedes the one in flight.
+    private var retryTask: Task<Void, Never>?
 
     private(set) lazy var purchaseViewModel = PlanPurchaseViewModel(
         planPurchaser: dependency.planPurchaserFactory.makePurchaser(
@@ -37,7 +39,6 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     @Published public var isDismiss = false
     @Published public var isAlertPresented = false
 
-    // [IOS-12239]: Handle error alert
     private(set) var alertType: UpgradeAccountPlanAlertType?
 
     init(dependency: RevampUpgradePlansDependency) {
@@ -61,6 +62,11 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             dependency.tracker.trackAnalyticsEvent(with: MaybeLaterUpgradeAccountButtonPressedEvent())
         }
         isDismiss = true
+    }
+
+    func load() async {
+        await loadData()
+        await monitorPromoExpiry()
     }
 
     func loadData() async {
@@ -180,6 +186,23 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     }
 
     private func showInitialLoadingAlert() {
-        // [IOS-12239]: Show error alert
+        presentAlert(
+            .loadFailed(
+                retryAction: { [weak self] in
+                    self?.retryLoad()
+                },
+                dismissAction: { [weak self] in
+                    guard let self, !isDismiss else { return }
+                    isDismiss = true
+                }
+            )
+        )
+    }
+
+    private func retryLoad() {
+        retryTask?.cancel()
+        retryTask = Task { [weak self] in
+            await self?.load()
+        }
     }
 }

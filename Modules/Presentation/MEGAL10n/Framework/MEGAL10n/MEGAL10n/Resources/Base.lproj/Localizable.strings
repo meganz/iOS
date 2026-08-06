@@ -5148,3 +5148,9 @@
 "subscriptionPurchase.revamp.promo.offerEnded.message"="This deal is no longer available. Check our current plans to find one that suits you.";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Buy on our website and save up to %@";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="Couldn't load content";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="We ran into a problem loading your plans. Please try again";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Try again";

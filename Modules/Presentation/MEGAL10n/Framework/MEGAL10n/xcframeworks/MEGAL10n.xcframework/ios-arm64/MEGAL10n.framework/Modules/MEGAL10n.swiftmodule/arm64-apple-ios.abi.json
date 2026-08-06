@@ -154273,6 +154273,210 @@
                       },
                       {
                         "kind": "TypeDecl",
+                        "name": "LoadError",
+                        "printedName": "LoadError",
+                        "children": [
+                          {
+                            "kind": "Var",
+                            "name": "message",
+                            "printedName": "message",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "String",
+                                "printedName": "Swift.String",
+                                "usr": "s:SS"
+                              }
+                            ],
+                            "declKind": "Var",
+                            "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO7messageSSvpZ",
+                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO7messageSSvpZ",
+                            "moduleName": "MEGAL10n",
+                            "static": true,
+                            "declAttributes": [
+                              "HasInitialValue",
+                              "HasStorage",
+                              "AccessControl",
+                              "RawDocComment"
+                            ],
+                            "isLet": true,
+                            "hasStorage": true,
+                            "accessors": [
+                              {
+                                "kind": "Accessor",
+                                "name": "Get",
+                                "printedName": "Get()",
+                                "children": [
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  }
+                                ],
+                                "declKind": "Accessor",
+                                "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO7messageSSvgZ",
+                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO7messageSSvgZ",
+                                "moduleName": "MEGAL10n",
+                                "static": true,
+                                "implicit": true,
+                                "accessorKind": "get"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Var",
+                            "name": "title",
+                            "printedName": "title",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "String",
+                                "printedName": "Swift.String",
+                                "usr": "s:SS"
+                              }
+                            ],
+                            "declKind": "Var",
+                            "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO5titleSSvpZ",
+                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO5titleSSvpZ",
+                            "moduleName": "MEGAL10n",
+                            "static": true,
+                            "declAttributes": [
+                              "HasInitialValue",
+                              "HasStorage",
+                              "AccessControl",
+                              "RawDocComment"
+                            ],
+                            "isLet": true,
+                            "hasStorage": true,
+                            "accessors": [
+                              {
+                                "kind": "Accessor",
+                                "name": "Get",
+                                "printedName": "Get()",
+                                "children": [
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  }
+                                ],
+                                "declKind": "Accessor",
+                                "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO5titleSSvgZ",
+                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO5titleSSvgZ",
+                                "moduleName": "MEGAL10n",
+                                "static": true,
+                                "implicit": true,
+                                "accessorKind": "get"
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "TypeDecl",
+                            "name": "Button",
+                            "printedName": "Button",
+                            "children": [
+                              {
+                                "kind": "Var",
+                                "name": "tryAgain",
+                                "printedName": "tryAgain",
+                                "children": [
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  }
+                                ],
+                                "declKind": "Var",
+                                "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO8tryAgainSSvpZ",
+                                "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO8tryAgainSSvpZ",
+                                "moduleName": "MEGAL10n",
+                                "static": true,
+                                "declAttributes": [
+                                  "HasInitialValue",
+                                  "HasStorage",
+                                  "AccessControl",
+                                  "RawDocComment"
+                                ],
+                                "isLet": true,
+                                "hasStorage": true,
+                                "accessors": [
+                                  {
+                                    "kind": "Accessor",
+                                    "name": "Get",
+                                    "printedName": "Get()",
+                                    "children": [
+                                      {
+                                        "kind": "TypeNominal",
+                                        "name": "String",
+                                        "printedName": "Swift.String",
+                                        "usr": "s:SS"
+                                      }
+                                    ],
+                                    "declKind": "Accessor",
+                                    "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO8tryAgainSSvgZ",
+                                    "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO8tryAgainSSvgZ",
+                                    "moduleName": "MEGAL10n",
+                                    "static": true,
+                                    "implicit": true,
+                                    "accessorKind": "get"
+                                  }
+                                ]
+                              }
+                            ],
+                            "declKind": "Enum",
+                            "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO",
+                            "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO6ButtonO",
+                            "moduleName": "MEGAL10n",
+                            "declAttributes": [
+                              "AccessControl"
+                            ],
+                            "conformances": [
+                              {
+                                "kind": "Conformance",
+                                "name": "Copyable",
+                                "printedName": "Copyable",
+                                "usr": "s:s8CopyableP",
+                                "mangledName": "$ss8CopyableP"
+                              },
+                              {
+                                "kind": "Conformance",
+                                "name": "Escapable",
+                                "printedName": "Escapable",
+                                "usr": "s:s9EscapableP",
+                                "mangledName": "$ss9EscapableP"
+                              }
+                            ]
+                          }
+                        ],
+                        "declKind": "Enum",
+                        "usr": "s:8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO",
+                        "mangledName": "$s8MEGAL10n7StringsO11LocalizableO20SubscriptionPurchaseO6RevampO9LoadErrorO",
+                        "moduleName": "MEGAL10n",
+                        "declAttributes": [
+                          "AccessControl"
+                        ],
+                        "conformances": [
+                          {
+                            "kind": "Conformance",
+                            "name": "Copyable",
+                            "printedName": "Copyable",
+                            "usr": "s:s8CopyableP",
+                            "mangledName": "$ss8CopyableP"
+                          },
+                          {
+                            "kind": "Conformance",
+                            "name": "Escapable",
+                            "printedName": "Escapable",
+                            "usr": "s:s9EscapableP",
+                            "mangledName": "$ss9EscapableP"
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "TypeDecl",
                         "name": "Promo",
                         "printedName": "Promo",
                         "children": [
@@ -211947,674 +212151,653 @@
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717046,
+      "offset": 717054,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717061,
+      "offset": 717069,
+      "length": 47,
+      "value": "\"subscriptionPurchase.revamp.loadError.message\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717128,
+      "length": 60,
+      "value": "\"We ran into a problem loading your plans. Please try again\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717347,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717362,
+      "length": 45,
+      "value": "\"subscriptionPurchase.revamp.loadError.title\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717419,
+      "length": 23,
+      "value": "\"Couldn't load content\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717654,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717669,
+      "length": 55,
+      "value": "\"subscriptionPurchase.revamp.loadError.button.tryAgain\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717736,
+      "length": 11,
+      "value": "\"Try again\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717956,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 717971,
       "length": 46,
       "value": "\"subscriptionPurchase.revamp.promo.offerEnded\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717119,
+      "offset": 718029,
       "length": 22,
       "value": "\"This offer has ended\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717638,
+      "offset": 718548,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717653,
+      "offset": 718563,
       "length": 48,
       "value": "\"subscriptionPurchase.revamp.promo.specialOffer\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717713,
+      "offset": 718623,
       "length": 15,
       "value": "\"Special offer\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717908,
+      "offset": 718818,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717923,
+      "offset": 718833,
       "length": 52,
       "value": "\"subscriptionPurchase.revamp.promo.button.viewPlans\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 717987,
+      "offset": 718897,
       "length": 12,
       "value": "\"View plans\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718213,
+      "offset": 719123,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718228,
+      "offset": 719138,
       "length": 54,
       "value": "\"subscriptionPurchase.revamp.promo.offerEnded.message\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718294,
+      "offset": 719204,
       "length": 87,
       "value": "\"This deal is no longer available. Check our current plans to find one that suits you.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718533,
+      "offset": 719443,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718548,
+      "offset": 719458,
       "length": 18,
       "value": "\"tabbarTitle.chat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718578,
+      "offset": 719488,
       "length": 6,
       "value": "\"Chat\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718672,
+      "offset": 719582,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718687,
+      "offset": 719597,
       "length": 19,
       "value": "\"tabbarTitle.drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718718,
+      "offset": 719628,
       "length": 7,
       "value": "\"Drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718811,
+      "offset": 719721,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718826,
+      "offset": 719736,
       "length": 18,
       "value": "\"tabbarTitle.home\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718856,
+      "offset": 719766,
       "length": 6,
       "value": "\"Home\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718948,
+      "offset": 719858,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718963,
+      "offset": 719873,
       "length": 18,
       "value": "\"tabbarTitle.menu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 718993,
+      "offset": 719903,
       "length": 6,
       "value": "\"Menu\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719088,
+      "offset": 719998,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719103,
+      "offset": 720013,
       "length": 20,
       "value": "\"tabbarTitle.photos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719135,
+      "offset": 720045,
       "length": 8,
       "value": "\"Photos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719418,
+      "offset": 720328,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719433,
+      "offset": 720343,
       "length": 48,
       "value": "\"transfer.cell.shareOwnerStorageQuota.infoLabel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719493,
+      "offset": 720403,
       "length": 36,
       "value": "\"Share owner is over storage quota.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719722,
+      "offset": 720632,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719737,
+      "offset": 720647,
       "length": 40,
       "value": "\"transfer.error.termsOfServiceViolation\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 719789,
+      "offset": 720699,
       "length": 27,
       "value": "\"Violated Terms of Service\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720007,
+      "offset": 720917,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720022,
+      "offset": 720932,
       "length": 40,
       "value": "\"transfer.liveActivity.downloadingFiles\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720074,
+      "offset": 720984,
       "length": 19,
       "value": "\"Downloading files\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720359,
+      "offset": 721269,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720374,
+      "offset": 721284,
       "length": 40,
       "value": "\"transfer.liveActivity.openMEGAToResume\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720426,
+      "offset": 721336,
       "length": 21,
       "value": "\"Open MEGA to resume\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720670,
+      "offset": 721580,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720685,
+      "offset": 721595,
       "length": 41,
       "value": "\"transfer.liveActivity.requiresAttention\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720738,
+      "offset": 721648,
       "length": 29,
       "value": "\"Transfer requires attention\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720913,
+      "offset": 721823,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720928,
+      "offset": 721838,
       "length": 38,
       "value": "\"transfer.liveActivity.uploadingFiles\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 720978,
+      "offset": 721888,
       "length": 17,
       "value": "\"Uploading files\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721113,
+      "offset": 722023,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721128,
+      "offset": 722038,
       "length": 24,
       "value": "\"transfer.sharing.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721164,
+      "offset": 722074,
       "length": 18,
       "value": "\"Transfer sharing\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721321,
+      "offset": 722231,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721336,
+      "offset": 722246,
       "length": 32,
       "value": "\"transfer.storage.quotaExceeded\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721380,
+      "offset": 722290,
       "length": 24,
       "value": "\"Storage quota exceeded\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721614,
+      "offset": 722524,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721629,
+      "offset": 722539,
       "length": 38,
       "value": "\"transferQuotaError.button.buyNewPlan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721679,
+      "offset": 722589,
       "length": 14,
       "value": "\"Buy new plan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721839,
+      "offset": 722749,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721854,
+      "offset": 722764,
       "length": 35,
       "value": "\"transferQuotaError.button.upgrade\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 721901,
+      "offset": 722811,
       "length": 9,
       "value": "\"Upgrade\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722045,
+      "offset": 722955,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722060,
+      "offset": 722970,
       "length": 32,
       "value": "\"transferQuotaError.button.wait\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722104,
+      "offset": 723014,
       "length": 13,
       "value": "\"I will wait\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722291,
+      "offset": 723201,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722306,
+      "offset": 723216,
       "length": 48,
       "value": "\"transferQuotaError.downloadExceededQuota.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 722366,
+      "offset": 723276,
       "length": 25,
       "value": "\"Transfer quota exceeded\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723232,
+      "offset": 724142,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723247,
+      "offset": 724157,
       "length": 61,
       "value": "\"transferQuotaError.downloadExceededQuota.proAccount.message\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723320,
+      "offset": 724230,
       "length": 223,
       "value": "\"You can’t continue downloading as you don’t have any transfer quota left on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723743,
+      "offset": 724653,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723758,
+      "offset": 724668,
       "length": 47,
       "value": "\"transferQuotaError.downloadLimitedQuota.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 723817,
+      "offset": 724727,
       "length": 34,
       "value": "\"Limited available transfer quota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 724690,
+      "offset": 725600,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 724705,
+      "offset": 725615,
       "length": 60,
       "value": "\"transferQuotaError.downloadLimitedQuota.proAccount.message\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 724777,
+      "offset": 725687,
       "length": 222,
       "value": "\"Downloading may be interrupted as you’ve used most of your transfer quota on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 725305,
+      "offset": 726215,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 725320,
+      "offset": 726230,
       "length": 45,
       "value": "\"transferQuotaError.footerMessage.quotaUsage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 725377,
+      "offset": 726287,
       "length": 23,
       "value": "\"[A]%% of [B] TB used\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726288,
+      "offset": 727198,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726303,
+      "offset": 727213,
       "length": 62,
       "value": "\"transferQuotaError.streamingExceededQuota.proAccount.message\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726377,
+      "offset": 727287,
       "length": 217,
       "value": "\"Your media stopped playing as you don’t have any transfer quota left on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726829,
+      "offset": 727739,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726844,
+      "offset": 727754,
       "length": 37,
       "value": "\"transfers.action.cancelAllTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 726893,
+      "offset": 727803,
       "length": 22,
       "value": "\"Cancel all transfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 727086,
+      "offset": 727996,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 727101,
+      "offset": 728011,
       "length": 36,
       "value": "\"transfers.action.clearAllTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 727149,
+      "offset": 728059,
       "length": 21,
       "value": "\"Clear all transfers\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727324,
-      "length": 13,
-      "value": "\"Localizable\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727339,
-      "length": 36,
-      "value": "\"transfers.action.retryAllTransfers\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727387,
-      "length": 21,
-      "value": "\"Retry all transfers\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727552,
-      "length": 13,
-      "value": "\"Localizable\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727567,
-      "length": 30,
-      "value": "\"transfers.cancellable.cancel\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727609,
-      "length": 17,
-      "value": "\"Cancel transfer\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727764,
-      "length": 13,
-      "value": "\"Localizable\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727779,
-      "length": 43,
-      "value": "\"transfers.cancellable.cancellingTransfers\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727834,
-      "length": 25,
-      "value": "\"Cancelling transfers…\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727974,
-      "length": 13,
-      "value": "\"Localizable\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 727989,
-      "length": 37,
-      "value": "\"transfers.cancellable.confirmCancel\""
-    },
-    {
-      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
-      "kind": "StringLiteral",
-      "offset": 728038,
-      "length": 76,
-      "value": "\"Interrupting the transfer process may render some of the items incomplete.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
@@ -212627,2218 +212810,2302 @@
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
       "offset": 728249,
+      "length": 36,
+      "value": "\"transfers.action.retryAllTransfers\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728297,
+      "length": 21,
+      "value": "\"Retry all transfers\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728462,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728477,
+      "length": 30,
+      "value": "\"transfers.cancellable.cancel\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728519,
+      "length": 17,
+      "value": "\"Cancel transfer\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728674,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728689,
+      "length": 43,
+      "value": "\"transfers.cancellable.cancellingTransfers\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728744,
+      "length": 25,
+      "value": "\"Cancelling transfers…\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728884,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728899,
+      "length": 37,
+      "value": "\"transfers.cancellable.confirmCancel\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 728948,
+      "length": 76,
+      "value": "\"Interrupting the transfer process may render some of the items incomplete.\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 729144,
+      "length": 13,
+      "value": "\"Localizable\""
+    },
+    {
+      "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
+      "kind": "StringLiteral",
+      "offset": 729159,
       "length": 39,
       "value": "\"transfers.cancellable.creatingFolders\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728300,
+      "offset": 729210,
       "length": 21,
       "value": "\"Creating folders…\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728422,
+      "offset": 729332,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728437,
+      "offset": 729347,
       "length": 31,
       "value": "\"transfers.cancellable.dismiss\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728480,
+      "offset": 729390,
       "length": 14,
       "value": "\"No, continue\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728620,
+      "offset": 729530,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728635,
+      "offset": 729545,
       "length": 34,
       "value": "\"transfers.cancellable.donotclose\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728681,
+      "offset": 729591,
       "length": 77,
       "value": "\"Don’t close the app. If you close, transfers not yet queued will be lost.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728859,
+      "offset": 729769,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728874,
+      "offset": 729784,
       "length": 31,
       "value": "\"transfers.cancellable.proceed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 728917,
+      "offset": 729827,
       "length": 13,
       "value": "\"Yes, cancel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729042,
+      "offset": 729952,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729057,
+      "offset": 729967,
       "length": 32,
       "value": "\"transfers.cancellable.scanning\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729101,
+      "offset": 730011,
       "length": 13,
       "value": "\"Scanning…\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729243,
+      "offset": 730153,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729258,
+      "offset": 730168,
       "length": 29,
       "value": "\"transfers.cancellable.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729299,
+      "offset": 730209,
       "length": 19,
       "value": "\"Cancel transfers?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729434,
+      "offset": 730344,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729449,
+      "offset": 730359,
       "length": 36,
       "value": "\"transfers.cancellable.transferring\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729497,
+      "offset": 730407,
       "length": 23,
       "value": "\"Starting transfers…\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729629,
+      "offset": 730539,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729644,
+      "offset": 730554,
       "length": 41,
       "value": "\"transfers.cancellable.trasnferCancelled\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 729697,
+      "offset": 730607,
       "length": 20,
       "value": "\"Transfer cancelled\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730632,
+      "offset": 731542,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730647,
+      "offset": 731557,
       "length": 42,
       "value": "\"transfers.confirmation.cancelAll.confirm\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730701,
+      "offset": 731611,
       "length": 12,
       "value": "\"Cancel all\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730855,
+      "offset": 731765,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730870,
+      "offset": 731780,
       "length": 40,
       "value": "\"transfers.confirmation.cancelAll.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 730922,
+      "offset": 731832,
       "length": 23,
       "value": "\"Cancel all transfers?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731136,
+      "offset": 732046,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731151,
+      "offset": 732061,
       "length": 47,
       "value": "\"transfers.confirmation.cancelSelected.message\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731210,
+      "offset": 732120,
       "length": 43,
       "value": "\"The selected transfers will be cancelled.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731396,
+      "offset": 732306,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731411,
+      "offset": 732321,
       "length": 45,
       "value": "\"transfers.confirmation.cancelSelected.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731468,
+      "offset": 732378,
       "length": 19,
       "value": "\"Cancel transfers?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731737,
+      "offset": 732647,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731752,
+      "offset": 732662,
       "length": 40,
       "value": "\"transfers.emptyState.noActiveTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 731804,
+      "offset": 732714,
       "length": 21,
       "value": "\"No active transfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732007,
+      "offset": 732917,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732022,
+      "offset": 732932,
       "length": 43,
       "value": "\"transfers.emptyState.noCompletedTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732077,
+      "offset": 732987,
       "length": 24,
       "value": "\"No completed transfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732274,
+      "offset": 733184,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732289,
+      "offset": 733199,
       "length": 40,
       "value": "\"transfers.emptyState.noFailedTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732341,
+      "offset": 733251,
       "length": 21,
       "value": "\"No failed transfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732515,
+      "offset": 733425,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732530,
+      "offset": 733440,
       "length": 34,
       "value": "\"transfers.emptyState.noTransfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732576,
+      "offset": 733486,
       "length": 14,
       "value": "\"No transfers\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732879,
+      "offset": 733789,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732894,
+      "offset": 733804,
       "length": 38,
       "value": "\"transfers.overQuotaBanner.both.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 732944,
+      "offset": 733854,
       "length": 37,
       "value": "\"Get more storage and transfer quota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733221,
+      "offset": 734131,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733236,
+      "offset": 734146,
       "length": 41,
       "value": "\"transfers.overQuotaBanner.storage.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733289,
+      "offset": 734199,
       "length": 24,
       "value": "\"Get more storage quota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733555,
+      "offset": 734465,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733570,
+      "offset": 734480,
       "length": 42,
       "value": "\"transfers.overQuotaBanner.transfer.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733624,
+      "offset": 734534,
       "length": 25,
       "value": "\"Get more transfer quota\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733899,
+      "offset": 734809,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733914,
+      "offset": 734824,
       "length": 30,
       "value": "\"transfers.snackbar.allPaused\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 733956,
+      "offset": 734866,
       "length": 22,
       "value": "\"All transfers paused\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734160,
+      "offset": 735070,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734175,
+      "offset": 735085,
       "length": 22,
       "value": "\"transfers.tab.active\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734209,
+      "offset": 735119,
       "length": 8,
       "value": "\"Active\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734384,
+      "offset": 735294,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734399,
+      "offset": 735309,
       "length": 25,
       "value": "\"transfers.tab.completed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734436,
+      "offset": 735346,
       "length": 11,
       "value": "\"Completed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734605,
+      "offset": 735515,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734620,
+      "offset": 735530,
       "length": 22,
       "value": "\"transfers.tab.failed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 734654,
+      "offset": 735564,
       "length": 8,
       "value": "\"Failed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 735374,
+      "offset": 736284,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 735389,
+      "offset": 736299,
       "length": 43,
       "value": "\"upgradeAccountPlan.button.buyInApp.footer\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 735444,
+      "offset": 736354,
       "length": 53,
       "value": "\"Platform fees apply when purchasing through the app\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 736843,
+      "offset": 737753,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 736858,
+      "offset": 737768,
       "length": 41,
       "value": "\"upgradeAccountPlan.button.restore.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 736911,
+      "offset": 737821,
       "length": 18,
       "value": "\"Restore purchase\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737144,
+      "offset": 738054,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737159,
+      "offset": 738069,
       "length": 47,
       "value": "\"upgradeAccountPlan.footer.message.pricingPage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737218,
+      "offset": 738128,
       "length": 71,
       "value": "\"You can upgrade your current subscription on our [A]pricing page[\/A].\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737513,
+      "offset": 738423,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737528,
+      "offset": 738438,
       "length": 50,
       "value": "\"upgradeAccountPlan.header.planTermPicker.monthly\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737590,
+      "offset": 738500,
       "length": 9,
       "value": "\"Monthly\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737739,
+      "offset": 738649,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737754,
+      "offset": 738664,
       "length": 49,
       "value": "\"upgradeAccountPlan.header.planTermPicker.yearly\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 737815,
+      "offset": 738725,
       "length": 8,
       "value": "\"Yearly\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738041,
+      "offset": 738951,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738056,
+      "offset": 738966,
       "length": 51,
       "value": "\"upgradeAccountPlan.header.title.saveYearlyBilling\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738119,
+      "offset": 739029,
       "length": 37,
       "value": "\"Save up to 16%% with yearly billing\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738697,
+      "offset": 739607,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738712,
+      "offset": 739622,
       "length": 53,
       "value": "\"upgradeAccountPlan.header.title.subscriptionDetails\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 738777,
+      "offset": 739687,
       "length": 22,
       "value": "\"Subscription details\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 739026,
+      "offset": 739936,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 739041,
+      "offset": 739951,
       "length": 53,
       "value": "\"upgradeAccountPlan.message.text.subscriptionDetails\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 739106,
+      "offset": 740016,
       "length": 328,
       "value": "\"Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your Apple account settings page.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741028,
+      "offset": 741938,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741043,
+      "offset": 741953,
       "length": 66,
       "value": "\"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741121,
+      "offset": 742031,
       "length": 15,
       "value": "\"[A] [B]\/month\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741410,
+      "offset": 742320,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741425,
+      "offset": 742335,
       "length": 65,
       "value": "\"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 741502,
+      "offset": 742412,
       "length": 14,
       "value": "\"[A] [B]\/year\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744616,
+      "offset": 745526,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744631,
+      "offset": 745541,
       "length": 41,
       "value": "\"upgradeAccountPlan.plan.tag.currentPlan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744684,
+      "offset": 745594,
       "length": 14,
       "value": "\"Current plan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744863,
+      "offset": 745773,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744878,
+      "offset": 745788,
       "length": 41,
       "value": "\"upgradeAccountPlan.plan.tag.recommended\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 744931,
+      "offset": 745841,
       "length": 13,
       "value": "\"Recommended\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746798,
+      "offset": 747708,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746813,
+      "offset": 747723,
       "length": 39,
       "value": "\"upgradeAccountPlan.plan.yearly.footer\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 746864,
+      "offset": 747774,
       "length": 16,
       "value": "\"Charged yearly\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747486,
+      "offset": 748396,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747501,
+      "offset": 748411,
       "length": 77,
       "value": "\"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747590,
+      "offset": 748500,
       "length": 57,
       "value": "\"You already have a recurring subscription for this plan\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747828,
+      "offset": 748738,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747843,
+      "offset": 748753,
       "length": 33,
       "value": "\"verifyCredentials.headerMessage\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 747888,
+      "offset": 748798,
       "length": 234,
       "value": "\"We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to verify the contacts you share information with or receive data from.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748356,
+      "offset": 749266,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748371,
+      "offset": 749281,
       "length": 41,
       "value": "\"verifyCredentials.yourCredentials.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 748424,
+      "offset": 749334,
       "length": 18,
       "value": "\"Your credentials\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749150,
+      "offset": 750060,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749165,
+      "offset": 750075,
       "length": 31,
       "value": "\"video.alert.resumeVideo.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749208,
+      "offset": 750118,
       "length": 15,
       "value": "\"Resume video?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749395,
+      "offset": 750305,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749410,
+      "offset": 750320,
       "length": 40,
       "value": "\"video.alert.resumeVideo.button.restart\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749462,
+      "offset": 750372,
       "length": 9,
       "value": "\"Restart\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749593,
+      "offset": 750503,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749608,
+      "offset": 750518,
       "length": 39,
       "value": "\"video.alert.resumeVideo.button.resume\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749659,
+      "offset": 750569,
       "length": 8,
       "value": "\"Resume\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749910,
+      "offset": 750820,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749925,
+      "offset": 750835,
       "length": 39,
       "value": "\"videoPlayer.airPlay.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 749976,
+      "offset": 750886,
       "length": 9,
       "value": "\"AirPlay\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750228,
+      "offset": 751138,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750243,
+      "offset": 751153,
       "length": 47,
       "value": "\"videoPlayer.airPlay.indicator.playingOnDevice\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750302,
+      "offset": 751212,
       "length": 45,
       "value": "\"This video is playing on an external device\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750805,
+      "offset": 751715,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750820,
+      "offset": 751730,
       "length": 34,
       "value": "\"videoPlayer.lock.lockVideoPlayer\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 750866,
+      "offset": 751776,
       "length": 19,
       "value": "\"Lock video player\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751000,
+      "offset": 751910,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751015,
+      "offset": 751925,
       "length": 31,
       "value": "\"videoPlayer.lock.screenLocked\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751058,
+      "offset": 751968,
       "length": 18,
       "value": "\"Screen is locked\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751188,
+      "offset": 752098,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751203,
+      "offset": 752113,
       "length": 34,
       "value": "\"videoPlayer.lock.tapIconToUnlock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751249,
+      "offset": 752159,
       "length": 29,
       "value": "\"Tap the lock icon to unlock\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751470,
+      "offset": 752380,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751485,
+      "offset": 752395,
       "length": 35,
       "value": "\"videoPlayer.pip.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751532,
+      "offset": 752442,
       "length": 20,
       "value": "\"Picture-in-picture\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751745,
+      "offset": 752655,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751760,
+      "offset": 752670,
       "length": 40,
       "value": "\"videoPlayer.snapshot.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751812,
+      "offset": 752722,
       "length": 9,
       "value": "\"Capture\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751968,
+      "offset": 752878,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 751983,
+      "offset": 752893,
       "length": 37,
       "value": "\"videoPlayer.snapshot.snackBar.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752032,
+      "offset": 752942,
       "length": 28,
       "value": "\"Image saved to your device\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752259,
+      "offset": 753169,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752274,
+      "offset": 753184,
       "length": 41,
       "value": "\"videoPlayer.subtitles.bottomSheet.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752327,
+      "offset": 753237,
       "length": 11,
       "value": "\"Subtitles\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752508,
+      "offset": 753418,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752523,
+      "offset": 753433,
       "length": 46,
       "value": "\"videoPlayer.subtitles.menu.addFromCloudDrive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752581,
+      "offset": 753491,
       "length": 31,
       "value": "\"Add subtitle from Cloud drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752705,
+      "offset": 753615,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752720,
+      "offset": 753630,
       "length": 32,
       "value": "\"videoPlayer.subtitles.menu.off\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752764,
+      "offset": 753674,
       "length": 5,
       "value": "\"Off\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752928,
+      "offset": 753838,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752943,
+      "offset": 753853,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.addSubtitle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 752997,
+      "offset": 753907,
       "length": 14,
       "value": "\"Add subtitle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753120,
+      "offset": 754030,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753135,
+      "offset": 754045,
       "length": 37,
       "value": "\"videoPlayer.subtitles.select.cancel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753184,
+      "offset": 754094,
       "length": 8,
       "value": "\"Cancel\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753292,
+      "offset": 754202,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753307,
+      "offset": 754217,
       "length": 36,
       "value": "\"videoPlayer.subtitles.select.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753355,
+      "offset": 754265,
       "length": 24,
       "value": "\"Select a subtitle file\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753529,
+      "offset": 754439,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753544,
+      "offset": 754454,
       "length": 44,
       "value": "\"videoPlayer.subtitles.select.empty.content\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753600,
+      "offset": 754510,
       "length": 52,
       "value": "\"Upload subtitles in SRT format to your Cloud drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753768,
+      "offset": 754678,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753783,
+      "offset": 754693,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.empty.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 753837,
+      "offset": 754747,
       "length": 20,
       "value": "\"No subtitles found\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754019,
+      "offset": 754929,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754034,
+      "offset": 754944,
       "length": 44,
       "value": "\"videoPlayer.subtitles.select.error.content\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754090,
+      "offset": 755000,
       "length": 92,
       "value": "\"There was an issue with the subtitle file.\nSelect a different subtitle file or try again.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754296,
+      "offset": 755206,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754311,
+      "offset": 755221,
       "length": 39,
       "value": "\"videoPlayer.subtitles.select.error.ok\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754362,
+      "offset": 755272,
       "length": 12,
       "value": "\"OK, got it\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754490,
+      "offset": 755400,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754505,
+      "offset": 755415,
       "length": 42,
       "value": "\"videoPlayer.subtitles.select.error.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754559,
+      "offset": 755469,
       "length": 24,
       "value": "\"Unable to add subtitle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754752,
+      "offset": 755662,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754767,
+      "offset": 755677,
       "length": 47,
       "value": "\"videoPlayer.subtitles.select.search.noResults\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 754826,
+      "offset": 755736,
       "length": 19,
       "value": "\"No search results\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755025,
+      "offset": 755935,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755040,
+      "offset": 755950,
       "length": 28,
       "value": "\"videos.navigationbar.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755080,
+      "offset": 755990,
       "length": 8,
       "value": "\"Videos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755244,
+      "offset": 756154,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755259,
+      "offset": 756169,
       "length": 35,
       "value": "\"videos.recentlyWatched.emptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755306,
+      "offset": 756216,
       "length": 20,
       "value": "\"No recent activity\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755433,
+      "offset": 756343,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755448,
+      "offset": 756358,
       "length": 43,
       "value": "\"videos.recentlyWatched.navigationBarTitle\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755503,
+      "offset": 756413,
       "length": 18,
       "value": "\"Recently watched\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755696,
+      "offset": 756606,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755711,
+      "offset": 756621,
       "length": 45,
       "value": "\"videos.recentlyWatched.deletion.alert.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 755768,
+      "offset": 756678,
       "length": 78,
       "value": "\"Videos will be removed from this list, but not deleted from your Cloud drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756036,
+      "offset": 756946,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756051,
+      "offset": 756961,
       "length": 67,
       "value": "\"videos.recentlyWatched.deletion.alert.option.clearRecentlyWatched\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756130,
+      "offset": 757040,
       "length": 12,
       "value": "\"Clear list\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756374,
+      "offset": 757284,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756389,
+      "offset": 757299,
       "length": 35,
       "value": "\"videos.tab.all.content.emptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756436,
+      "offset": 757346,
       "length": 17,
       "value": "\"No videos found\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756694,
+      "offset": 757604,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756709,
+      "offset": 757619,
       "length": 52,
       "value": "\"videos.tab.all.filter.duration.option.allDurations\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756773,
+      "offset": 757683,
       "length": 15,
       "value": "\"All durations\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756938,
+      "offset": 757848,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 756953,
+      "offset": 757863,
       "length": 61,
       "value": "\"videos.tab.all.filter.duration.option.between10And60Seconds\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757026,
+      "offset": 757936,
       "length": 27,
       "value": "\"Between 10 and 60 seconds\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757199,
+      "offset": 758109,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757214,
+      "offset": 758124,
       "length": 59,
       "value": "\"videos.tab.all.filter.duration.option.between1And4Minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757285,
+      "offset": 758195,
       "length": 25,
       "value": "\"Between 1 and 4 minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757458,
+      "offset": 758368,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757473,
+      "offset": 758383,
       "length": 60,
       "value": "\"videos.tab.all.filter.duration.option.between4And20Minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757545,
+      "offset": 758455,
       "length": 26,
       "value": "\"Between 4 and 20 minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757712,
+      "offset": 758622,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757727,
+      "offset": 758637,
       "length": 57,
       "value": "\"videos.tab.all.filter.duration.option.lessThan10Seconds\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757796,
+      "offset": 758706,
       "length": 22,
       "value": "\"Less than 10 seconds\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757959,
+      "offset": 758869,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 757974,
+      "offset": 758884,
       "length": 57,
       "value": "\"videos.tab.all.filter.duration.option.moreThan20Minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758043,
+      "offset": 758953,
       "length": 22,
       "value": "\"More than 20 minutes\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758234,
+      "offset": 759144,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758249,
+      "offset": 759159,
       "length": 47,
       "value": "\"videos.tab.all.filter.duration.title.duration\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758308,
+      "offset": 759218,
       "length": 10,
       "value": "\"Duration\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758547,
+      "offset": 759457,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758562,
+      "offset": 759472,
       "length": 52,
       "value": "\"videos.tab.all.filter.location.option.allLocations\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758626,
+      "offset": 759536,
       "length": 15,
       "value": "\"All locations\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758772,
+      "offset": 759682,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758787,
+      "offset": 759697,
       "length": 53,
       "value": "\"videos.tab.all.filter.location.option.cameraUploads\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758852,
+      "offset": 759762,
       "length": 16,
       "value": "\"Camera uploads\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 758993,
+      "offset": 759903,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759008,
+      "offset": 759918,
       "length": 50,
       "value": "\"videos.tab.all.filter.location.option.cloudDrive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759070,
+      "offset": 759980,
       "length": 13,
       "value": "\"Cloud drive\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759210,
+      "offset": 760120,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759225,
+      "offset": 760135,
       "length": 51,
       "value": "\"videos.tab.all.filter.location.option.sharedItems\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759288,
+      "offset": 760198,
       "length": 14,
       "value": "\"Shared items\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759471,
+      "offset": 760381,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759486,
+      "offset": 760396,
       "length": 47,
       "value": "\"videos.tab.all.filter.location.title.location\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759545,
+      "offset": 760455,
       "length": 10,
       "value": "\"Location\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759832,
+      "offset": 760742,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759847,
+      "offset": 760757,
       "length": 40,
       "value": "\"videos.tab.playlist.browser.button.add\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 759899,
+      "offset": 760809,
       "length": 5,
       "value": "\"Add\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760077,
+      "offset": 760987,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760092,
+      "offset": 761002,
       "length": 40,
       "value": "\"videos.tab.playlist.content.emptyState\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760144,
+      "offset": 761054,
       "length": 20,
       "value": "\"No playlists found\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760301,
+      "offset": 761211,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760316,
+      "offset": 761226,
       "length": 41,
       "value": "\"videos.tab.playlist.content.newPlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760369,
+      "offset": 761279,
       "length": 14,
       "value": "\"New playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760519,
+      "offset": 761429,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760534,
+      "offset": 761444,
       "length": 48,
       "value": "\"videos.tab.playlist.content.removeFromPlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760594,
+      "offset": 761504,
       "length": 22,
       "value": "\"Remove from playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760794,
+      "offset": 761704,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760809,
+      "offset": 761719,
       "length": 47,
       "value": "\"videos.tab.playlist.content.alert.placeholder\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 760868,
+      "offset": 761778,
       "length": 14,
       "value": "\"New playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761005,
+      "offset": 761915,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761020,
+      "offset": 761930,
       "length": 41,
       "value": "\"videos.tab.playlist.content.alert.title\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761073,
+      "offset": 761983,
       "length": 21,
       "value": "\"Enter playlist name\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761274,
+      "offset": 762184,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761289,
+      "offset": 762199,
       "length": 49,
       "value": "\"videos.tab.playlist.content.alert.button.create\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761350,
+      "offset": 762260,
       "length": 8,
       "value": "\"Create\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761483,
+      "offset": 762393,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761498,
+      "offset": 762408,
       "length": 49,
       "value": "\"videos.tab.playlist.content.alert.button.rename\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761559,
+      "offset": 762469,
       "length": 8,
       "value": "\"Rename\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761750,
+      "offset": 762660,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761765,
+      "offset": 762675,
       "length": 60,
       "value": "\"videos.tab.playlist.content.alert.subtitle.enterTheNewName\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 761837,
+      "offset": 762747,
       "length": 20,
       "value": "\"Enter the new name\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762038,
+      "offset": 762948,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762053,
+      "offset": 762963,
       "length": 102,
       "value": "\"videos.tab.playlist.content.alert.subtitle.playlistWillBeDeletedButItsContentsWillStayInYourTimeline\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762167,
+      "offset": 763077,
       "length": 71,
       "value": "\"Playlist will be deleted but its contents will stay in your Timeline.\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762423,
+      "offset": 763333,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762438,
+      "offset": 763348,
       "length": 56,
       "value": "\"videos.tab.playlist.content.alert.title.deletePlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762506,
+      "offset": 763416,
       "length": 18,
       "value": "\"Delete playlist?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762642,
+      "offset": 763552,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762657,
+      "offset": 763567,
       "length": 48,
       "value": "\"videos.tab.playlist.content.alert.title.rename\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 762717,
+      "offset": 763627,
       "length": 17,
       "value": "\"Rename playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763023,
+      "offset": 763933,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763038,
+      "offset": 763948,
       "length": 53,
       "value": "\"videos.tab.playlist.content.header.button.title.add\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763103,
+      "offset": 764013,
       "length": 5,
       "value": "\"Add\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763361,
+      "offset": 764271,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763376,
+      "offset": 764286,
       "length": 65,
       "value": "\"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763453,
+      "offset": 764363,
       "length": 16,
       "value": "\"Empty playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763641,
+      "offset": 764551,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763656,
+      "offset": 764566,
       "length": 58,
       "value": "\"videos.tab.playlist.content.playlistCell.title.favorites\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763726,
+      "offset": 764636,
       "length": 12,
       "value": "\"Favourites\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763945,
+      "offset": 764855,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 763960,
+      "offset": 764870,
       "length": 58,
       "value": "\"videos.tab.playlist.content.snackbar.playlistNameDeleted\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764030,
+      "offset": 764940,
       "length": 19,
       "value": "\"“[A]” deleted\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764173,
+      "offset": 765083,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764188,
+      "offset": 765098,
       "length": 53,
       "value": "\"videos.tab.playlist.content.snackbar.renamingFailed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764253,
+      "offset": 765163,
       "length": 17,
       "value": "\"Renaming failed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764510,
+      "offset": 765420,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764525,
+      "offset": 765435,
       "length": 53,
       "value": "\"videos.tab.playlist.create.alert.enterDifferentName\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764590,
+      "offset": 765500,
       "length": 24,
       "value": "\"Enter a different name\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764759,
+      "offset": 765669,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764774,
+      "offset": 765684,
       "length": 47,
       "value": "\"videos.tab.playlist.create.alert.enterNewName\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 764833,
+      "offset": 765743,
       "length": 18,
       "value": "\"Enter a new name\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765012,
+      "offset": 765922,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765027,
+      "offset": 765937,
       "length": 58,
       "value": "\"videos.tab.playlist.create.alert.userVideoPlaylistExists\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765097,
+      "offset": 766007,
       "length": 42,
       "value": "\"A playlist with this name already exists\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765306,
+      "offset": 766216,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765321,
+      "offset": 766231,
       "length": 62,
       "value": "\"videos.tab.playlist.create.alert.videoPlaylistNameNotAllowed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765395,
+      "offset": 766305,
       "length": 35,
       "value": "\"This playlist name is not allowed\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765742,
+      "offset": 766652,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765757,
+      "offset": 766667,
       "length": 74,
       "value": "\"videos.tab.playlist.playlistContent.actionSheet.title.removeFromPlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 765843,
+      "offset": 766753,
       "length": 23,
       "value": "\"Remove from playlist?\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766065,
+      "offset": 766975,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766080,
+      "offset": 766990,
       "length": 52,
       "value": "\"videos.tab.playlist.playlistContent.menu.addVideos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766144,
+      "offset": 767054,
       "length": 12,
       "value": "\"Add videos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766286,
+      "offset": 767196,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766301,
+      "offset": 767211,
       "length": 57,
       "value": "\"videos.tab.playlist.playlistContent.menu.deletePlaylist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 766370,
+      "offset": 767280,
       "length": 17,
       "value": "\"Delete playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767245,
+      "offset": 768155,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767260,
+      "offset": 768170,
       "length": 22,
       "value": "\"videos.tab.title.all\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767294,
+      "offset": 768204,
       "length": 12,
       "value": "\"All videos\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767406,
+      "offset": 768316,
       "length": 13,
       "value": "\"Localizable\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767421,
+      "offset": 768331,
       "length": 27,
       "value": "\"videos.tab.title.playlist\""
     },
     {
       "filePath": "\/Users\/mikecap\/Library\/Developer\/Xcode\/DerivedData\/MEGAL10n-fimotlfjzvstbvbwugkkfnjlqnby\/Build\/Intermediates.noindex\/BuildToolPluginIntermediates\/MEGAL10n.output\/MEGAL10n\/SwiftGen\/Strings+Generated.swift",
       "kind": "StringLiteral",
-      "offset": 767460,
+      "offset": 768370,
       "length": 11,
       "value": "\"Playlists\""
     }
