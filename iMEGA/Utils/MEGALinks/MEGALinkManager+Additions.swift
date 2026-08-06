@@ -206,7 +206,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
             let source: PlaybackSource?
             if isFolderLink, let node {
-                source = .folderLink(node: node.toNodeEntity())
+                // The folder link SDK has to authorize the node before anything downstream can stream it
+                // or act on it — the account SDK cannot even resolve its handle.
+                source = .folderLink(node: MEGASdk.sharedFolderLinkSdk.authorizeNode(node) ?? node)
             } else if let fileLink, let url = URL(string: fileLink) {
                 source = .fileLink(url: url, node: node)
             } else if let filePaths, let firstPath = filePaths.first {

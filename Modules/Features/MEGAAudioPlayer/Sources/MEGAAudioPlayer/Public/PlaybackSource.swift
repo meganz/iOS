@@ -11,7 +11,10 @@ public enum PlaybackSource: Sendable {
     case cloudNode(node: NodeEntity, queue: [NodeEntity] = [])
     /// a file-link node is a standalone public node that isn't in any tree, so the streaming layer needs the object itself, not a handle.
     case fileLink(url: URL, node: (any PlayableNode)? = nil)
-    case folderLink(node: NodeEntity, queue: [NodeEntity] = [])
+    /// a folder-link node lives in the folder-link SDK instance and has to be authorized before anything
+    /// downstream can stream it or act on it, so the caller passes the authorized node objects rather
+    /// than handles the account SDK cannot resolve.
+    case folderLink(node: any PlayableNode, queue: [any PlayableNode] = [])
     case offlineFiles(file: URL, queue: [URL])
     case recents(node: NodeEntity, queue: [NodeEntity])
     case searchResult(node: NodeEntity)

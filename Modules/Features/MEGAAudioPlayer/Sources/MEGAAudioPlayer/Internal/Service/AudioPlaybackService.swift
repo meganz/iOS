@@ -181,7 +181,8 @@ final class AudioPlaybackService {
     private var currentTrackFingerprint: FingerprintEntity? {
         guard let track = playbackQueue.current else { return nil }
         switch track {
-        case let .account(node), let .folderLink(node): return node.fingerprint
+        case let .account(node): return node.fingerprint
+        case let .folderLink(node): return node.fingerprint
         case let .fileLink(_, node): return node?.fingerprint
         case .offline: return nil
         }

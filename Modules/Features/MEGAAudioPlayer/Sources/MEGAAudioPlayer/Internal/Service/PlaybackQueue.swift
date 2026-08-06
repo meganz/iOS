@@ -4,7 +4,9 @@ import MEGADomain
 extension PlaybackTrack {
     var id: String {
         switch self {
-        case .account(let node), .folderLink(let node):
+        case .account(let node):
+            return String(node.handle)
+        case .folderLink(let node):
             return String(node.handle)
         case .fileLink(let url, let node):
             return node.map { String($0.handle) } ?? url.path
@@ -15,8 +17,10 @@ extension PlaybackTrack {
 
     var displayName: String {
         switch self {
-        case .account(let node), .folderLink(let node):
+        case .account(let node):
             return node.name
+        case .folderLink(let node):
+            return node.name ?? ""
         case .fileLink(let url, let node):
             return node?.name ?? url.lastPathComponent
         case .offline(let url):

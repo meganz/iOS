@@ -101,8 +101,12 @@ extension MEGANode {
                                             allNodes: [MEGANode]?,
                                             sourcePage: NodeSourcePage) -> PlaybackSource? {
         if isFolderLink, let node {
-            let queue = (allNodes ?? []).map { $0.toNodeEntity() }
-            return .folderLink(node: node.toNodeEntity(), queue: queue)
+            // Folder link nodes belong to the folder link SDK instance, so the account SDK cannot resolve
+            // their handles. Authorizing here attaches the node key and lets the authorized objects travel
+            // with the queue, which is what makes the three-dot actions downstream work (IOS-12360).
+            let folderLinkSdk = MEGASdk.sharedFolderLinkSdk
+            let queue = (allNodes ?? []).map { folderLinkSdk.authorizeNode($0) ?? $0 }
+            return .folderLink(node: folderLinkSdk.authorizeNode(node) ?? node, queue: queue)
         }
         if let fileLink, let url = URL(string: fileLink) {
             guard let node else {

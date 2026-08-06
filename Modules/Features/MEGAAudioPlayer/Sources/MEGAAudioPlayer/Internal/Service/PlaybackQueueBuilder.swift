@@ -8,10 +8,10 @@ enum PlaybackQueueBuilder {
         case .cloudNode(let node, let queue),
              .allAudios(let node, let queue),
              .recents(let node, let queue):
-            return nodeQueue(initial: node, queue: queue, wrap: PlaybackTrack.account)
+            return nodeQueue(initial: node, queue: queue, name: { $0.name }, wrap: PlaybackTrack.account)
 
         case .folderLink(let node, let queue):
-            return nodeQueue(initial: node, queue: queue, wrap: PlaybackTrack.folderLink)
+            return nodeQueue(initial: node, queue: queue, name: { $0.name }, wrap: PlaybackTrack.folderLink)
 
         case .searchResult(let node),
              .chatMessage(let node):
@@ -25,19 +25,24 @@ enum PlaybackQueueBuilder {
         }
     }
 
-    private static func nodeQueue(
-        initial: NodeEntity,
-        queue: [NodeEntity],
-        wrap: (NodeEntity) -> PlaybackTrack
+    /// Generic over the node type because an account queue carries `NodeEntity` while a folder-link queue
+    /// carries the authorized `PlayableNode` objects. Both wrap into tracks whose `id` is the node handle,
+    /// which is what the initial track is located by.
+    private static func nodeQueue<Node>(
+        initial: Node,
+        queue: [Node],
+        name: (Node) -> String?,
+        wrap: (Node) -> PlaybackTrack
     ) -> PlaybackQueue {
-        let queue = queue.filter { isAudioPlayable($0.name) }
-        guard !queue.isEmpty else {
-            return PlaybackQueue(tracks: [wrap(initial)], currentIndex: 0)
+        let initialTrack = wrap(initial)
+        let tracks = queue.filter { isAudioPlayable(name($0)) }.map(wrap)
+        guard !tracks.isEmpty else {
+            return PlaybackQueue(tracks: [initialTrack], currentIndex: 0)
         }
-        if let index = queue.firstIndex(where: { $0.handle == initial.handle }) {
-            return PlaybackQueue(tracks: queue.map(wrap), currentIndex: index)
+        if let index = tracks.firstIndex(where: { $0.id == initialTrack.id }) {
+            return PlaybackQueue(tracks: tracks, currentIndex: index)
         }
-        return PlaybackQueue(tracks: [wrap(initial)] + queue.map(wrap), currentIndex: 0)
+        return PlaybackQueue(tracks: [initialTrack] + tracks, currentIndex: 0)
     }
 
     private static func offlineQueue(initial: URL, queue: [URL]) -> PlaybackQueue {
@@ -51,7 +56,7 @@ enum PlaybackQueueBuilder {
         return PlaybackQueue(tracks: [.offline(initial)] + queue.map(PlaybackTrack.offline), currentIndex: 0)
     }
 
-    private static func isAudioPlayable(_ name: String) -> Bool {
-        name.fileExtensionGroup.isAudio
+    private static func isAudioPlayable(_ name: String?) -> Bool {
+        name?.fileExtensionGroup.isAudio == true
     }
 }

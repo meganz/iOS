@@ -11,8 +11,10 @@ enum MEGAAudioPlayerActionsHandler {
     static func make() -> MEGAAudioPlayerViewRouter.ActionsHandler {
         { hostVC, track in
             switch track {
-            case .account(let node), .folderLink(let node):
-                presentNodeAction(for: node, on: hostVC)
+            case .account(let node):
+                presentAccountNodeAction(for: node, on: hostVC)
+            case .folderLink(let node):
+                presentFolderLinkNodeAction(for: node, on: hostVC)
             case .fileLink(let url, _):
                 presentFileLinkAction(for: url, on: hostVC)
             case .offline:
@@ -23,15 +25,43 @@ enum MEGAAudioPlayerActionsHandler {
         }
     }
 
-    private static func presentNodeAction(for nodeEntity: NodeEntity, on hostVC: UIViewController) {
+    private static func presentAccountNodeAction(for nodeEntity: NodeEntity, on hostVC: UIViewController) {
         guard let node = MEGASdk.sharedSdk.node(forHandle: nodeEntity.handle) else { return }
-        let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
         let isBackupNode = BackupsUseCase(
             backupsRepository: BackupsRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
         ).isBackupNode(nodeEntity)
+        present(
+            node: node,
+            on: hostVC,
+            displayMode: node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive,
+            isBackupNode: isBackupNode,
+            isNodeFromFolderLink: false
+        )
+    }
+
+    /// The track carries the node the folder link SDK authorized at enqueue time
+    private static func presentFolderLinkNodeAction(for playableNode: any PlayableNode, on hostVC: UIViewController) {
+        guard let node = playableNode as? MEGANode else { return }
+        present(
+            node: node,
+            on: hostVC,
+            displayMode: .nodeInsideFolderLink,
+            isBackupNode: false,
+            isNodeFromFolderLink: true
+        )
+    }
+
+    private static func present(
+        node: MEGANode,
+        on hostVC: UIViewController,
+        displayMode: DisplayMode,
+        isBackupNode: Bool,
+        isNodeFromFolderLink: Bool
+    ) {
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: hostVC,
+            isNodeFromFolderLink: isNodeFromFolderLink,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: hostVC)
         )
         let vc = PortraitNodeActionViewController(

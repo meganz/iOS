@@ -25,7 +25,7 @@ struct AudioURLResolutionUseCase: AudioURLResolutionUseCaseProtocol {
             return streamingRepository.streamingURL(for: .account(NodeEntityAdapter(node)))
 
         case .folderLink(let node):
-            return streamingRepository.streamingURL(for: .folderLink(NodeEntityAdapter(node)))
+            return streamingRepository.streamingURL(for: .folderLink(node))
 
         case .fileLink(_, let node):
             guard let node else {
