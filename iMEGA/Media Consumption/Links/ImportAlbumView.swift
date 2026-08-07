@@ -23,14 +23,20 @@ struct ImportAlbumView: View {
         
         ZStack {
             EmptyView()
-                .decryptionKeyMissingAlert(isPresented: $viewModel.showingDecryptionKeyAlert,
-                                           decryptionKey: $viewModel.publicLinkDecryptionKey,
-                                           onTappingCancel: dismissImportAlbumScreen,
-                                           onTappingDecryptButton: {
-                    publicAlbumLoadingTask = Task {
-                        await viewModel.loadWithNewDecryptionKey()
-                    }
-                })
+                .alert(
+                    isPresented: $viewModel.showingDecryptionKeyAlert,
+                    .decryptionKey(
+                        message: Strings.Localizable.decryptionKeyAlertMessageForAlbum,
+                        placeholder: "",
+                        confirm: { decryptionKey in
+                            viewModel.publicLinkDecryptionKey = decryptionKey
+                            publicAlbumLoadingTask = Task {
+                                await viewModel.loadWithNewDecryptionKey()
+                            }
+                        },
+                        cancel: dismissImportAlbumScreen
+                    )
+                )
             
             VStack(spacing: 0) {
                 navigationBar
@@ -223,25 +229,6 @@ struct ImportAlbumView: View {
 }
 
 private extension View {
-    func decryptionKeyMissingAlert(
-        isPresented: Binding<Bool>,
-        decryptionKey: Binding<String>,
-        onTappingCancel: (() -> Void)? = nil,
-        onTappingDecryptButton: (() -> Void)? = nil
-    ) -> some View {
-        ImportAlbumAlertView(
-            textString: decryptionKey,
-            showingAlert: isPresented,
-            title: Strings.Localizable.decryptionKeyAlertTitle,
-            message: Strings.Localizable.decryptionKeyAlertMessageForAlbum,
-            placeholderText: "",
-            cancelButtonText: Strings.Localizable.cancel,
-            decryptButtonText: Strings.Localizable.decrypt,
-            onTappingCancelButton: onTappingCancel,
-            onTappingDecryptButton: onTappingDecryptButton
-        )
-    }
-    
     func share(isPresented: Binding<Bool>, activityItems: [Any]) -> some View {
         background(
             ShareSheet(isPresented: isPresented, activityItems: activityItems)

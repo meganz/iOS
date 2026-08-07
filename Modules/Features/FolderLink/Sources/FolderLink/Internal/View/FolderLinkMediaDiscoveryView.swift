@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 import Search
 import SwiftUI

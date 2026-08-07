@@ -2,10 +2,14 @@ import MEGAAssets
 import MEGAL10n
 import SwiftUI
 
-struct ShareLinkButton: View {
-    let link: String
-    
-    var body: some View {
+public struct ShareLinkButton: View {
+    private let link: String
+
+    public init(link: String) {
+        self.link = link
+    }
+
+    public var body: some View {
         if let url = URL(string: link) {
             ShareLink(item: url) {
                 Label {

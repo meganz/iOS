@@ -121,17 +121,22 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                     // When first open folder link, calling retryPendingConnections after login to folder link
                     viewModel.retryPendingConnections()
                 }
-                .askingForDecryptionKeyAlert(
+                .alert(
                     isPresented: $viewModel.askingForDecryptionKey,
-                    isLinkRevampEnabled: dependency.isLinkRevampEnabled,
-                    confirm: { text in
-                        Task {
-                            await viewModel.confirmDecryptionKey(text)
+                    .decryptionKey(
+                        message: dependency.isLinkRevampEnabled
+                            ? Strings.Localizable.Link.DecryptionKey.Alert.message
+                            : Strings.Localizable.decryptionKeyAlertMessage,
+                        placeholder: Strings.Localizable.decryptionKey,
+                        confirm: { text in
+                            Task {
+                                await viewModel.confirmDecryptionKey(text)
+                            }
+                        }, cancel: {
+                            viewModel.cancelConfirmingDecryptionKey()
+                            dependency.onClose()
                         }
-                    }, cancel: {
-                        viewModel.cancelConfirmingDecryptionKey()
-                        dependency.onClose()
-                    }
+                    )
                 )
                 .invalidDecryptionKeyAlert(isPresented: $viewModel.notifyInvalidDecryptionKey) {
                     viewModel.acknowledgeInvalidDecryptionKey()

@@ -1,3 +1,5 @@
+import MEGADomain
+
 package enum FolderLinkFetchNodesErrorEntity: Error, Sendable, Equatable {
     case linkUnavailable(LinkUnavailableReason)
     case invalidDecryptionKey

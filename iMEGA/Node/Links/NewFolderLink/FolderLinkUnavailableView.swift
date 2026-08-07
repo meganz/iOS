@@ -1,4 +1,4 @@
-import FolderLink
+import MEGADomain
 import SwiftUI
 
 struct FolderLinkUnavailableView: View {

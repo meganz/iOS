@@ -3,14 +3,6 @@ import Search
 import SwiftUI
 import UIKit
 
-public enum LinkUnavailableReason: Error, Sendable, Equatable {
-    case downETD
-    case userETDSuspension
-    case copyrightSuspension
-    case generic
-    case expired
-}
-
 public struct FolderLinkNodeAction {
     public let handle: HandleEntity
     public let sender: UIButton

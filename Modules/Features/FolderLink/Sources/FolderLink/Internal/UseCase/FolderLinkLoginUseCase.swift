@@ -1,3 +1,5 @@
+import MEGADomain
+
 package enum FolderLinkLoginErrorEntity: Error, Sendable, Equatable {
     case linkUnavailable(LinkUnavailableReason)
     case invalidDecryptionKey
