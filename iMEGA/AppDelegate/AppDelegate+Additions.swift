@@ -21,6 +21,7 @@ import MEGAPermissions
 import MEGAPreference
 import MEGARepo
 import PushKit
+import QuotaWarnings
 import SafariServices
 
 // AppDelegate implements `pricingsReady` (declared in AppDelegate.h) in Obj-C.
@@ -87,6 +88,7 @@ extension AppDelegate {
         if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
             UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
             UIApplication.mnz_visibleViewController() is AccountExpiredViewController ||
+            QuotaDialogPresentationState.shared.isPresenting ||
             (MEGASdk.shared.isAccountType(.business) &&
              MEGASdk.shared.businessStatus != .active) {
             return
