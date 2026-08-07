@@ -32,8 +32,6 @@ struct TransferResultRowView: View {
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
     @Environment(\.editMode) private var editMode
-    /// The row's width as laid out in the list, measured for the tap-and-hold preview.
-    @State private var rowWidth: CGFloat = 0
 
     /// In select mode the row shows the native leading checkbox and nothing may
     /// compete with the tap that toggles it, so the trailing control is dropped
@@ -52,13 +50,6 @@ struct TransferResultRowView: View {
         viewModel.state.status == .completed
     }
 
-    /// Width of the lifted card in the tap-and-hold preview: the row inset by the
-    /// design's 16pt gutter on both sides. `nil` until the row has been laid out once, which leaves
-    /// the frame unconstrained rather than collapsing it to zero.
-    private var previewWidth: CGFloat? {
-        rowWidth > 0 ? rowWidth - TokenSpacing._5 * 2 : nil
-    }
-
     /// The lifted card's corner radius. UIKit masks the preview to this path, so
     /// the card needs no clip of its own; left to itself it rounds a preview more
     /// heavily than the design does.
@@ -74,17 +65,8 @@ struct TransferResultRowView: View {
 
     var body: some View {
         rowContent
-        .background {
-            GeometryReader { proxy in
-                Color.clear
-                    .onChange(of: proxy.size.width, initial: true) { _, width in
-                        rowWidth = width
-                    }
-            }
-        }
         .contentShape(Rectangle())
-        // Read off the row, not off the preview content: this is where SwiftUI
-        // takes the path from when it hands UIKit the lifted preview's parameters.
+        // Shapes the lifted card. Left to itself SwiftUI rounds it more heavily than the design does.
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: previewCornerRadius))
         // Masked rather than removed while selecting: an `if` around the gesture
         // and swipe modifiers would be a structural change, so entering select
@@ -100,10 +82,6 @@ struct TransferResultRowView: View {
             if !isSelecting {
                 selectMenuItem
             }
-        } preview: {
-            rowContent
-                .frame(width: previewWidth)
-                .background(TokenColors.Background.page.swiftUI)
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             if !isSelecting {
