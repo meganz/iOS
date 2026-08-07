@@ -49,7 +49,7 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     private(set) lazy var promoHeader: SubscriptionPromoHeaderViewModel? = {
         guard isPromo else { return nil }
-        return SubscriptionPromoHeaderViewModel(plans: plans)
+        return SubscriptionPromoHeaderViewModel(plan: promoHeaderPlan)
     }()
 
     /// The promotional offer's expiry that drives the header countdown, when one applies.
@@ -138,5 +138,12 @@ public final class UpgradePlansViewModel: ObservableObject {
     private var featuredPlan: PlanEntity? {
         guard discountedPlans.count == 1, let plan = discountedPlans.first, !plan.isCurrentPlan(for: accountDetails) else { return nil }
         return plan
+    }
+
+    // The plan whose info is to be shown in the promo header
+    private var promoHeaderPlan: PlanEntity? {
+        let badgePresenter = SubscriptionOfferBadgePresenter()
+        return discountedPlans
+            .max { (badgePresenter.discountPercentage(for: $0) ?? 0) < (badgePresenter.discountPercentage(for: $1) ?? 0) }
     }
 }

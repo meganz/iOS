@@ -1,7 +1,6 @@
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
-import MEGAUIComponent
 import SwiftUI
 
 /// The promo redesigned subscription page.
@@ -57,17 +56,7 @@ public struct SubscriptionPromoView: View {
     }
 
     private var promoBanner: some View {
-        Color.clear
-            .frame(maxWidth: .infinity)
-            .frame(height: 280)
-            .overlay(alignment: .top) {
-                MEGAAssets.Image.promoBannerCentered
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity)
-            }
-            .clipped()
-            .subscriptionHeaderBottomFade()
+        SubscriptionPromoBannerView()
     }
 
     @ViewBuilder
@@ -81,44 +70,15 @@ public struct SubscriptionPromoView: View {
     @ViewBuilder
     private var highlightedPlanCard: some View {
         if let card = viewModel.highlightedPlanCard {
-            PlanCardContainer(cardBackgroundColor: .highlightedPlanCardColor) {
-                PlanCardRibbon(
-                    text: card.ribbonText,
-                    fill: TokenColors.Button.brand.swiftUI,
-                    foreground: TokenColors.Text.onColor.swiftUI
+            SubscriptionPromoPlanCardView(card: card) {
+                PlanPurchaseButton(
+                    purchaseViewModel: purchaseViewModel,
+                    title: card.buttonTitle,
+                    productIdentifier: card.productIdentifier,
+                    style: .brand
                 )
-            } content: {
-                VStack(alignment: .leading, spacing: TokenSpacing._4) {
-                    PlanTitleView(card.title)
-                    PlanPriceView(card.price)
-                    PlanFeatureListView {
-                        PlanFeatureView(icon: MEGAAssets.Image.monoCloudMediumThinOutline, text: card.storage)
-                        PlanFeatureView(icon: MEGAAssets.Image.monoArrowUpDownMediumThinOutline, text: card.transfer)
-                    }
-                    PlanPurchaseButton(
-                        purchaseViewModel: purchaseViewModel,
-                        title: card.buttonTitle,
-                        productIdentifier: card.productIdentifier,
-                        style: .brand
-                    )
-                }
             }
-            .frame(maxWidth: .infinity)
             .padding(.top, TokenSpacing._2)
         }
-    }
-}
-
-private extension Color {
-    // Custom background color for highlighted card, not defined by any token color
-    static var highlightedPlanCardColor: Color {
-        UIColor(
-            dynamicProvider: {
-                $0.userInterfaceStyle == .light
-                ? UIColor.init(red: 253/255, green: 249/255, blue: 248/255, alpha: 1)
-                    : UIColor(red: 35/255, green: 20/255, blue: 16/255, alpha: 1.0)
-            }
-        ).swiftUI
-
     }
 }
