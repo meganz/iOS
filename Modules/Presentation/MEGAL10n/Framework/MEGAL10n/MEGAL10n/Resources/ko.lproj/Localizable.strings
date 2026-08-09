@@ -5154,3 +5154,9 @@
 "subscriptionPurchase.revamp.promo.offerEnded.message"="이 할인을 더 이상 이용할 수 없습니다. 그 대신 요금제를 확인해보세요.";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="또는 저희 웹사이트에서 최대 %@ 할인을 받으세요";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="콘텐츠를 불러올 수 없습니다";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="당신의 요금제를 불러오던 중 문제가 생겼습니다. 다시 시도하세요.";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="다시 시도";

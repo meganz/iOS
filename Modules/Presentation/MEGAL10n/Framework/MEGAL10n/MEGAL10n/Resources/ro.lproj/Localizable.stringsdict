@@ -3981,9 +3981,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] [B] for %d month</string>
+        <string>[A] [B] pentru %d lună</string>
+        <key>few</key>
+        <string>[A] [B] pentru %d luni</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B] pentru %d de luni</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3997,9 +3999,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] [B] for %d year</string>
+        <string>[A] [B] pentru %d an</string>
+        <key>few</key>
+        <string>[A] [B] pentru %d ani</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>[A] [B] pentru %d de ani</string>
       </dict>
     </dict>
   </dict>

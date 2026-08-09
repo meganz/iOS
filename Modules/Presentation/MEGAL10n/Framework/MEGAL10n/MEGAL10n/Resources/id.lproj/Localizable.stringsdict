@@ -3101,7 +3101,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B] selama %d bulan</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3115,7 +3115,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>[A] [B] selama %d tahun</string>
       </dict>
     </dict>
   </dict>

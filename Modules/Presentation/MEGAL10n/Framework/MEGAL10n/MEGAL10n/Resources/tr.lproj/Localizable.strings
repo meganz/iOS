@@ -5154,3 +5154,9 @@
 "subscriptionPurchase.revamp.promo.offerEnded.message"="Bu teklif artık geçerli değil. Bunun yerine planlarımıza göz atın.";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Veya web sitemizde %@ tasarruf edin";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="İçerik yüklenemedi";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Planlarınız yüklenirken bir sorunla karşılaştık. Lütfen tekrar deneyin.";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Tekrar dene";

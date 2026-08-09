@@ -5156,3 +5156,7 @@
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="O ahorra hasta un %@ en nuestra página web";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Inténtalo de nuevo";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="No se ha podido cargar el contenido";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Ha habido un problema al cargar tus planes. Por favor, inténtalo de nuevo.";
