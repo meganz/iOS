@@ -10,6 +10,7 @@ struct PreviewQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
         transferMax: 5 * 1_073_741_824
     )
     var plan: PlanEntity? = .mockEssentialYearly
+    var userEmail: String? = "preview@mega.co.nz"
 
     func upgradeOption() async throws -> QuotaUpgradeOption {
         if let plan {

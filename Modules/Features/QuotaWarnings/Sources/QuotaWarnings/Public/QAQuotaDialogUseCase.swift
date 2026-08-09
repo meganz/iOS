@@ -70,6 +70,8 @@ public struct QAQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
         self.cursor = SequenceCursor(steps: sequence)
     }
 
+    var userEmail: String? { nil }
+
     func upgradeOption() async throws -> QuotaUpgradeOption {
         guard let cursor, let step = await cursor.next() else {
             return configuredOutcome()
