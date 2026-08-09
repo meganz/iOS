@@ -18,6 +18,10 @@ struct QuotaDialogUseCase: QuotaDialogUseCaseProtocol {
         self.pricingRequester = pricingRequester
     }
 
+    var userEmail: String? {
+        accountUseCase.myEmail
+    }
+
     func upgradeOption() async throws -> QuotaUpgradeOption {
         try await pricingRequester.requestPricing()
         

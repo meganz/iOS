@@ -86,12 +86,12 @@ struct QuotaDialogContentView: View {
                     )
                 }
             )
-        case let .noUpgradeAvailable(header, currentPlan):
+        case let .noUpgradeAvailable(header, currentPlan, supportEmail):
             QuotaDialogView(
                 trackingUseCase: dependency.trackingUseCase(kind: kind, isFreeUser: currentPlan.freeUser),
                 header: { QuotaDialogHeaderView(header: header) },
                 currentPlanCard: { CurrentPlanView(currentPlan: currentPlan) },
-                footer: { ContactSupportFooterView() }
+                footer: { ContactSupportFooterView(email: supportEmail) }
             )
         }
     }

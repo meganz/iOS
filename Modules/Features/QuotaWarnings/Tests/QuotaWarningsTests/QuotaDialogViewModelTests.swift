@@ -7,10 +7,14 @@ import Testing
 @MainActor
 @Suite("QuotaDialogViewModel")
 struct QuotaDialogViewModelTests {
-    private func makeSUT(result: Result<QuotaUpgradeOption, any Error>) -> QuotaDialogViewModel {
+    private func makeSUT(
+        result: Result<QuotaUpgradeOption, any Error>,
+        userEmail: String? = nil
+    ) -> QuotaDialogViewModel {
         QuotaDialogViewModel(
-            useCase: MockQuotaDialogUseCase(result: result),
-            mapper: StubQuotaDialogMapper()
+            useCase: MockQuotaDialogUseCase(result: result, userEmail: userEmail),
+            mapper: StubQuotaDialogMapper(),
+            emailFormatter: CustomPlanEmailFormatter(appVersion: "1.2 (3)")
         )
     }
 
@@ -80,11 +84,29 @@ struct QuotaDialogViewModelTests {
 
         await sut.load()
 
-        guard case let .noUpgradeAvailable(_, currentPlan) = sut.viewState else {
+        guard case let .noUpgradeAvailable(_, currentPlan, _) = sut.viewState else {
             Issue.record("Expected .noUpgradeAvailable, got \(sut.viewState)")
             return
         }
         #expect(currentPlan.freeUser == freeUser)
+    }
+
+    // MARK: - Contact support
+
+    @Test func load_unavailable_buildsTheCustomPlanSupportEmail() async {
+        let sut = makeSUT(
+            result: .success(.unavailable(accountDetails: .build(proLevel: .proIII))),
+            userEmail: "user@mega.co.nz"
+        )
+
+        await sut.load()
+
+        guard case let .noUpgradeAvailable(_, _, supportEmail) = sut.viewState else {
+            Issue.record("Expected .noUpgradeAvailable, got \(sut.viewState)")
+            return
+        }
+        #expect(supportEmail.recipients == ["support@mega.io"])
+        #expect(supportEmail.body.contains("user@mega.co.nz (current)"))
     }
 }
 
@@ -94,7 +116,13 @@ private enum SampleError: Error { case any }
 
 private final class MockQuotaDialogUseCase: QuotaDialogUseCaseProtocol, @unchecked Sendable {
     private let result: Result<QuotaUpgradeOption, any Error>
-    init(result: Result<QuotaUpgradeOption, any Error>) { self.result = result }
+    let userEmail: String?
+
+    init(result: Result<QuotaUpgradeOption, any Error>, userEmail: String? = nil) {
+        self.result = result
+        self.userEmail = userEmail
+    }
+
     func upgradeOption() async throws -> QuotaUpgradeOption { try result.get() }
 }
 

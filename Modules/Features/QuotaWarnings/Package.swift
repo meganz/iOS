@@ -66,6 +66,8 @@ let package = Package(
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            "MEGASwift",
                            "MEGAUIComponent",
+                           "MEGAInfrastructure",
+                           "MEGAL10n",
                            .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")],
