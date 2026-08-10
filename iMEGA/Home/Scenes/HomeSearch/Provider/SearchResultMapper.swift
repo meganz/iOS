@@ -22,6 +22,7 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
     private let mediaUseCase: any MediaUseCaseProtocol
     private let nodeActions: NodeActions
     private let showHiddenNodeBlur: Bool
+    private let offlineActionGuard: any OfflineActionGuarding
 
     private var tracker: some AnalyticsTracking {
         DIContainer.tracker
@@ -35,7 +36,9 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodeActions: NodeActions,
-        showHiddenNodeBlur: Bool = true
+        showHiddenNodeBlur: Bool = true,
+        // Swipe actions all need a connection; only Cloud Drive passes a guard that blocks
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking
     ) {
         self.sdk = sdk
         self.nodeIconUsecase = nodeIconUsecase
@@ -45,6 +48,7 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
         self.mediaUseCase = mediaUseCase
         self.nodeActions = nodeActions
         self.showHiddenNodeBlur = showHiddenNodeBlur
+        self.offlineActionGuard = offlineActionGuard
     }
     
     func map(node: NodeEntity) -> SearchResult {
@@ -202,7 +206,8 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
                     SearchResultSwipeAction(
                         image: MEGAAssets.Image.rotateCcw,
                         backgroundColor: TokenColors.Indicator.green.swiftUI,
-                        action: {
+                        action: { [offlineActionGuard] in
+                            guard offlineActionGuard.allowsActionRequiringConnection() else { return }
                             nodeActions.restoreFromRubbishBin([node])
                         }
                     )
@@ -212,7 +217,8 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
             let shareLinkSwipeAction = SearchResultSwipeAction(
                 image: MEGAAssets.Image.link01,
                 backgroundColor: TokenColors.Indicator.yellow.swiftUI,
-                action: {
+                action: { [offlineActionGuard] in
+                    guard offlineActionGuard.allowsActionRequiringConnection() else { return }
                     tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureLinkButtonPressedEvent())
                     nodeActions.shareOrManageLink([node])
                 }
@@ -221,7 +227,8 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
             let downloadSwipeAction = SearchResultSwipeAction(
                 image: MEGAAssets.Image.arrowDownCircle,
                 backgroundColor: TokenColors.Indicator.green.swiftUI,
-                action: {
+                action: { [offlineActionGuard] in
+                    guard offlineActionGuard.allowsActionRequiringConnection() else { return }
                     tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureDownloadButtonPressedEvent())
                     nodeActions.nodeDownloader([node])
                 }
@@ -231,7 +238,8 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
                 let moveToRubbishBinSwipeAction = SearchResultSwipeAction(
                     image: MEGAAssets.Image.trash,
                     backgroundColor: TokenColors.Indicator.pink.swiftUI,
-                    action: {
+                    action: { [offlineActionGuard] in
+                        guard offlineActionGuard.allowsActionRequiringConnection() else { return }
                         tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureRemoveButtonPressedEvent())
                         nodeActions.moveToRubbishBin([node])
                     }

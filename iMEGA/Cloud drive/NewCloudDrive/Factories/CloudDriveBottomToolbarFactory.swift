@@ -30,6 +30,7 @@ struct CloudDriveBottomToolbarItemsFactory {
     let actionFactory: any ToolbarActionFactoryProtocol
     let nodeUseCase: any NodeUseCaseProtocol
     let nodeAccessoryActionDelegate: any NodeAccessoryActionDelegate
+    let offlineActionGuard: any OfflineActionGuarding
     private var tracker: some AnalyticsTracking {
         DIContainer.tracker
     }
@@ -106,6 +107,8 @@ struct CloudDriveBottomToolbarItemsFactory {
         parent: UIViewController,
         sender: Any
     ) {
+        guard !type.requiresConnection || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         switch type {
         case .download:
             nodeActionHandler.download(selectedNodes)
@@ -152,7 +155,10 @@ struct CloudDriveBottomToolbarItemsFactory {
         
         let nodeActionsViewController = NodeActionViewController(
             nodes: megaNodes(from: nodes),
-            delegate: nodeActionHandler,
+            delegate: OfflineAwareNodeActionDelegate(
+                wrapping: nodeActionHandler,
+                offlineActionGuard: offlineActionGuard
+            ),
             displayMode: displayMode,
             isIncoming: isIncomingShareChildView,
             containsABackupNode: displayMode == .backup,

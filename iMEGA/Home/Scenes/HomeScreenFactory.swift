@@ -99,7 +99,9 @@ final class HomeScreenFactory: NSObject {
     func makeResultsProvider(
         parentNodeProvider: @escaping () -> NodeEntity?,
         navigationController: UINavigationController,
-        isFromSharedItem: Bool = false
+        isFromSharedItem: Bool = false,
+        // Row swipe actions all need a connection; only Cloud Drive passes a guard that blocks
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard.neverBlocking
     ) -> HomeSearchResultsProvider {
         let nodeUseCase = makeNodeUseCase()
         let mapper = SearchResultMapper(
@@ -110,7 +112,8 @@ final class HomeScreenFactory: NSObject {
             sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
             mediaUseCase: makeMediaUseCase(),
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            showHiddenNodeBlur: !isFromSharedItem
+            showHiddenNodeBlur: !isFromSharedItem,
+            offlineActionGuard: offlineActionGuard
         )
         
         return HomeSearchResultsProvider(

@@ -28,6 +28,7 @@ final class RubbishBinMenuDelegateHandlerTests: XCTestCase {
             
             sut = RubbishBinMenuDelegateHandler(
                 restore: { restore($0) },
+                offlineActionGuard: MockOfflineActionGuard(),
                 showNodeInfo: { showNodeInfo($0) },
                 showNodeVersions: { showNodeVersions($0) },
                 remove: { remove($0) },

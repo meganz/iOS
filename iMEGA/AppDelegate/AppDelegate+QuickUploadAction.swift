@@ -36,6 +36,8 @@ extension AppDelegate {
         
         let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
             tracker: DIContainer.tracker,
+            // The home screen quick action is not the Cloud Drive screen the offline flag covers
+            offlineActionGuard: OfflineActionGuard.neverBlocking,
             nodeInsertionRouter: nodeInsertionRouter,
             nodeSource: .node({
                 nodeRepository.rootNode() // Per existing logic, we only upload to the root folder of CD.

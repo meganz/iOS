@@ -102,6 +102,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
 
     private func makeSUT(
         tracker: some AnalyticsTracking = MockTracker(),
+        offlineActionGuard: some OfflineActionGuarding = MockOfflineActionGuard(),
         nodeInsertionRouter: some NodeInsertionRouting = MockNodeInsertionRouter(),
         nodeSource: NodeSource,
         file: StaticString = #filePath,
@@ -109,6 +110,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
     ) -> SUT {
         let sut = SUT(
             tracker: tracker,
+            offlineActionGuard: offlineActionGuard,
             nodeInsertionRouter: nodeInsertionRouter,
             nodeSource: nodeSource
         )

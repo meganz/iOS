@@ -11,17 +11,23 @@ final class FloatingActionsHandler: FloatingActionsHandlerProtocol {
 
     var openLinkRouter: OpenLinkRouter?
 
+    private let offlineActionGuard: any OfflineActionGuarding
+
     init(
         tracker: some AnalyticsTracking,
+        offlineActionGuard: some OfflineActionGuarding,
         nodeInsertionRouter: some NodeInsertionRouting,
         nodeSource: NodeSource
     ) {
         self.tracker = tracker
+        self.offlineActionGuard = offlineActionGuard
         self.nodeInsertionRouter = nodeInsertionRouter
         self.nodeSource = nodeSource
     }
 
     func handle(action: FloatingActionEntity) {
+        guard action.requiresConnection == false || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         guard
             case let .node(nodeProvider) = nodeSource,
             let node = nodeProvider()

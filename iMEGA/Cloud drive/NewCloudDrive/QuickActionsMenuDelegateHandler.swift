@@ -20,8 +20,11 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
     // this needs to be supplied from the outside to trigger the menu rebuild
     var refreshMenu: (() -> Void)?
     
+    private let offlineActionGuard: any OfflineActionGuarding
+
     init(
         showNodeInfo: @escaping (NodeEntity) -> Void,
+        offlineActionGuard: some OfflineActionGuarding,
         manageShare: @escaping (NodeEntity) -> Void,
         shareFolders: @escaping ([NodeEntity]) -> Void,
         download: @escaping ([NodeEntity]) -> Void,
@@ -37,6 +40,7 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening
     ) {
         self.showNodeInfo = showNodeInfo
+        self.offlineActionGuard = offlineActionGuard
         self.manageShare = manageShare
         self.shareFolders = shareFolders
         self.shareOrManageLink = shareOrManageLink
@@ -58,6 +62,8 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         didSelect action: QuickActionEntity,
         needToRefreshMenu: Bool
     ) {
+        guard action.requiresConnection == false || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         guard
             case let .node(nodeProvider) = nodeSource,
             let parentNode = nodeProvider()

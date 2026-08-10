@@ -9,14 +9,18 @@ final class RubbishBinMenuDelegateHandler: RubbishBinMenuDelegate {
     let remove: (NodeEntity) -> Void
     let nodeSource: NodeSource
     
+    private let offlineActionGuard: any OfflineActionGuarding
+
     init(
         restore: @escaping (NodeEntity) -> Void,
+        offlineActionGuard: some OfflineActionGuarding,
         showNodeInfo: @escaping (_ node: NodeEntity) -> Void,
         showNodeVersions: @escaping (NodeEntity) -> Void,
         remove: @escaping (NodeEntity) -> Void,
         nodeSource: NodeSource
     ) {
         self.restore = restore
+        self.offlineActionGuard = offlineActionGuard
         self.showNodeInfo = showNodeInfo
         self.showNodeVersions = showNodeVersions
         self.remove = remove
@@ -25,7 +29,8 @@ final class RubbishBinMenuDelegateHandler: RubbishBinMenuDelegate {
     }
     
     func rubbishBinMenu(didSelect action: RubbishBinActionEntity) {
-        
+        guard action.requiresConnection == false || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         guard
             case let .node(nodeProvider) = nodeSource,
             let parentNode = nodeProvider()

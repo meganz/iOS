@@ -87,7 +87,8 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
                 nodeActionHandler: handler,
                 actionFactory: actionFactory,
                 nodeUseCase: nodeUseCase,
-                nodeAccessoryActionDelegate: MockNodeAccessoryActionDelegate()
+                nodeAccessoryActionDelegate: MockNodeAccessoryActionDelegate(),
+                offlineActionGuard: MockOfflineActionGuard()
             )
         }
         

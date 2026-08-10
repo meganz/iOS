@@ -14,13 +14,17 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggeri
     let changeSortOrder: (SortOrderType) -> Void
     let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     
+    private let offlineActionGuard: any OfflineActionGuarding
+
     init(
         rubbishBinUseCase: some RubbishBinUseCaseProtocol,
+        offlineActionGuard: some OfflineActionGuarding,
         toggleSelection: @escaping () -> Void,
         changeViewMode: @escaping (ViewModePreferenceEntity) -> Void,
         changeSortOrder: @escaping (SortOrderType) -> Void
     ) {
         self.rubbishBinUseCase = rubbishBinUseCase
+        self.offlineActionGuard = offlineActionGuard
         self.toggleSelection = toggleSelection
         self.changeViewMode = changeViewMode
         self.changeSortOrder = changeSortOrder
@@ -47,6 +51,8 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggeri
         didSelect action: DisplayActionEntity,
         needToRefreshMenu: Bool
     ) {
+        guard action.requiresConnection == false || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         switch action {
         case .select:
             toggleSelection()

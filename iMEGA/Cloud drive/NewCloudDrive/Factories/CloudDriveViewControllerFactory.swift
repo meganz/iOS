@@ -47,6 +47,14 @@ struct CloudDriveViewControllerFactory {
     private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let nodeActionsBridge: NodeActionsBridge
+    /// Blocks actions that need a connection while offline (IOS-12228)
+    private let offlineActionGuard: any OfflineActionGuarding
+
+    /// One place to build it, so the guards handed to the view controller, the results mapper and
+    /// the node action sheet delegate can never drift apart.
+    private static func makeOfflineActionGuard() -> OfflineActionGuard {
+        OfflineActionGuard(isNewOfflineModeEnabled: CloudDriveOfflineModeGate.isNewOfflineModeEnabled)
+    }
 
     init(
         navigationController: UINavigationController,
@@ -100,6 +108,7 @@ struct CloudDriveViewControllerFactory {
         self.nodeUpdateRepository = nodeUpdateRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.nodeActionsBridge = nodeActionsBridge
+        offlineActionGuard = Self.makeOfflineActionGuard()
         viewModeFactory = ViewModeFactory(viewModeStore: viewModeStore)
     }
 
@@ -137,7 +146,8 @@ struct CloudDriveViewControllerFactory {
             nodeUseCase: nodeUseCase,
             sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
             mediaUseCase: homeFactory.makeMediaUseCase(),
-            nodeActions: nodeActions
+            nodeActions: nodeActions,
+            offlineActionGuard: makeOfflineActionGuard()
         )
 
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
@@ -160,7 +170,12 @@ struct CloudDriveViewControllerFactory {
 
         let router = HomeSearchResultRouter(
             navigationController: navController,
-            nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
+            // Wrapping only the Cloud Drive's delegate keeps the offline block off the other
+            // screens that share NodeActionViewControllerGenericDelegate (IOS-12228)
+            nodeActionViewControllerDelegate: OfflineAwareNodeActionDelegate(
+                wrapping: nodeActionViewControllerDelegate,
+                offlineActionGuard: makeOfflineActionGuard()
+            ),
             backupsUseCase: backupsUseCase,
             nodeUseCase: nodeUseCase
         )
@@ -414,6 +429,7 @@ struct CloudDriveViewControllerFactory {
 
         let displayMenuDelegateHandler = DisplayMenuDelegateHandler(
             rubbishBinUseCase: rubbishBinUseCase,
+            offlineActionGuard: offlineActionGuard,
             toggleSelection: { [weak nodeBrowserViewModel] in
                 nodeBrowserViewModel?.toggleSelection()
             },
@@ -432,6 +448,7 @@ struct CloudDriveViewControllerFactory {
 
         let quickActionsMenuDelegateHandler = QuickActionsMenuDelegateHandler(
             showNodeInfo: nodeActions.showNodeInfo,
+            offlineActionGuard: offlineActionGuard,
             manageShare: { [nodeActions] in nodeActions.manageShare([$0]) },
             shareFolders: nodeActions.shareFolders,
             download: nodeActions.nodeDownloader,
@@ -457,6 +474,7 @@ struct CloudDriveViewControllerFactory {
 
         let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
             restore: { [nodeActions] in nodeActions.restoreFromRubbishBin([$0]) },
+            offlineActionGuard: offlineActionGuard,
             showNodeInfo: nodeActions.showNodeInfo,
             showNodeVersions: nodeActions.showNodeVersions,
             remove: { [nodeActions] in nodeActions.removeFromRubbishBin([$0]) },
@@ -465,6 +483,7 @@ struct CloudDriveViewControllerFactory {
 
         let uploadAddMenuDelegate = UploadAddMenuDelegateHandler(
             tracker: tracker,
+            offlineActionGuard: offlineActionGuard,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )
@@ -810,7 +829,8 @@ struct CloudDriveViewControllerFactory {
                 }),
                 actionFactory: ToolbarActionFactory(),
                 nodeUseCase: nodeUseCase,
-                nodeAccessoryActionDelegate: DefaultNodeAccessoryActionDelegate()
+                nodeAccessoryActionDelegate: DefaultNodeAccessoryActionDelegate(),
+                offlineActionGuard: offlineActionGuard
             ),
             backButtonTitle: Self.titleFor(
                 nodeSource,
@@ -1110,7 +1130,8 @@ struct CloudDriveViewControllerFactory {
             homeScreenFactory.makeResultsProvider(
                 parentNodeProvider: nodeProvider,
                 navigationController: navigationController,
-                isFromSharedItem: isFromSharedItem
+                isFromSharedItem: isFromSharedItem,
+                offlineActionGuard: offlineActionGuard
             )
         case .recentActionBucket(let bucket):
             RecentActionBucketProvider(
@@ -1248,6 +1269,7 @@ struct CloudDriveViewControllerFactory {
 
         let floatingActionsHandler = FloatingActionsHandler(
             tracker: tracker,
+            offlineActionGuard: offlineActionGuard,
             nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )

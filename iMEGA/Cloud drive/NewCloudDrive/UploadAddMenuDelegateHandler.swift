@@ -9,17 +9,23 @@ final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeSource: NodeSource
 
+    private let offlineActionGuard: any OfflineActionGuarding
+
     init(
         tracker: some AnalyticsTracking,
+        offlineActionGuard: some OfflineActionGuarding,
         nodeInsertionRouter: some NodeInsertionRouting,
         nodeSource: NodeSource
     ) {
         self.tracker = tracker
+        self.offlineActionGuard = offlineActionGuard
         self.nodeInsertionRouter = nodeInsertionRouter
         self.nodeSource = nodeSource
     }
 
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {
+        guard action.requiresConnection == false || offlineActionGuard.allowsActionRequiringConnection() else { return }
+
         guard
             case let .node(nodeProvider) = nodeSource,
             let node = nodeProvider()

@@ -47,6 +47,7 @@ final class QuickActionsMenuDelegateHandlerTests: XCTestCase {
             
             sut = QuickActionsMenuDelegateHandler(
                 showNodeInfo: { showNodeInfo($0) },
+                offlineActionGuard: MockOfflineActionGuard(),
                 manageShare: { manageShare($0) },
                 shareFolders: { shareFolders($0) },
                 download: { downloadNodes($0) },
