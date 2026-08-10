@@ -70,10 +70,15 @@ struct TransferTabListView: View {
                     .listRowSeparator(.hidden)
                     // Selected rows carry the design's surface-1 highlight in
                     // place of the native selected-cell grey.
+                    //
+                    // Unselected rows are painted the page colour rather than left clear: it reads
+                    // the same in the list, but the tap-and-hold lift is UIKit's snapshot of the
+                    // row, and a clear row snapshots to a transparent card that shows the dimmed
+                    // backdrop straight through instead of lifting off it.
                     .listRowBackground(
                         selection.selectedTags.contains(row.id)
                             ? TokenColors.Background.surface1.swiftUI
-                            : Color.clear
+                            : TokenColors.Background.page.swiftUI
                     )
             }
         }
