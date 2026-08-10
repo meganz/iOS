@@ -17,7 +17,7 @@ public struct SubscriptionRevampLoadingView: View {
             navigationHeader
             titlePlaceholder
             ForEach(0..<cardCount, id: \.self) { _ in
-                cardPlaceholder
+                SubscriptionPlanCardPlaceholderView()
             }
         }
         .padding(.horizontal, TokenSpacing._5)
@@ -27,49 +27,12 @@ public struct SubscriptionRevampLoadingView: View {
 
     private var titlePlaceholder: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._7) {
-            placeholderLine
+            SubscriptionPlaceholderLine()
                 .frame(maxWidth: .infinity)
-            placeholderLine
+            SubscriptionPlaceholderLine()
                 .frame(width: 123)
         }
         .shimmering()
-    }
-
-    private var cardPlaceholder: some View {
-        VStack(alignment: .leading, spacing: TokenSpacing._4) {
-            placeholderLine
-                .frame(width: 48)
-            placeholderLine
-                .frame(width: 90)
-            placeholderLine
-                .frame(width: 230)
-            placeholderLine
-                .frame(width: 230)
-            RoundedRectangle(cornerRadius: TokenRadius.small)
-                .fill(placeholderColor)
-                .frame(height: 32)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .shimmering()
-        .padding(TokenSpacing._5)
-        .background(
-            RoundedRectangle(cornerRadius: TokenRadius.large)
-                .fill(TokenColors.Background.page.swiftUI)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: TokenRadius.large)
-                .stroke(TokenColors.Border.strong.swiftUI, lineWidth: 1)
-        )
-    }
-
-    private var placeholderLine: some View {
-        Capsule()
-            .fill(placeholderColor)
-            .frame(height: 16)
-    }
-
-    private var placeholderColor: Color {
-        TokenColors.Text.primary.swiftUI
     }
 
     // MARK: - Navigation header

@@ -3,14 +3,14 @@ import MEGADesignToken
 import MEGAUIComponent
 import SwiftUI
 
-struct PromoLandingDialogContentView: View {
+public struct PromoLandingDialogContentView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     private let compactContentLeadingPadding: CGFloat = 250
 
-    private let dependency: PromoLandingDialogContentViewDependency
+    private let dependency: PromoLandingDialogContentView.Dependency
 
-    init(dependency: PromoLandingDialogContentViewDependency) {
+    public init(dependency: PromoLandingDialogContentView.Dependency) {
         self.dependency = dependency
     }
 
@@ -20,7 +20,7 @@ struct PromoLandingDialogContentView: View {
         isRegularHeight ? 0 : TokenSpacing._11
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .topLeading) {
             layoutView
                 .background(TokenColors.Background.page.swiftUI)
@@ -28,6 +28,7 @@ struct PromoLandingDialogContentView: View {
                 // bottom inset below keeps the content scrolling above the footer.
                 .ignoresSafeArea(edges: [.top, .horizontal])
 
+            // [IOS-12242]: Handle close button
             PromoLandingDialogCloseButton(dismissAction: dependency.dismissAction)
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -36,7 +37,8 @@ struct PromoLandingDialogContentView: View {
                 productIdentifier: dependency.card.productIdentifier,
                 planPurchaser: dependency.planPurchaser,
                 onPurchased: {
-                    // Will be handled in the next MR 
+                    dependency.onPurchased()
+                    dependency.dismissAction()
                 }
             )
         }
@@ -84,5 +86,18 @@ struct PromoLandingDialogContentView: View {
             .padding(.bottom, TokenSpacing._2)
             .maxWidthForWideScreen()
         }
+    }
+}
+
+private extension PromoLandingDialogContentView.Dependency {
+    var header: SubscriptionPromoHeaderViewModel {
+        SubscriptionPromoHeaderViewModel(plan: plan)
+    }
+
+    var card: SubscriptionRevampPromoPlanCardModel {
+        SubscriptionPromoPlanCardPresenter(
+            plan: plan,
+            displayName: { $0.toAccountTypeDisplayName() }
+        ).cardModel
     }
 }
