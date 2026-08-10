@@ -5069,7 +5069,7 @@
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
 "subscriptionPurchase.revamp.cycle.yearly"="Abonament anual";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Spațiul dvs. de stocare este %d% plin";
+"quotaWarning.storage.title"="Spațiul dvs. de stocare este %d%% plin";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="Actualizează-ți planul înainte să rămâi fără spațiu";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
@@ -5105,7 +5105,7 @@
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="Cota ta de transfer se epuizează";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Ai folosit %d% din cota ta de transfer";
+"quotaWarning.transfer.percentUsed.title"="Ai folosit %d%% din cota ta de transfer";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
 "quotaWarning.transfer.limitedDownload.subtitle"="Ca rezultat, descărcarea ta poate fi întreruptă. Actualizează-ți planul pentru a obține o cotă de transfer mai mare. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */

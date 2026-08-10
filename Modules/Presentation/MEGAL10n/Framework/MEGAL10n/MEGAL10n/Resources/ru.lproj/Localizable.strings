@@ -5067,7 +5067,7 @@
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
 "subscriptionPurchase.revamp.cycle.saving"="Сэкономьте до %@";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Ваше хранилище заполнено на %d%";
+"quotaWarning.storage.title"="Ваше хранилище заполнено на %d%%";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="Обновите тариф до того, как место закончится";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
@@ -5091,7 +5091,7 @@
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="Ваш лимит передачи подходит к концу";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Вы потратили %d% вашего лимита передачи";
+"quotaWarning.transfer.percentUsed.title"="Вы потратили %d%% вашего лимита передачи";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */

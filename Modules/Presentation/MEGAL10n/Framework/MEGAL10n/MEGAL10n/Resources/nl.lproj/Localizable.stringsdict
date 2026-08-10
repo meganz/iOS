@@ -3349,7 +3349,7 @@
     <key>achievementDetails.bonusExpiration.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@dagen@</string>
+      <string>%#@days@</string>
       <key>days</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>

@@ -2883,7 +2883,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d/%[A] đã hoàn tất</string>
+        <string>%d [A] đã hoàn tất</string>
       </dict>
     </dict>
     <key>recents.bucketDetails.subtitle</key>

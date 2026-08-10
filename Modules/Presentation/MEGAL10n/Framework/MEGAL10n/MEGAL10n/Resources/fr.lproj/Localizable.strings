@@ -3771,7 +3771,7 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="Acheter un nouvel abonnement";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[A]%% % utilisé de [B] To";
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% sur [B] TB utilisés";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Le quota de transfert disponible est limité";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
