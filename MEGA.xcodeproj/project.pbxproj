@@ -1264,6 +1264,7 @@
 		84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */; };
 		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
 		88ADCA6EE1FFAB22278F511E /* OfflineAwareNodeTapDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */; };
+
 		9094D487F36B23B444D1DA90 /* MockOfflineActionGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8D7879D212CAF7AE1AD85 /* MockOfflineActionGuard.swift */; };
 		940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */; };
 		940196D72DAD1E0100181689 /* QRSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */; };
@@ -2663,7 +2664,12 @@
 		C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */; };
 		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
 		C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */; };
+
 		D03DA65C266694FB20371E24 /* ActionsRequiringConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D2A797B8B23B0FDD5C3FEC /* ActionsRequiringConnectionTests.swift */; };
+
+		C63FAA6DC8DE398DF87D0F6A /* OfflineAwareNodeTapDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */; };
+		CA2E12D813A8EE81C5DEECBA /* OfflineFileOpenGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */; };
+		CD0FF1E5C0DD12225BA88A01 /* CloudDriveOfflineModeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */; };
 		D2D3A4016DBB6940AEB7A37B /* PricingRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */; };
 		D2D3A4026DBB6940AEB7A37C /* PricingRequesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
@@ -2697,6 +2703,11 @@
 		F384F2FCE2B1DA7696C727C1 /* QuotaWarnings in Frameworks */ = {isa = PBXBuildFile; productRef = 58D0A8B972414DDC063C14F1 /* QuotaWarnings */; };
 		FAB12046DE1E6A7E50000002 /* MEGAPurchaseDelegatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */; };
 		FE0000000000000000000002 /* UpgradePlansRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0000000000000000000001 /* UpgradePlansRouter.swift */; };
+		FE1EB0000000000000000001 /* NewFileLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000001 /* NewFileLinkViewController.swift */; };
+		FE1EB0000000000000000002 /* NewFileLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */; };
+		FE1EB0000000000000000003 /* MEGAFileLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */; };
+		FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */; };
+		FE1EB0000000000000000006 /* FileLink in Frameworks */ = {isa = PBXBuildFile; productRef = FE1EA0000000000000000007 /* FileLink */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3059,6 +3070,7 @@
 		1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExternalPurchaseUseCase.swift; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+CheckCancellation.swift"; sourceTree = "<group>"; };
+		18DD52396FB20BA18AC8B6EA /* OfflineAwareNodeTapDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAwareNodeTapDispatcher.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+MNZCategory.swift"; sourceTree = "<group>"; };
@@ -3292,6 +3304,7 @@
 		2FFCF3A925FB1F5E00E1718D /* MeetingCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewController.swift; sourceTree = "<group>"; };
 		2FFCF3C325FB1FBE00E1718D /* MeetingCreatingViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewRouter.swift; sourceTree = "<group>"; };
 		2FFCF3CD25FB1FE700E1718D /* MeetingCreatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingViewModel.swift; sourceTree = "<group>"; };
+		3181EA1257269CDD7B58E925 /* OfflineFileOpenGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileOpenGuard.swift; sourceTree = "<group>"; };
 		320262ED298C97EE0049688C /* FilterTypeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTypeEntityMappingTests.swift; sourceTree = "<group>"; };
 		320262F8298CB0B40049688C /* FilterType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FilterType+Mapper.swift"; sourceTree = "<group>"; };
 		32051E652A1F760A008CFAC4 /* AlbumAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumAlertType.swift; sourceTree = "<group>"; };
@@ -4083,6 +4096,7 @@
 		83FB1436219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOOfflineFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
 		83FB1438219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOOfflineFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
+		842AF5533025B0ED0089685B /* FileLink */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FileLink; sourceTree = "<group>"; };
 		844A439E2F7D20B600AE5D17 /* Transfer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transfer; sourceTree = "<group>"; };
 		84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Highlight.swift"; sourceTree = "<group>"; };
 		84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderSession.swift; sourceTree = "<group>"; };
@@ -5491,6 +5505,9 @@
 		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
 		C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandlerTests.swift; sourceTree = "<group>"; };
 		C70D09D7707039EB5A91C3AD /* QuotaEventSimulatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEventSimulatorView.swift; sourceTree = "<group>"; };
+
+		CD0FF1E5C0DD12225BA88A02 /* CloudDriveOfflineModeGate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveOfflineModeGate.swift; sourceTree = "<group>"; };
+
 		E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAwareNodeTapDispatcherTests.swift; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MasterKeyViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5554,6 +5571,10 @@
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 		FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPurchaseDelegatesTests.swift; sourceTree = "<group>"; };
 		FE0000000000000000000001 /* UpgradePlansRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradePlansRouter.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000001 /* NewFileLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileLinkViewController.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewFileLinkViewController+Ads.swift"; sourceTree = "<group>"; };
+		FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFileLinkBuilder.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkUnavailableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -5582,6 +5603,7 @@
 				16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				BF26E7AF2F3EDB8800AF51E5 /* Favourites in Frameworks */,
+				FE1EB0000000000000000006 /* FileLink in Frameworks */,
 				14C0336E2FBAD9C200BC12C1 /* FirebaseAnalytics in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
@@ -10867,6 +10889,7 @@
 				A52F1E342EBCE55800D3A2E9 /* CloudDrive */,
 				A52F1E352EBCE55800D3A2E9 /* DeviceCenter */,
 				BF26E7482F3D84A600AF51E5 /* Favourites */,
+				842AF5533025B0ED0089685B /* FileLink */,
 				A589D4F12F04EB7400A9B23C /* FolderLink */,
 				BF7758C92F21D6F40091DE2A /* Home */,
 				A83E525D2F8508EA002A37C3 /* MediaImport */,
@@ -13475,6 +13498,7 @@
 				837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */,
 				945339D02A60150D00363DAD /* File */,
 				0E51AC362E6118B30075E18F /* Import */,
+				FE1EA0000000000000000008 /* NewFileLink */,
 				A5472CBC2F04EE0E00A49688 /* NewFolderLink */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */,
@@ -13606,6 +13630,17 @@
 			path = Activities;
 			sourceTree = "<group>";
 		};
+		FE1EA0000000000000000008 /* NewFileLink */ = {
+			isa = PBXGroup;
+			children = (
+				FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */,
+				FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */,
+				FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */,
+				FE1EA0000000000000000001 /* NewFileLinkViewController.swift */,
+			);
+			path = NewFileLink;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -13701,6 +13736,7 @@
 				A5E1368B2EB50586004BDD4F /* MEGADomain */,
 				14F2EFBF2EDD46B300C37318 /* APMKit */,
 				A5472CC62F04EF0900A49688 /* FolderLink */,
+				FE1EA0000000000000000007 /* FileLink */,
 				BF7758D02F21D8490091DE2A /* Home */,
 				BF26E7AE2F3EDB8800AF51E5 /* Favourites */,
 				A8D553002EDF150300B05C12 /* NodeBackgroundDownloader */,
@@ -15060,6 +15096,7 @@
 				A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
+				FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
 				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
@@ -15348,6 +15385,7 @@
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				FE1EB0000000000000000003 /* MEGAFileLinkBuilder.swift in Sources */,
 				A5472D082F06494300A49688 /* MEGAFolderLinkBuilder.swift in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
@@ -15501,6 +15539,8 @@
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */,
 				C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */,
+				FE1EB0000000000000000002 /* NewFileLinkViewController+Ads.swift in Sources */,
+				FE1EB0000000000000000001 /* NewFileLinkViewController.swift in Sources */,
 				A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */,
 				A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */,
 				0E7533A82EF1ECDC002BEE1E /* NewTimelineView.swift in Sources */,
@@ -19590,6 +19630,10 @@
 		BFE772A22D9B8A32005B114E /* MEGAAppPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppPresentation;
+		};
+		FE1EA0000000000000000007 /* FileLink */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FileLink;
 		};
 /* End XCSwiftPackageProductDependency section */
 

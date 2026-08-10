@@ -403,3 +403,14 @@ extension MEGALinkManager {
         MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: true)
     }
 }
+
+// MARK: - FileLink
+extension MEGALinkManager {
+    @objc static func newFileLinkViewController(link: String) -> UIViewController {
+        NewFileLinkViewController(link: link)
+    }
+
+    static func buildFileLink(_ link: String, with key: String) -> String {
+        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: false)
+    }
+}

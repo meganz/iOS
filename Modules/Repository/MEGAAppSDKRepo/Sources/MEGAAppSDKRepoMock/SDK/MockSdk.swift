@@ -132,6 +132,9 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public var _isRequestStatusMonitorEnabled: Bool
     
     public var loginToLinkRequestResult: Result<Void, MEGAError> = .success
+    /// Set to drive `publicNode(forMegaFileLink:delegate:)`; when `nil` the `fileLinkNode` the mock
+    /// was built with is returned instead.
+    public var publicNodeForFileLinkRequestResult: Result<MEGARequest, MEGAError>?
     public var fetchNodesRequestResult: Result<MEGARequest, MEGAError> = .success(MockRequest(handle: 0))
     public var logoutCalled = false
     public var retryPendingConnectionsCalled = false
@@ -815,6 +818,16 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override func publicNode(forMegaFileLink megaFileLink: String, delegate: any MEGARequestDelegate) {
         messages.append(.publicNodeForMegaFileLink(megaFileLink))
         
+        if let publicNodeForFileLinkRequestResult {
+            switch publicNodeForFileLinkRequestResult {
+            case let .success(request):
+                delegate.onRequestFinish?(self, request: request, error: MockError(errorType: .apiOk))
+            case let .failure(error):
+                delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
+            }
+            return
+        }
+
         let mockRequest = MockRequest(
             handle: 1,
             publicNode: fileLinkNode

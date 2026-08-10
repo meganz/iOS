@@ -643,7 +643,20 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)showFileLinkView {
     NSString *fileLinkURLString = MEGALinkManager.linkURL.mnz_MEGAURL;
-    
+
+    if (MEGALinkManager.isLinkRevampEnabled) {
+        // The new screen is presented before the link is resolved, so its skeleton covers the wait.
+        UIViewController *fileLinkViewController = [self newFileLinkViewControllerWithLink:fileLinkURLString];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:fileLinkViewController];
+
+        [self presentViewControllerWithAds:navigationController
+                                publicLink:fileLinkURLString
+                              isFolderLink:false
+                     adsSlotViewController:fileLinkViewController
+                         presentationStyle:UIModalPresentationFullScreen];
+        return;
+    }
+
     MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
             [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
@@ -657,7 +670,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                         MEGALogError(@"Create directory at path failed with error: %@", nserror);
                     }
                 }
-                
+
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.sharedFolderLink displayMode:DisplayModeFileLink isFromSharedItem:NO presentingNode:node];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
@@ -674,11 +687,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }
         }
-        
+
         [SVProgressHUD dismiss];
     }];
     delegate.savePublicHandle = YES;
-    
+
     [SVProgressHUD show];
     [MEGASdk.shared publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
 }

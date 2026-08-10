@@ -181,6 +181,14 @@
     {
       "parallelizable" : true,
       "target" : {
+        "containerPath" : "container:Modules\/Features\/FileLink",
+        "identifier" : "FileLinkTests",
+        "name" : "FileLinkTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
         "identifier" : "MEGAAnalyticsDomainTests",
         "name" : "MEGAAnalyticsDomainTests"
