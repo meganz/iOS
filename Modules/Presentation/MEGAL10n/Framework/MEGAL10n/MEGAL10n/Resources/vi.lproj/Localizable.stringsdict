@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thanh toán [A]/tháng cho tháng đầu tiên %d tháng, [B]/tháng sau</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thanh toán [A] cho tháng đầu tiên %d tháng, [B]/tháng sau</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thanh toán [A] cho tháng đầu tiên %d, [B] được tính phí hàng năm sau</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

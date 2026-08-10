@@ -3388,6 +3388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Stunde</string>
         <key>other</key>
         <string>Stunden</string>
       </dict>
@@ -3402,6 +3404,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Minute</string>
         <key>other</key>
         <string>Minuten</string>
       </dict>
@@ -3416,6 +3420,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Tag</string>
         <key>other</key>
         <string>Tage</string>
       </dict>

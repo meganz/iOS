@@ -153,7 +153,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>ใช้กับรายการที่ซ้ำกัน</string>
+        <string>ใช้กับรายการที่ซ้ำทั้งหมด %d รายการ</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A]/เดือน สำหรับเดือนแรก %d เดือน, [B]/เดือน หลังจากนั้น</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A] สำหรับเดือนแรก %d เดือน, [B]/เดือน หลังจากนั้น</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A] สำหรับเดือนแรก %d เดือน, [B] ถูกเรียกเก็บเป็นรายปีหลังจากนั้น</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Ditagihkan [A] per bulan untuk bulan pertama %d, [B] per bulan setelahnya</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Ditagihkan [A] untuk bulan pertama %d, [B] per bulan setelahnya</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Ditagihkan [A] untuk bulan pertama %d, [B] dibebankan setiap tahun setelahnya</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

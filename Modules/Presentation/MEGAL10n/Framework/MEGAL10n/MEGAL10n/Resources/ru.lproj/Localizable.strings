@@ -4923,7 +4923,7 @@
 /* The title for menu action button that will show the recent activity */
 "home.recent.menu.action.showRecentActivity"="Показать недавнюю активность";
 /* Custom offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1: скидка %2";
+"upgradeAccountPlan.plan.tag.introOffer.specialOfferLabel"="%1$@: скидка %2$@";
 /* Status text shown in the transfer Live Activity when files are being downloaded */
 "transfer.liveActivity.downloadingFiles"="Скачивание файлов";
 /* Status text shown in the transfer Live Activity when files are being uploaded */
