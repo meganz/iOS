@@ -116,6 +116,6 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     }
 
     private var isRevampUpgradePlansEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .upgradeAccountPlanRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosUpgradeAccountPlanRevamp)
     }
 }
