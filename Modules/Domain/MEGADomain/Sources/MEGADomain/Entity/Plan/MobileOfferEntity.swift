@@ -27,6 +27,9 @@ public struct MobileOfferIosSignatureEntity: Sendable, Equatable {
 /// An API-driven mobile offer attached to a purchasable plan.
 /// Could represent either intro or promo offer. If `iosSignature` is present, it's a promo offer.
 /// Sourced from the API `utqa` command's `mo` object and surfaced through the SDK.
+/// Note:
+///     For each campaign, all the MobileOfferEntity will have common values for `id` and `reshowTimeout` and `expiryDate` and `flags`
+///     even though these properites are per-offer.
 public struct MobileOfferEntity: Sendable, Equatable {
     /// The offer identifier, e.g. `black-friday-2025`.
     public let id: String

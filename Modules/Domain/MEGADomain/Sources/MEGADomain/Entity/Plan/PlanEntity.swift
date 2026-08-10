@@ -27,6 +27,8 @@ public struct PlanEntity: Sendable {
     public var appStorePrice: PlanPriceEntity
 
     // The introductory offer available to this plan, sourced from StoreKit
+    // introductoryOffer is prioritize over promotionalOffer, when a plan carries
+    // an intro offer, it overshadow its promo offer.
     public var introductoryOffer: SubscriptionOfferEntity?
 
     // The mobile offer available to this plan, sourced from API.
