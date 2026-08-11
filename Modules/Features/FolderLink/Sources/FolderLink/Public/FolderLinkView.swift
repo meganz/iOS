@@ -56,6 +56,10 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     @StateObject private var viewModel: FolderLinkViewModel
     @State private var navigationPath = NavigationPath()
     @StateObject private var miniPlayerViewModel = FolderLinkMiniPlayerViewModel()
+
+    /// Read here rather than where it is used because this is the last place that still sees it — see
+    /// `EnvironmentValues.folderLinkBottomSafeAreaInset`.
+    @State private var bottomSafeAreaInset: CGFloat = 0
     
     private let dependency: Dependency
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
@@ -88,11 +92,21 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                 .navigationDestination(for: NavigationRoute.self) { route in
                     navigationDestinationBuilder(with: route)
                 }
-                .safeAreaInset(edge: .bottom) {
+                .safeAreaInset(edge: .bottom, spacing: 0) {
                     miniPlayerView
                 }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { bottomSafeAreaInset = proxy.safeAreaInsets.bottom }
+                    .onChange(of: proxy.safeAreaInsets.bottom) { _, inset in
+                        bottomSafeAreaInset = inset
+                    }
+            }
+        }
+        .environment(\.folderLinkBottomSafeAreaInset, bottomSafeAreaInset)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .task {
             await viewModel.onAppear()
@@ -143,15 +157,14 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                     }
                     
                     ToolbarItem(placement: .principal) {
-                        Text(Strings.Localizable.folderLink)
-                            .font(.headline)
-                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                            .lineLimit(1)
+                        loadingNavigationTitle
                     }
                 }
         case let .error(reason):
-            linkUnavailableContent(reason)
-                .ignoresSafeArea()
+            fullScreenLinkUnavailableContent(reason)
+                // The design draws the bar as transparent page background, with only the close
+                // button carrying a glass capsule.
+                .hideNavigationToolbarBackground()
                 .noNetworkConnection()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -159,17 +172,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                     }
                     
                     ToolbarItem(placement: .principal) {
-                        VStack {
-                            Text(Strings.Localizable.folderLink)
-                                .font(.headline)
-                                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                                .lineLimit(1)
-                            Text(Strings.Localizable.unavailable)
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                                .lineLimit(1)
-                        }
+                        unavailableNavigationTitle
                     }
                 }
         case let .results(nodeHandle):
@@ -182,6 +185,17 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         }
     }
     
+    private func fullScreenLinkUnavailableContent(_ reason: LinkUnavailableReason) -> some View {
+        GeometryReader { proxy in
+            let topOffset = proxy.frame(in: .global).minY
+
+            linkUnavailableContent(reason)
+                .frame(width: proxy.size.width, height: proxy.size.height + topOffset)
+                .offset(y: -topOffset)
+        }
+        .ignoresSafeArea()
+    }
+
     @ViewBuilder
     private func navigationDestinationBuilder(with route: NavigationRoute) -> some View {
         switch route {
@@ -192,7 +206,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
                     dismissContent: { backButton }
                 )
             )
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaInset(edge: .bottom, spacing: 0) {
                 miniPlayerView
             }
             .task {
@@ -202,13 +216,61 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
         }
     }
     
+    private var brandNavigationTitle: some View {
+        FolderLinkNavigationTitleView(title: "MEGA", subtitle: Strings.Localizable.folderLink)
+    }
+
+    @ViewBuilder
+    private var loadingNavigationTitle: some View {
+        if dependency.isLinkRevampEnabled {
+            brandNavigationTitle
+        } else {
+            FolderLinkNavigationTitleView(title: Strings.Localizable.folderLink, subtitle: nil)
+        }
+    }
+
+    @ViewBuilder
+    private var unavailableNavigationTitle: some View {
+        if dependency.isLinkRevampEnabled {
+            brandNavigationTitle
+        } else {
+            FolderLinkNavigationTitleView(
+                title: Strings.Localizable.folderLink,
+                subtitle: Strings.Localizable.unavailable
+            )
+        }
+    }
+
     private var closeButton: some View {
         Button {
             viewModel.stopLoadingFolderLink()
             dependency.onClose()
         } label: {
+            closeButtonLabel
+        }
+        .accessibilityLabel(Strings.Localizable.close)
+    }
+
+    @ViewBuilder
+    private var closeButtonLabel: some View {
+        if dependency.isLinkRevampEnabled {
+            closeIcon
+        } else {
             Text(Strings.Localizable.close)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        }
+    }
+
+    @ViewBuilder
+    private var closeIcon: some View {
+        let icon = MEGAAssets.Image.x
+            .frame(width: TokenSpacing._7, height: TokenSpacing._7)
+            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+
+        if #available(iOS 26.0, *) {
+            icon
+        } else {
+            icon.padding(10)
         }
     }
     

@@ -11,7 +11,7 @@ import SwiftUI
 enum FolderLinkMoreOption: Identifiable, Hashable {
     case select
     case saveToMEGA
-    case download
+    case saveToPhotos
     case copyToOffline
     case shareLink
     case sendToChat
@@ -24,8 +24,8 @@ enum FolderLinkMoreOption: Identifiable, Hashable {
             Strings.Localizable.select
         case .saveToMEGA:
             Strings.Localizable.Link.Button.saveToMega
-        case .download:
-            Strings.Localizable.download
+        case .saveToPhotos:
+            Strings.Localizable.saveToPhotos
         case .copyToOffline:
             Strings.Localizable.Link.Button.copyToOffline
         case .shareLink:
@@ -35,16 +35,16 @@ enum FolderLinkMoreOption: Identifiable, Hashable {
         }
     }
 
-    /// Download saves to the device rather than to the Offline section, which is what Copy to Offline
-    /// does, so the two take the save-to-disk and the cloud-download icon respectively.
+    /// Save to Photos lands the images and videos in the Photos library, not in the Offline section that
+    /// Copy to Offline fills, so it takes the Photos icon and leaves the cloud-download one to that row.
     var icon: Image {
         switch self {
         case .select:
             MEGAAssets.Image.checkCircle
         case .saveToMEGA:
             MEGAAssets.Image.uploadToCloud
-        case .download:
-            MEGAAssets.Image.downloadToDisk
+        case .saveToPhotos:
+            MEGAAssets.Image.photosApp
         case .copyToOffline:
             MEGAAssets.Image.cloudDownload
         case .shareLink:
@@ -272,7 +272,7 @@ private struct ContentHeightPreferenceKey: PreferenceKey {
                 title: "Marketing",
                 subtitle: Strings.Localizable.folderLink,
                 link: "https://mega.nz/folder/abcdefgh",
-                options: [.select, .saveToMEGA, .download, .copyToOffline, .shareLink, .sendToChat],
+                options: [.select, .saveToMEGA, .saveToPhotos, .copyToOffline, .shareLink, .sendToChat],
                 disabledOptions: [],
                 selectionHandler: { _ in }
             )
