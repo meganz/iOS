@@ -5164,3 +5164,7 @@
 "subscriptionPurchase.revamp.promo.loadError.title"="Não foi possível conectar";
 /* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
 "subscriptionPurchase.revamp.promo.loadError.message"="Verifique a sua conexão com a internet e tente novamente.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Obtenha %2$@ de desconto\n%3$@/mês no plano %4$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Aceitar a oferta";

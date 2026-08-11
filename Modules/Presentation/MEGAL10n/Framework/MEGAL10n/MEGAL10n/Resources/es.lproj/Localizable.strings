@@ -5160,3 +5160,11 @@
 "subscriptionPurchase.revamp.loadError.title"="No se ha podido cargar el contenido";
 /* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
 "subscriptionPurchase.revamp.loadError.message"="Ha habido un problema al cargar tus planes. Por favor, inténtalo de nuevo.";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="No se ha podido conectar";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Comprueba la conexión a internet y vuelve a intentarlo.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Obtén un %2$@ de descuento\n%3$@/mes para el %4$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Ir a la oferta";
