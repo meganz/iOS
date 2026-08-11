@@ -20,7 +20,7 @@ extension MEGAPricing {
             expiryDate: expiryTimestamp > 0 ? Date(timeIntervalSince1970: TimeInterval(expiryTimestamp)) : nil,
             iosOfferId: mobileOfferIosOfferId(atProductIndex: index),
             iosSignature: toMobileOfferIosSignatureEntity(index: index),
-            campaignId: mobileOfferCampaignId(atProductIndex: index)
+            campaignId: 0 // [IOS-12395] - Adopt campaignId from SDK
         )
     }
 
