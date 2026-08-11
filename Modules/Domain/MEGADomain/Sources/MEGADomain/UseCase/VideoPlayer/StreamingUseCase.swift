@@ -8,9 +8,27 @@ public protocol StreamingUseCaseProtocol: Sendable {
     func startStreaming()
     func stopStreaming()
     func streamingLink(for node: any PlayableNode) -> URL?
+
+    /// Throttles the streaming server to the bandwidth the given media actually needs.
+    ///
+    /// Only high-bitrate media is throttled: below the threshold the cap is removed instead, since
+    /// unthrottled streaming of ordinary media is not what starves playback.
+    ///
+    /// - Parameters:
+    ///   - totalBitrate: Combined estimated data rate of all media tracks, in bits per second.
+    ///   - playbackRate: Current playback rate; values below `1.0` are clamped to `1.0`.
+    /// - Returns: `true` when a throttle was installed, `false` when the cap was removed.
+    @discardableResult
+    func updateThrottleBitrate(totalBitrate: Float, playbackRate: Float) -> Bool
+
+    /// Removes any streaming throttle, so it doesn't carry over to the next playback.
+    func resetThrottleBitrate()
 }
 
 public struct StreamingUseCase: StreamingUseCaseProtocol {
+    /// Media below this combined bitrate streams fine unthrottled, so no cap is installed for it.
+    private static let highBitrateThreshold: Float = 15_000_000
+
     public var isStreaming: Bool {
         repository.httpServerIsRunning != 0
     }
@@ -31,6 +49,27 @@ public struct StreamingUseCase: StreamingUseCaseProtocol {
 
     public func stopStreaming() {
         repository.httpServerStop()
+    }
+
+    @discardableResult
+    public func updateThrottleBitrate(totalBitrate: Float, playbackRate: Float) -> Bool {
+        guard totalBitrate.isFinite, totalBitrate > Self.highBitrateThreshold else {
+            resetThrottleBitrate()
+            return false
+        }
+
+        let rate = max(playbackRate.isFinite ? playbackRate : 1.0, 1.0)
+        let scaled = totalBitrate * rate * 3
+        guard scaled.isFinite, scaled >= 0, scaled < Float(UInt64.max) else {
+            return false
+        }
+
+        repository.httpServerSetThrottleBitrate(UInt64(scaled))
+        return true
+    }
+
+    public func resetThrottleBitrate() {
+        repository.httpServerSetThrottleBitrate(0)
     }
 }
 

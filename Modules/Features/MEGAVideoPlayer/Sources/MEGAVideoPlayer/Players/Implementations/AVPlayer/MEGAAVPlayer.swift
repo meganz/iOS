@@ -43,6 +43,9 @@ public final class MEGAAVPlayer {
     private var cancellables = Set<AnyCancellable>()
     public var monitorVideoNodesUpdateTask: Task<Void, Never>?
 
+    private var throttleRateCancellable: AnyCancellable?
+    private var throttleConfigurationTask: Task<Void, Never>?
+
     private let streamingUseCase: any StreamingUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let resumePlaybackPositionUseCase: any ResumePlaybackPositionUseCaseProtocol
@@ -75,6 +78,7 @@ public final class MEGAAVPlayer {
 
     deinit {
         monitorVideoNodesUpdateTask?.cancel()
+        throttleConfigurationTask?.cancel()
     }
 }
 
@@ -137,6 +141,7 @@ extension MEGAAVPlayer: PlaybackControllable {
             player.removeTimeObserver(timeObserverToken)
             self.timeObserverToken = nil
         }
+        resetThrottleBitrate()
         streamingUseCase.stopStreaming()
         monitorVideoNodesUpdateTask?.cancel()
         monitorVideoNodesUpdateTask = nil
@@ -422,6 +427,9 @@ extension MEGAAVPlayer: NodeLoadable {
     }
 
     private func observe(for playerItem: AVPlayerItem) {
+        // The previous item's throttle says nothing about this one; it is reinstalled once this
+        // item reports its own bitrate in `configureThrottleBitrate(for:)`.
+        resetThrottleBitrate()
         observePlaybackBufferStatus(for: playerItem)
         observeStatus(for: playerItem)
         observeDidPlayToEndTime(for: playerItem)
@@ -461,6 +469,9 @@ extension MEGAAVPlayer: NodeLoadable {
                     let errorMessage = "Player item failed with error: \(item.error?.localizedDescription ?? "Unknown error")"
                     self?.state = .error(errorMessage)
                     self?.playbackDebugMessage(errorMessage)
+                }
+                if status == .readyToPlay {
+                    self?.configureThrottleBitrate(for: item)
                 }
                 self?.itemStatusSubject.send(status)
                 self?.playbackDebugMessage("Player item status changed to \(status.rawValue)")
@@ -512,6 +523,74 @@ extension MEGAAVPlayer: NodeLoadable {
                 playNext()
             }
         }
+    }
+}
+
+// MARK: - Streaming throttle
+
+extension MEGAAVPlayer {
+    /// Throttles the streaming server to what this item actually needs to play.
+    ///
+    /// Left unthrottled, the server races ahead of playback for high-bitrate media and the audio
+    /// track drops out. Once the item's own bitrate is known, a matching cap is installed and kept
+    /// in sync with `AVPlayer.rate`, since faster playback consumes proportionally more bandwidth.
+    ///
+    /// - Parameter playerItem: The player item whose asset bitrate determines the throttle.
+    private func configureThrottleBitrate(for playerItem: AVPlayerItem) {
+        throttleConfigurationTask?.cancel()
+
+        let asset = playerItem.asset
+
+        throttleConfigurationTask = Task { [weak self] in
+            do {
+                let totalBitrate = try await Self.totalBitrate(of: asset)
+                guard !Task.isCancelled, let self else { return }
+
+                if streamingUseCase.updateThrottleBitrate(totalBitrate: totalBitrate, playbackRate: player.rate) {
+                    bindPlayerRateForThrottle(totalBitrate: totalBitrate)
+                    playbackDebugMessage("Throttle installed for bitrate \(totalBitrate) bps")
+                } else {
+                    throttleRateCancellable = nil
+                    playbackDebugMessage("Not high bitrate: \(totalBitrate) bps, throttle not set")
+                }
+            } catch {
+                self?.playbackDebugMessage("Failed to load tracks for throttle: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    /// Combined estimated data rate of every audio and video track in the asset, in bits per second.
+    private static func totalBitrate(of asset: AVAsset) async throws -> Float {
+        var totalBitrate: Float = 0
+
+        for mediaType in [AVMediaType.video, .audio] {
+            for track in try await asset.loadTracks(withMediaType: mediaType) {
+                totalBitrate += try await track.load(.estimatedDataRate)
+            }
+        }
+
+        return totalBitrate
+    }
+
+    /// Re-applies the throttle whenever the playback rate changes, so a sped-up playback isn't
+    /// starved by a cap sized for 1×. Only non-zero rates are forwarded, so pausing keeps the
+    /// current cap rather than resetting it.
+    private func bindPlayerRateForThrottle(totalBitrate: Float) {
+        throttleRateCancellable = player.publisher(for: \.rate)
+            .removeDuplicates()
+            .filter { $0 > 0 }
+            .sink { [weak self] rate in
+                self?.streamingUseCase.updateThrottleBitrate(totalBitrate: totalBitrate, playbackRate: rate)
+            }
+    }
+
+    /// Drops the throttle and everything keeping it up to date, so it doesn't outlive the item it
+    /// was sized for.
+    private func resetThrottleBitrate() {
+        throttleConfigurationTask?.cancel()
+        throttleConfigurationTask = nil
+        throttleRateCancellable = nil
+        streamingUseCase.resetThrottleBitrate()
     }
 }
 

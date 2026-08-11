@@ -96,6 +96,27 @@ struct MEGAAVPlayerTests {
 
     // MARK: - Helper
 
+    @Test
+    func loadNode_shouldResetThrottleInheritedFromPreviousItem() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let sut = makeSUT(streamingUseCase: streamingUseCase)
+
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        #expect(streamingUseCase.resetThrottleBitrateCallCount == 1)
+    }
+
+    @Test
+    func stop_shouldResetThrottleSoItDoesNotOutliveThePlayback() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let sut = makeSUT(streamingUseCase: streamingUseCase)
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        sut.stop()
+
+        #expect(streamingUseCase.resetThrottleBitrateCallCount == 2)
+    }
+
     private func makeSUT(
         streamingUseCase: some StreamingUseCaseProtocol = MockStreamingUseCase(),
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase(),
