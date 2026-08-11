@@ -1,3 +1,4 @@
+import Accounts
 import Combine
 import ContentLibraries
 import Favourites
@@ -132,7 +133,8 @@ extension HomeScreenFactory {
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
             tracker: DIContainer.tracker,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            promotedPlanProvider: makePromotedPlanProvider()
         )
         
         let hostingController = HomeViewHostingController(dependency: dependency)
@@ -141,6 +143,25 @@ extension HomeScreenFactory {
         navigationController.viewControllers = [hostingController]
 
         return navigationController
+    }
+
+    private func makePromotedPlanProvider() -> @Sendable () async throws -> PlanEntity? {
+        let promotedPlanUseCase = PromotedPlanUseCase(
+            pricingRequester: PricingRequester.shared,
+            fetchUseCase: RevampUpgradePlansUseCase(
+                productsUseCase: AccountPlanProductsUseCase(
+                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+                    offerUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo)
+                ),
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+            )
+        )
+
+        return {
+            guard await DIContainer.remoteFeatureFlagUseCase
+                .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp) else { return nil }
+            return try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)
+        }
     }
 
     private func makeHomeAddMenuActionHandler(

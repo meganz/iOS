@@ -19,7 +19,8 @@ extension MEGAPricing {
             reshowTimeout: reshowInterval > 0 ? TimeInterval(reshowInterval) : nil,
             expiryDate: expiryTimestamp > 0 ? Date(timeIntervalSince1970: TimeInterval(expiryTimestamp)) : nil,
             iosOfferId: mobileOfferIosOfferId(atProductIndex: index),
-            iosSignature: toMobileOfferIosSignatureEntity(index: index)
+            iosSignature: toMobileOfferIosSignatureEntity(index: index),
+            campaignId: mobileOfferCampaignId(atProductIndex: index)
         )
     }
 

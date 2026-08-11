@@ -334,9 +334,11 @@ public struct HomeView: View {
                         dependency.router.route(to: .accountUpgrade)
                     }
                 case .promotionalBanners:
-                    PromotionalBannersWidgetView {
-                        dependency.router.route(to: .promotionalBanner($0))
-                    }
+                    PromotionalBannersWidgetView(
+                        promotedPlanProvider: dependency.promotedPlanProvider,
+                        urlSelectionHandler: { dependency.router.route(to: .promotionalBanner($0)) },
+                        discountActionHandler: { dependency.router.route(to: .promoLandingDialog) }
+                    )
                 case .recents:
                     RecentsWidgetView(
                         dependency: RecentsWidgetView.Dependency(

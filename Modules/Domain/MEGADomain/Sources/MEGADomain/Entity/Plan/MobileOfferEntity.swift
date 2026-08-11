@@ -28,7 +28,7 @@ public struct MobileOfferIosSignatureEntity: Sendable, Equatable {
 /// Could represent either intro or promo offer. If `iosSignature` is present, it's a promo offer.
 /// Sourced from the API `utqa` command's `mo` object and surfaced through the SDK.
 /// Note:
-///     For each campaign, all the MobileOfferEntity will have common values for `id` and `reshowTimeout` and `expiryDate` and `flags`
+///     For each campaign, all the MobileOfferEntity will share common values of`reshowTimeout` and `expiryDate` and `flags`
 ///     even though these properites are per-offer.
 public struct MobileOfferEntity: Sendable, Equatable {
     /// The offer identifier, e.g. `black-friday-2025`.
@@ -58,6 +58,9 @@ public struct MobileOfferEntity: Sendable, Equatable {
     /// Signed StoreKit payload for redeeming the offer, or `nil` when not provided. Only used for promotional offers.
     public let iosSignature: MobileOfferIosSignatureEntity?
 
+    /// Identifies the campaign this offer belongs to, or `0` when it belongs to no campaign.
+    public let campaignId: UInt64
+
     public init(
         id: String,
         useAsTitle: Bool,
@@ -67,7 +70,8 @@ public struct MobileOfferEntity: Sendable, Equatable {
         reshowTimeout: TimeInterval?,
         expiryDate: Date?,
         iosOfferId: String?,
-        iosSignature: MobileOfferIosSignatureEntity?
+        iosSignature: MobileOfferIosSignatureEntity?,
+        campaignId: UInt64 = 0
     ) {
         self.id = id
         self.useAsTitle = useAsTitle
@@ -78,5 +82,6 @@ public struct MobileOfferEntity: Sendable, Equatable {
         self.expiryDate = expiryDate
         self.iosOfferId = iosOfferId
         self.iosSignature = iosSignature
+        self.campaignId = campaignId
     }
 }

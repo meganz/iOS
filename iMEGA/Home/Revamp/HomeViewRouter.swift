@@ -1,6 +1,9 @@
+import Accounts
 import Home
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 import SwiftUI
 import UIKit
 
@@ -30,6 +33,8 @@ final class HomeViewRouter: HomeViewRouting {
             showUpgradePlanView()		
         case .promotionalBanner(let url):
             routeToPromotionalUrl(url)
+        case .promoLandingDialog:
+            showPromoLandingDialog()
         case .offline:
             showOffline()
         case .transfers:
@@ -96,6 +101,31 @@ final class HomeViewRouter: HomeViewRouting {
             viewType: .upgrade,
             accountUseCase: accountUseCase,
             isFromAds: false)
+        .start()
+    }
+
+    private func showPromoLandingDialog() {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
+
+        PromoLandingDialogRouter(
+            presenter: UIApplication.mnz_visibleViewController(),
+            promotedPlanUseCase: PromotedPlanUseCase(
+                pricingRequester: PricingRequester.shared,
+                fetchUseCase: RevampUpgradePlansUseCase(
+                    productsUseCase: AccountPlanProductsUseCase(
+                        purchaseUseCase: purchaseUseCase,
+                        offerUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo)
+                    ),
+                    accountUseCase: accountUseCase
+                )
+            ),
+            planPurchaser: DefaultPlanPurchaserFactory().makePurchaser(
+                purchaseUseCase: purchaseUseCase,
+                subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
+                accountUseCase: accountUseCase
+            )
+        )
         .start()
     }
 

@@ -52,6 +52,7 @@ extension HomeView {
         let photoLibraryContentViewRouter: any PhotoLibraryContentViewRouting
         let tracker: any AnalyticsTracking
         let featureFlagProvider: any FeatureFlagProviderProtocol
+        let promotedPlanProvider: @Sendable () async throws -> PlanEntity?
 
         public init(
             homeAddMenuActionHandler: some HomeAddMenuActionHandling,
@@ -81,7 +82,8 @@ extension HomeView {
             recentActionBucketMoreActionsPresenter: some MoreNodeActionsPresenting,
             photoLibraryContentViewRouter: some PhotoLibraryContentViewRouting,
             tracker: some AnalyticsTracking,
-            featureFlagProvider: some FeatureFlagProviderProtocol
+            featureFlagProvider: some FeatureFlagProviderProtocol,
+            promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?
         ) {
             self.homeAddMenuActionHandler = homeAddMenuActionHandler
             self.router = router
@@ -111,6 +113,7 @@ extension HomeView {
             self.photoLibraryContentViewRouter = photoLibraryContentViewRouter
             self.tracker = tracker
             self.featureFlagProvider = featureFlagProvider
+            self.promotedPlanProvider = promotedPlanProvider
         }
     }
 }

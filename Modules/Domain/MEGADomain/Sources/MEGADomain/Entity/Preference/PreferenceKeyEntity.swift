@@ -58,6 +58,7 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol, Sendable {
     case lastKnownProLevel
     case homeWidgetConfigs = "HomeWidgetsCustomizationConfigs"
     case homePromotionalDialogShown
+    case homeDiscountBannerDismissedCampaignIds
     case storageAlmostFullOnAppOpenDialogShownCount
     case storageAlmostFullOnAppOpenDialogLastShownDate
     case storageAlmostFullAfterUploadDialogShownCount

@@ -4,6 +4,7 @@ public enum HomeWidgetRouteType {
     case shortcut(ShortcutType)
     case accountUpgrade
     case promotionalBanner(_ url: URL)
+    case promoLandingDialog
     case offline
     case transfers
 }
