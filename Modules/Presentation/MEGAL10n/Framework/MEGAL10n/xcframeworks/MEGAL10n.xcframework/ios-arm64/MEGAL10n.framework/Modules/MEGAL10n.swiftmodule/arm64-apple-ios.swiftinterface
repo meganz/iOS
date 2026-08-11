@@ -3092,6 +3092,12 @@ public enum Strings {
           public static let noOfflineFiles: Swift.String
         }
       }
+      public enum PromotionalBanners {
+        public enum DiscountBanner {
+          public static let grabDeal: Swift.String
+          public static func message(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> Swift.String
+        }
+      }
       public enum PromotionalDialog {
         public static let header: Swift.String
         public static let subtitle: Swift.String

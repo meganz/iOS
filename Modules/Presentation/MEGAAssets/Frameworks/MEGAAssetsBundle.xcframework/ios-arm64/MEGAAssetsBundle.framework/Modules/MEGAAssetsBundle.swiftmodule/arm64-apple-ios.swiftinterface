@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
-// swift-module-flags: -target arm64-apple-ios17.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
+// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
+// swift-module-flags: -target arm64-apple-ios17.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -1079,6 +1079,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var monoCheckSquareMediumThinOutline: SwiftUICore.Image {
+    get
+  }
+  public static var homeDiscountBanner: SwiftUICore.Image {
     get
   }
 }
@@ -2796,6 +2799,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var monoCheckSquareMediumThinOutline: UIKit.UIImage {
+    get
+  }
+  public static var homeDiscountBanner: UIKit.UIImage {
     get
   }
 }
