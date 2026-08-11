@@ -55,9 +55,14 @@ struct MEGAPlaybackReportingManagerTests {
 
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,
-            with: [VideoPlaybackStartupFailureNewVPEvent(
-                scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
-                commonMap: "")]
+            with: [
+                VideoPlaybackStartupFailureNewVPEvent(
+                    scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
+                    commonMap: ""),
+                VideoPlaybackStartupFailureReasonNewVPEvent(
+                    errCode: .anyTestValue,
+                    reason: "")
+            ]
         )
     }
 
@@ -101,9 +106,41 @@ struct MEGAPlaybackReportingManagerTests {
 
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,
-            with: [VideoPlaybackStartupFailureNewVPEvent(
-                scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
-                commonMap: "")
+            with: [
+                VideoPlaybackStartupFailureNewVPEvent(
+                    scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
+                    commonMap: ""),
+                VideoPlaybackStartupFailureReasonNewVPEvent(
+                    errCode: .anyTestValue,
+                    reason: "")
+            ]
+        )
+    }
+
+    @Test
+    func trackVideoPlaybackFinalEvents_whenAlreadyFailed_shouldNotTrackFailureAgain() {
+        let analyticsTracker = MockTracker()
+        let player = MockVideoPlayer()
+        let sut = makeSUT(
+            player: player,
+            analyticsTracker: analyticsTracker
+        )
+        sut.observePlayback()
+        sut.recordOpenTimeStamp()
+
+        player.state = .error("boom")
+        sut.trackVideoPlaybackFinalEvents()
+
+        // Only the pair sent when the error happened -- teardown must not add a second pair.
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,
+            with: [
+                VideoPlaybackStartupFailureNewVPEvent(
+                    scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
+                    commonMap: ""),
+                VideoPlaybackStartupFailureReasonNewVPEvent(
+                    errCode: .anyTestValue,
+                    reason: "")
             ]
         )
     }

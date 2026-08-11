@@ -27,6 +27,13 @@ final class MEGAPlaybackReportingManager {
     private let playbackDebugMessage: any PlaybackDebugMessageObservable
     private let playbackReporter: any PlaybackReporting
     private let analyticsTracker: any AnalyticsTracking
+    
+    private var elapsedMillisecondsSinceOpen: Int32 {
+        guard let openTimeStamp else { return 0 }
+        let elapsed = (CACurrentMediaTime() - openTimeStamp) * 1000
+        guard elapsed.isFinite else { return 0 }
+        return Int32(min(max(0, elapsed), Double(Int32.max)))
+    }
 
     init(
         playerOptionIdentifiable: some PlayerOptionIdentifiable,
@@ -73,7 +80,11 @@ final class MEGAPlaybackReportingManager {
             trackVideoPlaybackRecordEvent()
             trackVideoPlaybackStallEvent()
         } else {
-            trackVideoPlaybackStartupFailureEvent()
+            guard !hasStartupFailure else { return }
+            hasStartupFailure = true
+            trackVideoPlaybackStartupFailureEvent(
+                reason: .noFirstFrame(elapsedMilliseconds: elapsedMillisecondsSinceOpen)
+            )
         }
     }
 
@@ -108,7 +119,7 @@ final class MEGAPlaybackReportingManager {
         case .failed:
             guard !hasStartupFailure, firstFrameTimeStamp == nil else { return }
             hasStartupFailure = true
-            trackVideoPlaybackStartupFailureEvent()
+            trackVideoPlaybackStartupFailureEvent(reason: .playbackError(message: nil))
         case .readyToPlay:
             guard firstFrameTimeStamp == nil else { return }
             firstFrameTimeStamp = CACurrentMediaTime()
@@ -207,10 +218,10 @@ final class MEGAPlaybackReportingManager {
             guard firstFrameTimeStamp != nil else { return }
             pauseStartTime = CACurrentMediaTime()
             recordStallTime()
-        case .error:
+        case .error(let message):
             guard !hasStartupFailure, firstFrameTimeStamp == nil else { return }
             hasStartupFailure = true
-            trackVideoPlaybackStartupFailureEvent()
+            trackVideoPlaybackStartupFailureEvent(reason: .playbackError(message: message))
         default:
             guard firstFrameTimeStamp != nil else { return }
             recordPauseTime()
@@ -242,11 +253,18 @@ final class MEGAPlaybackReportingManager {
         self.stallStartTime = nil
     }
 
-    private func trackVideoPlaybackStartupFailureEvent() {
+    private func trackVideoPlaybackStartupFailureEvent(reason: StartupFailureReason) {
         analyticsTracker.trackAnalyticsEvent(
             with: VideoPlaybackStartupFailureNewVPEvent(
                 scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
                 commonMap: eventsCommonMap
+            )
+        )
+        
+        analyticsTracker.trackAnalyticsEvent(
+            with: VideoPlaybackStartupFailureReasonNewVPEvent(
+                errCode: reason.errCode,
+                reason: reason.reason
             )
         )
     }
