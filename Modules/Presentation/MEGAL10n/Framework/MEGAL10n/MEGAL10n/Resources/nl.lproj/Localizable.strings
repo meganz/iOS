@@ -5160,3 +5160,7 @@
 "subscriptionPurchase.revamp.loadError.message"="Er is een probleem opgetreden bij het laden van uw abonnementen. Probeer het opnieuw.";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Probeer nogmaals";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Kan geen verbinding maken";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Controleer uw internetverbinding en probeer het opnieuw.";

@@ -5160,3 +5160,11 @@
 "subscriptionPurchase.revamp.loadError.message"="プラン情報の読み込み中に問題が発生しました。もう一度お試しください。";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="再試行";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="接続できませんでした";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="インターネット接続を確認して、もう一度お試しください。";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · %2$@OFF\n%4$@が月額%3$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="特別セールを利用する";

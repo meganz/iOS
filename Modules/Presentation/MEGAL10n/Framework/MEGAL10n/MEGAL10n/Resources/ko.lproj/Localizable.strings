@@ -5160,3 +5160,11 @@
 "subscriptionPurchase.revamp.loadError.message"="당신의 요금제를 불러오던 중 문제가 생겼습니다. 다시 시도하세요.";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="다시 시도";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="연결할 수 없습니다";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="인터넷 연결을 확인하고 다시 시도하세요.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · %2$@ 할인을 받으세요\n%4$@ 요금제를 월 %3$@에";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="할인 잡기";

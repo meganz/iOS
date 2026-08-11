@@ -3901,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A]/miesiąc przez pierwszy %d miesiąc, potem [B]/miesiąc</string>
+        <string>[A]/miesiąc przez pierwszy miesiąc, potem [B]/miesiąc</string>
         <key>few</key>
         <string>[A]/miesiąc przez pierwsze %d miesiące, potem [B]/miesiąc</string>
         <key>many</key>
@@ -3919,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] za pierwszy %d miesiąc, potem [B]/miesiąc</string>
+        <string>[A] za pierwszy miesiąc, potem [B]/miesiąc</string>
         <key>few</key>
         <string>[A] za pierwsze %d miesiące, potem [B]/miesiąc</string>
         <key>many</key>
@@ -3955,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] za pierwszy %d miesiąc, potem [B] naliczane rocznie</string>
+        <string>[A] za pierwszy miesiąc, potem [B] naliczane rocznie</string>
         <key>few</key>
         <string>[A] za pierwsze %d miesiące, potem [B] naliczane rocznie</string>
         <key>many</key>

@@ -4513,7 +4513,7 @@
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.message"="Şifre yöneticimiz ve yüksek hızlı VPN’imiz ile çevrim içi hayatınızı daha güvenli, daha hızlı ve daha kolay hale getirin";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
-"ads.adFree.button.viewProPlans"="Pro planlarını görüntüle";
+"ads.adFree.button.viewProPlans"="Pro planları görüntüle";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Atla";
 /* Add to album empty message */
@@ -5160,3 +5160,11 @@
 "subscriptionPurchase.revamp.loadError.message"="Planlarınız yüklenirken bir sorunla karşılaştık. Lütfen tekrar deneyin.";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Tekrar dene";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Bağlanılamadı";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="İnternet bağlantınızı kontrol edip tekrar deneyin.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · %2$@ indirim kazanın\n%4$@ için ayda %3$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Fırsatı yakala";

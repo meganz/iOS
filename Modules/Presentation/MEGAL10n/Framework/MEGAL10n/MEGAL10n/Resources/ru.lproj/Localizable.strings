@@ -5091,7 +5091,7 @@
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
 "quotaWarning.transfer.runningLow.title"="Ваш лимит передачи подходит к концу";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Вы потратили %d%% вашего лимита передачи";
+"quotaWarning.transfer.percentUsed.title"="Использовано %d%% лимита передачи";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */

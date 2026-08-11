@@ -3469,9 +3469,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A]/maand voor de eerste %d maand, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A]/maand voor de eerste maand, daarna [B]/maand</string>
         <key>other</key>
-        <string>[A]/maand voor de eerste %d maanden, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A]/maand voor de eerste %d maanden, daarna [B]/maand</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3485,9 +3485,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] voor de eerste %d maand, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A] voor de eerste maand, daarna [B]/maand</string>
         <key>other</key>
-        <string>[A] voor de eerste %d maanden, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A] voor de eerste %d maanden, daarna [B]/maand</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3517,9 +3517,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] voor de eerste %d maand, daarna jaarlijks [B]</string>
+        <string>Gefactuureerd op[A] voor de eerste maand, daarna jaarlijks [B] in rekening gebracht</string>
         <key>other</key>
-        <string>[A] voor de eerste %d maanden, daarna jaarlijks [B]</string>
+        <string>Gefactuureerd op [A] voor de eerste %d maanden, daarna jaarlijks [B] in rekening gebracht</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

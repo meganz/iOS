@@ -3037,7 +3037,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>前%d個月以[A]/月計費，之後[B]/月。</string>
+        <string>前%d個月以[A]/月計費，之後[B]/月</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3051,7 +3051,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>前%d個月以[A]計費，之後[B]/月。</string>
+        <string>前%d個月以[A]計費，之後[B]/月</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>

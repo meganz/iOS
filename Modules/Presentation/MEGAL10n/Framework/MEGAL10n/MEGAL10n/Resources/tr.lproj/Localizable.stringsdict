@@ -3469,7 +3469,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay boyunca [A]/ay, sonrasında [B]/ay üzerinden faturalandırılır</string>
+        <string>İlk ay boyunca [A]/ay, sonrasında [B]/ay üzerinden faturalandırılır</string>
         <key>other</key>
         <string>İlk %d ay boyunca [A]/ay, sonrasında [B]/ay üzerinden faturalandırılır</string>
       </dict>
@@ -3485,7 +3485,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
+        <string>İlk ay boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
         <key>other</key>
         <string>İlk %d ay boyunca [A], sonrasında [B]/ay üzerinden faturalandırılır</string>
       </dict>
@@ -3517,7 +3517,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>İlk %d ay boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
+        <string>İlk ay boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
         <key>other</key>
         <string>İlk %d ay boyunca [A], sonrasında yıllık [B] üzerinden faturalandırılır</string>
       </dict>

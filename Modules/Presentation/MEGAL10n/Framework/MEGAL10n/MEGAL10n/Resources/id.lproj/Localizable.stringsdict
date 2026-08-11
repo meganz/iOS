@@ -3051,7 +3051,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Ditagihkan [A] untuk bulan pertama %d, [B] per bulan setelahnya</string>
+        <string>Ditagihkan [A] untuk %d bulan pertama, [B] per bulan setelahnya</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3079,7 +3079,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Ditagihkan [A] untuk bulan pertama %d, [B] dibebankan setiap tahun setelahnya</string>
+        <string>Ditagihkan [A] untuk %d bulan pertama, [B] dibebankan setiap tahun setelahnya</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

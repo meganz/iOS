@@ -3469,7 +3469,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Für den ersten %d Monat [A]/Monat, danach [B]/Monat</string>
+        <string>Für den ersten Monat [A]/Monat, danach [B]/Monat</string>
         <key>other</key>
         <string>Für die ersten %d Monate [A]/Monat, danach [B]/Monat</string>
       </dict>
@@ -3485,7 +3485,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Für den ersten %d Monat [A], danach [B]/Monat</string>
+        <string>Für den ersten Monat [A], danach [B]/Monat</string>
         <key>other</key>
         <string>Für die ersten %d Monate [A], danach [B]/Monat</string>
       </dict>
@@ -3517,7 +3517,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Für den ersten %d Monat [A], danach jährlich [B]</string>
+        <string>Für den ersten Monat [A], danach jährlich [B]</string>
         <key>other</key>
         <string>Für die ersten %d Monate [A], danach jährlich [B]</string>
       </dict>

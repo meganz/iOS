@@ -3901,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturé à [A]/mois pendant le premier %d mois, puis [B]/mois</string>
+        <string>Facturé à [A]/mois pendant le premier mois, puis [B]/mois</string>
         <key>many</key>
         <string>Facturé à [A]/mois pendant les %d premiers mois, puis [B]/mois</string>
         <key>other</key>
@@ -3919,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturé à [A] pendant le premier %d mois, puis [B]/mois</string>
+        <string>Facturé à [A] pendant le premier mois, puis [B]/mois</string>
         <key>many</key>
         <string>Facturé à [A] pendant les %d premiers mois, puis [B]/mois</string>
         <key>other</key>
@@ -3955,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturé à [A] pendant le premier %d mois, puis [B] facturé annuellement</string>
+        <string>Facturé à [A] pendant le premier mois, puis [B] facturé annuellement</string>
         <key>many</key>
         <string>Facturé à [A] pendant les %d premiers mois, puis [B] facturé annuellement</string>
         <key>other</key>

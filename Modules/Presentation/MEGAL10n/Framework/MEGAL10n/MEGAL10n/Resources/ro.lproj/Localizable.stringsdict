@@ -3901,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturat la [A]/lună pentru prima %d lună, apoi [B]/lună</string>
+        <string>Facturat la [A]/lună pentru prima lună, apoi [B]/lună</string>
         <key>few</key>
         <string>Facturat la [A]/lună pentru primele %d luni, apoi [B]/lună</string>
         <key>other</key>
@@ -3919,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturat la [A] pentru prima %d lună, apoi [B]/lună</string>
+        <string>Facturat la [A] pentru prima lună, apoi [B]/lună</string>
         <key>few</key>
         <string>Facturat la [A] pentru primele %d luni, apoi [B]/lună</string>
         <key>other</key>
@@ -3955,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Facturat la [A] pentru prima %d lună, apoi facturat anual la [B]</string>
+        <string>Facturat la [A] pentru prima lună, apoi facturat anual la [B]</string>
         <key>few</key>
         <string>Facturat la [A] pentru primele %d luni, apoi facturat anual la [B]</string>
         <key>other</key>

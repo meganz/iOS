@@ -3051,7 +3051,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>คิดค่าบริการ [A] สำหรับเดือนแรก %d เดือน, [B]/เดือน หลังจากนั้น</string>
+        <string>คิดค่าบริการ [A] สำหรับ %d เดือนแรก, [B]/เดือน หลังจากนั้น</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3079,7 +3079,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>คิดค่าบริการ [A] สำหรับเดือนแรก %d เดือน, [B] ถูกเรียกเก็บเป็นรายปีหลังจากนั้น</string>
+        <string>คิดค่าบริการ [A] สำหรับ %d เดือนแรก, [B] ถูกเรียกเก็บเป็นรายปีหลังจากนั้น</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>

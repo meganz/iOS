@@ -3051,7 +3051,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thanh toán [A] cho tháng đầu tiên %d tháng, [B]/tháng sau</string>
+        <string>Thanh toán [A] cho %d tháng đầu tiên, [B]/tháng sau</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3079,7 +3079,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thanh toán [A] cho tháng đầu tiên %d, [B] được tính phí hàng năm sau</string>
+        <string>Thu phí [A] cho %d tháng đầu tiên, sau đó [B] mỗi năm</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
