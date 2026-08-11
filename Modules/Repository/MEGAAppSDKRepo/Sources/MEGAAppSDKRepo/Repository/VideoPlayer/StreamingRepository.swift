@@ -37,4 +37,8 @@ public struct StreamingRepository: StreamingRepositoryProtocol {
     public func httpServerStop() {
         sdk.httpServerStop()
     }
+
+    public func httpServerSetThrottleBitrate(_ bitrateBps: UInt64) {
+        sdk.httpServerSetThrottleBitrate(bitrateBps)
+    }
 }
