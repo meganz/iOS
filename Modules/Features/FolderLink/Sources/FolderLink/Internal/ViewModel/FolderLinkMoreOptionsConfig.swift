@@ -17,21 +17,22 @@ struct FolderLinkMoreOptionsConfig {
     ///   - canSelect: whether the folder holds anything to select.
     ///   - showsQuickActions: whether the folder-wide actions apply, which they do not for a folder whose
     ///     key is still undecrypted.
-    ///   - includesDownload: whether every node the action would cover can be saved to Photos.
+    ///   - savesToPhotos: whether every node the action would cover is an image or a video, which is what
+    ///     makes Photos the destination and the row worth offering.
     ///   - isNetworkConnected: every row needs the network, so losing it disables the button outright.
     init(
         canSelect: Bool,
         showsQuickActions: Bool,
-        includesDownload: Bool,
+        savesToPhotos: Bool,
         isNetworkConnected: Bool
     ) {
         var options: [FolderLinkMoreOption] = [.select]
         if showsQuickActions {
             options.append(.saveToMEGA)
             // Save to Photos lost its bottom bar slot to the two anchored buttons, so the sheet is where
-            // it lives now, labelled Download as the design asks.
-            if includesDownload {
-                options.append(.download)
+            // it lives now.
+            if savesToPhotos {
+                options.append(.saveToPhotos)
             }
             options.append(contentsOf: [.copyToOffline, .shareLink, .sendToChat])
         }
@@ -63,7 +64,7 @@ extension FolderLinkMoreOptionsHandling {
             quickAction = .makeAvailableOffline
         case .sendToChat:
             quickAction = .sendToChat
-        case .download:
+        case .saveToPhotos:
             bottomBarAction = .saveToPhotos
         case .shareLink:
             // Handled by the ShareLink the sheet renders for this row.

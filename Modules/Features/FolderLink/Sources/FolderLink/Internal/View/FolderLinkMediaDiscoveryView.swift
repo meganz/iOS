@@ -56,7 +56,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         }
         .noNetworkConnection()
         .navigationBarBackButtonHidden(true)
-        .safeAreaInset(edge: .bottom) {
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             anchoredButtons
         }
         .toolbar {
@@ -202,7 +202,7 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
         FolderLinkMoreOptionsConfig(
             canSelect: viewModel.shouldEnableMoreOptionsMenu,
             showsQuickActions: viewModel.shouldShowQuickActionsMenu,
-            includesDownload: viewModel.shouldIncludeSaveToPhotosBottomAction,
+            savesToPhotos: viewModel.shouldIncludeSaveToPhotosBottomAction,
             isNetworkConnected: networkConnected
         )
     }
