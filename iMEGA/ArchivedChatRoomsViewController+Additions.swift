@@ -18,6 +18,19 @@ extension ArchivedChatRoomsViewController {
         navigationItem.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
     }
+
+    @objc func configureLiquidGlass() {
+        // `Chat.storyboard` prevents this VC from extending under `.bottom`
+        // edge (`Extend Edges > Under Bottom Bar` is unticked).
+        // - On iOS 18 and below, this has the effect of preventing the tab bar
+        // from overlapping the last few chats in a long list.
+        // - However, the same config on iOS 26 dark mode will reveal the black
+        // background of the `navigationController.view` behind the Liquid Glass
+        // tab bar.
+        if #available(iOS 26.0, *) {
+            edgesForExtendedLayout = [.top, .bottom]
+        }
+    }
 }
 
 extension ArchivedChatRoomsViewController: AudioPlayerPresenterProtocol {

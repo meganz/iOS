@@ -62,6 +62,7 @@
     
     [self updateAppearance];
     [self registerForAppearanceChanges];
+    [self configureLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
