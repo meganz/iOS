@@ -1,6 +1,5 @@
 import Combine
 import MediaPlayer
-import MEGAAssets
 import UIKit
 
 /// Bridges playback state to the system Now Playing UI (Control Center / lock screen)
@@ -98,14 +97,15 @@ final class NowPlayingInfoController {
                 lastInfo = info
                 guard isActive else { return }
 
-                let image = info.artworkData.flatMap(UIImage.init(data:)) ?? MEGAAssets.UIImage.audioIcon
                 var dict: [String: Any] = [
                     MPMediaItemPropertyTitle: info.title,
                     MPMediaItemPropertyArtist: info.artist,
-                    MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: image.size) { @Sendable _ in image },
                     MPNowPlayingInfoPropertyElapsedPlaybackTime: info.elapsed,
                     MPNowPlayingInfoPropertyPlaybackRate: info.rate
                 ]
+                if let image = info.artworkData.flatMap(UIImage.init(data:)) {
+                    dict[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { @Sendable _ in image }
+                }
                 if info.duration > 0 {
                     dict[MPMediaItemPropertyPlaybackDuration] = info.duration
                 }
