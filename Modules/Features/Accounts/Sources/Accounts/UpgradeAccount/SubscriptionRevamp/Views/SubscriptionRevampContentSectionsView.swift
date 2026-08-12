@@ -1,6 +1,9 @@
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
+import MEGAL10n
+import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 
 /// The section stack shared by both redesigned subscription pages: Pro features,
@@ -23,6 +26,10 @@ struct SubscriptionContentSectionsView: View {
             if let currentPlan = viewModel.currentPlanViewModel {
                 SubscriptionCurrentPlanView(viewModel: currentPlan)
                     .padding(.top, TokenSpacing._3)
+                if viewModel.isOnHighestPlan {
+                    pricingPageHint
+                        .padding(.top, TokenSpacing._3)
+                }
             }
             cyclePicker
                 .padding(.top, TokenSpacing._3)
@@ -44,6 +51,29 @@ struct SubscriptionContentSectionsView: View {
                 .padding(.top, TokenSpacing._5)
                 .padding(.bottom, TokenSpacing._13)
         }
+    }
+
+    /// Points users already on the top plan at the web pricing page, the only place
+    /// left to upgrade further.
+    private var pricingPageHint: some View {
+        TextWithLinkView(details: pricingPageDetails)
+            .font(.footnote)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            .tint(TokenColors.Link.primary.swiftUI)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var pricingPageDetails: TextWithLinkDetails {
+        let fullText = Strings.Localizable.UpgradeAccountPlan.Footer.Message.pricingPage
+        let tappableText = fullText.subString(from: "[A]", to: "[/A]") ?? ""
+        let fullTextWithoutFormatters = fullText
+            .replacingOccurrences(of: "[A]", with: "")
+            .replacingOccurrences(of: "[/A]", with: "")
+        return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
+                                   tappableText: tappableText,
+                                   linkString: "https://\(dependency.domainName)/pro",
+                                   textColor: TokenColors.Text.primary.swiftUI,
+                                   linkColor: TokenColors.Link.primary.swiftUI)
     }
 
     private var cyclePicker: some View {

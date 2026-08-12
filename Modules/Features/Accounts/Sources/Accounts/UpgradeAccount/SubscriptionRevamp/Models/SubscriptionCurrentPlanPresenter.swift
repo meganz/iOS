@@ -58,6 +58,20 @@ struct SubscriptionCurrentPlanPresenter {
         accountDetails.plans.first { $0.accountType == accountDetails.proLevel }
     }
 
+    /// Whether the plan renews by itself: its `subscriptionId` must still match a valid subscription
+    /// on the account. No id means a one-off purchase, a missing match means auto-renewal was cancelled.
+    /// Note: At the moment this is only working for Stripe purchase. API is not capable of detecting cancelled
+    /// subscriptions on iOS and Android yet
+    private var isRenewing: Bool {
+        guard let plan = currentAccountPlan, plan.isProPlan else {
+            return accountDetails.subscriptionStatus == .valid
+        }
+        guard let subscriptionId = plan.subscriptionId, !subscriptionId.isEmpty else { return false }
+        return accountDetails.subscriptions.contains {
+            $0.id == subscriptionId && $0.status == .valid
+        }
+    }
+
     /// Purchased length in months for a one-off (non-recurring) plan, derived from
     /// the plan's start and expiry times. `nil` for recurring plans or when the
     /// SDK hasn't provided a start time.
@@ -75,9 +89,10 @@ struct SubscriptionCurrentPlanPresenter {
         return months
     }
 
-    /// The status line: `.renews` with the renewal date, else `.expires` with the
+    /// The status line: `.renews` with the renewal date for a plan that renews by itself,
+    /// else `.expires` with the plan's expiry.
     private var status: SubscriptionCurrentPlanViewModel.Status? {
-        if accountDetails.subscriptionRenewTime > 0 {
+        if isRenewing, accountDetails.subscriptionRenewTime > 0 {
             return .renews(Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime)))
         }
         let expiration = currentAccountPlan.map { TimeInterval($0.expirationTime) }

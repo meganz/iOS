@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAUIComponent
 
 /// Builds the standard plan cards for a billing cycle.
@@ -22,8 +23,8 @@ struct SubscriptionPlanCardsPresenter {
                     productIdentifier: plan.productIdentifier,
                     title: displayName(plan.type),
                     price: resolver.planPrice(for: plan),
-                    storage: plan.storage,
-                    transfer: plan.transfer,
+                    storage: Strings.Localizable.SubscriptionPurchase.Plan.storage(plan.storage),
+                    transfer: Strings.Localizable.SubscriptionPurchase.Plan.transfer(plan.transfer),
                     ribbonText: badgePresenter.badge(for: plan),
                     externalPurchaseTitle: externalPurchase?.externalPurchaseTitle(for: plan)
                 )

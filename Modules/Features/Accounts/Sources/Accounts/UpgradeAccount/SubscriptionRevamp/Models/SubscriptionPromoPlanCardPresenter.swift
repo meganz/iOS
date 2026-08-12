@@ -14,8 +14,8 @@ struct SubscriptionPromoPlanCardPresenter {
             ribbonText: SubscriptionOfferBadgePresenter().badge(for: plan) ?? "",
             title: name,
             price: SubscriptionPlanPriceResolver().planPrice(for: plan),
-            storage: plan.storage,
-            transfer: plan.transfer,
+            storage: Strings.Localizable.SubscriptionPurchase.Plan.storage(plan.storage),
+            transfer: Strings.Localizable.SubscriptionPurchase.Plan.transfer(plan.transfer),
             buttonTitle: Strings.Localizable.SubscriptionPurchase.Button.getPlan(name)
         )
     }

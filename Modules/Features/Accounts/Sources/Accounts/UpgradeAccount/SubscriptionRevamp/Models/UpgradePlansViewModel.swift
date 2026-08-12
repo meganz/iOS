@@ -71,6 +71,11 @@ public final class UpgradePlansViewModel: ObservableObject {
         currentPlanPresenter.currentPlanViewModel
     }()
 
+    /// Whether the user already holds the top plan, so no in-app upgrade is left to offer.
+    var isOnHighestPlan: Bool {
+        accountDetails.proLevel == .proIII
+    }
+
     // MARK: - Default cycle selection
 
     /// The billing cycle to preselect in priority order:

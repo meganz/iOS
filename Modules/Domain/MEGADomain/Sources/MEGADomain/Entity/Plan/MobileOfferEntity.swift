@@ -44,6 +44,9 @@ public struct MobileOfferEntity: Sendable, Equatable {
     public let discountPercentage: Int
 
     /// Client feature-flag bitmask (always present, normally 0).
+    /// Usage:
+    /// - Bit 1: Used to determine whether an offer can be advertised (e.g: Show as a promoted plan at app launch) see [IOS-12376]
+    /// - Other bit: Reserved for future use.
     public let flags: Int
 
     /// How long before the offer may be reshown, or `nil` when not provided.
@@ -59,6 +62,7 @@ public struct MobileOfferEntity: Sendable, Equatable {
     public let iosSignature: MobileOfferIosSignatureEntity?
 
     /// Identifies the campaign this offer belongs to, or `0` when it belongs to no campaign.
+    /// Note: In practice an offer will always carry a non-zero campaignId.
     public let campaignId: UInt64
 
     public init(

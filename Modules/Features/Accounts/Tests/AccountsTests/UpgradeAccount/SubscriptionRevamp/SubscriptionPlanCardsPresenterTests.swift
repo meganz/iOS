@@ -64,10 +64,20 @@ struct SubscriptionPlanCardsPresenterTests {
         let sut = makeSUT(plans: [plan(.proI, .monthly, storage: "2 TB", transfer: "2 TB")])
         let card = try #require(sut.cards(for: .monthly).first)
         #expect(card.title == AccountTypeEntity.proI.toAccountTypeDisplayName())
-        #expect(card.storage == "2 TB")
-        #expect(card.transfer == "2 TB")
+        #expect(card.storage == Strings.Localizable.SubscriptionPurchase.Plan.storage("2 TB"))
+        #expect(card.transfer == Strings.Localizable.SubscriptionPurchase.Plan.transfer("2 TB"))
         #expect(card.ribbonText == nil)
         #expect(card.hasOffer == false)
+    }
+
+    @Test("Storage and transfer are labelled, not raw plan values")
+    func labelsStorageAndTransfer() throws {
+        let sut = makeSUT(plans: [plan(.proII, .yearly, storage: "8 TB", transfer: "8 TB")])
+        let card = try #require(sut.cards(for: .yearly).first)
+        #expect(card.storage != "8 TB")
+        #expect(card.storage.contains("8 TB"))
+        #expect(card.transfer != "8 TB")
+        #expect(card.transfer.contains("8 TB"))
     }
 
     // MARK: - Buy on our website
