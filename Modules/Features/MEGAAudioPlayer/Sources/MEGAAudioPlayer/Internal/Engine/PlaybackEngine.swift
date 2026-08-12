@@ -49,6 +49,11 @@ final class PlaybackEngine {
     private var isPlaybackIntended = false
     private var isInterrupted = false
 
+    /// Target of the in-flight seek
+    private var pendingSeekTarget: TimeInterval?
+    /// Identifies the latest seek, so a superseded one cannot open the gate early.
+    private var seekGeneration = 0
+
     init(notificationCenter: NotificationCenter = .default) {
         self.notificationCenter = notificationCenter
         observeTimeControlStatus()
@@ -105,6 +110,7 @@ extension PlaybackEngine: PlaybackEngineProtocol {
 
 extension PlaybackEngine {
     func play(url: URL) {
+        resetSeekGate()
         configureAudioSession()
         let item = AVPlayerItem(url: url)
         observeDuration(of: item)
@@ -118,8 +124,7 @@ extension PlaybackEngine {
     }
 
     func replay() {
-        player.seek(to: .zero)
-        currentTimeSubject.send(0)
+        performSeek(to: 0)
         isPlaybackIntended = true
         player.play()
     }
@@ -145,8 +150,34 @@ extension PlaybackEngine {
               duration > 0,
               seconds.isFinite,
               seconds >= 0 else { return }
-        let target = max(0, min(seconds, duration))
-        player.seek(to: CMTime(seconds: target, preferredTimescale: 600))
+        performSeek(to: max(0, min(seconds, duration)))
+    }
+
+    /// Publishes the target up front and closes the gate until the seek lands, so the
+    /// progress bar moves straight there instead of flashing back to the old position.
+    private func performSeek(to target: TimeInterval) {
+        seekGeneration += 1
+        let generation = seekGeneration
+        pendingSeekTarget = target
+        currentTimeSubject.send(target)
+
+        // Issued synchronously, so a caller may act on the player right after — see
+        // `replay()`, which relies on the seek being queued ahead of its `play()`.
+        player.seek(to: CMTime(seconds: target, preferredTimescale: 600)) { [weak self] _ in
+            // Always fires, including for a superseded seek (`finished == false`), so
+            // the gate cannot get stuck closed. The flag is ignored on purpose — only
+            // the newest generation opens the gate. The callback queue is unspecified,
+            // hence the hop.
+            Task { @MainActor in
+                guard let self, generation == self.seekGeneration else { return }
+                self.pendingSeekTarget = nil
+            }
+        }
+    }
+
+    private func resetSeekGate() {
+        seekGeneration += 1
+        pendingSeekTarget = nil
     }
 
     func setPlaybackSpeed(_ rate: Float) {
@@ -165,6 +196,7 @@ extension PlaybackEngine {
         isPlaybackIntended = false
         isInterrupted = false
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        resetSeekGate()
         currentTimeSubject.send(0)
         durationSubject.send(nil)
         playbackStatusSubject.send(.paused)
@@ -252,9 +284,14 @@ private extension Notification {
 extension PlaybackEngine {
     private func startPeriodicTimeObserver() {
         let interval = CMTime(seconds: 0.5, preferredTimescale: 600)
-        let subject = currentTimeSubject
-        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
-            subject.send(CMTimeGetSeconds(time))
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            // Registered on `.main`, so this already runs main-actor-isolated
+            MainActor.assumeIsolated {
+                // While a seek is in flight the observer still reports the pre-seek
+                // position — publishing it would flash the progress bar backwards.
+                guard let self, self.pendingSeekTarget == nil else { return }
+                self.currentTimeSubject.send(CMTimeGetSeconds(time))
+            }
         }
     }
 }
