@@ -127,9 +127,9 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             .compactMap { $0.toMEGANode(in: sdk) }
             .forEach { node in
                 if node.isFavourite {
-                    Task { try await favouriteUseCase.unFavourite(node: node.toNodeEntity()) }
+                    Task { try? await favouriteUseCase.unFavourite(node: node.toNodeEntity()) }
                 } else {
-                    Task { try await favouriteUseCase.favourite(node: node.toNodeEntity()) }
+                    Task { try? await favouriteUseCase.favourite(node: node.toNodeEntity()) }
                 }
             }
     }

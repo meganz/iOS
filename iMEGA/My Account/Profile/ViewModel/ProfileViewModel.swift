@@ -236,7 +236,8 @@ extension ProfileViewModel {
             
             twoFactorAuthStatusValueSubject.send(.querying)
             Task { @MainActor in
-                let isFlagEnabled = try await self.accountUseCase.multiFactorAuthCheck(email: myEmail)
+                guard let isFlagEnabled = try? await self.accountUseCase.multiFactorAuthCheck(email: myEmail) else { return }
+                
                 twoFactorAuthStatusValueSubject.send(isFlagEnabled ? .enabled : .disabled)
                 invokeCommand?(.changeProfile(requestedChangeType: requestedChangeType, isTwoFactorAuthenticationEnabled: isFlagEnabled))
             }

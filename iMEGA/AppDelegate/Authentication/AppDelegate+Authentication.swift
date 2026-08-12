@@ -62,7 +62,7 @@ extension AppDelegate {
         QuickAccessWidgetManager.reloadAllWidgetsContent()
         
         Task {
-            try await PricingRequester.shared.requestPricing()
+            try? await PricingRequester.shared.requestPricing()
         }
 
         createKMTransferFile()

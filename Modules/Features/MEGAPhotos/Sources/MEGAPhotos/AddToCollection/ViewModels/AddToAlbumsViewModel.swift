@@ -150,9 +150,10 @@ extension AddToAlbumsViewModel: AddItemsToCollectionViewModelProtocol {
     func addItems(_ photos: [NodeEntity]) {
         guard let album = albumSelection.albums.values.first,
               photos.isNotEmpty else { return }
+        
         addToCollectionRouter.dismiss { [albumModificationUseCase, addToCollectionRouter] in
             Task { @MainActor in
-                let result = try await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos)
+                guard let result = try? await albumModificationUseCase.addPhotosToAlbum(by: album.id, nodes: photos) else { return }
                 
                 let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: album.name)

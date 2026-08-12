@@ -344,11 +344,11 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
         if node.isFavourite {
             Task {
-                try await nodefavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
+                try? await nodefavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
             }
         } else {
             Task {
-                try await nodefavouriteActionUseCase.favourite(node: node.toNodeEntity())
+                try? await nodefavouriteActionUseCase.favourite(node: node.toNodeEntity())
             }
         }
     }

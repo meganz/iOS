@@ -32,7 +32,7 @@ class ContactLinkCollectionViewCell: TextMessageCell {
         Task { [weak self] in
             guard let self else { return }
             let contactLinkUC = ContactLinkUseCase(repo: ContactLinkRepository.newRepo)
-            guard let contactEntity = try await contactLinkUC.contactLinkQuery(handle: handle) else {
+            guard let contactEntity = try? await contactLinkUC.contactLinkQuery(handle: handle) else {
                 contactLinkContentView.hideLoading()
                 return
             }

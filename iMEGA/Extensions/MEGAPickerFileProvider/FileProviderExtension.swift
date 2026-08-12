@@ -138,7 +138,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         }
         
         Task { [transferUseCase] in
-            let transferEntity = try await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
+            guard let transferEntity = try? await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
                 NSFileProviderManager.default.signalEnumerator(for: identifier) { error in
                     if let error {
                         MEGALogError("Error signaling item: \(error)")
@@ -149,7 +149,7 @@ final class FileProviderExtension: NSFileProviderExtension {
                         MEGALogError("Error signaling item: \(error)")
                     }
                 }
-            })
+            }) else { return }
             
             do {
                 try await NSFileProviderManager.default.signalEnumerator(for: identifier)

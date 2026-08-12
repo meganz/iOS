@@ -114,7 +114,8 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initializeMiniPlayer() {
         Task { [weak self] in
             guard let self, configEntity.node != nil else { return }
-            let isTakenDown = try await isConfigNodeTakenDown()
+            guard let isTakenDown = try? await isConfigNodeTakenDown() else { return }
+            
             if isTakenDown {
                 router?.showTermsOfServiceViolationAlert()
                 return

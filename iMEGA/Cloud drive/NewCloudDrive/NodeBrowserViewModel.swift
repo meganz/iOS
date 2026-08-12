@@ -452,7 +452,7 @@ final class NodeBrowserViewModel: ObservableObject {
     private func configureAdsVisibility(withDelay: Bool = false) {
         Task {
             if withDelay {
-                try await Task.sleep(nanoseconds: 500_000_000)
+                try? await Task.sleep(for: .milliseconds(500))
             }
             adsVisibilityViewModel?.configureAdsVisibility()
         }

@@ -213,7 +213,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             Task { [weak self] in
                 guard let self else { return }
                 router.hideAds()
-                try await Task.sleep(nanoseconds: 500_000)
+                try? await Task.sleep(nanoseconds: 500_000)
                 router.showDetails(forChatId: chatListItem.chatId)
             }
         } else {

@@ -533,7 +533,7 @@ final class ChatContentViewModel: ViewModelType {
                 // Adding a delay of 0.7 seconds so there is enough time to play the tone
                 Task { [weak self] in
                     guard let self else { return }
-                    try await Task.sleep(nanoseconds: 700_000_000)
+                    try? await Task.sleep(for: .milliseconds(700))
                     self.router.removeEndCallDialogIfNeeded()
                     self.endCall(call)
                     self.endCallSubscription = nil
@@ -626,7 +626,7 @@ final class ChatContentViewModel: ViewModelType {
         guard chatRoom.chatType == .oneToOne else { return } // For groups there are not online status
         let chatOnlineStatusUpdates = chatPresenceUseCase.monitorOnChatOnlineStatusUpdate()
         Task { [weak self] in
-            for try await chatOnlineStatusUpdate in chatOnlineStatusUpdates {
+            for await chatOnlineStatusUpdate in chatOnlineStatusUpdates {
                 self?.onChatOnlineStatusUpdate(chatOnlineStatusUpdate)
             }
         }
@@ -657,7 +657,7 @@ final class ChatContentViewModel: ViewModelType {
         guard chatRoom.chatType == .oneToOne else { return } // For groups there are not presence last green
         let chatPresenceLastGreenUpdates = chatPresenceUseCase.monitorOnPresenceLastGreenUpdates()
         Task { [weak self] in
-            for try await chatPresenceLastGreenUpdate in chatPresenceLastGreenUpdates {
+            for await chatPresenceLastGreenUpdate in chatPresenceLastGreenUpdates {
                 self?.onPresenceLastGreenUpdate(chatPresenceLastGreenUpdate)
             }
         }

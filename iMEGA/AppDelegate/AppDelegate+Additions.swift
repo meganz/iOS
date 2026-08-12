@@ -572,7 +572,7 @@ extension AppDelegate {
         case .default: 
             // Added delay to show the mega app for a moment and not flash the in-app browser to the user
             Task { @MainActor in
-                try await Task.sleep(nanoseconds: 500_000_000)
+                try? await Task.sleep(for: .milliseconds(500))
                 url.mnz_presentSafariViewController()
             }
         case .upgrade:

@@ -4,7 +4,7 @@ struct SearchResultTapAndLongPressGestureModifier: ViewModifier {
     private enum Constants {
         static let easeInOutDuration = 0.05
         static let longPressMininumDuration = 0.5
-        static let tapHighlightDurationNs: UInt64 = 100_000_000
+        static let tapHighlightDuration: Duration = .milliseconds(100)
     }
 
     let isHighlighted: Binding<Bool>
@@ -18,9 +18,9 @@ struct SearchResultTapAndLongPressGestureModifier: ViewModifier {
                 }
 
                 Task {
-                    // Wait for Constants.tapHighlightDurationNs to keep `isHighlighted.wrappedValue = true`
+                    // Wait for Constants.tapHighlightDuration to keep `isHighlighted.wrappedValue = true`
                     // for a little before setting it to false ot dismiss the highlight effect
-                    try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
+                    try? await Task.sleep(for: Constants.tapHighlightDuration)
                     withAnimation(.easeInOut(duration: Constants.easeInOutDuration)) {
                         isHighlighted.wrappedValue = false
                     }

@@ -306,7 +306,7 @@ public final class SearchResultsViewModel: ObservableObject {
     // If the search results are already loaded -> areNewSearchResultsLoaded = true, we shouldn't display shimmer loading
     func showLoadingPlaceholderIfNeeded() async {
         Task {
-            try await Task.sleep(nanoseconds: UInt64(showLoadingPlaceholderDelay*1_000_000_000))
+            try? await Task.sleep(for: .seconds(showLoadingPlaceholderDelay))
             guard !(areNewSearchResultsLoaded) else { return }
             updateLoadingPlaceholderVisibility(true)
         }

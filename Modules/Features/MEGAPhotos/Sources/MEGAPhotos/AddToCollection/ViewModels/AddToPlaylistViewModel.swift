@@ -69,10 +69,12 @@ public final class AddToPlaylistViewModel: VideoPlaylistsContentViewModelProtoco
             destructiveButtonTitle: Strings.Localizable.cancel,
             action: { [weak self] newPlaylist in
                 guard let self, let newPlaylist else { return }
+                
                 let name = VideoPlaylistNameCreationMapper.videoPlaylistName(
                     from: newPlaylist, from: videoPlaylists.map(\.name))
+                
                 Task {
-                    _ = try await videoPlaylistsUseCase.createVideoPlaylist(name)
+                    _ = try? await videoPlaylistsUseCase.createVideoPlaylist(name)
                 }
             },
             validator: { try? validator.validateWhenCreated(with: $0) }
@@ -107,7 +109,8 @@ extension AddToPlaylistViewModel: AddItemsToCollectionViewModelProtocol {
               photos.isNotEmpty else { return }
         addToCollectionRouter.dismiss { [videoPlaylistModificationUseCase, addToCollectionRouter] in
             Task { @MainActor in
-                let result = try await videoPlaylistModificationUseCase.addVideoToPlaylist(by: playlist.handle, nodes: photos)
+                guard let result = try? await videoPlaylistModificationUseCase
+                    .addVideoToPlaylist(by: playlist.handle, nodes: photos) else { return }
                 
                 let message = Strings.Localizable.Set.AddTo.Snackbar.message(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: playlistName)

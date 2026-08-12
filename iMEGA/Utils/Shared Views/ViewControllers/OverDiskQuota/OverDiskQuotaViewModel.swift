@@ -45,7 +45,7 @@ final class OverDiskQuotaViewModel: NSObject, ViewModelType {
                 Task { @MainActor [weak self] in
                     // Added delay to prevent abrupt dismissal of ODQ page while
                     // Upgrade plan page is being dismissed
-                    try await Task.sleep(nanoseconds: 1_000_000_000)
+                    try? await Task.sleep(for: .seconds(1))
                     self?.router?.dismiss()
                 }
             }

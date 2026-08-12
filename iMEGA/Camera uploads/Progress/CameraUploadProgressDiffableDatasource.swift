@@ -166,7 +166,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
             }
         } else {
             Task { @MainActor in
-                try await performQueueUpdate(viewModels: viewModels)
+                try? await performQueueUpdate(viewModels: viewModels)
             }
         }
     }

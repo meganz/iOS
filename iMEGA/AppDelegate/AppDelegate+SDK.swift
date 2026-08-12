@@ -18,7 +18,8 @@ extension AppDelegate {
         Task {
             let updatedNodes = nodeList.toNodeEntities()
             let cameraUploadsUseCase = CameraUploadsUseCase(cameraUploadsRepository: CameraUploadsRepository.newRepo)
-            let cameraUploadsNode = try await cameraUploadsUseCase.cameraUploadsNode()
+            
+            guard let cameraUploadsNode = try? await cameraUploadsUseCase.cameraUploadsNode() else { return }
             
             let isCURootFolderAffected = cameraUploadsRootFolderWasAffected(
                 by: updatedNodes,

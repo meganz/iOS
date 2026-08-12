@@ -405,7 +405,8 @@ extension MEGAAVViewController {
         guard let node else { return }
         Task {
             let nodeInfoUseCase = NodeInfoUseCase()
-            let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: isFolderLink)
+            guard let isTakenDown = try? await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: isFolderLink) else { return }
+            
             if isTakenDown {
                 showTermsOfServiceAlert()
             }

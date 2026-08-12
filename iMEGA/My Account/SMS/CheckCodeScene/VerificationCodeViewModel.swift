@@ -118,7 +118,7 @@ struct VerificationCodeViewModel: ViewModelType {
         }
         
         Task {
-            try await authUseCase.login(sessionId: sessionId)
+            try? await authUseCase.login(sessionId: sessionId)
         }
     }
 }

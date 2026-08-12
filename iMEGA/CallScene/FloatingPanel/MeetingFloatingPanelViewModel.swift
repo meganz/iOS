@@ -206,7 +206,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             reloadCallParticipantsInCall()
         case .allowNonHostToAddParticipants(let enabled):
             Task {
-                try await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
+                try? await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
             }
         case .selectParticipantsList(let selectedTab):
             selectParticipantsListTab(selectedTab)

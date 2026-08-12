@@ -20,7 +20,7 @@ struct RevampedSearchResultRowView: View {
         static let tapHighlightFadeOutDuration = 0.05
         static let flashHighlightFadeOutDuration = 0.3
         static let longPressMininumDuration = 0.5
-        static let tapHighlightDurationNs: UInt64 = 100_000_000
+        static let tapHighlightDuration: Duration = .milliseconds(100)
         static let defaultThumbnailSize: Double = 32
         static let moreButtonWidth: CGFloat = 40
         static let moreButtonTrailingInset: CGFloat = 16
@@ -144,7 +144,7 @@ struct RevampedSearchResultRowView: View {
             }
 
             Task {
-                try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
+                try? await Task.sleep(for: Constants.tapHighlightDuration)
                 withAnimation(.easeInOut(duration: Constants.tapHighlightFadeOutDuration)) {
                     highlighted = false
                 }
