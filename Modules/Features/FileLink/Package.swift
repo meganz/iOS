@@ -16,9 +16,12 @@ let package = Package(
     dependencies: [
         // UI
         .package(path: "../../UI/MEGASwiftUI"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
 
         // Presentation
         .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(path: "../../Presentation/MEGAAssets"),
 
         // Domain
         .package(path: "../../Domain/MEGADomain"),
@@ -39,7 +42,10 @@ let package = Package(
             name: "FileLink",
             dependencies: [
                 "MEGASwiftUI",
+                "MEGAUIComponent",
                 "MEGAL10n",
+                "MEGAAppPresentation",
+                "MEGAAssets",
                 "MEGADomain",
                 "MEGAAppSDKRepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
@@ -52,8 +58,10 @@ let package = Package(
             dependencies: [
                 "FileLink",
                 "MEGATest",
+                "MEGAL10n",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo")
+                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ]
         )
     ]

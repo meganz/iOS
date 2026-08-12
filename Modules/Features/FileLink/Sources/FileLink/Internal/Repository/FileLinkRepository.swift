@@ -14,14 +14,23 @@ package protocol FileLinkRepositoryProtocol: RepositoryProtocol, Sendable {
 }
 
 package struct FileLinkRepository: FileLinkRepositoryProtocol {
+    /// Only here to satisfy `RepositoryProtocol`. Production code goes through
+    /// `newRepo(nodeProvider:)`, so that the provider the preview loader reads from is the one this
+    /// repository writes to.
     static package var newRepo: FileLinkRepository {
-        FileLinkRepository(sdk: .sharedSdk)
+        newRepo(nodeProvider: FileLinkNodeProvider())
+    }
+
+    static package func newRepo(nodeProvider: FileLinkNodeProvider) -> FileLinkRepository {
+        FileLinkRepository(sdk: .sharedSdk, nodeProvider: nodeProvider)
     }
 
     private let sdk: MEGASdk
+    private let nodeProvider: FileLinkNodeProvider
 
-    package init(sdk: MEGASdk) {
+    package init(sdk: MEGASdk, nodeProvider: FileLinkNodeProvider) {
         self.sdk = sdk
+        self.nodeProvider = nodeProvider
     }
 
     package func publicNode(for link: String) async throws(FileLinkPublicNodeErrorEntity) -> NodeEntity {
@@ -36,6 +45,8 @@ package struct FileLinkRepository: FileLinkRepositoryProtocol {
                         if request.flag {
                             completion(.failure(FileLinkPublicNodeErrorEntity.invalidDecryptionKey))
                         } else if let node = request.publicNode {
+                            // Stored before resuming, so the preview request that follows finds it.
+                            nodeProvider.store(node)
                             completion(.success(node.toNodeEntity()))
                         } else {
                             completion(.failure(FileLinkPublicNodeErrorEntity.linkUnavailable(.generic)))

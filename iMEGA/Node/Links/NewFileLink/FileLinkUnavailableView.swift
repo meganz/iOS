@@ -1,35 +1,21 @@
 import MEGADomain
 import SwiftUI
 
-/// Unavailable state of a file link. It still wraps the XIB the legacy screen shows; the revamped
-/// empty state lands together with the file link content page.
-struct FileLinkUnavailableView: UIViewRepresentable {
+/// Unavailable state of a file link. The screen it belongs to only exists with the link revamp flag
+/// on, so there is no legacy layout to fall back to: it always shows the revamped empty state, the
+/// same one the folder link shows.
+struct FileLinkUnavailableView: View {
     let reason: LinkUnavailableReason
 
-    func makeUIView(context: Context) -> UIView {
-        guard let view = Bundle.main.loadNibNamed("UnavailableLinkView", owner: nil)?.first as? UnavailableLinkView else {
-            return UIView()
-        }
-
-        switch reason {
-        case .downETD:
-            view.configureInvalidFileLinkByETD()
-        case .userETDSuspension:
-            view.configureInvalidFileLinkByUserETDSuspension()
-        case .copyrightSuspension:
-            view.configureInvalidFileLinkByUserCopyrightSuspension()
-        case .generic:
-            view.configureGenericInvalidFileLink()
-        case .expired:
-            view.configureInvalidFileLinkForExpired()
-        }
-
-        return view
+    var body: some View {
+        LinkUnavailableContentView(reason: reason, copy: .fileLink)
     }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
-#Preview {
+#Preview("Generic") {
     FileLinkUnavailableView(reason: .generic)
+}
+
+#Preview("Expired") {
+    FileLinkUnavailableView(reason: .expired)
 }

@@ -7,7 +7,7 @@ import SwiftUI
 /// It mimics the preview and the name/size lines that replace it once the node is known.
 struct FileLinkLoadingView: View {
     private enum Constants {
-        static let previewHeight: CGFloat = 298
+        static let maxPreviewHeight: CGFloat = 298
         static let nameWidth: CGFloat = 165
         static let nameHeight: CGFloat = 22
         static let sizeWidth: CGFloat = 110
@@ -16,8 +16,7 @@ struct FileLinkLoadingView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._9) {
-            bone(height: Constants.previewHeight, cornerRadius: TokenRadius.large)
-                .frame(maxWidth: .infinity)
+            previewBone
 
             VStack(alignment: .leading, spacing: TokenSpacing._1) {
                 bone(width: Constants.nameWidth, height: Constants.nameHeight)
@@ -32,6 +31,14 @@ struct FileLinkLoadingView: View {
         // element that announces the loading state the skeleton stands in for.
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Strings.Localizable.loading)
+    }
+
+    /// Carries the same height ceiling as the preview area it stands in for, so the skeleton does not
+    /// overflow a screen that is too short for it either.
+    private var previewBone: some View {
+        RoundedRectangle(cornerRadius: TokenRadius.large)
+            .fill(TokenColors.Text.primary.swiftUI)
+            .frame(maxWidth: .infinity, maxHeight: Constants.maxPreviewHeight)
     }
 
     private func bone(

@@ -1,6 +1,7 @@
 import FileLink
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import Testing
 
 @Suite("FileLinkViewModel Tests")
@@ -15,6 +16,41 @@ struct FileLinkViewModelTests {
         await sut.startLoadingFileLink()
 
         #expect(sut.viewState == .loaded(NodeEntity(handle: 42)))
+    }
+
+    @Test("the file takes over the navigation bar once the link resolves")
+    func navigationTitle_afterLoading_isFileName() async {
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(
+                initialStartResult: .success(NodeEntity(name: "elcapitan.jpeg", handle: 42))
+            )
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(sut.navigationTitle == "elcapitan.jpeg")
+        #expect(sut.navigationSubtitle == Strings.Localizable.fileLink)
+    }
+
+    @Test("while the link is being resolved the navigation bar carries the brand")
+    func navigationTitle_whileLoading_isBrand() {
+        let sut = makeSUT()
+
+        #expect(sut.navigationTitle == "MEGA")
+        #expect(sut.navigationSubtitle == Strings.Localizable.fileLink)
+    }
+
+    /// As in the folder link, the failure is spelled out by the empty state, not by the title.
+    @Test("an unavailable link keeps the brand in the navigation bar")
+    func navigationTitle_onError_isBrand() async {
+        let sut = makeSUT(
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(initialStartResult: .failure(.linkUnavailable(.expired)))
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(sut.navigationTitle == "MEGA")
+        #expect(sut.navigationSubtitle == Strings.Localizable.fileLink)
     }
 
     @Test("a link shared without its key asks for the decryption key")

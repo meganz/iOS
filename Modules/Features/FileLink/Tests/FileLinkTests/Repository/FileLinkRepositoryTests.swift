@@ -101,9 +101,25 @@ struct FileLinkRepositoryTests {
         }
     }
 
-    private func makeSUT(result: Result<MEGARequest, MEGAError>) -> FileLinkRepository {
+    @Test("the resolved node is kept so its preview can be loaded later")
+    func publicNode_success_storesNodeInProvider() async throws {
+        let nodeProvider = FileLinkNodeProvider()
+        let sut = makeSUT(
+            result: .success(MockRequest(handle: 1, publicNode: MockNode(handle: 42))),
+            nodeProvider: nodeProvider
+        )
+
+        _ = try await sut.publicNode(for: "link")
+
+        #expect(await nodeProvider.node(for: 42)?.handle == 42)
+    }
+
+    private func makeSUT(
+        result: Result<MEGARequest, MEGAError>,
+        nodeProvider: FileLinkNodeProvider = FileLinkNodeProvider()
+    ) -> FileLinkRepository {
         let sdk = MockSdk()
         sdk.publicNodeForFileLinkRequestResult = result
-        return FileLinkRepository(sdk: sdk)
+        return FileLinkRepository(sdk: sdk, nodeProvider: nodeProvider)
     }
 }

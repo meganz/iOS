@@ -1,7 +1,10 @@
+import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 /// Entry point of the file link screen. It owns the access flow only: the screen is on top before the
@@ -12,6 +15,9 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
         let link: String
         let fileLinkBuilder: any FileLinkBuilderProtocol
         let onClose: @MainActor () -> Void
+        /// Shared by the link resolution, which stores the node it resolved, and the preview loader,
+        /// which needs that node to fetch the image. See `FileLinkNodeProvider`.
+        let nodeProvider: FileLinkNodeProvider
 
         public init(
             link: String,
@@ -21,12 +27,15 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
             self.link = link
             self.fileLinkBuilder = fileLinkBuilder
             self.onClose = onClose
+            nodeProvider = FileLinkNodeProvider()
         }
     }
 
     @StateObject private var viewModel: FileLinkViewModel
 
     private let dependency: Dependency
+    /// Built once, next to the view model, so that resolving the body does not rebuild it.
+    private let previewLoader: any ThumbnailLoaderProtocol
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
 
     public init(
@@ -35,11 +44,13 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
     ) {
         self.dependency = dependency
         self.linkUnavailableContent = linkUnavailableContent
+        previewLoader = FileLinkPreviewLoaderFactory.makePreviewLoader(nodeProvider: dependency.nodeProvider)
         _viewModel = StateObject(
             wrappedValue: FileLinkViewModel(
                 dependency: FileLinkViewModel.Dependency(
                     link: dependency.link,
-                    fileLinkBuilder: dependency.fileLinkBuilder
+                    fileLinkBuilder: dependency.fileLinkBuilder,
+                    nodeProvider: dependency.nodeProvider
                 )
             )
         )
@@ -89,20 +100,28 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
                 }
                 .toolbar { toolbarContent }
         case let .loaded(node):
-            // Placeholder for the revamped content page. Naming the file is enough to tell that the
-            // link resolved; the preview, the size and the actions arrive with that page.
-            Text(node.name)
-                .font(.callout)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                .padding(TokenSpacing._5)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(TokenColors.Background.page.swiftUI)
+            FileLinkContentView(node: node, previewLoader: previewLoader)
                 .toolbar { toolbarContent }
         case let .error(reason):
-            linkUnavailableContent(reason)
-                .ignoresSafeArea()
+            fullScreenLinkUnavailableContent(reason)
+                // The design draws the bar as transparent page background, with only the close
+                // button carrying a glass capsule.
+                .hideNavigationToolbarBackground()
                 .toolbar { toolbarContent }
         }
+    }
+
+    /// Centres the unavailable state on the whole screen rather than on the area below the
+    /// navigation bar, which is transparent here. Same treatment as the folder link.
+    private func fullScreenLinkUnavailableContent(_ reason: LinkUnavailableReason) -> some View {
+        GeometryReader { proxy in
+            let topOffset = proxy.frame(in: .global).minY
+
+            linkUnavailableContent(reason)
+                .frame(width: proxy.size.width, height: proxy.size.height + topOffset)
+                .offset(y: -topOffset)
+        }
+        .ignoresSafeArea()
     }
 
     @ToolbarContentBuilder
@@ -116,21 +135,18 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
         }
     }
 
-    @ViewBuilder
     private var titleView: some View {
         VStack {
-            Text(Strings.Localizable.fileLink)
+            Text(viewModel.navigationTitle)
                 .font(.headline)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 .lineLimit(1)
 
-            if case .error = viewModel.viewState {
-                Text(Strings.Localizable.unavailable)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                    .lineLimit(1)
-            }
+            Text(viewModel.navigationSubtitle)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .lineLimit(1)
         }
     }
 
@@ -139,8 +155,23 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
             viewModel.stopLoadingFileLink()
             dependency.onClose()
         } label: {
-            Text(Strings.Localizable.close)
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            closeIcon
+        }
+        .accessibilityLabel(Strings.Localizable.close)
+    }
+
+    /// From iOS 26 the toolbar puts the icon in a glass capsule of its own, so the padding that
+    /// gives it a tappable area on earlier versions would double up.
+    @ViewBuilder
+    private var closeIcon: some View {
+        let icon = MEGAAssets.Image.x
+            .frame(width: TokenSpacing._7, height: TokenSpacing._7)
+            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+
+        if #available(iOS 26.0, *) {
+            icon
+        } else {
+            icon.padding(10)
         }
     }
 }

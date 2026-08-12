@@ -19,8 +19,10 @@ package struct FileLinkFlowUseCase: FileLinkFlowUseCaseProtocol {
     private let fileLinkRepository: any FileLinkRepositoryProtocol
     private let fileLinkBuilder: any FileLinkBuilderProtocol
 
+    /// The repository is not defaulted on purpose: it has to be built around the same
+    /// `FileLinkNodeProvider` the preview loader reads from.
     package init(
-        fileLinkRepository: some FileLinkRepositoryProtocol = FileLinkRepository.newRepo,
+        fileLinkRepository: some FileLinkRepositoryProtocol,
         fileLinkBuilder: some FileLinkBuilderProtocol
     ) {
         self.fileLinkRepository = fileLinkRepository

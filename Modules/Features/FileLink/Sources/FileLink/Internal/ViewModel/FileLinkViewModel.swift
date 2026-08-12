@@ -1,19 +1,29 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 
 @MainActor
 package final class FileLinkViewModel: ObservableObject {
+    private enum Constants {
+        /// Not localised, as in the folder link: it is the brand, not a word.
+        static let brandTitle = "MEGA"
+    }
+
     package struct Dependency {
         let link: String
         let fileLinkFlowUseCase: any FileLinkFlowUseCaseProtocol
 
         init(
             link: String,
-            fileLinkBuilder: some FileLinkBuilderProtocol
+            fileLinkBuilder: some FileLinkBuilderProtocol,
+            nodeProvider: FileLinkNodeProvider
         ) {
             self.init(
                 link: link,
-                fileLinkFlowUseCase: FileLinkFlowUseCase(fileLinkBuilder: fileLinkBuilder)
+                fileLinkFlowUseCase: FileLinkFlowUseCase(
+                    fileLinkRepository: FileLinkRepository.newRepo(nodeProvider: nodeProvider),
+                    fileLinkBuilder: fileLinkBuilder
+                )
             )
         }
 
@@ -37,6 +47,22 @@ package final class FileLinkViewModel: ObservableObject {
     @Published package var viewState: ViewState = .loading
     @Published package var askingForDecryptionKey: Bool = false
     @Published package var notifyInvalidDecryptionKey: Bool = false
+
+    /// The brand carries the title until the link resolves, at which point the file takes over. This
+    /// mirrors the folder link, where the unavailable state keeps the brand rather than spelling the
+    /// failure out in the navigation bar.
+    package var navigationTitle: String {
+        if case let .loaded(node) = viewState {
+            node.name
+        } else {
+            Constants.brandTitle
+        }
+    }
+
+    /// Always names the kind of link the screen is showing.
+    package var navigationSubtitle: String {
+        Strings.Localizable.fileLink
+    }
 
     private let dependency: Dependency
     private var fileLinkFlowStopped = false
