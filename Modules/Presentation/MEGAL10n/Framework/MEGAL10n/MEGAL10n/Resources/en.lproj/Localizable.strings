@@ -5162,3 +5162,15 @@
 "home.promotionalBanners.discountBanner.message"="%1$@ · Get %2$@ off\n%3$@/month for %4$@";
 /* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
 "home.promotionalBanners.discountBanner.grabDeal"="Grab deal";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Not enough storage";
+/* Message of the alert shown before a folder link download that would not fit on the device. [X] is the space the download needs, for example "1.2 GB". [Y] is the space still free on the device. */
+"link.download.notEnoughStorage.message"="This download needs about [X] of free space, and your device has [Y]. Free up some space and try again.";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="OK, got it";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="Download stopped";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="Your device ran out of storage during the download. Free up some space and try again.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Try again";
