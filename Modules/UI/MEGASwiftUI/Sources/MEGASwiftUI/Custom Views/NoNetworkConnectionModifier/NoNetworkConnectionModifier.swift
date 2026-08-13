@@ -10,10 +10,11 @@ extension EnvironmentValues {
 struct NoNetworkConnectionModifier<NoNetworkContent: View>: ViewModifier {
     @Environment(\.networkConnected) var networkConnected
 
+    let showsContentWhileOffline: Bool
     @ViewBuilder let noNetworkContentViewBuilder: @MainActor () -> NoNetworkContent
 
     func body(content: Content) -> some View {
-        if networkConnected {
+        if networkConnected || showsContentWhileOffline {
             content
         } else {
             noNetworkContentViewBuilder()
@@ -24,16 +25,27 @@ struct NoNetworkConnectionModifier<NoNetworkContent: View>: ViewModifier {
 extension View {
 
     /// Replaces the view content with a custom no-network view when `networkConnected` environment value is `false`.
-    /// - Parameter noNetworkContentViewBuilder: A closure that returns the custom view to display when there is no network connection.
+    /// - Parameters:
+    ///   - showsContentWhileOffline: Whether the content stays on screen while offline.
+    ///   - noNetworkContentViewBuilder: A closure that returns the custom view to display when there is no network connection.
     /// - Returns: A view that conditionally displays either the original content or the custom no-network view.
-    public func noNetworkConnection<NoNetworkContent: View>(@ViewBuilder noNetworkContentViewBuilder: @escaping @MainActor () -> NoNetworkContent) -> some View {
-        modifier(NoNetworkConnectionModifier(noNetworkContentViewBuilder: noNetworkContentViewBuilder))
+    public func noNetworkConnection<NoNetworkContent: View>(
+        showsContentWhileOffline: Bool = false,
+        @ViewBuilder noNetworkContentViewBuilder: @escaping @MainActor () -> NoNetworkContent
+    ) -> some View {
+        modifier(NoNetworkConnectionModifier(
+            showsContentWhileOffline: showsContentWhileOffline,
+            noNetworkContentViewBuilder: noNetworkContentViewBuilder
+        ))
     }
 
     /// Replaces the view content with the default no-network view when `networkConnected` environment value is `false`.
+    /// - Parameter showsContentWhileOffline: Whether the content stays on screen while offline.
     /// - Returns: A view that conditionally displays either the original content or the default no-network view.
-    public func noNetworkConnection() -> some View {
-        modifier(NoNetworkConnectionModifier { Self.makeDefaultNoNetworkContent() })
+    public func noNetworkConnection(showsContentWhileOffline: Bool = false) -> some View {
+        modifier(NoNetworkConnectionModifier(showsContentWhileOffline: showsContentWhileOffline) {
+            Self.makeDefaultNoNetworkContent()
+        })
     }
 
     @MainActor

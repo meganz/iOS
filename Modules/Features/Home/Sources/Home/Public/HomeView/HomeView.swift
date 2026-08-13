@@ -130,12 +130,12 @@ public struct HomeView: View {
                     searchContent
                 }
             }
-            .noNetworkConnection {
+            .noNetworkConnection(showsContentWhileOffline: viewModel.isNewOfflineModeEnabled) {
                 noInternetView
             }
             .noInternetViewModifier(
-                layout: .onTop,
-                hiddenInVerticalCompact: true,
+                layout: viewModel.isNewOfflineModeEnabled ? .inline : .onTop,
+                hiddenInVerticalCompact: !viewModel.isNewOfflineModeEnabled,
                 viewModel: MEGAConnectivity.DependencyInjection.networkPathNoInternetViewModel
             )
             .background(TokenColors.Background.page.swiftUI)

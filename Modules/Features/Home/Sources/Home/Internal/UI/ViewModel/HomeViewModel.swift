@@ -12,6 +12,9 @@ final class HomeViewModel: ObservableObject {
     @Published var presentHomeActions = false
     @Published var hidesFloatingActionsButton: Bool = false
     @Published var isNetworkConnected = false
+
+    let isNewOfflineModeEnabled: Bool
+
     private let homeDeepLink: HomeDeepLink
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
     private let widgetDisplayUseCase: any HomeWidgetDisplayUseCaseProtocol
@@ -44,6 +47,7 @@ final class HomeViewModel: ObservableObject {
         self.isSearching = homeDeepLink.homeSearch
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
+        self.isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
         isNetworkConnected = networkMonitoringUseCase.isConnected()
     }
 
