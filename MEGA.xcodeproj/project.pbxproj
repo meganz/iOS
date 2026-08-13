@@ -1262,6 +1262,7 @@
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		84BB636E2FC6847000334B0D /* SharedItemsViewController+Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */; };
 		84DB3FEA2FDFEFBD00DD99EB /* FileProviderSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */; };
+		84F6E2823029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */; };
 		84F989B92F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */; };
 		88ADCA6EE1FFAB22278F511E /* OfflineAwareNodeTapDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F922DBBF1F73D0E773D9C4 /* OfflineAwareNodeTapDispatcherTests.swift */; };
 
@@ -1854,6 +1855,8 @@
 		AA119032BBBBBBBBBBBBBB02 /* PortraitNodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA119031AAAAAAAAAAAAAA01 /* PortraitNodeActionViewController.swift */; };
 		AA11B0010000000000000002 /* DefaultLaunchDestinationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000001 /* DefaultLaunchDestinationRepository.swift */; };
 		AA11B0010000000000000004 /* DefaultLaunchDestinationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000003 /* DefaultLaunchDestinationRepositoryTests.swift */; };
+		AA12316A0002000000000002 /* DeviceStorageChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12316A0001000000000001 /* DeviceStorageChecker.swift */; };
+		AA12316A0006000000000006 /* DeviceStorageCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12316A0005000000000005 /* DeviceStorageCheckerTests.swift */; };
 		B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
@@ -4101,6 +4104,7 @@
 		844A439E2F7D20B600AE5D17 /* Transfer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Transfer; sourceTree = "<group>"; };
 		84BB636D2FC6847000334B0D /* SharedItemsViewController+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Highlight.swift"; sourceTree = "<group>"; };
 		84DB3FE92FDFEFBD00DD99EB /* FileProviderSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProviderSession.swift; sourceTree = "<group>"; };
+		84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEnoughStorageAlertRouter.swift; sourceTree = "<group>"; };
 		84F989B82F7E7505005CD580 /* TransferIndicatorBarItemConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferIndicatorBarItemConfigurator.swift; sourceTree = "<group>"; };
 		92E5BCF3A2387440AC9118F8 /* PricingRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingRequester.swift; sourceTree = "<group>"; };
 		92E5BCF4A2387440AC9118F9 /* PricingRequesterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingRequesterTests.swift; sourceTree = "<group>"; };
@@ -4702,6 +4706,8 @@
 		AA119033CCCCCCCCCCCCCC03 /* NodeSourcePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeSourcePage.h; sourceTree = "<group>"; };
 		AA11B0010000000000000001 /* DefaultLaunchDestinationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLaunchDestinationRepository.swift; sourceTree = "<group>"; };
 		AA11B0010000000000000003 /* DefaultLaunchDestinationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLaunchDestinationRepositoryTests.swift; sourceTree = "<group>"; };
+		AA12316A0001000000000001 /* DeviceStorageChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStorageChecker.swift; sourceTree = "<group>"; };
+		AA12316A0005000000000005 /* DeviceStorageCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStorageCheckerTests.swift; sourceTree = "<group>"; };
 		B5053BC42D111BE4003718E0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
@@ -7331,6 +7337,7 @@
 				72A2216927F1DCF500F49BCB /* ContextMenus */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				C45C2FA425C94D5800315369 /* Delegates */,
+				AA12316A0007000000000007 /* DeviceStorage */,
 				B68ED09127D05F8700713850 /* DomainExtensions */,
 				A5D5278F2CCF624600CC9E46 /* FeatureFlag */,
 				83D0E56427C78D16003BEC2E /* FileActionsHelpers */,
@@ -11365,6 +11372,23 @@
 			path = "Report Issue";
 			sourceTree = "<group>";
 		};
+		AA12316A0007000000000007 /* DeviceStorage */ = {
+			isa = PBXGroup;
+			children = (
+				AA12316A0001000000000001 /* DeviceStorageChecker.swift */,
+				84F6E2813029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift */,
+			);
+			path = DeviceStorage;
+			sourceTree = "<group>";
+		};
+		AA12316A0008000000000008 /* DeviceStorage */ = {
+			isa = PBXGroup;
+			children = (
+				AA12316A0005000000000005 /* DeviceStorageCheckerTests.swift */,
+			);
+			path = DeviceStorage;
+			sourceTree = "<group>";
+		};
 		B5000FC32A1E219400E06478 /* Plan */ = {
 			isa = PBXGroup;
 			children = (
@@ -11681,6 +11705,7 @@
 			children = (
 				2546EE032A4149A000CBB82E /* AVPlayerManager */,
 				2488EBC12A13B4F2005F910E /* Delegates */,
+				AA12316A0008000000000008 /* DeviceStorage */,
 				328984882A288FCC0049CD40 /* DomainExtensions */,
 				943DBBC42CB93AE400B8B14C /* ExportFile */,
 				C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */,
@@ -15019,6 +15044,7 @@
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
+				AA12316A0002000000000002 /* DeviceStorageChecker.swift in Sources */,
 				BF3E1A122E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */,
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */,
@@ -15612,6 +15638,7 @@
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
+				84F6E2823029AAD300FFD21D /* NotEnoughStorageAlertRouter.swift in Sources */,
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
@@ -16669,6 +16696,7 @@
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */,
 				AA11B0010000000000000004 /* DefaultLaunchDestinationRepositoryTests.swift in Sources */,
+				AA12316A0006000000000006 /* DeviceStorageCheckerTests.swift in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,

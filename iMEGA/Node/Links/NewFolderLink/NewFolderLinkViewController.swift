@@ -79,7 +79,10 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
         )
         
         let fileNodeOpener = FolderLinkFileNodeOpener(navigationController: navigationController)
-        let nodeActionHandler = FolderLinkNodeActionHandler(navigationController: navigationController)
+        let nodeActionHandler = FolderLinkNodeActionHandler(
+            navigationController: navigationController,
+            isLinkRevampEnabled: isLinkRevampEnabled
+        )
         
         return FolderLinkView.Dependency(
             link: link,

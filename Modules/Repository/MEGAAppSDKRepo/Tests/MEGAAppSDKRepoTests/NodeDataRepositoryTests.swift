@@ -40,10 +40,48 @@ struct NodeDataRepositoryTests {
         }
     }
 
+    @Suite("Size for node")
+    struct SizeForNode {
+        private let folderHandle = HandleEntity(42)
+
+        private func folder() -> MockNode {
+            MockNode(handle: folderHandle, name: "Folder", nodeType: .folder)
+        }
+
+        @Test("Sizes a folder that only the folder link SDK knows about with that same SDK")
+        func sizesFolderLinkFolderWithSharedFolderSdk() {
+            let sut = makeSUT(
+                sdk: MockSdk(),
+                sharedFolderSdk: MockSdk(nodes: [folder()], nodeSizes: [folderHandle: 999])
+            )
+
+            // Asking the logged in account's SDK for a folder link node's size reports nothing, so a
+            // regression here shows up as 0 rather than as a missing value.
+            #expect(sut.sizeForNode(handle: folderHandle) == 999)
+        }
+
+        @Test("Sizes a folder of the logged in account with the account's own SDK")
+        func sizesAccountFolderWithAccountSdk() {
+            let sut = makeSUT(
+                sdk: MockSdk(nodes: [folder()], nodeSizes: [folderHandle: 500]),
+                sharedFolderSdk: MockSdk(nodes: [folder()], nodeSizes: [folderHandle: 999])
+            )
+
+            #expect(sut.sizeForNode(handle: folderHandle) == 500)
+        }
+
+        @Test("Returns nil when neither SDK knows the node")
+        func returnsNilForUnknownNode() {
+            let sut = makeSUT(sdk: MockSdk(), sharedFolderSdk: MockSdk())
+
+            #expect(sut.sizeForNode(handle: folderHandle) == nil)
+        }
+    }
+
     private static func makeSUT(
         sdk: MEGASdk = MockSdk(),
         sharedFolderSdk: MEGASdk = MockSdk()
     ) -> NodeDataRepository {
-        NodeDataRepository(sdk: sdk, sharedFolderSdk: sdk)
+        NodeDataRepository(sdk: sdk, sharedFolderSdk: sharedFolderSdk)
     }
 }

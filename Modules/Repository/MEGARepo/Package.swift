@@ -24,6 +24,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0")
@@ -34,6 +35,7 @@ let package = Package(
             name: "MEGARepo",
             dependencies: [
                 "MEGADomain",
+                "MEGAFoundation",
                 "MEGASwift",
                 "SAMKeychain"
             ],

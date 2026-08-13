@@ -80,10 +80,13 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     public func sizeForNode(handle: HandleEntity) -> UInt64? {
-        var megaNode: MEGANode
+        let owningSdk: MEGASdk
+        let megaNode: MEGANode
         if let node = sdk.node(forHandle: handle) {
+            owningSdk = sdk
             megaNode = node
         } else if let node = sharedFolderSdk.node(forHandle: handle) {
+            owningSdk = sharedFolderSdk
             megaNode = node
         } else {
             return nil
@@ -92,7 +95,10 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
         if megaNode.isFile() {
             return megaNode.size?.uint64Value
         } else {
-            return sdk.size(for: megaNode).uint64Value
+            // A folder's size is the recursive size of its tree, so it has to be asked of the SDK
+            // instance holding that tree: a folder link node measured against the logged in
+            // account's SDK reports nothing.
+            return owningSdk.size(for: megaNode).uint64Value
         }
     }
     
