@@ -59,11 +59,12 @@ public final class MEGAAudioPlayerViewRouter {
         self.accountUseCase = accountUseCase
     }
 
-    /// Start (or replace) playback with the given source and present the
-    /// full-screen player. Use this from any "tap audio file → play" entry
-    /// point in the host app.
+    /// Start (or replace) playback with the given source. Use this from any
+    /// "tap audio file → play" entry point in the host app.
     public func start(source: PlaybackSource) {
+        let hasActiveSession = service.currentSource != nil
         service.play(source: source)
+        guard !hasActiveSession else { return }
         present()
     }
 
