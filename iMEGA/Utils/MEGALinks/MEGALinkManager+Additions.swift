@@ -334,15 +334,27 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         RecoveryKeyViewRouter(presenter: UIApplication.mnz_visibleViewController()).presentView()
     }
     
-    @objc class func processUpgradeLink() {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        
-        if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
-            delegate.mainTBC?.selectedIndex = TabManager.menuTabIndex()
-        } else {
-            delegate.showUpgradeAccount()
+    @objc class func processUpgradeLink(_ url: URL?) {
+        Task { @MainActor in
+            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+
+            if url?.mnz_deeplinkQueryValue(for: .offer) == "1",
+               await DIContainer.remoteFeatureFlagUseCase
+                .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp),
+               accountUseCase.currentAccountDetails != nil {
+                PromoLandingDialogRouter
+                    .makeDefault(presenter: UIApplication.mnz_visibleViewController())
+                    .start()
+                return
+            }
+
+            guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+            if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
+                delegate.mainTBC?.selectedIndex = TabManager.menuTabIndex()
+            } else {
+                delegate.showUpgradeAccount()
+            }
         }
     }
 }

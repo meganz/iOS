@@ -85,6 +85,19 @@ enum DeeplinkSchemeKey: String {
     case pwm = "megapass"
 }
 
+enum DeeplinkQueryKey: String {
+    case offer
+}
+
+extension URL {
+    func mnz_deeplinkQueryValue(for key: DeeplinkQueryKey) -> String? {
+        URLComponents(url: self, resolvingAgainstBaseURL: false)?
+            .queryItems?
+            .first { $0.name == key.rawValue }?
+            .value
+    }
+}
+
 extension NSURL {
     @objc func mnz_type() -> URLType {
         guard let scheme else { return .default }
