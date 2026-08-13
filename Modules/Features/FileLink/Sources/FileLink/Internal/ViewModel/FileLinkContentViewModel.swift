@@ -25,10 +25,19 @@ package final class FileLinkContentViewModel: ObservableObject {
 
     private let node: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let fileNodeOpener: any FileLinkNodeOpenerProtocol
+    /// Not published: nothing on screen changes while a file is being opened, this only keeps a second
+    /// ask from getting through. See `openFile()`.
+    private var isOpeningFile = false
 
-    package init(node: NodeEntity, thumbnailLoader: some ThumbnailLoaderProtocol) {
+    package init(
+        node: NodeEntity,
+        thumbnailLoader: some ThumbnailLoaderProtocol,
+        fileNodeOpener: some FileLinkNodeOpenerProtocol
+    ) {
         self.node = node
         self.thumbnailLoader = thumbnailLoader
+        self.fileNodeOpener = fileNodeOpener
         name = node.name
         details = Self.details(for: node)
         preview = .fileTypeIcon(MEGAAssets.Image.image(forFileName: node.name))
@@ -46,6 +55,14 @@ package final class FileLinkContentViewModel: ObservableObject {
         guard let container = try? await thumbnailLoader.loadImage(for: node, type: .preview) else { return }
 
         preview = .media(image: container.image, videoDuration: Self.videoDuration(for: node))
+    }
+
+    package func openFile() async {
+        guard !isOpeningFile else { return }
+        isOpeningFile = true
+        defer { isOpeningFile = false }
+
+        await fileNodeOpener.openNode(handle: node.handle)
     }
 
     private static func details(for node: NodeEntity) -> String {

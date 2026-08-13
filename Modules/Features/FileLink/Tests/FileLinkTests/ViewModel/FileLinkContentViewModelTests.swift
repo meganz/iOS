@@ -121,17 +121,52 @@ struct FileLinkContentViewModelTests {
         #expect(sut.name == "elcapitan.jpeg")
     }
 
+    @Test("opening the file hands the node the link resolved to over to the opener")
+    func openFile_asksOpenerForTheResolvedNode() async {
+        let fileNodeOpener = MockFileLinkNodeOpener()
+        let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), fileNodeOpener: fileNodeOpener)
+
+        await sut.openFile()
+
+        #expect(fileNodeOpener.openNodeCalledHandles == [42])
+    }
+
+    /// Only the in-flight window is the view model's to guard. Turning taps away while a viewer is
+    /// already up is the opener's job, so it is not covered here.
+    @Test("a second ask while the first is still opening is dropped")
+    func openFile_whileAlreadyOpening_opensOnce() async {
+        let fileNodeOpener = MockFileLinkNodeOpener()
+        let sut = makeSUT(node: NodeEntity(name: "Voice Note.mp3", handle: 42), fileNodeOpener: fileNodeOpener)
+        fileNodeOpener.whileOpening = { await sut.openFile() }
+
+        await sut.openFile()
+
+        #expect(fileNodeOpener.openNodeCalledHandles == [42])
+    }
+
+    @Test("the file can be opened again once the first open has finished")
+    func openFile_afterOpening_opensAgain() async {
+        let fileNodeOpener = MockFileLinkNodeOpener()
+        let sut = makeSUT(node: NodeEntity(handle: 42), fileNodeOpener: fileNodeOpener)
+
+        await sut.openFile()
+        await sut.openFile()
+
+        #expect(fileNodeOpener.openNodeCalledHandles == [42, 42])
+    }
+
     private func makeSUT(
         node: NodeEntity,
         loadedPreview: ImageContainer? = nil,
-        thumbnailLoader: MockThumbnailLoader? = nil
+        thumbnailLoader: MockThumbnailLoader? = nil,
+        fileNodeOpener: MockFileLinkNodeOpener = MockFileLinkNodeOpener()
     ) -> FileLinkContentViewModel {
         let loader = thumbnailLoader ?? MockThumbnailLoader(
             loadImage: loadedPreview.map {
                 SingleItemAsyncSequence<any ImageContaining>(item: $0).eraseToAnyAsyncSequence()
             } ?? EmptyAsyncSequence<any ImageContaining>().eraseToAnyAsyncSequence()
         )
-        return FileLinkContentViewModel(node: node, thumbnailLoader: loader)
+        return FileLinkContentViewModel(node: node, thumbnailLoader: loader, fileNodeOpener: fileNodeOpener)
     }
 
     private func size(_ byteCount: Int64) -> String {

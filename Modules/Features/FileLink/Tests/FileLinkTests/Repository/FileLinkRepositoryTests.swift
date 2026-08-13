@@ -114,6 +114,21 @@ struct FileLinkRepositoryTests {
         #expect(await nodeProvider.node(for: 42)?.handle == 42)
     }
 
+    /// The link asked for rather than the one the screen was opened with: a link shared without its key
+    /// is rebuilt around the key the user typed in, and only that one can be downloaded from.
+    @Test("the link that resolved is kept with the node")
+    func publicNode_success_storesResolvedLinkInProvider() async throws {
+        let nodeProvider = FileLinkNodeProvider()
+        let sut = makeSUT(
+            result: .success(MockRequest(handle: 1, publicNode: MockNode(handle: 42))),
+            nodeProvider: nodeProvider
+        )
+
+        _ = try await sut.publicNode(for: "link#key")
+
+        #expect(nodeProvider.resolvedLink == "link#key")
+    }
+
     private func makeSUT(
         result: Result<MEGARequest, MEGAError>,
         nodeProvider: FileLinkNodeProvider = FileLinkNodeProvider()

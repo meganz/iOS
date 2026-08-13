@@ -46,7 +46,9 @@ package struct FileLinkRepository: FileLinkRepositoryProtocol {
                             completion(.failure(FileLinkPublicNodeErrorEntity.invalidDecryptionKey))
                         } else if let node = request.publicNode {
                             // Stored before resuming, so the preview request that follows finds it.
-                            nodeProvider.store(node)
+                            // `link` rather than the one the screen was opened with: this is the one
+                            // that resolved, key included when the user had to type it in.
+                            nodeProvider.store(node, resolvedFrom: link)
                             completion(.success(node.toNodeEntity()))
                         } else {
                             completion(.failure(FileLinkPublicNodeErrorEntity.linkUnavailable(.generic)))

@@ -14,20 +14,27 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
     public struct Dependency {
         let link: String
         let fileLinkBuilder: any FileLinkBuilderProtocol
+        let fileNodeOpener: any FileLinkNodeOpenerProtocol
         let onClose: @MainActor () -> Void
-        /// Shared by the link resolution, which stores the node it resolved, and the preview loader,
-        /// which needs that node to fetch the image. See `FileLinkNodeProvider`.
+        /// Shared by the link resolution, which stores the node it resolved, and everything that needs
+        /// that node afterwards: the preview loader in here and `fileNodeOpener` out there. See
+        /// `FileLinkNodeProvider`.
         let nodeProvider: FileLinkNodeProvider
 
+        /// `nodeProvider` has to be the very instance `fileNodeOpener` reads from, which is why the
+        /// caller owns it rather than this initialiser creating one.
         public init(
             link: String,
             fileLinkBuilder: some FileLinkBuilderProtocol,
+            fileNodeOpener: some FileLinkNodeOpenerProtocol,
+            nodeProvider: FileLinkNodeProvider,
             onClose: @escaping @MainActor () -> Void
         ) {
             self.link = link
             self.fileLinkBuilder = fileLinkBuilder
+            self.fileNodeOpener = fileNodeOpener
+            self.nodeProvider = nodeProvider
             self.onClose = onClose
-            nodeProvider = FileLinkNodeProvider()
         }
     }
 
@@ -100,8 +107,12 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
                 }
                 .toolbar { toolbarContent }
         case let .loaded(node):
-            FileLinkContentView(node: node, previewLoader: previewLoader)
-                .toolbar { toolbarContent }
+            FileLinkContentView(
+                node: node,
+                previewLoader: previewLoader,
+                fileNodeOpener: dependency.fileNodeOpener
+            )
+            .toolbar { toolbarContent }
         case let .error(reason):
             fullScreenLinkUnavailableContent(reason)
                 // The design draws the bar as transparent page background, with only the close
