@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 // This delegate object is used by the new cloud drive (NodeBrowserView) to

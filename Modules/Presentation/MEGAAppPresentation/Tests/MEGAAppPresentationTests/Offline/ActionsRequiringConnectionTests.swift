@@ -1,15 +1,11 @@
-import CloudDrive
-@testable import MEGA
+import MEGAAppPresentation
 import MEGADomain
 import XCTest
 
-/// Pins the offline policy: which Cloud Drive actions need a connection (IOS-12228).
+/// Pins the offline policy for the shared context-menu actions (IOS-12228). The action types that
+/// cannot be seen from here carry the same property in the app target, pinned by
+/// `AppActionsRequiringConnectionTests`.
 final class ActionsRequiringConnectionTests: XCTestCase {
-
-    func testBottomToolbarAction_requiringConnection() {
-        assertRequiresConnection([.download, .shareLink, .move, .copy, .delete, .restore] as [BottomToolbarAction])
-        assertDoesNotRequireConnection([.actions] as [BottomToolbarAction])
-    }
 
     func testQuickActionEntity_requiringConnection() {
         assertRequiresConnection([
@@ -34,26 +30,8 @@ final class ActionsRequiringConnectionTests: XCTestCase {
         assertDoesNotRequireConnection([.info, .versions] as [RubbishBinActionEntity])
     }
 
-    func testUploadAndCreationActions_allRequireConnection() {
-        XCTAssertTrue(FloatingActionEntity.allCases.allSatisfy(\.requiresConnection))
+    func testUploadAddActionEntity_allRequireConnection() {
         XCTAssertTrue(UploadAddActionEntity.allCases.allSatisfy(\.requiresConnection))
-    }
-
-    func testMegaNodeActionType_readOnlyActionsStayAvailable() {
-        assertDoesNotRequireConnection([
-            .info, .viewVersions, .select, .search, .list, .thumbnail, .sort, .mediaDiscovery,
-            .pdfPageView, .pdfThumbnailView, .viewInFolder, .showInLocation, .clear, .verifyContact
-        ] as [MegaNodeActionType])
-    }
-
-    func testMegaNodeActionType_mutatingAndTransferActionsRequireConnection() {
-        assertRequiresConnection([
-            .download, .exportFile, .copy, .move, .favourite, .label, .leaveSharing, .rename,
-            .removeLink, .moveToRubbishBin, .remove, .removeSharing, .import, .revertVersion,
-            .restore, .saveToPhotos, .manageShare, .shareFolder, .manageLink, .shareLink,
-            .sendToChat, .editTextFile, .disputeTakedown, .restoreBackup, .hide, .unhide,
-            .addTo, .addToAlbum
-        ] as [MegaNodeActionType])
     }
 
     // MARK: - Helpers
@@ -84,10 +62,7 @@ protocol RequiresConnectionReporting {
     var requiresConnection: Bool { get }
 }
 
-extension BottomToolbarAction: RequiresConnectionReporting {}
 extension QuickActionEntity: RequiresConnectionReporting {}
 extension DisplayActionEntity: RequiresConnectionReporting {}
 extension RubbishBinActionEntity: RequiresConnectionReporting {}
-extension FloatingActionEntity: RequiresConnectionReporting {}
 extension UploadAddActionEntity: RequiresConnectionReporting {}
-extension MegaNodeActionType: RequiresConnectionReporting {}

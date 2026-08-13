@@ -53,7 +53,7 @@ struct CloudDriveViewControllerFactory {
     /// One place to build it, so the guards handed to the view controller, the results mapper and
     /// the node action sheet delegate can never drift apart.
     private static func makeOfflineActionGuard() -> OfflineActionGuard {
-        OfflineActionGuard(isNewOfflineModeEnabled: CloudDriveOfflineModeGate.isNewOfflineModeEnabled)
+        OfflineActionGuard(isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled)
     }
 
     init(
@@ -604,7 +604,7 @@ struct CloudDriveViewControllerFactory {
 
         let initialViewMode = viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
         let networkMonitorUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
-        let isNewOfflineModeEnabled = CloudDriveOfflineModeGate.isNewOfflineModeEnabled
+        let isNewOfflineModeEnabled = DIContainer.featureFlagProvider.isNewOfflineModeEnabled
         let offlineFileOpenGuard = OfflineFileOpenGuard(
             isNewOfflineModeEnabled: isNewOfflineModeEnabled,
             networkMonitorUseCase: networkMonitorUseCase,

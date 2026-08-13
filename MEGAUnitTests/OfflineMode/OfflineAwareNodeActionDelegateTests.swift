@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppPresentationMock
 import XCTest
 
 @MainActor

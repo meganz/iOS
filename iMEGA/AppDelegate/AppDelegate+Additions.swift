@@ -849,6 +849,18 @@ extension AppDelegate {
     }
 }
 
+// MARK: - Offline mode
+extension AppDelegate {
+    /// Hands MEGAAppPresentation the app's reachability check and no-connection prompt, so
+    /// `OfflineActionGuard` works the same wherever it is built — including from a package, which
+    /// cannot reach `MEGAReachabilityManager` (IOS-12406).
+    @objc func injectOfflineModeDependencies() {
+        DIContainer.isReachablePromptingIfNot = {
+            MEGAReachabilityManager.isReachableHUDIfNot()
+        }
+    }
+}
+
 // MARK: - Handlers for app exit event
 extension AppDelegate {
     /// Remote flags are only readable once login + fetchnodes complete (RemoteFeatureFlagReadySource),

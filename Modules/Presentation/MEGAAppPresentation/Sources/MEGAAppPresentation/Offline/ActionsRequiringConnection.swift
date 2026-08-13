@@ -1,7 +1,6 @@
-import CloudDrive
 import MEGADomain
 
-// The offline policy for every Cloud Drive action, in one place (IOS-12228).
+// The offline policy for the shared context-menu actions (IOS-12228).
 //
 // `requiresConnection` is true for anything that changes remote state and for anything that has
 // to start a transfer — per the agreed Phase 1 scope, starting an upload or a download is
@@ -10,20 +9,12 @@ import MEGADomain
 //
 // The switches are exhaustive on purpose: adding a case to one of these enums should not compile
 // until its offline behaviour has been decided.
+//
+// Action types that cannot be seen from here — the Objective-C `MegaNodeActionType` and the
+// screen-owned toolbar/floating-button enums — carry the same property in the app target; see
+// `ActionsRequiringConnection+App.swift`.
 
-extension BottomToolbarAction {
-    var requiresConnection: Bool {
-        switch self {
-        case .download, .shareLink, .move, .copy, .delete, .restore:
-            true
-        case .actions:
-            // Opens a sheet whose own actions are guarded individually
-            false
-        }
-    }
-}
-
-extension QuickActionEntity {
+public extension QuickActionEntity {
     var requiresConnection: Bool {
         switch self {
         case .download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageFolder,
@@ -39,7 +30,7 @@ extension QuickActionEntity {
     }
 }
 
-extension DisplayActionEntity {
+public extension DisplayActionEntity {
     var requiresConnection: Bool {
         switch self {
         case .clearRubbishBin:
@@ -55,7 +46,7 @@ extension DisplayActionEntity {
     }
 }
 
-extension RubbishBinActionEntity {
+public extension RubbishBinActionEntity {
     var requiresConnection: Bool {
         switch self {
         case .restore, .remove:
@@ -66,36 +57,11 @@ extension RubbishBinActionEntity {
     }
 }
 
-extension FloatingActionEntity {
-    var requiresConnection: Bool {
-        switch self {
-        case .chooseFromPhotos, .capture, .importFrom, .scanDocument, .newFolder, .newTextFile,
-             .openLink:
-            true
-        }
-    }
-}
-
-extension UploadAddActionEntity {
+public extension UploadAddActionEntity {
     var requiresConnection: Bool {
         switch self {
         case .chooseFromPhotos, .capture, .importFrom, .scanDocument, .newFolder, .newTextFile,
              .importFolderLink:
-            true
-        }
-    }
-}
-
-extension MegaNodeActionType {
-    /// `MegaNodeActionType` is an Objective-C enum shared with screens outside Cloud Drive, so
-    /// this lists what stays available and treats everything else as needing a connection —
-    /// a new action is blocked offline until someone decides otherwise, never silently allowed.
-    var requiresConnection: Bool {
-        switch self {
-        case .info, .viewVersions, .select, .search, .list, .thumbnail, .sort, .mediaDiscovery,
-             .pdfPageView, .pdfThumbnailView, .viewInFolder, .showInLocation, .clear, .verifyContact:
-            false
-        default:
             true
         }
     }

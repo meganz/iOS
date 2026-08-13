@@ -127,6 +127,7 @@
     [self injectAuthenticationDependencies];
     [self injectSearchDependencies];
     [self injectConnectivityLocalizations];
+    [self injectOfflineModeDependencies];
 
     [self initialiseModules];
     

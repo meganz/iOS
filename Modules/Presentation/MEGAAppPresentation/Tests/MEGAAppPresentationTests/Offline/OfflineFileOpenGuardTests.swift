@@ -1,4 +1,4 @@
-@testable import MEGA
+import MEGAAppPresentation
 import MEGADomain
 import MEGADomainMock
 import XCTest

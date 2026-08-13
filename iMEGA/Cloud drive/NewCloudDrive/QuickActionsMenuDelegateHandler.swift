@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 
