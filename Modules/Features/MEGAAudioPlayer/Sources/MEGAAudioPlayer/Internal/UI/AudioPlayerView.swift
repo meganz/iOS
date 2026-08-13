@@ -226,6 +226,7 @@ struct AudioPlayerView: View {
                     sourceName: vm.artist,
                     items: vm.playlistItems,
                     currentTrackID: vm.currentTrackID,
+                    isVisible: vm.isPlaylistVisible,
                     onSelect: vm.selectPlaylistItem,
                     onMove: vm.movePlaylistItem,
                     loadMetadata: { await vm.metadata(forID: $0) }

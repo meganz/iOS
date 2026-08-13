@@ -9,6 +9,7 @@ struct PlaylistView: View {
     let sourceName: String?
     let items: [AudioPlaylistItem]
     let currentTrackID: String?
+    let isVisible: Bool
     let onSelect: (Int) -> Void
     let onMove: (IndexSet, Int) -> Void
     /// Lazily resolves a row's metadata by track id (from the shared cache).
@@ -17,23 +18,69 @@ struct PlaylistView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
-            List {
-                ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
-                    let isCurrent = row.id == currentTrackID
-                    PlaylistRow(item: row, isCurrent: isCurrent, loadMetadata: loadMetadata)
-                        .padding(.horizontal, TokenSpacing._5)
-                        .contentShape(Rectangle())
-                        .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
-                        .onTapGesture { onSelect(index) }
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(isCurrent ? TokenColors.Button.secondary.swiftUI : Color.clear)
-                        .listRowInsets(EdgeInsets())
+            ScrollViewReader { proxy in
+                List {
+                    ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
+                        let isCurrent = row.id == currentTrackID
+                        PlaylistRow(item: row, isCurrent: isCurrent, loadMetadata: loadMetadata)
+                            .padding(.horizontal, TokenSpacing._5)
+                            .contentShape(Rectangle())
+                            .contentShape(.dragPreview, RoundedRectangle(cornerRadius: TokenRadius.small))
+                            .onTapGesture { onSelect(index) }
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(isCurrent ? TokenColors.Button.secondary.swiftUI : Color.clear)
+                            .listRowInsets(EdgeInsets())
+                    }
+                    .onMove(perform: onMove)
                 }
-                .onMove(perform: onMove)
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.clear)
+                // Opening the playlist parks the playing track at the top of the visible
+                // area. The layer swap is instant (no fade), so this must be un-animated
+                // too — the row is already in place the moment the list is shown. Near the
+                // end of the queue there are too few rows left to scroll past, so the
+                // track settles as high as it can go.
+                .onChange(of: isVisible, initial: true) { _, visible in
+                    guard visible else { return }
+                    scrollToCurrentTrack(proxy, anchor: .top, animated: false)
+                }
+                // Skipping tracks keeps the highlighted row on screen. A nil anchor
+                // scrolls the minimum needed, so a row that is already visible stays put.
+                // Pointless while hidden — opening re-anchors to .top regardless.
+                .onChange(of: currentTrackID) { _, _ in
+                    guard isVisible else { return }
+                    scrollToCurrentTrack(proxy, anchor: nil, animated: true)
+                }
+                // The playing row can also move without changing identity: switching
+                // shuffle off rebuilds the queue in its original order and re-seats the
+                // track at whatever index it held there, leaving `currentTrackID` equal.
+                // Watching the position catches that; the nil anchor keeps it silent when
+                // the row is already on screen, including after a drag-to-reorder.
+                .onChange(of: currentTrackIndex) { _, _ in
+                    guard isVisible else { return }
+                    scrollToCurrentTrack(proxy, anchor: nil, animated: true)
+                }
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color.clear)
+        }
+    }
+
+    /// Where the playing track currently sits in the list, or `nil` if it is not in it.
+    private var currentTrackIndex: Int? {
+        currentTrackID.flatMap { id in items.firstIndex { $0.id == id } }
+    }
+
+    /// `anchor` is passed straight to `scrollTo`: `nil` scrolls the minimum needed to make
+    /// the row wholly visible (a no-op when it already is), a unit point re-seats it there.
+    private func scrollToCurrentTrack(_ proxy: ScrollViewProxy, anchor: UnitPoint?, animated: Bool) {
+        // The queue and the current track arrive from the same publisher, but a row
+        // that is not on screen yet has no scroll target — skip rather than no-op loudly.
+        guard let currentTrackID, items.contains(where: { $0.id == currentTrackID }) else { return }
+
+        if animated {
+            withAnimation { proxy.scrollTo(currentTrackID, anchor: anchor) }
+        } else {
+            proxy.scrollTo(currentTrackID, anchor: anchor)
         }
     }
 
@@ -209,6 +256,7 @@ struct NowPlayingCompactHeader: View {
                 sourceName: "Arcy Drive",
                 items: previewItems,
                 currentTrackID: previewItems.first?.id,
+                isVisible: true,
                 onSelect: { _ in },
                 onMove: { _, _ in },
                 loadMetadata: { _ in AudioMetadata(title: nil, artist: "Arcy Drive", album: nil, artworkData: nil) }
