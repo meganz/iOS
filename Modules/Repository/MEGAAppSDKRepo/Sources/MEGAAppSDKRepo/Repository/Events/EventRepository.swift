@@ -10,4 +10,8 @@ public struct EventRepository: EventRepositoryProtocol {
     public var eventUpdates: AnyAsyncSequence<EventEntity> {
         MEGAUpdateHandlerManager.shared.eventUpdates
     }
+
+    public var folderLinkEventUpdates: AnyAsyncSequence<EventEntity> {
+        MEGAUpdateHandlerManager.sharedFolderLink.eventUpdates
+    }
 }
