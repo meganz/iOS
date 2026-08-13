@@ -143,6 +143,30 @@ extension ChatViewController {
         }
     }
     
+    func dockInputBarToKeyboard() {
+        // `KeyboardManager.bind(inputAccessoryView:…)` raises
+        // `inputContainerView` by the whole height of the keyboard
+        // notification frame, which is in screen coordinates:
+        // https://github.com/nathantannar4/InputBarAccessoryView/blob/7.0.6/Sources/KeyboardManager/KeyboardManager.swift#L203
+        // - A window filling the screen is covered by exactly that height.
+        //   -> The message input bar lands on the keyboard.
+        // - A window in iPad multitasking ends above the bottom of the screen,
+        //   covered by less than that height or not at all.
+        //   -> The bar rises too far.
+        guard let inputBarBottomToViewBottom = view.constraints.first(where: {
+            $0.firstItem === inputContainerView
+            && $0.firstAttribute == .bottom
+            && $0.secondItem === view
+        }) else { return }
+
+        inputBarBottomToViewBottom.isActive = false
+
+        // `keyboardLayoutGuide` measures only the covered part of this view.
+        inputContainerView.bottomAnchor.constraint(
+            equalTo: view.keyboardLayoutGuide.topAnchor
+        ).isActive = true
+    }
+
     private func join(button: UIButton) {
         if MEGAChatSdk.shared.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink

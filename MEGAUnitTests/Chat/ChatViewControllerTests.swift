@@ -1,6 +1,11 @@
+import Chat
 import ChatRepoMock
 @testable import MEGA
+import MEGAAppPresentationMock
+import MEGADomain
+import MEGADomainMock
 import MEGAL10n
+import MEGAUIMock
 import XCTest
 
 @MainActor
@@ -37,5 +42,47 @@ final class ChatViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.previewerView.isHidden)
         
         XCTAssertEqual(sut.navigationItem.backBarButtonItem?.title, "")
+    }
+
+    func testViewDidLoad_inputBarBottom_shouldFollowKeyboardLayoutGuide() {
+        let sut = makeChatViewController()
+
+        sut.loadViewIfNeeded()
+
+        let bottomConstraints = sut.view.constraints.filter {
+            $0.firstItem === sut.inputContainerView && $0.firstAttribute == .bottom
+        }
+        XCTAssertEqual(bottomConstraints.count, 1)
+        XCTAssertTrue(bottomConstraints.first?.secondItem === sut.view.keyboardLayoutGuide)
+    }
+
+    private func makeChatViewController() -> ChatViewController {
+        let chatContentViewModel = ChatContentViewModel(
+            chatRoom: MockChatRoom().toChatRoomEntity(),
+            chatUseCase: MockChatUseCase(),
+            chatRoomUseCase: MockChatRoomUseCase(),
+            chatPresenceUseCase: MockChatPresenceUseCase(),
+            callUseCase: MockCallUseCase(),
+            callUpdateUseCase: MockCallUpdateUseCase(),
+            scheduledMeetingUseCase: MockScheduledMeetingUseCase(),
+            audioSessionUseCase: MockAudioSessionUseCase(),
+            transfersListenerUseCase: MockTransfersListenerUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
+            router: MockChatContentRouter(),
+            permissionRouter: MockPermissionAlertRouter(),
+            analyticsEventUseCase: MockAnalyticsEventUseCase(),
+            meetingNoUserJoinedUseCase: MockMeetingNoUserJoinedUseCase(),
+            handleUseCase: MockMEGAHandleUseCase(),
+            callController: MockCallController(),
+            callsManager: MockCallsManager(),
+            noteToSelfNewFeatureBadgeStore: NoteToSelfNewFeatureBadgeStore(userAttributeUseCase: MockUserAttributeUseCase()),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:])
+        )
+
+        return ChatViewController(
+            chatRoom: MockChatRoom().toChatRoomEntity(),
+            chatContentViewModel: chatContentViewModel,
+            photoPicker: MockMEGAPhotoPicker()
+        )
     }
 }

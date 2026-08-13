@@ -1,6 +1,5 @@
 import ChatRepo
 import Combine
-import KeyboardLayoutGuide
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -249,6 +248,7 @@ class ChatViewController: MessagesViewController {
         
         chatInputBar.delegate = self
         configureInputBarType()
+        dockInputBarToKeyboard()
         
         messagesCollectionView.backgroundColor = TokenColors.Background.page
         chatRoomDelegate.chatViewController = self
