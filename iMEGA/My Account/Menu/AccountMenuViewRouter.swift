@@ -124,7 +124,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
                 return await avatarHandler.avatar(for: base64Handle)
             },
             logoutHandler: logout,
-            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler
+            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler,
+            discountBannerUseCase: MenuDiscountBannerUseCase(promotedPlanProvider: PromotedPlanFactory.makeProvider())
         )
 
         let hostingViewController = UIHostingController(
@@ -177,6 +178,12 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             viewType: .upgrade,
             accountUseCase: accountUseCase
         ).start()
+    }
+
+    func showPromoLandingDialog() {
+        PromoLandingDialogRouter
+            .makeDefault(presenter: UIApplication.mnz_visibleViewController())
+            .start()
     }
 
     func showStorage() {

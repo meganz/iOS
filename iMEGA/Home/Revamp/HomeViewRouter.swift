@@ -105,28 +105,9 @@ final class HomeViewRouter: HomeViewRouting {
     }
 
     private func showPromoLandingDialog() {
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
-
-        PromoLandingDialogRouter(
-            presenter: UIApplication.mnz_visibleViewController(),
-            promotedPlanUseCase: PromotedPlanUseCase(
-                pricingRequester: PricingRequester.shared,
-                fetchUseCase: RevampUpgradePlansUseCase(
-                    productsUseCase: AccountPlanProductsUseCase(
-                        purchaseUseCase: purchaseUseCase,
-                        offerUseCase: StoreKitOfferUseCase(repository: StoreKitOfferRepository.newRepo)
-                    ),
-                    accountUseCase: accountUseCase
-                )
-            ),
-            planPurchaser: DefaultPlanPurchaserFactory().makePurchaser(
-                purchaseUseCase: purchaseUseCase,
-                subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
-                accountUseCase: accountUseCase
-            )
-        )
-        .start()
+        PromoLandingDialogRouter
+            .makeDefault(presenter: UIApplication.mnz_visibleViewController())
+            .start()
     }
 
     private func routeToPromotionalUrl(_ url: URL) {

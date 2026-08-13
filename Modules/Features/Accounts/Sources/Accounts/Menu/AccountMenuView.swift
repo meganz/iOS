@@ -54,6 +54,7 @@ public struct AccountMenuView: View {
         }
         .scrollIndicators(.hidden)
         .coordinateSpace(name: AccountMenuViewModel.Constants.coordinateSpaceName)
+        .animation(.easeInOut(duration: 0.3), value: viewModel.discountBanner?.content)
     }
 
     /// Zero-height probe that only tracks whether the list is scrolled near the top;
@@ -77,17 +78,38 @@ public struct AccountMenuView: View {
     @ViewBuilder
     private var accountSection: some View {
         if let items = viewModel.sections[.account] {
-            ForEach(items.compactMap { $0 }) { option in
-                if case .disclosure(let action) = option.rowType {
-                    Button(action: action) {
-                        MenuRowView(option: option)
-                    }
-                } else {
-                    MenuRowView(option: option)
-                }
+            let bannerIndex = AccountMenuViewModel.Constants.AccountSectionIndex.currentPlan.rawValue
+            ForEach(items.prefix(bannerIndex).compactMap { $0 }) { option in
+                row(for: option)
+            }
+            discountBanner
+            ForEach(items.dropFirst(bannerIndex).compactMap { $0 }) { option in
+                row(for: option)
             }
         } else {
             EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private func row(for option: AccountMenuOption) -> some View {
+        if case .disclosure(let action) = option.rowType {
+            Button(action: action) {
+                MenuRowView(option: option)
+            }
+        } else {
+            MenuRowView(option: option)
+        }
+    }
+
+    @ViewBuilder
+    private var discountBanner: some View {
+        if let banner = viewModel.discountBanner {
+            MenuDiscountBannerView(
+                content: banner.content,
+                actionHandler: { viewModel.discountBannerActionTapped() },
+                closeHandler: { viewModel.closeDiscountBanner() }
+            )
         }
     }
 

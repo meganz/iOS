@@ -1105,6 +1105,132 @@ struct AccountMenuViewModelTests {
         )
     }
 
+    @Test("Shows the discount banner for the promoted plan")
+    func showsDiscountBannerForPromotedPlan() async throws {
+        let sut = makeSUT(
+            discountBannerUseCase: MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan())),
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+
+        await sut.onTask()
+
+        let banner = try #require(sut.discountBanner)
+        #expect(banner.plan.mobileOffer?.campaignId == 7)
+        #expect(banner.content.actionTitle == Strings.Localizable.Home.PromotionalBanners.DiscountBanner.grabDeal)
+    }
+
+    @Test("Shows no discount banner when no plan is promoted")
+    func showsNoDiscountBannerWithoutPromotedPlan() async {
+        let sut = makeSUT(
+            discountBannerUseCase: MockMenuDiscountBannerUseCase(promotedPlanResult: .success(nil)),
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+
+        await sut.onTask()
+
+        #expect(sut.discountBanner == nil)
+    }
+
+    @Test("Shows no discount banner when the promoted plan carries no discount")
+    func showsNoDiscountBannerForUndiscountedPlan() async {
+        let sut = makeSUT(
+            discountBannerUseCase: MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan())),
+            discountBannerMapper: .stub(planPrice: .monthly(.init(price: 9.99, currency: "EUR")))
+        )
+
+        await sut.onTask()
+
+        #expect(sut.discountBanner == nil)
+    }
+
+    @Test("Shows no discount banner when the fetch fails")
+    func showsNoDiscountBannerWhenFetchFails() async {
+        struct FetchError: Error {}
+        let sut = makeSUT(
+            discountBannerUseCase: MockMenuDiscountBannerUseCase(promotedPlanResult: .failure(FetchError())),
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+
+        await sut.onTask()
+
+        #expect(sut.discountBanner == nil)
+    }
+
+    @Test("Tapping the discount banner action opens the promo landing dialog")
+    func discountBannerActionOpensPromoLandingDialog() async {
+        let router = MockMenuViewRouter()
+        let sut = makeSUT(
+            router: router,
+            discountBannerUseCase: MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan())),
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+        await sut.onTask()
+
+        sut.discountBannerActionTapped()
+
+        #expect(router.showPromoLandingDialog_calledTimes == 1)
+    }
+
+    @Test("Closing the discount banner hides it and records the dismissal")
+    func closingDiscountBannerRecordsDismissal() async {
+        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
+        let sut = makeSUT(
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+        await sut.onTask()
+
+        sut.closeDiscountBanner()
+
+        #expect(sut.discountBanner == nil)
+        #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
+    }
+
+    @Test("A successful purchase hides the discount banner and records the dismissal")
+    func successfulPurchaseHidesDiscountBanner() async throws {
+        let submitReceiptResultSubject = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
+        let sut = makeSUT(
+            purchaseUseCase: MockAccountPlanPurchaseUseCase(submitReceiptResultPublisher: submitReceiptResultSubject),
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+        await sut.onTask()
+        #expect(sut.discountBanner != nil)
+
+        submitReceiptResultSubject.send(.success(()))
+
+        try await waitUntil(
+            await MainActor.run {
+                sut.discountBanner != nil
+            }
+        )
+        #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
+    }
+
+    @Test("A failed purchase leaves the discount banner in place")
+    func failedPurchaseKeepsDiscountBanner() async throws {
+        let submitReceiptResultSubject = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let purchaseUseCase = MockAccountPlanPurchaseUseCase(submitReceiptResultPublisher: submitReceiptResultSubject)
+        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
+        let sut = makeSUT(
+            purchaseUseCase: purchaseUseCase,
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+        await sut.onTask()
+
+        submitReceiptResultSubject.send(.failure(AccountPlanErrorEntity(errorCode: -1, errorMessage: nil)))
+
+        try await waitUntil(
+            await MainActor.run {
+                purchaseUseCase.endMonitoringPurchaseReceiptCalled == 0
+            }
+        )
+        #expect(sut.discountBanner != nil)
+        #expect(discountBannerUseCase.dismissedPlans.isEmpty)
+    }
+
     private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
@@ -1121,7 +1247,9 @@ struct AccountMenuViewModelTests {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
         logoutHandler: @escaping () async -> Void = {},
         sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 },
-        fullNameHandler: @escaping (CurrentUserSource) -> String = { _ in "" }
+        fullNameHandler: @escaping (CurrentUserSource) -> String = { _ in "" },
+        discountBannerUseCase: some MenuDiscountBannerUseCaseProtocol = MockMenuDiscountBannerUseCase(),
+        discountBannerMapper: MenuDiscountBannerContentMapper = .stub(planPrice: .monthly(.init(price: 9.99, currency: "EUR")))
     ) -> SUT {
         let currentUserSource = CurrentUserSource(sdk: MockSdk())
         return AccountMenuViewModel(
@@ -1138,7 +1266,9 @@ struct AccountMenuViewModelTests {
             fullNameHandler: fullNameHandler,
             avatarFetchHandler: { _, _ in UIImage() },
             logoutHandler: logoutHandler,
-            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler
+            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler,
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: discountBannerMapper
         )
     }
 
@@ -1180,6 +1310,23 @@ struct AccountMenuViewModelTests {
     }
 }
 
+private final class MockMenuDiscountBannerUseCase: MenuDiscountBannerUseCaseProtocol, @unchecked Sendable {
+    private let promotedPlanResult: Result<PlanEntity?, any Error>
+    private(set) var dismissedPlans: [PlanEntity] = []
+
+    init(promotedPlanResult: Result<PlanEntity?, any Error> = .success(nil)) {
+        self.promotedPlanResult = promotedPlanResult
+    }
+
+    func promotedPlan() async throws -> PlanEntity? {
+        try promotedPlanResult.get()
+    }
+
+    func dismiss(_ plan: PlanEntity) {
+        dismissedPlans.append(plan)
+    }
+}
+
 private final class MockMenuViewRouter: AccountMenuViewRouting {
     private(set) var showNotifications_calledTimes = 0
     private(set) var showAccount_calledTimes = 0
@@ -1193,6 +1340,7 @@ private final class MockMenuViewRouter: AccountMenuViewRouting {
     private(set) var showOfflineFiles_calledTimes = 0
     private(set) var showRubbishBin_calledTimes = 0
     private(set) var showSettings_calledTimes = 0
+    private(set) var showPromoLandingDialog_calledTimes = 0
     private(set) var openLink_calledTimes = 0
     private(set) var openLink_lastApp: Accounts.MegaCompanionApp?
 
@@ -1242,6 +1390,10 @@ private final class MockMenuViewRouter: AccountMenuViewRouting {
 
     func showSettings() {
         showSettings_calledTimes += 1
+    }
+
+    func showPromoLandingDialog() {
+        showPromoLandingDialog_calledTimes += 1
     }
 
     func openLink(for app: Accounts.MegaCompanionApp) {

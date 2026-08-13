@@ -39,6 +39,7 @@ public protocol AccountMenuViewRouting {
     func showOfflineFiles()
     func showRubbishBin()
     func showSettings()
+    func showPromoLandingDialog()
     func openLink(for app: MegaCompanionApp)
 }
 
@@ -92,6 +93,7 @@ public final class AccountMenuViewModel: ObservableObject {
     @Published var isAtTop = true
     @Published var isAccountUpdating: Bool = false
     @Published private(set) var isConnected: Bool = true
+    @Published private(set) var discountBanner: DiscountBannerModel?
 
     private let router: any AccountMenuViewRouting
     private let tracker: any AnalyticsTracking
@@ -113,6 +115,8 @@ public final class AccountMenuViewModel: ObservableObject {
     private var monitorSubmitReceiptResultTask: Task<Void, Never>?
     private var monitorConnectionTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
+    private let discountBannerUseCase: any MenuDiscountBannerUseCaseProtocol
+    private let discountBannerMapper: MenuDiscountBannerContentMapper
     private var subscriptions: Set<AnyCancellable> = []
 
     @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
@@ -236,7 +240,9 @@ public final class AccountMenuViewModel: ObservableObject {
         fullNameHandler: @escaping (CurrentUserSource) -> String,
         avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?,
         logoutHandler: @escaping () async -> Void,
-        sharedItemsNotificationCountHandler: @escaping () -> Int
+        sharedItemsNotificationCountHandler: @escaping () -> Int,
+        discountBannerUseCase: some MenuDiscountBannerUseCaseProtocol,
+        discountBannerMapper: MenuDiscountBannerContentMapper = MenuDiscountBannerContentMapper()
     ) {
         self.router = router
         self.tracker = tracker
@@ -251,6 +257,8 @@ public final class AccountMenuViewModel: ObservableObject {
         self.logoutHandler = logoutHandler
         self.sharedItemsNotificationCountHandler = sharedItemsNotificationCountHandler
         self.notificationsUseCase = notificationsUseCase
+        self.discountBannerUseCase = discountBannerUseCase
+        self.discountBannerMapper = discountBannerMapper
 
         isAccountUpdating = accountUseCase.isMonitoringRefreshAccount || purchaseUseCase.isSubmittingReceiptAfterPurchase
         isConnected = networkMonitorUseCase.isConnected()
@@ -295,7 +303,36 @@ public final class AccountMenuViewModel: ObservableObject {
     func onTask() async {
         async let updateUITask: () = updateUI()
         async let trackAccountNotificationEventTask: () = trackAccountNotificationEvent()
-        _ = await (updateUITask, trackAccountNotificationEventTask)
+        async let loadDiscountBannerTask: () = loadDiscountBanner()
+        _ = await (updateUITask, trackAccountNotificationEventTask, loadDiscountBannerTask)
+    }
+
+    func discountBannerActionTapped() {
+        router.showPromoLandingDialog()
+    }
+
+    func closeDiscountBanner() {
+        dismissDiscountBanner()
+    }
+
+    private func dismissDiscountBanner() {
+        if let discountBanner {
+            discountBannerUseCase.dismiss(discountBanner.plan)
+        }
+        discountBanner = nil
+    }
+
+    private func loadDiscountBanner() async {
+        do {
+            guard let plan = try await discountBannerUseCase.promotedPlan(),
+                  let content = discountBannerMapper.map(plan) else {
+                discountBanner = nil
+                return
+            }
+            discountBanner = DiscountBannerModel(plan: plan, content: content)
+        } catch {
+            MEGALogError("[Account Menu Discount Banner] Could not load promoted plan. Error: \(error.localizedDescription)")
+        }
     }
 
     func logoutButtonTapped() {
@@ -707,8 +744,11 @@ public final class AccountMenuViewModel: ObservableObject {
                 .submitReceiptResultPublisher
                 .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
                 .values
-            for await _ in submitReceiptResultSequence {
+            for await result in submitReceiptResultSequence {
                 purchaseUseCase.endMonitoringPurchaseReceipt()
+                if case .success = result {
+                    self?.dismissDiscountBanner()
+                }
                 await self?.fetchUpdatedAccountDetailsAndUpdateUI(monitorUpdate: true)
             }
         }
