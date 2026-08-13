@@ -272,7 +272,8 @@
     }
 
     [self listenToDomainUpdates];
-    
+    [self listenToLoggedOutStreamingOverQuota];
+
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
         if (isFetchNodesDone) {

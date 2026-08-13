@@ -60,6 +60,21 @@ extension AppDelegate {
         }
     }
 
+    /// Surfaces the transfer over-quota warning for streaming done while logged out.
+    ///
+    /// `AppDelegate` is only registered as a global delegate on `MEGASdk.shared`, so it covers the
+    /// logged-in case in `onEvent:event:` only. Logged-out streaming runs on the folder link SDK
+    /// instance instead — `StreamingInfoRepository` and `AudioStreamingRepository` both select it
+    /// purely on `MEGASdk.isLoggedIn` — and its events never reach that delegate.
+    @objc func listenToLoggedOutStreamingOverQuota() {
+        Task { @MainActor [weak self] in
+            let useCase = StreamingOverQuotaUseCase(repo: EventRepository.newRepo)
+            for await _ in useCase.loggedOutStreamingOverQuotaUpdates {
+                self?.showStreamingOverQuotaModalAlert()
+            }
+        }
+    }
+
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
