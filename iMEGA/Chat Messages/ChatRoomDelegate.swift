@@ -87,7 +87,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     }
     
     nonisolated func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
-        Task { @MainActor in
+        Task { @MainActor [self] in
             MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
             
             chatViewController?.update(chatRoom: chat.toChatRoomEntity())
@@ -208,7 +208,7 @@ final class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDel
     }
     
     nonisolated func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
-        Task { @MainActor in
+        Task { @MainActor [self] in
             MEGALogInfo("ChatRoomDelegate: onMessageReceived \(message)")
             guard include(message: message) else { return }
             

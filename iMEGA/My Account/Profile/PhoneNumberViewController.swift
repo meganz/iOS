@@ -69,7 +69,7 @@ class PhoneNumberViewController: UITableViewController {
     
     private func showModifyPhoneAlert() {
         let modifyPhoneNumberAlert = UIAlertController(title: Strings.Localizable.modifyPhoneNumber, message: Strings.Localizable.thisOperationWillRemoveYourCurrentPhoneNumberAndStartTheProcessOfAssociatingANewPhoneNumberWithYourAccount, preferredStyle: .alert)
-        modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
+        modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { [self] _ in
             MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { [weak self] result in
                 guard let self else { return }
                 Task { @MainActor in
@@ -96,7 +96,7 @@ class PhoneNumberViewController: UITableViewController {
     
     private func showRemovePhoneAlert() {
         let removePhoneNumberAlert = UIAlertController(title: Strings.Localizable.removePhoneNumber, message: Strings.Localizable.ThisWillRemoveYourAssociatedPhoneNumberFromYourAccount.ifYouLaterChooseToAddAPhoneNumberYouWillBeRequiredToVerifyIt, preferredStyle: .alert)
-        removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
+        removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { [self] _ in
             MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { [weak self] result in
                 guard let self else { return }
                 Task { @MainActor in

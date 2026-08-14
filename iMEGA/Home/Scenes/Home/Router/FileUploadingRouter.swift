@@ -140,14 +140,12 @@ final class FileUploadingRouter {
     private func presentCameraViewController() {
         let imagePickerController = UploadImagePickerViewController()
         try? imagePickerController.prepare(withSourceType: .camera) { [weak self] result in
-            guard let self else { return }
-                
             Task { @MainActor in
                 imagePickerController.dismiss(animated: true) {
                     switch result {
                     case .failure: break
                     case .success(let filePath):
-                        self.presentDestinationFolderBrowser { [weak self] parentNode in
+                        self?.presentDestinationFolderBrowser { parentNode in
                             guard let presenter = self?.navigationController else {
                                 return
                             }

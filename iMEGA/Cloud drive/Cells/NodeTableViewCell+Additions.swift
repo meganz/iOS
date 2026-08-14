@@ -245,16 +245,16 @@ extension NodeTableViewCell {
             switch cellFlavor {
             case .flavorVersions, .flavorRecentAction, .flavorCloudDrive:
                 infoLabel?.text = recentActionBucket != nil ? Helper.sizeAndCreationDate(for: node, api: megaSDK) : Helper.sizeAndModificationDate(for: node, api: megaSDK)
-                megaSDK.hasVersions(node: node) { hasVersions in
-                    DispatchQueue.main.async { [weak self] in
+                megaSDK.hasVersions(node: node) { [weak self] hasVersions in
+                    DispatchQueue.main.async {
                         self?.uploadOrVersionImageView?.isHidden = !hasVersions
                     }
                 }
 
             case .flavorSharedLink:
                 infoLabel?.text = Helper.sizeAndShareLinkCreateDate(forSharedLinkNode: node, api: megaSDK)
-                megaSDK.hasVersions(node: node) { hasVersions in
-                    DispatchQueue.main.async { [weak self] in
+                megaSDK.hasVersions(node: node) { [weak self] hasVersions in
+                    DispatchQueue.main.async {
                         self?.versionedImageView?.isHidden = !hasVersions
                     }
                 }

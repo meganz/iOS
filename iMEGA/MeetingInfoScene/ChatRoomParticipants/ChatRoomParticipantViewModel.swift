@@ -134,7 +134,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     func chatParticipantTapped() {
         guard !isMyUser else { return }
         
-        Task { @MainActor in
+        Task { @MainActor [self] in
             do {
                 let participantEmail = try await chatRoomUserUseCase.userEmail(forUserHandle: chatParticipantId)
                 router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom) { [weak self] peerPrivilege in

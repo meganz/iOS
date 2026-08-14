@@ -161,19 +161,19 @@ final class QuickAccessWidgetManager: NSObject, @unchecked Sendable {
     }
     
     private func monitorAllWidgetChanges(continuation: WidgetManagerStatusContinuation) -> Task<Void, Never> {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
             await withTaskGroup(of: Void.self) { taskGroup in
                 let cases = WidgetType.allCases
                 let taskStartedStream = AsyncStream.makeStream(of: WidgetType.self, bufferingPolicy: .bufferingNewest(cases.count))
 
-                taskGroup.addTasksUnlessCancelled(for: cases, priority: .background) { [weak self] type in
-                    guard let self else { return }
+                taskGroup.addTasksUnlessCancelled(for: cases, priority: .background) { type in
                     switch type {
                     case .favourites:
-                        await monitorFavouriteContentUpdate(
+                        await self.monitorFavouriteContentUpdate(
                             taskStartedContinuation: taskStartedStream.continuation)
                     case .recents:
-                        await monitorRecentsContentUpdate(
+                        await self.monitorRecentsContentUpdate(
                             taskStartedContinuation: taskStartedStream.continuation)
                     }
                 }

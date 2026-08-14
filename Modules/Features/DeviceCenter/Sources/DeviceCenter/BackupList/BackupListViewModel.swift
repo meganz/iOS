@@ -298,8 +298,8 @@ public final class BackupListViewModel: ObservableObject {
                 .none: Strings.Localizable.renameNodeMessage
             ],
             alertPlaceholder: Strings.Localizable.Device.Center.Rename.Device.title
-        ) {
-            Task { [weak self] in
+        ) { [weak self] in
+            Task {
                 await self?.syncDevicesAndLoadBackups()
             }
         }

@@ -44,7 +44,7 @@ final class OpenLinkRouter: Routing {
         }
         openAction.isEnabled = false
 
-        alertController.addTextField { textField in
+        alertController.addTextField { [openAction] textField in
             textField.addAction(UIAction { [weak openAction] action in
                 guard let textField = action.sender as? UITextField else { return }
                 let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""

@@ -124,15 +124,16 @@ import MEGAL10n
         isLoading = true
         defer { isLoading = false }
         
-        loadingTask = Task { @MainActor in
+        loadingTask = Task { @MainActor [weak self] in
+            guard let shareUseCase = self?.shareUseCase else { return }
             do {
                 guard try await shareUseCase.containsSensitiveContent(in: nodes.toNodeEntities()) else { return }
                 
-                alertModel = AlertModel.makeShareContainsSensitiveItems(nodeCount: nodes.count) { @MainActor [weak self] in
+                self?.alertModel = AlertModel.makeShareContainsSensitiveItems(nodeCount: nodes.count) { @MainActor [weak self] in
                     self?.dismissViewSubject.send()
                 }
             } catch {
-                MEGALogError("[\(type(of: self))]: containsSensitiveContent returned \(error.localizedDescription)")
+                MEGALogError("[ContactsViewModel]: containsSensitiveContent returned \(error.localizedDescription)")
             }
         }
     }

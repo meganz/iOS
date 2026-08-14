@@ -177,7 +177,7 @@ final class CameraUploadHeartbeat: NSObject, @unchecked Sendable {
     
     private func sendHeartbeat(forBackupId backupId: HandleEntity, lastNode: MEGANode?, lastActionDate: Date?) {
         MEGALogDebug("[Camera Upload] heartbeat - start sending heartbeat for backupId \(type(of: sdk).base64Handle(forHandle: backupId) ?? "")")
-        CameraUploadManager.shared().loadCurrentUploadStats { [sdk] stats, error in
+        CameraUploadManager.shared().loadCurrentUploadStats { [sdk, self] stats, error in
             guard let stats = stats else {
                 if let error = error {
                     Crashlytics.crashlytics().record(error: error)

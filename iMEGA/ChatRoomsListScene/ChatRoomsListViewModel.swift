@@ -973,7 +973,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
     
     nonisolated func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
         tracker.trackAnalyticsEvent(with: ChatRoomDNDMenuItemEvent())
-        Task { @MainActor in
+        Task { @MainActor [self] in
             globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
                 self?.refreshContextMenu()
             }
@@ -981,7 +981,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
     }
     
     nonisolated func chatDisableDoNotDisturb() {
-        Task { @MainActor in
+        Task { @MainActor [self] in
             guard globalDNDNotificationControl.isGlobalDNDEnabled else {
                 return
             }

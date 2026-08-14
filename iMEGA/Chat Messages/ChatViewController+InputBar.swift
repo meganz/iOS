@@ -850,7 +850,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             
             let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
             
-            let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
+            let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { [self] _ in
                 let enableGeolocationDelegate = RequestDelegate { [weak self] enableGeolocationResult in
                     guard let self else { return }
                     Task { @MainActor in

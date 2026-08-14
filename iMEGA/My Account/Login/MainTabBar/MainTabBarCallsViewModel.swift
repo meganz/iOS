@@ -422,7 +422,7 @@ class MainTabBarCallsViewModel: ViewModelType {
         forCall call: CallEntity,
         shouldBlockAddingUsersToCall: Bool
     ) {
-        Task { @MainActor in
+        Task { @MainActor [self] in
             do {
                 let username = try await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
                 router.showOneUserWaitingRoomDialog(

@@ -91,7 +91,7 @@ extension ContactDetailsViewController {
     @objc func removeParticipantFromGroup() {
         guard !isUserActionInProgress else { return }
         userActionInProgress(true)
-        Task {
+        Task { [self] in
             do {
                 let chatRoomRepository = ChatRoomRepository.newRepo
                 try await chatRoomRepository.remove(fromChat: groupChatRoom.toChatRoomEntity(), userId: userHandle)

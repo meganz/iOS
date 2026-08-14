@@ -36,7 +36,7 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
                 sinceDays: 30,
                 maxNodes: 500,
                 excludeSensitives: excludeSensitive,
-                delegate: RequestDelegate { result in
+                delegate: RequestDelegate { [self] result in
                     guard case let .success(request) = result else {
                         continuation.finish()
                         return
