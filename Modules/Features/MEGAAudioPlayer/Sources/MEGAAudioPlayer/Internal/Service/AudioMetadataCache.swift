@@ -28,7 +28,7 @@ extension AudioMetadataCacheProtocol {
 // MARK: - Implementation
 
 actor AudioMetadataCache: AudioMetadataCacheProtocol {
-    private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
+    private let urlUseCase: any AudioTrackURLUseCaseProtocol
     private let metadataLoader: any AudioMetadataLoading
 
     private var store: [String: AudioMetadata] = [:]
@@ -41,12 +41,12 @@ actor AudioMetadataCache: AudioMetadataCacheProtocol {
     private var memoryWarningTask: Task<Void, Never>?
 
     init(
-        urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
+        urlUseCase: some AudioTrackURLUseCaseProtocol = AudioTrackURLUseCase(),
         metadataLoader: some AudioMetadataLoading = AudioMetadataLoader(),
         notificationCenter: NotificationCenter = .default,
         memoryWarningNotification: Notification.Name = DependencyInjection.memoryWarningNotification
     ) {
-        self.urlResolutionUseCase = urlResolutionUseCase
+        self.urlUseCase = urlUseCase
         self.metadataLoader = metadataLoader
         Task { await self.startObservingMemoryWarnings(on: notificationCenter, named: memoryWarningNotification) }
     }
@@ -69,7 +69,7 @@ actor AudioMetadataCache: AudioMetadataCacheProtocol {
         if let cached = store[key] { return cached }
         if let task = inFlight[key] { return await task.value }
 
-        let url = urlResolutionUseCase.url(for: track)
+        let url = urlUseCase.url(for: track)
         let loader = metadataLoader
         let task = Task<AudioMetadata?, Never> {
             guard let url else { return nil }

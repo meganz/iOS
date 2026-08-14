@@ -68,7 +68,7 @@ struct MEGAAudioPlayerViewRouterTests {
     ) {
         let engine = MockPlaybackEngine()
         let service = AudioPlaybackService(
-            urlResolutionUseCase: OfflinePassthroughURLResolver(),
+            trackResolver: PassthroughTrackResolver(),
             streamingRepository: StubAudioStreamingRepository(),
             metadataCache: StubAudioMetadataCache(),
             engine: engine,

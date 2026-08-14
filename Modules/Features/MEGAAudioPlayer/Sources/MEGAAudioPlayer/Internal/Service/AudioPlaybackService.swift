@@ -18,12 +18,13 @@ final class AudioPlaybackService {
     private let sleepTimerStateSubject = CurrentValueSubject<SleepTimerState, Never>(.inactive)
     private let isShuffleOnSubject = CurrentValueSubject<Bool, Never>(false)
     private let resumePromptSubject = CurrentValueSubject<ResumePrompt?, Never>(nil)
+    private let playbackBlockedSubject = CurrentValueSubject<PlaybackBlockedReason?, Never>(nil)
 
     private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
 
     private let artworkResolvedSubject = CurrentValueSubject<Bool, Never>(false)
 
-    private let urlResolutionUseCase: any AudioURLResolutionUseCaseProtocol
+    private let trackResolver: any AudioTrackResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
     private let metadataCache: any AudioMetadataCacheProtocol
     private let engine: any PlaybackEngineProtocol
@@ -33,7 +34,11 @@ final class AudioPlaybackService {
     /// In-flight metadata parse for the current track. Cancelled when a new
     /// track starts or playback stops.
     private var metadataTask: Task<Void, Never>?
-    
+
+    /// In-flight admission check for the current track. Cancelled whenever a new
+    /// track starts, so a late verdict cannot land on the wrong one.
+    private var resolutionTask: Task<Void, Never>?
+
     private var sleepTimerTask: Task<Void, Never>?
 
     /// Bumped on every `play` / `stop` so a late-returning metadata parse for a
@@ -64,17 +69,14 @@ final class AudioPlaybackService {
     }
 
     init(
-        urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol = DependencyInjection.urlResolutionUseCase,
+        trackResolver: some AudioTrackResolutionUseCaseProtocol = AudioTrackResolutionUseCase(),
         streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
-        metadataCache: some AudioMetadataCacheProtocol = AudioMetadataCache(
-            urlResolutionUseCase: DependencyInjection.urlResolutionUseCase,
-            metadataLoader: AudioMetadataLoader()
-        ),
+        metadataCache: some AudioMetadataCacheProtocol = AudioMetadataCache(),
         engine: some PlaybackEngineProtocol = PlaybackEngine(),
         notificationCenter: NotificationCenter = .default,
         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol = DependencyInjection.playbackContinuationUseCase
     ) {
-        self.urlResolutionUseCase = urlResolutionUseCase
+        self.trackResolver = trackResolver
         self.streamingRepository = streamingRepository
         self.metadataCache = metadataCache
         self.engine = engine
@@ -353,6 +355,10 @@ extension AudioPlaybackService: PlaybackStateObservable {
     var resumePromptPublisher: AnyPublisher<ResumePrompt?, Never> {
         resumePromptSubject.removeDuplicates().eraseToAnyPublisher()
     }
+
+    var playbackBlockedPublisher: AnyPublisher<PlaybackBlockedReason?, Never> {
+        playbackBlockedSubject.removeDuplicates().eraseToAnyPublisher()
+    }
 }
 
 // MARK: - PlaybackControllable
@@ -367,6 +373,7 @@ extension AudioPlaybackService: PlaybackControllable {
         currentSource = source
         unshuffledQueue = nil
         isShuffleOnSubject.send(false)
+        trackResolver.reset()
         playbackQueue = PlaybackQueueBuilder.build(from: source)
 
         startStreamingServerIfNeeded(for: source)
@@ -377,8 +384,12 @@ extension AudioPlaybackService: PlaybackControllable {
     private func playCurrent() {
         metadataTask?.cancel()
         metadataTask = nil
+        resolutionTask?.cancel()
+        resolutionTask = nil
         playGeneration += 1
         let generation = playGeneration
+
+        playbackBlockedSubject.send(nil)
 
         guard let track = playbackQueue.current else {
             status = .error("url resolution error")
@@ -391,20 +402,45 @@ extension AudioPlaybackService: PlaybackControllable {
         hasPlayedOnceBeforeSubject.send(false)
         artworkResolvedSubject.send(false)
         status = .loading
+        // The queue has already moved on, so the outgoing track must go quiet now
+        // rather than play on — and keep driving the scrubber — for however long the
+        // admission check takes.
+        engine.unloadCurrentItem()
 
-        guard let url = urlResolutionUseCase.url(for: track) else {
-            status = .error("url resolution error")
+        // A verdict we already hold is applied inline, so offline files and
+        // already-checked tracks start without waiting a turn.
+        if let known = trackResolver.cachedResolution(for: track) {
+            playTrack(track, resolution: known, generation: generation)
             return
         }
-        metadataTask = Task { [metadataCache, weak self] in
-            let metadata = await metadataCache.metadata(for: track, throttled: false)
-            guard let self, !Task.isCancelled else { return }
-            if let metadata, !metadata.isEmpty {
-                self.applyMetadata(metadata, generation: generation)
-            }
-            self.markArtworkResolved(generation: generation)
+
+        resolutionTask = Task { [weak self] in
+            guard let self else { return }
+            let resolution = await trackResolver.resolve(track)
+            guard !Task.isCancelled, generation == playGeneration else { return }
+            playTrack(track, resolution: resolution, generation: generation)
         }
-        engine.play(url: url)
+    }
+
+    private func playTrack(_ track: PlaybackTrack, resolution: AudioURLResolution, generation: Int) {
+        switch resolution {
+        case .resolved(let url):
+            metadataTask = Task { [metadataCache, weak self] in
+                let metadata = await metadataCache.metadata(for: track, throttled: false)
+                guard let self, !Task.isCancelled else { return }
+                if let metadata, !metadata.isEmpty {
+                    self.applyMetadata(metadata, generation: generation)
+                }
+                self.markArtworkResolved(generation: generation)
+            }
+            engine.play(url: url)
+
+        case .takenDown:
+            playbackBlockedSubject.send(.takenDown)
+
+        case .unresolved:
+            status = .error("url resolution error")
+        }
     }
 
     func togglePlayPause() {
@@ -596,6 +632,10 @@ extension AudioPlaybackService: PlaybackControllable {
         clearResumeState()
         metadataTask?.cancel()
         metadataTask = nil
+        resolutionTask?.cancel()
+        resolutionTask = nil
+        trackResolver.reset()
+        playbackBlockedSubject.send(nil)
         Task { [metadataCache] in await metadataCache.removeAll() }
         playGeneration += 1
         unshuffledQueue = nil

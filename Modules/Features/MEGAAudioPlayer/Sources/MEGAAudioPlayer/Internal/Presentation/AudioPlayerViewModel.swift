@@ -95,6 +95,11 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var resumePrompt: ResumePrompt?
 
+    // MARK: - Taken-down file
+
+    /// Drives the TakenDown alert. Acknowledging it ends the session, which is what closes this screen.
+    @Published var isTakenDownAlertPresented: Bool = false
+
     private(set) var playlistListTopY: CGFloat = 0
 
     var isQueueButtonEnabled: Bool {
@@ -239,6 +244,12 @@ final class AudioPlayerViewModel: ObservableObject {
 
         service.resumePromptPublisher
             .assign(to: &$resumePrompt)
+
+        // Latched, so a screen opened after the block still raises the alert
+        service.playbackBlockedPublisher
+            .map { $0 == .takenDown }
+            .removeDuplicates()
+            .assign(to: &$isTakenDownAlertPresented)
         
         service.currentQueuePublisher
             .map { $0.tracks.count == 1 }
@@ -277,6 +288,12 @@ final class AudioPlayerViewModel: ObservableObject {
 
     func dismiss() {
         onDismiss?()
+    }
+
+    /// Acknowledging the taken-down alert. Ending the session clears the current source
+    func confirmTakenDownAlert() {
+        isTakenDownAlertPresented = false
+        service?.stop()
     }
 
     func didTapMore() {

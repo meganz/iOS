@@ -18,6 +18,10 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
     private(set) var pauseCallCount = 0
     private(set) var replayCallCount = 0
     private(set) var stopCallCount = 0
+    private(set) var unloadCallCount = 0
+
+    /// `true` while an item is loaded — i.e. something can actually be heard.
+    private(set) var isItemLoaded = false
 
     /// Duration reported for every item handed to `play(url:)`.
     var itemDuration: TimeInterval = 100
@@ -51,9 +55,18 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
 
     func play(url: URL) {
         playedURLs.append(url)
+        isItemLoaded = true
         currentTimeSubject.send(0)
         durationSubject.send(itemDuration)
         playbackStatusSubject.send(.playing)
+    }
+
+    func unloadCurrentItem() {
+        unloadCallCount += 1
+        isItemLoaded = false
+        currentTimeSubject.send(0)
+        durationSubject.send(nil)
+        playbackStatusSubject.send(.loading)
     }
 
     func togglePlayPause() {

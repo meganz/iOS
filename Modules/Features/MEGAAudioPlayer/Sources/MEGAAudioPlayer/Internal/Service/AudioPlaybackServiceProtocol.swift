@@ -37,6 +37,10 @@ protocol PlaybackStateObservable {
     var isShuffleOnPublisher: AnyPublisher<Bool, Never> { get }
     var resumePromptPublisher: AnyPublisher<ResumePrompt?, Never> { get }
 
+    /// Why the track the session is trying to play cannot be played, or `nil` when
+    /// nothing is blocked.
+    var playbackBlockedPublisher: AnyPublisher<PlaybackBlockedReason?, Never> { get }
+
     // MARK: Queries
 
     func metadata(forTrackID id: String) async -> AudioMetadata?
@@ -68,6 +72,13 @@ protocol PlaybackControllable {
 struct ResumePrompt: Equatable {
     let fileName: String
     let playbackTime: TimeInterval
+}
+
+// MARK: - Blocked playback
+
+enum PlaybackBlockedReason: Equatable {
+    /// The file was taken down for a Terms of Service violation.
+    case takenDown
 }
 
 // MARK: - Status

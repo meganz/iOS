@@ -16,6 +16,8 @@ protocol PlaybackEngineProtocol: AnyObject {
     var didPlayToEndPublisher: AnyPublisher<Void, Never> { get }
 
     func play(url: URL)
+    /// Detach the loaded item without ending the session — see the implementation.
+    func unloadCurrentItem()
     func togglePlayPause()
     func pause()
     func setPlaybackSpeed(_ rate: Float)
@@ -121,6 +123,18 @@ extension PlaybackEngine {
         durationSubject.send(nil)
         isPlaybackIntended = true
         player.play()
+    }
+
+    /// Detach whatever is loaded without ending the session
+    func unloadCurrentItem() {
+        endObservation = nil
+        resetSeekGate()
+        player.pause()
+        player.replaceCurrentItem(with: nil)
+        isPlaybackIntended = false
+        currentTimeSubject.send(0)
+        durationSubject.send(nil)
+        playbackStatusSubject.send(.loading)
     }
 
     func replay() {

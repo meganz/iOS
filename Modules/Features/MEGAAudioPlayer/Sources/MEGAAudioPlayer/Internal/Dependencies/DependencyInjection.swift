@@ -8,12 +8,12 @@ enum DependencyInjection {
         AudioStreamingRepository.newRepo
     }
 
-    static var memoryWarningNotification: Notification.Name {
-        UIApplication.didReceiveMemoryWarningNotification
+    static var nodeAvailabilityRepository: some AudioNodeAvailabilityRepositoryProtocol {
+        AudioNodeAvailabilityRepository.newRepo
     }
 
-    static var urlResolutionUseCase: some AudioURLResolutionUseCaseProtocol {
-        AudioURLResolutionUseCase(streamingRepository: streamingRepository)
+    static var memoryWarningNotification: Notification.Name {
+        UIApplication.didReceiveMemoryWarningNotification
     }
 
     static var playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol {

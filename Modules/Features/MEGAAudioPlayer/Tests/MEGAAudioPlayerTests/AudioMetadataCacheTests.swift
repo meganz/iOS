@@ -15,7 +15,7 @@ struct AudioMetadataCacheTests {
     ) -> (sut: AudioMetadataCache, loader: SpyMetadataLoader) {
         let loader = SpyMetadataLoader(result: result, delay: loadDelay)
         let sut = AudioMetadataCache(
-            urlResolutionUseCase: StubURLResolver(resolvedURL: resolvedURL),
+            urlUseCase: StubURLResolver(resolvedURL: resolvedURL),
             metadataLoader: loader,
             notificationCenter: notificationCenter,
             memoryWarningNotification: memoryWarningNotification
@@ -89,7 +89,7 @@ struct AudioMetadataCacheTests {
         let currentURL = URL(fileURLWithPath: "/audio/current.mp3")
         let loader = GatedMetadataLoader(immediateURL: currentURL, result: Self.sampleMetadata)
         let sut = AudioMetadataCache(
-            urlResolutionUseCase: OfflinePassthroughURLResolver(),
+            urlUseCase: OfflinePassthroughURLResolver(),
             metadataLoader: loader,
             notificationCenter: NotificationCenter(),
             memoryWarningNotification: .init("test.memoryWarning")

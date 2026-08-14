@@ -133,7 +133,7 @@ struct AudioPlaybackServiceEndOfQueueTests {
 
     private func makeSUT(engine: MockPlaybackEngine) -> AudioPlaybackService {
         AudioPlaybackService(
-            urlResolutionUseCase: OfflinePassthroughURLResolver(),
+            trackResolver: PassthroughTrackResolver(),
             streamingRepository: StubAudioStreamingRepository(),
             metadataCache: StubAudioMetadataCache(),
             engine: engine,

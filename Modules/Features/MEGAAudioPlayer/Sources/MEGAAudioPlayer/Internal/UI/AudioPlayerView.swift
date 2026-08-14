@@ -154,6 +154,16 @@ struct AudioPlayerView: View {
         } message: { prompt in
             Text(Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.description(prompt.fileName, prompt.playbackTime.timeString))
         }
+        .alert(
+            Strings.Localizable.General.Alert.TermsOfServiceViolation.title,
+            isPresented: $vm.isTakenDownAlertPresented
+        ) {
+            Button(Strings.Localizable.dismiss) {
+                vm.confirmTakenDownAlert()
+            }
+        } message: {
+            Text(Strings.Localizable.fileLinkUnavailableText2)
+        }
     }
 
     private var seekGestureLayer: some View {
