@@ -75,7 +75,7 @@ struct AudioPlayerView: View {
                             isShuffleOn: vm.isShuffleOn,
                             repeatMode: vm.repeatMode,
                             isSingleTrack: vm.isSingleTrack,
-                            isOnLastTrack: vm.isOnLastTrack,
+                            isOnLastTwoTracks: vm.isOnLastTwoTracks,
                             onShuffle: vm.toggleShuffle,
                             onSkipPrevious: vm.skipPrevious,
                             onPlayPause: vm.togglePlayPause,
@@ -708,7 +708,7 @@ private struct MusicModeControlsSection: View {
     let isShuffleOn: Bool
     let repeatMode: RepeatMode
     let isSingleTrack: Bool
-    let isOnLastTrack: Bool
+    let isOnLastTwoTracks: Bool
     let onShuffle: () -> Void
     let onSkipPrevious: () -> Void
     let onPlayPause: () -> Void
@@ -717,8 +717,11 @@ private struct MusicModeControlsSection: View {
 
     private let secondaryIconSize: CGFloat = 22
 
+    /// Shuffle only reorders what is still upcoming, so it is dead on the last track *and* on
+    /// the one before it — a single upcoming track shuffles to itself. `!isShuffleOn` keeps the
+    /// escape hatch: shuffle can always be switched back off, wherever the queue has got to.
     private var isShuffleDisabled: Bool {
-        isSingleTrack || (isOnLastTrack && !isShuffleOn)
+        isSingleTrack || (isOnLastTwoTracks && !isShuffleOn)
     }
 
     var body: some View {

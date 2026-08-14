@@ -89,7 +89,11 @@ final class AudioPlayerViewModel: ObservableObject {
 
     @Published private(set) var isSingleTrack: Bool = false
 
-    @Published private(set) var isOnLastTrack: Bool = false
+    /// `true` when the current track is the last one or the one before it — i.e. at most one
+    /// track follows it. Shuffle reorders only the upcoming tracks, so with none left, or with
+    /// a single one that shuffles to itself, tapping it cannot change the queue.
+    /// An empty queue has no current track, so it is neither.
+    @Published private(set) var isOnLastTwoTracks: Bool = false
 
     // MARK: - Resume prompt
 
@@ -258,10 +262,10 @@ final class AudioPlayerViewModel: ObservableObject {
 
         service.currentQueuePublisher
             .map { queue in
-                !queue.tracks.isEmpty && queue.currentIndex >= queue.tracks.count - 1
+                !queue.tracks.isEmpty && queue.currentIndex >= queue.tracks.count - 2
             }
             .removeDuplicates()
-            .assign(to: &$isOnLastTrack)
+            .assign(to: &$isOnLastTwoTracks)
     }
 
     /// Decode the current track's embedded cover (`artworkData`, parsed from the
@@ -403,7 +407,7 @@ final class AudioPlayerViewModel: ObservableObject {
         }
         currentTrackID = playlistItems.indices.contains(currentIndex) ? playlistItems[currentIndex].id : nil
         isSingleTrack = titles.count == 1
-        isOnLastTrack = !titles.isEmpty && currentIndex >= titles.count - 1
+        isOnLastTwoTracks = !titles.isEmpty && currentIndex >= titles.count - 2
     }
 
     func switchPlaybackMode() {
