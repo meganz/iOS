@@ -27,10 +27,10 @@ final class ChatViewControllerTests: XCTestCase {
     
     func testViewDidLoad_viewConfiguration_shouldBeCorrect() {
         // given
-        guard let sut =  ChatContentRouter.chatViewController(for: MockChatRoom()) else { return }
+        let sut = makeSUT()
         
         // when
-        sut.viewDidLoad()
+        sut.loadViewIfNeeded()
         
         // then
         XCTAssertNil(sut.startOrJoinCallButton.title(for: .normal))
@@ -45,7 +45,7 @@ final class ChatViewControllerTests: XCTestCase {
     }
 
     func testViewDidLoad_inputBarBottom_shouldFollowKeyboardLayoutGuide() {
-        let sut = makeChatViewController()
+        let sut = makeSUT()
 
         sut.loadViewIfNeeded()
 
@@ -56,7 +56,7 @@ final class ChatViewControllerTests: XCTestCase {
         XCTAssertTrue(bottomConstraints.first?.secondItem === sut.view.keyboardLayoutGuide)
     }
 
-    private func makeChatViewController() -> ChatViewController {
+    private func makeSUT() -> ChatViewController {
         let chatContentViewModel = ChatContentViewModel(
             chatRoom: MockChatRoom().toChatRoomEntity(),
             chatUseCase: MockChatUseCase(),
