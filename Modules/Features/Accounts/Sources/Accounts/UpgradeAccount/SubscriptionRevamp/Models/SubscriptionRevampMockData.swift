@@ -15,7 +15,7 @@ enum SubscriptionRevampMockData {
                 price: .yearly(.init(pricePerMonth: "€3.33/month", billingCaption: "€40.01 charged yearly")),
                 storage: "400 GB storage",
                 transfer: "1 TB transfer",
-                ribbonText: "Best value",
+                ribbon: .offer("Best value"),
                 isPrimaryAction: true
             ),
             SubscriptionPlanCardModel(

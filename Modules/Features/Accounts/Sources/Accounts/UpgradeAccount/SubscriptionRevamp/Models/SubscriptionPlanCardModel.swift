@@ -1,12 +1,25 @@
+import MEGAL10n
 import MEGAUIComponent
 
 struct SubscriptionPlanCardModel: Identifiable, Equatable {
+    enum Ribbon: Equatable {
+        case offer(String)
+        case recommended
+
+        var text: String {
+            switch self {
+            case .offer(let text): text
+            case .recommended: Strings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended
+            }
+        }
+    }
+
     let productIdentifier: String
     let title: String
     let price: PlanPrice
     let storage: String
     let transfer: String
-    let ribbonText: String?
+    let ribbon: Ribbon?
     let isPrimaryAction: Bool
     let externalPurchaseTitle: String?
 
@@ -25,7 +38,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
         price: PlanPrice,
         storage: String,
         transfer: String,
-        ribbonText: String? = nil,
+        ribbon: Ribbon? = nil,
         isPrimaryAction: Bool = false,
         externalPurchaseTitle: String? = nil
     ) {
@@ -34,7 +47,7 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
         self.price = price
         self.storage = storage
         self.transfer = transfer
-        self.ribbonText = ribbonText
+        self.ribbon = ribbon
         self.isPrimaryAction = isPrimaryAction
         self.externalPurchaseTitle = externalPurchaseTitle
     }

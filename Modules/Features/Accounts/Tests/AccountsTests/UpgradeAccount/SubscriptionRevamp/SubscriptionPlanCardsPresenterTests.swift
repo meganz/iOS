@@ -22,7 +22,7 @@ struct SubscriptionPlanCardsPresenterTests {
     ) -> SubscriptionPlanCardsPresenter {
         SubscriptionPlanCardsPresenter(
             plans: plans,
-            featuredPlan: featuredPlan,
+            pageType: .promo(featuredPlan: featuredPlan),
             displayName: { $0.toAccountTypeDisplayName() },
             externalPurchase: externalPurchase
         )
@@ -66,7 +66,7 @@ struct SubscriptionPlanCardsPresenterTests {
         #expect(card.title == AccountTypeEntity.proI.toAccountTypeDisplayName())
         #expect(card.storage == Strings.Localizable.SubscriptionPurchase.Plan.storage("2 TB"))
         #expect(card.transfer == Strings.Localizable.SubscriptionPurchase.Plan.transfer("2 TB"))
-        #expect(card.ribbonText == nil)
+        #expect(card.ribbon == nil)
         #expect(card.hasOffer == false)
     }
 

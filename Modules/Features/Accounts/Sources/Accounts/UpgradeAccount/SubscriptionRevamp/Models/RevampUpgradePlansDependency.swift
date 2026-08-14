@@ -11,6 +11,7 @@ public struct RevampUpgradePlansDependency: Sendable {
     let accountUseCase: any AccountUseCaseProtocol
     let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
     let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    let recommendedUpgradePlanUseCase: any RecommendedUpgradePlanUseCaseProtocol
     let tracker: any AnalyticsTracking
     let viewType: RevampUpgradePlansViewType
     let accountDisplayName: @Sendable (AccountTypeEntity) -> String
@@ -54,7 +55,9 @@ public struct RevampUpgradePlansDependency: Sendable {
         purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
         dismissAction: @MainActor @escaping () -> Void = {},
         promoExpiryMonitorFactory: some PromoExpiryMonitorFactory = DefaultPromoExpiryMonitorFactory(),
-        planPurchaserFactory: some PlanPurchaserFactory = DefaultPlanPurchaserFactory()
+        planPurchaserFactory: some PlanPurchaserFactory = DefaultPlanPurchaserFactory(),
+        recommendedUpgradePlanUseCase: some RecommendedUpgradePlanUseCaseProtocol
+            = RecommendedUpgradePlanUseCase(subscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCase())
     ) {
         self.fetchUseCase = fetchUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -76,5 +79,6 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.termsAndPoliciesPresenter = termsAndPoliciesPresenter
         self.promoExpiryMonitorFactory = promoExpiryMonitorFactory
         self.planPurchaserFactory = planPurchaserFactory
+        self.recommendedUpgradePlanUseCase = recommendedUpgradePlanUseCase
     }
 }

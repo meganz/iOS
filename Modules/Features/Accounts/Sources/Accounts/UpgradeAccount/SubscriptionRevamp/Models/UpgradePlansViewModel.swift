@@ -17,6 +17,7 @@ public final class UpgradePlansViewModel: ObservableObject {
     private let displayName: @Sendable (AccountTypeEntity) -> String
     /// Whether "buy on our website" is offered at all, so the button can be mapped onto the cards.
     private let isExternalPurchaseAvailable: Bool
+    private let recommendedPlanUseCase: any RecommendedUpgradePlanUseCaseProtocol
 
     /// The billing cycle currently selected in the picker, seeded from the default selection.
     @Published var selectedCycle: SubscriptionCycleEntity
@@ -27,7 +28,9 @@ public final class UpgradePlansViewModel: ObservableObject {
         accountDetails: AccountDetailsEntity,
         plans: [PlanEntity],
         displayName: @escaping @Sendable (AccountTypeEntity) -> String,
-        isExternalPurchaseAvailable: Bool = false
+        isExternalPurchaseAvailable: Bool = false,
+        recommendedPlanUseCase: some RecommendedUpgradePlanUseCaseProtocol
+            = RecommendedUpgradePlanUseCase(subscriptionPlanPriceUseCase: SubscriptionPlanPriceUseCase())
     ) {
         self.isPromo = isPromo
         self.viewType = viewType
@@ -36,6 +39,7 @@ public final class UpgradePlansViewModel: ObservableObject {
         self.currentCycle = accountDetails.subscriptionCycle
         self.displayName = displayName
         self.isExternalPurchaseAvailable = isExternalPurchaseAvailable
+        self.recommendedPlanUseCase = recommendedPlanUseCase
         self.selectedCycle = Self.resolveDefaultCycle(plans: plans, currentCycle: accountDetails.subscriptionCycle)
     }
 
@@ -123,10 +127,20 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     // MARK: - Plan cards
 
+    /// The tier tagged as recommended; `nil` on the promo page and when no plan clears the account's quota.
+    /// Resolved to a type so the ribbon follows the cycle picker - the use case targets a single cycle.
+    private lazy var recommendedPlanType: AccountTypeEntity? = {
+        guard !isPromo,
+              let recommended = recommendedPlanUseCase.recommend(for: accountDetails, from: plans) else { return nil }
+        return plans.first { $0.productIdentifier == recommended.productIdentifier }?.type
+    }()
+
     func planCards(for cycle: SubscriptionCycleEntity) -> [SubscriptionPlanCardModel] {
         SubscriptionPlanCardsPresenter(
             plans: plans.filter { !$0.isCurrentPlan(for: accountDetails) },
-            featuredPlan: featuredPlan,
+            pageType: isPromo
+                ? .promo(featuredPlan: featuredPlan)
+                : .standard(recommendedPlanType: recommendedPlanType),
             displayName: displayName,
             externalPurchase: isExternalPurchaseAvailable ? ExternalPurchasePresenter() : nil
         ).cards(for: cycle)

@@ -23,12 +23,12 @@ struct SubscriptionPlanCardsView: View {
 
     @ViewBuilder
     private func planCard(_ card: SubscriptionPlanCardModel) -> some View {
-        if let ribbonText = card.ribbonText {
+        if let ribbon = card.ribbon {
             PlanCardContainer {
                 PlanCardRibbon(
-                    text: ribbonText,
-                    fill: TokenColors.Button.brand.swiftUI,
-                    foreground: TokenColors.Text.onColor.swiftUI
+                    text: ribbon.text,
+                    fill: ribbonFill(for: ribbon),
+                    foreground: ribbonForeground(for: ribbon)
                 )
             } content: {
                 cardContent(card)
@@ -37,6 +37,20 @@ struct SubscriptionPlanCardsView: View {
             PlanCardContainer {
                 cardContent(card)
             }
+        }
+    }
+
+    private func ribbonFill(for ribbon: SubscriptionPlanCardModel.Ribbon) -> Color {
+        switch ribbon {
+        case .offer: TokenColors.Button.brand.swiftUI
+        case .recommended: TokenColors.Notifications.notificationInfo.swiftUI
+        }
+    }
+
+    private func ribbonForeground(for ribbon: SubscriptionPlanCardModel.Ribbon) -> Color {
+        switch ribbon {
+        case .offer: TokenColors.Text.onColor.swiftUI
+        case .recommended: TokenColors.Text.info.swiftUI
         }
     }
 

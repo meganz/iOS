@@ -142,7 +142,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             accountDetails: accountDetails,
             plans: plans,
             displayName: dependency.accountDisplayName,
-            isExternalPurchaseAvailable: isExternalPurchaseAvailable
+            isExternalPurchaseAvailable: isExternalPurchaseAvailable,
+            recommendedPlanUseCase: dependency.recommendedUpgradePlanUseCase
         )
     }
 
