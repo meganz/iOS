@@ -11,9 +11,14 @@ public protocol PricingRequesting: Sendable {
     ///   * After a `cancel()`, it starts a new request and waits for it, because the previously loaded products are gone.
     /// - Throws: `CancellationError` if the calling task is cancelled while waiting, or if `cancel()`
     ///           is called before the request finishes.
-    /// - Note: Successfully loaded products are cached and reused, which matches the current behavior and satisfies the current requirements.
-    ///   If, in the future, a new request should always be started even after a successful load, consider adding a separate `refreshPricing()` function.
+    /// - Note: Successfully loaded products are cached and reused.
+    ///   Callers that need the latest products should use `refreshPricing()` instead.
     func requestPricing() async throws
+
+    /// Forgets the last completed request and loads the products again, then waits for it like `requestPricing()`.
+    /// A request already in flight is joined rather than restarted: it is loading the current products anyway.
+    /// - Throws: `CancellationError` under the same conditions as `requestPricing()`.
+    func refreshPricing() async throws
 
     /// Cancels the in-flight pricing request, if there is one, and forgets the last one, so the next
     /// `requestPricing()` starts fresh.

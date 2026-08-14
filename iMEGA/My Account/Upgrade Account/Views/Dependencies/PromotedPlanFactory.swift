@@ -13,7 +13,7 @@ enum PromotedPlanFactory {
         return {
             guard await DIContainer.remoteFeatureFlagUseCase
                 .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp) else { return nil }
-            return try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)
+            return try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)?.plan
         }
     }
 

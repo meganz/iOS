@@ -23,9 +23,9 @@ public struct PromoLandingDialogDependency {
     }
 
     /// Carries this dependency over to the loaded dialog, once the offer has been resolved.
-    func contentViewDependency(for plan: PlanEntity) -> PromoLandingDialogContentView.Dependency {
+    func contentViewDependency(for promotedPlan: PromotedPlanEntity) -> PromoLandingDialogContentView.Dependency {
         PromoLandingDialogContentView.Dependency(
-            plan: plan,
+            plan: promotedPlan.plan,
             planPurchaser: planPurchaser,
             dismissAction: dismissAction,
             onPurchased: onPurchased

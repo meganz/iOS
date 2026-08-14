@@ -15,6 +15,7 @@ struct QASettingsView: View {
         static let userDataHeaderText = "User Data"
         static let clearStandardUserDefaultsText = "Clear Standard UserDefaults"
         static let quotaEventSimulatorText = "Quota dialog simulator"
+        static let promoDialogText = "Promo dialog"
     }
 
     let viewModel: QASettingsViewModel
@@ -59,6 +60,12 @@ struct QASettingsView: View {
                 QuotaEventSimulatorView()
             } label: {
                 Text(Constants.quotaEventSimulatorText)
+            }
+
+            NavigationLink {
+                PromoDialogQASettingsView()
+            } label: {
+                Text(Constants.promoDialogText)
             }
 
             Section(

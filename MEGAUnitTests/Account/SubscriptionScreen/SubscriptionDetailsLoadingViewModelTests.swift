@@ -142,6 +142,10 @@ private final class SuspendingPricingRequester: PricingRequesting, @unchecked Se
         }
     }
 
+    func refreshPricing() async throws {
+        try await requestPricing()
+    }
+
     func cancel() {}
 
     func finishRequest() {

@@ -10,65 +10,132 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
     
     // MARK: Plans
     func testAccountPlanProducts_monthly() async {
-        let products = [MockSKProduct(identifier: "pro1.oneMonth", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "pro2.oneMonth", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "pro3.oneMonth", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "lite.oneMonth", price: "1", priceLocale: locale)]
+        let identifiers = ["pro1.oneMonth", "pro2.oneMonth", "pro3.oneMonth", "lite.oneMonth"]
         let expectedResult = [PlanEntity(type: .proI, subscriptionCycle: .monthly),
                               PlanEntity(type: .proII, subscriptionCycle: .monthly),
                               PlanEntity(type: .proIII, subscriptionCycle: .monthly),
                               PlanEntity(type: .lite, subscriptionCycle: .monthly)]
-        
-        let mockPurchase = MockMEGAPurchase(productPlans: products)
-        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
+
+        let sut = makeSUT(purchase: makePurchase(storeProductIdentifiers: identifiers, pricingProductIdentifiers: identifiers))
         let plans = await sut.accountPlanProducts(useAPIPrice: false)
         XCTAssertEqual(plans, expectedResult)
     }
-    
+
     func testAccountPlanProducts_yearly() async {
-        let products = [MockSKProduct(identifier: "pro1.oneYear", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "pro2.oneYear", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "pro3.oneYear", price: "1", priceLocale: locale),
-                        MockSKProduct(identifier: "lite.oneYear", price: "1", priceLocale: locale)]
+        let identifiers = ["pro1.oneYear", "pro2.oneYear", "pro3.oneYear", "lite.oneYear"]
         let expectedResult = [PlanEntity(type: .proI, subscriptionCycle: .yearly),
                               PlanEntity(type: .proII, subscriptionCycle: .yearly),
                               PlanEntity(type: .proIII, subscriptionCycle: .yearly),
                               PlanEntity(type: .lite, subscriptionCycle: .yearly)]
-        
-        let mockPurchase = MockMEGAPurchase(productPlans: products)
-        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
+
+        let sut = makeSUT(purchase: makePurchase(storeProductIdentifiers: identifiers, pricingProductIdentifiers: identifiers))
         let plans = await sut.accountPlanProducts(useAPIPrice: false)
         XCTAssertEqual(plans, expectedResult)
     }
 
     func testAccountPlanProducts_usingAPIPrice_shouldReturnAPIPrice_andCurrencyCode() async {
-        let products = [
-            MockSKProduct(identifier: "pro1.oneYear", price: "1", priceLocale: locale),
-            MockSKProduct(identifier: "pro2.oneYear", price: "1", priceLocale: locale),
-            MockSKProduct(identifier: "pro3.oneYear", price: "1", priceLocale: locale),
-            MockSKProduct(identifier: "lite.oneYear", price: "1", priceLocale: locale)
-        ]
+        let identifiers = ["pro1.oneYear", "pro2.oneYear", "pro3.oneYear", "lite.oneYear"]
         let expectedResult = [
-            PlanEntity(type: .proI, subscriptionCycle: .yearly, price: 1111.11),
-            PlanEntity(type: .proII, subscriptionCycle: .yearly, price: 2222.22),
-            PlanEntity(type: .proIII, subscriptionCycle: .yearly, price: 3333.33),
-            PlanEntity(type: .lite, subscriptionCycle: .yearly, price: 4444.44)
+            PlanEntity(type: .proI, subscriptionCycle: .yearly),
+            PlanEntity(type: .proII, subscriptionCycle: .yearly),
+            PlanEntity(type: .proIII, subscriptionCycle: .yearly),
+            PlanEntity(type: .lite, subscriptionCycle: .yearly)
         ]
+        // Written as strings because a `Decimal` float literal is not exact: `1111.11` parses as
+        // 1111.1099999999997952, while the price the repository computes is exactly 1111.11.
+        let expectedPrices = ["1111.11", "2222.22", "3333.33", "4444.44"].compactMap { Decimal(string: $0) }
 
-        let mockPurchase = MockMEGAPurchase(productPlans: products)
+        let mockPurchase = makePurchase(storeProductIdentifiers: identifiers)
         mockPurchase._pricing = MockMEGAPricing(
             productList: [
-                MockPricingProduct(proLevel: .proI, localPrice: 111111),
-                MockPricingProduct(proLevel: .proII, localPrice: 222222),
-                MockPricingProduct(proLevel: .proIII, localPrice: 333333),
-                MockPricingProduct(proLevel: .lite, localPrice: 444444)
+                MockPricingProduct(proLevel: .proI, localPrice: 111111, iOSID: "pro1.oneYear"),
+                MockPricingProduct(proLevel: .proII, localPrice: 222222, iOSID: "pro2.oneYear"),
+                MockPricingProduct(proLevel: .proIII, localPrice: 333333, iOSID: "pro3.oneYear"),
+                MockPricingProduct(proLevel: .lite, localPrice: 444444, iOSID: "lite.oneYear")
             ]
         )
         mockPurchase._currency = MockMEGACurrency(localCurrencyName: "USD", localCurrencySymbol: "USD")
-        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
+        let sut = makeSUT(purchase: mockPurchase)
         let plans = await sut.accountPlanProducts(useAPIPrice: true)
         XCTAssertEqual(plans, expectedResult)
-        XCTAssertTrue(plans.allSatisfy { $0.currency == "USD" })
+        // `PlanEntity`'s equality only covers the type and the cycle, so the prices are asserted separately.
+        XCTAssertEqual(plans.compactMap(\.apiPrice?.price), expectedPrices)
+        XCTAssertTrue(plans.allSatisfy { $0.apiPrice?.currency == "USD" })
+    }
+
+    func testAccountPlanProducts_notUsingAPIPrice_shouldNotCarryAnAPIPrice() async {
+        let mockPurchase = makePurchase(storeProductIdentifiers: ["pro1.oneYear"])
+        mockPurchase._pricing = MockMEGAPricing(
+            productList: [MockPricingProduct(proLevel: .proI, localPrice: 111111, iOSID: "pro1.oneYear")]
+        )
+        let sut = makeSUT(purchase: mockPurchase)
+
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
+
+        XCTAssertNil(plans.first?.apiPrice)
+    }
+
+    /// A product live in App Store Connect that the API does not price. The two catalogues only overlap,
+    /// so a product with no pricing entry has no storage, transfer, price or offer to be built from.
+    func testAccountPlanProducts_withAStoreProductMissingFromThePricing_shouldSkipIt() async {
+        let sut = makeSUT(purchase: makePurchase(
+            storeProductIdentifiers: ["pro1.oneMonth", "pro3.oneMonth"],
+            pricingProductIdentifiers: ["pro1.oneMonth"]
+        ))
+
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
+
+        XCTAssertEqual(plans.map(\.productIdentifier), ["pro1.oneMonth"])
+    }
+
+    /// With nothing priced there is nothing to build a plan out of, so no plan is built rather than an
+    /// empty shell of one.
+    func testAccountPlanProducts_whenThePricingListsNothing_shouldReturnNoPlans() async {
+        let sut = makeSUT(purchase: makePurchase(storeProductIdentifiers: ["pro1.oneMonth"]))
+
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
+
+        XCTAssertTrue(plans.isEmpty)
+    }
+
+    /// The App Store returns the products in its own order, so a product's position in that list says
+    /// nothing about where its plan sits in the pricing: every detail is read at the index the product
+    /// resolves to.
+    func testAccountPlanProducts_whenTheCataloguesAreOrderedDifferently_shouldReadTheMatchingPricingEntry() async {
+        let mockPurchase = makePurchase(storeProductIdentifiers: ["pro1.oneMonth", "pro3.oneMonth"])
+        mockPurchase._pricing = MockMEGAPricing(
+            productList: [
+                MockPricingProduct(proLevel: .proIII, storageGB: 16384, transferGB: 16384, iOSID: "pro3.oneMonth"),
+                MockPricingProduct(proLevel: .proI, storageGB: 400, transferGB: 1024, iOSID: "pro1.oneMonth")
+            ]
+        )
+        let sut = makeSUT(purchase: mockPurchase)
+
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
+
+        let proI = plans.first { $0.productIdentifier == "pro1.oneMonth" }
+        let proIII = plans.first { $0.productIdentifier == "pro3.oneMonth" }
+        XCTAssertEqual(proI?.storageLimit, 400)
+        XCTAssertEqual(proI?.transferLimit, 1024)
+        XCTAssertEqual(proIII?.storageLimit, 16384)
+        XCTAssertEqual(proIII?.transferLimit, 16384)
+    }
+
+    /// Attaching an offer to the wrong plan is what makes a plan advertise a campaign belonging to another.
+    func testAccountPlanProducts_shouldAttachTheOfferOfTheMatchingPricingEntry() async {
+        let mockPurchase = makePurchase(storeProductIdentifiers: ["pro1.oneMonth", "pro2.oneMonth"])
+        mockPurchase._pricing = MockMEGAPricing(
+            productList: [
+                MockPricingProduct(proLevel: .proI, iOSID: "pro1.oneMonth"),
+                MockPricingProduct(proLevel: .proII, iOSID: "pro2.oneMonth", mobileOffer: MockMobileOffer(id: "black-friday"))
+            ]
+        )
+        let sut = makeSUT(purchase: mockPurchase)
+
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
+
+        XCTAssertNil(plans.first { $0.productIdentifier == "pro1.oneMonth" }?.mobileOffer)
+        XCTAssertEqual(plans.first { $0.productIdentifier == "pro2.oneMonth" }?.mobileOffer?.id, "black-friday")
     }
 
     // MARK: Restore purchase
@@ -310,5 +377,20 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
             sdk: sdk,
             currentUserSource: currentUserSource
         )
+    }
+
+    /// The two catalogues the repository holds: what the App Store sells, and what the API prices. They
+    /// are given separately because a plan can appear in one and not the other.
+    private func makePurchase(
+        storeProductIdentifiers: [String],
+        pricingProductIdentifiers: [String]? = nil
+    ) -> MockMEGAPurchase {
+        let purchase = MockMEGAPurchase(
+            productPlans: storeProductIdentifiers.map { MockSKProduct(identifier: $0, price: "1", priceLocale: locale) }
+        )
+        if let pricingProductIdentifiers {
+            purchase._pricing = MockMEGAPricing(productList: pricingProductIdentifiers.map { MockPricingProduct(iOSID: $0) })
+        }
+        return purchase
     }
 }

@@ -9,8 +9,13 @@
 @import MEGAAppSDKRepo;
 
 @interface MEGAPurchase ()
+/// The iOS product identifiers of the plans in the last pricing request, kept only to detect whether
+/// that set has changed and a new `SKProductsRequest` is therefore needed. It must be updated alongside with self.pricing.
+///
+/// Do not index into it to reach `pricing`
+/// To resolve a product against `pricing`, use `productIndex(for:)` in `MEGAPurchase+Pricing.swift`.
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
-@property (nonatomic, strong) NSMutableArray *products;
+@property (atomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) SKProduct *pendingStoreProduct;
 @property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;
@@ -58,18 +63,7 @@
 - (void)requestProducts {
     MEGALogDebug(@"[StoreKit] Request %ld products:", (long)self.pricing.products);
     if ([SKPaymentQueue canMakePayments]) {
-        NSMutableArray *productIdentifieres = [NSMutableArray.alloc initWithCapacity:self.pricing.products];
-        for (NSInteger i = 0; i < self.pricing.products; i++) {
-            NSString *productId = [self.pricing iOSIDAtProductIndex:i];
-            MEGALogDebug(@"[StoreKit] Product \"%@\"", productId);
-            if (productId.length) {
-                [productIdentifieres addObject:productId];
-            } else {
-                MEGALogWarning(@"Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
-            }
-        }
-        self.products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
-        self.iOSProductIdentifiers = [productIdentifieres copy];
+        self.products = [[NSMutableArray alloc] initWithCapacity:self.iOSProductIdentifiers.count];
         if (self.productsRequest) {
             [self.productsRequest cancel];
             self.productsRequest = nil;
@@ -77,11 +71,18 @@
         self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         self.productsRequest.delegate = self;
         [self.productsRequest start];
-
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         [self notifyPricingsFailedWithErrorCode:MEGAPurchasePricingErrorCodePaymentsDisabled];
     }
+}
+
+- (void)notifyPricingsReady {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingDelegates) {
+            [pricingsDelegate pricingsReady];
+        }
+    });
 }
 
 - (void)notifyPricingsFailedWithErrorCode:(MEGAPurchasePricingErrorCode)errorCode {
@@ -158,10 +159,6 @@
     }
 }
 
-- (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product {
-    return [self.iOSProductIdentifiers indexOfObject:product.productIdentifier];
-}
-
 - (SKProduct *)pendingPromotedProductForPayment {
     return self.pendingStoreProduct;
 }
@@ -198,12 +195,7 @@
         MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
     }
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingDelegates) {
-            [pricingsDelegate pricingsReady];
-        }
-    });
-
+    [self notifyPricingsReady];
     [self checkForExpiredOrCancellation];
 }
 
@@ -396,9 +388,7 @@
     }
 
     if (request.type == MEGARequestTypeGetPricing) {
-        self.pricing = request.pricing;
-        self.currency = request.currency;
-        [self requestProducts];
+        [self handleSucceededPricingRequest:request];
     } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         MEGALogDebug(@"[StoreKit] Receipt submitted successfully");
         [self setIsSubmittingReceipt:false];
@@ -410,6 +400,82 @@
         [self finishSubmittedTransactions];
         self.submittingTransactions = nil;
     }
+}
+
+/// Pricing (MEGAPricing) contains plan details configured via our API, such as
+/// price, currency, storage quota, and any available offers.
+/// It includes plan details for MEGA Cloud, VPN, and PWM.
+///
+/// Products (SKProduct) contains subscription details configured in App Store Connect.
+/// It includes all subscriptions available in the MEGA Cloud app, including those
+/// used primarily for testing and those that are no longer supported by our API.
+///
+/// The valid, supported products for MEGA Cloud are the intersection of Pricing and Products.
+/// This set is unlikely to change unless we add support for new MEGA Cloud subscriptions configured in App Store Connect.
+/// What may change frequently is the offer associated with a given plan.
+///
+/// When there is an ongoing offer, a promotional dialog may be shown to users.
+/// The API guarantees that once a user upgrades during a campaign, it will stop
+/// exposing offers for that user in MEGAPricing.
+/// Therefore, we should refresh MEGAPricing regularly to ensure that offers remain up to date.
+///
+/// As a result, Products do not need to be requested again once they have been loaded.
+- (void)handleSucceededPricingRequest:(MEGARequest *)request {
+    self.pricing = request.pricing;
+    self.currency = request.currency;
+    NSMutableArray *productIdentifieres = [NSMutableArray.alloc initWithCapacity:self.pricing.products];
+    for (NSInteger i = 0; i < self.pricing.products; i++) {
+        NSString *productId = [self.pricing iOSIDAtProductIndex:i];
+        MEGALogDebug(@"[Pricing] Product \"%@\"", productId);
+        if (productId.length) {
+            [productIdentifieres addObject:productId];
+        } else {
+            MEGALogWarning(@"[Pricing] Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
+        }
+    }
+    
+    BOOL isProductIdentifiersUnchanged = [self isIOSProductIdentifiersUnchanged:productIdentifieres];
+    BOOL isProductsLoaded = self.products && self.products.count > 0;
+    
+    // Replaced on every path, right after the comparison that reads the previous value, so it always
+    // describes the same pricing request as `self.pricing` above.
+    self.iOSProductIdentifiers = [productIdentifieres copy];
+
+    if (isProductsLoaded && isProductIdentifiersUnchanged) {
+        // Products are already loaded, so notify that pricing is ready immediately.
+        // Otherwise, PricingRequester.refreshPricing will be awaiting forever.
+        [self notifyPricingsReady];
+    } else if (!isProductsLoaded) {
+        // Products are not loaded yet, proceeding with product request.
+        // The product request delegate will call either notifyPricingsReady or notifyPricingsFailed upon completion.
+        [self requestProducts];
+    } else {
+        // A different set of identifiers, proceeding with product request.
+        // The product request delegate will call either notifyPricingsReady or notifyPricingsFailed upon completion.
+        MEGALogWarning(@"[Pricing] Product identifiers have changed");
+        [self requestProducts];
+    }
+}
+
+/// Why a set comparison rather than an array comparison.
+///
+/// The order of `iOSProductIdentifiers` does not matter when fetching metadata for a given `SKProduct`.
+///
+/// `self.pricing` and `self.iOSProductIdentifiers` needed to be updated together because
+/// their underlying order was kept in sync. Given an `SKProduct.productIdentifier`, its index in
+/// `iOSProductIdentifiers` was expected to match the index of the corresponding product in `self.pricing`.
+///
+/// However, using `iOSProductIdentifiers` to look up a product index can be confusing and error-prone.
+/// Instead, please use `productIndex(for product: SKProduct)` in `MEGAPurchase+Pricing.swift`,
+/// which searches through `pricing.products`.
+
+/// `iOSProductIdentifiers` is now used only to determine whether the product identifiers have changed
+/// between pricing requests. This determines whether a subsequent product request needs to be made.
+///
+/// Comparing arrays is order-sensitive. As a result, the same set of product identifiers in a different
+/// order would cause `isIOSProductIdentifiersUnchanged` to return `false`, resulting in an unnecessary product request.
+- (BOOL)isIOSProductIdentifiersUnchanged:(NSArray *)productIdentifiers {
+    return [[NSSet setWithArray:self.iOSProductIdentifiers] isEqualToSet:[NSSet setWithArray:productIdentifiers]];
 }
 
 - (void)finishSubmittedTransactions {

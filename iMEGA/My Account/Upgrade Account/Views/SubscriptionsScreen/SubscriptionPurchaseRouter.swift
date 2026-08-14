@@ -74,7 +74,7 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
         let subscriptionView = SubscriptionPurchaseView(
             viewModel: viewModel,
             onDismiss: onDismiss ?? dismiss)
-        let hostingController = UIHostingController(rootView: subscriptionView)
+        let hostingController = PromoDialogBlockingHostingController(rootView: subscriptionView)
         hostingController.modalPresentationStyle = .fullScreen
         baseViewController = hostingController
         return hostingController

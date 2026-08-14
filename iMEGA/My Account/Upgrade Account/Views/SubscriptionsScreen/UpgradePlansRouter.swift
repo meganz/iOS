@@ -72,7 +72,7 @@ final class UpgradePlansRouter {
             dismissAction: onDismiss
         )
         let view = UpgradePlansContainerView(dependency: dependency)
-        let hostingController = UIHostingController(rootView: view)
+        let hostingController = PromoDialogBlockingHostingController(rootView: view)
         hostingController.modalPresentationStyle = .fullScreen
         baseViewController = hostingController
         termsAndPoliciesPresenter.presentingViewController = hostingController

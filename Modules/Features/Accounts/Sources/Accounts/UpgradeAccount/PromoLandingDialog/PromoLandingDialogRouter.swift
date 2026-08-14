@@ -38,7 +38,7 @@ public final class PromoLandingDialogRouter: Routing {
             )
         )
 
-        let hostingController = UIHostingController(rootView: view)
+        let hostingController = PromoDialogBlockingHostingController(rootView: view)
         presentedController = hostingController
         return hostingController
     }

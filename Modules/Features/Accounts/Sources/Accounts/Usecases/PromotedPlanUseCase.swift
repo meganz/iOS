@@ -4,7 +4,7 @@ import MEGADomain
 public protocol PromotedPlanUseCaseProtocol: Sendable {
     /// The cheapest upgrade whose offer may be advertised, or `nil` when there is none. Ties go to the yearly cycle.
     /// - Parameter checksForExpiry: when `true`, an offer is also rejected once its expiry date passes. Offers without one never lapse.
-    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PlanEntity?
+    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity?
 }
 
 public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
@@ -19,8 +19,12 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
         self.fetchUseCase = fetchUseCase
     }
 
-    public func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PlanEntity? {
-        try await pricingRequester.requestPricing()
+    public func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity? {
+        // Offers may become invalid for various reasons, such as expiring, or no longer being exposed once the user converts.
+        // Reload the products so an offer is advertised on what the API says now, not on what it said previously, such as at login.
+        // The API guarantees that once a user upgrades during the campaign, it will stop exposing offers for that user in MEGAPricing.
+        // Therefore, we should refresh MEGAPricing regularly to ensure the offers remain up to date.
+        try await pricingRequester.refreshPricing()
         async let accountDetailsResult = fetchUseCase.currentAccountDetails()
         async let plansResult = fetchUseCase.plans()
         let accountDetails = try await accountDetailsResult
@@ -30,7 +34,8 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
               let mobileOffer = plan.mobileOffer,
               mobileOffer.isAdvertisable,
               !(checksForExpiry && mobileOffer.hasExpired) else { return nil }
-        return plan
+
+        return PromotedPlanEntity(plan: plan, offer: mobileOffer)
     }
 
     private func cheapestOfferedPlan(

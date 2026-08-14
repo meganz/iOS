@@ -73,6 +73,26 @@ final class PricingRequester: NSObject, @unchecked Sendable {
 
     // MARK: - Private
 
+    private func requestPricing(forceRefresh: Bool) async throws {
+        let shouldStartNewRequest = lock.withLock {
+            let shouldStartNewRequest = if forceRefresh {
+                currentRequestState != .inFlight
+            } else {
+                currentRequestState.shouldStartNewRequest
+            }
+            // Only move to `.inFlight` when a request is actually started.
+            if shouldStartNewRequest {
+                currentRequestState = .inFlight
+            }
+            return shouldStartNewRequest
+        }
+        if shouldStartNewRequest {
+            purchase.requestPricing()
+        }
+
+        try await wait()
+    }
+    
     /// Suspends until the pricing request this caller joined reports an outcome.
     ///
     /// Cancellation is covered at three points, because the caller can be cancelled before, during,
@@ -158,19 +178,15 @@ final class PricingRequester: NSObject, @unchecked Sendable {
 extension PricingRequester: PricingRequesting {
     /// Starts a request only when there is nothing worth joining, then waits with everyone else.
     func requestPricing() async throws {
-        let shouldStartNewRequest = lock.withLock {
-            let shouldStartNewRequest = currentRequestState.shouldStartNewRequest
-            // Only move to `.inFlight` when a request is actually started.
-            if shouldStartNewRequest {
-                currentRequestState = .inFlight
-            }
-            return shouldStartNewRequest
-        }
-        if shouldStartNewRequest {
-            purchase.requestPricing()
-        }
+        try await requestPricing(forceRefresh: false)
+    }
 
-        try await wait()
+    /// Drops a completed request and loads the products again.
+    ///
+    /// Only a completed request is forgotten. One still in flight is loading the current products already,
+    /// so this joins it rather than restarting it
+    func refreshPricing() async throws {
+        try await requestPricing(forceRefresh: true)
     }
 
     /// Stops the in-flight request and drops back to `.idle`, so the next caller starts a new one.

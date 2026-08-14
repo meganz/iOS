@@ -123,6 +123,83 @@ struct PricingRequesterTests {
         #expect(sut.pendingCallerCount == 0)
     }
 
+    // MARK: - Refreshing
+
+    /// The difference from `requestPricing()`: the app-open promo trigger has to advertise on what the API
+    /// says now, so a catalogue already loaded in this process is not good enough.
+    @Test("forgets a completed request and loads the products again")
+    func refresh_afterSuccess_startsANewRequest() async throws {
+        let (sut, purchase) = makeSUT(immediateResponse: .ready)
+        try await sut.requestPricing()
+
+        try await sut.refreshPricing()
+
+        #expect(purchase.requestPricingCallCount == 2)
+        #expect(sut.pendingCallerCount == 0)
+    }
+
+    /// A request still in flight is loading the current catalogue already, so refreshing joins it. Restarting
+    /// would drop back to `.idle` and strand everyone already waiting on it with a `CancellationError`, so this
+    /// asserts the first caller resumes too rather than only counting requests.
+    @Test("joins a request already in flight instead of restarting it, leaving its waiters intact")
+    func refresh_whileInFlight_joinsTheExistingRequest() async throws {
+        let (sut, purchase) = makeSUT()
+        let waiting = Task { try await sut.requestPricing() }
+        try await waitUntil { sut.pendingCallerCount == 1 }
+
+        let refreshing = Task { try await sut.refreshPricing() }
+        try await waitUntil { sut.pendingCallerCount == 2 }
+
+        #expect(purchase.requestPricingCallCount == 1)
+
+        purchase.deliverPricingsReady()
+
+        try await waiting.value
+        try await refreshing.value
+        #expect(sut.pendingCallerCount == 0)
+    }
+
+    @Test("starts a request and waits for it when nothing has been loaded yet")
+    func refresh_onAFreshRequester_startsARequestAndWaitsForIt() async throws {
+        let (sut, purchase) = makeSUT()
+        let task = Task { try await sut.refreshPricing() }
+
+        try await waitUntil { sut.pendingCallerCount == 1 }
+        #expect(purchase.requestPricingCallCount == 1)
+
+        purchase.deliverPricingsReady()
+
+        try await task.value
+        #expect(sut.pendingCallerCount == 0)
+    }
+
+    /// A refresh that fails must release its caller and stay retryable, or the next app open waits on a
+    /// catalogue that is never coming.
+    @Test("releases the caller when the refreshed request fails, and the next refresh retries")
+    func refresh_whenTheRequestFails_resumesAndStaysRetryable() async throws {
+        let (sut, purchase) = makeSUT(immediateResponse: .failed)
+
+        try await sut.refreshPricing()
+
+        #expect(purchase.requestPricingCallCount == 1)
+        #expect(sut.pendingCallerCount == 0)
+
+        try await sut.refreshPricing()
+        #expect(purchase.requestPricingCallCount == 2)
+    }
+
+    @Test("throws a cancellation error when the calling task is cancelled while a refresh waits")
+    func refresh_callerCancelledWhileWaiting_throwsCancellationError() async throws {
+        let (sut, _) = makeSUT()
+        let task = Task { try await sut.refreshPricing() }
+        try await waitUntil { sut.pendingCallerCount == 1 }
+
+        task.cancel()
+
+        await #expect(throws: CancellationError.self) { try await task.value }
+        try await waitUntil { sut.pendingCallerCount == 0 }
+    }
+
     // MARK: - Cancellation
 
     /// Cancelling an `SKProductsRequest` produces no delegate callback, so the requester itself is the only

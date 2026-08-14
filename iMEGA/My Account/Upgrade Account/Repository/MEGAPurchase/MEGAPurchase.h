@@ -54,7 +54,6 @@ typedef NS_ENUM(NSInteger, MEGAPurchasePricingErrorCode) {
 - (void)cancelPricingRequest;
 - (void)purchaseProduct:(SKProduct *)product;
 - (void)restorePurchase;
-- (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product;
 - (void)removeAllProducts;
 - (SKProduct *)pendingPromotedProductForPayment;
 - (void)savePendingPromotedProduct:(SKProduct *)product;

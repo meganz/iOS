@@ -333,6 +333,8 @@
     [MEGAChatSdk.shared setBackgroundStatus:YES];
     [MEGAChatSdk.shared saveCurrentState];
 
+    [self cancelPromoLandingDialogTrigger];
+
     [LTHPasscodeViewController.sharedUser setDelegate:self];
     
     if (self.privacyView == nil) {
@@ -378,6 +380,8 @@
     [center removeAllDeliveredNotifications];
     
     [self showTurnOnNotificationsIfNeeded];
+
+    [self showPromoLandingDialogIfNeeded];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -763,6 +767,8 @@
     [self showTemporaryTransferErrorDialogIfNeeded];
 
     [self showStorageQuotaWarningIfNeeded];
+
+    [self showPromoLandingDialogIfNeeded];
 
     if (!hadPendingAction) {
         [self dispatchDefaultLaunchDestinationIfNeeded];

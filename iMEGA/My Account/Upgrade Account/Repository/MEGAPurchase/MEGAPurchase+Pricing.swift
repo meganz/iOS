@@ -26,33 +26,26 @@ extension MEGAPurchase {
     ///            `false` if the refresh failed and the pricing could not be updated.
     /// Discussion: According to Apple's documentation, a promotional offer's signature is only valid for ~24h. Therefore it's recommended to get a new signature for each purchase.
     @objc func refreshPricing(forProduct product: SKProduct) async -> Bool {
-        guard let pricing, let index = productIndex(for: product, in: pricing),
-              pricing.toMobileOfferEntity(index: index)?.iosSignature != nil else {
+        await refreshPricing(forProduct: product, requester: PricingRequester.shared)
+    }
+
+    /// The injectable form of `refreshPricing(forProduct:)`. Production always goes through the shared
+    /// requester; the parameter only exists so tests can drive the refresh without the singleton.
+    func refreshPricing(forProduct product: SKProduct, requester: some PricingRequesting) async -> Bool {
+        guard mobileOffer(for: product)?.iosSignature != nil else { return true }
+
+        do {
+            try await requester.refreshPricing()
+            // IOS-12264: Handle signature refresh failure
             return true
+        } catch {
+            MEGALogError("[MEGAPurchase] Failed to refresh the promotional offer before purchase \(error)")
+            return false
         }
-
-        let refreshedPricing: MEGAPricing? = await withCheckedContinuation { continuation in
-            MEGASdk.shared.getPricingWith(RequestDelegate { result in
-                switch result {
-                case .success(let request):
-                    continuation.resume(returning: request.pricing)
-                case .failure(let error):
-                    CrashlyticsLogger.log(category: .storeKit, "Could not refresh MEGAPricing for promotional offer. Error: \(error.type) - \(error.name)")
-                    MEGALogError("[StoreKit] Failed to refresh the promotional offer before purchase")
-                    continuation.resume(returning: nil)
-                }
-            })
-        }
-
-        guard let refreshedPricing else { return false }
-        await MainActor.run { self.pricing = refreshedPricing }
-        return true
     }
 
     private func promotionalOffer(for product: SKProduct) -> SKPaymentDiscount? {
-        guard let pricing, let index = productIndex(for: product, in: pricing),
-              let iosSignature = pricing.toMobileOfferEntity(index: index)?.iosSignature else { return nil }
-
+        guard let iosSignature = mobileOffer(for: product)?.iosSignature else { return nil }
         guard !iosSignature.offerId.isEmpty, !iosSignature.keyId.isEmpty, !iosSignature.signature.isEmpty,
               let nonce = UUID(uuidString: iosSignature.nonce), iosSignature.timestamp > 0 else {
             MEGALogWarning("[StoreKit] Incomplete promotional offer for product \"\(product.productIdentifier)\", purchasing without discount")
@@ -70,10 +63,18 @@ extension MEGAPurchase {
 
     /// Resolves the product's index against the given pricing directly, so the offer fields are
     /// always read from the same MEGAPricing (avoids desync with a separately cached index).
-    private func productIndex(for product: SKProduct, in pricing: MEGAPricing) -> Int? {
+    func productIndex(for product: SKProduct) -> Int? {
+        guard let pricing else { return nil }
         for index in 0..<pricing.products where pricing.iOSID(atProductIndex: index) == product.productIdentifier {
             return index
         }
         return nil
+    }
+
+    /// The offer attached to the pricing entry that matches this product, or `nil` when the product is
+    /// not in the pricing or carries no offer.
+    func mobileOffer(for product: SKProduct) -> MobileOfferEntity? {
+        guard let pricing, let index = productIndex(for: product) else { return nil }
+        return pricing.toMobileOfferEntity(index: index)
     }
 }
