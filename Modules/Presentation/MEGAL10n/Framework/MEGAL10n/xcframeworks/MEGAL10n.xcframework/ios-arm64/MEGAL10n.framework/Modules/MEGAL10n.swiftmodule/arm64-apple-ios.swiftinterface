@@ -3349,7 +3349,7 @@ public enum Strings {
           public static func title(_ p1: Swift.Int) -> Swift.String
         }
         public enum NotEnoughStorage {
-          public static let message: Swift.String
+          public static func message(_ p1: Any, _ p2: Any) -> Swift.String
           public static let title: Swift.String
           public enum Button {
             public static let dismiss: Swift.String
