@@ -3,7 +3,7 @@ import Foundation
 import MEGASwift
 
 public final class Debouncer: NSObject, Sendable {
-    public typealias Action = () -> Void
+    public typealias Action = @Sendable () -> Void
     private let subject = PassthroughSubject<Action, Never>()
     private let scheduler = DispatchQueue(label: "nz.mega.MEGAFoundation.Debouncer.scheduler")
     
@@ -19,7 +19,7 @@ public final class Debouncer: NSObject, Sendable {
         }
     }
     
-    public func start(action: @escaping @Sendable Action) {
+    public func start(action: @escaping Action) {
         subject.send(action)
     }
 

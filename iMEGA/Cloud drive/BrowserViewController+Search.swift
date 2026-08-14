@@ -6,7 +6,9 @@ extension BrowserViewController {
         if searchController.isActive {
             if searchString.count > 0 {
                 viewModel.searchDebouncer.start { [weak self] in
-                    self?.search(by: searchString)
+                    Task { @MainActor in
+                        self?.search(by: searchString)
+                    }
                 }
             } else {
                 cancelSearchTask()

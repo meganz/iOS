@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 protocol SlideShowOptionContentRouting {
     func slideShowOptionCell(for viewModel: SlideShowOptionCellViewModel) -> SlideShowOptionCellView
     func slideShowOptionDetailView(for viewModel: SlideShowOptionCellViewModel, isShowing: Binding<Bool>) -> SlideShowOptionDetailView

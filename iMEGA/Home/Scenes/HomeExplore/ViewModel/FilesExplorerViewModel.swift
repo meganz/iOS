@@ -198,8 +198,10 @@ final class FilesExplorerViewModel: ViewModelType {
     // MARK: search
     private func monitorNodeUpdates() async {
         for await _ in useCase.nodeUpdates {
-            debouncer.start { @MainActor [weak self] in
-                self?.invokeCommand?(.reloadData)
+            debouncer.start { [weak self] in
+                Task { @MainActor in
+                    self?.invokeCommand?(.reloadData)
+                }
             }
         }
     }

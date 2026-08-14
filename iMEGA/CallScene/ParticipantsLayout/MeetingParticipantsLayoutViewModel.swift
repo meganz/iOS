@@ -1399,8 +1399,10 @@ extension MeetingParticipantsLayoutViewModel {
                 break
             }
         case .callRaiseHand:
-            debouncer.start { @MainActor [weak self] in
-                self?.callRaiseHandChanged(for: call)
+            debouncer.start { [weak self] in
+                Task { @MainActor in
+                    self?.callRaiseHandChanged(for: call)
+                }
             }
         default:
             break

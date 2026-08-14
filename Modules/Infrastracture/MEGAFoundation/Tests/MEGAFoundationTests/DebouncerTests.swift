@@ -12,12 +12,13 @@ final class DebouncerTests: XCTestCase {
 
     func testStartAction_whenCalled_shouldExecuteActionAfterDelay() {
         let expectation = XCTestExpectation(description: "Action should be called after delay")
-        let debouncer = Debouncer(delay: defaultDelay)
+        let delay = defaultDelay
+        let debouncer = Debouncer(delay: delay)
         let startTime = Date()
 
         debouncer.start {
             let elapsedTime = Date().timeIntervalSince(startTime)
-            XCTAssertGreaterThanOrEqual(elapsedTime, self.defaultDelay, "Action should be executed after the delay")
+            XCTAssertGreaterThanOrEqual(elapsedTime, delay, "Action should be executed after the delay")
             expectation.fulfill()
         }
         
@@ -42,11 +43,11 @@ final class DebouncerTests: XCTestCase {
     func testMultipleStarts_whenCalledMultipleTimes_shouldOnlyExecuteLastAction() {
         let expectation = XCTestExpectation(description: "Only the last action should be called")
         let debouncer = Debouncer(delay: defaultDelay)
-        var callCount = 0
-        
+        let callCount = CallCounter()
+
         func performStartAction() {
             debouncer.start {
-                callCount += 1
+                callCount.increment()
                 expectation.fulfill()
             }
         }
@@ -57,7 +58,7 @@ final class DebouncerTests: XCTestCase {
 
         wait(for: [expectation], timeout: defaultTimeOut)
 
-        XCTAssertEqual(callCount, 1)
+        XCTAssertEqual(callCount.value, 1)
     }
 
     func testConcurrentAccess_whenCalledConcurrently_shouldDebounceCorrectly() {
@@ -81,5 +82,24 @@ final class DebouncerTests: XCTestCase {
         group.notify(queue: DispatchQueue.main) {
             self.wait(for: [expectation], timeout: self.defaultTimeOut)
         }
+    }
+}
+
+/// `Debouncer.Action` is `@Sendable`, so a captured `var` cannot be mutated from
+/// inside it. This keeps the counter usable across isolation domains.
+private final class CallCounter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var count = 0
+
+    func increment() {
+        lock.lock()
+        defer { lock.unlock() }
+        count += 1
+    }
+
+    var value: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return count
     }
 }

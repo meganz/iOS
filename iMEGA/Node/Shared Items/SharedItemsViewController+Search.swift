@@ -19,7 +19,9 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 }
                 
                 viewModel.searchDebouncer.start { [weak self] in
-                    self?.search(by: searchString, showsHUD: showsHUD)
+                    Task { @MainActor in
+                        self?.search(by: searchString, showsHUD: showsHUD)
+                    }
                 }
             }
         } else {
