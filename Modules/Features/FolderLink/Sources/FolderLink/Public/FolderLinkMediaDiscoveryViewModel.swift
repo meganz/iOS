@@ -197,10 +197,9 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                 case .saveToPhotos:
                     // While browsing, this hands Save to Photos the folder itself rather than the media
                     // inside it, and `SaveMediaToPhotosUseCase` downloads whatever it is given as a file
-                    // instead of walking the tree — so the sheet's Download row does nothing for a folder.
-                    // The list/grid screen maps it the same way, and IOS-12333 reworks Download for
-                    // folders (download the tree, then archive it on device), so this is left to that
-                    // ticket rather than fixed for gallery mode alone and split from list/grid.
+                    // instead of walking the tree — so the row does nothing for a folder. Left alone rather
+                    // than fixed here because the list/grid screen maps it exactly the same way, and one
+                    // screen walking the tree while the other does not is worse than both being wrong.
                     FolderLinkNodesAction.saveToPhotos(nodes)
                 }
             }

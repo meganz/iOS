@@ -71,15 +71,23 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         } else if mediaUseCase.isImage(node.name), let imageUrl = fileCacheRepository.existingOriginalImageURL(for: node) {
             return imageUrl
         } else if let fileUrl = fileCacheRepository.existingTempFileURL(for: node) {
+            // Safe for a folder as well as a file: neither takes its final name until it is whole, so what
+            // is found here is never a download still in progress. See `downloadFolder(_:)`.
             return fileUrl
         } else {
             return nil
         }
     }
-    
+
+    /// An offline record can outlive the copy it points at: the store it comes from and the copy itself sit
+    /// in different containers, so reinstalling leaves the record behind with nothing under it. Both cache
+    /// branches in `nodeUrl(_:)` already check for the file, and without the same check here a stale record
+    /// makes the export skip its download and hand back a path with nothing at it.
     private func offlineUrl(for base64Handle: Base64HandleEntity) -> URL? {
         guard let offlinePath = offlineFileFetcherRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
-        return URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
+
+        let offlineUrl = URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
+        return fileSystemRepository.fileExists(at: offlineUrl) ? offlineUrl : nil
     }
     
     private func importNodeToDownload(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity) async throws -> URL {
@@ -88,6 +96,11 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     }
 
     private func downloadNode(_ node: NodeEntity) async throws -> URL {
+        guard node.isFile else { return try await downloadFolder(node) }
+        return try await downloadFile(node)
+    }
+
+    private func downloadFile(_ node: NodeEntity) async throws -> URL {
         let url = mediaUseCase.isImage(node.name)
             ? fileCacheRepository.cachedOriginalImageURL(for: node)
             : fileCacheRepository.tempFileURL(for: node)
@@ -100,6 +113,46 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         } catch {
             throw ExportFileErrorEntity.downloadFailed
         }
+    }
+
+    /// Downloads a folder into a staging directory and moves it where it belongs once it is whole, so that
+    /// finding the final directory always means a finished download.
+    ///
+    /// The SDK already does this for a file — it writes under a temporary leaf name and takes the real one
+    /// on completion — but it builds a folder's directory tree under the final name before downloading
+    /// anything into it, which leaves a half-filled tree indistinguishable from a finished one.
+    private func downloadFolder(_ node: NodeEntity) async throws -> URL {
+        let destinationURL = fileCacheRepository.tempFileURL(for: node)
+        let stagingURL = fileCacheRepository.stagingTempFileURL(for: node)
+        let stagingFolderURL = fileCacheRepository.stagingTempFolder(for: node)
+
+        // Whatever being killed mid download left behind: the SDK would otherwise download alongside it
+        // under a deduplicated name, and the move below would carry the older tree over instead. Only the
+        // copy is cleared, not the directory holding it, which the download still needs to exist.
+        try? await fileSystemRepository.removeItem(at: stagingURL)
+
+        do {
+            _ = try await downloadFileRepository.download(
+                nodeHandle: node.handle,
+                to: stagingURL,
+                metaData: .exportFile
+            )
+        } catch {
+            try? await fileSystemRepository.removeItem(at: stagingFolderURL)
+            throw ExportFileErrorEntity.downloadFailed
+        }
+
+        // Handed over from staging if the move fails: the tree is whole and merely in the wrong place, and
+        // the only cost is that the next export downloads it again instead of finding it in the cache. The
+        // staging directory has to stay for the same reason.
+        guard fileSystemRepository.moveFile(at: stagingURL, to: destinationURL) else { return stagingURL }
+        // The whole staging directory, not the copy inside it: a move that happened leaves that directory
+        // empty, and one would otherwise pile up for every folder ever exported. It also covers the move
+        // reporting success without moving anything, which is what it does when the destination is already
+        // there — another export having finished the same folder first, whose copy is as good as ours.
+        try? await fileSystemRepository.removeItem(at: stagingFolderURL)
+
+        return destinationURL
     }
 }
 

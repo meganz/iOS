@@ -241,8 +241,8 @@ final class FolderLinkMediaDiscoveryViewModelTests {
                 (.addToCloudDrive([parentHandle]), .addToCloudDrive),
                 (.makeAvailableOffline([parentHandle]), .makeAvailableOffline),
                 (.downloadToFiles([parentHandle]), .downloadToFiles),
-                // Save to Photos cannot actually take a folder — this pins the interim mapping, not a
-                // working flow, and IOS-12333 is expected to change both it and this expectation.
+                // Save to Photos cannot actually take a folder, so this pins the mapping the row makes,
+                // not a working flow — see the note on the mapping itself.
                 (.saveToPhotos([parentHandle]), .saveToPhotos)
             ]
 

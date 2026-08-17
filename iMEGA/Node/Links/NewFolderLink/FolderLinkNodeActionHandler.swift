@@ -120,10 +120,6 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
         saveToPhotos(nodes)
     }
     
-    /// Placeholder until IOS-12333 builds the real Download flow. `ExportFileRouter` only exports files,
-    /// so a selected folder is silently dropped here — the SDK has no compressed download, so covering
-    /// folders means downloading the tree and archiving it on device, which IOS-12333 owns along with
-    /// the behaviour design picks for mixed file and folder selections.
     private func exportNodes(nodeHandles: Set<HandleEntity>) {
         let nodes = nodeHandles.compactMap { sdk.node(forHandle: $0) }
         Task { await settingUpTransfer { await startExport(of: nodes) } }
@@ -131,8 +127,8 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
 
     private func startExport(of nodes: [MEGANode]) async {
         guard let navigationController, await confirmEnoughStorage(for: nodes) else { return }
-        ExportFileRouter(presenter: navigationController, sender: navigationController.view, isFolderLink: true)
-            .export(nodes: nodes.toNodeEntities())
+        await ExportFileRouter(presenter: navigationController, sender: navigationController.view, isFolderLink: true)
+            .export(nodes: nodes.toNodeEntities())?.value
     }
     
     private func downloadNodes(_ nodes: [MEGANode]) {
@@ -144,9 +140,12 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
         DownloadLinkRouter(nodes: nodes.toNodeEntities(), isFolderLink: true, presenter: navigationController).start()
     }
 
-    /// Runs `start` unless another transfer is already being set up, so repeated taps on a bottom bar
-    /// button collapse into one. Only covers the set-up window: once the transfer is handed to its
-    /// router, the transfers UI takes over reporting it.
+    /// Runs `start` unless one is already in flight, so repeated taps on a bottom bar button collapse into
+    /// one rather than starting a second transfer over the first.
+    ///
+    /// Exporting is held for its whole duration, because a second export of the same folder would clear the
+    /// staging directory the first one is still filling. Saving offline hands off to its own router and
+    /// returns straight away, so there it still only covers the set-up window.
     private func settingUpTransfer(_ start: () async -> Void) async {
         guard !isSettingUpTransfer else { return }
         isSettingUpTransfer = true
@@ -179,10 +178,9 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
     /// `nonisolated` because sizing a folder makes the SDK walk its whole tree, which would block the
     /// main actor for a large folder link.
     ///
-    /// The total is an upper bound: it charges the device for the whole selection, while a download
-    /// skips whatever is already offline and an export reuses whatever is already cached. Erring on the
-    /// high side only ever warns too eagerly, never too late, and IOS-12333 replaces this with the byte
-    /// count the real download plan reports once that plan exists.
+    /// The total is an upper bound: it charges the device for the whole selection, while a download skips
+    /// whatever is already offline and an export reuses whatever is already cached. Erring on the high side
+    /// only ever warns too eagerly, never too late.
     private nonisolated func requiredBytes(for nodes: [MEGANode]) async -> UInt64 {
         nodes.toNodeEntities().reduce(UInt64.zero) { total, node in
             total + (nodeUseCase.sizeFor(node: node) ?? 0)
@@ -206,8 +204,8 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
 
     private func startExport(of node: MEGANode, from sender: Any) async {
         guard let navigationController, await confirmEnoughStorage(for: [node]) else { return }
-        ExportFileRouter(presenter: navigationController, sender: sender, isFolderLink: true)
-            .export(node: node.toNodeEntity())
+        await ExportFileRouter(presenter: navigationController, sender: sender, isFolderLink: true)
+            .export(node: node.toNodeEntity())?.value
     }
 
     private func saveToPhotos(_ nodes: [MEGANode]) {

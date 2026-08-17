@@ -17,6 +17,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     public var removeFolderContents_calledTimes: Int = 0
     
     @Atomic public var removeFileURLs = [URL]()
+    /// Every move that was asked for, in call order, so a test can assert what was moved where.
+    @Atomic public var movedFiles = [(source: URL, destination: URL)]()
 
     public init(fileExists: Bool = false,
                 copiedNode: Bool = false,
@@ -45,7 +47,8 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     }
     
     public func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
-        movedNode
+        $movedFiles.mutate { $0.append((sourceURL, destinationURL)) }
+        return movedNode
     }
     
     public func copyFile(at sourceURL: URL, to destinationURL: URL) -> Bool {

@@ -21,14 +21,24 @@ final class ExportFileRouter: ExportFileViewRouting {
     }
     
     // MARK: - Dispatch actions without viewcontroller -
-    func export(node: NodeEntity) {
-        createViewModel().dispatch(.exportFileFromNode(node))
+    /// - Returns: The work the export runs on, so a caller that needs to know when it is over can await it.
+    ///   Every caller that only fires and forgets can keep ignoring it.
+    @discardableResult
+    func export(node: NodeEntity) -> Task<Void, Never>? {
+        dispatch(.exportFileFromNode(node))
+    }
+
+    @discardableResult
+    func export(nodes: [NodeEntity]) -> Task<Void, Never>? {
+        dispatch(.exportFilesFromNodes(nodes))
     }
     
-    func export(nodes: [NodeEntity]) {
-        createViewModel().dispatch(.exportFilesFromNodes(nodes))
+    private func dispatch(_ action: ExportFileAction) -> Task<Void, Never>? {
+        let viewModel = createViewModel()
+        viewModel.dispatch(action)
+        return viewModel.currentTask
     }
-    
+
     func export(messages: [ChatMessageEntity], chatId: HandleEntity) {
         createViewModel().dispatch(.exportFilesFromMessages(messages, chatId))
     }

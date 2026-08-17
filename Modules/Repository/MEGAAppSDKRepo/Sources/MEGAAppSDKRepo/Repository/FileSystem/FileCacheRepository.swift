@@ -9,6 +9,9 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
     private enum Constants {
         static let originalCacheDirectory = "originalV3"
         static let uploadsDirectory = "Uploads"
+        /// Appended to the containing folder rather than to the node's own name, so that a staged copy
+        /// keeps the name the user knows it by.
+        static let stagingDirectorySuffix = ".incomplete"
     }
     
     private let fileManager: FileManager
@@ -37,6 +40,14 @@ public final class FileCacheRepository: FileCacheRepositoryProtocol {
         base64HandleTempFolder(for: node.base64Handle).appendingPathComponent(node.name)
     }
     
+    public func stagingTempFileURL(for node: NodeEntity) -> URL {
+        stagingTempFolder(for: node).appendingPathComponent(node.name)
+    }
+
+    public func stagingTempFolder(for node: NodeEntity) -> URL {
+        base64HandleTempFolder(for: node.base64Handle + Constants.stagingDirectorySuffix)
+    }
+
     public func base64HandleTempFolder(for base64Handle: Base64HandleEntity) -> URL {
         let directoryURL = tempFolder.appendingPathComponent(base64Handle)
         try? fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)

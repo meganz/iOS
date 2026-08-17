@@ -6,17 +6,22 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     
     private let base64Handle: Base64HandleEntity
     private let name: String
+    /// Whether a cached copy is already on disk. Defaults to `true` so that callers written before this knob
+    /// existed keep seeing a cache hit; pass `false` to exercise what happens when nothing is cached yet.
+    private let hasExistingTempFile: Bool
     public var tempFolder: URL
     public var tempUploadURL: URL
-    
+
     public init(
         base64Handle: Base64HandleEntity = "",
         name: String = "",
+        hasExistingTempFile: Bool = true,
         tempFolder: URL = URL(fileURLWithPath: "temp/"),
         tempUploadURL: URL = URL(fileURLWithPath: "temp/upload")
     ) {
         self.base64Handle = base64Handle
         self.name = name
+        self.hasExistingTempFile = hasExistingTempFile
         self.tempFolder = tempFolder
         self.tempUploadURL = tempUploadURL
     }
@@ -24,9 +29,18 @@ public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     public func tempFileURL(for node: NodeEntity) -> URL {
         tempFolder.appendingPathComponent(name)
     }
-    
+
+    /// Mirrors the real layout: the node keeps its name and only the folder holding it differs.
+    public func stagingTempFileURL(for node: NodeEntity) -> URL {
+        stagingTempFolder(for: node).appendingPathComponent(name)
+    }
+
+    public func stagingTempFolder(for node: NodeEntity) -> URL {
+        tempFolder.appendingPathComponent(base64Handle + ".incomplete")
+    }
+
     public func existingTempFileURL(for node: NodeEntity) -> URL? {
-        tempFolder.appendingPathComponent(name)
+        hasExistingTempFile ? tempFolder.appendingPathComponent(name) : nil
     }
     
     public var cachedOriginalImageDirectoryURL: URL {

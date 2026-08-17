@@ -4,6 +4,10 @@ public protocol FileCacheRepositoryProtocol: RepositoryProtocol, Sendable {
     var tempFolder: URL { get }
     var tempUploadURL: URL { get }
     func tempFileURL(for node: NodeEntity) -> URL
+    func stagingTempFileURL(for node: NodeEntity) -> URL
+    /// The directory `stagingTempFileURL(for:)` sits in, so that a caller finished with a staged copy can
+    /// clear the whole thing rather than leaving an empty directory behind for every node it staged.
+    func stagingTempFolder(for node: NodeEntity) -> URL
     func existingTempFileURL(for node: NodeEntity) -> URL?
     var cachedOriginalImageDirectoryURL: URL { get }
     func cachedOriginalImageURL(for node: NodeEntity) -> URL

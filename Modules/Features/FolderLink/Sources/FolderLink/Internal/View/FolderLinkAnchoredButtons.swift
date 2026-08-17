@@ -27,7 +27,7 @@ struct FolderLinkAnchoredButtons: View {
                     type: .secondary,
                     state: buttonState
                 ) {
-                    selection = .makeAvailableOffline
+                    selection = .downloadToFiles
                 },
                 MEGAButton(
                     Strings.Localizable.Link.Button.saveToMega,
