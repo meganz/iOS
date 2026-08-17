@@ -184,15 +184,22 @@ struct FolderLinkMediaDiscoveryView<Content, DismissButton>: View where Content:
                             Image(uiImage: MEGAAssets.UIImage.checkCircle)
                         }
                     }
+                    // Selecting needs something to select; the other actions in this menu do not.
+                    .disabled(!viewModel.shouldEnableMoreOptionsMenu)
+                }
+
+                if viewModel.shouldShowQuickActionsMenu {
+                    Section {
+                        FolderLinkQuickActionButton(action: .addToCloudDrive, selection: $viewModel.quickAction)
+                        FolderLinkQuickActionButton(action: .makeAvailableOffline, selection: $viewModel.quickAction)
+                        ShareLinkButton(link: dependency.link)
+                        FolderLinkQuickActionButton(action: .sendToChat, selection: $viewModel.quickAction)
+                    }
                 }
             } label: {
-                Label {
-                    Text(Strings.Localizable.more)
-                } icon: {
-                    Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
-                }
+                FolderLinkMoreOptionsLabel()
             }
-            // The pre-revamp menu holds no folder-wide action, so it keeps its original gating.
+            // Kept identical to the list/grid screen's pre-revamp gating.
             .disabled(!viewModel.shouldEnableMoreOptionsMenu || !networkConnected)
         }
     }
