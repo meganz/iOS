@@ -19,8 +19,8 @@ public final class UpgradePlansViewModel: ObservableObject {
     private let isExternalPurchaseAvailable: Bool
     private let recommendedPlanUseCase: any RecommendedUpgradePlanUseCaseProtocol
 
-    /// The billing cycle currently selected in the picker, seeded from the default selection.
-    @Published var selectedCycle: SubscriptionCycleEntity
+    /// The billing cycle currently selected in the picker, always yearly by default.
+    @Published var selectedCycle: SubscriptionCycleEntity = .yearly
 
     init(
         isPromo: Bool = false,
@@ -40,7 +40,6 @@ public final class UpgradePlansViewModel: ObservableObject {
         self.displayName = displayName
         self.isExternalPurchaseAvailable = isExternalPurchaseAvailable
         self.recommendedPlanUseCase = recommendedPlanUseCase
-        self.selectedCycle = Self.resolveDefaultCycle(plans: plans, currentCycle: accountDetails.subscriptionCycle)
     }
 
     private var currentPlanPresenter: SubscriptionCurrentPlanPresenter {
@@ -82,40 +81,8 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     // MARK: - Default cycle selection
 
-    /// The billing cycle to preselect in priority order:
-    /// 1. discounts on both cycles -> the cycle matching the user's current plan,
-    /// 2. a discount on a single cycle -> that cycle,
-    /// 3. no discount -> the user's current cycle, or yearly when the user has none (e.g. free).
-    var defaultSelectedCycle: SubscriptionCycleEntity {
-        Self.resolveDefaultCycle(plans: plans, currentCycle: currentCycle)
-    }
-
-    private static func resolveDefaultCycle(
-        plans: [PlanEntity],
-        currentCycle: SubscriptionCycleEntity
-    ) -> SubscriptionCycleEntity {
-        switch (hasDiscountedPlan(.monthly, in: plans), hasDiscountedPlan(.yearly, in: plans)) {
-        case (true, false): .monthly
-        case (false, true): .yearly
-        case (true, true), (false, false): userCycle(currentCycle) ?? .yearly
-        }
-    }
-
-    private static func hasDiscountedPlan(_ cycle: SubscriptionCycleEntity, in plans: [PlanEntity]) -> Bool {
-        plans.contains { $0.subscriptionCycle == cycle && isDiscounted($0) }
-    }
-
-    private static func isDiscounted(_ plan: PlanEntity) -> Bool {
-        plan.introductoryOffer != nil || plan.hasValidPromotionalOffer
-    }
-
-    private static func userCycle(_ cycle: SubscriptionCycleEntity) -> SubscriptionCycleEntity? {
-        switch cycle {
-        case .monthly: .monthly
-        case .yearly: .yearly
-        case .none: nil
-        }
-    }
+    /// The billing cycle to preselect, always yearly.
+    var defaultSelectedCycle: SubscriptionCycleEntity { .yearly }
 
     var freePlanCard: SubscriptionFreePlanCardModel? {
         guard case .onboarding(let isFreeAccountFirstLogin) = viewType else { return nil }

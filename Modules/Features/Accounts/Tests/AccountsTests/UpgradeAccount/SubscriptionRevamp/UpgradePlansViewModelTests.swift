@@ -32,60 +32,41 @@ struct UpgradePlansViewModelTests {
         )
     }
 
-    @Test("A discount on the monthly cycle only preselects monthly, overriding the user's cycle")
-    func monthlyOnlyDiscountPreselectsMonthly() {
-        let sut = makeSUT(plans: [plan(.monthly, discounted: true), plan(.yearly)], userCycle: .yearly)
-        #expect(sut.defaultSelectedCycle == .monthly)
+    @Test("A discount on the monthly cycle only still preselects yearly")
+    func monthlyOnlyDiscountPreselectsYearly() {
+        let sut = makeSUT(plans: [plan(.monthly, discounted: true), plan(.yearly)], userCycle: .monthly)
+        #expect(sut.defaultSelectedCycle == .yearly)
+        #expect(sut.selectedCycle == .yearly)
     }
 
-    @Test("A discount on the yearly cycle only preselects yearly, overriding the user's cycle")
+    @Test("A discount on the yearly cycle only preselects yearly")
     func yearlyOnlyDiscountPreselectsYearly() {
         let sut = makeSUT(plans: [plan(.monthly), plan(.yearly, discounted: true)], userCycle: .monthly)
         #expect(sut.defaultSelectedCycle == .yearly)
+        #expect(sut.selectedCycle == .yearly)
     }
 
-    @Test("Discounts on both cycles preselect the cycle matching the user's current plan (monthly)")
-    func bothDiscountedFollowsUserCycleMonthly() {
+    @Test("Discounts on both cycles preselect yearly")
+    func bothDiscountedPreselectsYearly() {
         let sut = makeSUT(
             plans: [plan(.monthly, discounted: true), plan(.yearly, discounted: true)],
             userCycle: .monthly
         )
-        #expect(sut.defaultSelectedCycle == .monthly)
-    }
-
-    @Test("Discounts on both cycles preselect the cycle matching the user's current plan (yearly)")
-    func bothDiscountedFollowsUserCycleYearly() {
-        let sut = makeSUT(
-            plans: [plan(.monthly, discounted: true), plan(.yearly, discounted: true)],
-            userCycle: .yearly
-        )
         #expect(sut.defaultSelectedCycle == .yearly)
+        #expect(sut.selectedCycle == .yearly)
     }
 
-    @Test("Discounts on both cycles fall back to yearly when the user has no recurring plan")
-    func bothDiscountedDefaultsToYearlyWithoutUserCycle() {
-        let sut = makeSUT(
-            plans: [plan(.monthly, discounted: true), plan(.yearly, discounted: true)],
-            userCycle: .none
-        )
-        #expect(sut.defaultSelectedCycle == .yearly)
-    }
-
-    @Test("No discount preselects the user's current cycle (monthly)")
-    func noDiscountFollowsUserCycleMonthly() {
+    @Test("A user on a monthly plan still preselects yearly")
+    func monthlyUserCyclePreselectsYearly() {
         let sut = makeSUT(plans: [plan(.monthly), plan(.yearly)], userCycle: .monthly)
-        #expect(sut.defaultSelectedCycle == .monthly)
-    }
-
-    @Test("No discount preselects the user's current cycle (yearly)")
-    func noDiscountFollowsUserCycleYearly() {
-        let sut = makeSUT(plans: [plan(.monthly), plan(.yearly)], userCycle: .yearly)
         #expect(sut.defaultSelectedCycle == .yearly)
+        #expect(sut.selectedCycle == .yearly)
     }
 
-    @Test("No discount and no user cycle defaults to yearly")
-    func noDiscountNoUserCycleDefaultsToYearly() {
+    @Test("A user with no recurring plan preselects yearly")
+    func noUserCyclePreselectsYearly() {
         let sut = makeSUT(plans: [plan(.monthly), plan(.yearly)], userCycle: .none)
         #expect(sut.defaultSelectedCycle == .yearly)
+        #expect(sut.selectedCycle == .yearly)
     }
 }
