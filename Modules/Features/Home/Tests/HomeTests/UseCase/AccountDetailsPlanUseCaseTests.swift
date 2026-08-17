@@ -1,5 +1,5 @@
-import Home
 import Foundation
+import Home
 import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
@@ -66,7 +66,10 @@ struct AccountDetailsPlanUseCaseTests {
             currentAccountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence()
         )
-        let sut = AccountDetailsPlanUseCase(accountUseCase: accountUseCase)
+        let sut = AccountDetailsPlanUseCase(
+            accountUseCase: accountUseCase,
+            planPurchases: AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
+        )
 
         accountUseCase.setCurrentAccountDetails(MockMEGAAccountDetails(type: .proII).toAccountDetailsEntity())
         continuation.yield(.success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
@@ -82,7 +85,10 @@ struct AccountDetailsPlanUseCaseTests {
             currentAccountDetails: MockMEGAAccountDetails(type: .proI).toAccountDetailsEntity(),
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence()
         )
-        let sut = AccountDetailsPlanUseCase(accountUseCase: accountUseCase)
+        let sut = AccountDetailsPlanUseCase(
+            accountUseCase: accountUseCase,
+            planPurchases: AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
+        )
 
         accountUseCase.setCurrentAccountDetails(MockMEGAAccountDetails(type: .business).toAccountDetailsEntity())
         continuation.yield(.success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
@@ -138,6 +144,55 @@ struct AccountDetailsPlanUseCaseTests {
         #expect(didReceiveUpdate == false)
     }
 
+    // MARK: - Reacting to a plan purchase
+
+    @Test("currentPlan emits nil when a plan purchase is announced, so the widget can show its loading state")
+    func currentPlanEmitsNilOnPurchase() async throws {
+        let (purchases, purchase) = AsyncStream<Void>.makeStream()
+        let sut = makeSUT(
+            accountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
+            planPurchases: purchases.eraseToAnyAsyncSequence()
+        )
+
+        // Subscribing first, then announcing, makes the ordering total: the subject cannot emit
+        // before there is a subscriber, and the purchase stream buffers so the SUT cannot miss it.
+        var iterator = sut.currentPlan.makeAsyncIterator()
+        #expect(await iterator.next() == .free)
+
+        purchase.yield()
+
+        let cleared: AccountTypeEntity?? = await iterator.next()
+        #expect(try #require(cleared) == nil)
+    }
+
+    @Test("currentPlan clears to nil on purchase then emits the purchased plan on the refresh that follows")
+    func currentPlanEmitsPurchasedPlanAfterPurchaseThenRefresh() async throws {
+        let (purchases, purchase) = AsyncStream<Void>.makeStream()
+        let (requests, request) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
+            onAccountRequestFinish: requests.eraseToAnyAsyncSequence()
+        )
+        let sut = AccountDetailsPlanUseCase(
+            accountUseCase: accountUseCase,
+            planPurchases: purchases.eraseToAnyAsyncSequence()
+        )
+
+        // One iterator drives the whole scenario, so each step is only taken once the previous
+        // emission has been observed. That ordering is what makes the sequence below total.
+        var iterator = sut.currentPlan.makeAsyncIterator()
+        #expect(await iterator.next() == .free)
+
+        purchase.yield()
+        let cleared: AccountTypeEntity?? = await iterator.next()
+        #expect(try #require(cleared) == nil)
+
+        accountUseCase.setCurrentAccountDetails(MockMEGAAccountDetails(type: .proI).toAccountDetailsEntity())
+        request.yield(.success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
+
+        #expect(await iterator.next() == .proI)
+    }
+
     // MARK: - Multiple sequential updates
 
     @Test("currentPlan emits each distinct plan update in order")
@@ -147,7 +202,10 @@ struct AccountDetailsPlanUseCaseTests {
             currentAccountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
             onAccountRequestFinish: stream.eraseToAnyAsyncSequence()
         )
-        let sut = AccountDetailsPlanUseCase(accountUseCase: accountUseCase)
+        let sut = AccountDetailsPlanUseCase(
+            accountUseCase: accountUseCase,
+            planPurchases: AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
+        )
 
         var received: [AccountTypeEntity?] = []
         var iterator = sut.currentPlan.makeAsyncIterator()
@@ -172,13 +230,15 @@ struct AccountDetailsPlanUseCaseTests {
 
     private func makeSUT(
         accountDetails: AccountDetailsEntity? = nil,
-        onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = AsyncStream<Result<AccountRequestEntity, any Error>> { _ in }.eraseToAnyAsyncSequence()
+        onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = AsyncStream<Result<AccountRequestEntity, any Error>> { _ in }.eraseToAnyAsyncSequence(),
+        planPurchases: AnyAsyncSequence<Void> = AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
     ) -> AccountDetailsPlanUseCase {
         AccountDetailsPlanUseCase(
             accountUseCase: MockAccountUseCase(
                 currentAccountDetails: accountDetails,
                 onAccountRequestFinish: onAccountRequestFinish
-            )
+            ),
+            planPurchases: planPurchases
         )
     }
 

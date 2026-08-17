@@ -174,8 +174,8 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private func monitorPlan() async {
-        for await accountType in dependency.planUseCase.currentPlan.compacted() {
-            plan = accountType.toAccountTypeDisplayName()
+        for await accountType in dependency.planUseCase.currentPlan {
+            plan = accountType?.toAccountTypeDisplayName()
         }
     }
 
@@ -186,7 +186,7 @@ final class AccountDetailsWidgetViewModel: ObservableObject {
     }
 
     private func monitorStorage() async {
-        for await storageDetail in dependency.storageUseCase.storageDetails.compacted() {
+        for await storageDetail in dependency.storageUseCase.storageDetails {
             self.storageDetail = storageDetail
         }
     }

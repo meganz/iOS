@@ -254,6 +254,31 @@ struct AccountDetailsStorageUseCaseTests {
         #expect(updated == .unlimited(150))
     }
 
+    // MARK: - Reacting to a plan purchase
+
+    @Test("storageDetails emits nil when a plan purchase is announced, so the widget can show its loading state")
+    func storageDetailsEmitsNilOnPurchase() async throws {
+        let (purchases, purchase) = AsyncStream<Void>.makeStream()
+        let sut = makeSUT(
+            accountDetails: MockMEGAAccountDetails(
+                storageUsed: 500,
+                storageMax: 1000,
+                type: .proI
+            ).toAccountDetailsEntity(),
+            planPurchases: purchases.eraseToAnyAsyncSequence()
+        )
+
+        // Subscribing first, then announcing, makes the ordering total: the subject cannot emit
+        // before there is a subscriber, and the purchase stream buffers so the SUT cannot miss it.
+        var iterator = sut.storageDetails.makeAsyncIterator()
+        #expect(await iterator.next() == .limited(500, storageMax: 1000, storageStatus: .noStorageProblems))
+
+        purchase.yield()
+
+        let cleared: AccountStorageDetails?? = await iterator.next()
+        #expect(try #require(cleared) == nil)
+    }
+
     // MARK: - Multiple sequential updates across both triggers
 
     @Test("storageDetails emits each distinct storage update in order across both triggers")
@@ -303,24 +328,28 @@ struct AccountDetailsStorageUseCaseTests {
     private func makeSUT(
         accountDetails: AccountDetailsEntity? = nil,
         onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = AsyncStream { _ in }.eraseToAnyAsyncSequence(),
-        storageSumUpdates: AnyAsyncSequence<Int64> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
+        storageSumUpdates: AnyAsyncSequence<Int64> = AsyncStream { _ in }.eraseToAnyAsyncSequence(),
+        planPurchases: AnyAsyncSequence<Void> = AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
     ) -> AccountDetailsStorageUseCase {
         makeSUT(
             accountUseCase: MockAccountUseCase(
                 currentAccountDetails: accountDetails,
                 onAccountRequestFinish: onAccountRequestFinish
             ),
-            storageSumUpdates: storageSumUpdates
+            storageSumUpdates: storageSumUpdates,
+            planPurchases: planPurchases
         )
     }
 
     private func makeSUT(
         accountUseCase: MockAccountUseCase,
-        storageSumUpdates: AnyAsyncSequence<Int64> = AsyncStream { _ in }.eraseToAnyAsyncSequence()
+        storageSumUpdates: AnyAsyncSequence<Int64> = AsyncStream { _ in }.eraseToAnyAsyncSequence(),
+        planPurchases: AnyAsyncSequence<Void> = AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
     ) -> AccountDetailsStorageUseCase {
         AccountDetailsStorageUseCase(
             accountUseCase: accountUseCase,
-            accountStorageUseCase: MockAccountStorageUseCase(storageSumUpdates: storageSumUpdates)
+            accountStorageUseCase: MockAccountStorageUseCase(storageSumUpdates: storageSumUpdates),
+            planPurchases: planPurchases
         )
     }
 }

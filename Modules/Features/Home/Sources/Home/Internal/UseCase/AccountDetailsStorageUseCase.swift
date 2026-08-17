@@ -1,5 +1,6 @@
 @preconcurrency import Combine
 
+import Foundation
 import MEGADomain
 import MEGASwift
 
@@ -27,7 +28,8 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
 
     package init(
         accountUseCase: some AccountUseCaseProtocol,
-        accountStorageUseCase: some AccountStorageUseCaseProtocol
+        accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        planPurchases: AnyAsyncSequence<Void> = NotificationCenter.purchaseSuccesses
     ) {
         self.accountUseCase = accountUseCase
 
@@ -38,7 +40,16 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
         let subject = CurrentValueSubject<AccountStorageDetails?, Never>(initialDetails)
         self.storageSubject = subject
 
-        monitorTask = Task { [accountUseCase] in
+        monitorTask = Task { [accountUseCase, planPurchases] in
+            // Listen to payment success event, change AccountStorageDetails to nil
+            // Consumer of this AccountStorageDetails can update their UI to `loading` state
+            // and wait for the new values to arrive later
+            async let purchaseMonitoring: () = {
+                for await _ in planPurchases {
+                    guard !Task.isCancelled else { break }
+                    subject.send(nil)
+                }
+            }()
 
             async let requestFinishMonitoring: () = {
                 for await _ in accountStorageUseCase.storageSumUpdates {
@@ -59,7 +70,7 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
                 }
             }()
 
-            _ = await (requestFinishMonitoring, accountRequestFinishMonitoring)
+            _ = await (purchaseMonitoring, requestFinishMonitoring, accountRequestFinishMonitoring)
         }
 
     }

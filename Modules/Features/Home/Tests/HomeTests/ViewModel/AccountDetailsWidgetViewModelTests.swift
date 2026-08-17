@@ -1,3 +1,4 @@
+@testable import Home
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADesignToken
@@ -5,7 +6,6 @@ import MEGADomain
 import MEGASwift
 import SwiftUI
 import Testing
-@testable import Home
 
 @Suite("AccountDetailsWidgetViewModelTests")
 @MainActor
@@ -47,14 +47,51 @@ struct AccountDetailsWidgetViewModelTests {
         #expect(sut.shouldShowUpgrade == false)
     }
 
+    // MARK: - nil clears the widget back to its loading state
+
+    @Test("plan is cleared when the plan sequence emits nil")
+    func planIsClearedWhenPlanEmitsNil() async {
+        let (stream, continuation) = AsyncStream<AccountTypeEntity?>.makeStream()
+        let sut = makeSUT(
+            storageDetail: nil,
+            planUseCase: StubPlanUseCase(currentPlan: stream.eraseToAnyAsyncSequence())
+        )
+        sut.plan = "Pro I"
+
+        continuation.yield(nil)
+        continuation.finish()
+        await sut.onTask()
+
+        #expect(sut.plan == nil)
+    }
+
+    @Test("storageDetail is cleared when the storage sequence emits nil")
+    func storageDetailIsClearedWhenStorageEmitsNil() async {
+        let (stream, continuation) = AsyncStream<AccountStorageDetails?>.makeStream()
+        let sut = makeSUT(
+            storageDetail: .limited(50, storageMax: 100, storageStatus: .noStorageProblems),
+            storageUseCase: StubStorageUseCase(storageDetails: stream.eraseToAnyAsyncSequence())
+        )
+
+        continuation.yield(nil)
+        continuation.finish()
+        await sut.onTask()
+
+        #expect(sut.storageDetail == nil)
+    }
+
     // MARK: - Helpers
 
-    private func makeSUT(storageDetail: AccountStorageDetails?) -> AccountDetailsWidgetViewModel {
+    private func makeSUT(
+        storageDetail: AccountStorageDetails?,
+        planUseCase: StubPlanUseCase = StubPlanUseCase(),
+        storageUseCase: StubStorageUseCase = StubStorageUseCase()
+    ) -> AccountDetailsWidgetViewModel {
         let sut = AccountDetailsWidgetViewModel(
             dependency: .init(
                 userNameUseCase: StubUserNameUseCase(),
-                planUseCase: StubPlanUseCase(),
-                storageUseCase: StubStorageUseCase(),
+                planUseCase: planUseCase,
+                storageUseCase: storageUseCase,
                 avatarUseCase: StubAvatarUseCase(),
                 tracker: StubTracker()
             )
@@ -64,30 +101,30 @@ struct AccountDetailsWidgetViewModelTests {
     }
 }
 
-// MARK: - Stubs (no mocks exist for these protocols; sequences are never iterated in these tests)
+// MARK: - Stubs (no mocks exist for these protocols)
+
+/// Sequences default to an already-finished stream so `onTask()` returns instead of hanging on the
+/// monitors a given test does not drive.
+private func finishedStream<Element>(of type: Element.Type = Element.self) -> AnyAsyncSequence<Element> {
+    AsyncStream<Element> { $0.finish() }.eraseToAnyAsyncSequence()
+}
 
 private struct StubUserNameUseCase: AccountDetailsUserNameUseCaseProtocol {
     var names: AnyAsyncSequence<String> {
-        get async { AsyncStream<String> { _ in }.eraseToAnyAsyncSequence() }
+        get async { finishedStream() }
     }
 }
 
 private struct StubPlanUseCase: AccountDetailsPlanUseCaseProtocol {
-    var currentPlan: AnyAsyncSequence<AccountTypeEntity?> {
-        AsyncStream<AccountTypeEntity?> { _ in }.eraseToAnyAsyncSequence()
-    }
+    var currentPlan: AnyAsyncSequence<AccountTypeEntity?> = finishedStream()
 }
 
 private struct StubStorageUseCase: AccountDetailsStorageUseCaseProtocol {
-    var storageDetails: AnyAsyncSequence<AccountStorageDetails?> {
-        AsyncStream<AccountStorageDetails?> { _ in }.eraseToAnyAsyncSequence()
-    }
+    var storageDetails: AnyAsyncSequence<AccountStorageDetails?> = finishedStream()
 }
 
 private struct StubAvatarUseCase: AccountDetailsAvatarUseCaseProtocol {
-    var avatar: AnyAsyncSequence<Image> {
-        AsyncStream<Image> { _ in }.eraseToAnyAsyncSequence()
-    }
+    var avatar: AnyAsyncSequence<Image> = finishedStream()
 }
 
 private struct StubTracker: AnalyticsTracking {
