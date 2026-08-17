@@ -41,6 +41,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let chatViewType: ChatViewType
     private var networkMonitorTask: Task<Void, Never>?
 
+    /// When enabled, the tab keeps showing the chats already on the device while offline
+    /// instead of covering the whole screen with the "No internet connection" state.
+    let isNewOfflineModeEnabled: Bool
+
     lazy var contextMenuManager = ContextMenuManager(
         chatMenuDelegate: self,
         meetingContextMenuDelegate: self,
@@ -164,6 +168,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         urlOpener: @escaping (URL) -> Void
     ) {
         self.router = router
@@ -183,6 +188,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.retryPendingConnectionsUseCase = retryPendingConnectionsUseCase
         self.tracker = tracker
+        self.isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         self.urlOpener = urlOpener
@@ -222,7 +228,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                 contactsOnMega: contactsOnMegaViewState,
                 archivedChats: archiveChatsViewState,
                 actions: emptyViewActions,
-                bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : []
+                enablesActionsRequiringConnection: !isBrowsingOffline
             )
         }
     }
@@ -286,15 +292,18 @@ final class ChatRoomsListViewModel: ObservableObject {
         retryPendingConnectionsUseCase.retryPendingConnections()
         chatUseCase.retryPendingConnections()
         
-        if chatUseCase.chatConnectionStatus() == .online {
-            fetchChats()
-        }
-        
         let isConnectedToNetwork = networkMonitorUseCase.isConnected()
         if self.isConnectedToNetwork != isConnectedToNetwork {
             self.isConnectedToNetwork = isConnectedToNetwork
         }
-        
+
+        // Chat list items come from the local Karere database, so they can be loaded without a
+        // connection. Without this the offline list would be stuck on the loading spinner, since
+        // the connection status only reaches `.online` once Karere connects.
+        if chatUseCase.chatConnectionStatus() == .online || (isNewOfflineModeEnabled && !isConnectedToNetwork) {
+            fetchChats()
+        }
+
         updateActiveCall(chatUseCase.activeCall())
         
         let onlineStatus = chatPresenceUseCase.onlineStatus()
@@ -359,11 +368,39 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
+    /// The list is showing what is already on the device because there is no connection.
+    private var isBrowsingOffline: Bool {
+        isNewOfflineModeEnabled && !isConnectedToNetwork
+    }
+
+    /// While offline the archived chats are still browsable, but the chat list context menu that
+    /// normally leads to them is not, so the row is surfaced on top of the list instead.
+    var shouldShowArchivedChatsRow: Bool {
+        isBrowsingOffline && hasArchivedChats
+    }
+
+    var shouldShowContactsOnMegaRow: Bool {
+        !isSearchActive && existMoreChatsThanNoteToSelf
+    }
+
+    /// The row leads to the invite contacts screen, which cannot go through without a connection,
+    /// so offline it stays on screen greyed out.
+    var isContactsOnMegaRowEnabled: Bool {
+        !isBrowsingOffline
+    }
+
+    /// Karere keeps reporting the last known presence while offline, so the navigation bar subtitle
+    /// would still read "Online" with no connection. Offline the user is not reachable by anyone,
+    /// so the subtitle follows the connection instead of the stale presence.
+    var displayedChatStatus: ChatStatusEntity? {
+        isBrowsingOffline ? .offline : chatStatus
+    }
+
     func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState? {
-        if isConnectedToNetwork {
+        if isConnectedToNetwork || isNewOfflineModeEnabled {
             return nil
         }
-        
+
         return emptyViewStateFactory.noNetworkEmptyViewState(
             hasArchivedChats: hasArchivedChats,
             chatViewMode: chatViewMode,
@@ -509,13 +546,16 @@ final class ChatRoomsListViewModel: ObservableObject {
             MEGALogDebug("Unable to fetch chat list items")
             return
         }
-        
-        try await fetchFutureScheduledMeetings()
+
+        // Occurrences are fetched from the API. While offline the request would never complete and
+        // the tab would stay on the loading spinner, so the meetings on the device are listed
+        // without them and the recurring ones fall back to the past meetings section.
+        try await fetchFutureScheduledMeetings(fetchingUpcomingOccurrences: !isBrowsingOffline)
     }
-    
+
     /// There are some sync calls: `scheduledMeetings` of `scheduledMeetingUseCase`, map and filter operations.
     /// Making this function nonisolated means it is not main actor isolated, hence avoid blocking main.
-    private nonisolated func fetchFutureScheduledMeetings() async throws {
+    private nonisolated func fetchFutureScheduledMeetings(fetchingUpcomingOccurrences: Bool) async throws {
         let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetings()
         let futureScheduledMeetings = scheduledMeetings.filter {
             if $0.parentScheduledId != .invalid {
@@ -532,7 +572,11 @@ final class ChatRoomsListViewModel: ObservableObject {
             }
         }
         
-        let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
+        let upcomingOccurrences = if fetchingUpcomingOccurrences {
+            try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
+        } else {
+            [ChatIdEntity: ScheduledMeetingOccurrenceEntity]()
+        }
         let futureScheduledMeetingsWithOccurrences = filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: futureScheduledMeetings, upcomingOccurrences: upcomingOccurrences)
         
         let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
@@ -776,30 +820,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func startMeetingMenu() -> MenuButtonModel.Menu {
-        .init(
-            name: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
-            image: MEGAAssets.Image.startMeeting,
-            action: startMeeting
-        )
-    }
-    
-    private func joinMeetingMenu() -> MenuButtonModel.Menu {
-        .init(
-            name: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
-            image: MEGAAssets.Image.joinAMeeting,
-            action: joinMeeting
-        )
-    }
-    
-    private func scheduleMeetingMenu() -> MenuButtonModel.Menu {
-        .init(
-            name: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting,
-            image: MEGAAssets.Image.scheduleMeeting,
-            action: scheduleMeeting
-        )
-    }
-    
     private func listenToChatStatusUpdate() {
         chatUseCase
             .monitorChatStatusChange()
@@ -832,7 +852,14 @@ final class ChatRoomsListViewModel: ObservableObject {
         networkMonitorTask?.cancel()
         networkMonitorTask = Task { [weak self] in
             for await isConnected in connectionSequence {
-                self?.isConnectedToNetwork = isConnected
+                guard let self else { return }
+                let wasConnected = isConnectedToNetwork
+                isConnectedToNetwork = isConnected
+                // Coming back online refreshes what was listed from the device, including the
+                // meeting occurrences that could not be fetched while offline.
+                if isNewOfflineModeEnabled, isConnected, !wasConnected {
+                    fetchChats()
+                }
             }
         }
     }

@@ -14,7 +14,8 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
         func chatEmptyState(
             hasArchivedChats: Bool = false,
             hasContacts: Bool = true,
-            chatViewMode: ChatViewMode = .chats
+            chatViewMode: ChatViewMode = .chats,
+            enablesActionsRequiringConnection: Bool = true
         ) -> ChatRoomsEmptyViewState {
             let contactsOnMega = ChatRoomsTopRowViewState(
                 id: "contacts",
@@ -55,7 +56,7 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
                         self?.linkTappedActionCallCount += 1
                     }
                 ),
-                bottomButtonMenus: []
+                enablesActionsRequiringConnection: enablesActionsRequiringConnection
             )
         }
         
@@ -141,6 +142,26 @@ final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
         XCTAssertEqual(harness.linkTappedActionCallCount, 1)
     }
     
+    func testChatEmpty_WhenActionsRequireAConnectionThatIsMissing_ButtonsShownDisabled() {
+        let harness = Harness()
+        let state = harness.chatEmptyState(hasContacts: false, enablesActionsRequiringConnection: false)
+        XCTAssertEqual(state.bottomButtonTitles, [inviteTitle, newChatTitle])
+        XCTAssertEqual(state.bottomButtons.filter(\.isEnabled).count, 0)
+    }
+
+    func testMeetingEmpty_WhenActionsRequireAConnectionThatIsMissing_ButtonsShownDisabled() {
+        let harness = Harness()
+        let state = harness.chatEmptyState(chatViewMode: .meetings, enablesActionsRequiringConnection: false)
+        XCTAssertEqual(state.bottomButtonTitles, [startMeetingTitle, scheduleMeetingTitle])
+        XCTAssertEqual(state.bottomButtons.filter(\.isEnabled).count, 0)
+    }
+
+    func testChatEmpty_WhenActionsCanGoThrough_ButtonsShownEnabled() {
+        let harness = Harness()
+        let state = harness.chatEmptyState(hasContacts: false)
+        XCTAssertEqual(state.bottomButtons.filter(\.isEnabled).count, 2)
+    }
+
     func testNewChat_InviteTapped_TriggersAction() throws {
         let harness = Harness()
         let state = harness.newChat()

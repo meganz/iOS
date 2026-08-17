@@ -133,6 +133,273 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertEqual(mockList, viewModel.displayPastMeetings.flatMap { $0.map(\.chatListItem) })
     }
     
+    // MARK: - Offline mode
+
+    @MainActor
+    func testNoNetworkEmptyViewState_whenDisconnectedAndOfflineModeDisabled_coversTheList() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+
+        XCTAssertNotNil(viewModel.noNetworkEmptyViewState())
+    }
+
+    @MainActor
+    func testNoNetworkEmptyViewState_whenDisconnectedAndOfflineModeEnabled_doesNotCoverTheList() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertNil(viewModel.noNetworkEmptyViewState())
+    }
+
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenChatNotConnectedAndOfflineModeDisabled_doesNotLoadChats() {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(items: chatsListMock, currentChatConnectionStatus: .invalid),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        XCTAssertNil(viewModel.displayChatRooms)
+    }
+
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenChatNotConnectedAndOfflineModeEnabled_loadsChatsOnTheDevice() async throws {
+        let mockList = chatsListMock
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(items: mockList, currentChatConnectionStatus: .invalid),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        let expectation = expectation(description: "Awaiting the chats stored on the device")
+        subscription = viewModel
+            .$displayChatRooms
+            .compactMap { $0 }
+            .prefix(1)
+            .sink { _ in expectation.fulfill() }
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        await fulfillment(of: [expectation], timeout: 6)
+        XCTAssertEqual(mockList, viewModel.displayChatRooms.flatMap { $0.map(\.chatListItem) })
+    }
+
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenMeetingsTabIsOffline_listsTheMeetingsOnTheDevice() async throws {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(items: meetingsListMock, currentChatConnectionStatus: .invalid),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            chatViewMode: .meetings,
+            isNewOfflineModeEnabled: true
+        )
+
+        let expectation = expectation(description: "Awaiting the meetings stored on the device")
+        subscription = viewModel
+            .$displayPastMeetings
+            .filter { $0?.count == 3 }
+            .prefix(1)
+            .sink { _ in expectation.fulfill() }
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        await fulfillment(of: [expectation], timeout: 6)
+        XCTAssertEqual(meetingsListMock, viewModel.displayPastMeetings.flatMap { $0.map(\.chatListItem) })
+    }
+
+    /// Offline the occurrences cannot be fetched, so a recurring meeting that only stays in the
+    /// future section thanks to them falls back to the past meetings section instead of hanging
+    /// the tab on the loading spinner.
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenMeetingsTabIsOffline_doesNotFetchUpcomingOccurrences() throws {
+        let oneHourAgo = try XCTUnwrap(pastDate(bySubtractHours: 1))
+        let recurringMeeting = ScheduledMeetingEntity(
+            chatId: 1,
+            scheduledId: 100,
+            endDate: oneHourAgo,
+            rules: ScheduledMeetingRulesEntity(frequency: .daily)
+        )
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(
+            scheduledMeetingsList: [recurringMeeting],
+            upcomingOccurrences: [100: ScheduledMeetingOccurrenceEntity()]
+        )
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(currentChatConnectionStatus: .invalid),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
+            chatViewMode: .meetings,
+            isNewOfflineModeEnabled: true
+        )
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        let predicate = NSPredicate { _, _ in
+            viewModel.displayFutureMeetings?.isEmpty == false
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = true
+        wait(for: [expectation], timeout: 5)
+    }
+
+    /// With no chats at all the offline user reaches the regular empty state, whose buttons
+    /// (new chat, invite, start and schedule meeting) all need a connection. They stay on screen
+    /// greyed out rather than disappearing.
+    @MainActor
+    func testEmptyViewState_whenOffline_disablesTheActionsRequiringAConnection() {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(items: []),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        let buttons = viewModel.emptyViewState()?.bottomButtons ?? []
+        XCTAssertNotEqual(buttons.count, 0)
+        XCTAssertEqual(buttons.filter(\.isEnabled).count, 0)
+    }
+
+    @MainActor
+    func testEmptyViewState_whenOnline_enablesTheActions() {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(items: []),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: true
+        )
+
+        let buttons = viewModel.emptyViewState()?.bottomButtons ?? []
+        XCTAssertNotEqual(buttons.count, 0)
+        XCTAssertEqual(buttons.filter { !$0.isEnabled }.count, 0)
+    }
+
+    @MainActor
+    func testContactsOnMegaRow_whenOffline_isShownDisabled() async {
+        let viewModel = await loadedChatsViewModel(isConnected: false)
+
+        XCTAssertTrue(viewModel.shouldShowContactsOnMegaRow)
+        XCTAssertFalse(viewModel.isContactsOnMegaRowEnabled)
+    }
+
+    @MainActor
+    func testContactsOnMegaRow_whenOnline_isShownEnabled() async {
+        let viewModel = await loadedChatsViewModel(isConnected: true)
+
+        XCTAssertTrue(viewModel.shouldShowContactsOnMegaRow)
+        XCTAssertTrue(viewModel.isContactsOnMegaRowEnabled)
+    }
+
+    /// Offline mode on, chats already loaded from the device, so `existMoreChatsThanNoteToSelf`
+    /// is true and the connection is the only thing left driving the row's enabled state.
+    @MainActor
+    private func loadedChatsViewModel(isConnected: Bool) async -> ChatRoomsListViewModel {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(
+                items: chatsListMock,
+                currentChatConnectionStatus: isConnected ? .online : .invalid
+            ),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: isConnected),
+            isNewOfflineModeEnabled: true
+        )
+
+        let expectation = expectation(description: "Awaiting the loaded chats")
+        subscription = viewModel
+            .$displayChatRooms
+            .compactMap { $0 }
+            .prefix(1)
+            .sink { _ in expectation.fulfill() }
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        await fulfillment(of: [expectation], timeout: 6)
+        return viewModel
+    }
+
+    @MainActor
+    func testDisplayedChatStatus_whenOffline_isOfflineInsteadOfTheStalePresence() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+        viewModel.chatStatus = .online
+
+        XCTAssertEqual(viewModel.displayedChatStatus, .offline)
+    }
+
+    @MainActor
+    func testDisplayedChatStatus_whenOnline_isThePresence() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: true
+        )
+        viewModel.chatStatus = .away
+
+        XCTAssertEqual(viewModel.displayedChatStatus, .away)
+    }
+
+    @MainActor
+    func testDisplayedChatStatus_whenOfflineModeDisabled_isThePresence() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+        viewModel.chatStatus = .online
+
+        XCTAssertEqual(viewModel.displayedChatStatus, .online)
+    }
+
+    @MainActor
+    func testShouldShowArchivedChatsRow_whenOnline_isFalse() {
+        let chatUseCase = MockChatUseCase()
+        chatUseCase.archivedChatsCount = 2
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertFalse(viewModel.shouldShowArchivedChatsRow)
+    }
+
+    @MainActor
+    func testShouldShowArchivedChatsRow_whenOfflineWithArchivedChats_isTrue() {
+        let chatUseCase = MockChatUseCase()
+        chatUseCase.archivedChatsCount = 2
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertTrue(viewModel.shouldShowArchivedChatsRow)
+    }
+
+    @MainActor
+    func testShouldShowArchivedChatsRow_whenOfflineWithoutArchivedChats_isFalse() {
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: MockChatUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertFalse(viewModel.shouldShowArchivedChatsRow)
+    }
+
+    @MainActor
+    func testShouldShowArchivedChatsRow_whenOfflineModeDisabled_isFalse() {
+        let chatUseCase = MockChatUseCase()
+        chatUseCase.archivedChatsCount = 2
+        let viewModel = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+
+        XCTAssertFalse(viewModel.shouldShowArchivedChatsRow)
+    }
+
     @MainActor
     func test_EmptyChatsList() {
         let viewModel = makeChatRoomsListViewModel()
@@ -720,7 +987,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         permissionAlertRouter: MockPermissionAlertRouter? = nil,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        isNewOfflineModeEnabled: Bool = false
     ) -> ChatRoomsListViewModel {
         let _permissionHandler: MockPermissionAlertRouter = if let permissionAlertRouter {
             permissionAlertRouter
@@ -743,6 +1011,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.offlineMode: isNewOfflineModeEnabled]),
             urlOpener: {_ in }
         )
         return sut

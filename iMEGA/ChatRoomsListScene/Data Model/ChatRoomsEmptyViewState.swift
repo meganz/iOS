@@ -29,15 +29,23 @@ struct MenuButtonModel: Identifiable {
         _self.theme = theme
         return _self
     }
+
+    func applying(isEnabled: Bool) -> Self {
+        var _self = self
+        _self.isEnabled = isEnabled
+        return _self
+    }
     
     init(
         theme: MenuButtonModel.Theme = .dark,
         title: String,
-        interaction: MenuButtonModel.Interaction
+        interaction: MenuButtonModel.Interaction,
+        isEnabled: Bool = true
     ) {
         self.theme = theme
         self.title = title
         self.interaction = interaction
+        self.isEnabled = isEnabled
     }
     
     struct Menu: Identifiable {
@@ -65,15 +73,17 @@ struct MenuButtonModel: Identifiable {
     var theme: Theme = .dark
     var title: String
     var interaction: Interaction
-    
+    /// Greyed out and not tappable, for actions that cannot go through, such as while offline.
+    var isEnabled: Bool = true
+
     var backgroundColor: Color {
         tokenBackgroundColor
     }
-    
+
     private var tokenBackgroundColor: Color {
         theme == .dark ? TokenColors.Icon.accent.swiftUI : TokenColors.Support.success.swiftUI
     }
-    
+
     var textColor: Color {
         TokenColors.Text.inverseAccent.swiftUI
     }

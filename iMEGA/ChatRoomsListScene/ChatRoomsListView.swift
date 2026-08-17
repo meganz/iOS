@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAssets
+import MEGAConnectivity
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -10,25 +11,15 @@ struct ChatRoomsListView: View {
     @ObservedObject var viewModel: ChatRoomsListViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
-            ChatTabsSelectorView(
-                chatViewMode: viewModel.chatViewMode,
-                shouldDisplayUnreadBadgeForChats: viewModel.shouldDisplayUnreadBadgeForChats,
-                shouldDisplayUnreadBadgeForMeetings: viewModel.shouldDisplayUnreadBadgeForMeetings
-            ) { mode in
-                viewModel.selectChatMode(mode)
-            }
-            
-            if let activeCallViewModel = viewModel.activeCallViewModel {
-                ChatRoomActiveCallView(viewModel: activeCallViewModel)
-            }
-            
-            if let offlineEmptyState = viewModel.noNetworkEmptyViewState() {
-                ChatRoomsEmptyView(emptyViewState: offlineEmptyState)
-            } else {
-                content()
-            }
-        }
+        // New offline mode: shared banner below the navigation bar; the chats already on the
+        // device stay listed and browsable while offline (IOS-12414). With the flag off only the
+        // banner is suppressed: applying the modifier conditionally instead would change the
+        // content's structural identity, resetting the list and the toolbar beneath it.
+        tabContent
+        .modifier(NoInternetViewModifier(
+            isHidden: !viewModel.isNewOfflineModeEnabled,
+            viewModel: MEGAConnectivity.DependencyInjection.networkPathNoInternetViewModel
+        ))
         .toolbar {
             TransferIndicatorBarItemConfigurator.toolbarFactory.toolbarContent(trailingItemCount: 2)
 
@@ -37,7 +28,7 @@ struct ChatRoomsListView: View {
                     Text(viewModel.title)
                         .font(.headline)
                         .lineLimit(1)
-                    if let subtitle = viewModel.chatStatus?.localizedIdentifier {
+                    if let subtitle = viewModel.displayedChatStatus?.localizedIdentifier {
                         Text(subtitle)
                             .font(.caption)
                     }
@@ -51,12 +42,12 @@ struct ChatRoomsListView: View {
                         Button {
                             viewModel.addChatButtonTapped()
                         } label: {
-                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                            addImage
                         }
                         .disabled(!viewModel.isConnectedToNetwork)
                     case .meetings:
                         addMenuButton {
-                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                            addImage
                         }
                         .disabled(!viewModel.isConnectedToNetwork)
                     }
@@ -76,12 +67,12 @@ struct ChatRoomsListView: View {
                         Button {
                             viewModel.addChatButtonTapped()
                         } label: {
-                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                            addImage
                         }
                         .disabled(!viewModel.isConnectedToNetwork)
                     case .meetings:
                         addMenuButton {
-                            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+                            addImage
                         }
                         .disabled(!viewModel.isConnectedToNetwork)
                     }
@@ -140,6 +131,42 @@ struct ChatRoomsListView: View {
         )
     }
     
+    private var tabContent: some View {
+        VStack(spacing: 0) {
+            ChatTabsSelectorView(
+                chatViewMode: viewModel.chatViewMode,
+                shouldDisplayUnreadBadgeForChats: viewModel.shouldDisplayUnreadBadgeForChats,
+                shouldDisplayUnreadBadgeForMeetings: viewModel.shouldDisplayUnreadBadgeForMeetings
+            ) { mode in
+                viewModel.selectChatMode(mode)
+            }
+
+            if let activeCallViewModel = viewModel.activeCallViewModel {
+                ChatRoomActiveCallView(viewModel: activeCallViewModel)
+            }
+
+            if let offlineEmptyState = viewModel.noNetworkEmptyViewState() {
+                ChatRoomsEmptyView(emptyViewState: offlineEmptyState)
+            } else {
+                content()
+            }
+        }
+    }
+
+    /// The asset carries its own colours, so `.disabled(_:)` alone leaves it looking tappable.
+    /// It is greyed out explicitly to match the disabled state of the button around it. Template
+    /// rendering is what lets the tint through, so it is only turned on with the new offline mode,
+    /// leaving the icon drawn from the asset as before behind the flag.
+    private var addImage: some View {
+        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+            .renderingMode(viewModel.isNewOfflineModeEnabled ? .template : .original)
+            .foregroundStyle(
+                viewModel.isConnectedToNetwork
+                ? TokenColors.Icon.primary.swiftUI
+                : TokenColors.Icon.disabled.swiftUI
+            )
+    }
+
     func addMenuButton<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
         return viewModel.contextMenuManager.menu(with: viewModel.addMeetingsMenuConfiguration, label: label)
     }
@@ -164,6 +191,18 @@ struct ChatRoomsListView: View {
     }
     
     @ViewBuilder
+    private func archivedChatsRow() -> some View {
+        if viewModel.shouldShowArchivedChatsRow {
+            let state = viewModel.archiveChatsViewState
+            ChatRoomsTopRowView(state: state)
+                .onTapGesture(perform: state.action)
+                .listRowInsets(EdgeInsets())
+                .padding(10)
+                .background()
+        }
+    }
+
+    @ViewBuilder
     private func searchBarView() -> some View {
         SearchBarView(
             text: $viewModel.searchText,
@@ -183,11 +222,14 @@ struct ChatRoomsListView: View {
                     if viewModel.shouldShowSearchBar {
                         searchBarView()
                     }
-                    
+
+                    archivedChatsRow()
+
                     if chatRooms.isNotEmpty {
-                        if !viewModel.isSearchActive && viewModel.existMoreChatsThanNoteToSelf {
+                        if viewModel.shouldShowContactsOnMegaRow {
                             ChatRoomsTopRowView(state: viewModel.contactsOnMegaViewState)
                                 .onTapGesture(perform: viewModel.contactsOnMegaViewState.action)
+                                .disabled(!viewModel.isContactsOnMegaRowEnabled)
                                 .listRowInsets(EdgeInsets())
                                 .padding(10)
                                 .background()
@@ -224,7 +266,9 @@ struct ChatRoomsListView: View {
                     if viewModel.shouldShowSearchBar {
                         searchBarView()
                     }
-                    
+
+                    archivedChatsRow()
+
                     if pastMeetings.isNotEmpty || futureMeetings.isNotEmpty {
                         ForEach(futureMeetings, id: \.title) { futureMeetingSection in
                             MeetingsListHeaderView(title: futureMeetingSection.title)

@@ -99,6 +99,9 @@ struct ChatRoomsEmptyViewStateFactory {
         )
     }
     
+    /// - Parameter enablesActionsRequiringConnection: Whether the buttons that need a connection
+    ///   (new chat, invite, start and schedule meeting) can be used. They stay on screen greyed
+    ///   out while offline, where the state is reachable but none of them can go through.
     func emptyChatRoomsViewState(
         hasArchivedChats: Bool,
         hasContacts: Bool,
@@ -106,12 +109,13 @@ struct ChatRoomsEmptyViewStateFactory {
         contactsOnMega: ChatRoomsTopRowViewState,
         archivedChats: ChatRoomsTopRowViewState,
         actions: ChatEmptyViewActions,
-        bottomButtonMenus: [MenuButtonModel.Menu]
+        enablesActionsRequiringConnection: Bool
     ) -> ChatRoomsEmptyViewState {
         newEmptyChatRoomsViewState(
             chatViewMode: chatViewMode,
             hasContacts: hasContacts,
-            actions: actions
+            actions: actions,
+            enablesActionsRequiringConnection: enablesActionsRequiringConnection
         )
     }
     
@@ -157,7 +161,8 @@ struct ChatRoomsEmptyViewStateFactory {
     private func emptyChatBottomButtons(
         chatViewMode: ChatViewMode,
         hasContacts: Bool,
-        actions: ChatEmptyViewActions
+        actions: ChatEmptyViewActions,
+        isEnabled: Bool
     ) -> [MenuButtonModel] {
         let buttons: () -> [MenuButtonModel] = {
             switch chatViewMode {
@@ -171,7 +176,7 @@ struct ChatRoomsEmptyViewStateFactory {
         // zipping here to guarantee first button is dark
         // and second button is light, even if there's single button in the array
         return zip(buttons(), themes).map { button, theme in
-            button.applying(theme: theme)
+            button.applying(theme: theme).applying(isEnabled: isEnabled)
         }
     }
     
@@ -202,7 +207,8 @@ struct ChatRoomsEmptyViewStateFactory {
     private func newEmptyChatRoomsViewState(
         chatViewMode: ChatViewMode,
         hasContacts: Bool,
-        actions: ChatEmptyViewActions
+        actions: ChatEmptyViewActions,
+        enablesActionsRequiringConnection: Bool
     ) -> ChatRoomsEmptyViewState {
         .init(
             topRows: [],
@@ -213,7 +219,8 @@ struct ChatRoomsEmptyViewStateFactory {
             bottomButtons: emptyChatBottomButtons(
                 chatViewMode: chatViewMode,
                 hasContacts: hasContacts,
-                actions: actions
+                actions: actions,
+                isEnabled: enablesActionsRequiringConnection
             )
         )
     }
@@ -274,7 +281,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 action: {}
             ),
             actions: .preview,
-            bottomButtonMenus: []
+            enablesActionsRequiringConnection: true
         )
     )
 }
@@ -294,7 +301,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 action: {}
             ),
             actions: .preview,
-            bottomButtonMenus: []
+            enablesActionsRequiringConnection: true
         )
     )
 }
@@ -314,7 +321,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 action: {}
             ),
             actions: .preview,
-            bottomButtonMenus: []
+            enablesActionsRequiringConnection: true
         )
     )
 }
@@ -334,7 +341,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 action: {}
             ),
             actions: .preview,
-            bottomButtonMenus: []
+            enablesActionsRequiringConnection: true
         )
     )
 }
@@ -354,7 +361,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 action: {}
             ),
             actions: .preview,
-            bottomButtonMenus: []
+            enablesActionsRequiringConnection: true
         )
     )
 }
