@@ -127,7 +127,7 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
 
     private func startExport(of nodes: [MEGANode]) async {
         guard let navigationController, await confirmEnoughStorage(for: nodes) else { return }
-        await ExportFileRouter(presenter: navigationController, sender: navigationController.view, isFolderLink: true)
+        await exportFileRouter(presenter: navigationController, sender: navigationController.view)
             .export(nodes: nodes.toNodeEntities())?.value
     }
     
@@ -204,8 +204,19 @@ extension FolderLinkNodeActionHandler: NodeActionViewControllerDelegate {
 
     private func startExport(of node: MEGANode, from sender: Any) async {
         guard let navigationController, await confirmEnoughStorage(for: [node]) else { return }
-        await ExportFileRouter(presenter: navigationController, sender: sender, isFolderLink: true)
+        await exportFileRouter(presenter: navigationController, sender: sender)
             .export(node: node.toNodeEntity())?.value
+    }
+
+    /// The incomplete download warning ships with the revamped folder link only, so the legacy surfaces
+    /// keep handing on whatever arrived without comment.
+    private func exportFileRouter(presenter: UINavigationController, sender: Any?) -> ExportFileRouter {
+        ExportFileRouter(
+            presenter: presenter,
+            sender: sender,
+            isFolderLink: true,
+            incompleteDownloadAlertRouter: isLinkRevampEnabled ? IncompleteDownloadAlertRouter() : nil
+        )
     }
 
     private func saveToPhotos(_ nodes: [MEGANode]) {

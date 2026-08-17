@@ -111,6 +111,73 @@ struct ExportFileViewModelTestSuite {
         }
     }
     
+    @Suite("Incomplete Download Tests - Verifies the warning is raised only when part of the selection failed to arrive.")
+    struct IncompleteDownloadTests {
+        @Test("fewer files than asked for are reported with both counts, and still exported")
+        @MainActor
+        func shortResult_warnsWithBothCountsAndExports() async {
+            let urls = [URL(string: "mock://file1")!, URL(string: "mock://file2")!]
+            let (sut, router, _, _, _) = makeSUT(urls: urls)
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity(), NodeEntity()]))
+            await sut.currentTask?.value
+
+            #expect(router.warnDownloadIncompleteInvocations.count == 1)
+            let invocation = router.warnDownloadIncompleteInvocations.first
+            #expect(invocation?.downloadedCount == 2)
+            #expect(invocation?.failedCount == 1)
+            #expect(router.exportedUrls == urls, "The files that did arrive should still be exported.")
+        }
+
+        @Test("a complete result is exported without a warning")
+        @MainActor
+        func completeResult_doesNotWarn() async {
+            let urls = [URL(string: "mock://file1")!, URL(string: "mock://file2")!]
+            let (sut, router, _, _, _) = makeSUT(urls: urls)
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity()]))
+            await sut.currentTask?.value
+
+            #expect(router.warnDownloadIncompleteInvocations.isEmpty)
+            #expect(router.exportedFiles_calledTimes == 1)
+        }
+
+        /// The whole batch failing is the case most worth reporting, so it is warned about too — but with
+        /// nothing to hand on there is no export to continue to.
+        @Test("a result with nothing in it is still warned about, and exports nothing")
+        @MainActor
+        func emptyResult_warnsWithoutExporting() async {
+            let (sut, router, _, _, _) = makeSUT(urls: [])
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity()]))
+            await sut.currentTask?.value
+
+            #expect(router.warnDownloadIncompleteInvocations.count == 1)
+            #expect(router.warnDownloadIncompleteInvocations.first?.downloadedCount == 0)
+            #expect(router.warnDownloadIncompleteInvocations.first?.failedCount == 2)
+            #expect(router.exportedFiles_calledTimes == 0)
+        }
+
+        /// The warning is awaited, which holds the export open for as long as it is on screen — long enough
+        /// for the export to be called off. Whatever arrived then stays put rather than opening a share sheet
+        /// nobody is waiting on.
+        @Test("an export cancelled while the warning is on screen hands nothing over")
+        @MainActor
+        func cancelledDuringWarning_handsNothingOver() async {
+            let (sut, router, _, _, _) = makeSUT(urls: [URL(string: "mock://file1")!])
+            router.onWarnDownloadIncomplete = { sut.cancelCurrentTask() }
+
+            sut.dispatch(.exportFilesFromNodes([NodeEntity(), NodeEntity()]))
+            // Taken before the task body runs, because cancelling clears it.
+            let task = sut.currentTask
+            await task?.value
+
+            #expect(router.warnDownloadIncompleteInvocations.count == 1, "The warning itself still belongs on screen.")
+            #expect(router.exportedFiles_calledTimes == 0)
+            #expect(router.hideProgressView_calledTimes == 1, "The progress view must not be left behind either.")
+        }
+    }
+
     // MARK: - Cancel Task Tests
     @Suite("Task Cancellation Tests - Verifies that cancelling an export task works as expected.")
     struct CancelTaskTests {

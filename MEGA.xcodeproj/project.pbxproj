@@ -1334,6 +1334,7 @@
 		9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */; };
 		943BD8472C91CA5C00619F2B /* MockWarningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */; };
 		943DBBC62CB93AF900B8B14C /* ExportFileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBC52CB93AEC00B8B14C /* ExportFileViewModelTests.swift */; };
+		AA12423B0002000000000002 /* IncompleteDownloadAlertRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12423B0001000000000001 /* IncompleteDownloadAlertRouterTests.swift */; };
 		943DBBC92CB94C5600B8B14C /* MockExportFileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */; };
 		943DBBCC2CB94C7F00B8B14C /* MockExportFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */; };
 		943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */; };
@@ -1857,6 +1858,7 @@
 		AA11B0010000000000000002 /* DefaultLaunchDestinationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000001 /* DefaultLaunchDestinationRepository.swift */; };
 		AA11B0010000000000000004 /* DefaultLaunchDestinationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11B0010000000000000003 /* DefaultLaunchDestinationRepositoryTests.swift */; };
 		AA12316A0002000000000002 /* DeviceStorageChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12316A0001000000000001 /* DeviceStorageChecker.swift */; };
+		AA12423A0002000000000002 /* IncompleteDownloadAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12423A0001000000000001 /* IncompleteDownloadAlertRouter.swift */; };
 		AA12316A0006000000000006 /* DeviceStorageCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12316A0005000000000005 /* DeviceStorageCheckerTests.swift */; };
 		AB123720000000000000F002 /* PromoDialogBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F001 /* PromoDialogBlocking.swift */; };
 		AB123720000000000000F004 /* PromoDialogInterruptibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */; };
@@ -4169,6 +4171,7 @@
 		9439F1242B838F6F00B3633D /* ViewModeFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeFactoryTests.swift; sourceTree = "<group>"; };
 		943BD8462C91CA5C00619F2B /* MockWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWarningViewRouter.swift; sourceTree = "<group>"; };
 		943DBBC52CB93AEC00B8B14C /* ExportFileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileViewModelTests.swift; sourceTree = "<group>"; };
+		AA12423B0001000000000001 /* IncompleteDownloadAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteDownloadAlertRouterTests.swift; sourceTree = "<group>"; };
 		943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExportFileViewRouter.swift; sourceTree = "<group>"; };
 		943DBBCB2CB94C7D00B8B14C /* MockExportFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExportFileUseCase.swift; sourceTree = "<group>"; };
 		943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDataModel.swift; sourceTree = "<group>"; };
@@ -4707,6 +4710,7 @@
 		AA11B0010000000000000001 /* DefaultLaunchDestinationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLaunchDestinationRepository.swift; sourceTree = "<group>"; };
 		AA11B0010000000000000003 /* DefaultLaunchDestinationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLaunchDestinationRepositoryTests.swift; sourceTree = "<group>"; };
 		AA12316A0001000000000001 /* DeviceStorageChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStorageChecker.swift; sourceTree = "<group>"; };
+		AA12423A0001000000000001 /* IncompleteDownloadAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteDownloadAlertRouter.swift; sourceTree = "<group>"; };
 		AA12316A0005000000000005 /* DeviceStorageCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStorageCheckerTests.swift; sourceTree = "<group>"; };
 		AB123720000000000000F001 /* PromoDialogBlocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoDialogBlocking.swift; sourceTree = "<group>"; };
 		AB123720000000000000F003 /* PromoDialogInterruptibilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromoDialogInterruptibilityTests.swift; sourceTree = "<group>"; };
@@ -9357,9 +9361,18 @@
 			path = MainTabBar;
 			sourceTree = "<group>";
 		};
+		AA12423B0003000000000003 /* NewFolderLink */ = {
+			isa = PBXGroup;
+			children = (
+				AA12423B0001000000000001 /* IncompleteDownloadAlertRouterTests.swift */,
+			);
+			path = NewFolderLink;
+			sourceTree = "<group>";
+		};
 		835EBCCF2DCA0B7300AD1E57 /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				AA12423B0003000000000003 /* NewFolderLink */,
 				835EBCD02DCA0B7A00AD1E57 /* FileLinkViewModelTests.swift */,
 				0E51AC392E6119780075E18F /* ImportLinkViewModelTests.swift */,
 			);
@@ -11004,6 +11017,7 @@
 				A56582FB2F3194C50089CD6D /* FolderLinkSearchResultsProvidingBuilder.swift */,
 				A5ECB6102F0F909F003FEAA8 /* FolderLinkUnavailableContentView.swift */,
 				A5ECB60C2F0F909F003FEAA8 /* FolderLinkUnavailableView.swift */,
+				AA12423A0001000000000001 /* IncompleteDownloadAlertRouter.swift */,
 				A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */,
 				A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */,
 				A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */,
@@ -15295,6 +15309,7 @@
 				0E51AC382E6118B30075E18F /* ImportLinkViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				83E10DB52C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift in Sources */,
+				AA12423A0002000000000002 /* IncompleteDownloadAlertRouter.swift in Sources */,
 				C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
@@ -16785,6 +16800,7 @@
 				94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				0E51AC3A2E6119780075E18F /* ImportLinkViewModelTests.swift in Sources */,
+				AA12423B0002000000000002 /* IncompleteDownloadAlertRouterTests.swift in Sources */,
 				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* LegacyFileVersioningViewModelTests.swift in Sources */,
 				0E80B31D2DC4834100582D55 /* LoginRoutingViewModelTests.swift in Sources */,

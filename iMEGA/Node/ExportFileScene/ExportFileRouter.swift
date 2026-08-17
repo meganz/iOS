@@ -7,17 +7,32 @@ import MEGARepo
 import UIKit
 
 @MainActor
+protocol IncompleteDownloadAlertRouting {
+    /// Tells the user that part of the selection never made it onto the device, and returns only once they
+    /// have acknowledged it, so the caller can carry on with whatever did arrive.
+    func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async
+}
+
+@MainActor
 final class ExportFileRouter: ExportFileViewRouting {
     private weak var presenter: UIViewController?
     private let sender: Any?
     private let popoverSourceRect: CGRect?
     private let isFolderLink: Bool
+    private let incompleteDownloadAlertRouter: (any IncompleteDownloadAlertRouting)?
 
-    init(presenter: UIViewController, sender: Any?, popoverSourceRect: CGRect? = nil, isFolderLink: Bool = false) {
+    init(
+        presenter: UIViewController,
+        sender: Any?,
+        popoverSourceRect: CGRect? = nil,
+        isFolderLink: Bool = false,
+        incompleteDownloadAlertRouter: (any IncompleteDownloadAlertRouting)? = nil
+    ) {
         self.presenter = presenter
         self.sender = sender
         self.popoverSourceRect = popoverSourceRect
         self.isFolderLink = isFolderLink
+        self.incompleteDownloadAlertRouter = incompleteDownloadAlertRouter
     }
     
     // MARK: - Dispatch actions without viewcontroller -
@@ -107,5 +122,12 @@ final class ExportFileRouter: ExportFileViewRouting {
     func hideProgressView() {
         TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget(widgetFobidden: true)
         TransfersWidgetViewController.sharedTransfer().resetToKeyWindow()
+    }
+
+    func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async {
+        await incompleteDownloadAlertRouter?.warnDownloadIncomplete(
+            downloadedCount: downloadedCount,
+            failedCount: failedCount
+        )
     }
 }

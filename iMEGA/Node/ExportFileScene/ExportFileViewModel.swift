@@ -14,6 +14,7 @@ protocol ExportFileViewRouting {
     func exportedFiles(urls: [URL])
     func showProgressView()
     func hideProgressView()
+    func warnDownloadIncomplete(downloadedCount: Int, failedCount: Int) async
 }
 
 @MainActor
@@ -66,6 +67,7 @@ final class ExportFileViewModel: ViewModelType {
         switch action {
         case let .exportFileFromNode(node):
             await performExport(
+                requestedCount: 1,
                 exportBlock: {
                     let url = try await exportFileUseCase.export(node: node)
                     return [url]
@@ -74,6 +76,7 @@ final class ExportFileViewModel: ViewModelType {
             )
         case let .exportFilesFromNodes(nodes):
             await performExport(
+                requestedCount: nodes.count,
                 exportBlock: {
                     return try await exportFileUseCase.export(nodes: nodes)
                 },
@@ -81,6 +84,7 @@ final class ExportFileViewModel: ViewModelType {
             )
         case let .exportFilesFromMessages(messages, chatId):
             await performExport(
+                requestedCount: messages.count,
                 exportBlock: {
                     return await exportFileUseCase.export(
                         messages: messages,
@@ -91,6 +95,7 @@ final class ExportFileViewModel: ViewModelType {
             )
         case let .exportFileFromMessageNode(node, messageId, chatId):
             await performExport(
+                requestedCount: 1,
                 exportBlock: {
                     let url = try await exportFileUseCase.exportNode(
                         node.toNodeEntity(),
@@ -104,7 +109,11 @@ final class ExportFileViewModel: ViewModelType {
         }
     }
     
+    /// - Parameter requestedCount: How many files the action asked for. `exportBlock` drops whatever it
+    ///   could not fetch rather than throwing, so this is the only way to tell a partial result from a
+    ///   complete one.
     private func performExport(
+        requestedCount: Int,
         exportBlock: () async throws -> [URL],
         errorMessage: String
     ) async {
@@ -113,11 +122,13 @@ final class ExportFileViewModel: ViewModelType {
             let urls = try await exportBlock()
             guard !Task.isCancelled else { return }
 
-            if !urls.isEmpty {
+            await warnIfIncomplete(downloadedCount: urls.count, requestedCount: requestedCount)
+
+            if urls.isEmpty {
+                MEGALogError(errorMessage)
+            } else if !Task.isCancelled {
                 analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                 router.exportedFiles(urls: urls)
-            } else {
-                MEGALogError(errorMessage)
             }
         } catch is CancellationError {
             MEGALogError("[ExportFile] Cancelled task: \(errorMessage)")
@@ -125,5 +136,16 @@ final class ExportFileViewModel: ViewModelType {
             MEGALogError("[ExportFile] \(errorMessage): \(error.localizedDescription)")
         }
         router.hideProgressView()
+    }
+
+    /// Reported whether or not anything arrived, including when the whole selection failed — a batch that
+    /// silently produces nothing is exactly the case worth telling the user about.
+    private func warnIfIncomplete(downloadedCount: Int, requestedCount: Int) async {
+        guard downloadedCount < requestedCount else { return }
+
+        await router.warnDownloadIncomplete(
+            downloadedCount: downloadedCount,
+            failedCount: requestedCount - downloadedCount
+        )
     }
 }
