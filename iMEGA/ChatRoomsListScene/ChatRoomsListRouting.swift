@@ -15,6 +15,7 @@ protocol ChatRoomsListRouting {
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,
+        actionsRequiringConnectionEnabled: Bool,
         dndAction: @escaping () -> Void,
         markAsReadAction: (() -> Void)?,
         infoAction: @escaping () -> Void,

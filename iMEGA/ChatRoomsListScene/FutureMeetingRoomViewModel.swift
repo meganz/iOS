@@ -434,7 +434,7 @@ extension FutureMeetingRoomViewModel {
         ) { [weak self] in
             guard let self else { return }
             startOrJoinMeetingTapped()
-        }
+        }.requiringConnection()
     }
     
     private var editContextMenuOption: ChatRoomContextMenuOption {
@@ -444,7 +444,7 @@ extension FutureMeetingRoomViewModel {
         ) {
             self.tracker.trackAnalyticsEvent(with: ScheduledMeetingEditMenuItemEvent())
             self.router.edit(scheduledMeeting: self.scheduledMeeting)
-        }
+        }.requiringConnection()
     }
     
     private var occurrenceContextMenuOption: ChatRoomContextMenuOption {
@@ -453,7 +453,7 @@ extension FutureMeetingRoomViewModel {
             image: MEGAAssets.Image.occurrences
         ) {
             self.showOccurrences()
-        }
+        }.requiringConnection()
     }
     
     private var cancelContextMenuOption: ChatRoomContextMenuOption {
@@ -463,7 +463,7 @@ extension FutureMeetingRoomViewModel {
         ) {
             self.tracker.trackAnalyticsEvent(with: ScheduledMeetingCancelMenuItemEvent())
             self.cancelMeeting()
-        }
+        }.requiringConnection()
     }
     
     private var muteContextMenuOption: ChatRoomContextMenuOption {
@@ -474,7 +474,7 @@ extension FutureMeetingRoomViewModel {
         ) { [weak self] in
             guard let self else { return }
             self.toggleDND()
-        }
+        }.requiringConnection()
     }
     
     private var infoChatContextMenuOption: ChatRoomContextMenuOption {
@@ -494,7 +494,7 @@ extension FutureMeetingRoomViewModel {
         ) { [weak self] in
             guard let self else { return }
             archiveChatRoom(afterCancelMeeting: false)
-        }
+        }.requiringConnection()
     }
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {

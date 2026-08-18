@@ -158,6 +158,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,
+        actionsRequiringConnectionEnabled: Bool,
         dndAction: @escaping () -> Void,
         markAsReadAction: (() -> Void)?,
         infoAction: @escaping () -> Void,
@@ -168,8 +169,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             markAsReadSheetAction = ActionSheetAction(
                 title: Strings.Localizable.markAsRead,
                 detail: nil,
-                accessoryView: nil,
                 image: MEGAAssets.UIImage.markUnreadMenu,
+                enabled: actionsRequiringConnectionEnabled,
                 style: .default) {
                     markAsReadAction()
                 }
@@ -178,8 +179,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let dndSheetAction = ActionSheetAction(
             title: dndEnabled ?  Strings.Localizable.unmute : Strings.Localizable.mute,
             detail: nil,
-            accessoryView: nil,
             image: MEGAAssets.UIImage.mutedChatMenu,
+            enabled: actionsRequiringConnectionEnabled,
             style: .default) {
                 dndAction()
             }
@@ -196,8 +197,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let archiveChatSheetAction = ActionSheetAction(
             title: Strings.Localizable.archiveChat,
             detail: nil,
-            accessoryView: nil,
             image: MEGAAssets.UIImage.archiveChat,
+            enabled: actionsRequiringConnectionEnabled,
             style: .default) {
                 archiveAction()
             }

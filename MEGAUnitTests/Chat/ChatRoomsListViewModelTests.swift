@@ -317,6 +317,68 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         return viewModel
     }
 
+    /// The button is only rendered once its configuration exists, so without this it would be
+    /// missing from the toolbar offline rather than greyed out.
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenOffline_buildsTheContextMenuConfiguration() async {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        let predicate = NSPredicate { _, _ in viewModel.contextMenuConfiguration != nil }
+        await fulfillment(of: [expectation(for: predicate, evaluatedWith: nil)], timeout: 6)
+    }
+
+    @MainActor
+    func testLoadChatRoomsIfNeeded_whenOfflineModeDisabled_leavesTheContextMenuConfigurationAlone() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+
+        viewModel.loadChatRoomsIfNeeded()
+
+        let predicate = NSPredicate { _, _ in viewModel.contextMenuConfiguration != nil }
+        let unexpected = expectation(for: predicate, evaluatedWith: nil)
+        unexpected.isInverted = true
+        wait(for: [unexpected], timeout: 3)
+    }
+
+    @MainActor
+    func testActionsRequiringConnectionEnabled_whenOffline_isFalse() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertFalse(viewModel.actionsRequiringConnectionEnabled)
+    }
+
+    @MainActor
+    func testActionsRequiringConnectionEnabled_whenOnline_isTrue() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: true
+        )
+
+        XCTAssertTrue(viewModel.actionsRequiringConnectionEnabled)
+    }
+
+    /// With the flag off the chat list keeps offering everything, the full page cover is what
+    /// stops the user from reaching it.
+    @MainActor
+    func testActionsRequiringConnectionEnabled_whenOfflineModeDisabled_isTrue() {
+        let viewModel = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            isNewOfflineModeEnabled: false
+        )
+
+        XCTAssertTrue(viewModel.actionsRequiringConnectionEnabled)
+    }
+
     @MainActor
     func testDisplayedChatStatus_whenOffline_isOfflineInsteadOfTheStalePresence() {
         let viewModel = makeChatRoomsListViewModel(
@@ -568,6 +630,53 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 5)
     }
     
+    /// The tips are anchored to the future meeting rows, which the offline list keeps on screen,
+    /// and their "Got it" writes a user attribute. The sibling create meeting tip already hides
+    /// while offline; these two now do the same.
+    @MainActor
+    func testStartMeetingTip_whenOffline_shouldNotShowStartMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            userAttributeUseCase: userAttributeUseCase,
+            chatViewMode: .meetings,
+            isNewOfflineModeEnabled: true
+        )
+
+        sut.loadChatRoomsIfNeeded()
+        sut.startMeetingTipOffsetY = 100
+
+        let predicate = NSPredicate { _, _ in
+            sut.presentingStartMeetingTip == true
+        }
+        let unexpected = expectation(for: predicate, evaluatedWith: nil)
+        unexpected.isInverted = true
+        wait(for: [unexpected], timeout: 3)
+    }
+
+    @MainActor
+    func testRecurringMeetingTip_whenOffline_shouldNotShowRecurringMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.recurringMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = makeChatRoomsListViewModel(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            userAttributeUseCase: userAttributeUseCase,
+            chatViewMode: .meetings,
+            isNewOfflineModeEnabled: true
+        )
+
+        sut.loadChatRoomsIfNeeded()
+        sut.recurringMeetingTipOffsetY = 100
+
+        let predicate = NSPredicate { _, _ in
+            sut.presentingRecurringMeetingTip == true
+        }
+        let unexpected = expectation(for: predicate, evaluatedWith: nil)
+        unexpected.isInverted = true
+        wait(for: [unexpected], timeout: 3)
+    }
+
     @MainActor
     func testStartMeetingTip_meetingTipRecordIsStartMeetingAndScrollingList_shouldNotShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
@@ -1089,7 +1198,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         present_calledTimes += 1
     }
     
-    func presentMoreOptionsForChat(withDNDEnabled dndEnabled: Bool, dndAction: @escaping () -> Void, markAsReadAction: (() -> Void)?, infoAction: @escaping () -> Void, archiveAction: @escaping () -> Void) {
+    func presentMoreOptionsForChat(withDNDEnabled dndEnabled: Bool, actionsRequiringConnectionEnabled: Bool, dndAction: @escaping () -> Void, markAsReadAction: (() -> Void)?, infoAction: @escaping () -> Void, archiveAction: @escaping () -> Void) {
         presentMoreOptionsForChat_calledTimes += 1
     }
     

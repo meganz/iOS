@@ -6,7 +6,8 @@ import SwiftUI
 
 struct FutureMeetingRoomView: View {
     @ObservedObject var viewModel: FutureMeetingRoomViewModel
-    
+    @Environment(\.chatListActionsRequiringConnectionEnabled) private var actionsRequiringConnectionEnabled
+
     private enum Constants {
         static let viewHeight: CGFloat = 65
         static let avatarViewSize = CGSize(width: 28, height: 28)
@@ -95,6 +96,7 @@ struct FutureMeetingRoomView: View {
                                 .font(.title)
                         }
                     }
+                    .disabled(contextMenuOption.requiresConnection && !actionsRequiringConnectionEnabled)
                 }
             }
         }

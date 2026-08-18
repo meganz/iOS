@@ -7,21 +7,24 @@ import SwiftUI
 
 struct ChatRoomView: View {
     @ObservedObject var viewModel: ChatRoomViewModel
-    
+    @Environment(\.chatListActionsRequiringConnectionEnabled) private var actionsRequiringConnectionEnabled
+
     var body: some View {
         Group {
             ChatRoomContentView()
-                .swipeActions {
+                .swipeActions(allowsFullSwipe: allowsFullSwipe) {
                     ForEach(swipeActionLabels()) { label in
                         if let image = MEGAAssets.UIImage.image(named: label.imageName)?
                             .withRenderingMode(.alwaysTemplate)
                             .withTintColor(TokenColors.Icon.onColor) {
+                            let isEnabled = isEnabled(label)
                             Button {
                                 label.action()
                             } label: {
                                 Image(uiImage: image)
                             }
-                            .tint(label.backgroundColor)
+                            .tint(isEnabled ? label.backgroundColor : TokenColors.Button.disabled.swiftUI)
+                            .disabled(!isEnabled)
                         }
                     }
                 }
@@ -47,6 +50,17 @@ struct ChatRoomView: View {
         return buttons
     }
     
+    private func isEnabled(_ label: SwipeActionLabel) -> Bool {
+        actionsRequiringConnectionEnabled || !label.requiresConnection
+    }
+
+    /// A full swipe runs the first action directly, without going through its button, so the
+    /// gesture has to be turned off rather than relying on the button being disabled.
+    private var allowsFullSwipe: Bool {
+        guard let first = swipeActionLabels().first else { return true }
+        return isEnabled(first)
+    }
+
     private func swipeActionLabels() -> [SwipeActionLabel] {
         if viewModel.isNoteToSelfChatAndEmpty {
             []
@@ -57,7 +71,8 @@ struct ChatRoomView: View {
                     backgroundColor: TokenColors.Support.warning.swiftUI,
                     action: {
                         viewModel.archiveChat()
-                    }
+                    },
+                    requiresConnection: true
                 ),
                 SwipeActionLabel(
                     imageName: "info",
@@ -74,13 +89,16 @@ struct ChatRoomView: View {
                     backgroundColor: TokenColors.Support.warning.swiftUI,
                     action: {
                         viewModel.archiveChat()
-                    }
+                    },
+                    requiresConnection: true
                 ),
                 SwipeActionLabel(
                     imageName: "moreListChatSwipeActionButton",
                     backgroundColor: TokenColors.Support.info.swiftUI,
                     action: {
-                        viewModel.presentMoreOptionsForChat()
+                        viewModel.presentMoreOptionsForChat(
+                            actionsRequiringConnectionEnabled: actionsRequiringConnectionEnabled
+                        )
                     }
                 )
             ]
@@ -90,7 +108,8 @@ struct ChatRoomView: View {
 
 private struct ChatRoomContentView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
-    
+    @Environment(\.chatListActionsRequiringConnectionEnabled) private var actionsRequiringConnectionEnabled
+
     private enum Constants {
         static let viewPadding: CGFloat = 10
         static let viewHeight: CGFloat = 65
@@ -119,6 +138,7 @@ private struct ChatRoomContentView: View {
                     } label: {
                         HorizontalImageTextLabel(image: contextMenuOption.image, text: contextMenuOption.title)
                     }
+                    .disabled(contextMenuOption.requiresConnection && !actionsRequiringConnectionEnabled)
                 }
             }
         }

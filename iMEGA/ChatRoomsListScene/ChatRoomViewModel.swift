@@ -221,9 +221,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func presentMoreOptionsForChat() {
+    /// - Parameter actionsRequiringConnectionEnabled: The sheet keeps every option while offline,
+    ///   greying out the ones that write to the API. Only Info works from what is on the device.
+    func presentMoreOptionsForChat(actionsRequiringConnectionEnabled: Bool) {
         router.presentMoreOptionsForChat(
-            withDNDEnabled: chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
+            withDNDEnabled: chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId),
+            actionsRequiringConnectionEnabled: actionsRequiringConnectionEnabled
         ) { [weak self] in
             self?.toggleDND()
         } markAsReadAction: { [weak self] in
@@ -327,7 +330,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                     image: existsInProgressCallInChatRoom ? MEGAAssets.Image.joinMeeting2 : MEGAAssets.Image.startMeeting2,
                     action: {
                         self.startOrJoinMeetingTapped()
-                    }))
+                    }).requiringConnection())
         }
         
         if chatListItem.unreadCount > 0 {
@@ -341,7 +344,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                             forChatRoom: chatRoom,
                             messageId: self.chatListItem.lastMessageId
                         )
-                    })
+                    }).requiringConnection()
             )
         }
         
@@ -354,7 +357,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 action: { [weak self] in
                     guard let self else { return }
                     self.toggleDND()
-                })]
+                }).requiringConnection()]
         }
         
         options += [
@@ -371,7 +374,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
                 action: { [weak self] in
                     guard let self else { return }
                     self.archiveChat()
-                })
+                }).requiringConnection()
         ]
         
         return options

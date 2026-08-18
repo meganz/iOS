@@ -129,12 +129,12 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     var presentingRecurringMeetingTip: Bool {
-        chatViewMode == .meetings  && !isMeetingListScrolling && recurringMeetingTipOffsetY != nil &&
+        chatViewMode == .meetings && isConnectedToNetwork && !isMeetingListScrolling && recurringMeetingTipOffsetY != nil &&
         (currentTip == .recurringMeeting || currentTip == .recurringOrStartMeeting)
     }
     
     var presentingStartMeetingTip: Bool {
-        chatViewMode == .meetings  && !isMeetingListScrolling && startMeetingTipOffsetY != nil &&
+        chatViewMode == .meetings && isConnectedToNetwork && !isMeetingListScrolling && startMeetingTipOffsetY != nil &&
         (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
     }
     
@@ -317,6 +317,14 @@ final class ChatRoomsListViewModel: ObservableObject {
         monitorNetworkChanges()
         monitorActiveCallChanges()
         fetchScheduledMeetingTipRecord()
+
+        // The menu button is only rendered once its configuration exists, and every path that
+        // builds it needs the network: a presence update, an archived chat change, or the push
+        // notification settings arriving. Offline the button would be missing from the toolbar
+        // instead of greyed out, so the configuration is built here from what is on the device.
+        if isNewOfflineModeEnabled {
+            refreshContextMenu()
+        }
     }
     
     func cancelLoading() {
@@ -386,6 +394,13 @@ final class ChatRoomsListViewModel: ObservableObject {
     /// The row leads to the invite contacts screen, which cannot go through without a connection,
     /// so offline it stays on screen greyed out.
     var isContactsOnMegaRowEnabled: Bool {
+        !isBrowsingOffline
+    }
+
+    /// Whether the actions that write to the API are usable: the navigation bar buttons and context
+    /// menu, and, on each row, the swipe actions, the context menu and the options sheet. They all
+    /// stay on screen greyed out while offline (IOS-12415).
+    var actionsRequiringConnectionEnabled: Bool {
         !isBrowsingOffline
     }
 

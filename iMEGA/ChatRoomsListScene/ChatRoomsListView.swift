@@ -57,8 +57,9 @@ struct ChatRoomsListView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     contextMenuButton {
-                        Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+                        moreImage
                     }
+                    .disabled(!viewModel.actionsRequiringConnectionEnabled)
                 }
             } else {
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -78,8 +79,9 @@ struct ChatRoomsListView: View {
                     }
 
                     contextMenuButton {
-                        Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
+                        moreImage
                     }
+                    .disabled(!viewModel.actionsRequiringConnectionEnabled)
                 }
             }
         }
@@ -151,17 +153,29 @@ struct ChatRoomsListView: View {
                 content()
             }
         }
+        .environment(
+            \.chatListActionsRequiringConnectionEnabled,
+            viewModel.actionsRequiringConnectionEnabled
+        )
     }
 
-    /// The asset carries its own colours, so `.disabled(_:)` alone leaves it looking tappable.
-    /// It is greyed out explicitly to match the disabled state of the button around it. Template
-    /// rendering is what lets the tint through, so it is only turned on with the new offline mode,
-    /// leaving the icon drawn from the asset as before behind the flag.
     private var addImage: some View {
-        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
+        navigationBarIcon(MEGAAssets.UIImage.navigationbarAdd)
+    }
+
+    private var moreImage: some View {
+        navigationBarIcon(MEGAAssets.UIImage.moreNavigationBar)
+    }
+
+    /// The assets carry their own colours, so `.disabled(_:)` alone leaves them looking tappable.
+    /// They are greyed out explicitly to match the disabled state of the button around them.
+    /// Template rendering is what lets the tint through, so it is only turned on with the new
+    /// offline mode, leaving the icons drawn from the asset as before behind the flag.
+    private func navigationBarIcon(_ image: UIImage) -> some View {
+        Image(uiImage: image)
             .renderingMode(viewModel.isNewOfflineModeEnabled ? .template : .original)
             .foregroundStyle(
-                viewModel.isConnectedToNetwork
+                viewModel.actionsRequiringConnectionEnabled
                 ? TokenColors.Icon.primary.swiftUI
                 : TokenColors.Icon.disabled.swiftUI
             )

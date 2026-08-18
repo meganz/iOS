@@ -254,6 +254,20 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         evaluate { self.router.showErrorMessage_calledTimes == 1 }
     }
     
+    /// Every option on a meeting row writes to the API, except Info, which reads what is on the
+    /// device. The ones that do are greyed out while offline (IOS-12415).
+    @MainActor
+    func testContextMenuOptions_onlyInfoDoesNotRequireAConnection() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+
+        let options = sut.contextMenuOptions ?? []
+        XCTAssertFalse(options.isEmpty)
+        let notRequiringConnection = options.filter { !$0.requiresConnection }.map(\.title)
+        XCTAssertEqual(notRequiringConnection, [Strings.Localizable.info])
+    }
+
     @MainActor
     func testEditContextMenuOption_onOpenContextMenu_shouldShowEditOptionAtTheSecondPosition() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
