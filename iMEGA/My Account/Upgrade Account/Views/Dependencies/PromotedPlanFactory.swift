@@ -1,4 +1,5 @@
 import Accounts
+import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -32,6 +33,34 @@ enum PromotedPlanFactory {
                 ),
                 accountUseCase: accountUseCase
             )
+        )
+    }
+}
+
+extension PromoLandingOrUpgradeRouter {
+    static func makeDefault(
+        presenter: @escaping @MainActor () -> UIViewController?,
+        showUpgradeScreen: @escaping @MainActor () -> Void
+    ) -> PromoLandingOrUpgradeRouter {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
+
+        return PromoLandingOrUpgradeRouter(
+            presenter: presenter,
+            promotedPlanUseCase: PromotedPlanFactory.makeUseCase(
+                accountUseCase: accountUseCase,
+                purchaseUseCase: purchaseUseCase
+            ),
+            planPurchaser: DefaultPlanPurchaserFactory().makePurchaser(
+                purchaseUseCase: purchaseUseCase,
+                subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
+                accountUseCase: accountUseCase
+            ),
+            showUpgradeScreen: showUpgradeScreen,
+            canInterruptUser: {
+                PromoDialogInterruptibility(chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo))
+                    .canInterruptUser
+            }
         )
     }
 }

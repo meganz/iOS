@@ -526,6 +526,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeUpgrade:
         {
             [MEGALinkManager processUpgradeLink:url];
+            [MEGALinkManager resetLinkAndURLType];
             break;
         }
         case URLTypeVpn:

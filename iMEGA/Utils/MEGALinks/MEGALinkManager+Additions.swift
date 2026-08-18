@@ -342,19 +342,26 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                await DIContainer.remoteFeatureFlagUseCase
                 .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp),
                accountUseCase.currentAccountDetails != nil {
-                PromoLandingDialogRouter
-                    .makeDefault(presenter: UIApplication.mnz_visibleViewController())
+                await PromoLandingOrUpgradeRouter
+                    .makeDefault(
+                        presenter: { UIApplication.mnz_visibleViewController() },
+                        showUpgradeScreen: { showUpgradeDestination(for: accountUseCase) }
+                    )
                     .start()
                 return
             }
 
-            guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            showUpgradeDestination(for: accountUseCase)
+        }
+    }
 
-            if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
-                delegate.mainTBC?.selectedIndex = TabManager.menuTabIndex()
-            } else {
-                delegate.showUpgradeAccount()
-            }
+    private static func showUpgradeDestination(for accountUseCase: some AccountUseCaseProtocol) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+        if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
+            delegate.mainTBC?.selectedIndex = TabManager.menuTabIndex()
+        } else {
+            delegate.showUpgradeAccount()
         }
     }
 }

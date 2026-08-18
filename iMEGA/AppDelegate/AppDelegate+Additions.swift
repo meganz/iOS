@@ -591,12 +591,17 @@ extension AppDelegate {
                 url.mnz_presentSafariViewController()
             }
         case .upgrade:
-            guard let deepLinkURL = URL(string: urlString),
+            guard let deepLinkURL = URL(string: trimmedURL),
                   UIApplication.shared.canOpenURL(deepLinkURL) else {
                 return
             }
+
+            // Before processing `.upgrade`, we need to check if there any blocking screen
+            let interruptibility = PromoDialogInterruptibility(chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo))
+            guard interruptibility.canInterruptUser else { return }
+
             MEGALinkManager.linkURL = deepLinkURL
-            manageLink(deepLinkURL)
+            showLink(deepLinkURL)
         default:
             guard let deepLinkURL = URL(string: urlString),
                   UIApplication.shared.canOpenURL(deepLinkURL) else {
