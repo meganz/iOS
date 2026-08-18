@@ -8,7 +8,6 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAUIKit
-import Transfer
 
 @MainActor let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
@@ -21,10 +20,6 @@ extension MainTabBarController {
     }
 
     @objc func loadTabViewControllers() {
-        SharedTransferIndicator.configure()
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
-            SharedTransferFinishRecorder.shared.configure()
-        }
         let appTabs = TabManager.appTabs
 
         let viewControllers = appTabs.map {

@@ -2,6 +2,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import Transfer
 
 extension AppDelegate {
     
@@ -12,6 +13,15 @@ extension AppDelegate {
             featureFlagProvider: DIContainer.featureFlagProvider,
             nodeUseCase: makeNodeUseCase()
         )
+    }
+    
+    @objc func configureTransferServices() {
+        MainActor.assumeIsolated {
+            SharedTransferIndicator.configure()
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+                SharedTransferFinishRecorder.shared.configure()
+            }
+        }
     }
     
     private func makeSensitiveNodeUseCase() -> some SensitiveNodeUseCaseProtocol {

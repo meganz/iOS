@@ -130,6 +130,7 @@
     [self injectOfflineModeDependencies];
 
     [self initialiseModules];
+    [self configureTransferServices];
     
     [self enableRequestStatusMonitor];
 
