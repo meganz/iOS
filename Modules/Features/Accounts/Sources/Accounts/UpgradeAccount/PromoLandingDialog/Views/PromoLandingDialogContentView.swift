@@ -39,7 +39,8 @@ public struct PromoLandingDialogContentView: View {
                 onPurchased: {
                     dependency.onPurchased()
                     dependency.dismissAction()
-                }
+                },
+                viewAllPlans: dependency.viewAllPlans
             )
         }
     }

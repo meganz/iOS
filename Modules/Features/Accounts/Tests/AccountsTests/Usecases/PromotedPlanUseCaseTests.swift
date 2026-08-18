@@ -15,7 +15,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("An offered plan without the advertising flag is not promoted")
@@ -38,7 +38,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("A promoted plan carries the offer it was promoted for, and the campaign that offer belongs to")
@@ -50,9 +50,9 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.offer == advertisableOffer)
-        #expect(result?.offer.isAdvertisable == true)
-        #expect(result?.offer.campaignId == 2026)
+        #expect(result?.promotedPlan.offer == advertisableOffer)
+        #expect(result?.promotedPlan.offer.isAdvertisable == true)
+        #expect(result?.promotedPlan.offer.campaignId == 2026)
     }
 
     @Test("A plan with no mobile offer at all is not promoted")
@@ -81,7 +81,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("An offer still inside its window is promoted")
@@ -92,7 +92,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: true)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("An offer with no expiry date never lapses")
@@ -103,7 +103,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: true)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("The expiry gate applies to the cheapest plan, not to any offered plan")
@@ -142,7 +142,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     @Test("No plans at all returns nil")
@@ -173,7 +173,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.subscriptionCycle == .yearly)
+        #expect(result?.promotedPlan.plan.subscriptionCycle == .yearly)
     }
 
     // MARK: - Downgrades
@@ -191,7 +191,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proIII)
+        #expect(result?.promotedPlan.plan.type == .proIII)
     }
 
     @Test("Only lower plans are left once the user is on the top level")
@@ -219,7 +219,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.subscriptionCycle == .yearly)
+        #expect(result?.promotedPlan.plan.subscriptionCycle == .yearly)
     }
 
     @Test("A user on a level the plan list does not carry is offered every plan")
@@ -234,7 +234,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proI)
+        #expect(result?.promotedPlan.plan.type == .proI)
     }
 
     // MARK: - Cheapest selection
@@ -249,7 +249,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proII)
+        #expect(result?.promotedPlan.plan.type == .proII)
     }
 
     @Test("Cycles are compared per month, not by their raw totals")
@@ -261,7 +261,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proII)
+        #expect(result?.promotedPlan.plan.type == .proII)
     }
 
     @Test("A tie on the per-month price goes to the yearly cycle, whatever the plan order", arguments: [false, true])
@@ -272,7 +272,7 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.subscriptionCycle == .yearly)
+        #expect(result?.promotedPlan.plan.subscriptionCycle == .yearly)
     }
 
     @Test("The flag gate applies to the cheapest plan, not to any offered plan")
@@ -294,7 +294,79 @@ struct PromotedPlanUseCaseTests {
 
         let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
 
-        #expect(result?.plan.type == .proII)
+        #expect(result?.promotedPlan.plan.type == .proII)
+    }
+
+    // MARK: - Multiple offers
+
+    @Test("A lone advertisable offer is the only one on offer")
+    func fetchPromotedPlan_onlyOfferedPlan_hasNoOtherOffers() async throws {
+        let sut = makeSUT(plans: [plan(type: .proI, introductoryOffer: offer(perMonth: 5), mobileOffer: campaign(flags: 1))])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
+
+        #expect(result?.hasMultipleOffers == false)
+    }
+
+    @Test("Each offered plan counts on its own, so the same level on both cycles is two offers")
+    func fetchPromotedPlan_sameLevelBothCyclesOffered_hasMultipleOffers() async throws {
+        let sut = makeSUT(plans: [
+            plan(type: .proI, cycle: .monthly, introductoryOffer: offer(perMonth: 5), mobileOffer: campaign(flags: 1)),
+            plan(type: .proI, cycle: .yearly, introductoryOffer: prepaidYearlyOffer(total: 48), mobileOffer: campaign(flags: 1))
+        ])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
+
+        #expect(result?.hasMultipleOffers == true)
+    }
+
+    @Test("An offer that may not be advertised is not another offer to point at")
+    func fetchPromotedPlan_otherPlanUnflagged_hasNoOtherOffers() async throws {
+        let sut = makeSUT(plans: [
+            plan(type: .proI, introductoryOffer: offer(perMonth: 4), mobileOffer: campaign(flags: 1)),
+            plan(type: .proII, introductoryOffer: offer(perMonth: 8), mobileOffer: campaign(flags: 0))
+        ])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
+
+        #expect(result?.promotedPlan.plan.type == .proI)
+        #expect(result?.hasMultipleOffers == false)
+    }
+
+    @Test("A lapsed offer stops counting once expiry is checked")
+    func fetchPromotedPlan_otherPlanExpiredAndChecking_hasNoOtherOffers() async throws {
+        let sut = makeSUT(plans: [
+            plan(type: .proI, introductoryOffer: offer(perMonth: 4), mobileOffer: campaign(flags: 1, expiryDate: .distantFuture)),
+            plan(type: .proII, introductoryOffer: offer(perMonth: 8), mobileOffer: campaign(flags: 1, expiryDate: .distantPast))
+        ])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: true)
+
+        #expect(result?.hasMultipleOffers == false)
+    }
+
+    @Test("A lapsed offer still counts when the caller opts out of the expiry check")
+    func fetchPromotedPlan_otherPlanExpiredButNotChecking_hasMultipleOffers() async throws {
+        let sut = makeSUT(plans: [
+            plan(type: .proI, introductoryOffer: offer(perMonth: 4), mobileOffer: campaign(flags: 1, expiryDate: .distantFuture)),
+            plan(type: .proII, introductoryOffer: offer(perMonth: 8), mobileOffer: campaign(flags: 1, expiryDate: .distantPast))
+        ])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
+
+        #expect(result?.hasMultipleOffers == true)
+    }
+
+    @Test("A plan carrying no offer is not another offer to point at")
+    func fetchPromotedPlan_otherPlanUnoffered_hasNoOtherOffers() async throws {
+        let sut = makeSUT(plans: [
+            plan(type: .proI, introductoryOffer: offer(perMonth: 4), mobileOffer: campaign(flags: 1)),
+            plan(type: .proII, mobileOffer: campaign(flags: 1))
+        ])
+
+        let result = try await sut.fetchPromotedPlan(checksForExpiry: false)
+
+        #expect(result?.hasMultipleOffers == false)
     }
 
     // MARK: - Pricing request

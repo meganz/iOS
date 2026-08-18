@@ -21,6 +21,18 @@ struct PromoLandingDialogLaunchPresenterTests {
         #expect(useCase.recordedPlans.count == 1)
     }
 
+    @Test("The dialog is handed the whole fetch result, so it can point at the other plans on offer")
+    func triggerIfNeeded_multipleOffers_presentsThatVerdict() async {
+        let useCase = MockAppOpenPromoDialogUseCase(promotedPlan: plan(), hasMultipleOffers: true)
+        let presentation = PresentationSpy(result: true)
+        let sut = makeSUT(useCase: useCase, canInterruptUser: true, presentation: presentation)
+
+        sut.triggerIfNeeded()
+        await sut.attempt?.value
+
+        #expect(presentation.presentedResults.map(\.hasMultipleOffers) == [true])
+    }
+
     @Test("The dialog belongs to the plan revamp, so nothing happens while that flag is off")
     func triggerIfNeeded_featureDisabled_doesNotResolveOrPresent() async {
         let useCase = MockAppOpenPromoDialogUseCase(promotedPlan: plan())
@@ -255,28 +267,31 @@ private final class MockAppOpenPromoDialogUseCase: AppOpenPromoDialogUseCaseProt
     @Atomic var promotedPlanToPresentCalled = 0
     @Atomic var recordedPlans: [PromotedPlanEntity] = []
 
-    private let promotedPlan: PromotedPlanEntity?
+    private let fetchResult: PromotedPlanFetchResult?
     private let error: (any Error)?
     /// Runs while the offer is being resolved, standing in for whatever the user does during the request.
     private let onResolve: (@Sendable () async -> Void)?
 
     init(
         promotedPlan: PromotedPlanEntity? = nil,
+        hasMultipleOffers: Bool = false,
         error: (any Error)? = nil,
         onResolve: (@Sendable () async -> Void)? = nil
     ) {
-        self.promotedPlan = promotedPlan
+        self.fetchResult = promotedPlan.map {
+            PromotedPlanFetchResult(promotedPlan: $0, hasMultipleOffers: hasMultipleOffers)
+        }
         self.error = error
         self.onResolve = onResolve
     }
 
-    func promotedPlanToPresent() async throws -> PromotedPlanEntity? {
+    func promotedPlanToPresent() async throws -> PromotedPlanFetchResult? {
         $promotedPlanToPresentCalled.mutate { $0 += 1 }
         await onResolve?()
         if let error {
             throw error
         }
-        return promotedPlan
+        return fetchResult
     }
 
     func recordDialogShown(for promotedPlan: PromotedPlanEntity) {
@@ -287,7 +302,9 @@ private final class MockAppOpenPromoDialogUseCase: AppOpenPromoDialogUseCaseProt
 /// Records what the presenter tried to present, standing in for the router.
 @MainActor
 private final class PresentationSpy {
-    private(set) var presentedPlans: [PlanEntity] = []
+    private(set) var presentedResults: [PromotedPlanFetchResult] = []
+
+    var presentedPlans: [PlanEntity] { presentedResults.map(\.promotedPlan.plan) }
 
     private let result: Bool
 
@@ -295,9 +312,9 @@ private final class PresentationSpy {
         self.result = result
     }
 
-    var present: @MainActor (PlanEntity) -> Bool {
-        { [self] plan in
-            presentedPlans.append(plan)
+    var present: @MainActor (PromotedPlanFetchResult) -> Bool {
+        { [self] fetchResult in
+            presentedResults.append(fetchResult)
             return result
         }
     }

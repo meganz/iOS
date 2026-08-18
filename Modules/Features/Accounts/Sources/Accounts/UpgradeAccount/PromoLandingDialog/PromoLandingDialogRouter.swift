@@ -10,19 +10,22 @@ public final class PromoLandingDialogRouter: Routing {
     private let promotedPlanUseCase: any PromotedPlanUseCaseProtocol
     private let planPurchaser: any PlanPurchasing
     private let onPurchased: @MainActor () -> Void
+    private let showAllPlans: @MainActor () -> Void
 
     public init(
         presenter: UIViewController?,
         checksForExpiry: Bool = true,
         promotedPlanUseCase: some PromotedPlanUseCaseProtocol,
         planPurchaser: some PlanPurchasing,
-        onPurchased: @escaping @MainActor () -> Void = {}
+        onPurchased: @escaping @MainActor () -> Void = {},
+        showAllPlans: @escaping @MainActor () -> Void
     ) {
         self.presenter = presenter
         self.checksForExpiry = checksForExpiry
         self.promotedPlanUseCase = promotedPlanUseCase
         self.planPurchaser = planPurchaser
         self.onPurchased = onPurchased
+        self.showAllPlans = showAllPlans
     }
 
     public func build() -> UIViewController {
@@ -34,7 +37,11 @@ public final class PromoLandingDialogRouter: Routing {
                 promotedPlanUseCase: promotedPlanUseCase,
                 planPurchaser: planPurchaser,
                 dismissAction: { presentedController?.dismiss(animated: true) },
-                onPurchased: onPurchased
+                onPurchased: onPurchased,
+                // The upgrade page presents from whatever presented this dialog, so it waits for the dialog to close.
+                viewAllPlansAction: { [showAllPlans] in
+                    presentedController?.dismiss(animated: true) { showAllPlans() }
+                }
             )
         )
 

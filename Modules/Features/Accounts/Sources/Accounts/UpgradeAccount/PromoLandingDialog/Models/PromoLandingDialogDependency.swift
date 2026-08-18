@@ -7,28 +7,32 @@ public struct PromoLandingDialogDependency {
     let planPurchaser: any PlanPurchasing
     let dismissAction: @MainActor () -> Void
     let onPurchased: @MainActor () -> Void
+    let viewAllPlansAction: @MainActor () -> Void
 
     public init(
         checksForExpiry: Bool,
         promotedPlanUseCase: any PromotedPlanUseCaseProtocol,
         planPurchaser: some PlanPurchasing,
         dismissAction: @MainActor @escaping () -> Void,
-        onPurchased: @MainActor @escaping () -> Void = {}
+        onPurchased: @MainActor @escaping () -> Void = {},
+        viewAllPlansAction: @MainActor @escaping () -> Void
     ) {
         self.checksForExpiry = checksForExpiry
         self.promotedPlanUseCase = promotedPlanUseCase
         self.planPurchaser = planPurchaser
         self.dismissAction = dismissAction
         self.onPurchased = onPurchased
+        self.viewAllPlansAction = viewAllPlansAction
     }
 
     /// Carries this dependency over to the loaded dialog, once the offer has been resolved.
-    func contentViewDependency(for promotedPlan: PromotedPlanEntity) -> PromoLandingDialogContentView.Dependency {
+    func contentViewDependency(for fetchResult: PromotedPlanFetchResult) -> PromoLandingDialogContentView.Dependency {
         PromoLandingDialogContentView.Dependency(
-            plan: promotedPlan.plan,
+            fetchResult: fetchResult,
             planPurchaser: planPurchaser,
             dismissAction: dismissAction,
-            onPurchased: onPurchased
+            onPurchased: onPurchased,
+            viewAllPlansAction: viewAllPlansAction
         )
     }
 }

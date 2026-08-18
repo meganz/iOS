@@ -12,7 +12,14 @@ struct AppOpenPromoDialogUseCaseTests {
     func promotedPlanToPresent_allowanceAvailable_returnsPlan() async throws {
         let sut = makeSUT(promotedPlan: plan(campaignId: 2026), isAllowanceAvailable: true)
 
-        #expect(try await sut.promotedPlanToPresent()?.plan.type == .proI)
+        #expect(try await sut.promotedPlanToPresent()?.promotedPlan.plan.type == .proI)
+    }
+
+    @Test("The dialog is told that other plans are on offer too")
+    func promotedPlanToPresent_multipleOffers_carriesTheVerdict() async throws {
+        let sut = makeSUT(promotedPlan: plan(campaignId: 2026), hasMultipleOffers: true)
+
+        #expect(try await sut.promotedPlanToPresent()?.hasMultipleOffers == true)
     }
 
     @Test("Nothing is presented when the campaign is still inside its reshow interval")
@@ -94,14 +101,18 @@ struct AppOpenPromoDialogUseCaseTests {
 
     private func makeSUT(
         promotedPlan: PromotedPlanEntity?,
+        hasMultipleOffers: Bool = false,
         promotedPlanError: (any Error)? = nil,
         isAllowanceAvailable: Bool = true,
         allowances: MockPromoDialogReshowAllowanceFactory? = nil,
         currentUserHandle: HandleEntity? = 1
     ) -> AppOpenPromoDialogUseCase {
         let allowances = allowances ?? MockPromoDialogReshowAllowanceFactory(isAvailable: isAllowanceAvailable)
+        let fetchResult = promotedPlan.map {
+            PromotedPlanFetchResult(promotedPlan: $0, hasMultipleOffers: hasMultipleOffers)
+        }
         return AppOpenPromoDialogUseCase(
-            promotedPlanUseCase: MockPromotedPlanUseCase(promotedPlan: promotedPlan, error: promotedPlanError),
+            promotedPlanUseCase: MockPromotedPlanUseCase(fetchResult: fetchResult, error: promotedPlanError),
             accountUseCase: MockAccountUseCase(currentUser: currentUserHandle.map { UserEntity(handle: $0) }),
             makeAllowance: allowances.makeAllowance
         )
@@ -134,12 +145,12 @@ struct AppOpenPromoDialogUseCaseTests {
 // MARK: - Test doubles
 
 private struct MockPromotedPlanUseCase: PromotedPlanUseCaseProtocol {
-    let promotedPlan: PromotedPlanEntity?
+    let fetchResult: PromotedPlanFetchResult?
     let error: (any Error)?
 
-    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity? {
+    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanFetchResult? {
         if let error { throw error }
-        return promotedPlan
+        return fetchResult
     }
 }
 

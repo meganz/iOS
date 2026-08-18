@@ -3,8 +3,11 @@ import MEGADomain
 
 public protocol PromotedPlanUseCaseProtocol: Sendable {
     /// The cheapest upgrade whose offer may be advertised, or `nil` when there is none. Ties go to the yearly cycle.
+    ///
+    /// The result also reports whether other upgrades carry an advertisable offer, so a dialog with room for one plan
+    /// can point at the rest. Each plan counts on its own, so the same tier offered monthly and yearly counts twice.
     /// - Parameter checksForExpiry: when `true`, an offer is also rejected once its expiry date passes. Offers without one never lapse.
-    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity?
+    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanFetchResult?
 }
 
 public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
@@ -19,7 +22,7 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
         self.fetchUseCase = fetchUseCase
     }
 
-    public func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity? {
+    public func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanFetchResult? {
         // Offers may become invalid for various reasons, such as expiring, or no longer being exposed once the user converts.
         // Reload the products so an offer is advertised on what the API says now, not on what it said previously, such as at login.
         // The API guarantees that once a user upgrades during the campaign, it will stop exposing offers for that user in MEGAPricing.
@@ -30,24 +33,30 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
         let accountDetails = try await accountDetailsResult
         let plans = await plansResult
 
-        guard let plan = cheapestOfferedPlan(in: plans, accountDetails: accountDetails),
-              let mobileOffer = plan.mobileOffer,
-              mobileOffer.isAdvertisable,
-              !(checksForExpiry && mobileOffer.hasExpired) else { return nil }
+        let offered = offeredUpgrades(in: plans, accountDetails: accountDetails)
 
-        return PromotedPlanEntity(plan: plan, offer: mobileOffer)
+        guard let cheapest = offered.min(by: isCheaperPromotion),
+              let mobileOffer = cheapest.plan.mobileOffer,
+              mobileOffer.isAdvertised(checksForExpiry: checksForExpiry) else { return nil }
+
+        let hasOtherAdvertisedOffers = offered.contains {
+            $0.plan != cheapest.plan && $0.plan.mobileOffer?.isAdvertised(checksForExpiry: checksForExpiry) == true
+        }
+
+        return PromotedPlanFetchResult(
+            promotedPlan: PromotedPlanEntity(plan: cheapest.plan, offer: mobileOffer),
+            hasMultipleOffers: hasOtherAdvertisedOffers
+        )
     }
 
-    private func cheapestOfferedPlan(
+    private func offeredUpgrades(
         in plans: [PlanEntity],
         accountDetails: AccountDetailsEntity
-    ) -> PlanEntity? {
+    ) -> [(plan: PlanEntity, offer: SubscriptionOfferEntity)] {
         upgradeCandidates(in: plans, accountDetails: accountDetails)
             .compactMap { plan in
                 plan.applicableOffer.map { (plan: plan, offer: $0) }
             }
-            .min(by: isCheaperPromotion)?
-            .plan
     }
 
     /// Filter for the candidates for promotion: A candidate is a plan that has higher tier and not the current plan user owns
@@ -73,6 +82,10 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
 }
 
 private extension MobileOfferEntity {
+    func isAdvertised(checksForExpiry: Bool) -> Bool {
+        isAdvertisable && !(checksForExpiry && hasExpired)
+    }
+
     var hasExpired: Bool {
         guard let expiryDate = expiryDate else { return false }
         return expiryDate <= Date()

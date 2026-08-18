@@ -33,28 +33,32 @@ public final class PromoLandingOrUpgradeRouter {
     public func start() async {
         guard canInterruptUser() else { return }
 
-        let promotedPlan = try? await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)
+        let fetchResult = try? await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)
 
         // A blocking screen may have taken over while the offer was resolving.
         guard canInterruptUser() else { return }
 
-        guard let promotedPlan else {
+        guard let fetchResult else {
             showUpgradeScreen()
             return
         }
 
-        presenter()?.present(build(for: promotedPlan.plan), animated: true)
+        presenter()?.present(build(for: fetchResult), animated: true)
     }
 
-    private func build(for plan: PlanEntity) -> UIViewController {
+    private func build(for fetchResult: PromotedPlanFetchResult) -> UIViewController {
         weak var presentedController: UIViewController?
 
         let view = PromoLandingDialogContentView(
             dependency: PromoLandingDialogContentView.Dependency(
-                plan: plan,
+                fetchResult: fetchResult,
                 planPurchaser: planPurchaser,
                 dismissAction: { presentedController?.dismiss(animated: true) },
-                onPurchased: onPurchased
+                onPurchased: onPurchased,
+                // The upgrade page presents from whatever presented this dialog, so it waits for the dialog to close.
+                viewAllPlansAction: { [showUpgradeScreen] in
+                    presentedController?.dismiss(animated: true) { showUpgradeScreen() }
+                }
             )
         )
 

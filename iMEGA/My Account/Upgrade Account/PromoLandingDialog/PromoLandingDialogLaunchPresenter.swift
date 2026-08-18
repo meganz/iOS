@@ -20,7 +20,7 @@ final class PromoLandingDialogLaunchPresenter {
     private let isFeatureEnabled: @Sendable () async -> Bool
     private let useCase: any AppOpenPromoDialogUseCaseProtocol
     private let interruptibility: any PromoDialogInterruptibilityProtocol
-    private let presentDialog: @MainActor (PlanEntity) -> Bool
+    private let presentDialog: @MainActor (PromotedPlanFetchResult) -> Bool
     private let delay: @Sendable () async throws -> Void
     /// The attempt this app open is making. Readable so tests can await it instead of guessing at timing;
     /// only this class starts or cancels one, hence `private(set)`.
@@ -30,7 +30,7 @@ final class PromoLandingDialogLaunchPresenter {
         isFeatureEnabled: @escaping @Sendable () async -> Bool,
         useCase: some AppOpenPromoDialogUseCaseProtocol,
         interruptibility: some PromoDialogInterruptibilityProtocol,
-        presentDialog: @escaping @MainActor (PlanEntity) -> Bool,
+        presentDialog: @escaping @MainActor (PromotedPlanFetchResult) -> Bool,
         delay: @escaping @Sendable () async throws -> Void = {
             try await Task.sleep(for: PromoLandingDialogLaunchPresenter.presentationDelay)
         }
@@ -55,16 +55,16 @@ final class PromoLandingDialogLaunchPresenter {
                 try Task.checkCancellation()
                 guard interruptibility.canInterruptUser else { throw SkipReason.userBusyBeforeLookup }
 
-                guard let promotedPlan = try await useCase.promotedPlanToPresent() else {
+                guard let fetchResult = try await useCase.promotedPlanToPresent() else {
                     throw SkipReason.noOfferToShow
                 }
 
                 try Task.checkCancellation()
                 guard interruptibility.canInterruptUser else { throw SkipReason.userBusyAfterLookup }
 
-                guard presentDialog(promotedPlan.plan) else { throw SkipReason.presentationRefused }
+                guard presentDialog(fetchResult) else { throw SkipReason.presentationRefused }
 
-                useCase.recordDialogShown(for: promotedPlan)
+                useCase.recordDialogShown(for: fetchResult.promotedPlan)
             } catch let reason as SkipReason {
                 MEGALogDebug("[PromoLandingDialog] Skipped this app open: \(reason)")
             } catch is CancellationError {
@@ -120,8 +120,8 @@ extension PromoLandingDialogLaunchPresenter {
             interruptibility: PromoDialogInterruptibility(
                 chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo)
             ),
-            presentDialog: { plan in
-                AppOpenPromoLandingDialogRouter().present(plan: plan)
+            presentDialog: { fetchResult in
+                AppOpenPromoLandingDialogRouter().present(fetchResult: fetchResult)
             }
         )
     }

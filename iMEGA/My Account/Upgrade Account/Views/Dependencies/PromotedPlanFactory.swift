@@ -14,7 +14,7 @@ enum PromotedPlanFactory {
         return {
             guard await DIContainer.remoteFeatureFlagUseCase
                 .isFeatureFlagEnabledAfterReady(for: .iosUpgradeAccountPlanRevamp) else { return nil }
-            return try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)?.plan
+            return try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true)?.promotedPlan.plan
         }
     }
 
@@ -80,7 +80,10 @@ extension PromoLandingDialogRouter {
                 purchaseUseCase: purchaseUseCase,
                 subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
                 accountUseCase: accountUseCase
-            )
+            ),
+            showAllPlans: { [weak presenter] in
+                UpgradeSubscriptionRouter(presenter: presenter).showUpgradeAccount()
+            }
         )
     }
 }

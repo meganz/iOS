@@ -13,7 +13,7 @@ final class AppOpenPromoLandingDialogRouter {
     /// - Returns: whether the dialog was presented, so a caller gating on a reshow interval only records the
     ///   campaign as shown when it actually was.
     @discardableResult
-    func present(plan: PlanEntity) -> Bool {
+    func present(fetchResult: PromotedPlanFetchResult) -> Bool {
         guard let presenter = UIApplication.topPresentableViewController() else {
             MEGALogError("[PromoLandingDialog] No view controller available to present the landing dialog")
             return false
@@ -23,10 +23,18 @@ final class AppOpenPromoLandingDialogRouter {
             presenter?.dismiss(animated: true)
         }
 
+        // The upgrade page presents from the same view controller, so it waits for the dialog to close.
+        let onViewAllPlans: @MainActor () -> Void = { [weak presenter] in
+            presenter?.dismiss(animated: true) {
+                UpgradeSubscriptionRouter(presenter: presenter).showUpgradeAccount()
+            }
+        }
+
         let dependency = PromoLandingDialogContentView.Dependency(
-            plan: plan,
+            fetchResult: fetchResult,
             planPurchaser: makePlanPurchaser(),
-            dismissAction: onDismiss
+            dismissAction: onDismiss,
+            viewAllPlansAction: onViewAllPlans
         )
 
         let hostingController = PromoLandingDialogContentHostingController(dependency: dependency)

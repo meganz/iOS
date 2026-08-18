@@ -90,7 +90,7 @@ private final class Harness {
     private var canInterruptUserAnswers: [Bool]
 
     init(
-        result: Result<PromotedPlanEntity?, any Error>,
+        result: Result<PromotedPlanFetchResult?, any Error>,
         canInterruptUserAnswers: [Bool] = []
     ) {
         self.canInterruptUserAnswers = canInterruptUserAnswers
@@ -125,14 +125,14 @@ private final class SpyPresenter: UIViewController {
 }
 
 private final class MockPromotedPlanUseCase: PromotedPlanUseCaseProtocol, @unchecked Sendable {
-    private let result: Result<PromotedPlanEntity?, any Error>
+    private let result: Result<PromotedPlanFetchResult?, any Error>
     private(set) var checksForExpiryValues: [Bool] = []
 
-    init(result: Result<PromotedPlanEntity?, any Error>) {
+    init(result: Result<PromotedPlanFetchResult?, any Error>) {
         self.result = result
     }
 
-    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanEntity? {
+    func fetchPromotedPlan(checksForExpiry: Bool) async throws -> PromotedPlanFetchResult? {
         checksForExpiryValues.append(checksForExpiry)
         return try result.get()
     }
@@ -140,6 +140,12 @@ private final class MockPromotedPlanUseCase: PromotedPlanUseCaseProtocol, @unche
 
 private enum TestError: Error {
     case fetchFailed
+}
+
+private extension PromotedPlanFetchResult {
+    static var fake: PromotedPlanFetchResult {
+        PromotedPlanFetchResult(promotedPlan: .fake, hasMultipleOffers: false)
+    }
 }
 
 private extension PromotedPlanEntity {

@@ -2,9 +2,10 @@ import Foundation
 import MEGADomain
 
 public protocol AppOpenPromoDialogUseCaseProtocol: Sendable {
-    /// The plan whose offer should be advertised as the app opens by presenting the promo dialog,
-    /// or `nil` when nothing should be shown: no advertisable offer, or one the reshow interval still holds back.
-    func promotedPlanToPresent() async throws -> PromotedPlanEntity?
+    /// The plan whose offer should be advertised as the app opens by presenting the promo dialog, along with whether
+    /// other plans are on offer, or `nil` when nothing should be shown: no advertisable offer, or one the reshow
+    /// interval still holds back.
+    func promotedPlanToPresent() async throws -> PromotedPlanFetchResult?
     /// Records that the dialog was shown for `promotedPlan`'s offer, spending its reshow allowance.
     /// Only call this once the dialog actually appeared on screen.
     func recordDialogShown(for promotedPlan: PromotedPlanEntity)
@@ -36,11 +37,11 @@ public struct AppOpenPromoDialogUseCase: AppOpenPromoDialogUseCaseProtocol {
         self.makeAllowance = makeAllowance
     }
 
-    public func promotedPlanToPresent() async throws -> PromotedPlanEntity? {
+    public func promotedPlanToPresent() async throws -> PromotedPlanFetchResult? {
         guard let accountHandle = accountUseCase.currentUserHandle else { return nil }
-        guard let promotedPlan = try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true) else { return nil }
-        guard makeAllowance(accountHandle, promotedPlan.offer).isAvailable else { return nil }
-        return promotedPlan
+        guard let fetchResult = try await promotedPlanUseCase.fetchPromotedPlan(checksForExpiry: true) else { return nil }
+        guard makeAllowance(accountHandle, fetchResult.promotedPlan.offer).isAvailable else { return nil }
+        return fetchResult
     }
 
     public func recordDialogShown(for promotedPlan: PromotedPlanEntity) {

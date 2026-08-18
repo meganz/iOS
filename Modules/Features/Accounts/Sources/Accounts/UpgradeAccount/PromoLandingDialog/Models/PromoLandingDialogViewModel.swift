@@ -25,7 +25,7 @@ final class PromoLandingDialogViewModel: ObservableObject {
         viewState = .loading
 
         do {
-            guard let promotedPlan = try await dependency
+            guard let fetchResult = try await dependency
                 .promotedPlanUseCase
                 .fetchPromotedPlan(checksForExpiry: dependency.checksForExpiry) else {
                 // Nothing on offer and nothing to fall back to, so we show error
@@ -35,7 +35,7 @@ final class PromoLandingDialogViewModel: ObservableObject {
                 return
             }
 
-            viewState = .loaded(dependency.contentViewDependency(for: promotedPlan))
+            viewState = .loaded(dependency.contentViewDependency(for: fetchResult))
         } catch {
             viewState = .error
         }
