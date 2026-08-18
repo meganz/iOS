@@ -155,18 +155,100 @@ struct FileLinkContentViewModelTests {
         #expect(fileNodeOpener.openNodeCalledHandles == [42, 42])
     }
 
+    @Test("the more options offered to a non media file leave Save to Photos out")
+    func moreOptions_nonMedia_excludesSaveToPhotos() {
+        let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf"))
+
+        #expect(sut.moreOptions == [.saveToMEGA, .download, .copyToOffline, .shareLink, .sendToChat])
+    }
+
+    @Test("visual media is also offered Save to Photos", arguments: ["elcapitan.jpeg", "Hobbiton.mp4"])
+    func moreOptions_visualMedia_includesSaveToPhotos(fileName: String) {
+        let sut = makeSUT(node: NodeEntity(name: fileName))
+
+        #expect(sut.moreOptions == [.saveToMEGA, .saveToPhotos, .download, .copyToOffline, .shareLink, .sendToChat])
+    }
+
+    /// Audio is media the Photos library has nowhere to put, so it is offered the same rows as a document.
+    @Test("audio is not offered Save to Photos")
+    func moreOptions_audio_excludesSaveToPhotos() {
+        let sut = makeSUT(node: NodeEntity(name: "Voice Note.mp3"))
+
+        #expect(sut.moreOptions == [.saveToMEGA, .download, .copyToOffline, .shareLink, .sendToChat])
+    }
+
+    @Test(
+        "a picked row is handed to the app layer with the node behind the link",
+        arguments: zip(
+            [FileLinkMoreOption.saveToMEGA, .saveToPhotos, .download, .copyToOffline],
+            [FileLinkAction.saveToMEGA, .saveToPhotos, .download, .copyToOffline]
+        )
+    )
+    func handleMoreOption_isPassedToTheActionHandler(option: FileLinkMoreOption, action: FileLinkAction) async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg", handle: 42), actionHandler: actionHandler)
+
+        await sut.handle(moreOption: option)
+
+        #expect(actionHandler.handledActions == [.init(action: action, nodeHandle: 42)])
+    }
+
+    /// Sending to chat passes on a link rather than acting on the file, so it carries the link with it.
+    @Test("the Send to chat row is handed the link the file is passed on with")
+    func handleMoreOption_sendToChat_carriesTheShareLink() async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(
+            node: NodeEntity(name: "elcapitan.jpeg", handle: 42),
+            actionHandler: actionHandler,
+            shareLink: "https://mega.nz/file/abc#key"
+        )
+
+        await sut.handle(moreOption: .sendToChat)
+
+        #expect(
+            actionHandler.handledActions
+                == [.init(action: .sendToChat("https://mega.nz/file/abc#key"), nodeHandle: 42)]
+        )
+    }
+
+    /// The sheet shares the link itself, so the row has nothing to hand on to the app layer.
+    @Test("the Share link row is not handed to the app layer")
+    func handleMoreOption_shareLink_isNotPassedToTheActionHandler() async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), actionHandler: actionHandler)
+
+        await sut.handle(moreOption: .shareLink)
+
+        #expect(actionHandler.handledActions.isEmpty)
+    }
+
+    @Test("the link handed in is the one the Share link row shares")
+    func shareLink_isTheLinkHandedIn() {
+        let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), shareLink: "https://mega.nz/file/abc#key")
+
+        #expect(sut.shareLink == "https://mega.nz/file/abc#key")
+    }
+
     private func makeSUT(
         node: NodeEntity,
         loadedPreview: ImageContainer? = nil,
         thumbnailLoader: MockThumbnailLoader? = nil,
-        fileNodeOpener: MockFileLinkNodeOpener = MockFileLinkNodeOpener()
+        fileNodeOpener: MockFileLinkNodeOpener = MockFileLinkNodeOpener(),
+        actionHandler: MockFileLinkActionHandler = MockFileLinkActionHandler(),
+        shareLink: String = "https://mega.nz/file/abc"
     ) -> FileLinkContentViewModel {
         let loader = thumbnailLoader ?? MockThumbnailLoader(
             loadImage: loadedPreview.map {
                 SingleItemAsyncSequence<any ImageContaining>(item: $0).eraseToAnyAsyncSequence()
             } ?? EmptyAsyncSequence<any ImageContaining>().eraseToAnyAsyncSequence()
         )
-        return FileLinkContentViewModel(node: node, thumbnailLoader: loader, fileNodeOpener: fileNodeOpener)
+        return FileLinkContentViewModel(
+            node: node,
+            thumbnailLoader: loader,
+            fileNodeOpener: fileNodeOpener,
+            actionHandler: actionHandler,
+            shareLink: shareLink
+        )
     }
 
     private func size(_ byteCount: Int64) -> String {

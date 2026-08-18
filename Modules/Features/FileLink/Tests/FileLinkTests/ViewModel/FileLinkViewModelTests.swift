@@ -150,13 +150,61 @@ struct FileLinkViewModelTests {
         #expect(sut.askingForDecryptionKey == true)
     }
 
+    // MARK: - Share link
+
+    @Test("a link that resolved as it was opened is the one passed on")
+    func shareLink_afterLoading_isTheLinkThatResolved() async {
+        let sut = makeSUT(link: "https://mega.nz/file/abc#key")
+
+        await sut.startLoadingFileLink()
+
+        #expect(sut.shareLink == "https://mega.nz/file/abc#key")
+    }
+
+    /// The keyless link the screen was opened with cannot be opened by anyone it is passed on to, so what
+    /// gets shared is the link rebuilt around the key the user typed in.
+    @Test("a link shared without its key passes on the link rebuilt around the typed key")
+    func shareLink_afterConfirmingDecryptionKey_isTheRebuiltLink() async {
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc",
+            fileLinkFlowUseCase: MockFileLinkFlowUseCase(resolvedLink: "https://mega.nz/file/abc#typed-key")
+        )
+
+        await sut.confirmDecryptionKey("typed-key")
+
+        #expect(sut.shareLink == "https://mega.nz/file/abc#typed-key")
+    }
+
+    /// The encrypted link is the form the file was published in, so it outranks the decrypted one the
+    /// screen resolved through.
+    @Test("an encrypted link is passed on as it was published")
+    func shareLink_encryptedLink_isPassedOnAsPublished() async {
+        let sut = makeSUT(
+            link: "https://mega.nz/file/abc#key",
+            encryptedLink: "https://mega.nz/#P!encrypted"
+        )
+
+        await sut.startLoadingFileLink()
+
+        #expect(sut.shareLink == "https://mega.nz/#P!encrypted")
+    }
+
+    @Test("a link that has not resolved yet is passed on as it was opened")
+    func shareLink_beforeLoading_isTheLinkTheScreenWasOpenedWith() {
+        let sut = makeSUT(link: "https://mega.nz/file/abc#key")
+
+        #expect(sut.shareLink == "https://mega.nz/file/abc#key")
+    }
+
     private func makeSUT(
         link: String = "link",
+        encryptedLink: String? = nil,
         fileLinkFlowUseCase: MockFileLinkFlowUseCase = MockFileLinkFlowUseCase()
     ) -> FileLinkViewModel {
         FileLinkViewModel(
             dependency: FileLinkViewModel.Dependency(
                 link: link,
+                encryptedLink: encryptedLink,
                 fileLinkFlowUseCase: fileLinkFlowUseCase
             )
         )

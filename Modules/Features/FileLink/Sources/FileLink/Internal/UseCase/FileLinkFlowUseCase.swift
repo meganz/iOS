@@ -6,9 +6,26 @@ package enum FileLinkFlowErrorEntity: Error, Sendable, Equatable {
     case missingDecryptionKey // to show alert asking for decryption key
 }
 
+/// The file behind a link, together with the link it resolved from.
+///
+/// The two travel together because they can differ: a link shared without its key resolves through the one
+/// rebuilt around the key the user typed in, and that is the only one anything downstream can use.
+package struct ResolvedFileLinkEntity: Equatable, Sendable {
+    package let node: NodeEntity
+    package let link: String
+
+    package init(node: NodeEntity, link: String) {
+        self.node = node
+        self.link = link
+    }
+}
+
 package protocol FileLinkFlowUseCaseProtocol: Sendable {
-    func initialStart(with link: String) async throws(FileLinkFlowErrorEntity) -> NodeEntity
-    func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FileLinkFlowErrorEntity) -> NodeEntity
+    func initialStart(with link: String) async throws(FileLinkFlowErrorEntity) -> ResolvedFileLinkEntity
+    func confirmDecryptionKey(
+        with link: String,
+        decryptionKey: String
+    ) async throws(FileLinkFlowErrorEntity) -> ResolvedFileLinkEntity
 }
 
 /// This handles the file link flow: resolve the public node the link points at, so the screen can show
@@ -32,9 +49,10 @@ package struct FileLinkFlowUseCase: FileLinkFlowUseCaseProtocol {
     /// In this flow, an invalid decryption key means the key came embedded in the link itself, so
     /// the error page is shown immediately (.linkUnavailable(.generic)).
     /// Check the confirmDecryptionKey flow for the difference.
-    package func initialStart(with link: String) async throws(FileLinkFlowErrorEntity) -> NodeEntity {
+    package func initialStart(with link: String) async throws(FileLinkFlowErrorEntity) -> ResolvedFileLinkEntity {
         do {
-            return try await fileLinkRepository.publicNode(for: link)
+            let node = try await fileLinkRepository.publicNode(for: link)
+            return ResolvedFileLinkEntity(node: node, link: link)
         } catch {
             throw switch error {
             case .invalidDecryptionKey: .linkUnavailable(.generic)
@@ -46,11 +64,17 @@ package struct FileLinkFlowUseCase: FileLinkFlowUseCaseProtocol {
 
     /// In this flow, unlike the initialStart flow, an invalid decryption key does not show the error
     /// page. The user typed the key in, so they are told it is invalid and asked for it again.
-    package func confirmDecryptionKey(with link: String, decryptionKey: String) async throws(FileLinkFlowErrorEntity) -> NodeEntity {
+    /// Reports `fullLink` rather than the link it was asked with: the one the user was given carries no key,
+    /// so it is of no use to whatever the screen does with the file next.
+    package func confirmDecryptionKey(
+        with link: String,
+        decryptionKey: String
+    ) async throws(FileLinkFlowErrorEntity) -> ResolvedFileLinkEntity {
         let fullLink = await fileLinkBuilder.build(link: link, with: decryptionKey)
 
         do {
-            return try await fileLinkRepository.publicNode(for: fullLink)
+            let node = try await fileLinkRepository.publicNode(for: fullLink)
+            return ResolvedFileLinkEntity(node: node, link: fullLink)
         } catch {
             throw switch error {
             case .invalidDecryptionKey: .invalidDecryptionKey

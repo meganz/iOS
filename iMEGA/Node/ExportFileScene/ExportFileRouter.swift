@@ -20,19 +20,25 @@ final class ExportFileRouter: ExportFileViewRouting {
     private let popoverSourceRect: CGRect?
     private let isFolderLink: Bool
     private let incompleteDownloadAlertRouter: (any IncompleteDownloadAlertRouting)?
+    /// Where the download behind the export looks for the node. The account tree holds every node the app
+    /// exports but one: the node behind a file link is not in it, so the file link screen hands in the
+    /// provider holding the node its link resolved to.
+    private let nodeProvider: any MEGANodeProviderProtocol
 
     init(
         presenter: UIViewController,
         sender: Any?,
         popoverSourceRect: CGRect? = nil,
         isFolderLink: Bool = false,
-        incompleteDownloadAlertRouter: (any IncompleteDownloadAlertRouting)? = nil
+        incompleteDownloadAlertRouter: (any IncompleteDownloadAlertRouting)? = nil,
+        nodeProvider: some MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk)
     ) {
         self.presenter = presenter
         self.sender = sender
         self.popoverSourceRect = popoverSourceRect
         self.isFolderLink = isFolderLink
         self.incompleteDownloadAlertRouter = incompleteDownloadAlertRouter
+        self.nodeProvider = nodeProvider
     }
     
     // MARK: - Dispatch actions without viewcontroller -
@@ -69,7 +75,8 @@ final class ExportFileRouter: ExportFileViewRouting {
             // has to be told where to look for it.
             downloadFileRepository: DownloadFileRepository(
                 sdk: .sharedSdk,
-                sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil
+                sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil,
+                nodeProvider: nodeProvider
             ),
             offlineFilesRepository: OfflineFilesRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,

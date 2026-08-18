@@ -11,15 +11,19 @@ package final class FileLinkViewModel: ObservableObject {
 
     package struct Dependency {
         let link: String
+        /// Set when the link the user opened was an encrypted one, of which `link` is the decrypted form.
+        let encryptedLink: String?
         let fileLinkFlowUseCase: any FileLinkFlowUseCaseProtocol
 
         init(
             link: String,
+            encryptedLink: String?,
             fileLinkBuilder: some FileLinkBuilderProtocol,
             nodeProvider: FileLinkNodeProvider
         ) {
             self.init(
                 link: link,
+                encryptedLink: encryptedLink,
                 fileLinkFlowUseCase: FileLinkFlowUseCase(
                     fileLinkRepository: FileLinkRepository.newRepo(nodeProvider: nodeProvider),
                     fileLinkBuilder: fileLinkBuilder
@@ -29,9 +33,11 @@ package final class FileLinkViewModel: ObservableObject {
 
         package init(
             link: String,
+            encryptedLink: String? = nil,
             fileLinkFlowUseCase: some FileLinkFlowUseCaseProtocol
         ) {
             self.link = link
+            self.encryptedLink = encryptedLink
             self.fileLinkFlowUseCase = fileLinkFlowUseCase
         }
     }
@@ -64,8 +70,20 @@ package final class FileLinkViewModel: ObservableObject {
         Strings.Localizable.fileLink
     }
 
+    /// The link to pass the file on with: the encrypted one when the user arrived through an encrypted link,
+    /// since that is the form it was published in, and otherwise the link the file actually resolved from.
+    ///
+    /// The link the screen was opened with is the last resort rather than the first choice: a link shared
+    /// without its key resolves through the one rebuilt around the key the user typed in, and handing on the
+    /// keyless one would leave whoever receives it unable to open the file.
+    package var shareLink: String {
+        dependency.encryptedLink ?? resolvedLink ?? dependency.link
+    }
+
     private let dependency: Dependency
     private var fileLinkFlowStopped = false
+    /// Kept from the moment the link resolved. See `shareLink`.
+    private var resolvedLink: String?
 
     package init(dependency: Dependency) {
         self.dependency = dependency
@@ -74,8 +92,8 @@ package final class FileLinkViewModel: ObservableObject {
     package func startLoadingFileLink() async {
         fileLinkFlowStopped = false
         do throws(FileLinkFlowErrorEntity) {
-            let node = try await dependency.fileLinkFlowUseCase.initialStart(with: dependency.link)
-            show(node)
+            let resolvedFileLink = try await dependency.fileLinkFlowUseCase.initialStart(with: dependency.link)
+            show(resolvedFileLink)
         } catch {
             handleFileLinkFlowError(error)
         }
@@ -84,11 +102,11 @@ package final class FileLinkViewModel: ObservableObject {
     package func confirmDecryptionKey(_ key: String) async {
         fileLinkFlowStopped = false
         do throws(FileLinkFlowErrorEntity) {
-            let node = try await dependency.fileLinkFlowUseCase.confirmDecryptionKey(
+            let resolvedFileLink = try await dependency.fileLinkFlowUseCase.confirmDecryptionKey(
                 with: dependency.link,
                 decryptionKey: key
             )
-            show(node)
+            show(resolvedFileLink)
         } catch {
             handleFileLinkFlowError(error)
         }
@@ -104,9 +122,10 @@ package final class FileLinkViewModel: ObservableObject {
         askingForDecryptionKey = true
     }
 
-    private func show(_ node: NodeEntity) {
+    private func show(_ resolvedFileLink: ResolvedFileLinkEntity) {
         guard !fileLinkFlowStopped else { return }
-        viewState = .loaded(node)
+        resolvedLink = resolvedFileLink.link
+        viewState = .loaded(resolvedFileLink.node)
     }
 
     private func handleFileLinkFlowError(_ error: FileLinkFlowErrorEntity) {

@@ -2714,6 +2714,7 @@
 		FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */; };
 		FE1EB0000000000000000009 /* LinkUnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */; };
 		FE1EB000000000000000000A /* FileLinkNodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000A /* FileLinkNodeOpener.swift */; };
+		FE1EB000000000000000000B /* FileLinkActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000B /* FileLinkActionHandler.swift */; };
 		FE1EB0000000000000000006 /* FileLink in Frameworks */ = {isa = PBXBuildFile; productRef = FE1EA0000000000000000007 /* FileLink */; };
 /* End PBXBuildFile section */
 
@@ -5591,6 +5592,7 @@
 		FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkUnavailableView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUnavailableContentView.swift; sourceTree = "<group>"; };
 		FE1EA000000000000000000A /* FileLinkNodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkNodeOpener.swift; sourceTree = "<group>"; };
+		FE1EA000000000000000000B /* FileLinkActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -13708,6 +13710,7 @@
 		FE1EA0000000000000000008 /* NewFileLink */ = {
 			isa = PBXGroup;
 			children = (
+				FE1EA000000000000000000B /* FileLinkActionHandler.swift */,
 				FE1EA000000000000000000A /* FileLinkNodeOpener.swift */,
 				FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */,
 				FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */,
@@ -15183,6 +15186,7 @@
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
+				FE1EB000000000000000000B /* FileLinkActionHandler.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				FE1EB000000000000000000A /* FileLinkNodeOpener.swift in Sources */,
 				FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */,

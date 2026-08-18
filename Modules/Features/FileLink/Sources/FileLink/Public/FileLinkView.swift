@@ -6,6 +6,7 @@ import MEGAL10n
 import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
+import Transfer
 
 /// Entry point of the file link screen. It owns the access flow only: the screen is on top before the
 /// link is resolved, shows the skeleton while that happens, asks for a decryption key when the link
@@ -13,26 +14,37 @@ import SwiftUI
 public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
     public struct Dependency {
         let link: String
+        /// Set when the link the user opened was an encrypted one, of which `link` is the decrypted form.
+        /// It is the form the link was published in, so it is the one the Share link row hands on.
+        let encryptedLink: String?
         let fileLinkBuilder: any FileLinkBuilderProtocol
         let fileNodeOpener: any FileLinkNodeOpenerProtocol
+        let actionHandler: any FileLinkActionHandlerProtocol
+        let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let onClose: @MainActor () -> Void
         /// Shared by the link resolution, which stores the node it resolved, and everything that needs
-        /// that node afterwards: the preview loader in here and `fileNodeOpener` out there. See
-        /// `FileLinkNodeProvider`.
+        /// that node afterwards: the preview loader in here, `fileNodeOpener` and `actionHandler` out
+        /// there. See `FileLinkNodeProvider`.
         let nodeProvider: FileLinkNodeProvider
 
-        /// `nodeProvider` has to be the very instance `fileNodeOpener` reads from, which is why the
-        /// caller owns it rather than this initialiser creating one.
+        /// `nodeProvider` has to be the very instance `fileNodeOpener` and `actionHandler` read from,
+        /// which is why the caller owns it rather than this initialiser creating one.
         public init(
             link: String,
+            encryptedLink: String?,
             fileLinkBuilder: some FileLinkBuilderProtocol,
             fileNodeOpener: some FileLinkNodeOpenerProtocol,
+            actionHandler: some FileLinkActionHandlerProtocol,
+            transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
             nodeProvider: FileLinkNodeProvider,
             onClose: @escaping @MainActor () -> Void
         ) {
             self.link = link
+            self.encryptedLink = encryptedLink
             self.fileLinkBuilder = fileLinkBuilder
             self.fileNodeOpener = fileNodeOpener
+            self.actionHandler = actionHandler
+            self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
             self.nodeProvider = nodeProvider
             self.onClose = onClose
         }
@@ -56,6 +68,7 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
             wrappedValue: FileLinkViewModel(
                 dependency: FileLinkViewModel.Dependency(
                     link: dependency.link,
+                    encryptedLink: dependency.encryptedLink,
                     fileLinkBuilder: dependency.fileLinkBuilder,
                     nodeProvider: dependency.nodeProvider
                 )
@@ -110,7 +123,13 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
             FileLinkContentView(
                 node: node,
                 previewLoader: previewLoader,
-                fileNodeOpener: dependency.fileNodeOpener
+                fileNodeOpener: dependency.fileNodeOpener,
+                actionHandler: dependency.actionHandler,
+                // Read from the view model rather than from the dependency: only it knows which link the
+                // file resolved from, which is not the one the screen was opened with when the user had to
+                // type the key in.
+                shareLink: viewModel.shareLink,
+                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
             )
             .toolbar { toolbarContent }
         case let .error(reason):

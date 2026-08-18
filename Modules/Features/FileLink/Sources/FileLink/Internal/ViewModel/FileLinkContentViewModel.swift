@@ -20,12 +20,17 @@ package final class FileLinkContentViewModel: ObservableObject {
     package let name: String
     /// The size on its own, or the duration and the size for media that carries one.
     package let details: String
+    /// The rows the more button offers, which the file type decides once and for all.
+    package let moreOptions: [FileLinkMoreOption]
+    /// What the Share link row hands on, which is not necessarily the link the file was resolved from.
+    package let shareLink: String
 
     @Published package private(set) var preview: Preview
 
     private let node: NodeEntity
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let fileNodeOpener: any FileLinkNodeOpenerProtocol
+    private let actionHandler: any FileLinkActionHandlerProtocol
     /// Not published: nothing on screen changes while a file is being opened, this only keeps a second
     /// ask from getting through. See `openFile()`.
     private var isOpeningFile = false
@@ -33,13 +38,18 @@ package final class FileLinkContentViewModel: ObservableObject {
     package init(
         node: NodeEntity,
         thumbnailLoader: some ThumbnailLoaderProtocol,
-        fileNodeOpener: some FileLinkNodeOpenerProtocol
+        fileNodeOpener: some FileLinkNodeOpenerProtocol,
+        actionHandler: some FileLinkActionHandlerProtocol,
+        shareLink: String
     ) {
         self.node = node
         self.thumbnailLoader = thumbnailLoader
         self.fileNodeOpener = fileNodeOpener
+        self.actionHandler = actionHandler
+        self.shareLink = shareLink
         name = node.name
         details = Self.details(for: node)
+        moreOptions = Self.moreOptions(for: node)
         preview = .fileTypeIcon(MEGAAssets.Image.image(forFileName: node.name))
     }
 
@@ -63,6 +73,26 @@ package final class FileLinkContentViewModel: ObservableObject {
         defer { isOpeningFile = false }
 
         await fileNodeOpener.openNode(handle: node.handle)
+    }
+
+    /// Runs the row picked in the more options sheet. Share link is not one of them: the sheet hands that
+    /// row to `ShareLink`, which shares `shareLink` without going through here.
+    package func handle(moreOption: FileLinkMoreOption) async {
+        guard let action = moreOption.action(shareLink: shareLink) else { return }
+
+        await actionHandler.handle(action, nodeHandle: node.handle)
+    }
+
+    private static func moreOptions(for node: NodeEntity) -> [FileLinkMoreOption] {
+        var options: [FileLinkMoreOption] = [.saveToMEGA]
+        // An image or a video is all the Photos library takes, so every other file type leaves the row out
+        // rather than offering somewhere the file cannot go.
+        if node.name.fileExtensionGroup.isVisualMedia {
+            options.append(.saveToPhotos)
+        }
+        options.append(contentsOf: [.download, .copyToOffline, .shareLink, .sendToChat])
+
+        return options
     }
 
     private static func details(for node: NodeEntity) -> String {

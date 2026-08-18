@@ -38,9 +38,12 @@ struct FileLinkPreviewView: View {
                     .frame(maxWidth: Constants.maxIconSize, maxHeight: Constants.maxIconSize)
             }
         case let .media(image, videoDuration):
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
+            Color.clear
+                .overlay {
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
                 .overlay {
                     if let videoDuration {
                         videoOverlay(duration: videoDuration)

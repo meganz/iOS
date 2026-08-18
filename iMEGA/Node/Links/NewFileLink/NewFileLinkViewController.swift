@@ -46,17 +46,24 @@ final class NewFileLinkViewController: UIViewController {
 
     private func buildDependency() -> FileLinkView<FileLinkUnavailableView>.Dependency {
         let nodeProvider = FileLinkNodeProvider()
+        // Read now rather than when the file is opened or shared: the photo browser clears it as it closes.
+        let encryptedLink = MEGALinkManager.secondaryLinkURL?.absoluteString
         let fileNodeOpener = FileLinkNodeOpener(
             navigationController: navigationController,
             nodeProvider: nodeProvider,
-            // Read now rather than when the file is opened: the photo browser clears it as it closes.
-            encryptedLink: MEGALinkManager.secondaryLinkURL?.absoluteString
+            encryptedLink: encryptedLink
         )
 
         return FileLinkView.Dependency(
             link: link,
+            encryptedLink: encryptedLink,
             fileLinkBuilder: MEGAFileLinkBuilder(),
             fileNodeOpener: fileNodeOpener,
+            actionHandler: FileLinkActionHandler(
+                navigationController: navigationController,
+                nodeProvider: nodeProvider
+            ),
+            transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
             nodeProvider: nodeProvider,
             onClose: { [weak self] in
                 self?.close()

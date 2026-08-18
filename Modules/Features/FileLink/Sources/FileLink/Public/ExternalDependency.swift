@@ -18,3 +18,26 @@ public protocol FileLinkBuilderProtocol: Sendable {
 public protocol FileLinkNodeOpenerProtocol {
     func openNode(handle: HandleEntity) async
 }
+
+/// The actions the more button of the file link screen hands back to the app layer.
+///
+/// Share link is not among them: the sheet offers it through SwiftUI's `ShareLink`, which brings the
+/// anchoring the system share sheet needs on iPad with it.
+public enum FileLinkAction: Equatable, Sendable {
+    case saveToMEGA
+    case saveToPhotos
+    case download
+    case copyToOffline
+    /// Carries the link because sending to chat passes the link on rather than acting on the file, and the
+    /// form it passes on is the published one -- the same the Share link row hands to the share sheet.
+    case sendToChat(String)
+}
+
+/// Runs the actions the file link screen offers.
+///
+/// Implemented outside the module because each of them ends up in a flow of the app layer's own: the node
+/// browser, the share sheet, the transfer queue.
+@MainActor
+public protocol FileLinkActionHandlerProtocol {
+    func handle(_ action: FileLinkAction, nodeHandle: HandleEntity) async
+}

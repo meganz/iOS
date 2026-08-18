@@ -5,13 +5,14 @@ import Testing
 
 @Suite("FileLinkFlowUseCase Tests")
 struct FileLinkFlowUseCaseTests {
-    @Test("initial start returns the resolved node")
-    func initialStart_success_returnsNode() async throws {
+    @Test("initial start returns the resolved node together with the link it resolved from")
+    func initialStart_success_returnsNodeAndLink() async throws {
         let sut = makeSUT(repositoryResult: .success(NodeEntity(handle: 42)))
 
-        let node = try await sut.initialStart(with: "link")
+        let resolvedFileLink = try await sut.initialStart(with: "link")
 
-        #expect(node.handle == 42)
+        #expect(resolvedFileLink.node.handle == 42)
+        #expect(resolvedFileLink.link == "link")
     }
 
     @Test("initial start with a key embedded in the link shows the unavailable page when the key is invalid")
@@ -49,9 +50,11 @@ struct FileLinkFlowUseCaseTests {
             fileLinkBuilder: fileLinkBuilder
         )
 
-        let node = try await sut.confirmDecryptionKey(with: "link", decryptionKey: "key")
+        let resolvedFileLink = try await sut.confirmDecryptionKey(with: "link", decryptionKey: "key")
 
-        #expect(node.handle == 42)
+        #expect(resolvedFileLink.node.handle == 42)
+        // The rebuilt link rather than the keyless one it was asked with: only this one can be acted on.
+        #expect(resolvedFileLink.link == "link-with-key")
         #expect(fileLinkBuilder.buildCalledArguments.map(\.key) == ["key"])
     }
 
