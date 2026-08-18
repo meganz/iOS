@@ -184,6 +184,96 @@ struct UpgradePlansContainerViewModelTests {
         #expect(sut.isDismiss)
     }
 
+    // MARK: - Analytics
+
+    @Test("Appearing reports the screen view")
+    func onAppear_reportsScreenView() {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        sut.onAppear()
+
+        #expect(analyticsUseCase.invocations == [.screenView])
+    }
+
+    @Test("A successful load hands the plans to the analytics use case")
+    func loadData_handsPlansToAnalytics() async {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        await sut.loadData()
+
+        #expect(analyticsUseCase.invocations == [.plansDidLoad])
+    }
+
+    // MARK: - Dismissal
+
+    @Test("Dismissing from the header reports it and dismisses the page")
+    func dismiss_maybeLater_reportsAndDismisses() {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        sut.dismiss(reason: .maybeLater)
+
+        #expect(sut.isDismiss)
+        #expect(analyticsUseCase.invocations == [.dismiss])
+    }
+
+    @Test("Carrying on with the free plan reports its own event")
+    func dismiss_freePlan_reportsGetStartedForFree() {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        sut.dismiss(reason: .freePlan)
+
+        #expect(sut.isDismiss)
+        #expect(analyticsUseCase.invocations == [.getStartedForFree])
+    }
+
+    @Test("A dismissal the screen triggers itself reports nothing", arguments: [
+        UpgradePlansDismissReason.purchaseSucceeded,
+        .loadFailed
+    ])
+    func dismiss_screenDrivenReasons_dismissWithoutReporting(reason: UpgradePlansDismissReason) {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        sut.dismiss(reason: reason)
+
+        #expect(sut.isDismiss)
+        #expect(analyticsUseCase.invocations.isEmpty)
+    }
+
+    /// The scenario from the MR review: tapping "Maybe later" while a purchase is in flight must not let
+    /// the purchase completing dismiss - or report - a second time.
+    @Test("A purchase completing after the user already dismissed neither dismisses nor reports again")
+    func dismiss_thenPurchaseSucceeds_doesNotDismissOrReportTwice() {
+        let purchaser = MockPlanPurchasing()
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(
+            plans: [standardPlan()],
+            purchaser: purchaser,
+            analyticsUseCase: analyticsUseCase
+        )
+
+        sut.dismiss(reason: .maybeLater)
+        send(.succeeded, from: purchaser, to: sut)
+
+        #expect(sut.isDismiss)
+        #expect(analyticsUseCase.invocations == [.dismiss])
+    }
+
+    @Test("A repeat dismissal reports only once")
+    func dismiss_calledTwice_reportsOnce() {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
+
+        sut.dismiss(reason: .maybeLater)
+        sut.dismiss(reason: .maybeLater)
+
+        #expect(analyticsUseCase.invocations == [.dismiss])
+    }
+
     // MARK: - SUT
 
     private func makeSUT(
@@ -195,7 +285,8 @@ struct UpgradePlansContainerViewModelTests {
         isExternalPurchaseAvailable: Bool = false,
         externalPurchaser: MockExternalPlanPurchasing = MockExternalPlanPurchasing(),
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void = {},
-        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss
+        purchaseCompleteBehavior: PurchaseCompleteBehavior = .dismiss,
+        analyticsUseCase: MockUpgradePlansAnalyticsUseCase = MockUpgradePlansAnalyticsUseCase()
     ) -> UpgradePlansContainerViewModel {
         let fetchUseCase = MockRevampUpgradePlansUseCase(plansResult: plans, accountDetails: accountDetails)
         let dependency = makeDependency(
@@ -211,7 +302,8 @@ struct UpgradePlansContainerViewModelTests {
             ),
             isExternalPurchaseAvailable: isExternalPurchaseAvailable,
             notifyPurchaseSucceeded: notifyPurchaseSucceeded,
-            purchaseCompleteBehavior: purchaseCompleteBehavior
+            purchaseCompleteBehavior: purchaseCompleteBehavior,
+            analyticsUseCase: analyticsUseCase
         )
         return UpgradePlansContainerViewModel(dependency: dependency)
     }
@@ -232,7 +324,8 @@ struct UpgradePlansContainerViewModelTests {
         planPurchaserFactory: some PlanPurchaserFactory,
         isExternalPurchaseAvailable: Bool,
         notifyPurchaseSucceeded: @Sendable @escaping () -> Void,
-        purchaseCompleteBehavior: PurchaseCompleteBehavior
+        purchaseCompleteBehavior: PurchaseCompleteBehavior,
+        analyticsUseCase: MockUpgradePlansAnalyticsUseCase
     ) -> RevampUpgradePlansDependency {
         RevampUpgradePlansDependency(
             fetchUseCase: fetchUseCase,
@@ -242,14 +335,12 @@ struct UpgradePlansContainerViewModelTests {
             externalPurchaseUseCase: MockExternalPurchaseUseCase(
                 shouldProvideExternalPurchase: isExternalPurchaseAvailable
             ),
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             termsAndPoliciesPresenter: MockTermsAndPoliciesPresenter(),
-            tracker: MockTracker(),
+            analyticsUseCase: analyticsUseCase,
             viewType: .upgrade,
             accountDisplayName: { _ in "" },
             domainName: "mega.nz",
             appVersion: "1.0",
-            isFromAds: false,
             notifyPurchaseSucceeded: notifyPurchaseSucceeded,
             purchaseCompleteBehavior: purchaseCompleteBehavior,
             promoExpiryMonitorFactory: promoExpiryMonitorFactory,

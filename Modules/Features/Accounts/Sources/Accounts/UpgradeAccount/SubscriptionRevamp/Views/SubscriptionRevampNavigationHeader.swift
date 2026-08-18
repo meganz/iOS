@@ -20,9 +20,15 @@ struct SubscriptionNavigationHeader: View {
         case maybeLater
     }
 
-    let closeButtonType: CloseButtonType
+    let dependency: RevampUpgradePlansDependency
     let isAtTop: Bool
-    let dismissAction: () -> Void
+    let dismiss: (UpgradePlansDismissReason) -> Void
+
+    /// Protection mechanism to avoid the dismiss button from getting spammed in a short time
+    /// which cause multiple unexpected triggers of dismiss action.
+    @State private var alreadyTapped = false
+
+    private var closeButtonType: CloseButtonType { .init(viewType: dependency.viewType) }
 
     var body: some View {
         HStack(spacing: 0) {
@@ -49,7 +55,7 @@ struct SubscriptionNavigationHeader: View {
 
     private var closeButton: some View {
         Button {
-            dismissAction()
+            dismissTapped()
         } label: {
             MEGAAssets.Image.monoChevronLeftMediumThinOutline
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
@@ -57,12 +63,13 @@ struct SubscriptionNavigationHeader: View {
                 .contentShape(Circle())
         }
         .glassCircle()
+        .disabled(alreadyTapped)
         .accessibilityLabel(Strings.Localizable.close)
     }
 
     private var maybeLaterButton: some View {
         Button {
-            dismissAction()
+            dismissTapped()
         } label: {
             Text(Strings.Localizable.SubscriptionPurchase.maybeLater)
                 .font(.body)
@@ -72,6 +79,13 @@ struct SubscriptionNavigationHeader: View {
                 .contentShape(Capsule())
         }
         .glassCapsule()
+        .disabled(alreadyTapped)
+    }
+
+    private func dismissTapped() {
+        guard !alreadyTapped else { return }
+        alreadyTapped = true
+        dismiss(.maybeLater)
     }
 
     @ViewBuilder

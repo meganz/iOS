@@ -11,18 +11,23 @@ public final class PlanPurchaseViewModel: ObservableObject, PlanPurchaseAlertPre
 
     private let planPurchaser: any PlanPurchasing
     private let onPurchased: @MainActor () -> Void
+
+    private let tracker: (any PlanPurchaseTracking)?
     private var subscriptions = Set<AnyCancellable>()
 
     public init(
         planPurchaser: any PlanPurchasing,
-        onPurchased: @escaping @MainActor () -> Void
+        onPurchased: @escaping @MainActor () -> Void,
+        tracker: (any PlanPurchaseTracking)? = nil
     ) {
         self.planPurchaser = planPurchaser
         self.onPurchased = onPurchased
+        self.tracker = tracker
         observeOutcomes()
     }
 
     public func purchase(productIdentifier: String) async {
+        tracker?.trackBuyPlan(productIdentifier: productIdentifier)
         isPurchasing = true
         await planPurchaser.purchase(productIdentifier: productIdentifier)
     }

@@ -6,8 +6,13 @@ import SwiftUI
 /// The optional "Get started with our free plan" card: a headline, two feature
 /// rows and a secondary call to action, in the shared plan card container.
 struct SubscriptionFreePlanCardView: View {
+
     let model: SubscriptionFreePlanCardModel
-    let action: () -> Void
+    let dismiss: (UpgradePlansDismissReason) -> Void
+
+    /// Protection mechanism to avoid the dismiss button from getting spammed in a short time
+    /// which cause multiple unexpected triggers of dismiss action.
+    @State private var alreadyTapped = false
 
     var body: some View {
         PlanCardContainer {
@@ -17,10 +22,18 @@ struct SubscriptionFreePlanCardView: View {
                 MEGAButton(
                     model.primaryButtonTitle,
                     type: .secondary,
-                    action: action
-                )
+                    state: alreadyTapped ? .disabled : .default
+                ) {
+                    getStarted()
+                }
             }
         }
+    }
+
+    private func getStarted() {
+        guard !alreadyTapped else { return }
+        alreadyTapped = true
+        dismiss(.freePlan)
     }
 
     private var header: some View {
@@ -58,9 +71,4 @@ struct SubscriptionFreePlanCardView: View {
         }
         .padding(.vertical, TokenSpacing._2)
     }
-}
-
-#Preview {
-    SubscriptionFreePlanCardView(model: SubscriptionRevampMockData.freePlanCard, action: {})
-        .padding()
 }

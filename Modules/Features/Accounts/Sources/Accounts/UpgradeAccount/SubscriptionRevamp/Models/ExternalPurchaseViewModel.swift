@@ -17,23 +17,26 @@ final class ExternalPurchaseViewModel: ObservableObject, PlanPurchaseAlertPresen
     private let purchaser: any ExternalPlanPurchasing
     private let plans: [PlanEntity]
     private let onPurchased: @MainActor () -> Void
+    private let tracker: (any PlanPurchaseTracking)?
     private var subscriptions = Set<AnyCancellable>()
 
     init(
         purchaser: some ExternalPlanPurchasing,
         plans: [PlanEntity],
-        onPurchased: @escaping @MainActor () -> Void
+        onPurchased: @escaping @MainActor () -> Void,
+        tracker: (any PlanPurchaseTracking)? = nil
     ) {
         self.purchaser = purchaser
         self.plans = plans
         self.onPurchased = onPurchased
+        self.tracker = tracker
         observeOutcomes()
     }
 
     /// Buys the plan matching `productIdentifier` on the website; no-ops when no such plan is loaded.
     func buy(productIdentifier: String) async {
         guard let plan = plans.first(where: { $0.productIdentifier == productIdentifier }) else { return }
-
+        tracker?.trackBuyPlan(productIdentifier: productIdentifier)
         await purchaser.purchase(plan: plan) { [weak self] in
             // The browser has it now, so the buttons come back to life while it is completed there.
             self?.isPurchasing = false

@@ -18,8 +18,31 @@ struct SubscriptionCycleViewModelTests {
         ))
     }
 
-    private func makeSUT(plans: [PlanEntity], planPrice: SubscriptionPlanPrice) -> SubscriptionCycleViewModel {
-        SubscriptionCycleViewModel(plans: plans, priceUseCase: MockSubscriptionPlanPriceUseCase(planPrice: planPrice))
+    private func makeSUT(
+        plans: [PlanEntity],
+        planPrice: SubscriptionPlanPrice,
+        tracker: MockUpgradePlansAnalyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+    ) -> SubscriptionCycleViewModel {
+        SubscriptionCycleViewModel(
+            plans: plans,
+            priceUseCase: MockSubscriptionPlanPriceUseCase(planPrice: planPrice),
+            tracker: tracker
+        )
+    }
+
+    @Test("Selecting a cycle reports it")
+    func didSelectCycle_reportsTheCycle() {
+        let tracker = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(
+            plans: monthlyAndYearlyPlans,
+            planPrice: .yearly(.init(price: 0, currency: "")),
+            tracker: tracker
+        )
+
+        sut.didSelectCycle(.monthly)
+        sut.didSelectCycle(.yearly)
+
+        #expect(tracker.invocations == [.cycleToggle(.monthly), .cycleToggle(.yearly)])
     }
 
     /// Monthly 10 vs yearly 96 => base yearly-vs-monthly saving of 20%.

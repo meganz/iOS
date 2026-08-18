@@ -17,7 +17,7 @@ struct SubscriptionContentSectionsView: View {
     @ObservedObject var viewModel: UpgradePlansViewModel
     let purchaseViewModel: PlanPurchaseViewModel
     let externalPurchaseViewModel: ExternalPurchaseViewModel?
-    let dismissAction: () -> Void
+    let dismiss: (UpgradePlansDismissReason) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -42,7 +42,7 @@ struct SubscriptionContentSectionsView: View {
             SubscriptionBenefitsListView()
                 .padding(.top, TokenSpacing._4)
             if let freePlanCard = viewModel.freePlanCard {
-                SubscriptionFreePlanCardView(model: freePlanCard, action: dismissAction)
+                SubscriptionFreePlanCardView(model: freePlanCard, dismiss: dismiss)
                     .padding(.vertical, TokenSpacing._5)
             }
             SubscriptionDetailsView()
@@ -78,7 +78,7 @@ struct SubscriptionContentSectionsView: View {
 
     private var cyclePicker: some View {
         SubscriptionCyclePickerView(
-            dependency: .init(plans: viewModel.plans),
+            dependency: .init(plans: viewModel.plans, tracker: dependency.analyticsUseCase),
             selection: $viewModel.selectedCycle
         )
         .frame(maxWidth: .infinity, alignment: .leading)

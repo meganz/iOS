@@ -57,14 +57,16 @@ final class UpgradePlansRouter {
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             accountUseCase: accountUseCase,
             externalPurchaseUseCase: DIContainer.externalPurchaseUseCase,
-            remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
             termsAndPoliciesPresenter: termsAndPoliciesPresenter,
-            tracker: DIContainer.tracker,
+            analyticsUseCase: UpgradePlansAnalyticsUseCase(
+                tracker: DIContainer.tracker,
+                isFromAds: isFromAds,
+                remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase
+            ),
             viewType: revampViewType,
             accountDisplayName: { $0.toAccountTypeDisplayName() },
             domainName: DIContainer.domainName,
             appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion,
-            isFromAds: isFromAds,
             notifyPurchaseSucceeded: {
                 NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
             },

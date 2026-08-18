@@ -47,7 +47,7 @@ public struct UpgradePlansContainerView: View {
                 viewModel: contentViewModel,
                 purchaseViewModel: viewModel.purchaseViewModel,
                 externalPurchaseViewModel: viewModel.externalPurchaseViewModel,
-                dismissAction: { viewModel.dismiss() }
+                dismiss: { viewModel.dismiss(reason: $0) }
             )
         case .promo(let contentViewModel):
             SubscriptionPromoView(
@@ -55,7 +55,7 @@ public struct UpgradePlansContainerView: View {
                 viewModel: contentViewModel,
                 purchaseViewModel: viewModel.purchaseViewModel,
                 externalPurchaseViewModel: viewModel.externalPurchaseViewModel,
-                dismissAction: { viewModel.dismiss() }
+                dismiss: { viewModel.dismiss(reason: $0) }
             )
         }
     }

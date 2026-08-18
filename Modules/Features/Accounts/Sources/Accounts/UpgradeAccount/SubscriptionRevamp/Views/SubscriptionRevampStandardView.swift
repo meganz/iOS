@@ -15,27 +15,27 @@ public struct SubscriptionStandardView: View {
     private let viewModel: UpgradePlansViewModel
     private let purchaseViewModel: PlanPurchaseViewModel
     private let externalPurchaseViewModel: ExternalPurchaseViewModel?
-    private let dismissAction: () -> Void
+    private let dismiss: (UpgradePlansDismissReason) -> Void
 
     init(
         dependency: RevampUpgradePlansDependency,
         viewModel: UpgradePlansViewModel,
         purchaseViewModel: PlanPurchaseViewModel,
         externalPurchaseViewModel: ExternalPurchaseViewModel?,
-        dismissAction: @escaping () -> Void
+        dismiss: @escaping (UpgradePlansDismissReason) -> Void
     ) {
         self.viewModel = viewModel
         self.dependency = dependency
         self.purchaseViewModel = purchaseViewModel
         self.externalPurchaseViewModel = externalPurchaseViewModel
-        self.dismissAction = dismissAction
+        self.dismiss = dismiss
     }
 
     public var body: some View {
         SubscriptionBaseView(
             compactHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape,
-            closeButtonType: .init(viewType: dependency.viewType),
-            dismissAction: dismissAction
+            dependency: dependency,
+            dismiss: dismiss
         ) {
             headerImage
         } content: {
@@ -45,7 +45,7 @@ public struct SubscriptionStandardView: View {
                 viewModel: viewModel,
                 purchaseViewModel: purchaseViewModel,
                 externalPurchaseViewModel: externalPurchaseViewModel,
-                dismissAction: dismissAction
+                dismiss: dismiss
             )
         }
         .planPurchaseAlert(purchaseViewModel)

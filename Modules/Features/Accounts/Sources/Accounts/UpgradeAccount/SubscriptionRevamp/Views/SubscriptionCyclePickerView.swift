@@ -5,13 +5,14 @@ import SwiftUI
 struct SubscriptionCyclePickerView: View {
     struct Dependency {
         let plans: [PlanEntity]
+        let tracker: any UpgradePlansAnalyticsUseCaseProtocol
     }
 
     private let viewModel: SubscriptionCycleViewModel
     @Binding private var selection: SubscriptionCycleEntity
 
     init(dependency: Dependency, selection: Binding<SubscriptionCycleEntity>) {
-        self.viewModel = SubscriptionCycleViewModel(plans: dependency.plans)
+        self.viewModel = SubscriptionCycleViewModel(plans: dependency.plans, tracker: dependency.tracker)
         self._selection = selection
     }
 
@@ -30,7 +31,9 @@ struct SubscriptionCyclePickerView: View {
         let isSelected = option == selection
 
         return Button {
+            guard !isSelected else { return }
             selection = option
+            viewModel.didSelectCycle(option)
         } label: {
             HStack(spacing: TokenSpacing._2) {
                 Text(viewModel.title(for: option))

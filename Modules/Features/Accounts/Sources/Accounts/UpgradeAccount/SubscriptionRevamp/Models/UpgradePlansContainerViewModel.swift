@@ -1,8 +1,18 @@
 import Combine
 import Foundation
-import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
+
+/// Why the Upgrade screen is being dismissed. Decides what the dismissal reports, so every
+/// source goes through one guarded entry point instead of calling `dismissAction` itself.
+enum UpgradePlansDismissReason {
+    /// The header's dismissing control: "Maybe later" in onboarding, the back arrow in upgrade mode.
+    case maybeLater
+    /// The free plan card's call to action.
+    case freePlan
+    case purchaseSucceeded
+    case loadFailed
+}
 
 /// Owns loading and the loading/standard/promo state switching for the revamp
 /// Upgrade screen. Builds the content view model once the plans are loaded.
@@ -23,6 +33,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     private var isExternalPurchaseAvailable = false
     /// Owns the retry triggered from the load error alert, so a new attempt supersedes the one in flight.
     private var retryTask: Task<Void, Never>?
+    private var analyticsUseCase: any UpgradePlansAnalyticsUseCaseProtocol { dependency.analyticsUseCase }
 
     private(set) lazy var purchaseViewModel = PlanPurchaseViewModel(
         planPurchaser: dependency.planPurchaserFactory.makePurchaser(
@@ -32,7 +43,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         ),
         onPurchased: { [weak self] in
             self?.purchaseDidSucceed()
-        }
+        },
+        tracker: analyticsUseCase
     )
 
     /// Drives the "buy on our website" buttons. Needs the loaded plans, so it only exists from the first
@@ -40,7 +52,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     private(set) var externalPurchaseViewModel: ExternalPurchaseViewModel?
 
     @Published public private(set) var viewState: ViewState = .loading
-    @Published public var isDismiss = false
+    @Published public private(set) var isDismiss = false
     @Published public var isAlertPresented = false
 
     private(set) var alertType: UpgradeAccountPlanAlertType?
@@ -57,14 +69,18 @@ final class UpgradePlansContainerViewModel: ObservableObject {
     }
 
     func onAppear() {
-        dependency.tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
+        analyticsUseCase.trackScreenView()
     }
 
-    func dismiss() {
+    func dismiss(reason: UpgradePlansDismissReason) {
         guard !isDismiss else { return }
-        if dependency.viewType.isOnboarding {
-            dependency.tracker.trackAnalyticsEvent(with: MaybeLaterUpgradeAccountButtonPressedEvent())
+
+        switch reason {
+        case .maybeLater: analyticsUseCase.trackDismiss()
+        case .freePlan: analyticsUseCase.trackGetStartedForFree()
+        case .purchaseSucceeded, .loadFailed: break
         }
+
         isDismiss = true
     }
 
@@ -85,6 +101,9 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             let accountDetails = try await accountDetailsResult
             let plans = await plansResult
             isExternalPurchaseAvailable = await externalPurchaseAvailability
+
+            // Feed the tracker with the loaded data that it needs for its computation
+            analyticsUseCase.plansDidLoad(plans, accountDetails: accountDetails)
             externalPurchaseViewModel = makeExternalPurchaseViewModel(plans: plans)
 
             let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
@@ -163,7 +182,8 @@ final class UpgradePlansContainerViewModel: ObservableObject {
             plans: plans,
             onPurchased: { [weak self] in
                 self?.purchaseDidSucceed()
-            }
+            },
+            tracker: analyticsUseCase
         )
     }
 
@@ -196,11 +216,9 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
     private func purchaseDidSucceed() {
         dependency.notifyPurchaseSucceeded()
-        // [IOS-12341]: Handle non-loading state of AccountMenuView's .currentPlan and .storageUsed rows
         switch dependency.purchaseCompleteBehavior {
         case .dismiss:
-            guard !isDismiss else { return }
-            isDismiss = true
+            dismiss(reason: .purchaseSucceeded)
         case let .perform(action):
             action()
         }
@@ -218,8 +236,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
                     self?.retryLoad()
                 },
                 dismissAction: { [weak self] in
-                    guard let self, !isDismiss else { return }
-                    isDismiss = true
+                    self?.dismiss(reason: .loadFailed)
                 }
             )
         )

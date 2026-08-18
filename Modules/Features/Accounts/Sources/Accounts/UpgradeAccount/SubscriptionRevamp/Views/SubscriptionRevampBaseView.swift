@@ -18,21 +18,21 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
     private let topOffsetThreshold: CGFloat = 5
 
     private let compactHeaderImage: Image
-    private let closeButtonType: SubscriptionNavigationHeader.CloseButtonType
-    private let dismissAction: () -> Void
+    private let dependency: RevampUpgradePlansDependency
+    private let dismiss: (UpgradePlansDismissReason) -> Void
     private let regularHeader: RegularHeader
     private let content: Content
 
     init(
         compactHeaderImage: Image,
-        closeButtonType: SubscriptionNavigationHeader.CloseButtonType = .close,
-        dismissAction: @escaping () -> Void,
+        dependency: RevampUpgradePlansDependency,
+        dismiss: @escaping (UpgradePlansDismissReason) -> Void,
         @ViewBuilder regularHeader: () -> RegularHeader,
         @ViewBuilder content: () -> Content
     ) {
         self.compactHeaderImage = compactHeaderImage
-        self.closeButtonType = closeButtonType
-        self.dismissAction = dismissAction
+        self.dependency = dependency
+        self.dismiss = dismiss
         self.regularHeader = regularHeader()
         self.content = content()
     }
@@ -49,11 +49,7 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
                 .background(TokenColors.Background.page.swiftUI)
                 .ignoresSafeArea()
 
-            SubscriptionNavigationHeader(
-                closeButtonType: closeButtonType,
-                isAtTop: isAtTop,
-                dismissAction: dismissAction
-            )
+            SubscriptionNavigationHeader(dependency: dependency, isAtTop: isAtTop, dismiss: dismiss)
         }
     }
 

@@ -6,13 +6,20 @@ import MEGAL10n
 struct SubscriptionCycleViewModel {
     let plans: [PlanEntity]
     private let priceUseCase: any SubscriptionPlanPriceUseCaseProtocol
+    private let tracker: any UpgradePlansAnalyticsUseCaseProtocol
 
     init(
         plans: [PlanEntity],
-        priceUseCase: any SubscriptionPlanPriceUseCaseProtocol = SubscriptionPlanPriceUseCase()
+        priceUseCase: any SubscriptionPlanPriceUseCaseProtocol = SubscriptionPlanPriceUseCase(),
+        tracker: any UpgradePlansAnalyticsUseCaseProtocol
     ) {
         self.plans = plans
         self.priceUseCase = priceUseCase
+        self.tracker = tracker
+    }
+    
+    func didSelectCycle(_ cycle: SubscriptionCycleEntity) {
+        tracker.trackCycleToggle(cycle)
     }
 
     var options: [SubscriptionCycleEntity] {

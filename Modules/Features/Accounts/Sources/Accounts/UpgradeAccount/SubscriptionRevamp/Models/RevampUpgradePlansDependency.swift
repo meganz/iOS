@@ -10,14 +10,12 @@ public struct RevampUpgradePlansDependency: Sendable {
     let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     let accountUseCase: any AccountUseCaseProtocol
     let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
-    let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     let recommendedUpgradePlanUseCase: any RecommendedUpgradePlanUseCaseProtocol
-    let tracker: any AnalyticsTracking
+    let analyticsUseCase: any UpgradePlansAnalyticsUseCaseProtocol
     let viewType: RevampUpgradePlansViewType
     let accountDisplayName: @Sendable (AccountTypeEntity) -> String
     let domainName: String
     let appVersion: String
-    let isFromAds: Bool
     let canOpenURL: @Sendable (URL) async -> Bool
     let openURL: @Sendable (URL) async -> Void
     let notifyPurchaseSucceeded: @Sendable () -> Void
@@ -39,14 +37,12 @@ public struct RevampUpgradePlansDependency: Sendable {
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol,
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         termsAndPoliciesPresenter: some TermsAndPoliciesPresenting,
-        tracker: some AnalyticsTracking,
+        analyticsUseCase: some UpgradePlansAnalyticsUseCaseProtocol,
         viewType: RevampUpgradePlansViewType,
         accountDisplayName: @Sendable @escaping (AccountTypeEntity) -> String,
         domainName: String,
         appVersion: String,
-        isFromAds: Bool,
         canOpenURL: @Sendable @escaping (URL) async -> Bool = { UIApplication.shared.canOpenURL($0) },
         openURL: @Sendable @escaping (URL) async -> Void = { url in
             await MainActor.run { UIApplication.shared.open(url) }
@@ -64,13 +60,10 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountUseCase = accountUseCase
         self.externalPurchaseUseCase = externalPurchaseUseCase
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.tracker = tracker
         self.viewType = viewType
         self.accountDisplayName = accountDisplayName
         self.domainName = domainName
         self.appVersion = appVersion
-        self.isFromAds = isFromAds
         self.canOpenURL = canOpenURL
         self.openURL = openURL
         self.notifyPurchaseSucceeded = notifyPurchaseSucceeded
@@ -79,6 +72,7 @@ public struct RevampUpgradePlansDependency: Sendable {
         self.termsAndPoliciesPresenter = termsAndPoliciesPresenter
         self.promoExpiryMonitorFactory = promoExpiryMonitorFactory
         self.planPurchaserFactory = planPurchaserFactory
+        self.analyticsUseCase = analyticsUseCase
         self.recommendedUpgradePlanUseCase = recommendedUpgradePlanUseCase
     }
 }
