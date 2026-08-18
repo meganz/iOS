@@ -36,6 +36,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
     private let router: any MeetingInfoRouting
@@ -74,6 +75,7 @@ final class MeetingInfoViewModel: ObservableObject {
          accountUseCase: some AccountUseCaseProtocol,
          chatLinkUseCase: some ChatLinkUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          tracker: some AnalyticsTracking = DIContainer.tracker
@@ -87,6 +89,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
@@ -105,7 +108,10 @@ final class MeetingInfoViewModel: ObservableObject {
         isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
         isPublicChat = chatRoom.isPublicChat
         isUserInChat = chatRoom.ownPrivilege.isUserInChat
-        chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
+        chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(
+            chatRoom: chatRoom,
+            networkMonitorUseCase: networkMonitorUseCase
+        )
         if chatRoom.ownPrivilege == .moderator {
             chatLinkUseCase.queryChatLink(for: chatRoom)
             chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)

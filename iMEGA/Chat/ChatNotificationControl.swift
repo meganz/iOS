@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGAL10n
@@ -12,13 +13,26 @@ import UIKit
 @objc class ChatNotificationControl: PushNotificationControl {
     // MARK: - Interface methods.
 
-    @objc func configure(cell: any ChatNotificationControlCellProtocol, chatId: ChatIdEntity, isMeeting: Bool) {
+    /// - Parameter isReachable: Whether the change can reach the API. Passed in by the host, which
+    ///   already knows its own reachability and reloads when it changes, so this stays the same
+    ///   source of truth as the surrounding rows. With the new offline mode off it is ignored and
+    ///   only the settings having loaded matters, as before.
+    @objc func configure(
+        cell: any ChatNotificationControlCellProtocol,
+        chatId: ChatIdEntity,
+        isMeeting: Bool,
+        isReachable: Bool
+    ) {
+        let isChangeAllowed = !DIContainer.featureFlagProvider.isNewOfflineModeEnabled || isReachable
         
         cell.nameLabel?.text = isMeeting
             ? Strings.Localizable.Meetings.Info.meetingNotifications
             : Strings.Localizable.chatNotifications
         
-        cell.controlSwitch?.isEnabled = isNotificationSettingsLoaded()
+        // Changing the setting writes it to the API. Offline the request sits in the SDK retry
+        // queue, so the progress indicator it shows would never be dismissed, leaving the screen
+        // stuck on a spinner, hence the switch is disabled while there is no connection.
+        cell.controlSwitch?.isEnabled = isNotificationSettingsLoaded() && isChangeAllowed
         cell.controlSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
         cell.iconImageView?.image = MEGAAssets.UIImage.chatNotifications
     }

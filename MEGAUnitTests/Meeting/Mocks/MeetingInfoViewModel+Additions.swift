@@ -17,6 +17,7 @@ extension MeetingInfoViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatLinkUseCase: some ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker(),
@@ -32,6 +33,7 @@ extension MeetingInfoViewModel {
             accountUseCase: accountUseCase,
             chatLinkUseCase: chatLinkUseCase,
             megaHandleUseCase: megaHandleUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
             preferenceUseCase: preferenceUseCase,
             featureFlagProvider: featureFlagProvider,
             tracker: tracker

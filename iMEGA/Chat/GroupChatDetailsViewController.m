@@ -62,6 +62,7 @@
     [MEGAChatSdk.shared addChatRequestDelegate:self];
     [self addChatCallDelegate];
     [self addChatRoomDelegate];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self updateHeadingView];
     [self setParticipants];
@@ -75,6 +76,14 @@
     [MEGAChatSdk.shared removeChatRequestDelegate:self];
     [self removeChatCallDelegate];
     [self removeChatRoomDelegate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+// The rows read the reachability while they are being configured, so the table is reloaded when it
+// changes. Without this the chat notifications switch would keep the state it had when the screen
+// was last laid out, staying disabled after the connection came back.
+- (void)internetConnectionChanged {
+    [self.tableView reloadData];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -481,7 +490,8 @@
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsSwitchTypeID" forIndexPath:indexPath];
             [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
                                                      chatId:self.chatRoom.chatId
-                                                  isMeeting:self.chatRoom.isMeeting];
+                                                  isMeeting:self.chatRoom.isMeeting
+                                                isReachable:MEGAReachabilityManager.isReachable];
             cell.delegate = self;
             break;
             

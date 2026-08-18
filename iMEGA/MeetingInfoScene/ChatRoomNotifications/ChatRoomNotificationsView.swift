@@ -12,8 +12,13 @@ struct ChatRoomNotificationsView: View {
             ToggleView(
                 image: MEGAAssets.Image.enableChatNotifications,
                 text: Strings.Localizable.Meetings.Info.meetingNotifications,
+                enabled: viewModel.isChatNotificationsToggleEnabled,
                 isOn: $viewModel.isChatNotificationsOn)
-            if !viewModel.isChatNotificationsOn {
+            if let noConnectionMessage = viewModel.noConnectionMessage {
+                Text(noConnectionMessage)
+                    .font(.footnote)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)
+            } else if !viewModel.isChatNotificationsOn {
                 Text(viewModel.remainingDNDTime())
                     .font(.footnote)
                     .foregroundColor(TokenColors.Icon.secondary.swiftUI)

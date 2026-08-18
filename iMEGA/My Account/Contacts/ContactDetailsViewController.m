@@ -232,7 +232,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
                                              chatId:self.chatRoom.chatId
-                                          isMeeting:self.chatRoom.isMeeting];
+                                          isMeeting:self.chatRoom.isMeeting
+                                        isReachable:MEGAReachabilityManager.isReachable];
     cell.delegate = self;
     return cell;
 }

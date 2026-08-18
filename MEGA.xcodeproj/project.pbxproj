@@ -1541,6 +1541,7 @@
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
 		94FCE01B2D15C327000C63A4 /* TransfersWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
+		990AC4EF2A4A77EC008E298F /* ChatRoomNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EE2A4A77EC008E298F /* ChatRoomNotificationsViewModelTests.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
 		9911BA8E2A8B20CD00B88F28 /* WaitingRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */; };
 		9911BA902A8B20DE00B88F28 /* WaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */; };
@@ -4368,6 +4369,7 @@
 		94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransfersWidgetViewModel.swift; sourceTree = "<group>"; };
 		95658DAD3409BF9D3624FEEC /* AppDelegate+QAEventSimulation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+QAEventSimulation.m"; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
+		990AC4EE2A4A77EC008E298F /* ChatRoomNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomNotificationsViewModelTests.swift; sourceTree = "<group>"; };
 		9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewRouter.swift; sourceTree = "<group>"; };
 		9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewController.swift; sourceTree = "<group>"; };
 		9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomView.swift; sourceTree = "<group>"; };
@@ -12948,6 +12950,7 @@
 				94B503A62C357E320064270D /* CallsCoordinatorTests.swift */,
 				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
+				990AC4EE2A4A77EC008E298F /* ChatRoomNotificationsViewModelTests.swift */,
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
 				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
@@ -16725,6 +16728,7 @@
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				99778D982AE74EC700537EA9 /* ChatRoomAvatarViewModelTests.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
+				990AC4EF2A4A77EC008E298F /* ChatRoomNotificationsViewModelTests.swift in Sources */,
 				998299062ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift in Sources */,
 				998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */,
 				998379312ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift in Sources */,

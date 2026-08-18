@@ -44,7 +44,8 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
-            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
         let viewController = MeetingInfoViewController(viewModel: viewModel)
         
