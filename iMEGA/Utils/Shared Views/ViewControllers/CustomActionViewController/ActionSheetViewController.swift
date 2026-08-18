@@ -99,6 +99,11 @@ class ActionSheetViewController: UIViewController {
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
         backgroundView.addGestureRecognizer(tapRecognizer)
+        // VoiceOver never reaches that backdrop: it is decorative and owns no
+        // element of its own, and with VoiceOver running a single tap only moves
+        // focus rather than dispatching a touch. So the sheet answers the escape
+        // gesture itself (below), and keeps focus inside itself while it is up.
+        view.accessibilityViewIsModal = true
         
         configureActionTableView()
         registerForAppearanceChanges()
@@ -181,6 +186,16 @@ class ActionSheetViewController: UIViewController {
         self.dismiss(animated: true) { [weak self] in
             self?.dismissCompletion?()
         }
+    }
+
+    /// The two-finger scrub, VoiceOver's standard way out of a modal. Does what a
+    /// backdrop tap does — without it the sheet is a dead end for VoiceOver users,
+    /// who can leave it only by picking one of its actions.
+    override func accessibilityPerformEscape() -> Bool {
+        dismiss(animated: true) { [weak self] in
+            self?.dismissCompletion?()
+        }
+        return true
     }
     
     func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {

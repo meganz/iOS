@@ -124,7 +124,13 @@ public struct TransfersListView: View {
             get: { viewModel.presentingCancelConfirmation != nil },
             set: { isPresented in
                 guard !isPresented else { return }
-                viewModel.presentingCancelConfirmation = nil
+                // Deferred out of the current update pass. The alert writes
+                // `false` back while SwiftUI is still updating the view tree, so
+                // clearing the scope synchronously publishes into that same pass
+                // — which SwiftUI reports as undefined behaviour.
+                Task { @MainActor in
+                    viewModel.presentingCancelConfirmation = nil
+                }
             }
         )
     }
