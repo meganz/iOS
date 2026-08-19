@@ -1156,6 +1156,38 @@ struct AccountMenuViewModelTests {
         #expect(sut.discountBanner == nil)
     }
 
+    @Test("A discount banner on screen is reported as an impression")
+    func discountBannerAppeared_reportsTheImpression() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+
+        sut.discountBannerAppeared()
+
+        #expect(tracker.trackedEventIdentifiers.contains { $0 is MenuSubscriptionOfferBannerDisplayedEvent })
+    }
+
+    @Test("Tapping the discount banner action reports the press")
+    func discountBannerActionTapped_reportsThePress() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+
+        sut.discountBannerActionTapped()
+
+        #expect(tracker.trackedEventIdentifiers.contains { $0 is MenuSubscriptionOfferBannerPressedEvent })
+    }
+
+    /// The event belongs to the close button only. `dismissDiscountBanner` also runs when a purchase
+    /// receipt lands, and that is not a dismissal by the user.
+    @Test("Closing the discount banner reports the dismiss press")
+    func closeDiscountBanner_reportsTheDismissPress() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+
+        sut.closeDiscountBanner()
+
+        #expect(tracker.trackedEventIdentifiers.contains { $0 is MenuSubscriptionOfferBannerDismissButtonPressedEvent })
+    }
+
     @Test("Tapping the discount banner action opens the promo landing dialog")
     func discountBannerActionOpensPromoLandingDialog() async {
         let router = MockMenuViewRouter()

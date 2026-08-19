@@ -110,6 +110,7 @@ public struct AccountMenuView: View {
                 actionHandler: { viewModel.discountBannerActionTapped() },
                 closeHandler: { viewModel.closeDiscountBanner() }
             )
+            .onAppear { viewModel.discountBannerAppeared() }
         }
     }
 

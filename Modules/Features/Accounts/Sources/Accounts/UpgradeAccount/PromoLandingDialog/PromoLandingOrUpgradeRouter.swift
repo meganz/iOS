@@ -52,6 +52,7 @@ public final class PromoLandingOrUpgradeRouter {
         let view = PromoLandingDialogContentView(
             dependency: PromoLandingDialogContentView.Dependency(
                 fetchResult: fetchResult,
+                launchSource: .userTriggered,
                 planPurchaser: planPurchaser,
                 dismissAction: { presentedController?.dismiss(animated: true) },
                 onPurchased: onPurchased,

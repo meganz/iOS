@@ -568,7 +568,18 @@ extension AppDelegate {
         
         if case MEGANotificationType.generic.rawValue = notificationType {
             DIContainer.tracker.trackAnalyticsEvent(with: GenericAppPushNotificationReceivedEvent())
+
+            if genericNotificationURL(from: userInfo)?.mnz_type() == .upgrade {
+                DIContainer.tracker.trackAnalyticsEvent(with: SubscriptionOfferNotificationReceivedEvent())
+            }
         }
+    }
+
+    private func genericNotificationURL(from userInfo: [String: Any]) -> NSURL? {
+        guard let megaData = userInfo["megadata"] as? [String: Any],
+              let urlString = megaData["generic_href"] as? String,
+              let trimmedURL = urlString.trim else { return nil }
+        return NSURL(string: trimmedURL)
     }
     
     @objc func handleGenericAppPushNotificationTap(userInfo: [String: Any]?) {
@@ -591,6 +602,8 @@ extension AppDelegate {
                 url.mnz_presentSafariViewController()
             }
         case .upgrade:
+            DIContainer.tracker.trackAnalyticsEvent(with: SubscriptionOfferNotificationTappedEvent())
+
             guard let deepLinkURL = URL(string: trimmedURL),
                   UIApplication.shared.canOpenURL(deepLinkURL) else {
                 return

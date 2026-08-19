@@ -307,11 +307,17 @@ public final class AccountMenuViewModel: ObservableObject {
         _ = await (updateUITask, trackAccountNotificationEventTask, loadDiscountBannerTask)
     }
 
+    func discountBannerAppeared() {
+        tracker.trackAnalyticsEvent(with: MenuSubscriptionOfferBannerDisplayedEvent())
+    }
+
     func discountBannerActionTapped() {
+        tracker.trackAnalyticsEvent(with: MenuSubscriptionOfferBannerPressedEvent())
         router.showPromoLandingDialog()
     }
 
     func closeDiscountBanner() {
+        tracker.trackAnalyticsEvent(with: MenuSubscriptionOfferBannerDismissButtonPressedEvent())
         dismissDiscountBanner()
     }
 

@@ -32,6 +32,7 @@ final class AppOpenPromoLandingDialogRouter {
 
         let dependency = PromoLandingDialogContentView.Dependency(
             fetchResult: fetchResult,
+            launchSource: .appOpen,
             planPurchaser: makePlanPurchaser(),
             dismissAction: onDismiss,
             viewAllPlansAction: onViewAllPlans

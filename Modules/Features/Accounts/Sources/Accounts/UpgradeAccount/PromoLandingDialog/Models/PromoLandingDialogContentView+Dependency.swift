@@ -4,31 +4,30 @@ import MEGADomain
 
 public extension PromoLandingDialogContentView {
     struct Dependency {
-        /// The button that opens the upgrade page
-        /// .hidden for the case of single offer, otherwise shown with an action to open Upgrade page
-        enum ViewAllPlans {
-            case hidden
-            case shown(action: @MainActor () -> Void)
-        }
-
         let plan: PlanEntity
+        let hasMultipleOffers: Bool
         let planPurchaser: any PlanPurchasing
         let dismissAction: @MainActor () -> Void
         let onPurchased: @MainActor () -> Void
-        let viewAllPlans: ViewAllPlans
+        let viewAllPlansAction: @MainActor () -> Void
+        let analytics: PromoLandingDialogAnalytics
 
         public init(
             fetchResult: PromotedPlanFetchResult,
+            launchSource: PromoLandingDialogAnalytics.LaunchSource,
             planPurchaser: some PlanPurchasing,
             dismissAction: @escaping @MainActor () -> Void,
             onPurchased: @escaping @MainActor () -> Void = {},
-            viewAllPlansAction: @escaping @MainActor () -> Void
+            viewAllPlansAction: @escaping @MainActor () -> Void,
+            tracker: some AnalyticsTracking = DIContainer.tracker
         ) {
             self.plan = fetchResult.promotedPlan.plan
+            self.hasMultipleOffers = fetchResult.hasMultipleOffers
             self.planPurchaser = planPurchaser
             self.dismissAction = dismissAction
             self.onPurchased = onPurchased
-            self.viewAllPlans = fetchResult.hasMultipleOffers ? .shown(action: viewAllPlansAction) : .hidden
+            self.viewAllPlansAction = viewAllPlansAction
+            self.analytics = PromoLandingDialogAnalytics(launchSource: launchSource, tracker: tracker)
         }
     }
 }

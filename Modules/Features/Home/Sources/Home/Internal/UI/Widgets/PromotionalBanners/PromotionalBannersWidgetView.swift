@@ -38,9 +38,13 @@ struct PromotionalBannersWidgetView: View {
                 if let content = viewModel.discountBanner {
                     DiscountBanner(
                         content: content,
-                        actionHandler: discountActionHandler,
+                        actionHandler: {
+                            viewModel.trackDiscountBannerTapped()
+                            discountActionHandler()
+                        },
                         closeHandler: { viewModel.closeDiscountBanner() }
                     )
+                    .onAppear { viewModel.trackDiscountBannerDisplayed() }
                 }
                 ForEach(viewModel.bannerViewModels) { bannerViewModel in
                     PromotionalBanner(

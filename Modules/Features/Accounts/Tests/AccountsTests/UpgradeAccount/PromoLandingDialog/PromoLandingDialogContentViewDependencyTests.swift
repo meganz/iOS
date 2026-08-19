@@ -7,29 +7,11 @@ import Testing
 @MainActor
 struct PromoLandingDialogContentViewDependencyTests {
 
-    @Test("The only offer on the table leaves nothing to point at, so the upgrade page is not offered")
-    func viewAllPlans_singleOffer_isHidden() {
-        let sut = makeSUT(hasMultipleOffers: false)
+    @Test("Whether other plans are on offer is carried over from the fetch result", arguments: [true, false])
+    func hasMultipleOffers_isCarriedFromTheFetchResult(hasMultipleOffers: Bool) {
+        let sut = makeSUT(hasMultipleOffers: hasMultipleOffers)
 
-        guard case .hidden = sut.viewAllPlans else {
-            Issue.record("Expected the button to be hidden for a single offer")
-            return
-        }
-    }
-
-    @Test("Other plans on offer are reachable through the upgrade page")
-    func viewAllPlans_multipleOffers_isShownWithTheAction() {
-        var actionRan = false
-        let sut = makeSUT(hasMultipleOffers: true, viewAllPlansAction: { actionRan = true })
-
-        guard case .shown(let action) = sut.viewAllPlans else {
-            Issue.record("Expected the button to be shown while other plans are on offer")
-            return
-        }
-
-        action()
-
-        #expect(actionRan)
+        #expect(sut.hasMultipleOffers == hasMultipleOffers)
     }
 
     @Test("The dialog is built around the promoted plan")
@@ -43,13 +25,16 @@ struct PromoLandingDialogContentViewDependencyTests {
 
     private func makeSUT(
         hasMultipleOffers: Bool,
-        viewAllPlansAction: @escaping @MainActor () -> Void = {}
+        viewAllPlansAction: @escaping @MainActor () -> Void = {},
+        tracker: MockTracker = MockTracker()
     ) -> PromoLandingDialogContentView.Dependency {
         PromoLandingDialogContentView.Dependency(
             fetchResult: fetchResult(hasMultipleOffers: hasMultipleOffers),
+            launchSource: .userTriggered,
             planPurchaser: MockPlanPurchasing(),
             dismissAction: {},
-            viewAllPlansAction: viewAllPlansAction
+            viewAllPlansAction: viewAllPlansAction,
+            tracker: tracker
         )
     }
 

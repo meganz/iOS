@@ -7,7 +7,7 @@ import SwiftUI
 struct PromoLandingDialogFooterView: View {
     let title: String
     let productIdentifier: String
-    let viewAllPlans: PromoLandingDialogContentView.Dependency.ViewAllPlans
+    let viewAllPlans: PromoLandingDialogContentViewModel.ViewAllPlans
 
     @StateObject private var purchaseViewModel: PlanPurchaseViewModel
 
@@ -15,8 +15,9 @@ struct PromoLandingDialogFooterView: View {
         title: String,
         productIdentifier: String,
         planPurchaser: some PlanPurchasing,
+        purchaseTracker: some PlanPurchaseTracking,
         onPurchased: @escaping @MainActor () -> Void,
-        viewAllPlans: PromoLandingDialogContentView.Dependency.ViewAllPlans
+        viewAllPlans: PromoLandingDialogContentViewModel.ViewAllPlans
     ) {
         self.title = title
         self.productIdentifier = productIdentifier
@@ -24,7 +25,8 @@ struct PromoLandingDialogFooterView: View {
         _purchaseViewModel = StateObject(
             wrappedValue: PlanPurchaseViewModel(
                 planPurchaser: planPurchaser,
-                onPurchased: onPurchased
+                onPurchased: onPurchased,
+                tracker: purchaseTracker
             )
         )
     }
@@ -55,10 +57,7 @@ struct PromoLandingDialogFooterView: View {
                 Strings.Localizable.QuotaWarning.RecommendedPlan.Button.viewAllPlans,
                 type: .textOnly,
                 state: purchaseViewModel.isPurchasing ? .disabled : .default,
-                action: {
-                    // [IOS-12242]: Handle analytics tracking
-                    action()
-                }
+                action: { action() }
             )
         }
     }

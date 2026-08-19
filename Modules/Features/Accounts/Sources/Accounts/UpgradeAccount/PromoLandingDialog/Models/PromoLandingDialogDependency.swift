@@ -29,6 +29,7 @@ public struct PromoLandingDialogDependency {
     func contentViewDependency(for fetchResult: PromotedPlanFetchResult) -> PromoLandingDialogContentView.Dependency {
         PromoLandingDialogContentView.Dependency(
             fetchResult: fetchResult,
+            launchSource: .userTriggered,
             planPurchaser: planPurchaser,
             dismissAction: dismissAction,
             onPurchased: onPurchased,

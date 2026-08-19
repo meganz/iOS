@@ -8,10 +8,10 @@ public struct PromoLandingDialogContentView: View {
 
     private let compactContentLeadingPadding: CGFloat = 250
 
-    private let dependency: PromoLandingDialogContentView.Dependency
+    @StateObject private var viewModel: PromoLandingDialogContentViewModel
 
     public init(dependency: PromoLandingDialogContentView.Dependency) {
-        self.dependency = dependency
+        _viewModel = StateObject(wrappedValue: PromoLandingDialogContentViewModel(dependency: dependency))
     }
 
     private var isRegularHeight: Bool { verticalSizeClass != .compact }
@@ -28,21 +28,19 @@ public struct PromoLandingDialogContentView: View {
                 // bottom inset below keeps the content scrolling above the footer.
                 .ignoresSafeArea(edges: [.top, .horizontal])
 
-            // [IOS-12242]: Handle close button
-            PromoLandingDialogCloseButton(dismissAction: dependency.dismissAction)
+            PromoLandingDialogCloseButton(dismissAction: { viewModel.closeButtonTapped() })
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             PromoLandingDialogFooterView(
-                title: dependency.card.buttonTitle,
-                productIdentifier: dependency.card.productIdentifier,
-                planPurchaser: dependency.planPurchaser,
-                onPurchased: {
-                    dependency.onPurchased()
-                    dependency.dismissAction()
-                },
-                viewAllPlans: dependency.viewAllPlans
+                title: viewModel.card.buttonTitle,
+                productIdentifier: viewModel.card.productIdentifier,
+                planPurchaser: viewModel.planPurchaser,
+                purchaseTracker: viewModel.purchaseTracker,
+                onPurchased: { viewModel.purchaseCompleted() },
+                viewAllPlans: viewModel.viewAllPlans
             )
         }
+        .onAppear { viewModel.onAppear() }
     }
 
     // MARK: - Layout
@@ -76,9 +74,9 @@ public struct PromoLandingDialogContentView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 0) {
-                    SubscriptionPromoHeaderView(viewModel: dependency.header)
+                    SubscriptionPromoHeaderView(viewModel: viewModel.header)
                         .blendIntoHeader(offset: TokenSpacing._16, isCompact: !isRegularHeight)
-                    SubscriptionPromoPlanCardView(card: dependency.card)
+                    SubscriptionPromoPlanCardView(card: viewModel.card)
                         .padding(.vertical, TokenSpacing._4)
                 }
                 .padding(.horizontal, TokenSpacing._5)
@@ -90,7 +88,7 @@ public struct PromoLandingDialogContentView: View {
     }
 }
 
-private extension PromoLandingDialogContentView.Dependency {
+private extension PromoLandingDialogContentViewModel {
     var header: SubscriptionPromoHeaderViewModel {
         SubscriptionPromoHeaderViewModel(plan: plan)
     }

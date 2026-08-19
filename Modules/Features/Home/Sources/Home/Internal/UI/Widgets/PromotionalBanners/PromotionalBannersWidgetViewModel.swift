@@ -51,7 +51,16 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
         _ = await (remoteBanners, discountBanner)
     }
 
+    func trackDiscountBannerDisplayed() {
+        tracker.trackAnalyticsEvent(with: HomeSubscriptionOfferBannerDisplayedEvent())
+    }
+
+    func trackDiscountBannerTapped() {
+        tracker.trackAnalyticsEvent(with: HomeSubscriptionOfferBannerPressedEvent())
+    }
+
     func closeDiscountBanner() {
+        tracker.trackAnalyticsEvent(with: HomeSubscriptionOfferBannerDismissButtonPressedEvent())
         if let plan = cache.cachedPromotedPlan {
             discountBannerUseCase.dismiss(plan)
         } else {
