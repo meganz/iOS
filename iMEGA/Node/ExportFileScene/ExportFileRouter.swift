@@ -80,7 +80,8 @@ final class ExportFileRouter: ExportFileViewRouting {
             megaHandleRepository: MEGAHandleRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo,
-            userStoreRepository: UserStoreRepository.newRepo
+            userStoreRepository: UserStoreRepository.newRepo,
+            handsOverIncompleteFolders: incompleteDownloadAlertRouter != nil
         )
         
         let overDiskQuotaChecker = OverDiskQuotaChecker(

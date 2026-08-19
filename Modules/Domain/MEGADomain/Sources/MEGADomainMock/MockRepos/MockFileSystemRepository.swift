@@ -10,6 +10,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     private let movedNode: Bool
     private let containsOriginalsDirectory: Bool
     private let fileSize: UInt64
+    private let fileCount: Int
     private let creationDate: Date
     private let relativePath: String
     private let _offlineDirectoryURL: URL?
@@ -25,6 +26,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
                 movedNode: Bool = false,
                 containsOriginalsDirectory: Bool = false,
                 fileSize: UInt64 = 0,
+                fileCount: Int = 0,
                 creationDate: Date = Date(),
                 relativePath: String = "relativePath",
                 offlineDirectoryURL: URL? = nil) {
@@ -33,6 +35,7 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
         self.movedNode = movedNode
         self.containsOriginalsDirectory = containsOriginalsDirectory
         self.fileSize = fileSize
+        self.fileCount = fileCount
         self.creationDate = creationDate
         self.relativePath = relativePath
         _offlineDirectoryURL = offlineDirectoryURL
@@ -57,6 +60,10 @@ public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unch
     
     public func removeItem(at url: URL) throws {
         $removeFileURLs.mutate { $0.append(url) }
+    }
+    
+    public func fileCount(at url: URL) -> Int {
+        fileCount
     }
     
     public func fileSize(at url: URL) -> UInt64? {

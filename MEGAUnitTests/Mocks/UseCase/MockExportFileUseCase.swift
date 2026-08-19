@@ -4,22 +4,26 @@ import MEGADomain
 final class MockExportFileUseCase: ExportFileUseCaseProtocol, @unchecked Sendable {
     var exportNode_calledTimes = 0
     var exportNodes_calledTimes = 0
+    var exportFolder_calledTimes = 0
     var exportMessages_calledTimes = 0
     var exportNodeFromMessage_calledTimes = 0
 
     var exportNodeResult: URL?
-    var exportNodesResult: [URL]
+    var exportNodesResult: ExportedSelectionEntity
+    var exportFolderResult: ExportedNodeEntity?
     var exportMessagesResult: [URL]
     var exportNodeFromMessageResult: URL?
 
     init(
         exportNodeResult: URL? = nil,
-        exportNodesResult: [URL] = [],
+        exportNodesResult: ExportedSelectionEntity = .nothing,
+        exportFolderResult: ExportedNodeEntity? = nil,
         exportMessagesResult: [URL] = [],
         exportNodeFromMessageResult: URL? = nil
     ) {
         self.exportNodeResult = exportNodeResult
         self.exportNodesResult = exportNodesResult
+        self.exportFolderResult = exportFolderResult
         self.exportMessagesResult = exportMessagesResult
         self.exportNodeFromMessageResult = exportNodeFromMessageResult
     }
@@ -33,11 +37,20 @@ final class MockExportFileUseCase: ExportFileUseCaseProtocol, @unchecked Sendabl
         }
     }
     
-    func export(nodes: [NodeEntity]) async throws -> [URL] {
+    func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity {
         exportNodes_calledTimes += 1
         return exportNodesResult
     }
-    
+
+    func exportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity {
+        exportFolder_calledTimes += 1
+        if let result = exportFolderResult {
+            return result
+        } else {
+            throw ExportFileErrorEntity.downloadFailed
+        }
+    }
+
     func export(messages: [ChatMessageEntity], chatId: HandleEntity) async -> [URL] {
         exportMessages_calledTimes += 1
         return exportMessagesResult

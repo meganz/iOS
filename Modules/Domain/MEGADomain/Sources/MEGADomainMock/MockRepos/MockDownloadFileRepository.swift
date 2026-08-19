@@ -9,19 +9,30 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
     private let completionResult: Result<TransferEntity, TransferErrorEntity>
     private let error: TransferErrorEntity
     private let transferEntity: TransferEntity?
-    
+    private let folderDownloadResult: Result<FolderDownloadResultEntity, TransferErrorEntity>
+
     public init(completionResult: Result<TransferEntity, TransferErrorEntity> = .failure(.generic),
                 error: TransferErrorEntity = .generic,
-                transferEntity: TransferEntity? = nil) {
+                transferEntity: TransferEntity? = nil,
+                folderDownloadResult: Result<FolderDownloadResultEntity, TransferErrorEntity> = .failure(.generic)) {
         self.completionResult = completionResult
         self.error = error
         self.transferEntity = transferEntity
+        self.folderDownloadResult = folderDownloadResult
     }
-        
+
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
         try await withCheckedThrowingContinuation { continuation in continuation.resume(with: completionResult) }
     }
-    
+
+    public func downloadFolder(
+        nodeHandle: HandleEntity,
+        to url: URL,
+        metaData: TransferMetaDataEntity?
+    ) async throws -> FolderDownloadResultEntity {
+        try folderDownloadResult.get()
+    }
+
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }

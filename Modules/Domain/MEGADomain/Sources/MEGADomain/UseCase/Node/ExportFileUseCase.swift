@@ -3,7 +3,10 @@ import Foundation
 // MARK: - Use case protocol -
 public protocol ExportFileNodeUseCaseProtocol: Sendable {
     func export(node: NodeEntity) async throws -> URL
-    func export(nodes: [NodeEntity]) async throws -> [URL]
+    /// Exports a selection of nodes, reporting how much of it arrived.
+    func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity
+    /// Exports a folder node, reporting how much of it arrived.
+    func exportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity
 }
 
 public protocol ExportFileChatMessageUseCaseProtocol: Sendable {
@@ -36,6 +39,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let megaHandleRepository: Z
     private let offlineFileFetcherRepository: G
     private let userStoreRepository: H
+    private let handsOverIncompleteFolders: Bool
     
     public init(
         downloadFileRepository: T,
@@ -48,7 +52,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         megaHandleRepository: Z,
         mediaUseCase: M,
         offlineFileFetcherRepository: G,
-        userStoreRepository: H
+        userStoreRepository: H,
+        handsOverIncompleteFolders: Bool = false
     ) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
@@ -61,6 +66,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         self.mediaUseCase = mediaUseCase
         self.offlineFileFetcherRepository = offlineFileFetcherRepository
         self.userStoreRepository = userStoreRepository
+        self.handsOverIncompleteFolders = handsOverIncompleteFolders
     }
     
     // MARK: - Private
@@ -95,8 +101,16 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         return try await downloadNode(node)
     }
 
+    /// A folder short of some of its files still comes back as a URL here rather than throwing: this path
+    /// deals in nodes, so the counts have nowhere to go, and handing over what arrived beats discarding it.
+    /// Callers that need to say what is missing ask for `exportFolder(_:)` instead.
     private func downloadNode(_ node: NodeEntity) async throws -> URL {
-        guard node.isFile else { return try await downloadFolder(node) }
+        guard node.isFile else {
+            guard let url = try await downloadFolder(node).url else {
+                throw ExportFileErrorEntity.downloadFailed
+            }
+            return url
+        }
         return try await downloadFile(node)
     }
 
@@ -121,7 +135,10 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     /// The SDK already does this for a file — it writes under a temporary leaf name and takes the real one
     /// on completion — but it builds a folder's directory tree under the final name before downloading
     /// anything into it, which leaves a half-filled tree indistinguishable from a finished one.
-    private func downloadFolder(_ node: NodeEntity) async throws -> URL {
+    ///
+    /// A folder that came back short stays in staging and is handed over from there: it is worth offering,
+    /// but moving it into place would make the next export mistake it for a finished download.
+    private func downloadFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity {
         let destinationURL = fileCacheRepository.tempFileURL(for: node)
         let stagingURL = fileCacheRepository.stagingTempFileURL(for: node)
         let stagingFolderURL = fileCacheRepository.stagingTempFolder(for: node)
@@ -131,28 +148,59 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         // copy is cleared, not the directory holding it, which the download still needs to exist.
         try? await fileSystemRepository.removeItem(at: stagingURL)
 
+        let result: FolderDownloadResultEntity
         do {
-            _ = try await downloadFileRepository.download(
+            result = try await downloadFileRepository.downloadFolder(
                 nodeHandle: node.handle,
                 to: stagingURL,
                 metaData: .exportFile
             )
+        } catch TransferErrorEntity.cancelled {
+            try? await fileSystemRepository.removeItem(at: stagingFolderURL)
+            // The user stopped it themselves, so this leaves rather than reporting a shortfall back at them.
+            throw ExportFileErrorEntity.downloadFailed
         } catch {
             try? await fileSystemRepository.removeItem(at: stagingFolderURL)
-            throw ExportFileErrorEntity.downloadFailed
+            // The transfer never ran, so there are no file counts to report and the caller is left to speak
+            // about the folder itself.
+            return ExportedNodeEntity(url: nil, fileCount: 0, downloadedFileCount: 0)
+        }
+
+        guard result.isSuccess else {
+            guard handsOverIncompleteFolders, result.downloadedFileCount > 0 else {
+                // Counted as having delivered nothing, because that is what the caller is left with once
+                // the partial tree is gone.
+                try? await fileSystemRepository.removeItem(at: stagingFolderURL)
+                return ExportedNodeEntity(url: nil, fileCount: result.fileCount, downloadedFileCount: 0)
+            }
+            return ExportedNodeEntity(
+                url: stagingURL,
+                fileCount: result.fileCount,
+                downloadedFileCount: result.downloadedFileCount
+            )
         }
 
         // Handed over from staging if the move fails: the tree is whole and merely in the wrong place, and
         // the only cost is that the next export downloads it again instead of finding it in the cache. The
         // staging directory has to stay for the same reason.
-        guard fileSystemRepository.moveFile(at: stagingURL, to: destinationURL) else { return stagingURL }
+        guard fileSystemRepository.moveFile(at: stagingURL, to: destinationURL) else {
+            return ExportedNodeEntity(
+                url: stagingURL,
+                fileCount: result.fileCount,
+                downloadedFileCount: result.downloadedFileCount
+            )
+        }
         // The whole staging directory, not the copy inside it: a move that happened leaves that directory
         // empty, and one would otherwise pile up for every folder ever exported. It also covers the move
         // reporting success without moving anything, which is what it does when the destination is already
         // there — another export having finished the same folder first, whose copy is as good as ours.
         try? await fileSystemRepository.removeItem(at: stagingFolderURL)
 
-        return destinationURL
+        return ExportedNodeEntity(
+            url: destinationURL,
+            fileCount: result.fileCount,
+            downloadedFileCount: result.downloadedFileCount
+        )
     }
 }
 
@@ -166,24 +214,41 @@ extension ExportFileUseCase: ExportFileNodeUseCaseProtocol {
         }
     }
     
-    public func export(nodes: [NodeEntity]) async throws -> [URL] {
-        var urlsArray = [URL]()
-        return await withTaskGroup(of: URL?.self) { group in
+    public func exportFolder(_ node: NodeEntity) async throws -> ExportedNodeEntity {
+        if let nodeUrl = await nodeUrl(node) {
+            // A cached copy is only ever a finished one, so what is in it is both everything that was asked
+            // for and everything that arrived. Counted rather than left at zero, because a selection reports in files
+            let fileCount = await fileSystemRepository.fileCount(at: nodeUrl)
+            return ExportedNodeEntity(url: nodeUrl, fileCount: fileCount, downloadedFileCount: fileCount)
+        }
+        return try await downloadFolder(node)
+    }
+
+    public func export(nodes: [NodeEntity]) async throws -> ExportedSelectionEntity {
+        await withTaskGroup(of: ExportedNodeEntity.self) { group in
             for node in nodes {
-                group.addTask {
-                    do {
-                        return try await export(node: node)
-                    } catch {
-                        print("Failed to export node with error: \(error)")
-                        return nil
-                    }
-                }
+                group.addTask { await exportCounted(node) }
             }
-            
-            for await result in group.compacted() {
-                urlsArray.append(result)
+
+            var selection = ExportedSelectionEntity.nothing
+            for await node in group {
+                selection = selection.adding(node)
             }
-            return urlsArray
+            return selection
+        }
+    }
+
+    /// What one node of a selection amounts to, so that a folder is counted by the files inside it while a
+    /// file counts as itself.
+    private func exportCounted(_ node: NodeEntity) async -> ExportedNodeEntity {
+        do {
+            guard node.isFile else { return try await exportFolder(node) }
+            return ExportedNodeEntity(url: try await export(node: node), fileCount: 1, downloadedFileCount: 1)
+        } catch {
+            print("Failed to export node with error: \(error)")
+            // No count came back either, so this leaves the node speaking for itself — see
+            // `ExportedNodeEntity.requestedFileCount`.
+            return ExportedNodeEntity(url: nil, fileCount: 0, downloadedFileCount: 0)
         }
     }
 }

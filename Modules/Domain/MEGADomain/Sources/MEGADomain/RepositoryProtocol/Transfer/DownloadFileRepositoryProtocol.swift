@@ -14,7 +14,24 @@ public protocol DownloadFileRepositoryProtocol: RepositoryProtocol, Sendable {
         to url: URL,
         metaData: TransferMetaDataEntity?
     ) async throws -> TransferEntity
-    
+
+    /// Downloads a folder node, reporting how many of the files inside it arrived.
+    ///
+    /// Separate from `download(nodeHandle:to:metaData:)` because a folder ending with an error is not the
+    /// same as it having brought nothing down: the SDK reports a single incomplete transfer whatever the
+    /// mix, so only the sub transfer counts say how much of it is usable.
+    /// - Parameters:
+    ///   - nodeHandle: Folder node handle to be downloaded.
+    ///   - url: Location for the folder to be downloaded to.
+    ///   - metaData: MetaData indicating type of download to start.
+    /// - Returns: What the transfer ended up doing. Throws only when the transfer could not be run at
+    ///   all, or when it was cancelled — a folder that ran and came back short is a result, not an error.
+    func downloadFolder(
+        nodeHandle: HandleEntity,
+        to url: URL,
+        metaData: TransferMetaDataEntity?
+    ) async throws -> FolderDownloadResultEntity
+
     func downloadTo(
         _ url: URL,
         nodeHandle: HandleEntity,

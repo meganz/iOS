@@ -853,6 +853,9 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public var stubbedDownloadTransferResult: Result<MockTransfer, MockError>?
     public var stubbedUploadTransferResult: Result<MockTransfer, MockError>?
+    /// The stage updates a folder download reports, in order, before it finishes. Empty by default, which
+    /// stands for a download that failed before the SDK had anything to say about the tree.
+    public var stubbedFolderTransferUpdates: [(stage: MEGATransferStage, fileCount: UInt)] = []
     
     public override func startDownloadNode(_ node: MEGANode, localPath: String, fileName: String?, appData: String?, startFirst: Bool, cancelToken: MEGACancelToken?, collisionCheck: CollisionCheck, collisionResolution: CollisionResolution, delegate: any MEGATransferDelegate) {
         let transfer: MockTransfer
@@ -870,6 +873,19 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             error = MockError(errorType: .apiOk)
         }
         
+        delegate.onTransferStart?(self, transfer: transfer)
+        for update in stubbedFolderTransferUpdates {
+            delegate.onFolderTransferUpdate?(
+                self,
+                transfer: transfer,
+                stage: update.stage,
+                folderCount: 1,
+                createdFolderCount: 0,
+                fileCount: update.fileCount,
+                currentFolder: "",
+                currentFileLeafName: ""
+            )
+        }
         delegate.onTransferFinish?(self, transfer: transfer, error: error)
     }
 

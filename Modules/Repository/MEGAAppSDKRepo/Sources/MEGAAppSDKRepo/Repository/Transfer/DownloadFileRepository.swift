@@ -25,36 +25,119 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
     
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
-        let megaNode: MEGANode
+        let megaNode = try await megaNode(for: nodeHandle)
 
-        if let sharedFolderSdk = sharedFolderSdk {
-            guard let node = sharedFolderSdk.node(forHandle: nodeHandle),
-                  let sharedNode = sharedFolderSdk.authorizeNode(node) else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            megaNode = sharedNode
-        } else {
-            guard let node = await nodeProvider.node(for: nodeHandle) else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            megaNode = node
-        }
-                
         return try await withAsyncThrowingValue { continuation in
-            sdk.startDownloadNode(
-                megaNode,
-                localPath: url.path,
-                fileName: nil,
-                appData: metaData?.rawValue,
-                startFirst: true,
-                cancelToken: cancelToken.value,
-                collisionCheck: CollisionCheck.fingerprint,
-                collisionResolution: CollisionResolution.newWithN,
+            startDownload(
+                of: megaNode,
+                to: url,
+                metaData: metaData,
                 delegate: TransferDelegate(completion: { result in continuation(result.mapError { $0 }) })
             )
         }
     }
-        
+
+    public func downloadFolder(
+        nodeHandle: HandleEntity,
+        to url: URL,
+        metaData: TransferMetaDataEntity?
+    ) async throws -> FolderDownloadResultEntity {
+        let megaNode = try await megaNode(for: nodeHandle)
+        let progress = FolderDownloadProgress()
+
+        // Counted from the global transfer stream, where every transfer this SDK runs arrives — the
+        // folder's own tag is what tells its files apart from the rest. Registered on the SDK that is
+        // about to run the download rather than on an app wide listener, so what is counted cannot drift
+        // from where the files are coming from.
+        //
+        // Recorded straight from the callback rather than over `transferFinishUpdates`, because a sub
+        // transfer is reported once and never again. The SDK calls globally registered transfer delegates
+        // before the folder transfer's own, so counting has finished before this download is told it is
+        // over, which handing the callbacks to a consuming task first would not guarantee.
+        let subTransfers = TransferDelegate { result in
+            guard case let .success(transfer) = result else { return }
+            progress.record(transfer)
+        }
+        sdk.add(subTransfers)
+        defer { sdk.remove(subTransfers) }
+
+        do {
+            // Typed rather than inferred: the folder transfer itself is of no interest here — only what the
+            // files under it did — but the continuation has nothing else to pin its value type to.
+            let _: TransferEntity = try await withAsyncThrowingValue { continuation in
+                startDownload(
+                    of: megaNode,
+                    to: url,
+                    metaData: metaData,
+                    delegate: TransferDelegate(
+                        // The folder transfer's own start, fired before it scans anything, is where its tag
+                        // comes from. There is no other way to tell our files apart from those of any other
+                        // folder download running at the same time.
+                        start: { progress.setFolderTransferTag($0.tag) },
+                        completion: { result in continuation(result.mapError { $0 }) },
+                        folderUpdate: { progress.noteFolderUpdate($0) }
+                    )
+                )
+            }
+            return progress.result(isSuccess: true)
+        } catch TransferErrorEntity.download {
+            // Reported rather than thrown: a folder comes back with this whether one file inside it failed
+            // or none of them ever started, and only the counts tell those two apart. Cancellation stays an
+            // error, since a user who stopped it themselves has nothing to be told.
+            let result = progress.result(isSuccess: false)
+            guard result.fileCount == 0 else { return result }
+
+            return FolderDownloadResultEntity(
+                isSuccess: false,
+                fileCount: await fileCount(of: megaNode),
+                downloadedFileCount: result.downloadedFileCount
+            )
+        }
+    }
+
+    private func fileCount(of node: MEGANode) async -> Int {
+        // Whichever SDK the node came from, since only that one has it in its tree — see `megaNode(for:)`.
+        await withAsyncValue { completion in
+            (sharedFolderSdk ?? sdk).getFolderInfo(for: node, delegate: RequestDelegate { result in
+                completion(.success((try? result.get())?.megaFolderInfo?.files ?? 0))
+            })
+        }
+    }
+
+    private func megaNode(for nodeHandle: HandleEntity) async throws -> MEGANode {
+        if let sharedFolderSdk {
+            guard let node = sharedFolderSdk.node(forHandle: nodeHandle),
+                  let sharedNode = sharedFolderSdk.authorizeNode(node) else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
+            }
+            return sharedNode
+        } else {
+            guard let node = await nodeProvider.node(for: nodeHandle) else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
+            }
+            return node
+        }
+    }
+
+    private func startDownload(
+        of node: MEGANode,
+        to url: URL,
+        metaData: TransferMetaDataEntity?,
+        delegate: TransferDelegate
+    ) {
+        sdk.startDownloadNode(
+            node,
+            localPath: url.path,
+            fileName: nil,
+            appData: metaData?.rawValue,
+            startFirst: true,
+            cancelToken: cancelToken.value,
+            collisionCheck: CollisionCheck.fingerprint,
+            collisionResolution: CollisionResolution.newWithN,
+            delegate: delegate
+        )
+    }
+
     public func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?) throws -> AnyAsyncSequence<TransferEventEntity> {
         guard let node = sdk.node(forHandle: nodeHandle),
               let base64Handle = node.base64Handle else {
