@@ -71,12 +71,16 @@ public struct QuotaWarningDialogView: View {
     private let kind: Kind
     private let onClose: @MainActor () -> Void
     private let onViewAllPlans: @MainActor () -> Void
+    private let onSignIn: @MainActor () -> Void
 
+    /// - Parameter onSignIn: starts the login flow. Only a signed-out viewer can reach it, and both of that
+    /// dialog's buttons lead here — there is nothing to purchase without an account.
     public init(
         dependency: QuotaWarningDialogView.Dependency,
         kind: Kind,
         onClose: @escaping @MainActor () -> Void,
-        onViewAllPlans: @escaping @MainActor () -> Void
+        onViewAllPlans: @escaping @MainActor () -> Void,
+        onSignIn: @escaping @MainActor () -> Void
     ) {
         self.dependency = switch kind {
         case .storage(let severity):
@@ -87,6 +91,7 @@ public struct QuotaWarningDialogView: View {
         self.kind = kind
         self.onClose = onClose
         self.onViewAllPlans = onViewAllPlans
+        self.onSignIn = onSignIn
     }
     
     public var body: some View {
@@ -94,7 +99,8 @@ public struct QuotaWarningDialogView: View {
             dependency: dependency,
             kind: kind,
             onClose: onClose,
-            onViewAllPlans: onViewAllPlans
+            onViewAllPlans: onViewAllPlans,
+            onSignIn: onSignIn
         )
     }
 }
@@ -115,7 +121,8 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
         kind: .storage(.almostFull),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
     )
 }
 
@@ -124,7 +131,8 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
         kind: .storage(.full(.storageState)),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
     )
 }
 
@@ -133,7 +141,8 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
         kind: .storage(.full(.uploadAttempt)),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
     )
 }
 
@@ -142,7 +151,8 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase(plan: nil)),
         kind: .storage(.full(.storageState)),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
     )
 }
 
@@ -151,7 +161,18 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
         kind: .transfer(.downloadExceeded),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
+    )
+}
+
+#Preview("Transfer — download exceeded — signed out") {
+    QuotaWarningDialogView(
+        dependency: .init(previewUseCase: PreviewQuotaDialogUseCase(signedOut: true)),
+        kind: .transfer(.downloadExceeded),
+        onClose: {},
+        onViewAllPlans: {},
+        onSignIn: {}
     )
 }
 
@@ -160,7 +181,8 @@ extension QuotaWarningDialogView.Dependency {
         dependency: .init(previewUseCase: PreviewQuotaDialogUseCase()),
         kind: .transfer(.streamingExceeded),
         onClose: {},
-        onViewAllPlans: {}
+        onViewAllPlans: {},
+        onSignIn: {}
     )
     .preferredColorScheme(.dark)
 }

@@ -17,18 +17,18 @@ struct QuotaDialogContentView: View {
 
         func trackingUseCase(
             kind: QuotaWarningDialogView.Kind,
-            isFreeUser: Bool
+            audience: QuotaDialogAudience
         ) -> QuotaDialogTrackingUseCase {
-            QuotaDialogTrackingUseCase(kind: kind, isFreeUser: isFreeUser, tracker: tracker)
+            QuotaDialogTrackingUseCase(kind: kind, audience: audience, tracker: tracker)
         }
 
         func upgradableFooterDependency(
             kind: QuotaWarningDialogView.Kind,
-            isFreeUser: Bool
+            audience: QuotaDialogAudience
         ) -> RecommendedPlanFooterView.Dependency {
             RecommendedPlanFooterView.Dependency(
                 planPurchaser: planPurchaser,
-                trackingUseCase: trackingUseCase(kind: kind, isFreeUser: isFreeUser)
+                trackingUseCase: trackingUseCase(kind: kind, audience: audience)
             )
         }
     }
@@ -39,12 +39,14 @@ struct QuotaDialogContentView: View {
     private let kind: QuotaWarningDialogView.Kind
     private let onClose: @MainActor () -> Void
     private let onViewAllPlans: @MainActor () -> Void
+    private let onSignIn: @MainActor () -> Void
 
     init(
         dependency: QuotaDialogContentView.Dependency,
         kind: QuotaWarningDialogView.Kind,
         onClose: @escaping @MainActor () -> Void,
-        onViewAllPlans: @escaping @MainActor () -> Void
+        onViewAllPlans: @escaping @MainActor () -> Void,
+        onSignIn: @escaping @MainActor () -> Void
     ) {
         _viewModel = StateObject(wrappedValue: QuotaDialogViewModel(
             useCase: dependency.useCase,
@@ -54,6 +56,7 @@ struct QuotaDialogContentView: View {
         self.kind = kind
         self.onClose = onClose
         self.onViewAllPlans = onViewAllPlans
+        self.onSignIn = onSignIn
     }
 
     var body: some View {
@@ -71,27 +74,41 @@ struct QuotaDialogContentView: View {
             QuotaDialogSkeletonView()
         case .error:
             QuotaDialogErrorView(onRetry: { Task { await viewModel.retry() } })
-        case let .upgradeAvailable(header, currentPlan, recommendedPlan):
+        case let .upgradeAvailable(header, currentPlan, recommendedPlan, audience):
             QuotaDialogView(
-                trackingUseCase: dependency.trackingUseCase(kind: kind, isFreeUser: currentPlan.freeUser),
+                trackingUseCase: dependency.trackingUseCase(kind: kind, audience: audience),
                 header: { QuotaDialogHeaderView(header: header) },
-                currentPlanCard: { CurrentPlanView(currentPlan: currentPlan) },
+                currentPlanCard: { currentPlan.map(CurrentPlanView.init) },
                 recommendedPlanCard: { RecommendedPlanView(plan: recommendedPlan) },
                 footer: {
                     RecommendedPlanFooterView(
                         recommendedPlan: recommendedPlan,
-                        dependency: dependency.upgradableFooterDependency(kind: kind, isFreeUser: currentPlan.freeUser),
+                        dependency: dependency.upgradableFooterDependency(kind: kind, audience: audience),
                         onPurchased: onClose,
                         onViewAllPlans: onViewAllPlans
                     )
                 }
             )
-        case let .noUpgradeAvailable(header, currentPlan, supportEmail):
+        case let .noUpgradeAvailable(header, currentPlan, supportEmail, audience):
             QuotaDialogView(
-                trackingUseCase: dependency.trackingUseCase(kind: kind, isFreeUser: currentPlan.freeUser),
+                trackingUseCase: dependency.trackingUseCase(kind: kind, audience: audience),
                 header: { QuotaDialogHeaderView(header: header) },
-                currentPlanCard: { CurrentPlanView(currentPlan: currentPlan) },
+                currentPlanCard: { currentPlan.map(CurrentPlanView.init) },
                 footer: { ContactSupportFooterView(email: supportEmail) }
+            )
+        case let .signIn(header, recommendedPlan):
+            let trackingUseCase = dependency.trackingUseCase(kind: kind, audience: .signedOut)
+            QuotaDialogView(
+                trackingUseCase: trackingUseCase,
+                header: { QuotaDialogHeaderView(header: header) },
+                recommendedPlanCard: { RecommendedPlanView(plan: recommendedPlan) },
+                footer: {
+                    SignedOutPlanFooterView(
+                        recommendedPlan: recommendedPlan,
+                        trackingUseCase: trackingUseCase,
+                        onSignIn: onSignIn
+                    )
+                }
             )
         }
     }

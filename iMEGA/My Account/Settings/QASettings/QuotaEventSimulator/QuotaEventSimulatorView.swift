@@ -314,7 +314,8 @@ struct QuotaEventSimulatorView: View {
                 dependency: .init(quotaDialogUseCase: qaUseCase, planPurchaser: planPurchaser),
                 kind: scenario.kind,
                 onClose: { isPresentingDialog = false },
-                onViewAllPlans: {}
+                onViewAllPlans: {},
+                onSignIn: { isPresentingDialog = false }
             )
         }
     }

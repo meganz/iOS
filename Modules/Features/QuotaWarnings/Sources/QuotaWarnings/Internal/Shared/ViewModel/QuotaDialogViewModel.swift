@@ -7,8 +7,9 @@ final class QuotaDialogViewModel: ObservableObject {
     enum ViewState {
         case loading
         case error
-        case upgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan, recommendedPlan: RecommendedPlan)
-        case noUpgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan, supportEmail: EmailEntity)
+        case upgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan?, recommendedPlan: RecommendedPlan, audience: QuotaDialogAudience)
+        case noUpgradeAvailable(header: QuotaDialogHeader, currentPlan: CurrentPlan?, supportEmail: EmailEntity, audience: QuotaDialogAudience)
+        case signIn(header: QuotaDialogHeader, recommendedPlan: RecommendedPlan)
     }
 
     @Published var viewState: ViewState = .loading
@@ -35,17 +36,23 @@ final class QuotaDialogViewModel: ObservableObject {
                 viewState = .upgradeAvailable(
                     header: mapper.header(accountDetails: accountDetails, canUpgrade: true),
                     currentPlan: mapper.currentPlan(accountDetails: accountDetails),
-                    recommendedPlan: mapper.recommendedPlan(recommendedPlan, accountDetails: accountDetails)
+                    recommendedPlan: mapper.recommendedPlan(recommendedPlan, accountDetails: accountDetails),
+                    audience: audience(for: accountDetails)
                 )
             case let .unavailable(accountDetails):
-                let currentPlan = mapper.currentPlan(accountDetails: accountDetails)
                 viewState = .noUpgradeAvailable(
                     header: mapper.header(accountDetails: accountDetails, canUpgrade: false),
-                    currentPlan: currentPlan,
+                    currentPlan: mapper.currentPlan(accountDetails: accountDetails),
                     supportEmail: emailFormatter.makeEmail(
-                        planName: currentPlan.name,
+                        planName: mapper.planName(accountDetails: accountDetails),
                         userEmail: useCase.userEmail
-                    )
+                    ),
+                    audience: audience(for: accountDetails)
+                )
+            case let .signIn(recommendedPlan):
+                viewState = .signIn(
+                    header: mapper.header(accountDetails: nil, canUpgrade: true),
+                    recommendedPlan: mapper.recommendedPlan(recommendedPlan, accountDetails: nil)
                 )
             }
         } catch is CancellationError {
@@ -55,8 +62,14 @@ final class QuotaDialogViewModel: ObservableObject {
             viewState = .error
         }
     }
-    
+
     func retry() async {
         await load()
+    }
+
+    // MARK: - Private
+
+    private func audience(for accountDetails: AccountDetailsEntity) -> QuotaDialogAudience {
+        accountDetails.isFree ? .free : .paid
     }
 }

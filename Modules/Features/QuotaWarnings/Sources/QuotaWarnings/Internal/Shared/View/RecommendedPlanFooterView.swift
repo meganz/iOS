@@ -71,13 +71,13 @@ struct RecommendedPlanFooterView: View {
             price: .yearly(.init(pricePerMonth: "€3.33/month", billingCaption: "€40.01 charged yearly")),
             storageText: "200 GB storage",
             transferText: "2 TB transfer",
-            quotaProgress: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1, style: .usedOfTotal)
+            quotaProgress: QuotaProgress(status: .good, usedBytes: 0, totalBytes: 1)
         ),
         dependency: .init(
             planPurchaser: PreviewPlanPurchasing(),
             trackingUseCase: QuotaDialogTrackingUseCase(
                 kind: .storage(.almostFull),
-                isFreeUser: true,
+                audience: .free,
                 tracker: NoOpAnalyticsTracker()
             )
         ),

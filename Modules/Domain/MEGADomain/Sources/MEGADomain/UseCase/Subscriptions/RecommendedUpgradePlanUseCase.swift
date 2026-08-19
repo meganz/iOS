@@ -1,6 +1,10 @@
 import Foundation
 import MEGASwift
 
+public enum RecommendedUpgradePlanError: Error, Sendable {
+    case noPlanToRecommend
+}
+
 public protocol RecommendedUpgradePlanUseCaseProtocol: Sendable {
     /// Picks the plan to recommend as an upgrade for the given account, from the provided plans
     /// Returns `nil` when there is no such plan
@@ -8,6 +12,14 @@ public protocol RecommendedUpgradePlanUseCaseProtocol: Sendable {
         for accountDetails: AccountDetailsEntity,
         from plans: [PlanEntity]
     ) -> RecommendedUpgradePlanEntity?
+
+    /// Picks the plan to recommend to someone who has no account yet: the cheapest yearly plan.
+    ///
+    /// Non-optional where `recommend(for:from:)` returns `nil`, because "nothing to recommend" means
+    /// something different here: there should be a plan for a brand-new account, so the absence of an answer says the
+    /// catalog is unusable, not that the user has run out of options.
+    /// - Throws: `RecommendedUpgradePlanError.noPlanToRecommend` when the catalog holds no yearly plan.
+    func recommendForNewAccount(from plans: [PlanEntity]) throws -> RecommendedUpgradePlanEntity
 }
 
 /// Recommendation rules
@@ -21,6 +33,8 @@ public protocol RecommendedUpgradePlanUseCaseProtocol: Sendable {
 ///   The per-month price folds in any introductory discount, so a discounted higher-tier plan wins whenever
 ///   its per-month is the cheapest. A free-trial offer (per-month 0) always wins.
 /// - No eligible plan (nothing in the target cycle has enough storage/transfer headroom) → `nil`.
+///
+/// For signed out user (`recommendForNewAccount(from:)`) only the cycle and the price rules apply.
 public struct RecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCaseProtocol {
     private let subscriptionPlanPriceUseCase: any SubscriptionPlanPriceUseCaseProtocol
 
@@ -33,23 +47,24 @@ public struct RecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCaseProtoc
         from plans: [PlanEntity]
     ) -> RecommendedUpgradePlanEntity? {
         let eligiblePlans = plansEligibleForRecommendation(accountDetails: accountDetails, plans: plans)
-        
-        guard let bestPlan = eligiblePlans.min(by: {
-            (effectivePricePerMonth($0), $0.storageLimit) < (effectivePricePerMonth($1), $1.storageLimit)
-        }) else { return nil }
-        
-        return RecommendedUpgradePlanEntity(
-            productIdentifier: bestPlan.productIdentifier,
-            name: bestPlan.name,
-            storage: bestPlan.storage,
-            storageLimit: bestPlan.storageLimit,
-            transfer: bestPlan.transfer,
-            transferLimit: bestPlan.transferLimit,
-            mobileOfferLabel: bestPlan.mobileOfferLabel,
-            price: subscriptionPlanPriceUseCase.planPrice(for: bestPlan)
-        )
+
+        guard let bestPlan = eligiblePlans.min(by: isCheaperPlan) else { return nil }
+
+        return recommendedUpgradePlanEntity(from: bestPlan)
     }
-    
+
+    public func recommendForNewAccount(from plans: [PlanEntity]) throws -> RecommendedUpgradePlanEntity {
+        let bestPlan = plans
+            .filter { $0.subscriptionCycle == .yearly }
+            .min(by: isCheaperPlan)
+
+        guard let bestPlan else {
+            throw RecommendedUpgradePlanError.noPlanToRecommend
+        }
+
+        return recommendedUpgradePlanEntity(from: bestPlan)
+    }
+
     private func plansEligibleForRecommendation(accountDetails: AccountDetailsEntity, plans: [PlanEntity]) -> [PlanEntity] {
         let recommendedCycle: SubscriptionCycleEntity = if accountDetails.isFree {
             .yearly // Always recommend .yearly for free user
@@ -80,5 +95,22 @@ public struct RecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseCaseProtoc
     private func effectivePricePerMonth(_ plan: PlanEntity) -> Decimal {
         if let offer = plan.applicableOffer { return offer.billingSchedule.pricePerMonth }
         return plan.subscriptionCycle == .yearly ? plan.price / 12 : plan.price
+    }
+
+    private func isCheaperPlan(_ lhs: PlanEntity, _ rhs: PlanEntity) -> Bool {
+        (effectivePricePerMonth(lhs), lhs.storageLimit) < (effectivePricePerMonth(rhs), rhs.storageLimit)
+    }
+
+    private func recommendedUpgradePlanEntity(from plan: PlanEntity) -> RecommendedUpgradePlanEntity {
+        RecommendedUpgradePlanEntity(
+            productIdentifier: plan.productIdentifier,
+            name: plan.name,
+            storage: plan.storage,
+            storageLimit: plan.storageLimit,
+            transfer: plan.transfer,
+            transferLimit: plan.transferLimit,
+            mobileOfferLabel: plan.mobileOfferLabel,
+            price: subscriptionPlanPriceUseCase.planPrice(for: plan)
+        )
     }
 }

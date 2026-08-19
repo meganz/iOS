@@ -27,6 +27,14 @@ struct QuotaDialogUseCase: QuotaDialogUseCaseProtocol {
         
         try Task.checkCancellation()
         
+        return if accountUseCase.isLoggedIn() {
+            try await loggedInUpgradeOption()
+        } else {
+            try await loggedOutUpgradeOption()
+        }
+    }
+    
+    private func loggedInUpgradeOption() async throws -> QuotaUpgradeOption {
         async let account = accountUseCase.refreshCurrentAccountDetails()
         async let plans = accountPlanProductsUseCase.availablePlans()
 
@@ -34,10 +42,19 @@ struct QuotaDialogUseCase: QuotaDialogUseCaseProtocol {
 
         try Task.checkCancellation()
         
-        if let recommendedPlan = recommendedUpgradePlanUseCase.recommend(for: accountDetails, from: catalog) {
-            return .available(accountDetails: accountDetails, recommendedPlan: recommendedPlan)
+        return if let recommendedPlan = recommendedUpgradePlanUseCase.recommend(for: accountDetails, from: catalog) {
+            .available(accountDetails: accountDetails, recommendedPlan: recommendedPlan)
         } else {
-            return .unavailable(accountDetails: accountDetails)
+            .unavailable(accountDetails: accountDetails)
         }
+    }
+    
+    private func loggedOutUpgradeOption() async throws -> QuotaUpgradeOption {
+        let plans = await accountPlanProductsUseCase.availablePlans()
+        
+        try Task.checkCancellation()
+        
+        let plan = try recommendedUpgradePlanUseCase.recommendForNewAccount(from: plans)
+        return .signIn(recommendedPlan: plan)
     }
 }

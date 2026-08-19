@@ -58,4 +58,55 @@ struct QuotaDialogUseCaseTests {
             try await sut.upgradeOption()
         }
     }
+
+    // MARK: - Signed out
+
+    @Test func upgradeOption_loggedOut_isSignInWithTheNewAccountRecommendation() async throws {
+        let expected = entity()
+        let result = try await makeSignedOutSUT(recommender: .init(newAccountRecommendation: .success(expected)))
+            .upgradeOption()
+
+        guard case let .signIn(recommendedPlan) = result else {
+            Issue.record("Expected .signIn, got \(result)")
+            return
+        }
+        #expect(recommendedPlan == expected)
+    }
+
+    /// The reason the signed-out dialog needs its own branch at all: `refreshCurrentAccountDetails()` fails
+    /// without a session, which is what used to strand a signed-out viewer on the error state.
+    @Test func upgradeOption_loggedOut_doesNotAskForAccountDetails() async throws {
+        let accountUseCase = MockAccountUseCase(isLoggedIn: false, accountDetailsResult: .failure(.generic))
+        let sut = QuotaDialogUseCase(
+            accountUseCase: accountUseCase,
+            accountPlanProductsUseCase: MockAccountPlanProductsUseCase(),
+            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: entity()),
+            pricingRequester: MockPricingRequester()
+        )
+
+        _ = try await sut.upgradeOption()
+
+        #expect(accountUseCase.refreshAccountDetails_calledCount == 0)
+    }
+
+    /// Signed out there is no account to name in a support request, so a failed recommendation must surface as
+    /// an error rather than degrade into the custom-plan state.
+    @Test func upgradeOption_loggedOut_recommenderThrows_propagatesInsteadOfUnavailable() async {
+        let sut = makeSignedOutSUT(
+            recommender: .init(newAccountRecommendation: .failure(RecommendedUpgradePlanError.noPlanToRecommend))
+        )
+
+        await #expect(throws: RecommendedUpgradePlanError.noPlanToRecommend) {
+            try await sut.upgradeOption()
+        }
+    }
+
+    private func makeSignedOutSUT(recommender: MockRecommendedUpgradePlanUseCase) -> QuotaDialogUseCase {
+        QuotaDialogUseCase(
+            accountUseCase: MockAccountUseCase(isLoggedIn: false),
+            accountPlanProductsUseCase: MockAccountPlanProductsUseCase(),
+            recommendedUpgradePlanUseCase: recommender,
+            pricingRequester: MockPricingRequester()
+        )
+    }
 }

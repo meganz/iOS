@@ -12,7 +12,16 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
         self.severity = severity
     }
 
-    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader {
+    func header(accountDetails: AccountDetailsEntity?, canUpgrade: Bool) -> QuotaDialogHeader {
+        guard let accountDetails else {
+            MEGALogError("[StorageQuotaDialogMapper] accountDetails is nil which should not happen")
+            assertionFailure("accountDetails should not be nil")
+            return QuotaDialogHeader(
+                image: MEGAAssets.Image.quotaWarning,
+                title: "", subtitle: subtitle(canUpgrade: canUpgrade)
+            )
+        }
+        
         let progress = currentQuotaProgress(accountDetails: accountDetails)
         return QuotaDialogHeader(
             image: MEGAAssets.Image.quotaWarning,
@@ -21,20 +30,22 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
         )
     }
 
-    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
+    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan? {
         CurrentPlan(
-            name: accountDetails.proLevel.toAccountTypeDisplayName(),
-            quota: currentQuotaProgress(accountDetails: accountDetails),
-            freeUser: accountDetails.isFree
+            name: planName(accountDetails: accountDetails),
+            quota: currentQuotaProgress(accountDetails: accountDetails)
         )
     }
 
-    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan {
+    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity?) -> RecommendedPlan {
+        guard let accountDetails else {
+            return makeRecommendedPlan(plan, quotaProgress: nil)
+        }
+        
         let quotaProgress = QuotaProgress(
             status: .good,
             usedBytes: accountDetails.storageUsed,
-            totalBytes: plan.storageLimit.gigabytesToBytes(),
-            style: .usedOfTotal
+            totalBytes: plan.storageLimit.gigabytesToBytes()
         )
         return makeRecommendedPlan(plan, quotaProgress: quotaProgress)
     }
@@ -68,8 +79,7 @@ struct StorageQuotaDialogMapper: QuotaDialogMapping {
         return QuotaProgress(
             status: status,
             usedBytes: accountDetails.storageUsed,
-            totalBytes: accountDetails.storageMax,
-            style: .usedOfTotal
+            totalBytes: accountDetails.storageMax
         )
     }
 }
