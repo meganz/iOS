@@ -1628,6 +1628,8 @@
 "openBrowser"="Open browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
+/* A label for the Pause button. */
+"pause"="Pause";
 /*  */
 "resume"="Resume";
 /* Title to preview document */
