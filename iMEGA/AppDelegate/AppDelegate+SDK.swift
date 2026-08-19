@@ -1,5 +1,7 @@
 import ContentLibraries
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
@@ -53,6 +55,15 @@ extension AppDelegate {
 
     @objc func startMonitoringLastPurgeEvents() {
         LastPurgeRepository.startMonitoring()
+        trackInactivityPurgeEventReceived()
+    }
+
+    private func trackInactivityPurgeEventReceived() {
+        Task {
+            let lastPurgeUseCase = LastPurgeUseCase(repository: LastPurgeRepository.newRepo)
+            guard await lastPurgeUseCase.inactivityPurgeEvent() != nil else { return }
+            DIContainer.tracker.trackAnalyticsEvent(with: InactivityPurgeEventReceivedEvent())
+        }
     }
     
     @objc func addCompletedTransfer(_ sdk: MEGASdk, transfer: MEGATransfer) {
