@@ -70,6 +70,20 @@ import UIKit
             Self.presentAllPlans(from: navigationController, dismissHandler: dismissHandler)
         }
 
+        let onSignIn: @MainActor () -> Void = { [weak presenter] in
+            let startLogin: @MainActor () -> Void = {
+                Task {
+                    await dismissHandler.handleDismiss()
+                    LoginViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
+                }
+            }
+            guard let presenter else {
+                startLogin()
+                return
+            }
+            presenter.dismiss(animated: true, completion: startLogin)
+        }
+
         let purchaseUseCase = AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo)
         let dependency: QuotaWarningDialogView.Dependency = QuotaWarningDialogView.Dependency(
             accountPlanPurchaseUseCase: purchaseUseCase,
@@ -85,6 +99,7 @@ import UIKit
             kind: kind,
             onClose: onClose,
             onViewAllPlans: onViewAllPlans,
+            onSignIn: onSignIn,
             dismissHandler: dismissHandler
         )
         let navigationController = MEGANavigationController(rootViewController: hostingController)
@@ -135,6 +150,7 @@ private final class QuotaWarningDialogHostingController: UIHostingController<Quo
         kind: QuotaWarningDialogView.Kind,
         onClose: @escaping @MainActor () -> Void,
         onViewAllPlans: @escaping @MainActor () -> Void,
+        onSignIn: @escaping @MainActor () -> Void,
         dismissHandler: some QuotaDialogDismissHandling
     ) {
         self.dismissHandler = dismissHandler
@@ -143,7 +159,8 @@ private final class QuotaWarningDialogHostingController: UIHostingController<Quo
                 dependency: dependency,
                 kind: kind,
                 onClose: onClose,
-                onViewAllPlans: onViewAllPlans
+                onViewAllPlans: onViewAllPlans,
+                onSignIn: onSignIn
             )
         )
     }

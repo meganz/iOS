@@ -23,24 +23,21 @@ struct QuotaProgressView: View {
             QuotaProgress(
                 status: .almostFull,
                 usedBytes: 16 * 1_073_741_824,
-                totalBytes: 20 * 1_073_741_824,
-                style: .usedOnly
+                totalBytes: 20 * 1_073_741_824
             )
         )
         QuotaProgressView(
             QuotaProgress(
                 status: .good,
                 usedBytes: 19 * 1_073_741_824,
-                totalBytes: 200 * 1_073_741_824,
-                style: .usedOfTotal
+                totalBytes: 200 * 1_073_741_824
             )
         )
         QuotaProgressView(
             QuotaProgress(
                 status: .full,
                 usedBytes: 1 * 1_073_741_824,
-                totalBytes: 2 * 1_073_741_824,
-                style: .usedOfTotal
+                totalBytes: 2 * 1_073_741_824
             )
         )
     }

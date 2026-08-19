@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAInfrastructure
@@ -11,14 +12,19 @@ import SwiftUI
 /// models the dialog renders. Storage and transfer each provide their own implementation (with severity
 /// baked in); the shared recommended-card mapping lives here.
 protocol QuotaDialogMapping {
-    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader
-    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan
-    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan
+    func header(accountDetails: AccountDetailsEntity?, canUpgrade: Bool) -> QuotaDialogHeader
+    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan?
+    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity?) -> RecommendedPlan
+    func planName(accountDetails: AccountDetailsEntity) -> String
 }
 
 extension QuotaDialogMapping {
+    func planName(accountDetails: AccountDetailsEntity) -> String {
+        accountDetails.proLevel.toAccountTypeDisplayName()
+    }
+
     /// Builds the recommended-plan card model; callers supply the quota progress (storage- or transfer-based).
-    func makeRecommendedPlan(_ plan: RecommendedUpgradePlanEntity, quotaProgress: QuotaProgress) -> RecommendedPlan {
+    func makeRecommendedPlan(_ plan: RecommendedUpgradePlanEntity, quotaProgress: QuotaProgress?) -> RecommendedPlan {
         RecommendedPlan(
             productIdentifier: plan.productIdentifier,
             name: plan.name,

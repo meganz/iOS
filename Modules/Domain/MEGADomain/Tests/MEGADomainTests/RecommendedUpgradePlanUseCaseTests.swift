@@ -402,4 +402,51 @@ struct RecommendedUpgradePlanUseCaseTests {
         let result = sut.recommend(for: .build(proLevel: .free), from: plans)
         #expect(result?.mobileOfferLabel == "Black Friday")
     }
+
+    // MARK: - New account (a viewer with no account yet)
+
+    @Test func newAccount_recommendsCheapestYearly_ignoringMonthly() throws {
+        let plans = [
+            plan(type: .proI, name: "Pro I", cycle: .monthly, price: 1),             // wrong cycle → ignored
+            plan(type: .essential, name: "Essential", cycle: .yearly, price: 40),    // cheapest yearly → wins
+            plan(type: .proI, name: "Pro I", cycle: .yearly, price: 100)
+        ]
+        let result = try sut.recommendForNewAccount(from: plans)
+
+        #expect(result.name == "Essential")
+        #expect(result.price == .yearly(.init(price: 40, currency: "EUR")))
+    }
+
+    /// A discounted higher tier can undercut a cheaper plan per month, and per-month is what ranks them.
+    @Test func newAccount_prefersTheCheapestEffectivePricePerMonth() throws {
+        let plans = [
+            plan(type: .essential, name: "Essential", cycle: .yearly, price: 40),    // 3.33/mo
+            plan(
+                type: .proI, name: "Pro I", cycle: .yearly, price: 100,
+                offer: prepaidOffer(total: 24, months: 12)                           // 2/mo → wins
+            )
+        ]
+        #expect(try sut.recommendForNewAccount(from: plans).name == "Pro I")
+    }
+
+    /// No allowance to clear, so a plan the equivalent free account would be excluded from still qualifies.
+    @Test func newAccount_hasNoStorageOrTransferFloor() throws {
+        let plans = [plan(type: .essential, name: "Essential", cycle: .yearly, price: 40, storageLimit: 20, transferLimit: 20)]
+
+        #expect(try sut.recommendForNewAccount(from: plans).name == "Essential")
+    }
+
+    @Test func newAccount_noYearlyPlan_throws() {
+        let plans = [plan(type: .essential, name: "Essential", cycle: .monthly, price: 5)]
+
+        #expect(throws: RecommendedUpgradePlanError.noPlanToRecommend) {
+            try sut.recommendForNewAccount(from: plans)
+        }
+    }
+
+    @Test func newAccount_emptyCatalog_throws() {
+        #expect(throws: RecommendedUpgradePlanError.noPlanToRecommend) {
+            try sut.recommendForNewAccount(from: [])
+        }
+    }
 }

@@ -11,12 +11,17 @@ struct PreviewQuotaDialogUseCase: QuotaDialogUseCaseProtocol {
     )
     var plan: PlanEntity? = .mockEssentialYearly
     var userEmail: String? = "preview@mega.co.nz"
+    /// Drives the signed-out dialog: no account, so no current-plan card and no usage on the recommendation.
+    var signedOut = false
 
     func upgradeOption() async throws -> QuotaUpgradeOption {
-        if let plan {
-            .available(accountDetails: account, recommendedPlan: RecommendedUpgradePlanEntity(plan: plan))
+        guard let plan else { return .unavailable(accountDetails: account) }
+
+        let recommendedPlan = RecommendedUpgradePlanEntity(plan: plan)
+        return if signedOut {
+            .signIn(recommendedPlan: recommendedPlan)
         } else {
-            .unavailable(accountDetails: account)
+            .available(accountDetails: account, recommendedPlan: recommendedPlan)
         }
     }
 }

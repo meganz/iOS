@@ -33,7 +33,9 @@ struct RecommendedPlanView: View {
                         )
                     }
                 }
-                QuotaProgressView(plan.quotaProgress)
+                if let quotaProgress = plan.quotaProgress {
+                    QuotaProgressView(quotaProgress)
+                }
             }
         }
     }

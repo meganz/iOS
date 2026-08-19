@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 @testable import QuotaWarnings
 import Testing
 
@@ -66,42 +67,59 @@ struct StorageQuotaDialogMapperTests {
         #expect(header.subtitle.links.isEmpty)
     }
 
-    @Test func currentPlan_usesStorageUsageAndSeverityStatus() {
+    @Test func currentPlan_usesStorageUsageAndSeverityStatus() throws {
         let sut = StorageQuotaDialogMapper(severity: .full(.storageState))
-        let currentPlan = sut.currentPlan(accountDetails: .build(storageUsed: 90, storageMax: 100))
+        let currentPlan = try #require(sut.currentPlan(accountDetails: .build(storageUsed: 90, storageMax: 100)))
 
         #expect(currentPlan.quota.status == .full)
-        #expect(currentPlan.quota.style == .usedOfTotal)
         #expect(currentPlan.quota.usedBytes == 90)
         #expect(currentPlan.quota.totalBytes == 100)
     }
 
-    /// The tier the dialog's analytics events are keyed on. Read off `CurrentPlan` by the view, which
-    /// builds `QuotaDialogTrackingUseCase` from it.
-    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
-    func currentPlan_carriesTheAccountTier(proLevel: AccountTypeEntity, freeUser: Bool) {
+    /// Unlike transfer, every storage tier has a published maximum — free included — so the card always shows.
+    @Test(arguments: [AccountTypeEntity.free, .proI])
+    func currentPlan_isOfferedToEveryTier(proLevel: AccountTypeEntity) {
         let sut = StorageQuotaDialogMapper(severity: .almostFull)
-        let currentPlan = sut.currentPlan(accountDetails: .build(proLevel: proLevel))
 
-        #expect(currentPlan.freeUser == freeUser)
+        #expect(sut.currentPlan(accountDetails: .build(proLevel: proLevel)) != nil)
     }
 
-    @Test func recommendedPlan_isGreenProgressOverPlanStorageAndBestForYouRibbon() {
+    @Test func recommendedPlan_isGreenProgressOverPlanStorageAndBestForYouRibbon() throws {
         let sut = StorageQuotaDialogMapper(severity: .almostFull)
         let account = AccountDetailsEntity.build(storageUsed: 50, storageMax: 100)
         let recommended = sut.recommendedPlan(recommendedEntity(), accountDetails: account)
+        let quotaProgress = try #require(recommended.quotaProgress)
 
         #expect(recommended.name == "Essential")
         #expect(recommended.ribbonText == "Best for you")
-        #expect(recommended.quotaProgress.status == .good)
-        #expect(recommended.quotaProgress.style == .usedOfTotal)
-        #expect(recommended.quotaProgress.usedBytes == 50)
-        #expect(recommended.quotaProgress.totalBytes > account.storageMax)
+        #expect(quotaProgress.status == .good)
+        #expect(quotaProgress.usedBytes == 50)
+        #expect(quotaProgress.totalBytes > account.storageMax)
+    }
+
+    /// Defensive only — every storage trigger needs a session — but the card must degrade rather than lie.
+    @Test func recommendedPlan_withoutAnAccount_plotsNoUsage() {
+        let sut = StorageQuotaDialogMapper(severity: .almostFull)
+
+        #expect(sut.recommendedPlan(recommendedEntity(), accountDetails: nil).quotaProgress == nil)
     }
 }
 
 @Suite("Transfer quota dialog mapper")
 struct TransferQuotaDialogMapperTests {
+    private func recommendedEntity() -> RecommendedUpgradePlanEntity {
+        RecommendedUpgradePlanEntity(
+            productIdentifier: "essential.yearly",
+            name: "Essential",
+            storage: "200 GB",
+            storageLimit: 200,
+            transfer: "2 TB",
+            transferLimit: 2048,
+            mobileOfferLabel: nil,
+            price: .yearly(.init(price: 40, currency: "EUR"))
+        )
+    }
+
     @Test func header_limitedDownloadFreeAccount_showsRunningLowTitle() {
         let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
         let header = sut.header(accountDetails: .build(proLevel: .free), canUpgrade: true)
@@ -148,27 +166,62 @@ struct TransferQuotaDialogMapperTests {
         #expect(header.subtitle.links.count == 1)
     }
 
-    @Test func currentPlan_freeAccountUsesUsedOnlyStyle() {
-        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
-        let currentPlan = sut.currentPlan(accountDetails: .build(transferUsed: 4, transferMax: 5, proLevel: .free))
+    // MARK: - Signed out
 
-        #expect(currentPlan.quota.style == .usedOnly)
-        #expect(currentPlan.quota.status == .almostFull)
+    @Test(arguments: [
+        (TransferQuotaSeverity.limitedDownload, "Your transfer quota is running low"),
+        (.limitedStreaming, "Your transfer quota is running low"),
+        (.downloadExceeded, "Transfer quota exceeded"),
+        (.streamingExceeded, "Transfer quota exceeded")
+    ])
+    func header_signedOut_reusesTheFreeAccountTitle(severity: TransferQuotaSeverity, expectedTitle: String) {
+        let sut = TransferQuotaDialogMapper(severity: severity)
+
+        // No account to quote a percentage from, so a signed-out viewer gets the free-account copy.
+        #expect(sut.header(accountDetails: nil, canUpgrade: true).title == expectedTitle)
     }
 
-    @Test func currentPlan_paidAccountUsesUsedOfTotalStyle() {
+    @Test func recommendedPlan_signedOut_plotsNoUsage() {
         let sut = TransferQuotaDialogMapper(severity: .downloadExceeded)
-        let currentPlan = sut.currentPlan(accountDetails: .build(transferUsed: 5, transferMax: 5, proLevel: .proI))
 
-        #expect(currentPlan.quota.style == .usedOfTotal)
-        #expect(currentPlan.quota.status == .full)
+        #expect(sut.recommendedPlan(recommendedEntity(), accountDetails: nil).quotaProgress == nil)
     }
 
-    @Test(arguments: [(AccountTypeEntity.free, true), (.proI, false)])
-    func currentPlan_carriesTheAccountTier(proLevel: AccountTypeEntity, freeUser: Bool) {
-        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
-        let currentPlan = sut.currentPlan(accountDetails: .build(proLevel: proLevel))
+    // MARK: - Current plan card
 
-        #expect(currentPlan.freeUser == freeUser)
+    /// A free account publishes no transfer maximum (`mxfer` is PRO-only), so there is no honest bar to draw:
+    /// no current-plan card, and no usage on the recommended card either.
+    @Test func currentPlan_freeAccount_isNotOffered() {
+        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+
+        #expect(sut.currentPlan(accountDetails: .build(transferUsed: 4, transferMax: 5, proLevel: .free)) == nil)
+    }
+
+    @Test func recommendedPlan_freeAccount_plotsNoUsage() {
+        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+        let account = AccountDetailsEntity.build(transferUsed: 4, transferMax: 5, proLevel: .free)
+
+        #expect(sut.recommendedPlan(recommendedEntity(), accountDetails: account).quotaProgress == nil)
+    }
+
+    @Test func currentPlan_paidAccount_plotsUsageAgainstTheAccountAllowance() throws {
+        let sut = TransferQuotaDialogMapper(severity: .downloadExceeded)
+        let currentPlan = try #require(
+            sut.currentPlan(accountDetails: .build(transferUsed: 5, transferMax: 5, proLevel: .proI))
+        )
+
+        #expect(currentPlan.quota.status == .full)
+        #expect(currentPlan.quota.usedBytes == 5)
+        #expect(currentPlan.quota.totalBytes == 5)
+    }
+
+    @Test func recommendedPlan_paidAccount_plotsUsageAgainstThePlanTransfer() throws {
+        let sut = TransferQuotaDialogMapper(severity: .limitedDownload)
+        let account = AccountDetailsEntity.build(transferUsed: 4, transferMax: 5, proLevel: .proI)
+        let quotaProgress = try #require(sut.recommendedPlan(recommendedEntity(), accountDetails: account).quotaProgress)
+
+        #expect(quotaProgress.status == .good)
+        #expect(quotaProgress.usedBytes == 4)
+        #expect(quotaProgress.totalBytes == 2048.gigabytesToBytes())
     }
 }

@@ -10,14 +10,14 @@ struct QuotaDialogView<
 >: View {
     private let trackingUseCase: any QuotaDialogTrackingUseCaseProtocol
     private let header: Header
-    private let currentPlanCard: CurrentPlanCard
+    private let currentPlanCard: CurrentPlanCard?
     private let recommendedPlanCard: RecommendedPlanCard?
     private let footer: Footer
 
     init(
         trackingUseCase: some QuotaDialogTrackingUseCaseProtocol,
         @ViewBuilder header: () -> Header,
-        @ViewBuilder currentPlanCard: () -> CurrentPlanCard,
+        @ViewBuilder currentPlanCard: () -> CurrentPlanCard?,
         @ViewBuilder recommendedPlanCard: () -> RecommendedPlanCard,
         @ViewBuilder footer: () -> Footer
     ) {
@@ -33,7 +33,9 @@ struct QuotaDialogView<
             ScrollView {
                 VStack(spacing: TokenSpacing._7) {
                     header
-                    currentPlanCard
+                    if let currentPlanCard {
+                        currentPlanCard
+                    }
                     if let recommendedPlanCard {
                         recommendedPlanCard
                     }
@@ -66,6 +68,21 @@ extension QuotaDialogView where RecommendedPlanCard == EmptyView {
         self.header = header()
         self.currentPlanCard = currentPlanCard()
         self.recommendedPlanCard = nil
+        self.footer = footer()
+    }
+}
+
+extension QuotaDialogView where CurrentPlanCard == EmptyView {
+    init(
+        trackingUseCase: some QuotaDialogTrackingUseCaseProtocol,
+        @ViewBuilder header: () -> Header,
+        @ViewBuilder recommendedPlanCard: () -> RecommendedPlanCard,
+        @ViewBuilder footer: () -> Footer
+    ) {
+        self.trackingUseCase = trackingUseCase
+        self.header = header()
+        self.currentPlanCard = nil
+        self.recommendedPlanCard = recommendedPlanCard()
         self.footer = footer()
     }
 }

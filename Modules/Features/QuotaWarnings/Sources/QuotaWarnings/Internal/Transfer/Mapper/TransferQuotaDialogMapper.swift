@@ -19,7 +19,7 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         self.severity = severity
     }
 
-    func header(accountDetails: AccountDetailsEntity, canUpgrade: Bool) -> QuotaDialogHeader {
+    func header(accountDetails: AccountDetailsEntity?, canUpgrade: Bool) -> QuotaDialogHeader {
         QuotaDialogHeader(
             image: MEGAAssets.Image.quotaWarning,
             title: title(accountDetails: accountDetails),
@@ -30,22 +30,27 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         )
     }
 
-    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan {
-        CurrentPlan(
-            name: accountDetails.proLevel.toAccountTypeDisplayName(),
-            quota: currentQuotaProgress(accountDetails: accountDetails),
-            freeUser: accountDetails.isFree
+    /// `nil` for a free user as there is no public transfer quota for free user
+    func currentPlan(accountDetails: AccountDetailsEntity) -> CurrentPlan? {
+        guard let quota = currentQuotaProgress(accountDetails: accountDetails) else { return nil }
+
+        return CurrentPlan(
+            name: planName(accountDetails: accountDetails),
+            quota: quota
         )
     }
 
-    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity) -> RecommendedPlan {
-        let quotaProgress = QuotaProgress(
-            status: .good,
-            usedBytes: accountDetails.transferUsed,
-            totalBytes: plan.transferLimit.gigabytesToBytes(),
-            style: .usedOfTotal
-        )
-        return makeRecommendedPlan(plan, quotaProgress: quotaProgress)
+    func recommendedPlan(_ plan: RecommendedUpgradePlanEntity, accountDetails: AccountDetailsEntity?) -> RecommendedPlan {
+        if let accountDetails, !accountDetails.isFree {
+            let quotaProgress = QuotaProgress(
+                status: .good,
+                usedBytes: accountDetails.transferUsed,
+                totalBytes: plan.transferLimit.gigabytesToBytes()
+            )
+            return makeRecommendedPlan(plan, quotaProgress: quotaProgress)
+        } else {
+            return makeRecommendedPlan(plan, quotaProgress: nil)
+        }
     }
 
     // MARK: - Private
@@ -62,15 +67,13 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         )
     }
 
-    private func title(accountDetails: AccountDetailsEntity) -> String {
+    private func title(accountDetails: AccountDetailsEntity?) -> String {
         switch severity {
         case .limitedDownload, .limitedStreaming:
-            if accountDetails.isFree {
-                Strings.Localizable.QuotaWarning.Transfer.RunningLow.title
+            if let accountDetails, let quota = currentQuotaProgress(accountDetails: accountDetails) {
+                Strings.Localizable.QuotaWarning.Transfer.PercentUsed.title(quota.usedPercentage)
             } else {
-                Strings.Localizable.QuotaWarning.Transfer.PercentUsed.title(
-                    currentQuotaProgress(accountDetails: accountDetails).usedPercentage
-                )
+                Strings.Localizable.QuotaWarning.Transfer.RunningLow.title
             }
         case .downloadExceeded, .streamingExceeded:
             Strings.Localizable.QuotaWarning.Transfer.Exceeded.title
@@ -98,36 +101,19 @@ struct TransferQuotaDialogMapper: QuotaDialogMapping {
         }
     }
 
-    private func currentQuotaProgress(accountDetails: AccountDetailsEntity) -> QuotaProgress {
+    private func currentQuotaProgress(accountDetails: AccountDetailsEntity) -> QuotaProgress? {
+        /// `nil` for a free user as there is no public transfer quota for free user
+        guard !accountDetails.isFree else { return nil }
+        
         let status: QuotaStatus = switch severity {
         case .limitedDownload, .limitedStreaming: .almostFull
         case .downloadExceeded, .streamingExceeded: .full
         }
 
-        /// Bcause transfer quota limit is not available for free user,
-        /// Hardcode the total bytes such that the used percentage is 100% for full, otherwise 80%
-        let totalBytes = if accountDetails.isFree {
-            if status == .full {
-                Int64(100)
-            } else {
-                Int64(Double(accountDetails.transferUsed) * 1.25)
-            }
-        } else {
-            accountDetails.transferMax
-        }
-        
-        /// Displayed the used transfer quota only because transfer quota limit is not available.
-        let style: QuotaUsageStyle = if accountDetails.isFree {
-            .usedOnly
-        } else {
-            .usedOfTotal
-        }
-        
         return QuotaProgress(
             status: status,
             usedBytes: accountDetails.transferUsed,
-            totalBytes: totalBytes,
-            style: style
+            totalBytes: accountDetails.transferMax
         )
     }
 }
