@@ -73,6 +73,8 @@ enum WarningBannerType: Equatable {
             tracker.trackAnalyticsEvent(with: FullStorageOverQuotaBannerDisplayedEvent())
         case .almostFullStorageOverQuota:
             tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerDisplayedEvent())
+        case .inactivityPurge:
+            tracker.trackAnalyticsEvent(with: InactivityPurgeBannerDisplayedEvent())
         default: break
         }
     }
@@ -89,6 +91,8 @@ enum WarningBannerType: Equatable {
         switch warningType {
         case .almostFullStorageOverQuota:
             tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerCloseButtonPressedEvent())
+        case .inactivityPurge:
+            tracker.trackAnalyticsEvent(with: InactivityPurgeBannerCloseButtonPressedEvent())
         default: break
         }
         
@@ -104,6 +108,7 @@ enum WarningBannerType: Equatable {
             tracker.trackAnalyticsEvent(with: AlmostFullStorageOverQuotaBannerUpgradeButtonPressedEvent())
             router?.presentUpgradeScreen()
         case .inactivityPurge:
+            tracker.trackAnalyticsEvent(with: InactivityPurgeBannerLearnMoreButtonPressedEvent())
             if let url = URL(string: "https://help.mega.io/files-folders/restore-delete/data-deleted-by-mega") { router?.openURL(url) }
         default: break
         }
