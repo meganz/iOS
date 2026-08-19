@@ -53,6 +53,7 @@ public struct DefaultPlanPurchaserFactory: PlanPurchaserFactory {
             purchaseUseCase: purchaseUseCase,
             accountUseCase: accountUseCase,
             eligibilityChecker: PlanPurchaseEligibilityChecker(accountUseCase: accountUseCase),
+            tracker: DIContainer.tracker,
             domainName: domainName,
             appVersion: appVersion,
             canOpenURL: canOpenURL,

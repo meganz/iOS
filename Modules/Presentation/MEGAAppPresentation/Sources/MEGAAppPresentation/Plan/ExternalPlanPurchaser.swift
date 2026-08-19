@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -37,6 +38,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let eligibilityChecker: any PlanPurchaseEligibilityChecking
+    private let tracker: any AnalyticsTracking
     /// Delay between the account reporting the plan and emitting `.succeeded`, matching the in-app route.
     private let postPurchaseDelay: TimeInterval
     private let domainName: String
@@ -60,6 +62,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo),
         eligibilityChecker: some PlanPurchaseEligibilityChecking = PlanPurchaseEligibilityChecker(),
+        tracker: some AnalyticsTracking,
         domainName: String,
         appVersion: String,
         postPurchaseDelay: TimeInterval = 1,
@@ -70,6 +73,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.eligibilityChecker = eligibilityChecker
+        self.tracker = tracker
         self.postPurchaseDelay = postPurchaseDelay
         self.domainName = domainName
         self.appVersion = appVersion
@@ -112,7 +116,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
         guard await eligibilityChecker.cancelActiveSubscription(),
               await eligibilityChecker.refreshedEligibility() == .purchasable else {
             endPurchasing()
-            // IOS-12213: fire UpgradeAccountPurchaseFailedEvent
+            tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
             outcomesSubject.send(.failed)
             return
         }
@@ -122,7 +126,7 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
     private func openWebsite(for plan: PlanEntity, onWebsiteOpened: @escaping @MainActor () -> Void) async {
         guard let url = await openableLink(for: plan) else {
             endPurchasing()
-            // IOS-12213: fire UpgradeAccountPurchaseFailedEvent
+            tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
             outcomesSubject.send(.failed)
             return
         }
@@ -195,8 +199,8 @@ public final class ExternalPlanPurchaser: ExternalPlanPurchasing {
     /// the screen identically.
     private func handlePurchaseSucceeded() async {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
         purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
-        // [IOS-12213]: fire UpgradeAccountPurchaseSucceededEvent
 
         if postPurchaseDelay > 0 {
             try? await Task.sleep(for: .seconds(postPurchaseDelay))
