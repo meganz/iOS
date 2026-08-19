@@ -8,8 +8,8 @@ struct PlanEntityExternalPurchasePlanTests {
         (AccountTypeEntity.proI, "propay_1"),
         (.proII, "propay_2"),
         (.proIII, "propay_3"),
-        (.lite, "propay_101"),
-        (.proFlexi, "propay_4"),
+        (.lite, "propay_4"),
+        (.proFlexi, "propay_101"),
         (.business, "registerb")
     ])
     func externalPurchasePath_forEachPlan_isTheSellingPath(type: AccountTypeEntity, expected: String) {
