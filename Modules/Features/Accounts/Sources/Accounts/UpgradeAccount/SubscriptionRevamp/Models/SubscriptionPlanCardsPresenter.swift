@@ -38,7 +38,7 @@ struct SubscriptionPlanCardsPresenter {
                     storage: Strings.Localizable.SubscriptionPurchase.Plan.storage(plan.storage),
                     transfer: Strings.Localizable.SubscriptionPurchase.Plan.transfer(plan.transfer),
                     ribbon: ribbon,
-                    isPrimaryAction: ribbon == .recommended,
+                    isPrimaryAction: ribbon != nil,
                     externalPurchaseTitle: externalPurchase?.externalPurchaseTitle(for: plan)
                 )
             }

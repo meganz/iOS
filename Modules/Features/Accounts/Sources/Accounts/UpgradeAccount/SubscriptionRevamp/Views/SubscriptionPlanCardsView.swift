@@ -72,7 +72,7 @@ struct SubscriptionPlanCardsView: View {
             purchaseViewModel: purchaseViewModel,
             title: Strings.Localizable.SubscriptionPurchase.Button.getPlan(card.title),
             productIdentifier: card.productIdentifier,
-            style: card.hasOffer ? .brand : .mega(card.isPrimaryAction ? .primary : .secondary)
+            style: .mega(card.isPrimaryAction ? .primary : .secondary)
         )
     }
 

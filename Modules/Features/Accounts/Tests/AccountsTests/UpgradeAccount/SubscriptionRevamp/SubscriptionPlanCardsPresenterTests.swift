@@ -67,7 +67,15 @@ struct SubscriptionPlanCardsPresenterTests {
         #expect(card.storage == Strings.Localizable.SubscriptionPurchase.Plan.storage("2 TB"))
         #expect(card.transfer == Strings.Localizable.SubscriptionPurchase.Plan.transfer("2 TB"))
         #expect(card.ribbon == nil)
-        #expect(card.hasOffer == false)
+        #expect(card.isPrimaryAction == false)
+    }
+
+    @Test("A discounted plan carries an offer ribbon and is the primary action")
+    func discountedPlanIsPrimaryAction() throws {
+        let sut = makeSUT(plans: [externalPurchasePlan(introductoryOffer: introOffer())])
+        let card = try #require(sut.cards(for: .monthly).first)
+        #expect(card.ribbon != nil)
+        #expect(card.isPrimaryAction)
     }
 
     @Test("Storage and transfer are labelled, not raw plan values")

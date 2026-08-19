@@ -25,13 +25,6 @@ struct SubscriptionPlanCardModel: Identifiable, Equatable {
 
     var id: String { productIdentifier }
 
-    var hasOffer: Bool {
-        switch price {
-        case .discountMonthly, .discountYearly: true
-        case .monthly, .yearly: false
-        }
-    }
-
     init(
         productIdentifier: String,
         title: String,
