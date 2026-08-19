@@ -31,4 +31,20 @@ struct MainTabBarAdsViewModelTests {
         let receivedConfigs = await task.value
         #expect(receivedConfigs == configs)
     }
+    
+    @Test("Should open with the config sent before anyone listened", .timeLimit(.minutes(1)))
+    func adsSlotConfigAsyncSequence_whenConfigSentBeforeIteration_shouldReceiveLatestConfig() async throws {
+        let sut = MainTabBarAdsViewModel()
+        sut.sendNewAdsConfig(AdsSlotConfig(displayAds: false))
+        sut.sendNewAdsConfig(AdsSlotConfig(displayAds: true))
+        
+        let task = Task {
+            for await config in sut.adsSlotConfigAsyncSequence {
+                return config
+            }
+            return nil
+        }
+        
+        #expect(await task.value == AdsSlotConfig(displayAds: true))
+    }
 }

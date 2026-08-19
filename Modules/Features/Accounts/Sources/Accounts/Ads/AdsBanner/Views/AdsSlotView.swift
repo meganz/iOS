@@ -1,105 +1,26 @@
-import GoogleMobileAds
-import MEGAAppPresentation
-import MEGADesignToken
-import MEGASwiftUI
 import SwiftUI
 
 /// AdsSlotView is a view that displays the main content of the app, with an optional banner ad positioned at the bottom of the screen.
-/// `shouldHideAds`: This checks whether ads should be hidden on a tab . It evaluates both the current verticalSizeClass and the state of ad enablement. VerticalSizeClass should be `.regular` only, applicable for both iPhone and iPad.
+/// Screens that draw the ad inside their own layout instead of under their whole content embed `AdsBannerView` directly.
+/// Whether there is a banner to make room for at all is `AdsSlotViewModel.bannerHeight(isVerticallyCompact:)`, which the banner itself reads too. VerticalSizeClass should be `.regular` only, applicable for both iPhone and iPad.
 /// `displayAds`: This determines if ads should be hidden. Even when isExternalAdsEnabled returns true, ads might still be hidden if the contentView is navigated to a screen where ads should not be displayed. For instance, when a user navigates to the "Account" page from the Home, Photos or Cloud drive tab, the ad will be hidden.
 public struct AdsSlotView<T: View>: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel: AdsSlotViewModel
-    private let adSize = AdSizeBanner
     public let contentView: T
 
     public var body: some View {
         VStack(spacing: 0) {
             contentView
-            
-            if viewModel.isExternalAdsEnabled == true {
-                HStack(alignment: .top, spacing: 0) {
-                    AdMobBannerView(
-                        adSize: adSize,
-                        adMob: viewModel.adMob,
-                        bannerViewDidReceiveAdsUpdate: { [weak viewModel] result in
-                            viewModel?.bannerViewDidReceiveAdsUpdate(result: result)
-                        }
-                    )
-                    .frame(
-                        width: adSize.size.width,
-                        height: adSize.size.height
-                    )
-                    
-                    if viewModel.showCloseButton {
-                        closeButton
-                            .frame(width: 16, height: 16)
-                            .adaptiveSheetModal(isPresented: $viewModel.showAdsFreeView) {
-                                AdsFreeView(
-                                    viewModel: AdsFreeViewModel(
-                                        purchaseUseCase: viewModel.purchaseUseCase,
-                                        viewProPlanAction: viewModel.adsFreeViewProPlanAction
-                                    )
-                                )
-                                .interactiveDismissDisabled()
-                            }
-                    }
-                }
-                .padding(.top, 5)
-                .frame(maxWidth: .infinity)
-                .frame(height: adsContainerHeight)
-                .background(TokenColors.Background.surface1.swiftUI)
-                .opacity(adsContainerOpacity)
-            }
-        }
-        .onAppear {
-            viewModel.setupSubscriptions()
-            viewModel.startMonitoringAdsSlotUpdates()
-            viewModel.startMonitoringOnAccountUpdates()
-        }
-        .onDisappear {
-            viewModel.stopMonitoringAdsSlotUpdates()
-            viewModel.stopMonitoringOnAccountUpdates()
+
+            AdsBannerView(viewModel: viewModel)
         }
         .ignoresSafeArea(.keyboard)
-        .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) || adsContainerHeight == 0 ? .all : [.top])
+        .ignoresSafeArea(edges: bannerHeight == 0 ? .all : [.top])
     }
-    
-    private var closeButton: some View {
-        Button {
-            viewModel.didTapCloseAdsButton()
-        } label: {
-            Image("close")
-                .resizable(capInsets: EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))
-                .renderingMode(.template)
-                .foregroundStyle(TokenColors.Button.primary.swiftUI)
-        }
-        .background(TokenColors.Background.page.swiftUI)
-    }
-    
-    private var shouldHideAds: Bool {
-        verticalSizeClass == .compact || !viewModel.displayAds
-    }
-    
-    private var adsContainerHeight: CGFloat {
-        guard !shouldHideAds else { return 0 }
-        
-        switch viewModel.adsLoadingState {
-        case .loaded:
-            return 50
-        default:
-            return 0
-        }
-    }
-    
-    private var adsContainerOpacity: Double {
-        guard !shouldHideAds else { return 0 }
-        
-        switch viewModel.adsLoadingState {
-        case .loaded:
-            return 1
-        default:
-            return 0
-        }
+
+    /// The screen gives up its bottom safe area to the banner only while the banner is on screen.
+    private var bannerHeight: CGFloat {
+        viewModel.bannerHeight(isVerticallyCompact: verticalSizeClass == .compact)
     }
 }

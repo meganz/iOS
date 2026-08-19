@@ -45,6 +45,10 @@ final public class AdsSlotViewModel: ObservableObject {
         case loaded
         case failed
     }
+
+    private enum Constants {
+        static let bannerHeight: CGFloat = 50
+    }
     
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
@@ -246,6 +250,23 @@ final public class AdsSlotViewModel: ObservableObject {
         
         adsSlotConfig = newAdsSlotConfig
         displayAds = newAdsSlotConfig?.displayAds ?? false
+    }
+    
+    // MARK: Banner layout
+    
+    /// The room the banner takes on screen, zero while there is nothing to show: ads are disabled
+    /// for the account, hidden for the current slot, there is no room for them in landscape, or no
+    /// ad has loaded yet. The views keep the banner at that zero height rather than removing it, so
+    /// that AdMob can load into it.
+    func bannerHeight(isVerticallyCompact: Bool) -> CGFloat {
+        guard isExternalAdsEnabled == true,
+              displayAds,
+              !isVerticallyCompact,
+              adsLoadingState == .loaded else {
+            return 0
+        }
+        
+        return Constants.bannerHeight
     }
     
     /// In the future, AdMob will have multiple unit ids per adSlot

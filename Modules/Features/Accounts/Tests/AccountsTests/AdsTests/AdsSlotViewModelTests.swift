@@ -54,6 +54,54 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsValue)
     }
     
+    // MARK: - Banner layout
+    @MainActor func testBannerHeight_whenAdIsLoadedAndDisplayed_shouldReserveRoomForTheBanner() {
+        let sut = makeSUT()
+        sut.isExternalAdsEnabled = true
+        sut.displayAds = true
+        sut.adsLoadingState = .loaded
+        
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 50)
+    }
+    
+    @MainActor func testBannerHeight_whenVerticallyCompact_shouldCollapse() {
+        let sut = makeSUT()
+        sut.isExternalAdsEnabled = true
+        sut.displayAds = true
+        sut.adsLoadingState = .loaded
+        
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: true), 0)
+    }
+    
+    @MainActor func testBannerHeight_whenNoAdHasLoadedYet_shouldCollapse() {
+        let sut = makeSUT()
+        sut.isExternalAdsEnabled = true
+        sut.displayAds = true
+        
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+        
+        sut.adsLoadingState = .failed
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+    }
+    
+    @MainActor func testBannerHeight_whenAdsAreNotDisplayedOnThisSlot_shouldCollapse() {
+        let sut = makeSUT()
+        sut.isExternalAdsEnabled = true
+        sut.displayAds = false
+        sut.adsLoadingState = .loaded
+        
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+    }
+    
+    @MainActor func testBannerHeight_whenAdsAreDisabledForTheAccount_shouldCollapse() {
+        let sut = makeSUT()
+        sut.isExternalAdsEnabled = false
+        sut.displayAds = true
+        sut.adsLoadingState = .loaded
+        
+        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+    }
+    
     // MARK: - Submit receipt
     @MainActor func testSubmitReceiptResultPublisher_successResult_shouldKeepAdsDisplayStatus() async {
         await assertSubmitReceiptResultPublisher(
