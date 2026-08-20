@@ -60,9 +60,23 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         viewController?.present(activityViewController, animated: true, completion: nil)
     }
     
-    private func saveToPhotos(nodes: [MEGANode]) {
-        let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
-        wrapper.saveToPhotos(nodes: nodes)
+    /// Saved through the link, not the node. A file link's node is a public node
+    /// outside the account tree, so fetching it by handle — which is what the
+    /// by-node overload does — finds nothing and the save fails. Mirrors the
+    /// `.fileLink` branch the photo browser already uses.
+    private func saveToPhotos() {
+        guard let linkUrl = URL(string: link) else { return }
+
+        // `isFolderLink` only decides whether the repository is given the
+        // shared-folder SDK, and the file-link download never consults it: it
+        // fetches the public node from the link through the main SDK. False
+        // because that is what is true here, not because the flag would change
+        // anything on this path.
+        SaveToPhotosCoordinator(
+            messageDisplay: CustomProgressSVGErrorMessageDisplay(),
+            isFolderLink: false
+        )
+        .saveToPhotos(fileLink: FileLinkEntity(linkURL: linkUrl))
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
@@ -71,7 +85,7 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
         case .import: importNode(node)
         case .sendToChat: sendToChat()
         case .shareLink: shareLink(sender: sender as? UIBarButtonItem)
-        case .saveToPhotos: saveToPhotos(nodes: [node])
+        case .saveToPhotos: saveToPhotos()
         default:
             break
         }
