@@ -103,28 +103,7 @@ struct TransferResultRowView: View {
     private var rowContent: some View {
         VStack(spacing: 0) {
             HStack(spacing: TokenSpacing._4) {
-                leadingThumbnail
-
-                VStack(alignment: .leading, spacing: TokenSpacing._2) {
-                    Text(viewModel.state.fileName)
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                        .lineLimit(1)
-
-                    if isCompleted, let location = viewModel.state.location {
-                        Text(location)
-                            .font(.caption)
-                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                    }
-
-                    Text(viewModel.state.subtitle)
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(subtitleColor)
-                        .lineLimit(1)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                summary
 
                 if !isSelecting {
                     trailingAction
@@ -135,8 +114,83 @@ struct TransferResultRowView: View {
             if !isReadOnly {
                 ProgressView(value: viewModel.state.progress)
                     .progressViewStyle(CapsuleProgressViewStyle(tint: progressTint, height: 2))
+                    // Hidden from VoiceOver only — the bar still renders. A
+                    // ProgressView is an element in its own right and announces
+                    // its own "48%", which the row's label already says as its
+                    // middle component, so the row would read the figure twice.
+                    .accessibilityHidden(true)
             }
         }
+    }
+
+    /// Thumbnail and text as one VoiceOver element reading
+    /// `<file name>, <state>, <progress>`, rather than four in a row
+    ///
+    /// Grouped in its own stack rather than at the row level on purpose: the row
+    /// also holds the pause / more button, which has to stay separately reachable.
+    private var summary: some View {
+        HStack(spacing: TokenSpacing._4) {
+            leadingThumbnail
+
+            VStack(alignment: .leading, spacing: TokenSpacing._2) {
+                Text(viewModel.state.fileName)
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .lineLimit(1)
+
+                if isCompleted, let location = viewModel.state.location {
+                    Text(location)
+                        .font(.caption)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
+
+                Text(viewModel.state.subtitle)
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(subtitleColor)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(viewModel.state.accessibilityLabel)
+        .accessibilityValue(viewModel.state.accessibilityValue)
+        .accessibilityAddTraits(summaryTraits)
+        // Select mode is only reachable by tap-and-hold, and VoiceOver keeps that
+        // gesture for itself — an affordance behind a gesture needs a spoken
+        // equivalent
+        .accessibilityActions {
+            if !isSelecting {
+                Button(Strings.Localizable.select) {
+                    onSelectRequested()
+                }
+            }
+        }
+    }
+
+    /// Whether activating the row opens the file: the completed-row tap gesture,
+    /// which is masked off while selecting.
+    private var isOpenable: Bool {
+        isCompleted && !isSelecting
+    }
+
+    private var summaryTraits: AccessibilityTraits {
+        var traits: AccessibilityTraits = []
+        // Completed rows open the file when tapped, so they read as a button and
+        // answer VoiceOver's activate
+        if isOpenable {
+            traits.formUnion(.isButton)
+        }
+        // An in-flight row republishes its percentage on every SDK transfer
+        // callback, unthrottled — only row membership goes through the list's
+        // one-second throttle, progress does not. The trait turns that from push
+        // into pull: VoiceOver stops treating each change as an event to relay
+        // and instead polls the value while the row holds focus.
+        if !isReadOnly {
+            traits.formUnion(.updatesFrequently)
+        }
+        return traits
     }
 
     /// The single entry in the tap-and-hold menu.
@@ -173,11 +227,23 @@ struct TransferResultRowView: View {
                 }
             }
         } label: {
-            if isReadOnly {
-                MEGAAssets.Image.monoEraserMediumThinOutline
-            } else {
-                MEGAAssets.Image.rubbishBinInMenu
-            }
+            // Named on the image, not on the button. A swipe action reaches
+            // VoiceOver as a custom action whose name is taken from the label's
+            // *content*; with a bare image that name is the asset's own — the
+            // rotor read this one out as "rubbishBinInMenu" for example.
+            swipeIcon
+                .accessibilityLabel(isReadOnly
+                    ? Strings.Localizable.clear
+                    : Strings.Localizable.Transfers.Cancellable.cancel)
+        }
+    }
+
+    @ViewBuilder
+    private var swipeIcon: some View {
+        if isReadOnly {
+            MEGAAssets.Image.monoEraserMediumThinOutline
+        } else {
+            MEGAAssets.Image.rubbishBinInMenu
         }
     }
 
@@ -211,6 +277,7 @@ struct TransferResultRowView: View {
             }
         } label: {
             MEGAAssets.Image.rotateCcw
+                .accessibilityLabel(Strings.Localizable.retry)
         }
         .tint(TokenColors.Support.info.swiftUI)
     }
@@ -226,21 +293,34 @@ struct TransferResultRowView: View {
                 MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 24, height: 24)
+                    .expandedHitTarget()
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(Strings.Localizable.more)
         } else {
-            Button {
-                Task { await viewModel.togglePauseResume() }
-            } label: {
-                trailingImage
-                    .foregroundStyle(isPauseResumeDisabled
-                        ? TokenColors.Icon.disabled.swiftUI
-                        : TokenColors.Icon.secondary.swiftUI)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(.plain)
-            .disabled(isPauseResumeDisabled)
+            pauseResumeButton
         }
+    }
+
+    private var pauseResumeButton: some View {
+        Button {
+            Task { await viewModel.togglePauseResume() }
+        } label: {
+            trailingImage
+                .foregroundStyle(isPauseResumeDisabled
+                    ? TokenColors.Icon.disabled.swiftUI
+                    : TokenColors.Icon.secondary.swiftUI)
+                .frame(width: TokenSpacing._7, height: TokenSpacing._7)
+                .expandedHitTarget()
+        }
+        .buttonStyle(.plain)
+        .disabled(isPauseResumeDisabled)
+        // Named for what pressing it does, not for the state the row is in. The
+        // button is icon-only, so without a label VoiceOver falls back to the
+        // asset's own name and reads out "pause-medium-thin-outline".
+        .accessibilityLabel(viewModel.state.status == .paused
+            ? Strings.Localizable.resume
+            : Strings.Localizable.pause)
     }
 
     /// Failed rows show their state label in red; every other status (including
@@ -266,6 +346,21 @@ struct TransferResultRowView: View {
         case .paused: MEGAAssets.Image.monoPlayMediumThinOutline
         case .completed, .failed, .cancelled: MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
         }
+    }
+}
+
+private extension View {
+    /// Grows a control's touch target by (2 x `TokenSpacing._4`)pt — past the 44pt floor the HIG sets —
+    /// without moving a pixel: the hit region is inset by `_4` on every side and
+    /// the matching negative padding takes that inset back out of the layout.
+    ///
+    /// The row's trailing icons are 24pt and sit in the 16pt gutter, directly
+    /// under the list's scroll indicator, so a tap that lands a few points wide
+    /// of a bare icon is read as the start of a scroll instead of a press.
+    func expandedHitTarget() -> some View {
+        padding(TokenSpacing._4)
+            .contentShape(Rectangle())
+            .padding(-TokenSpacing._4)
     }
 }
 

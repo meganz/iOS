@@ -44,6 +44,10 @@ public struct RevampedContentUnavailableView: View {
                 width: iconSize(geo),
                 height: iconSize(geo)
             )
+            // Decorative: the title and description below say everything this
+            // illustration does. Left visible to VoiceOver it contributes no
+            // meaning and reads out the asset's own name.
+            .accessibilityHidden(true)
     }
 
     private var title: some View {

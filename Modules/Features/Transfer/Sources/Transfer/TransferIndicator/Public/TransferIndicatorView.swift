@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import SwiftUI
 
 @MainActor
@@ -39,6 +40,10 @@ private struct InternalTransferIndicatorView: View {
                 Button(action: action) {
                     TransferIndicatorContentView(state: viewModel.state)
                 }
+                // The button's content is a progress ring and a state icon, so
+                // without this VoiceOver falls back to the icon asset's name and
+                // announces "transferIndicator". Named for where it goes.
+                .accessibilityLabel(Strings.Localizable.transfers)
             } else {
                 TransferIndicatorContentView(state: viewModel.state)
             }

@@ -79,5 +79,37 @@ public struct TransferRowState: Sendable, Equatable {
         }
     }
 
+    // MARK: - Accessibility
+
+    /// The row's name and state, read together as `<file name>, <state>`.
+    var accessibilityLabel: String {
+        [fileName, accessibilityStatus].joined(separator: ", ")
+    }
+
+    /// The progress, spoken after the label as "48 percent" — the row reads as
+    /// `<file name>, <state>, <progress>`.
+    ///
+    /// Empty on rows with no progress to report: a queued transfer has made none,
+    /// and a terminal row's percentage is implied by its state.
+    var accessibilityValue: String {
+        switch status {
+        case .active, .paused:
+            "\(Int((progress * 100).rounded()))%"
+        case .queued, .completed, .failed, .cancelled:
+            ""
+        }
+    }
+
+    private var accessibilityStatus: String {
+        switch status {
+        case .active: Strings.Localizable.Transfers.Tab.active
+        case .queued: Strings.Localizable.queued
+        case .paused: Strings.Localizable.paused
+        case .completed: Strings.Localizable.Transfers.Tab.completed
+        case .failed: Strings.Localizable.Transfers.Tab.failed
+        case .cancelled: Strings.Localizable.cancelled
+        }
+    }
+
     private static let byteFormatStyle = ByteCountFormatStyle(style: .file)
 }

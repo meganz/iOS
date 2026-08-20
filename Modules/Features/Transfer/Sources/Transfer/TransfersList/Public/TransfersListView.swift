@@ -26,6 +26,7 @@ public struct TransfersListView: View {
                     subtitle: String?.none,
                     buttonText: banner.actionTitle,
                     state: banner.bannerState,
+                    closeButtonAccessibilityLabel: Strings.Localizable.close,
                     buttonAction: { viewModel.showUpgrade() },
                     closeButtonAction: banner.showsDismiss ? { viewModel.dismissOverQuotaBanner() } : nil
                 )
@@ -41,6 +42,13 @@ public struct TransfersListView: View {
         }
         .task {
             await viewModel.observeTransferQuota()
+        }
+        // Select mode is entered by tap-and-hold on a row, a gesture VoiceOver
+        // takes for itself, and the bar it swaps in sits outside the focused
+        // element — so without this the mode change happens silently.
+        .onChange(of: viewModel.isSelectModeActive) { _, isActive in
+            guard isActive else { return }
+            AccessibilityNotification.Announcement(Strings.Localizable.selectTitle).post()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
@@ -92,6 +100,9 @@ public struct TransfersListView: View {
                                 pauseAllIcon
                                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                             }
+                            .accessibilityLabel(viewModel.isAllPaused
+                                ? Strings.Localizable.resumeAll
+                                : Strings.Localizable.pauseAll)
                         }
                         if viewModel.showsMoreMenu {
                             Menu {
@@ -110,6 +121,7 @@ public struct TransfersListView: View {
                                 MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
                                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                             }
+                            .accessibilityLabel(Strings.Localizable.more)
                         }
                     }
                 }
@@ -302,6 +314,9 @@ public struct TransfersListView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        // The selected tab is marked by weight and an underline, neither of which
+        // VoiceOver can see; the trait is what makes it say "selected".
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 }
 
