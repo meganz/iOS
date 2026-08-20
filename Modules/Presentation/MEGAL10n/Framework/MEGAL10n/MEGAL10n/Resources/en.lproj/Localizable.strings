@@ -5176,3 +5176,11 @@
 "link.download.stopped.button.tryAgain"="Try again";
 /* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
 "link.download.notEnoughStorage.message"="This download needs about %1$@ of free space, and your device has %2$@. Free up some space and try again.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Limited transfer quota";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="Your transfer quota may be running low. As a result, your downloads or streams may be interrupted. Upgrade your plan for more transfer quota. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Upgrade your plan to get more transfer quota. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Manage your plan at %@ for more transfer quota";
