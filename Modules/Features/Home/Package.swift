@@ -55,6 +55,8 @@ let package = Package(
             name: "HomeTests",
             dependencies: [
                 "Home",
+                "MEGAL10n",
+                "MEGASwiftUI",
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                 .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),

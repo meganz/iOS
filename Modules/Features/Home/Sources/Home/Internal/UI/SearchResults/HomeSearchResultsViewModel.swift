@@ -25,7 +25,7 @@ final class HomeSearchResultsViewModel: ObservableObject {
 
         let searchBridge = SearchBridge(
             selection: { [weak self] in
-                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings(), isSearchActive: $0.isSearchActive)
+                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings(), isSearchActive: $0.isSearchActive, isFolder: $0.result.isFolder)
             },
             context: { [weak self] result, button in
                 self?.nodeAction = .init(handle: result.id, sender: button)

@@ -56,6 +56,22 @@ public struct HomeView: View {
         dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
     }
 
+    /// The selection handlers Home is given, each wrapped so that a tap on a file which would need
+    /// downloading while offline reports that instead of opening nothing (IOS-12409)
+    private var searchResultsSelectionHandler: some NodeSelectionHandling {
+        OfflineAwareNodeSelectionHandler(
+            wrapping: dependency.searchResultsSelectionHandler,
+            tapDispatcher: viewModel.offlineNodeTapDispatcher
+        )
+    }
+
+    private var recentsWidgetSelectionHandler: some NodeSelectionHandling {
+        OfflineAwareNodeSelectionHandler(
+            wrapping: dependency.recentActionBucketNodeSelectionHandler,
+            tapDispatcher: viewModel.offlineNodeTapDispatcher
+        )
+    }
+
     public init(
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
@@ -64,7 +80,11 @@ public struct HomeView: View {
         popToRootPublisher: AnyPublisher<Void, Never>
     ) {
         self.dependency = dependency
-        _viewModel = StateObject(wrappedValue: HomeViewModel(homeDeepLink: homeDeepLink, featureFlagProvider: dependency.featureFlagProvider))
+        _viewModel = StateObject(wrappedValue: HomeViewModel(
+            homeDeepLink: homeDeepLink,
+            featureFlagProvider: dependency.featureFlagProvider,
+            nodeUseCase: dependency.nodeUseCase
+        ))
         _navigator = StateObject(wrappedValue: HomeNavigation(tabBarHidden: tabBarHidden))
         self.quickAccessRoutePublisher = quickAccessRoutePublisher
         self.popToRootPublisher = popToRootPublisher
@@ -78,6 +98,11 @@ public struct HomeView: View {
             .tint(TokenColors.Icon.primary.swiftUI)
         .environmentObject(navigator)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .task {
+            viewModel.offlineNodeTapDispatcher.showFileUnavailableSnackBar = { [navigator] in
+                navigator.showSnackBar(HomeOfflineNodeTapGate.fileUnavailableOfflineSnackBar)
+            }
+        }
         .task { await viewModel.monitorNetworkConnection() }
         .task { await viewModel.monitorSearchBarPressed() }
         .task { await viewModel.observeDeepLinkSearch() }
@@ -224,6 +249,7 @@ public struct HomeView: View {
                         sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
+                        makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
                         moreActionsPresenter: dependency.favouritesMoreActionsPresenter,
                         selectActionPublisher: dependency.favouritesSelectActionPublisher,
                         transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
@@ -252,6 +278,7 @@ public struct HomeView: View {
             recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
             downloadedNodesListener: dependency.downloadedNodesListener,
             selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+            makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
             locationHandler: dependency.recentActionBucketLocationHandler,
             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
@@ -290,6 +317,7 @@ public struct HomeView: View {
                 resultMapper: dependency.recentActionBucketItemResultMapper,
                 downloadedNodesListener: dependency.downloadedNodesListener,
                 selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+                makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
                 locationHandler: dependency.recentActionBucketLocationHandler,
                 nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                 moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
@@ -345,7 +373,7 @@ public struct HomeView: View {
                             userNameProvider: dependency.userNameProvider,
                             recentActionBucketItemResultMapper: dependency.recentActionBucketItemResultMapper,
                             downloadedNodesListener: dependency.downloadedNodesListener,
-                            selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
+                            selectionHandler: recentsWidgetSelectionHandler,
                             locationHandler: dependency.recentActionBucketLocationHandler,
                             nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                             moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
@@ -373,7 +401,7 @@ public struct HomeView: View {
             dependency: HomeSearchResultsView.Dependency(
                 searchConfig: SearchConfig.homeSearchConfig,
                 resultsProvider: dependency.searchResultsProvider,
-                searchResultsSelectionHandler: dependency.searchResultsSelectionHandler,
+                searchResultsSelectionHandler: searchResultsSelectionHandler,
                 searchResultNodeActionHandler: dependency.searchResultNodeActionHandler,
                 tracker: dependency.tracker
             ),

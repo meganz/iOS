@@ -51,7 +51,7 @@ package final class FavouritesViewModel: ObservableObject {
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge(
             selection: { [weak self] in
-                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings())
+                self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings(), isFolder: $0.result.isFolder)
             },
             context: { [weak self] result, button in
                 self?.nodeAction = .init(handle: result.id, sender: button)

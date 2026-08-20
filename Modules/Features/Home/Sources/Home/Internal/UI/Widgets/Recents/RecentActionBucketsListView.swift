@@ -15,6 +15,7 @@ struct RecentActionBucketsListView: View {
         let recentActionBucketItemResultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
+        let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
         let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
@@ -36,6 +37,7 @@ struct RecentActionBucketsListView: View {
 
     private let dependency: Dependency
     @StateObject private var viewModel = RecentActionBucketsListViewModel()
+    @StateObject private var offlineNodeTapGate: HomeOfflineNodeTapGate
     @EnvironmentObject var navigator: HomeNavigation
     @State private var carouselBucket: RecentActionBucketEntity?
     @State private var carouselSectionTitle: String?
@@ -43,6 +45,9 @@ struct RecentActionBucketsListView: View {
     
     init(dependency: Dependency) {
         self.dependency = dependency
+        _offlineNodeTapGate = StateObject(
+            wrappedValue: HomeOfflineNodeTapGate(dispatcher: dependency.makeOfflineNodeTapDispatcher())
+        )
     }
     
     var body: some View {
@@ -78,6 +83,11 @@ struct RecentActionBucketsListView: View {
                 }
             }
             .sheet(isPresented: carouselSheetBinding, onDismiss: { performDeferredCarouselAction() }, content: { carouselSheetContent })
+            .snackBar($offlineNodeTapGate.snackBar)
+    }
+
+    private var selectionHandler: some NodeSelectionHandling {
+        offlineNodeTapGate.handler(wrapping: dependency.selectionHandler)
     }
     
     @ViewBuilder
@@ -143,7 +153,7 @@ struct RecentActionBucketsListView: View {
                                     case .multipleMedia:
                                         navigator.append(Route.multipleMedia(section.title, bucket))
                                     case let .singleFile(node), let .singleMedia(node):
-                                        dependency.selectionHandler.handle(selection: NodeSelection(handle: node.handle, siblings: []))
+                                        selectionHandler.handle(selection: NodeSelection(handle: node.handle, siblings: []))
                                     }
                                 },
                                 bucketCarouselPresenter: makeCarouselPresenter(sectionTitle: section.title)
@@ -218,7 +228,7 @@ struct RecentActionBucketsListView: View {
         carouselSectionTitle = nil
         switch action {
         case let .openNode(handle, siblings):
-            dependency.selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: siblings))
+            selectionHandler.handle(selection: NodeSelection(handle: handle, siblings: siblings))
         case let .showInLocation(handle):
             dependency.locationHandler.showInLocation(of: handle)
         case let .seeAll(bucket):

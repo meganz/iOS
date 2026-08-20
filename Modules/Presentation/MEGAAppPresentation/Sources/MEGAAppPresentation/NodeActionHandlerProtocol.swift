@@ -25,11 +25,13 @@ public struct NodeSelection {
     public let handle: HandleEntity
     public let siblings: [HandleEntity]
     public let isSearchActive: Bool
+    public let isFolder: Bool
 
-    public init(handle: HandleEntity, siblings: [HandleEntity], isSearchActive: Bool = false) {
+    public init(handle: HandleEntity, siblings: [HandleEntity], isSearchActive: Bool = false, isFolder: Bool = false) {
         self.handle = handle
         self.siblings = siblings
         self.isSearchActive = isSearchActive
+        self.isFolder = isFolder
     }
 }
 

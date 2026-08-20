@@ -35,7 +35,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
 
     package lazy var searchResultsContainerViewModel: SearchResultsContainerViewModel = {
         let searchBridge = SearchBridge { [weak self] in
-            self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings())
+            self?.selection = NodeSelection(handle: $0.result.id, siblings: $0.siblings(), isFolder: $0.result.isFolder)
         } context: { [weak self] result, button in
             self?.nodeAction = NodeAction(handle: result.id, sender: button)
         } chipTapped: { _, _ in }

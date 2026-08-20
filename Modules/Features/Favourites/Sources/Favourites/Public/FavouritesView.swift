@@ -19,6 +19,7 @@ public struct FavouritesView: View {
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let nodesActionHandler: any NodesActionHandling
         let nodeSelectionHandler: any NodeSelectionHandling
+        let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let selectActionPublisher: AnyPublisher<HandleEntity, Never>
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
@@ -32,6 +33,7 @@ public struct FavouritesView: View {
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
             nodesActionHandler: some NodesActionHandling,
             nodeSelectionHandler: some NodeSelectionHandling,
+            makeOfflineNodeTapDispatcher: @escaping () -> OfflineAwareNodeTapDispatcher,
             moreActionsPresenter: some MoreNodeActionsPresenting,
             selectActionPublisher: AnyPublisher<HandleEntity, Never>,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
@@ -44,6 +46,7 @@ public struct FavouritesView: View {
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.nodesActionHandler = nodesActionHandler
             self.nodeSelectionHandler = nodeSelectionHandler
+            self.makeOfflineNodeTapDispatcher = makeOfflineNodeTapDispatcher
             self.moreActionsPresenter = moreActionsPresenter
             self.selectActionPublisher = selectActionPublisher
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
@@ -51,6 +54,8 @@ public struct FavouritesView: View {
     }
 
     @StateObject private var viewModel: FavouritesViewModel
+    @State private var offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher
+    @State private var snackBar: SnackBar?
     @Binding private var tabBarHidden: Bool
     private let dependency: Dependency
     @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
@@ -76,7 +81,15 @@ public struct FavouritesView: View {
             )
         )
         self.dependency = dependency
+        _offlineNodeTapDispatcher = State(wrappedValue: dependency.makeOfflineNodeTapDispatcher())
         _tabBarHidden = tabBarHidden
+    }
+
+    private var offlineAwareSelectionHandler: some NodeSelectionHandling {
+        OfflineAwareNodeSelectionHandler(
+            wrapping: dependency.nodeSelectionHandler,
+            tapDispatcher: offlineNodeTapDispatcher
+        )
     }
 
     public var body: some View {
@@ -93,6 +106,12 @@ public struct FavouritesView: View {
             SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
         }
         .background(TokenColors.Background.page.swiftUI)
+        .snackBar($snackBar)
+        .task {
+            offlineNodeTapDispatcher.showFileUnavailableSnackBar = {
+                snackBar = SnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
+            }
+        }
         .navigationTitle(viewModel.editMode.isEditing ? selectionTitle : Strings.Localizable.Home.Favourites.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -142,7 +161,7 @@ public struct FavouritesView: View {
             dependency.nodesActionHandler.handle(action: action)
         }
         .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
-            dependency.nodeSelectionHandler.handle(selection: selection)
+            offlineAwareSelectionHandler.handle(selection: selection)
         }
         .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
             dependency.nodesActionHandler.handle(action: action)

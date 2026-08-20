@@ -14,6 +14,7 @@ struct RecentActionBucketItemsView: View {
         let resultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
+        let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
         let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
@@ -21,12 +22,16 @@ struct RecentActionBucketItemsView: View {
     }
 
     @StateObject private var viewModel: RecentActionBucketItemsViewModel
+    @StateObject private var offlineNodeTapGate: HomeOfflineNodeTapGate
     private let dependency: Dependency
     @EnvironmentObject var navigator: HomeNavigation
     @EnvironmentObject var miniPlayerVisibility: MiniPlayerVisibility
     
     init(dependency: Dependency) {
         self.dependency = dependency
+        _offlineNodeTapGate = StateObject(
+            wrappedValue: HomeOfflineNodeTapGate(dispatcher: dependency.makeOfflineNodeTapDispatcher())
+        )
         _viewModel = StateObject(
             wrappedValue: RecentActionBucketItemsViewModel(
                 dependency: RecentActionBucketItemsViewModel.Dependency(
@@ -74,7 +79,7 @@ struct RecentActionBucketItemsView: View {
             .miniPlayerAware()
             .environment(\.editMode, $viewModel.editMode)
             .onReceive(viewModel.$selection.compactMap { $0 }) { selection in
-                dependency.selectionHandler.handle(selection: selection)
+                selectionHandler.handle(selection: selection)
             }
             .onReceive(viewModel.$nodeAction.compactMap { $0 }) { action in
                 dependency.nodeActionHandler.handle(action: action)
@@ -106,6 +111,11 @@ struct RecentActionBucketItemsView: View {
                     .tabBarAndMiniPlayerAware()
             }
             .pageBackground()
+            .snackBar($offlineNodeTapGate.snackBar)
+    }
+
+    private var selectionHandler: some NodeSelectionHandling {
+        offlineNodeTapGate.handler(wrapping: dependency.selectionHandler)
     }
 
     @ViewBuilder

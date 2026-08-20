@@ -15,6 +15,10 @@ final class HomeViewModel: ObservableObject {
 
     let isNewOfflineModeEnabled: Bool
 
+    let offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher
+
+    private let offlineFileOpenGuard: any OfflineFileOpenGuarding
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let homeDeepLink: HomeDeepLink
     private let networkMonitoringUseCase: any NetworkMonitorUseCaseProtocol
     private let widgetDisplayUseCase: any HomeWidgetDisplayUseCaseProtocol
@@ -23,14 +27,23 @@ final class HomeViewModel: ObservableObject {
 
     convenience init(
         homeDeepLink: HomeDeepLink,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        nodeUseCase: some NodeUseCaseProtocol
     ) {
+        let networkMonitoringUseCase = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         self.init(
             homeDeepLink: homeDeepLink,
-            networkMonitoringUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            networkMonitoringUseCase: networkMonitoringUseCase,
             widgetDisplayUseCase: HomeWidgetDisplayUseCase(),
             tracker: DIContainer.tracker,
-            featureFlagProvider: featureFlagProvider
+            featureFlagProvider: featureFlagProvider,
+            nodeUseCase: nodeUseCase,
+            offlineFileOpenGuard: OfflineFileOpenGuard(
+                isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled,
+                networkMonitorUseCase: networkMonitoringUseCase,
+                nodeUseCase: nodeUseCase,
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            )
         )
     }
 
@@ -39,7 +52,9 @@ final class HomeViewModel: ObservableObject {
         networkMonitoringUseCase: some NetworkMonitorUseCaseProtocol,
         widgetDisplayUseCase: some HomeWidgetDisplayUseCaseProtocol,
         tracker: some AnalyticsTracking,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
+        offlineFileOpenGuard: some OfflineFileOpenGuarding
     ) {
         self.homeDeepLink = homeDeepLink
         self.networkMonitoringUseCase = networkMonitoringUseCase
@@ -48,7 +63,20 @@ final class HomeViewModel: ObservableObject {
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
         self.isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
+        self.offlineFileOpenGuard = offlineFileOpenGuard
+        self.nodeUseCase = nodeUseCase
+        self.offlineNodeTapDispatcher = OfflineAwareNodeTapDispatcher(
+            offlineFileOpenGuard: offlineFileOpenGuard,
+            nodeUseCase: nodeUseCase
+        )
         isNetworkConnected = networkMonitoringUseCase.isConnected()
+    }
+
+    func makeOfflineNodeTapDispatcher() -> OfflineAwareNodeTapDispatcher {
+        OfflineAwareNodeTapDispatcher(
+            offlineFileOpenGuard: offlineFileOpenGuard,
+            nodeUseCase: nodeUseCase
+        )
     }
 
     func reloadWidgets() {
