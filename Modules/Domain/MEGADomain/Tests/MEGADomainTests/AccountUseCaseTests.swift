@@ -159,6 +159,31 @@ final class AccountUseCaseTests: XCTestCase {
         }
     }
     
+    func testGetCurrentAccountDetails_whenCached_shouldReturnCachedDetailsWithoutRefreshing() async throws {
+        let cachedAccountDetails = AccountDetailsEntity.random
+        let sut = makeSUT(currentAccountDetails: cachedAccountDetails, accountDetailsResult: .failure(.generic))
+        
+        let accountDetails = try await sut.getCurrentAccountDetails()
+        
+        XCTAssertEqual(accountDetails, cachedAccountDetails)
+    }
+    
+    func testGetCurrentAccountDetails_whenNotCached_shouldReturnRefreshedDetails() async throws {
+        let refreshedAccountDetails = AccountDetailsEntity.random
+        let sut = makeSUT(currentAccountDetails: nil, accountDetailsResult: .success(refreshedAccountDetails))
+        
+        let accountDetails = try await sut.getCurrentAccountDetails()
+        
+        XCTAssertEqual(accountDetails, refreshedAccountDetails)
+    }
+    
+    func testGetCurrentAccountDetails_whenNotCachedAndRefreshFails_shouldThrowGenericError() async {
+        let sut = makeSUT(currentAccountDetails: nil, accountDetailsResult: .failure(.generic))
+        await XCTAsyncAssertThrowsError(try await sut.getCurrentAccountDetails()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
+        }
+    }
+    
     func testIsMonitoringRefreshAccount_shouldReturnUpdatedStatus() {
         [true, false]
             .forEach { isMonitoring in

@@ -28,11 +28,8 @@ struct SubscriptionDetailsLoadingViewModel {
     }
 
     private func loadAccountDetails() async -> AccountDetailsEntity? {
-        if let details = accountUseCase.currentAccountDetails {
-            return details
-        }
         do {
-            return try await accountUseCase.refreshCurrentAccountDetails()
+            return try await accountUseCase.getCurrentAccountDetails()
         } catch {
             MEGALogError("[\(type(of: self))]: failed to load account details error: \(error.localizedDescription)")
         }

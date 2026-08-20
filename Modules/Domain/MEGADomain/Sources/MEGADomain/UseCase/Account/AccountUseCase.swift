@@ -83,6 +83,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt64
     func upgradeSecurity() async throws -> Bool
+    func getCurrentAccountDetails() async throws -> AccountDetailsEntity
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity
     var monitorRefreshAccount: AnyPublisher<Bool, Never> { get }
@@ -116,6 +117,13 @@ public protocol AccountUseCaseProtocol: Sendable {
 extension AccountUseCaseProtocol {
     public var isFreeTierUser: Bool {
         currentAccountDetails?.proLevel == .free
+    }
+
+    public func getCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        if let currentAccountDetails {
+            return currentAccountDetails
+        }
+        return try await refreshCurrentAccountDetails()
     }
 }
 
