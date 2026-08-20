@@ -3,6 +3,13 @@ import MEGAAppSDKRepo
 import MEGADomain
 
 extension MEGANode {
+    /// Whether the node grants the actions the owner has. The SDK reports every node under the Vault as
+    /// read-only (except the Password Manager subtree), so backups have to be let in explicitly to keep
+    /// their link, sharing and export actions. Write actions stay gated on `isBackupNode` separately.
+    @objc var mnz_hasOwnerLevelAccess: Bool {
+        MEGASdk.shared.accessLevel(for: self) == .accessOwner || BackupsOCWrapper().isBackupNode(self)
+    }
+    
     @MainActor
     @objc func pushCloudDriveForNode(_ node: MEGANode, displayMode: DisplayMode, navigationController: UINavigationController) {
         let factory = CloudDriveViewControllerFactory.make(
@@ -23,18 +30,6 @@ extension MEGANode {
     @objc func navigateToParentAndPresent() {
         guard let mainTBC = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
 
-        if MEGASdk.shared.accessLevel(for: self) != .accessOwner {
-            navigateToSharedItems(in: mainTBC)
-        } else {
-            mainTBC.selectedIndex = TabManager.driveTabIndex()
-        }
-
-        guard let navigationController = mainTBC.selectedViewController as? UINavigationController else {
-            return MEGALogDebug("Trying to navigate to parent of node \(String(describing: self.name)) but selectedViewController is not UINavigationController")
-        }
-
-        navigationController.popToRootViewController(animated: false)
-
         let parentTreeArray = mnz_parentTreeArray() as? [MEGANode] ?? []
         var backupsRootNode: MEGANode? = BackupRootNodeAccess.shared.isTargetNode(for: self) ? self : nil
 
@@ -46,6 +41,20 @@ extension MEGANode {
         }
 
         let isBackupNode = backupsRootNode != nil
+
+        // Backups are presented in the Cloud Drive tab, and have to be asked for explicitly: the SDK
+        // reports every node under the Vault as read-only, so they no longer come in as owner.
+        if isBackupNode || MEGASdk.shared.accessLevel(for: self) == .accessOwner {
+            mainTBC.selectedIndex = TabManager.driveTabIndex()
+        } else {
+            navigateToSharedItems(in: mainTBC)
+        }
+
+        guard let navigationController = mainTBC.selectedViewController as? UINavigationController else {
+            return MEGALogDebug("Trying to navigate to parent of node \(String(describing: self.name)) but selectedViewController is not UINavigationController")
+        }
+
+        navigationController.popToRootViewController(animated: false)
 
         for node in parentTreeArray where node.handle != backupsRootNode?.parentHandle {
             pushCloudDriveForNode(

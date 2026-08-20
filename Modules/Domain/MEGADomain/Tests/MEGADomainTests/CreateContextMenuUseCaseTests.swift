@@ -164,6 +164,37 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
+
+    // The SDK reports nodes under the Vault as read-only, so a backups child arrives with read access
+    // and still has to keep the quick actions its owner has, rename aside.
+    func testCreateContextMenuBackupsChildWithReadAccess_Display() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        accessLevel: .read,
+                                                                        isAFolder: true,
+                                                                        isBackupsChild: true))
+
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+
+        menuActionsArray = [.quickActions(actionType: .info),
+                            .quickActions(actionType: .download),
+                            .quickActions(actionType: .shareLink),
+                            .quickActions(actionType: .shareFolder),
+                            .quickActions(actionType: .copy),
+                            .display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
+
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
     
     func testCreateContextMenu_displayHidden_returnsCorrectMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),

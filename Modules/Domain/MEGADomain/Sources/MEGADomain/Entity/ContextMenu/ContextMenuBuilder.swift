@@ -529,7 +529,7 @@ public final class ContextMenuBuilder {
     private func makeQuickActions() -> CMEntity {
         var quickActions: [CMElement] = [info, download]
         
-        if accessLevel == .owner {
+        if accessLevel == .owner || isBackupsChild {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
             quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
             if !isBackupsChild {

@@ -40,7 +40,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
         shareButton.setTitleColor(TokenColors.Text.inverse, for: UIControl.State.normal)
     }
     
-    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
+    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, hasOwnerLevelAccess: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
         nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
         : !node.isNodeKeyDecrypted() ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1) : node.name
 
@@ -53,8 +53,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             playIconImage.isHidden = node.name?.fileExtensionGroup.isVideo != true
         } else if node.type == .folder {
             previewImage.image = NodeAssetsManager.shared.icon(for: node)
-            let nodeAccess = MEGASdk.shared.accessLevel(for: node)
-            shareStackView.isHidden = isNodeInRubbish || (nodeAccess != .accessOwner)
+            shareStackView.isHidden = isNodeInRubbish || !hasOwnerLevelAccess
             shareButton.setTitle(Strings.Localizable.General.share.localizedUppercase, for: .normal)
             let folderSize = folderInfo?.currentSize ?? 0
             let versionSize = folderInfo?.versionsSize ?? 0

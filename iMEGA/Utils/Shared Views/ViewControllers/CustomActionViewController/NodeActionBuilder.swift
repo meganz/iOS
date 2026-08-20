@@ -309,6 +309,10 @@ final class NodeActionBuilder {
     
     // MARK: - Private methods
     
+    private var effectiveAccessLevel: MEGAShareType {
+        (isBackupNode || displayMode == .backup) && accessLevel == .accessRead ? .accessOwner : accessLevel
+    }
+
     private func shouldAddRestoreAction() -> Bool {
         guard isRestorable else {
             return false
@@ -378,26 +382,26 @@ final class NodeActionBuilder {
     private func textEditorActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if !isBackupNode && accessLevel != .accessRead && accessLevel != .accessUnknown {
+        if !isBackupNode && effectiveAccessLevel != .accessRead && effectiveAccessLevel != .accessUnknown {
             nodeActions.append(.textEditorAction())
         }
         nodeActions.append(.downloadAction())
-        if accessLevel != .accessOwner {
+        if effectiveAccessLevel != .accessOwner {
             nodeActions.append(.importAction())
         }
-        if accessLevel == .accessOwner {
+        if effectiveAccessLevel == .accessOwner {
             nodeActions.append(contentsOf: exportedNodeActions())
         }
         
         nodeActions.append(.exportFileAction())
         nodeActions.append(.sendToChatAction())
         
-        if accessLevel == .accessOwner,
+        if effectiveAccessLevel == .accessOwner,
             let hiddenStateAction = hiddenStateAction() {
             nodeActions.append(hiddenStateAction)
         }
 
-        if (accessLevel == .accessOwner || accessLevel == .accessFull) && !isLink {
+        if (effectiveAccessLevel == .accessOwner || effectiveAccessLevel == .accessFull) && !isLink && !isBackupNode {
             nodeActions.append(.moveToRubbishBinAction())
         }
 
@@ -415,10 +419,10 @@ final class NodeActionBuilder {
             nodeActions.append(.importAction())
         }
         nodeActions.append(.downloadAction())
-        if accessLevel == .accessOwner || isLink {
+        if effectiveAccessLevel == .accessOwner || isLink {
             nodeActions.append(contentsOf: exportedNodeActions())
         }
-        if accessLevel == .accessOwner {
+        if effectiveAccessLevel == .accessOwner {
             nodeActions.append(.exportFileAction())
         }
         nodeActions.append(.sendToChatAction())
@@ -430,12 +434,12 @@ final class NodeActionBuilder {
                 nodeActions.append(.pdfPageViewAction())
             }
         }
-        if accessLevel == .accessOwner,
+        if effectiveAccessLevel == .accessOwner,
            let hiddenStateAction = hiddenStateAction() {
             nodeActions.append(hiddenStateAction)
         }
 
-        if (accessLevel == .accessOwner || accessLevel == .accessFull) && !isLink {
+        if (effectiveAccessLevel == .accessOwner || effectiveAccessLevel == .accessFull) && !isLink && !isBackupNode {
             nodeActions.append(.moveToRubbishBinAction())
         }
 
@@ -450,7 +454,7 @@ final class NodeActionBuilder {
             nodeActions.append(.saveToPhotosAction())
         }
         
-        if accessLevel != .accessOwner {
+        if effectiveAccessLevel != .accessOwner {
             nodeActions.append(.importAction())
         }
         return nodeActions
@@ -515,7 +519,7 @@ final class NodeActionBuilder {
         
         var nodeActions: [NodeAction] = []
 
-        if accessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) && !isBackupNode {
+        if effectiveAccessLevel == .accessReadWrite && isEditableTextFile && (displayMode == .cloudDrive || displayMode == .recents || displayMode == .sharedItem) && !isBackupNode {
             nodeActions.append(.textEditorAction())
         }
         
@@ -541,7 +545,7 @@ final class NodeActionBuilder {
             if isIncomingShareChildView {
                 nodeActions.append(.leaveSharingAction())
             }
-        } else if accessLevel == .accessReadWrite && isChildVersion {
+        } else if effectiveAccessLevel == .accessReadWrite && isChildVersion {
             nodeActions.append(.revertVersionAction())
         }
         
@@ -659,7 +663,7 @@ final class NodeActionBuilder {
             return videoPlaylistContentActions()
         default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents, .homeSearch
             var actions = [NodeAction]()
-            switch accessLevel {
+            switch effectiveAccessLevel {
             case .accessUnknown:
                 actions = unknownAccessLevelNodeActions()
             case .accessRead, .accessReadWrite:
@@ -995,7 +999,7 @@ final class NodeActionBuilder {
     private func exportedNodeActions() -> [NodeAction] {
         if isExported {
             return [.manageLinkAction(), .removeLinkAction()]
-        } else if accessLevel == .accessOwner {
+        } else if effectiveAccessLevel == .accessOwner {
             return [.shareLinkAction()]
         } else {
             return []

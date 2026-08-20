@@ -35,7 +35,13 @@ enum NodeInfoAction: ActionType {
 
     var shouldShowNodeTags: Bool {
         !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
-        && !backupUseCase.isBackupNode(node.toNodeEntity())
+        && !isBackupNode
+    }
+
+    /// The SDK reports nodes under the Vault as read-only, so the owner checks that drive this screen
+    /// need to let backups through explicitly to keep showing their link, sharing and location.
+    var isBackupNode: Bool {
+        backupUseCase.isBackupNode(node.toNodeEntity())
     }
 
     init(
@@ -75,7 +81,8 @@ enum NodeInfoAction: ActionType {
         guard
             nodeInfoLocationViewModel == nil,
             node.name?.fileExtensionGroup.isVisualMedia ?? false,
-            await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node.handle) == .owner else {
+            await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node.handle) == .owner || isBackupNode
+        else {
             return
         }
         
