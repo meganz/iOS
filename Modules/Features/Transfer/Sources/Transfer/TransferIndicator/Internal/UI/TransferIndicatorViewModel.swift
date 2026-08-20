@@ -11,6 +11,16 @@ final class TransferIndicatorViewModel: ObservableObject {
     @Published public private(set) var state: TransferIndicatorViewState = .initial
     @Published public private(set) var isVisible = false
 
+    /// Visibility changes only. `@Published` sends on every assignment rather than on a new value,
+    /// and `apply(entity:)` re-asserts `isVisible` for each progress update — up to ten a second
+    /// during a transfer. Subscribers that act on a change, such as the UIKit navigation bar item
+    /// that rebuilds itself, must not see those.
+    var isVisiblePublisher: AnyPublisher<Bool, Never> {
+        $isVisible
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+
     private let useCase: any TransferIndicatorUseCaseProtocol
     private let viewStateMapper: any TransferIndicatorViewStateMapping
     private let throttle: StatePublisherThrottle

@@ -52,7 +52,7 @@ public enum SharedTransferIndicator {
     /// Returns `nil` when not yet configured — callers should skip subscription.
     public static var isVisiblePublisher: AnyPublisher<Bool, Never>? {
         guard isConfigured else { return nil }
-        return viewModel.$isVisible.eraseToAnyPublisher()
+        return viewModel.isVisiblePublisher
     }
 
     /// Configures the shared transfer indicator, injecting only the pieces that

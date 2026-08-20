@@ -74,6 +74,25 @@ struct TransferIndicatorViewModelTests {
         #expect(sut.state == .error)
     }
 
+    /// A transfer in progress delivers a new progress up to ten times a second. Re-publishing
+    /// visibility alongside each of those made the UIKit navigation bar item rebuild itself just as
+    /// often, which read as a flashing button.
+    @Test
+    func monitorStatus_whenOnlyProgressChanges_doesNotRepublishVisibility() {
+        let subject = CurrentValueSubject<TransferIndicatorEntity, Never>(.inProgress(progress: 0.1))
+        let sut = makeSUT(initialState: .inProgress(progress: 0.1), updates: subject.eraseToAnyPublisher())
+        let recorder = Recorder()
+        let cancellable = sut.isVisiblePublisher.sink { [recorder] in recorder.record($0) }
+
+        sut.startMonitoring()
+        subject.send(.inProgress(progress: 0.2))
+        subject.send(.inProgress(progress: 0.3))
+        subject.send(.inProgress(progress: 0.4))
+        cancellable.cancel()
+
+        #expect(recorder.values == [false, true], "the initial value, then becoming visible once")
+    }
+
     private func makeSUT(
         initialState: TransferIndicatorEntity,
         updates: AnyPublisher<TransferIndicatorEntity, Never> = Empty().eraseToAnyPublisher()
@@ -85,6 +104,15 @@ struct TransferIndicatorViewModelTests {
             ),
             throttle: { $0 }
         )
+    }
+}
+
+/// Collects the published visibility so the closure can stay free of the test's actor isolation.
+private final class Recorder: @unchecked Sendable {
+    private(set) var values: [Bool] = []
+
+    func record(_ value: Bool) {
+        values.append(value)
     }
 }
 
