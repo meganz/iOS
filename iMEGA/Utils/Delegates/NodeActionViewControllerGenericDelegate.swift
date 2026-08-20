@@ -267,9 +267,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         }
     }
     
+    /// Forwards the folder-link context the way `download` already does. The
+    /// wrapper has taken an `isFolderLink` flag since it was introduced, but this
+    /// call never passed it, so saving a folder-link node always downloaded
+    /// through the main SDK and failed.
     private func saveToPhotos(_ nodes: [MEGANode]) {
         let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
-        wrapper.saveToPhotos(nodes: nodes)
+        wrapper.saveToPhotos(nodes: nodes, isFolderLink: isNodeFromFolderLink)
     }
     
     private func download(_ node: MEGANode, isNodeFromFolderLink: Bool, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {

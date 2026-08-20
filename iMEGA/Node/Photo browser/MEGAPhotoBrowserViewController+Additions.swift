@@ -111,10 +111,7 @@ extension MEGAPhotoBrowserViewController {
                         return
                     }
 
-                    let delegate = NodeActionViewControllerGenericDelegate(
-                        viewController: playerVC,
-                        moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: playerVC)
-                    )
+                    let delegate = self.playerNodeActionDelegate(presenter: playerVC)
 
                     let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
                     let controller = NodeActionViewController(
@@ -217,6 +214,18 @@ extension MEGAPhotoBrowserViewController {
         DevicePermissionsHandler.makeHandler()
     }
     
+    /// The node-action delegate for the revamped player's `…` sheet
+    private func playerNodeActionDelegate(presenter: UIViewController) -> any NodeActionViewControllerDelegate {
+        if displayMode == .fileLink {
+            return FileLinkActionViewControllerDelegate(link: publicLink, viewController: presenter)
+        }
+        return NodeActionViewControllerGenericDelegate(
+            viewController: presenter,
+            isNodeFromFolderLink: displayMode == .nodeInsideFolderLink,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: presenter)
+        )
+    }
+
     @objc func saveToPhotos(node: MEGANode) {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         switch displayMode {
