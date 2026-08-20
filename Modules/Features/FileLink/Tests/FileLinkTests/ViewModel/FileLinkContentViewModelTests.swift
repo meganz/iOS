@@ -222,6 +222,52 @@ struct FileLinkContentViewModelTests {
         #expect(actionHandler.handledActions.isEmpty)
     }
 
+    /// The anchored buttons stay under the finger while the action they started runs, so a double tap
+    /// would otherwise import the file, or push onboarding, twice over.
+    @Test("a second ask for an action already under way is dropped")
+    func handleMoreOption_whileTheSameActionIsRunning_runsOnce() async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
+        actionHandler.whileHandling = { await sut.handle(moreOption: .saveToMEGA) }
+
+        await sut.handle(moreOption: .saveToMEGA)
+
+        #expect(actionHandler.handledActions == [.init(action: .saveToMEGA, nodeHandle: 42)])
+    }
+
+    @Test("the same action can be asked for again once the first has finished")
+    func handleMoreOption_afterTheActionFinished_runsAgain() async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
+
+        await sut.handle(moreOption: .saveToMEGA)
+        await sut.handle(moreOption: .saveToMEGA)
+
+        #expect(
+            actionHandler.handledActions
+                == [.init(action: .saveToMEGA, nodeHandle: 42), .init(action: .saveToMEGA, nodeHandle: 42)]
+        )
+    }
+
+    /// Only a repeat of the same action is turned away: a download the user is waiting on must not keep
+    /// them from saving the file to their account while it runs.
+    @Test("another action started while one is running still gets through")
+    func handleMoreOption_whileAnotherActionIsRunning_runsBoth() async {
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
+        actionHandler.whileHandling = {
+            actionHandler.whileHandling = nil
+            await sut.handle(moreOption: .saveToMEGA)
+        }
+
+        await sut.handle(moreOption: .download)
+
+        #expect(
+            actionHandler.handledActions
+                == [.init(action: .download, nodeHandle: 42), .init(action: .saveToMEGA, nodeHandle: 42)]
+        )
+    }
+
     @Test("the link handed in is the one the Share link row shares")
     func shareLink_isTheLinkHandedIn() {
         let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), shareLink: "https://mega.nz/file/abc#key")

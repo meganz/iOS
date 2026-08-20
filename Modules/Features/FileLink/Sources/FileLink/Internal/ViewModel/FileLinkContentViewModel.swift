@@ -34,6 +34,9 @@ package final class FileLinkContentViewModel: ObservableObject {
     /// Not published: nothing on screen changes while a file is being opened, this only keeps a second
     /// ask from getting through. See `openFile()`.
     private var isOpeningFile = false
+    /// The options whose action has been started and has not come back yet. Not published for the same
+    /// reason. See `handle(moreOption:)`.
+    private var actionsInFlight: Set<FileLinkMoreOption> = []
 
     package init(
         node: NodeEntity,
@@ -75,10 +78,13 @@ package final class FileLinkContentViewModel: ObservableObject {
         await fileNodeOpener.openNode(handle: node.handle)
     }
 
-    /// Runs the row picked in the more options sheet. Share link is not one of them: the sheet hands that
-    /// row to `ShareLink`, which shares `shareLink` without going through here.
+    /// Runs an option, picked either in the more options sheet or from one of the anchored buttons. Share
+    /// link is not one of them: the sheet hands that row to `ShareLink`, which shares `shareLink` without
+    /// going through here.
     package func handle(moreOption: FileLinkMoreOption) async {
         guard let action = moreOption.action(shareLink: shareLink) else { return }
+        guard actionsInFlight.insert(moreOption).inserted else { return }
+        defer { actionsInFlight.remove(moreOption) }
 
         await actionHandler.handle(action, nodeHandle: node.handle)
     }

@@ -31,6 +31,7 @@ let package = Package(
 
         // Repository
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Repository/MEGARepo"),
 
         // DataSource
         .package(path: "../../DataSource/MEGASDK"),
@@ -52,6 +53,7 @@ let package = Package(
                 "MEGAAssets",
                 "MEGADomain",
                 "MEGAAppSDKRepo",
+                "MEGARepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
                 "MEGASwift",
                 "MEGADesignToken"

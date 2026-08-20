@@ -52,6 +52,10 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
 
     @StateObject private var viewModel: FileLinkViewModel
 
+    /// Read here rather than where it is used because this is the last place that still sees it -- see
+    /// `EnvironmentValues.fileLinkBottomSafeAreaInset`.
+    @State private var bottomSafeAreaInset: CGFloat = 0
+
     private let dependency: Dependency
     /// Built once, next to the view model, so that resolving the body does not rebuild it.
     private let previewLoader: any ThumbnailLoaderProtocol
@@ -83,6 +87,20 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
                 .navigationBarBackButtonHidden(true)
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { bottomSafeAreaInset = proxy.safeAreaInsets.bottom }
+                    .onChange(of: proxy.safeAreaInsets.bottom) { _, inset in
+                        bottomSafeAreaInset = inset
+                    }
+            }
+        }
+        .environment(\.fileLinkBottomSafeAreaInset, bottomSafeAreaInset)
+        .environment(\.networkConnected, viewModel.isNetworkConnected)
+        .task {
+            await viewModel.monitorNetworkConnection()
+        }
     }
 
     @ViewBuilder

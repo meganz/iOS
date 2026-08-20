@@ -2,6 +2,7 @@ import FileLink
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGASwift
 import Testing
 
 @Suite("FileLinkViewModel Tests")
@@ -196,16 +197,41 @@ struct FileLinkViewModelTests {
         #expect(sut.shareLink == "https://mega.nz/file/abc#key")
     }
 
+    // MARK: - Network connection
+
+    @Test("the screen starts on the connection the monitor reports", arguments: [true, false])
+    func isNetworkConnected_atStart_isWhatTheMonitorReports(connected: Bool) {
+        let sut = makeSUT(networkUseCase: MockNetworkMonitorUseCase(connected: connected))
+
+        #expect(sut.isNetworkConnected == connected)
+    }
+
+    @Test("a connection lost while the screen is up is picked up")
+    func monitorNetworkConnection_connectionLost_isPickedUp() async {
+        let sut = makeSUT(
+            networkUseCase: MockNetworkMonitorUseCase(
+                connected: true,
+                connectionSequence: SingleItemAsyncSequence(item: false).eraseToAnyAsyncSequence()
+            )
+        )
+
+        await sut.monitorNetworkConnection()
+
+        #expect(sut.isNetworkConnected == false)
+    }
+
     private func makeSUT(
         link: String = "link",
         encryptedLink: String? = nil,
-        fileLinkFlowUseCase: MockFileLinkFlowUseCase = MockFileLinkFlowUseCase()
+        fileLinkFlowUseCase: MockFileLinkFlowUseCase = MockFileLinkFlowUseCase(),
+        networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase()
     ) -> FileLinkViewModel {
         FileLinkViewModel(
             dependency: FileLinkViewModel.Dependency(
                 link: link,
                 encryptedLink: encryptedLink,
-                fileLinkFlowUseCase: fileLinkFlowUseCase
+                fileLinkFlowUseCase: fileLinkFlowUseCase,
+                networkUseCase: networkUseCase
             )
         )
     }

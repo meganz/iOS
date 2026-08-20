@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 
 @MainActor
 package final class FileLinkViewModel: ObservableObject {
@@ -14,6 +15,7 @@ package final class FileLinkViewModel: ObservableObject {
         /// Set when the link the user opened was an encrypted one, of which `link` is the decrypted form.
         let encryptedLink: String?
         let fileLinkFlowUseCase: any FileLinkFlowUseCaseProtocol
+        let networkUseCase: any NetworkMonitorUseCaseProtocol
 
         init(
             link: String,
@@ -27,18 +29,21 @@ package final class FileLinkViewModel: ObservableObject {
                 fileLinkFlowUseCase: FileLinkFlowUseCase(
                     fileLinkRepository: FileLinkRepository.newRepo(nodeProvider: nodeProvider),
                     fileLinkBuilder: fileLinkBuilder
-                )
+                ),
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
             )
         }
 
         package init(
             link: String,
             encryptedLink: String? = nil,
-            fileLinkFlowUseCase: some FileLinkFlowUseCaseProtocol
+            fileLinkFlowUseCase: some FileLinkFlowUseCaseProtocol,
+            networkUseCase: some NetworkMonitorUseCaseProtocol
         ) {
             self.link = link
             self.encryptedLink = encryptedLink
             self.fileLinkFlowUseCase = fileLinkFlowUseCase
+            self.networkUseCase = networkUseCase
         }
     }
 
@@ -53,6 +58,9 @@ package final class FileLinkViewModel: ObservableObject {
     @Published package var viewState: ViewState = .loading
     @Published package var askingForDecryptionKey: Bool = false
     @Published package var notifyInvalidDecryptionKey: Bool = false
+    /// Every action the screen offers but Share link needs the network, so the screen keeps track of it
+    /// rather than letting the user find out by tapping. See `monitorNetworkConnection()`.
+    @Published package private(set) var isNetworkConnected: Bool
 
     /// The brand carries the title until the link resolves, at which point the file takes over. This
     /// mirrors the folder link, where the unavailable state keeps the brand rather than spelling the
@@ -87,6 +95,15 @@ package final class FileLinkViewModel: ObservableObject {
 
     package init(dependency: Dependency) {
         self.dependency = dependency
+        isNetworkConnected = dependency.networkUseCase.isConnected()
+    }
+
+    /// Follows the connection for as long as the screen is up. The sequence never finishes, so the task
+    /// the view starts this on is what ends it.
+    package func monitorNetworkConnection() async {
+        for await connected in dependency.networkUseCase.connectionSequence {
+            isNetworkConnected = connected
+        }
     }
 
     package func startLoadingFileLink() async {

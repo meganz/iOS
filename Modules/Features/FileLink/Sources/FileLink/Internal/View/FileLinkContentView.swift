@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 import Transfer
 
@@ -24,6 +25,8 @@ struct FileLinkContentView: View {
     private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
     @State private var isShowingMoreOptions = false
+    /// Followed by `FileLinkView`, which is where the screen learns about the connection.
+    @Environment(\.networkConnected) private var networkConnected
 
     init(
         node: NodeEntity,
@@ -57,6 +60,9 @@ struct FileLinkContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            anchoredButtons
+        }
         // Contributed from here rather than alongside the close button, so that the actions only appear
         // once there is a file to act on: the screen is presented before the link has resolved. The
         // transfer indicator comes with them, since this screen is where a transfer is started from.
@@ -153,7 +159,17 @@ struct FileLinkContentView: View {
             preview: viewModel.preview,
             link: viewModel.shareLink,
             options: viewModel.moreOptions,
-            selectionHandler: performMoreOption
+            selectionHandler: perform
+        )
+    }
+
+    /// Both buttons need the network, so losing it disables them outright rather than letting the tap
+    /// through to the no connection HUD. Same treatment as the folder link.
+    private var anchoredButtons: some View {
+        FileLinkAnchoredButtons(
+            isDisabled: !networkConnected,
+            onDownload: { perform(.download) },
+            onSaveToMEGA: { perform(.saveToMEGA) }
         )
     }
 
@@ -164,7 +180,7 @@ struct FileLinkContentView: View {
         }
     }
 
-    private func performMoreOption(_ option: FileLinkMoreOption) {
+    private func perform(_ option: FileLinkMoreOption) {
         Task {
             await viewModel.handle(moreOption: option)
         }
