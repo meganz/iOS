@@ -100,9 +100,10 @@
     }
     self.nameLabel.text = title;
     
-    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:nodesArray.firstObject];
+    MEGANode *firstNode = nodesArray.firstObject;
+    BOOL hasOwnerLevelAccess = firstNode.mnz_hasOwnerLevelAccess;
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
-        if (shareType == MEGAShareTypeAccessOwner) {
+        if (hasOwnerLevelAccess) {
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
@@ -118,7 +119,7 @@
     } else {
         self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_folder-incoming"];
+        self.incomingOrOutgoingImageView.image = hasOwnerLevelAccess ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_folder-incoming"];
     }
     
     self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];

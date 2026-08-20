@@ -44,6 +44,17 @@ final class SearchResultMapperTests: XCTestCase {
         )
     }
 
+    // The SDK reports nodes under the Vault as read-only, so a backup arrives with read access and
+    // still has to keep its link and download swipe actions.
+    func testSwipeActions_withNodeInBackupAndReadAccess_shouldReturnMultipleActions() {
+        assertSwipeActions(
+            displayMode: .backup,
+            accessLevel: .read,
+            expectedSwipeActionsCount: 2,
+            expectedSwipeActionImages: [MEGAAssets.Image.link01, MEGAAssets.Image.arrowDownCircle]
+        )
+    }
+
     func testSwipeActions_whenNodeIsChildNodeOfParentNodeInRubbishBin_shouldReturnSwipeActionsAsEmpty() {
         assertSwipeActions(
             isNodeInRubbishBin: { _ in true },

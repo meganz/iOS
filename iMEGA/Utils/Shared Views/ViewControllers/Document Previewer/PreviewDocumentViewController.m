@@ -193,7 +193,7 @@
     UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     NSMutableArray *toolbarItems = NSMutableArray.new;
     [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem]];
-    if ([MEGASdk.shared accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+    if (self.node.mnz_hasOwnerLevelAccess) {
         [toolbarItems addObject:self.exportFileBarButtonItem];
     } else {
         [toolbarItems addObject:self.importBarButtonItem];
@@ -530,7 +530,7 @@
             if (self.node.mnz_isInRubbishBin) {
                 [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem] animated:YES];
             } else {
-                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdk.shared accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
+                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.node.mnz_hasOwnerLevelAccess ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
             }
         } else {
             [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.exportFileBarButtonItem] animated:YES];

@@ -76,6 +76,12 @@ final class NodeInfoViewController: UITableViewController {
         viewModel.shouldDisplayContactVerificationInfo
     }
 
+    /// The SDK reports nodes under the Vault as read-only, so backups have to be let in explicitly to
+    /// keep their link, sharing and location. Write actions are gated on `isBackupNode` separately.
+    private var hasOwnerLevelAccess: Bool {
+        sdk.accessLevel(for: node) == .accessOwner || viewModel.isBackupNode
+    }
+
     init?(
         coder: NSCoder,
         viewModel: NodeInfoViewModel,
@@ -476,13 +482,13 @@ final class NodeInfoViewController: UITableViewController {
         }
 
         if !node.mnz_isInRubbishBin() {
-            if sdk.accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
+            if hasOwnerLevelAccess && !node.isTakenDown() {
                 sections.append(.link)
             }
         }
 
         if !node.mnz_isInRubbishBin() {
-            if node.isFolder() && sdk.accessLevel(for: node) == .accessOwner {
+            if node.isFolder() && hasOwnerLevelAccess {
                 sections.append(.sharing)
                 if pendingOutShares().isNotEmpty {
                     sections.append(.pendingSharing)
@@ -509,7 +515,7 @@ final class NodeInfoViewController: UITableViewController {
     
     private func detailRows() -> [DetailsSectionRow] {
         var detailRows = [DetailsSectionRow]()
-        if sdk.accessLevel(for: node) == .accessOwner {
+        if hasOwnerLevelAccess {
             detailRows.append(.location)
         }
         
@@ -580,9 +586,10 @@ final class NodeInfoViewController: UITableViewController {
         
         cell.configure(
             forNode: node,
-                       isNodeInRubbish: node.mnz_isInRubbishBin(),
-                       folderInfo: folderInfo,
-                       isUndecryptedFolder: viewModel.isNodeUndecryptedFolder
+            isNodeInRubbish: node.mnz_isInRubbishBin(),
+            hasOwnerLevelAccess: hasOwnerLevelAccess,
+            folderInfo: folderInfo,
+            isUndecryptedFolder: viewModel.isNodeUndecryptedFolder
         )
         return cell
     }

@@ -97,9 +97,14 @@
     NSString *imageName = @"standardDisclosureIndicator_designToken";
     self.disclosureIndicator.image = [UIImage megaImageWithNamed:imageName];
     
-    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
+#ifdef MNZ_SHARE_EXTENSION
+    // The backup check lives in the app target only, and Recents is not shown in the share extension.
+    BOOL hasOwnerLevelAccess = [MEGASdk.shared accessLevelForNode:node] == MEGAShareTypeAccessOwner;
+#else
+    BOOL hasOwnerLevelAccess = node.mnz_hasOwnerLevelAccess;
+#endif
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
-        if (shareType == MEGAShareTypeAccessOwner) {
+        if (hasOwnerLevelAccess) {
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
@@ -115,7 +120,7 @@
     } else {
         self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingImageView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_users"];
+        self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"folder_users"];
     }
     
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage megaImageWithNamed:@"versioned"] : [UIImage megaImageWithNamed:@"recentUpload"];

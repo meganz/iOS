@@ -110,6 +110,22 @@ final class NodeInfoViewModelTests: XCTestCase {
         }
     }
 
+    // The SDK reports nodes under the Vault as read-only, so a backup arrives with read access and
+    // still has to get its location view model.
+    @MainActor
+    func testNodeInfoLocationViewModel_whenNodeIsVisualMediaInBackupWithReadAccess_shouldReturnViewModel() async {
+        let node = MockNode(handle: 1, name: "test.mp4")
+        let sut = makeSUT(
+            node: node,
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .read),
+            backupUseCase: MockBackupsUseCase(isBackupsNode: true)
+        )
+
+        await test(viewModel: sut, action: .viewDidLoad, expectedCommands: [.reloadSections])
+
+        XCTAssertNotNil(sut.nodeInfoLocationViewModel)
+    }
+
     @MainActor
     func testShouldShowNodeTags_whenNodeInRubbishBin_shouldReturnFalse() {
         let nodeUseCase = MockNodeUseCase(isNodeInRubbishBin: true)

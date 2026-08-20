@@ -388,6 +388,69 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .shareLink, .exportFile, .sendToChat, .copy]) == true)
     }
+
+    // The SDK reports nodes under the Vault as read-only, so a backup node arrives with read access
+    // and still has to get the backup actions rather than the read-only ones.
+    @Test
+    func testBackupFileWithReadAccess() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessRead)
+            .setIsBackupNode(true)
+            .setIsFile(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .download, .shareLink, .exportFile, .sendToChat, .copy]) == true)
+    }
+
+    @Test
+    func testBackupFolderWithReadAccess() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessRead)
+            .setIsBackupNode(true)
+            .setIsFile(false)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .download, .shareLink, .shareFolder, .copy]) == true)
+    }
+
+    @Test
+    func testExportedBackupFileWithReadAccess() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.backup)
+            .setAccessLevel(.accessRead)
+            .setIsBackupNode(true)
+            .setIsFile(true)
+            .setIsExported(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .download, .manageLink, .removeLink, .exportFile, .sendToChat, .copy]) == true)
+    }
+
+    // Previewing a backup file keeps the owner's export and link actions, and still no write ones.
+    @Test
+    func testDocumentPreviewBackupFileWithReadAccess() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setAccessLevel(.accessRead)
+            .setIsBackupNode(true)
+            .setIsFile(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat]) == true)
+    }
+
+    @Test
+    func testNonBackupFileWithReadAccessKeepsReadOnlyActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessRead)
+            .setIsFile(true)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .download, .copy]) == true)
+    }
     
     // MARK: - Rubbish Bin
     @Test

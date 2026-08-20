@@ -123,12 +123,14 @@ final class NodeOpener {
         let nodes = allVisualMediaNodes.isNotEmpty ? allVisualMediaNodes : [node]
         let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
         let mediaNodes = NSMutableArray(array: nodes)
-        let isOwner = sdk.accessLevel(for: node) == .accessOwner
+        // Backups report read-only access since the SDK made the Vault read-only, so they are let in
+        // here to keep opening in their own display mode rather than as a shared item.
+        let hasOwnerLevelAccess = node.mnz_hasOwnerLevelAccess
         let passedThroughDisplayMode: DisplayMode = displayMode?.carriedOverDisplayMode ?? .cloudDrive
         let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
             withMediaNodes: mediaNodes,
             api: MEGASdk.sharedSdk,
-            displayMode: isOwner ? passedThroughDisplayMode : .sharedItem,
+            displayMode: hasOwnerLevelAccess ? passedThroughDisplayMode : .sharedItem,
             isFromSharedItem: isFromSharedItem ?? false,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )

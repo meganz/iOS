@@ -191,7 +191,8 @@ struct SearchResultMapper: Sendable, SearchResultsMapping {
         for node: NodeEntity,
         viewDisplayMode: ViewDisplayMode
     ) -> [SearchResultSwipeAction] {
-        guard nodeUseCase.nodeAccessLevel(nodeHandle: node.handle) == .owner, viewDisplayMode != .homeSearch else {
+        guard nodeUseCase.nodeAccessLevel(nodeHandle: node.handle) == .owner || viewDisplayMode == .backup,
+              viewDisplayMode != .homeSearch else {
             return []
         }
 
