@@ -59,6 +59,31 @@ struct QuotaDialogUseCaseTests {
         }
     }
 
+    /// The dialog is opened straight from an over-quota error, so the already loaded account details are reused
+    /// instead of paying for another fetch before the sheet can render.
+    @Test func upgradeOption_accountDetailsAlreadyCached_reusesThemWithoutRefreshing() async throws {
+        let cachedAccount = AccountDetailsEntity.build(proLevel: .free)
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: cachedAccount,
+            accountDetailsResult: .failure(.generic)
+        )
+        let sut = QuotaDialogUseCase(
+            accountUseCase: accountUseCase,
+            accountPlanProductsUseCase: MockAccountPlanProductsUseCase(),
+            recommendedUpgradePlanUseCase: MockRecommendedUpgradePlanUseCase(recommendation: entity()),
+            pricingRequester: MockPricingRequester()
+        )
+
+        let result = try await sut.upgradeOption()
+
+        #expect(accountUseCase.refreshAccountDetails_calledCount == 0)
+        guard case let .available(accountDetails, _) = result else {
+            Issue.record("Expected .available, got \(result)")
+            return
+        }
+        #expect(accountDetails == cachedAccount)
+    }
+
     // MARK: - Signed out
 
     @Test func upgradeOption_loggedOut_isSignInWithTheNewAccountRecommendation() async throws {

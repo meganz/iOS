@@ -35,7 +35,7 @@ struct QuotaDialogUseCase: QuotaDialogUseCaseProtocol {
     }
     
     private func loggedInUpgradeOption() async throws -> QuotaUpgradeOption {
-        async let account = accountUseCase.refreshCurrentAccountDetails()
+        async let account = accountUseCase.getCurrentAccountDetails()
         async let plans = accountPlanProductsUseCase.availablePlans()
 
         let (accountDetails, catalog) = try await (account, plans)

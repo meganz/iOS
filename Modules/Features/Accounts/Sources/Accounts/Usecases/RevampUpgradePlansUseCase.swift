@@ -23,9 +23,6 @@ public struct RevampUpgradePlansUseCase: RevampUpgradePlansUseCaseProtocol {
     }
 
     public func currentAccountDetails() async throws -> AccountDetailsEntity {
-        if let details = accountUseCase.currentAccountDetails {
-            return details
-        }
-        return try await accountUseCase.refreshCurrentAccountDetails()
+        try await accountUseCase.getCurrentAccountDetails()
     }
 }
