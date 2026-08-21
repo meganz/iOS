@@ -12,7 +12,9 @@ protocol PlaybackStateObservable {
     var artist: String? { get }
     var artworkData: Data? { get }
     var status: PlaybackStatus { get }
-    var hasPlayedOnceBefore: Bool { get }
+    /// `true` once the current track has produced audio at least once. Tells a
+    /// stall that interrupts playback apart from the wait before the first frame.
+    var hasStartedPlayback: Bool { get }
     var artworkResolved: Bool { get }
     var isAirPlayActive: Bool { get }
     var repeatMode: RepeatMode { get }
@@ -27,7 +29,7 @@ protocol PlaybackStateObservable {
     var durationPublisher: AnyPublisher<TimeInterval?, Never> { get }
     var currentTimePublisher: AnyPublisher<TimeInterval, Never> { get }
     var statusPublisher: AnyPublisher<PlaybackStatus, Never> { get }
-    var hasPlayedOnceBeforePublisher: AnyPublisher<Bool, Never> { get }
+    var hasStartedPlaybackPublisher: AnyPublisher<Bool, Never> { get }
     var artworkResolvedPublisher: AnyPublisher<Bool, Never> { get }
     var isAirPlayActivePublisher: AnyPublisher<Bool, Never> { get }
     var playbackSpeedPublisher: AnyPublisher<Float, Never> { get }
@@ -84,9 +86,14 @@ enum PlaybackBlockedReason: Equatable {
 // MARK: - Status
 
 enum PlaybackStatus: Equatable {
+    case idle
+    /// The session is starting a track up: resolving its address and clearing
+    /// the admission checks, before anything reaches the engine.
     case loading
+    /// An item is loaded and waiting to produce audio — first buffering, a
+    /// mid-track stall, or held before its first frame.
+    case buffering
     case playing
     case paused
-    case buffering
     case error(String)
 }

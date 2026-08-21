@@ -7,7 +7,7 @@ import MEGADomain
 final class MockPlaybackEngine: PlaybackEngineProtocol {
     private let currentTimeSubject = CurrentValueSubject<TimeInterval, Never>(0)
     private let durationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
-    private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+    private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.idle)
     private let playbackSpeedSubject = CurrentValueSubject<Float, Never>(1)
     private let playbackRateSubject = CurrentValueSubject<Float, Never>(0)
     private let didPlayToEndSubject = PassthroughSubject<Void, Never>()
@@ -25,6 +25,10 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
 
     /// Duration reported for every item handed to `play(url:)`.
     var itemDuration: TimeInterval = 100
+
+    /// When `true`, an item handed to `play(url:)` holds at `.buffering` until
+    /// `simulateFirstFrame()` — the real engine's route into a track.
+    var stallsBeforeFirstFrame = false
 
     var currentTime: TimeInterval { currentTimeSubject.value }
     var duration: TimeInterval? { durationSubject.value }
@@ -58,7 +62,7 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
         isItemLoaded = true
         currentTimeSubject.send(0)
         durationSubject.send(itemDuration)
-        playbackStatusSubject.send(.playing)
+        playbackStatusSubject.send(stallsBeforeFirstFrame ? .buffering : .playing)
     }
 
     func unloadCurrentItem() {
@@ -66,7 +70,7 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
         isItemLoaded = false
         currentTimeSubject.send(0)
         durationSubject.send(nil)
-        playbackStatusSubject.send(.loading)
+        playbackStatusSubject.send(.idle)
     }
 
     func togglePlayPause() {
@@ -111,6 +115,16 @@ final class MockPlaybackEngine: PlaybackEngineProtocol {
     func simulatePlayhead(at seconds: TimeInterval) {
         currentTimeSubject.send(seconds)
     }
+
+    /// The item that was holding at `.buffering` produces its first audio.
+    func simulateFirstFrame() {
+        playbackStatusSubject.send(.playing)
+    }
+
+    /// The running item stalls part-way through.
+    func simulateStall() {
+        playbackStatusSubject.send(.buffering)
+    }
 }
 
 struct StubAudioStreamingRepository: AudioStreamingRepositoryProtocol {
@@ -139,6 +153,18 @@ struct StubPlaybackContinuationUseCase: PlaybackContinuationUseCaseProtocol {
     ) {}
 
     func removeSavedPlaybackPosition(for fingerprint: FingerprintEntity) {}
+}
+
+/// Metadata that never comes back — a remote parse that outlives the first frame.
+actor NeverResolvingAudioMetadataCache: AudioMetadataCacheProtocol {
+    func metadata(for track: PlaybackTrack, throttled: Bool) async -> AudioMetadata? {
+        await withCheckedContinuation { (_: CheckedContinuation<Void, Never>) in }
+        return nil
+    }
+
+    func cachedMetadata(for track: PlaybackTrack) -> AudioMetadata? { nil }
+
+    func removeAll() {}
 }
 
 actor StubAudioMetadataCache: AudioMetadataCacheProtocol {

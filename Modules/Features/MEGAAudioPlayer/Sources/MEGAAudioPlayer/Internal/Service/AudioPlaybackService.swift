@@ -12,7 +12,7 @@ final class AudioPlaybackService {
     private let titleSubject = CurrentValueSubject<String, Never>("")
     private let artistSubject = CurrentValueSubject<String?, Never>(nil)
     private let artworkDataSubject = CurrentValueSubject<Data?, Never>(nil)
-    private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+    private let statusSubject = CurrentValueSubject<PlaybackStatus, Never>(.idle)
     private let isAirPlayActiveSubject = CurrentValueSubject<Bool, Never>(false)
     private let repeatModeSubject = CurrentValueSubject<RepeatMode, Never>(.off)
     private let sleepTimerStateSubject = CurrentValueSubject<SleepTimerState, Never>(.inactive)
@@ -20,9 +20,9 @@ final class AudioPlaybackService {
     private let resumePromptSubject = CurrentValueSubject<ResumePrompt?, Never>(nil)
     private let playbackBlockedSubject = CurrentValueSubject<PlaybackBlockedReason?, Never>(nil)
 
-    private let hasPlayedOnceBeforeSubject = CurrentValueSubject<Bool, Never>(false)
-
     private let artworkResolvedSubject = CurrentValueSubject<Bool, Never>(false)
+
+    private let hasStartedPlaybackSubject = CurrentValueSubject<Bool, Never>(false)
 
     private let trackResolver: any AudioTrackResolutionUseCaseProtocol
     private let streamingRepository: any AudioStreamingRepositoryProtocol
@@ -163,8 +163,8 @@ final class AudioPlaybackService {
     /// cleared session.
     private func applyEngineStatus(_ status: PlaybackStatus) {
         guard currentSource != nil else { return }
-        if status == .playing { hasPlayedOnceBeforeSubject.send(true) }
         self.status = status
+        if status == .playing { hasStartedPlaybackSubject.send(true) }
     }
 
     private func saveCurrentPlaybackPositionIfNeeded() {
@@ -262,8 +262,8 @@ extension AudioPlaybackService: PlaybackStateObservable {
         set { statusSubject.send(newValue) }
     }
 
-    var hasPlayedOnceBefore: Bool {
-        hasPlayedOnceBeforeSubject.value
+    var hasStartedPlayback: Bool {
+        hasStartedPlaybackSubject.value
     }
 
     var artworkResolved: Bool {
@@ -320,8 +320,8 @@ extension AudioPlaybackService: PlaybackStateObservable {
         statusSubject.eraseToAnyPublisher()
     }
 
-    var hasPlayedOnceBeforePublisher: AnyPublisher<Bool, Never> {
-        hasPlayedOnceBeforeSubject.removeDuplicates().eraseToAnyPublisher()
+    var hasStartedPlaybackPublisher: AnyPublisher<Bool, Never> {
+        hasStartedPlaybackSubject.removeDuplicates().eraseToAnyPublisher()
     }
 
     var artworkResolvedPublisher: AnyPublisher<Bool, Never> {
@@ -399,9 +399,8 @@ extension AudioPlaybackService: PlaybackControllable {
         title = track.displayName
         artist = nil
         artworkData = nil
-        hasPlayedOnceBeforeSubject.send(false)
         artworkResolvedSubject.send(false)
-        status = .loading
+        hasStartedPlaybackSubject.send(false)
         // The queue has already moved on, so the outgoing track must go quiet now
         // rather than play on — and keep driving the scrubber — for however long the
         // admission check takes.
@@ -644,10 +643,10 @@ extension AudioPlaybackService: PlaybackControllable {
         title = ""
         artist = nil
         artworkData = nil
-        hasPlayedOnceBeforeSubject.send(false)
         artworkResolvedSubject.send(false)
+        hasStartedPlaybackSubject.send(false)
         repeatModeSubject.send(.off)
-        status = .loading
+        status = .idle
         cancelSleepTimer()
         engine.stop()
         streamingRepository.stopServer()

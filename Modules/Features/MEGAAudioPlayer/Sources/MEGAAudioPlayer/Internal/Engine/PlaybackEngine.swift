@@ -36,7 +36,7 @@ protocol PlaybackEngineProtocol: AnyObject {
 final class PlaybackEngine {
     private let currentTimeSubject = CurrentValueSubject<TimeInterval, Never>(0)
     private let durationSubject = CurrentValueSubject<TimeInterval?, Never>(nil)
-    private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.loading)
+    private let playbackStatusSubject = CurrentValueSubject<PlaybackStatus, Never>(.idle)
     private let playbackSpeedSubject = CurrentValueSubject<Float, Never>(1)
     private let didPlayToEndSubject = PassthroughSubject<Void, Never>()
 
@@ -118,7 +118,7 @@ extension PlaybackEngine {
         observeDuration(of: item)
         observeEnd(of: item)
         player.replaceCurrentItem(with: item)
-        playbackStatusSubject.send(.buffering)
+        playbackStatusSubject.send(.loading)
         currentTimeSubject.send(0)
         durationSubject.send(nil)
         isPlaybackIntended = true
@@ -134,7 +134,7 @@ extension PlaybackEngine {
         isPlaybackIntended = false
         currentTimeSubject.send(0)
         durationSubject.send(nil)
-        playbackStatusSubject.send(.loading)
+        playbackStatusSubject.send(.idle)
     }
 
     func replay() {
@@ -213,7 +213,7 @@ extension PlaybackEngine {
         resetSeekGate()
         currentTimeSubject.send(0)
         durationSubject.send(nil)
-        playbackStatusSubject.send(.paused)
+        playbackStatusSubject.send(.idle)
     }
 }
 
@@ -314,17 +314,34 @@ extension PlaybackEngine {
 
 extension PlaybackEngine {
     private func observeTimeControlStatus() {
-        let subject = playbackStatusSubject
-        rateObservation = player.observe(\.timeControlStatus, options: [.initial, .new]) { player, _ in
+        rateObservation = player.observe(\.timeControlStatus, options: [.initial, .new]) { [weak self] _, _ in
             Task { @MainActor in
-                let status = PlaybackEngine.playbackStatus(from: player.timeControlStatus)
-                subject.send(status)
+                self?.publishCurrentStatus()
             }
         }
     }
 
-    private static func playbackStatus(from timeControlStatus: AVPlayer.TimeControlStatus) -> PlaybackStatus {
-        switch timeControlStatus {
+    /// Reads the player rather than the observation that woke it. The hand-over is
+    /// asynchronous, so a status captured while the outgoing track was still loaded
+    /// would land on the incoming one; sampling here means what is published always
+    /// describes whatever the player holds now
+    func publishCurrentStatus() {
+        playbackStatusSubject.send(
+            Self.playbackStatus(from: player.timeControlStatus, isLoaded: player.currentItem != nil)
+        )
+    }
+
+    /// The latest published status, for tests that drive the real observations.
+    var currentStatusForTesting: PlaybackStatus {
+        playbackStatusSubject.value
+    }
+
+    static func playbackStatus(
+        from timeControlStatus: AVPlayer.TimeControlStatus,
+        isLoaded: Bool
+    ) -> PlaybackStatus {
+        guard isLoaded else { return .idle }
+        return switch timeControlStatus {
         case .paused: .paused
         case .waitingToPlayAtSpecifiedRate: .buffering
         case .playing: .playing
@@ -342,13 +359,16 @@ extension PlaybackEngine {
 
     private func observeDuration(of item: AVPlayerItem) {
         durationObservation?.invalidate()
-        let subject = durationSubject
-        durationObservation = item.observe(\.duration, options: [.initial, .new]) { item, _ in
-            let seconds = CMTimeGetSeconds(item.duration)
-            let value: TimeInterval? = (seconds.isFinite && seconds > 0) ? seconds : nil
+        durationObservation = item.observe(\.duration, options: [.initial, .new]) { [weak self] _, _ in
             Task { @MainActor in
-                subject.send(value)
+                self?.publishCurrentDuration()
             }
         }
+    }
+
+    /// Reads the loaded item rather than the one that was observed
+    func publishCurrentDuration() {
+        let seconds = player.currentItem.map { CMTimeGetSeconds($0.duration) }
+        durationSubject.send(seconds.flatMap { $0.isFinite && $0 > 0 ? $0 : nil })
     }
 }

@@ -64,13 +64,13 @@ struct MiniPlayerView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(vm.isPreparing)
+        .disabled(!vm.loadingState.isToggleEnabled)
     }
 
     @ViewBuilder
     private var stateIcon: some View {
         switch vm.loadingState {
-        case .loading, .ready:
+        case .loading, .ready, .buffering:
             LoaderThrobber()
                 .frame(width: Sizes.iconSize, height: Sizes.iconSize)
         case .playing:

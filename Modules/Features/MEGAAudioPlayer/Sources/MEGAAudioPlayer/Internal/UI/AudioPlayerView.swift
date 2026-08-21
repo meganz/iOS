@@ -410,7 +410,7 @@ private struct ArtworkSection: View {
 
     private var coverScale: CGFloat {
         switch loadingState {
-        case .playing: 1
+        case .playing, .buffering: 1
         case .paused, .loading, .ready: coverReducedSize / coverMaxSize
         }
     }
@@ -600,12 +600,18 @@ private struct ScrubberSection: View {
         .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
 
+    /// Playback can now start before the duration lands, so the placeholder covers
+    /// a missing duration as well as start-up — otherwise the labels blank out.
     private var elapsedLabel: String {
-        loadingState == .loading ? Self.timePlaceholder : formatElapsed(displayTime, duration: duration)
+        hasTimes ? formatElapsed(displayTime, duration: duration) : Self.timePlaceholder
     }
 
     private var remainingLabel: String {
-        loadingState == .loading ? Self.timePlaceholder : formatRemaining(currentTime: displayTime, duration: duration)
+        hasTimes ? formatRemaining(currentTime: displayTime, duration: duration) : Self.timePlaceholder
+    }
+
+    private var hasTimes: Bool {
+        loadingState != .loading && duration != nil
     }
 
     @ViewBuilder
@@ -684,7 +690,7 @@ private struct CenterControlView: View {
     var body: some View {
         Group {
             switch loadingState {
-            case .loading, .ready:
+            case .loading, .ready, .buffering:
                 LoaderThrobber()
                     .padding(TokenSpacing._3)
             case .playing, .paused:
@@ -1066,6 +1072,21 @@ private struct AirPlayIconButton: View {
             playbackMode: .music
         )
         vm.setArtwork(image: MEGAAssets.UIImage.audioIcon, glowColor: nil)
+        return vm
+    }())
+}
+
+#Preview("Music — Stalled mid-track") {
+    AudioPlayerView(vm: {
+        let vm = AudioPlayerViewModel()
+        vm.setControlState(
+            title: "Orange (Live)",
+            artist: "Arcy Drive",
+            currentTime: 80,
+            duration: 234,
+            loadingState: .buffering,
+            playbackMode: .music
+        )
         return vm
     }())
 }

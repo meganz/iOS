@@ -17,8 +17,6 @@ final class MiniPlayerViewModel: ObservableObject {
 
     @Published private(set) var hasActiveSession: Bool = false
 
-    var isPreparing: Bool { loadingState == .loading || loadingState == .ready }
-
     private let service: (any AudioPlaybackServiceProtocol)?
     private var cancellables: Set<AnyCancellable> = []
 
@@ -56,11 +54,11 @@ final class MiniPlayerViewModel: ObservableObject {
 
         Publishers.CombineLatest3(
             service.statusPublisher,
-            service.hasPlayedOnceBeforePublisher,
+            service.hasStartedPlaybackPublisher,
             isReadyPublisher
         )
-        .map { status, hasPlayedOnceBefore, isReady in
-            PlayerLoadingState(status: status, hasPlayedOnceBefore: hasPlayedOnceBefore, isReady: isReady)
+        .map { status, hasStartedPlayback, isReady in
+            PlayerLoadingState(status: status, hasStartedPlayback: hasStartedPlayback, isReady: isReady)
         }
         .removeDuplicates()
         .receive(on: DispatchQueue.main)
@@ -86,7 +84,7 @@ final class MiniPlayerViewModel: ObservableObject {
     // MARK: - Intents
 
     func togglePlayPause() {
-        guard !isPreparing else { return }
+        guard loadingState.isToggleEnabled else { return }
         service?.togglePlayPause()
     }
 

@@ -217,11 +217,11 @@ final class AudioPlayerViewModel: ObservableObject {
 
         Publishers.CombineLatest3(
             service.statusPublisher,
-            service.hasPlayedOnceBeforePublisher,
+            service.hasStartedPlaybackPublisher,
             isReadyPublisher
         )
-        .map { status, hasPlayedOnceBefore, isReady in
-            PlayerLoadingState(status: status, hasPlayedOnceBefore: hasPlayedOnceBefore, isReady: isReady)
+        .map { status, hasStartedPlayback, isReady in
+            PlayerLoadingState(status: status, hasStartedPlayback: hasStartedPlayback, isReady: isReady)
         }
         .removeDuplicates()
         .receive(on: DispatchQueue.main)
