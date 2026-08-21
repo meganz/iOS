@@ -11,6 +11,10 @@ extension Array where Element: PhotoDateSection {
         flatMap { $0.contentList }
     }
     
+    var hydratedPhotos: [NodeEntity] {
+        allPhotos.filter { !$0.isTimelinePlaceholder }
+    }
+    
     func indexPath(of position: PhotoScrollPosition, in timeZone: TimeZone? = nil) -> IndexPath? {
         for (sectionIndex, section) in self.enumerated() where section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {
             for (itemIndex, photo) in section.contentList.enumerated() where photo.handle == position.handle {

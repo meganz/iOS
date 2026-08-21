@@ -20,6 +20,33 @@ final class PhotoDateSectionTests: XCTestCase {
         XCTAssertEqual(dateSections.allPhotos, testNodes)
     }
     
+    /// A paginated timeline's skeleton must not leak its synthetic slots to consumers that
+    /// resolve nodes by handle, and the surviving real nodes must keep their grid order.
+    func testHydratedPhotos_dropsSkeletonSlotsAndKeepsOrder() throws {
+        let real = [
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.mp4", handle: 2, modificationTime: try "2022-08-18T21:01:04Z".date)
+        ]
+        let sections = [MediaDateSectionEntity(
+            groupId: "2022-08-18",
+            startDate: try "2022-08-18T00:00:00Z".date,
+            endDate: try "2022-08-18T23:59:59Z".date,
+            count: 4)]
+        // Slots 0 and 2 stay placeholders, 1 and 3 are hydrated.
+        let library = PhotoLibrary.skeleton(from: sections).replacingPhotos(at: [1: real[0], 3: real[1]])
+
+        let dateSections = library.photoDaySections
+
+        XCTAssertEqual(dateSections.allPhotos.count, 4)
+        XCTAssertEqual(dateSections.hydratedPhotos, real)
+    }
+
+    func testHydratedPhotos_realLibraryIsUnchanged() throws {
+        let (dateSections, testNodes) = try makeSut(path: \.photoDaySections)
+
+        XCTAssertEqual(dateSections.hydratedPhotos, testNodes)
+    }
+
     func testPhotoAtIndexPath_monthSection() throws {
         let (dateSections, _) =  try makeSut(path: \.photoMonthSections)
         XCTAssertEqual(dateSections.count, 6)
