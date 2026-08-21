@@ -45,6 +45,16 @@ final class UIViewControllerAdditionsTests: XCTestCase {
         XCTAssertNil(root.topPresentableViewController())
     }
 
+    func testTopPresentableViewController_whenIntermediateIsOffWindow_shouldReturnTop() {
+        let window = UIWindow()
+        let (root, middle, top) = makeStack(in: window)
+        // A `.fullScreen` presentation detaches its presenter's view, so the middle of a nested modal chain is
+        // legitimately off window while the top is the one on screen.
+        middle.view.removeFromSuperview()
+
+        XCTAssertIdentical(root.topPresentableViewController(), top)
+    }
+
     func testTopPresentableViewController_whenDismissedTopIsGone_shouldReturnItsPresenter() {
         let window = UIWindow()
         let (root, middle, _) = makeStack(in: window)

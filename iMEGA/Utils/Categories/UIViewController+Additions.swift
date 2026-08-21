@@ -64,9 +64,10 @@ extension UIViewController {
     
     /// Walks down the modal stack from this controller to the topmost one that can present right now.
     ///
-    /// Unlike `UIApplication.mnz_presentingViewController()`, the walk stops before a controller that is off window
-    /// or on its way out. Those are the states in which `present(_:animated:)` does nothing but log
-    /// `Attempt to present … whose view is not in the window hierarchy`, leaving the caller to believe it succeeded.
+    /// Unlike `UIApplication.mnz_presentingViewController()`, the walk stops before a controller on its way out, and
+    /// refuses a landing spot that is off window. Those are the states in which `present(_:animated:)` does nothing
+    /// but log `Attempt to present … whose view is not in the window hierarchy`, leaving the caller to believe it
+    /// succeeded.
     ///
     /// A controller that is still animating in is returned: it will be presentable a moment later, and dropping it
     /// would lose every dialog raised during a presentation animation. UIKit can drop a presentation made into that
@@ -75,12 +76,16 @@ extension UIViewController {
     func topPresentableViewController() -> UIViewController? {
         var candidate = self
 
-        while let presented = candidate.presentedViewController, presented.isViewReady(), !presented.isBeingDismissed {
+        while let presented = candidate.presentedViewController, !presented.isBeingDismissed {
             candidate = presented
         }
 
-        /// The walk stops on a controller still holding a modal only when that modal is off window or on its way
-        /// out. UIKit refuses a second presentation until it is gone, so there is nothing presentable right now.
+        /// Only the controller the walk lands on has to be presentable. Intermediate presenters in a chain of full
+        /// screen modals are off window by design - UIKit detaches a presenter's view for `.fullScreen` - so testing
+        /// them would stop the walk short of the modal that is actually on screen.
+        ///
+        /// A landing spot that is off window, or one still holding a modal on its way out, is not presentable: UIKit
+        /// refuses a second presentation until that modal is gone.
         guard candidate.isViewReady(), candidate.presentedViewController == nil else { return nil }
 
         return candidate
