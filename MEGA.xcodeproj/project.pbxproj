@@ -626,6 +626,7 @@
 		4CEA86762EEA568200BF2A6A /* VideoTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */; };
 		530C524C2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */; };
 		530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */; };
+		530C52542C216B6E00DFF3FE /* OfflineThumbnailCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52532C216B6E00DFF3FE /* OfflineThumbnailCacheTests.swift */; };
 		534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */; };
 		53A255292C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A255282C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift */; };
 		53A2552D2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A2552C2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift */; };
@@ -1801,6 +1802,7 @@
 		A8B09DEA29B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B1C3712F7D610000772DE0 /* Transfer in Frameworks */ = {isa = PBXBuildFile; productRef = A8B1C3702F7D610000772DE0 /* Transfer */; };
 		A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */; };
+		A8B3156A2ACAB49500173F3A /* OfflineThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B315692ACAB49500173F3A /* OfflineThumbnailCache.swift */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51ADB27F3534F0030F1EA /* Haptica */; };
 		A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51AE827F3565E0030F1EA /* WSTagsField */; };
@@ -3460,6 +3462,7 @@
 		4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTabViewModelTests.swift; sourceTree = "<group>"; };
 		530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilderTests.swift; sourceTree = "<group>"; };
 		530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
+		530C52532C216B6E00DFF3FE /* OfflineThumbnailCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineThumbnailCacheTests.swift; sourceTree = "<group>"; };
 		534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTypeTests.swift; sourceTree = "<group>"; };
 		53A255282C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewRouterTests.swift; sourceTree = "<group>"; };
 		53A2552C2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_ThumbnailLoaderTests.swift; sourceTree = "<group>"; };
@@ -4656,6 +4659,7 @@
 		A8B0DD482D1D7AF1009BC7FD /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8B0DD492D1D7BAE009BC7FD /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewCell+Additions.swift"; sourceTree = "<group>"; };
+		A8B315692ACAB49500173F3A /* OfflineThumbnailCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineThumbnailCache.swift; sourceTree = "<group>"; };
 		A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatNotificationDelegate.h; sourceTree = "<group>"; };
 		A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatNotificationDelegate.m; sourceTree = "<group>"; };
 		A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OfflineFileEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -7293,6 +7297,7 @@
 				A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */,
 				83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */,
 				83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */,
+				A8B315692ACAB49500173F3A /* OfflineThumbnailCache.swift */,
 				243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */,
 				9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */,
 				BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */,
@@ -12480,6 +12485,7 @@
 				940CE3CA2C255EC60083068E /* Usage */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
+				530C52532C216B6E00DFF3FE /* OfflineThumbnailCacheTests.swift */,
 				530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */,
 			);
 			path = Account;
@@ -15744,6 +15750,7 @@
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
+				A8B3156A2ACAB49500173F3A /* OfflineThumbnailCache.swift in Sources */,
 				243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				BFFC82412ECE9B9A003E00DF /* OfflineViewController+Header.swift in Sources */,
@@ -16951,6 +16958,7 @@
 				94CFB3C02D11E2A30064D846 /* OfflineFileFetcherRepositoryTests.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
+				530C52542C216B6E00DFF3FE /* OfflineThumbnailCacheTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
 				C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */,
 				0E69C1002DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift in Sources */,

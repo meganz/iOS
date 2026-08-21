@@ -23,11 +23,17 @@ extension OfflineTableViewCell {
 @objc extension OfflineTableViewCell {
     func setThumbnail(url: URL) {
         guard url.relativeString.fileExtensionGroup.isVisualMedia else { return }
-        let fileAttributeGenerator = FileAttributeGenerator(sourceURL: url)
+
+        if let cachedThumbnail = OfflineThumbnailCache.shared.image(for: url) {
+            thumbnailImageView?.image = cachedThumbnail
+            return
+        }
+
+        loadThumbnailTask?.cancel()
         loadThumbnailTask = Task { @MainActor [weak self] in
-            guard let self, let image = await fileAttributeGenerator.requestThumbnail() else { return }
+            guard let image = await OfflineThumbnailCache.shared.thumbnail(for: url) else { return }
             try Task.checkCancellation()
-            self.thumbnailImageView?.image = image
+            self?.thumbnailImageView?.image = image
         }
     }
     

@@ -111,12 +111,19 @@ extension NodeCollectionViewCell {
     
     @objc func setThumbnail(url: URL) {
         guard url.relativeString.fileExtensionGroup.isVisualMedia else { return }
-        let fileAttributeGenerator = FileAttributeGenerator(sourceURL: url)
+
+        if let cachedThumbnail = OfflineThumbnailCache.shared.image(for: url) {
+            thumbnailIconView?.isHidden = true
+            thumbnailImageView?.image = cachedThumbnail
+            return
+        }
+
         loadThumbnailTask = Task { @MainActor [weak self] in
-            guard let self, let image = await fileAttributeGenerator.requestThumbnail() else { return }
+            guard let image = await OfflineThumbnailCache.shared.thumbnail(for: url) else { return }
             try Task.checkCancellation()
-            self.thumbnailIconView?.isHidden = true
-            self.thumbnailImageView?.image = image
+            guard let self else { return }
+            thumbnailIconView?.isHidden = true
+            thumbnailImageView?.image = image
         }
     }
     
