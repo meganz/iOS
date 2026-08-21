@@ -5184,3 +5184,11 @@
 "quotaWarning.transfer.limited.subtitle"="Upgrade your plan to get more transfer quota. %@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.transfer.limited.manage.subtitle"="Manage your plan at %@ for more transfer quota";
+/* Title of the screen shown when an album link cannot be opened. */
+"albumLink.cannotBeAccessed"="Album cannot be accessed";
+/* First of the reasons listed on the screen shown when an album link cannot be opened. */
+"albumLink.unavailableReason1"="The album was deleted";
+/* Second of the reasons listed on the screen shown when an album link cannot be opened. */
+"albumLink.unavailableReason2"="The album link is disabled by the owner";
+/* Third of the reasons listed on the screen shown when an album link cannot be opened. */
+"albumLink.unavailableReason3"="The link is invalid or doesn’t exist";

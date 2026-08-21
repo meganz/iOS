@@ -165,9 +165,8 @@ extension LinkUnavailableContentView.Copy {
 }
 
 extension LinkUnavailableContentView.Copy {
-    /// The title and the reasons are the English copy of the design, hardcoded on purpose: IOS-12472 adds the album link strings to MEGAL10n.
     static var albumLink: Self {
-        let title = "Album cannot be accessed"
+        let title = Strings.Localizable.AlbumLink.cannotBeAccessed
         return .init(
             notAvailableTitle: title,
             noLongerAvailableTitle: title,
@@ -175,9 +174,9 @@ extension LinkUnavailableContentView.Copy {
             hasExpiredDescription: Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message,
             genericDescriptionHeader: Strings.Localizable.fileLinkUnavailableText1,
             genericReasons: [
-                "The album was deleted",
-                "The album link is disabled by the owner",
-                "The link is invalid or doesn’t exist"
+                Strings.Localizable.AlbumLink.unavailableReason1,
+                Strings.Localizable.AlbumLink.unavailableReason2,
+                Strings.Localizable.AlbumLink.unavailableReason3
             ]
         )
     }
