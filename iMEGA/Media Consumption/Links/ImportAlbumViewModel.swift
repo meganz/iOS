@@ -27,6 +27,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private let appDelegateRouter: any AppDelegateRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
     private var subscriptions = Set<AnyCancellable>()
@@ -45,11 +46,12 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
             showingDecryptionKeyAlert = newValue == .requireDecryptionKey
-            showCannotAccessAlbumAlert = newValue == .invalid
+            showCannotAccessAlbumAlert = !isLinkRevampEnabled && newValue == .invalid
         }
     }
     @Published var publicLinkDecryptionKey = ""
     @Published var showingDecryptionKeyAlert = false
+    @Published var showInvalidDecryptionKeyAlert = false
     @Published var showShareLink = false
     @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
@@ -80,6 +82,24 @@ final class ImportAlbumViewModel: ObservableObject {
         renamedAlbum ?? publicAlbumName
     }
     
+    var isLinkRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .linkRevamp)
+    }
+    
+    var shouldShowLinkUnavailable: Bool {
+        isLinkRevampEnabled && publicLinkStatus == .invalid
+    }
+    
+    var decryptionKeyAlertMessage: String {
+        isLinkRevampEnabled
+        ? Strings.Localizable.Link.DecryptionKey.Alert.message
+        : Strings.Localizable.decryptionKeyAlertMessageForAlbum
+    }
+    
+    var decryptionKeyAlertPlaceholder: String {
+        isLinkRevampEnabled ? Strings.Localizable.decryptionKey : ""
+    }
+    
     var shouldShowEmptyAlbumView: Bool {
         publicLinkStatus == .loaded && isAlbumEmpty
     }
@@ -107,7 +127,8 @@ final class ImportAlbumViewModel: ObservableObject {
          permissionHandler: some DevicePermissionsHandling,
          tracker: some AnalyticsTracking,
          monitorUseCase: some NetworkMonitorUseCaseProtocol,
-         appDelegateRouter: some AppDelegateRouting) {
+         appDelegateRouter: some AppDelegateRouting,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
         self.albumNameUseCase = albumNameUseCase
@@ -120,6 +141,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.monitorUseCase = monitorUseCase
         self.appDelegateRouter = appDelegateRouter
+        self.featureFlagProvider = featureFlagProvider
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
@@ -156,11 +178,16 @@ final class ImportAlbumViewModel: ObservableObject {
         }
         guard publicLinkDecryptionKey.isNotEmpty,
               let linkWithDecryption = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
-            setLinkToInvalid()
+            handleInvalidDecryptionKey()
             return
         }
         publicLinkWithDecryptionKey = linkWithDecryption
         await loadPublicAlbum()
+    }
+    
+    /// Asks for the key again, now that the user has acknowledged the one they typed in is invalid.
+    func acknowledgeInvalidDecryptionKey() {
+        publicLinkStatus = .requireDecryptionKey
     }
     
     func enablePhotoLibraryEditMode(_ enable: Bool) {
@@ -305,7 +332,7 @@ final class ImportAlbumViewModel: ObservableObject {
         } catch is CancellationError {
             MEGALogError("[Import Album] loadPublicAlbumContents cancelled")
         } catch {
-            setLinkToInvalid()
+            handleLoadError(error)
             MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
         }
     }
@@ -317,6 +344,43 @@ final class ImportAlbumViewModel: ObservableObject {
     private func setLinkToInvalid() {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
+    }
+    
+    /// A key the user typed in does not take them to the unavailable page: they are told the key is
+    /// invalid and asked for it again. A key that came embedded in the link does, as there is nothing
+    /// for them to correct. Same split as the file link and the folder link.
+    private func handleLoadError(_ error: any Error) {
+        guard isLinkRevampEnabled,
+              didUserEnterDecryptionKey,
+              isDecryptionKeyError(error) else {
+            setLinkToInvalid()
+            return
+        }
+        handleInvalidDecryptionKey()
+    }
+    
+    private func handleInvalidDecryptionKey() {
+        guard isLinkRevampEnabled else {
+            setLinkToInvalid()
+            return
+        }
+        publicLinkWithDecryptionKey = nil
+        publicLinkDecryptionKey = ""
+        showInvalidDecryptionKeyAlert = true
+    }
+    
+    private var didUserEnterDecryptionKey: Bool {
+        publicLinkWithDecryptionKey != nil
+    }
+    
+    /// The album the key opens is fetched as a set, which reports a key it could not use either as a
+    /// malformed request or as contents it could not decrypt.
+    private func isDecryptionKeyError(_ error: any Error) -> Bool {
+        guard let error = error as? SharedCollectionErrorEntity else { return false }
+        return switch error {
+        case .malformed, .couldNotBeReadOrDecrypted: true
+        default: false
+        }
     }
         
     // MARK: Subscriptions

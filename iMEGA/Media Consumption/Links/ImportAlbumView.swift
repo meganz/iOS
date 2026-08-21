@@ -21,43 +21,13 @@ struct ImportAlbumView: View {
     
     var body: some View {
         
-        ZStack {
-            EmptyView()
-                .alert(
-                    isPresented: $viewModel.showingDecryptionKeyAlert,
-                    .decryptionKey(
-                        message: Strings.Localizable.decryptionKeyAlertMessageForAlbum,
-                        placeholder: "",
-                        confirm: { decryptionKey in
-                            viewModel.publicLinkDecryptionKey = decryptionKey
-                            publicAlbumLoadingTask = Task {
-                                await viewModel.loadWithNewDecryptionKey()
-                            }
-                        },
-                        cancel: dismissImportAlbumScreen
-                    )
-                )
-            
-            VStack(spacing: 0) {
-                navigationBar
-                
-                if viewModel.isConnectedToNetworkUntilContentLoaded {
-                    content()
-                        .snackBar($viewModel.snackBar)
-                } else {
-                    ContentUnavailableView {
-                        MEGAAssets.Image.noInternetEmptyState
-                    } description: {
-                        Text(Strings.Localizable.noInternetConnection)
-                            .font(.body)
-                    }
-                    .frame(maxHeight: .infinity)
-                }
-                
-                bottomToolbar
-            }
-            .task {
-                viewModel.monitorNetworkConnection()
+        Group {
+            if viewModel.shouldShowLinkUnavailable {
+                // Closing from here dismisses without resetting the link status: resetting it would
+                // put the album content back on screen, and with it the request that failed.
+                AlbumLinkUnavailableView(onClose: { presentationMode.wrappedValue.dismiss() })
+            } else {
+                albumContent
             }
         }
         .onAppear {
@@ -71,6 +41,56 @@ struct ImportAlbumView: View {
             SVProgressHUD.dismiss()
             SVProgressHUD.show(MEGAAssets.UIImage.hudForbidden,
                                status: Strings.Localizable.noInternetConnection)
+        }
+    }
+    
+    private var albumContent: some View {
+        VStack(spacing: 0) {
+            navigationBar
+            
+            if viewModel.isConnectedToNetworkUntilContentLoaded {
+                content()
+                    .snackBar($viewModel.snackBar)
+            } else {
+                ContentUnavailableView {
+                    MEGAAssets.Image.noInternetEmptyState
+                } description: {
+                    Text(Strings.Localizable.noInternetConnection)
+                        .font(.body)
+                }
+                .frame(maxHeight: .infinity)
+            }
+            
+            bottomToolbar
+        }
+        .task {
+            viewModel.monitorNetworkConnection()
+        }
+        // Both alerts hang off the album content rather than off an `EmptyView`: an empty view
+        // renders nothing, so SwiftUI is free to drop what is attached to it -- which is what kept
+        // the decryption key alert from ever being presented. The file link attaches its two the
+        // same way, to the view that is on screen while the link resolves.
+        .alert(
+            isPresented: $viewModel.showingDecryptionKeyAlert,
+            .decryptionKey(
+                message: viewModel.decryptionKeyAlertMessage,
+                placeholder: viewModel.decryptionKeyAlertPlaceholder,
+                confirm: { decryptionKey in
+                    viewModel.publicLinkDecryptionKey = decryptionKey
+                    publicAlbumLoadingTask = Task {
+                        await viewModel.loadWithNewDecryptionKey()
+                    }
+                },
+                cancel: dismissImportAlbumScreen
+            )
+        )
+        .alert(
+            Strings.Localizable.decryptionKeyNotValid,
+            isPresented: $viewModel.showInvalidDecryptionKeyAlert
+        ) {
+            Button(Strings.Localizable.ok) {
+                viewModel.acknowledgeInvalidDecryptionKey()
+            }
         }
     }
     

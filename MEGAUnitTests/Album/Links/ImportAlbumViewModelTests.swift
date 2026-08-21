@@ -834,6 +834,109 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     // MARK: - Private
     
+    // MARK: - Link revamp
+    
+    @MainActor
+    func testDecryptionKeyAlertCopy_onLinkRevampEnabled_shouldUseTheSharedRevampedCopy() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        XCTAssertEqual(sut.decryptionKeyAlertMessage, Strings.Localizable.Link.DecryptionKey.Alert.message)
+        XCTAssertEqual(sut.decryptionKeyAlertPlaceholder, Strings.Localizable.decryptionKey)
+    }
+    
+    @MainActor
+    func testDecryptionKeyAlertCopy_onLinkRevampDisabled_shouldUseTheLegacyCopy() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try requireDecryptionKeyAlbumLink)
+        
+        XCTAssertEqual(sut.decryptionKeyAlertMessage, Strings.Localizable.decryptionKeyAlertMessageForAlbum)
+        XCTAssertEqual(sut.decryptionKeyAlertPlaceholder, "")
+    }
+    
+    @MainActor
+    func testLoadPublicAlbum_onLinkRevampEnabledAndSharedAlbumError_shouldShowUnavailablePageInsteadOfAlert() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.couldNotBeReadOrDecrypted)),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertEqual(sut.publicLinkStatus, .invalid)
+        XCTAssertTrue(sut.shouldShowLinkUnavailable)
+        XCTAssertFalse(sut.showCannotAccessAlbumAlert)
+        XCTAssertFalse(sut.showInvalidDecryptionKeyAlert)
+    }
+    
+    @MainActor
+    func testLoadWithNewDecryptionKey_onLinkRevampEnabledAndKeyNotAccepted_shouldNotifyInvalidDecryptionKey() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.malformed)),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = "invalid-key"
+        
+        await sut.loadWithNewDecryptionKey()
+        
+        XCTAssertTrue(sut.showInvalidDecryptionKeyAlert)
+        XCTAssertFalse(sut.shouldShowLinkUnavailable)
+        XCTAssertNotEqual(sut.publicLinkStatus, .invalid)
+        XCTAssertEqual(sut.publicLinkDecryptionKey, "")
+    }
+    
+    @MainActor
+    func testLoadWithNewDecryptionKey_onLinkRevampEnabledAndAlbumNotFound_shouldShowUnavailablePage() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.resourceNotFound)),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
+        
+        await sut.loadWithNewDecryptionKey()
+        
+        XCTAssertTrue(sut.shouldShowLinkUnavailable)
+        XCTAssertFalse(sut.showInvalidDecryptionKeyAlert)
+    }
+    
+    @MainActor
+    func testLoadWithNewDecryptionKey_onLinkRevampDisabledAndKeyNotAccepted_shouldSetStatusToInvalid() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.malformed)))
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = "invalid-key"
+        
+        await sut.loadWithNewDecryptionKey()
+        
+        XCTAssertEqual(sut.publicLinkStatus, .invalid)
+        XCTAssertTrue(sut.showCannotAccessAlbumAlert)
+        XCTAssertFalse(sut.showInvalidDecryptionKeyAlert)
+    }
+    
+    @MainActor
+    func testAcknowledgeInvalidDecryptionKey_onLinkRevampEnabled_shouldAskForTheKeyAgain() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.malformed)),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = "invalid-key"
+        await sut.loadWithNewDecryptionKey()
+        
+        sut.acknowledgeInvalidDecryptionKey()
+        
+        XCTAssertEqual(sut.publicLinkStatus, .requireDecryptionKey)
+        XCTAssertTrue(sut.showingDecryptionKeyAlert)
+    }
+    
     @MainActor
     private func makeImportAlbumViewModel(
         publicLink: URL,
@@ -848,6 +951,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> ImportAlbumViewModel {
@@ -863,7 +967,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             permissionHandler: permissionHandler,
             tracker: tracker,
             monitorUseCase: monitorUseCase,
-            appDelegateRouter: appDelegateRouter)
+            appDelegateRouter: appDelegateRouter,
+            featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
@@ -972,7 +1077,8 @@ struct ImportAlbumViewModelTestSuite {
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
-        appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter()
+        appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ImportAlbumViewModel {
         .init(
             publicLink: publicLink,
@@ -986,6 +1092,7 @@ struct ImportAlbumViewModelTestSuite {
             permissionHandler: permissionHandler,
             tracker: tracker,
             monitorUseCase: monitorUseCase,
-            appDelegateRouter: appDelegateRouter)
+            appDelegateRouter: appDelegateRouter,
+            featureFlagProvider: featureFlagProvider)
     }
 }

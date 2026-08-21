@@ -5,13 +5,14 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
-/// Revamped unavailable state shared by the file link and the folder link: a Title 3/Semibold
-/// heading over Callout body copy, matching the Empty state component of the link revamp design.
+/// Revamped unavailable state shared by the file link, the folder link and the album link: a
+/// Title 3/Semibold heading over Callout body copy, matching the Empty state component of the link
+/// revamp design.
 ///
-/// Only the wording that names the kind of link differs between the two, so both hand their own
-/// `Copy` to this single layout.
+/// Only the wording that names the kind of link differs between them, so each hands its own `Copy`
+/// to this single layout.
 struct LinkUnavailableContentView: View {
-    /// The copy that names the kind of link. The reasons that are worded the same for both links --
+    /// The copy that names the kind of link. The reasons that are worded the same for every link --
     /// a taken down link, a suspended or a terminated owner -- are not part of this.
     struct Copy {
         let notAvailableTitle: String
@@ -163,10 +164,33 @@ extension LinkUnavailableContentView.Copy {
     }
 }
 
+extension LinkUnavailableContentView.Copy {
+    /// The title and the reasons are the English copy of the design, hardcoded on purpose: IOS-12472 adds the album link strings to MEGAL10n.
+    static var albumLink: Self {
+        let title = "Album cannot be accessed"
+        return .init(
+            notAvailableTitle: title,
+            noLongerAvailableTitle: title,
+            unavailableTitle: title,
+            hasExpiredDescription: Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message,
+            genericDescriptionHeader: Strings.Localizable.fileLinkUnavailableText1,
+            genericReasons: [
+                "The album was deleted",
+                "The album link is disabled by the owner",
+                "The link is invalid or doesn’t exist"
+            ]
+        )
+    }
+}
+
 #Preview("File link - generic") {
     LinkUnavailableContentView(reason: .generic, copy: .fileLink)
 }
 
 #Preview("Folder link - copyright suspension") {
     LinkUnavailableContentView(reason: .copyrightSuspension, copy: .folderLink)
+}
+
+#Preview("Album link") {
+    LinkUnavailableContentView(reason: .generic, copy: .albumLink)
 }
