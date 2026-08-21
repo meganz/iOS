@@ -58,6 +58,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private let nodeFingerprint: String?
     private let nodeSizes: [MEGAHandle: Int64]
     private let folderInfo: MEGAFolderInfo?
+    private let dateSections: [MEGADateSection]
     private var delegates: [any MEGADelegate] = []
     private var transferDelegates: [any MEGATransferDelegate] = []
     private var requestDelegates: [any MEGARequestDelegate] = []
@@ -87,6 +88,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public private(set) var nodeListSearchCallCount = 0
     public private(set) var searchWithFilterCallCount = 0
     public private(set) var searchNonRecursivelyWithFilterCallCount = 0
+    public private(set) var listAllNodesByPageQueryParameters: ListAllNodesByPageQueryParameters?
+    public private(set) var listAllNodesByPageCallCount = 0
+    public private(set) var groupAllNodesByDateQueryParameters: GroupAllNodesByDateQueryParameters?
+    public private(set) var groupAllNodesByDateCallCount = 0
     public private(set) var isNodeSensitive: Bool?
     public private(set) var megaSetsCallCount = 0
     public private(set) var copyNodeWithNewNameCallCount = 0
@@ -207,7 +212,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         updatedAddressURL: URL? = nil,
         isNonAuthorized: Bool = false,
         isS4Enabled: Bool = false,
-        s4ContainerHandle: MEGAHandle = 0
+        s4ContainerHandle: MEGAHandle = 0,
+        dateSections: [MEGADateSection] = []
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -277,6 +283,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.isNonAuthorized = isNonAuthorized
         self._isS4Enabled = isS4Enabled
         self.s4ContainerHandle = s4ContainerHandle
+        self.dateSections = dateSections
         super.init()
     }
     
@@ -489,7 +496,51 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         searchNonRecursivelyWithFilterCallCount += 1
         return MockNodeList(nodes: nodes)
     }
-    
+
+    public override func listAllNodesByPage(
+        with filter: MEGAListAllNodesFilter,
+        orderType: MEGASortOrderType,
+        maxElements: UInt,
+        cursor: MEGASearchCursorOffset?,
+        cancelToken: MEGACancelToken
+    ) -> MEGANodeList {
+        listAllNodesByPageQueryParameters = ListAllNodesByPageQueryParameters(
+            filter: filter,
+            orderType: orderType,
+            maxElements: maxElements,
+            pagination: .cursor(cursor.map(ListAllNodesByPageQueryParameters.Cursor.init)))
+        listAllNodesByPageCallCount += 1
+        return MockNodeList(nodes: nodes)
+    }
+
+    public override func listAllNodesByPage(
+        with filter: MEGAListAllNodesFilter,
+        orderType: MEGASortOrderType,
+        maxElements: UInt,
+        offset: Int64,
+        cancelToken: MEGACancelToken
+    ) -> MEGANodeList {
+        listAllNodesByPageQueryParameters = ListAllNodesByPageQueryParameters(
+            filter: filter,
+            orderType: orderType,
+            maxElements: maxElements,
+            pagination: .offset(offset))
+        listAllNodesByPageCallCount += 1
+        return MockNodeList(nodes: nodes)
+    }
+
+    public override func groupAllNodesByDate(
+        with filter: MEGAGroupNodesByDateFilter,
+        orderType: MEGASortOrderType,
+        cancelToken: MEGACancelToken
+    ) -> [MEGADateSection]? {
+        groupAllNodesByDateQueryParameters = GroupAllNodesByDateQueryParameters(
+            filter: filter,
+            orderType: orderType)
+        groupAllNodesByDateCallCount += 1
+        return dateSections
+    }
+
     public override func nodePath(for node: MEGANode) -> String? {
         guard let mockNode = node as? MockNode else { return nil }
         
@@ -1211,5 +1262,95 @@ private extension MEGANodeList {
     func toNodeArray() -> [MEGANode] {
         guard size > 0 else { return [] }
         return (0..<size).compactMap { node(at: $0) }
+    }
+}
+
+extension MockSdk {
+    /// Snapshot of the arguments of one `listAllNodesByPage` call. The filter is copied
+    /// field by field so an assertion can't be fooled by a later mutation of the same object.
+    public struct ListAllNodesByPageQueryParameters: Equatable {
+        /// Which of the two overloads was called, with the paging argument it carried.
+        public enum Pagination: Equatable {
+            case cursor(Cursor?)
+            case offset(Int64)
+        }
+
+        public struct Cursor: Equatable {
+            public let lastName: String?
+            public let lastHandle: MEGAHandle
+            public let lastSize: Int64
+            public let lastMtime: Int64
+            public let lastLabel: Int
+            public let lastFav: Int
+
+            public init(_ cursor: MEGASearchCursorOffset) {
+                lastName = cursor.lastName
+                lastHandle = cursor.lastHandle
+                lastSize = cursor.lastSize
+                lastMtime = cursor.lastMtime
+                lastLabel = cursor.lastLabel
+                lastFav = cursor.lastFav
+            }
+        }
+
+        public let category: MEGANodeFormatType
+        public let location: MEGAListAllNodesFilterLocation
+        public let locationHandles: [MEGAHandle]?
+        public let excludeLocationHandles: [MEGAHandle]?
+        public let sensitivityFilter: MEGAListAllNodesFilterSensitivityOption
+        public let timestampAnchorStartDate: Int64
+        public let timestampAnchorEndDate: Int64
+        public let timestampAnchorSectionOrder: MEGAListAllNodesTimestampAnchorOrder
+        public let orderType: MEGASortOrderType
+        public let maxElements: UInt
+        public let pagination: Pagination
+
+        public init(
+            filter: MEGAListAllNodesFilter,
+            orderType: MEGASortOrderType,
+            maxElements: UInt,
+            pagination: Pagination
+        ) {
+            category = filter.category
+            location = filter.location
+            locationHandles = filter.locationHandles?.toHandles()
+            excludeLocationHandles = filter.excludeLocationHandles?.toHandles()
+            sensitivityFilter = filter.sensitivityFilter
+            timestampAnchorStartDate = filter.timestampAnchorStartDate
+            timestampAnchorEndDate = filter.timestampAnchorEndDate
+            timestampAnchorSectionOrder = filter.timestampAnchorSectionOrder
+            self.orderType = orderType
+            self.maxElements = maxElements
+            self.pagination = pagination
+        }
+    }
+
+    /// Snapshot of the arguments of one `groupAllNodesByDate` call.
+    public struct GroupAllNodesByDateQueryParameters: Equatable {
+        public let category: MEGANodeFormatType
+        public let location: MEGAListAllNodesFilterLocation
+        public let locationHandles: [MEGAHandle]?
+        public let excludeLocationHandles: [MEGAHandle]?
+        public let sensitivityFilter: MEGAListAllNodesFilterSensitivityOption
+        public let granularity: MEGAGroupNodesByDateGranularity
+        public let utcOffset: String?
+        public let orderType: MEGASortOrderType
+
+        public init(filter: MEGAGroupNodesByDateFilter, orderType: MEGASortOrderType) {
+            category = filter.category
+            location = filter.location
+            locationHandles = filter.locationHandles?.toHandles()
+            excludeLocationHandles = filter.excludeLocationHandles?.toHandles()
+            sensitivityFilter = filter.sensitivityFilter
+            granularity = filter.granularity
+            utcOffset = filter.utcOffset
+            self.orderType = orderType
+        }
+    }
+}
+
+private extension Array where Element == NSNumber {
+    func toHandles() -> [MEGAHandle] {
+        map { $0.uint64Value }
     }
 }

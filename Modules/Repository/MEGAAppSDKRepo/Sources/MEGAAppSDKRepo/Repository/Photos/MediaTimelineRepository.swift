@@ -10,14 +10,14 @@ import MEGASwift
 /// on demand so they never leak into the Domain layer.
 public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
     private let sdk: MEGASdk
-    private let cameraUploadNodeAccess: CameraUploadNodeAccess
-    private let mediaUploadNodeAccess: MediaUploadNodeAccess
+    private let cameraUploadNodeAccess: any NodeAccessProtocol
+    private let mediaUploadNodeAccess: any NodeAccessProtocol
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
 
     public init(
         sdk: MEGASdk,
-        cameraUploadNodeAccess: CameraUploadNodeAccess,
-        mediaUploadNodeAccess: MediaUploadNodeAccess,
+        cameraUploadNodeAccess: some NodeAccessProtocol,
+        mediaUploadNodeAccess: some NodeAccessProtocol,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol
     ) {
         self.sdk = sdk
@@ -229,7 +229,7 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
         return await [camera, media].compactMap { $0 }
     }
 
-    private func handle(from access: NodeAccess) async -> HandleEntity? {
+    private func handle(from access: any NodeAccessProtocol) async -> HandleEntity? {
         await withCheckedContinuation { continuation in
             access.loadNode { node, _ in
                 continuation.resume(returning: node?.handle)

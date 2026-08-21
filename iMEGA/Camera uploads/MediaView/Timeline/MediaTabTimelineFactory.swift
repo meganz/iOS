@@ -64,8 +64,8 @@ enum MediaTabTimelineFactory {
             ? MediaTimelineUseCase(
                 repository: MediaTimelineRepository(
                     sdk: .shared,
-                    cameraUploadNodeAccess: .shared,
-                    mediaUploadNodeAccess: .shared,
+                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared,
+                    mediaUploadNodeAccess: MediaUploadNodeAccess.shared,
                     nodeUpdatesProvider: NodeUpdatesProvider()),
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase)
