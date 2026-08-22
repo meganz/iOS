@@ -6,16 +6,11 @@ import MEGASwiftUI
 import SwiftUI
 
 struct ImportAlbumView: View {
-    private enum Constants {
-        static let toolbarButtonVerticalPadding = 11.0
-        static let toolbarButtonHorizontalPadding = 16.0
-    }
-    
-    @Environment(\.presentationMode) private var presentationMode
     @Environment(\.colorScheme) private var colorScheme
     
     @StateObject var viewModel: ImportAlbumViewModel
-    var invokeDismiss: (() -> Void)?
+    
+    let invokeDismiss: () -> Void
     
     @State private var publicAlbumLoadingTask: Task<Void, Never>?
     
@@ -25,7 +20,7 @@ struct ImportAlbumView: View {
             if viewModel.shouldShowLinkUnavailable {
                 // Closing from here dismisses without resetting the link status: resetting it would
                 // put the album content back on screen, and with it the request that failed.
-                AlbumLinkUnavailableView(onClose: { presentationMode.wrappedValue.dismiss() })
+                AlbumLinkUnavailableView(onClose: invokeDismiss)
             } else {
                 albumContent
             }
@@ -44,53 +39,79 @@ struct ImportAlbumView: View {
         }
     }
     
+    
     private var albumContent: some View {
-        VStack(spacing: 0) {
-            navigationBar
-            
-            if viewModel.isConnectedToNetworkUntilContentLoaded {
-                content()
-                    .snackBar($viewModel.snackBar)
-            } else {
-                ContentUnavailableView {
-                    MEGAAssets.Image.noInternetEmptyState
-                } description: {
-                    Text(Strings.Localizable.noInternetConnection)
-                        .font(.body)
-                }
-                .frame(maxHeight: .infinity)
+        NavigationStack {
+            albumBody
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { toolbarContent }
+        }
+        .tint(TokenColors.Icon.primary.swiftUI)
+    }
+    
+    private var albumBody: some View {
+        albumBodyModals
+            .task {
+                viewModel.monitorNetworkConnection()
             }
-            
-            bottomToolbar
-        }
-        .task {
-            viewModel.monitorNetworkConnection()
-        }
-        // Both alerts hang off the album content rather than off an `EmptyView`: an empty view
-        // renders nothing, so SwiftUI is free to drop what is attached to it -- which is what kept
-        // the decryption key alert from ever being presented. The file link attaches its two the
-        // same way, to the view that is on screen while the link resolves.
-        .alert(
-            isPresented: $viewModel.showingDecryptionKeyAlert,
-            .decryptionKey(
-                message: viewModel.decryptionKeyAlertMessage,
-                placeholder: viewModel.decryptionKeyAlertPlaceholder,
-                confirm: { decryptionKey in
-                    viewModel.publicLinkDecryptionKey = decryptionKey
-                    publicAlbumLoadingTask = Task {
-                        await viewModel.loadWithNewDecryptionKey()
-                    }
-                },
-                cancel: dismissImportAlbumScreen
+            .alert(
+                isPresented: $viewModel.showingDecryptionKeyAlert,
+                .decryptionKey(
+                    message: viewModel.decryptionKeyAlertMessage,
+                    placeholder: viewModel.decryptionKeyAlertPlaceholder,
+                    confirm: { decryptionKey in
+                        viewModel.publicLinkDecryptionKey = decryptionKey
+                        publicAlbumLoadingTask = Task {
+                            await viewModel.loadWithNewDecryptionKey()
+                        }
+                    },
+                    cancel: dismissImportAlbumScreen
+                )
             )
-        )
-        .alert(
-            Strings.Localizable.decryptionKeyNotValid,
-            isPresented: $viewModel.showInvalidDecryptionKeyAlert
-        ) {
-            Button(Strings.Localizable.ok) {
-                viewModel.acknowledgeInvalidDecryptionKey()
+            .alert(
+                Strings.Localizable.decryptionKeyNotValid,
+                isPresented: $viewModel.showInvalidDecryptionKeyAlert
+            ) {
+                Button(Strings.Localizable.ok) {
+                    viewModel.acknowledgeInvalidDecryptionKey()
+                }
             }
+    }
+    
+    /// The modals the bottom bar buttons drive are attached here, not to the buttons themselves:
+    /// toolbar items live outside the regular view hierarchy, so what hangs off them can be dropped
+    /// the same way it was for the decryption key alert.
+    private var albumBodyModals: some View {
+        networkAwareContent
+            .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
+                CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
+            }
+            .alert(isPresented: $viewModel.showRenameAlbumAlert,
+                   viewModel.renameAlbumAlertViewModel())
+            .sheet(isPresented: $viewModel.showImportAlbumLocation) {
+                BrowserView(browserAction: .saveToCloudDrive,
+                            isChildBrowser: true,
+                            parentNode: MEGASdk.shared.rootNode,
+                            selectedNode: $viewModel.importFolderLocation)
+                .ignoresSafeArea(edges: .bottom)
+            }
+            .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
+            .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
+    }
+    
+    @ViewBuilder
+    private var networkAwareContent: some View {
+        if viewModel.isConnectedToNetworkUntilContentLoaded {
+            content()
+                .snackBar($viewModel.snackBar)
+        } else {
+            ContentUnavailableView {
+                MEGAAssets.Image.noInternetEmptyState
+            } description: {
+                Text(Strings.Localizable.noInternetConnection)
+                    .font(.body)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
     
@@ -120,15 +141,31 @@ struct ImportAlbumView: View {
         }
     }
     
-    private var navigationBar: some View {
-        NavigationBarView(leading: {
+    // MARK: - Toolbars
+    
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
             leftNavigationButton
-        }, trailing: {
-            rightNavigationBarButton
-                .frame(maxHeight: 44)
-        }, center: {
+        }
+        
+        ToolbarItem(placement: .principal) {
             navigationTitle
-        }, backgroundColor: TokenColors.Background.surface1.swiftUI)
+        }
+        
+        ToolbarItem(placement: .topBarTrailing) {
+            rightNavigationBarButton
+        }
+        
+        ToolbarItemGroup(placement: .bottomBar) {
+            if viewModel.showImportToolbarButton {
+                importAlbumToolbarButton
+                Spacer()
+            }
+            saveToPhotosToolbarButton
+            Spacer()
+            shareLinkButton
+        }
     }
     
     @ViewBuilder
@@ -140,33 +177,43 @@ struct ImportAlbumView: View {
                 Image(uiImage: MEGAAssets.UIImage.selectAllItems)
             }
         } else {
-            Button(Strings.Localizable.close) {
+            Button {
                 dismissImportAlbumScreen()
+            } label: {
+                closeIcon
             }
-            .foregroundColor(toolbarButtonColor)
+            .accessibilityLabel(Strings.Localizable.close)
         }
+    }
+    
+    /// The glass capsule supplies the padding the icon used to draw for itself.
+    private var closeIcon: some View {
+        MEGAAssets.Image.x
+            .frame(width: TokenSpacing._7, height: TokenSpacing._7)
+            .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+            .padding(isLiquidGlassSupported ? 0 : 10)
     }
     
     @ViewBuilder
     private var navigationTitle: some View {
         if viewModel.isSelectionEnabled {
-            NavigationTitleView(title: viewModel.selectionNavigationTitle)
+            NavigationTitleView(title: viewModel.selectionNavigationTitle,
+                                isLiquidGlassSupported: isLiquidGlassSupported)
         } else if let albumName = viewModel.publicAlbumName {
-            NavigationTitleView(title: albumName, subtitle: Strings.Localizable.albumLink)
+            NavigationTitleView(title: albumName,
+                                subtitle: Strings.Localizable.albumLink,
+                                isLiquidGlassSupported: isLiquidGlassSupported)
         } else {
-            NavigationTitleView(title: Strings.Localizable.albumLink)
+            NavigationTitleView(title: Strings.Localizable.albumLink,
+                                isLiquidGlassSupported: isLiquidGlassSupported)
         }
     }
     
     @ViewBuilder
     private var rightNavigationBarButton: some View {
         if viewModel.isSelectionEnabled {
-            Button {
+            Button(Strings.Localizable.cancel) {
                 viewModel.enablePhotoLibraryEditMode(false)
-            } label: {
-                Text(Strings.Localizable.cancel)
-                    .font(.body)
-                    .foregroundColor(toolbarButtonColor)
             }
         } else {
             Button {
@@ -174,71 +221,59 @@ struct ImportAlbumView: View {
             } label: {
                 Image(uiImage: MEGAAssets.UIImage.selectAllItems)
             }
-            .opacity(viewModel.selectButtonOpacity)
+            .opacity(selectButtonOpacity)
             .disabled(viewModel.isAlbumEmpty)
         }
     }
     
-    private var toolbarButtonColor: Color {
-        TokenColors.Text.primary.swiftUI
+    /// Under Liquid Glass the button carries its own glass capsule, and fading the button fades the
+    /// capsule with it. `disabled(_:)` already dims the content there, which leaves the opacity to
+    /// do only what the capsule cannot: hide the button outright while the album is still loading.
+    private var selectButtonOpacity: Double {
+        guard isLiquidGlassSupported else {
+            return viewModel.selectButtonOpacity
+        }
+        return viewModel.selectButtonOpacity > 0 ? 1 : 0
+    }
+    
+    private var isLiquidGlassSupported: Bool {
+        if #available(iOS 26.0, *) {
+            true
+        } else {
+            false
+        }
     }
     
     private func dismissImportAlbumScreen() {
         viewModel.publicLinkStatus = .none
-        presentationMode.wrappedValue.dismiss()
+        invokeDismiss()
     }
     
-    private var bottomToolbar: some View {
-        HStack(alignment: .top) {
-            if viewModel.showImportToolbarButton {
-                importAlbumToolbarButton()
-                Spacer()
-            }
-            saveToPhotosToolbarButton()
-            Spacer()
-            shareLinkButton()
-        }
-        .frame(maxHeight: 64)
-        .background(TokenColors.Background.surface1.swiftUI.edgesIgnoringSafeArea(.bottom))
-    }
+    // MARK: - Bottom bar buttons
     
-    private func importAlbumToolbarButton() -> some View {
-        ToolbarImageButton(image: MEGAAssets.UIImage.folderArrow,
-                           isDisabled: viewModel.isToolbarButtonsDisabled,
-                           action: {
+    private var importAlbumToolbarButton: some View {
+        Button {
             Task { await viewModel.importAlbum() }
-        })
-        // Legacy dialog: a dimmed-card overlay, must stay full-screen.
-        // (The redesigned dialog is presented via QuotaWarningsRouter from the view model.)
-        .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
-            CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.folderArrow)
         }
-        .alert(isPresented: $viewModel.showRenameAlbumAlert,
-               viewModel.renameAlbumAlertViewModel())
-        .sheet(isPresented: $viewModel.showImportAlbumLocation) {
-            BrowserView(browserAction: .saveToCloudDrive,
-                        isChildBrowser: true,
-                        parentNode: MEGASdk.shared.rootNode,
-                        selectedNode: $viewModel.importFolderLocation)
-            .ignoresSafeArea(edges: .bottom)
-        }
+        .disabled(viewModel.isToolbarButtonsDisabled)
     }
     
-    private func saveToPhotosToolbarButton() -> some View {
-        ToolbarImageButton(image: MEGAAssets.UIImage.photosApp,
-                           isDisabled: viewModel.isToolbarButtonsDisabled,
-                           action: {
+    private var saveToPhotosToolbarButton: some View {
+        Button {
             Task { await viewModel.saveToPhotos() }
-        })
-        .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.photosApp)
+        }
+        .disabled(viewModel.isToolbarButtonsDisabled)
     }
     
-    private func shareLinkButton() -> some View {
-        ToolbarImageButton(
-            image: MEGAAssets.UIImage.link01,
-            isDisabled: viewModel.isShareLinkButtonDisabled,
-            action: viewModel.shareLinkTapped)
-        .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
+    private var shareLinkButton: some View {
+        Button(action: viewModel.shareLinkTapped) {
+            Image(uiImage: MEGAAssets.UIImage.link01)
+        }
+        .disabled(viewModel.isShareLinkButtonDisabled)
     }
 }
 
@@ -247,37 +282,6 @@ private extension View {
         background(
             ShareSheet(isPresented: isPresented, activityItems: activityItems)
         )
-    }
-}
-
-private struct ToolbarImageButton: View {
-    private enum Constants {
-        static let toolbarButtonVerticalPadding = 11.0
-        static let toolbarButtonHorizontalPadding = 16.0
-        static let disabledOpacity = 0.3
-        static let imageSize: CGSize = .init(width: 28, height: 28)
-    }
-    
-    let image: UIImage
-    let isDisabled: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Image(uiImage: image)
-                .resizable()
-                .frame(width: Constants.imageSize.width,
-                       height: Constants.imageSize.height)
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .opacity(toolbarButtonOpacity)
-        }
-        .disabled(isDisabled)
-        .padding(.vertical, Constants.toolbarButtonVerticalPadding)
-        .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
-    }
-    
-    private var toolbarButtonOpacity: Double {
-        isDisabled ? Constants.disabledOpacity : 1
     }
 }
 

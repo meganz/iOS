@@ -113,10 +113,11 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             appDelegateRouter: AppDelegateRouter()
         )
         
-        let viewController = UIHostingController(rootView: ImportAlbumView(
-            viewModel: vm))
-        viewController.modalPresentationStyle = .fullScreen
-        UIApplication.mnz_visibleViewController().present(viewController, animated: true)
+        let navigationController = MEGANavigationController(
+            rootViewController: AlbumLinkViewController(viewModel: vm)
+        )
+        navigationController.modalPresentationStyle = .fullScreen
+        UIApplication.mnz_visibleViewController().present(navigationController, animated: true)
     }
     
     class func albumPublicLink() -> URL? {

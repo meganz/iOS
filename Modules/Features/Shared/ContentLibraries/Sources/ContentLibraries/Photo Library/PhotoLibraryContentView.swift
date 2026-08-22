@@ -45,10 +45,15 @@ public struct PhotoLibraryContentView: View {
         } else {
             photoContent()
                 .safeAreaInset(edge: .bottom) {
-                    EmptyView().frame(height: 64)
+                    EmptyView().frame(height: reservedBottomBarHeight)
                 }
         }
     }
+
+    private var reservedBottomBarHeight: CGFloat {
+        viewModel.contentMode == .albumLink ? 0 : 64
+    }
+
     private var placeholder: some View {
         PhotoLibraryPlaceholderView(isActive: viewModel.isLoading && viewModel.library.isEmpty)
     }

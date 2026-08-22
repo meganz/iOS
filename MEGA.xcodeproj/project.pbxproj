@@ -2715,6 +2715,7 @@
 		FE1EB0000000000000000003 /* MEGAFileLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */; };
 		FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */; };
 		FE1EB0000000000000000101 /* AlbumLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */; };
+		FE1EB0000000000000000103 /* AlbumLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000103 /* AlbumLinkViewController.swift */; };
 		FE1EB0000000000000000102 /* AlbumLinkEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */; };
 		FE1EB0000000000000000009 /* LinkUnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */; };
 		FE1EB000000000000000000A /* FileLinkNodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000A /* FileLinkNodeOpener.swift */; };
@@ -5597,6 +5598,7 @@
 		FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFileLinkBuilder.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkUnavailableView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkUnavailableView.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000103 /* AlbumLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkViewController.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkEmptyView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUnavailableContentView.swift; sourceTree = "<group>"; };
 		FE1EA000000000000000000A /* FileLinkNodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkNodeOpener.swift; sourceTree = "<group>"; };
@@ -7052,6 +7054,7 @@
 			children = (
 				FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */,
 				FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */,
+				FE1EA0000000000000000103 /* AlbumLinkViewController.swift */,
 				328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */,
 				328C15352A3975C8002499CE /* ImportAlbumView.swift */,
 				328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */,
@@ -14686,6 +14689,7 @@
 				32B813AC2A244AA6002A6635 /* AlbumHudMessage.swift in Sources */,
 				FE1EB0000000000000000102 /* AlbumLinkEmptyView.swift in Sources */,
 				FE1EB0000000000000000101 /* AlbumLinkUnavailableView.swift in Sources */,
+				FE1EB0000000000000000103 /* AlbumLinkViewController.swift in Sources */,
 				12397E212820C4A600A30CCC /* AlbumListView.swift in Sources */,
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */,
