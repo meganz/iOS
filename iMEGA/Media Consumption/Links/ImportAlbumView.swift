@@ -98,13 +98,7 @@ struct ImportAlbumView: View {
     private func content() -> some View {
         ZStack {
             if viewModel.shouldShowEmptyAlbumView {
-                ContentUnavailableView {
-                    MEGAAssets.Image.allPhotosEmptyState
-                } description: {
-                    Text(Strings.Localizable.CameraUploads.Albums.Empty.title)
-                        .font(.body)
-                }
-                .frame(maxHeight: .infinity)
+                AlbumLinkEmptyView(isLinkRevampEnabled: viewModel.isLinkRevampEnabled)
             } else {
                 PhotoLibraryContentView(
                     viewModel: viewModel.photoLibraryContentViewModel,
