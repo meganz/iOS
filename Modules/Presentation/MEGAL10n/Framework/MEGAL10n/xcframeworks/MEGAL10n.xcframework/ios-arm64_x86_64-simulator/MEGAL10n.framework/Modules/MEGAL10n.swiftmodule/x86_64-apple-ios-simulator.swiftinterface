@@ -2055,6 +2055,12 @@ public enum Strings {
             public static let videos: Swift.String
           }
         }
+        public enum Sort {
+          public static let newestByDateTaken: Swift.String
+          public static let newestByLastModified: Swift.String
+          public static let oldestByDateTaken: Swift.String
+          public static let oldestByLastModified: Swift.String
+        }
       }
       public enum VideoUploads {
         public static let title: Swift.String

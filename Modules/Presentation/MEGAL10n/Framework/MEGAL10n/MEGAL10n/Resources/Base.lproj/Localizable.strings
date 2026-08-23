@@ -5192,3 +5192,11 @@
 "albumLink.unavailableReason2"="The album link is disabled by the owner";
 /* Third of the reasons listed on the screen shown when an album link cannot be opened. */
 "albumLink.unavailableReason3"="The link is invalid or doesn’t exist";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Newest by last modified";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Oldest by last modified";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Newest by date taken";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Oldest by date taken";
