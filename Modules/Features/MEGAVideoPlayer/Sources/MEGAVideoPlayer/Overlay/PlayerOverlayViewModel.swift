@@ -67,6 +67,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         self.didTapMoreAction = didTapMoreAction
         self.didTapRotateAction = didTapRotateAction
         self.didTapPictureInPictureAction = didTapPictureInPictureAction
+        self.isLoopEnabled = player.isLoopEnabled
     }
 
     func viewWillAppear() {

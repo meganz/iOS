@@ -33,6 +33,8 @@ public protocol PlaybackStateObservable {
 
 @MainActor
 public protocol PlaybackControllable {
+    var isLoopEnabled: Bool { get }
+    
     func play()
     func pause()
     func stop()

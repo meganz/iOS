@@ -671,6 +671,16 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.setLoopingValue == false)
     }
 
+    @Test(arguments: [true, false])
+    func init_adoptsLoopStateFromPlayer(_ playerLoopState: Bool) {
+        let mockPlayer = MockVideoPlayer()
+        mockPlayer.isLoopEnabled = playerLoopState
+
+        let sut = makeSUT(player: mockPlayer)
+
+        #expect(sut.isLoopEnabled == playerLoopState)
+    }
+
     // MARK: - Rotation Tests
     
     @Test

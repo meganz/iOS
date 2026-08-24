@@ -37,7 +37,7 @@ public final class MEGAAVPlayer {
 
     private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
 
-    private var isLoopEnabled: Bool = false
+    public private(set) var isLoopEnabled: Bool
     private var playerRate: Float = 1.0
 
     private var cancellables = Set<AnyCancellable>()
@@ -50,17 +50,21 @@ public final class MEGAAVPlayer {
     private let notificationCenter: NotificationCenter
     private let resumePlaybackPositionUseCase: any ResumePlaybackPositionUseCaseProtocol
     private let videoNodesUseCase: any VideoNodesUseCaseProtocol
+    private let videoPlaybackLoopUseCase: any VideoPlaybackLoopUseCaseProtocol
 
     public init(
         streamingUseCase: some StreamingUseCaseProtocol,
         notificationCenter: NotificationCenter,
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol,
-        videoNodesUseCase: some VideoNodesUseCaseProtocol
+        videoNodesUseCase: some VideoNodesUseCaseProtocol,
+        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol
     ) {
         self.streamingUseCase = streamingUseCase
         self.notificationCenter = notificationCenter
         self.resumePlaybackPositionUseCase = resumePlaybackPositionUseCase
         self.videoNodesUseCase = videoNodesUseCase
+        self.videoPlaybackLoopUseCase = videoPlaybackLoopUseCase
+        self.isLoopEnabled = videoPlaybackLoopUseCase.isLoopEnabled
         self.statePublisher = stateSubject.eraseToAnyPublisher()
         self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
         self.durationPublisher = durationSubject.eraseToAnyPublisher()
@@ -187,6 +191,7 @@ extension MEGAAVPlayer: PlaybackControllable {
 
     public func setLooping(_ enabled: Bool) {
         isLoopEnabled = enabled
+        videoPlaybackLoopUseCase.setLoopEnabled(enabled)
     }
 
     public func playNext() {
@@ -765,7 +770,8 @@ public extension MEGAAVPlayer {
             streamingUseCase: DependencyInjection.streamingUseCase,
             notificationCenter: .default,
             resumePlaybackPositionUseCase: DependencyInjection.resumePlaybackPositionUseCase,
-            videoNodesUseCase: DependencyInjection.videoNodesUseCase
+            videoNodesUseCase: DependencyInjection.videoNodesUseCase,
+            videoPlaybackLoopUseCase: DependencyInjection.videoPlaybackLoopUseCase
         )
     }
 }

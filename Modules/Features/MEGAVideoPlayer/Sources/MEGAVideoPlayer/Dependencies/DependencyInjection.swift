@@ -24,6 +24,12 @@ public enum DependencyInjection {
         )
     }
 
+    public static var videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol {
+        VideoPlaybackLoopUseCase(
+            preferenceUseCase: PreferenceUseCase.default
+        )
+    }
+
     public static var videoNodesUseCase: some VideoNodesUseCaseProtocol {
         VideoNodesUseCase(
             repo: VideoNodesRepository.newRepo

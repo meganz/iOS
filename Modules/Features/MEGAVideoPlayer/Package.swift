@@ -82,6 +82,7 @@ let package = Package(
                 "MEGAVideoPlayer",
                 "MEGAVideoPlayerMock",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAPreferenceMocks", package: "MEGAPreference"),
                 .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
                 .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
                 .product(name: "MEGAPermissions", package: "MEGAPermissions"),

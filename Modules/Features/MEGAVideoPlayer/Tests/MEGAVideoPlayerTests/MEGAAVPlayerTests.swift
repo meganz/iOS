@@ -117,17 +117,46 @@ struct MEGAAVPlayerTests {
         #expect(streamingUseCase.resetThrottleBitrateCallCount == 2)
     }
 
+    // MARK: - Loop Tests
+
+    @Test(arguments: [true, false])
+    func init_restoresPersistedLoopState(_ persistedValue: Bool) {
+        let sut = makeSUT(
+            videoPlaybackLoopUseCase: MockVideoPlaybackLoopUseCase(isLoopEnabled: persistedValue)
+        )
+
+        #expect(sut.isLoopEnabled == persistedValue)
+    }
+
+    @Test
+    func setLooping_persistsLoopState() {
+        let mockLoopUseCase = MockVideoPlaybackLoopUseCase()
+        let sut = makeSUT(videoPlaybackLoopUseCase: mockLoopUseCase)
+
+        sut.setLooping(true)
+        #expect(sut.isLoopEnabled == true)
+        #expect(mockLoopUseCase.setLoopEnabledCallCount == 1)
+        #expect(mockLoopUseCase.isLoopEnabled == true)
+
+        sut.setLooping(false)
+        #expect(sut.isLoopEnabled == false)
+        #expect(mockLoopUseCase.setLoopEnabledCallCount == 2)
+        #expect(mockLoopUseCase.isLoopEnabled == false)
+    }
+
     private func makeSUT(
         streamingUseCase: some StreamingUseCaseProtocol = MockStreamingUseCase(),
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase(),
         videoNodesUseCase: some VideoNodesUseCaseProtocol =
-            MockVideoNodesUseCase()
+            MockVideoNodesUseCase(),
+        videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol = MockVideoPlaybackLoopUseCase()
     ) -> MEGAAVPlayer {
         return MEGAAVPlayer(
             streamingUseCase: streamingUseCase,
             notificationCenter: .default,
             resumePlaybackPositionUseCase: resumePlaybackPositionUseCase,
-            videoNodesUseCase: videoNodesUseCase
+            videoNodesUseCase: videoNodesUseCase,
+            videoPlaybackLoopUseCase: videoPlaybackLoopUseCase
         )
     }
 }
