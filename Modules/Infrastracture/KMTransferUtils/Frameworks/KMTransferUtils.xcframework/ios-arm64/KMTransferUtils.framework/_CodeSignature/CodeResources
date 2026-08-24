@@ -6,27 +6,27 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		0FYkaQfZHcCUoociC7k+6a5u270=
+		fh5IfEmTA95Z4JDhCvNi2gPg+ms=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		oy4cQEi2AA2moxTWhCsQeH07XtA=
+		bBYTBO/JgrMgzEsXPXJIJn3QlWk=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		VWRkCrQIq9O8rSD1t46eRhWydmM=
+		hoZesbrMiDRizNdlXRNcsEizOHw=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		TszoRbK14mTLWumNgGMACSl7lhs=
+		Y66lxOdKMop+QpOH178r/chIOYc=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		VWRkCrQIq9O8rSD1t46eRhWydmM=
+		hoZesbrMiDRizNdlXRNcsEizOHw=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		QDYqqiYv7XWY+pYFfXaNJ7dgmPU=
+		ENxsu9+X+UhxoDVuu20CrIwxBTs=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -35,35 +35,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vM497aJEexmq78cuWDznJuwddEE/gxzIimrVNs4rqag=
+			Xe8lFpGeJnh9QNHJiqREbNgyoHkFXzUQ8LmRWABoXao=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Q7v6JEnv8Igeq6jm2Lba6DivfoIDSSVV61NQPJVv88U=
+			U33wrwWg4Pw/PmQEXAKoG/kPHH/N4KgqDWa12DlMDjQ=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SqxS+QeU2FIJlKtpees983Ald4/eiVdUJnjKNFnbIo4=
+			XQQlH9RaPsqXq4kehDPqtSvAvPkJlOowrUx/vQVvY1k=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Q7v6JEnv8Igeq6jm2Lba6DivfoIDSSVV61NQPJVv88U=
+			U33wrwWg4Pw/PmQEXAKoG/kPHH/N4KgqDWa12DlMDjQ=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9rrMKtlvHUHiQbv9NixMwfAV39tH7ka0lF2UVPFDD80=
+			h2GlNuZf2EYAtIclofUEQbKgxbV0hCjnVcGn9JhE93s=
 			</data>
 		</dict>
 	</dict>

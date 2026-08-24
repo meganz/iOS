@@ -242,9 +242,54 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "isPrimary",
+            "printedName": "isPrimary",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15KMTransferUtils13KMQueryConfigV9isPrimarySbvp",
+            "mangledName": "$s15KMTransferUtils13KMQueryConfigV9isPrimarySbvp",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15KMTransferUtils13KMQueryConfigV9isPrimarySbvg",
+                "mangledName": "$s15KMTransferUtils13KMQueryConfigV9isPrimarySbvg",
+                "moduleName": "KMTransferUtils",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(service:account:group:label:)",
+            "printedName": "init(service:account:group:label:isPrimary:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -293,11 +338,18 @@
                 ],
                 "hasDefaultArg": true,
                 "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:15KMTransferUtils13KMQueryConfigV7service7account5group5labelACSS_S2SSgAHtcfc",
-            "mangledName": "$s15KMTransferUtils13KMQueryConfigV7service7account5group5labelACSS_S2SSgAHtcfc",
+            "usr": "s:15KMTransferUtils13KMQueryConfigV7service7account5group5label9isPrimaryACSS_S2SSgAISbtcfc",
+            "mangledName": "$s15KMTransferUtils13KMQueryConfigV7service7account5group5label9isPrimaryACSS_S2SSgAISbtcfc",
             "moduleName": "KMTransferUtils",
             "declAttributes": [
               "AccessControl",
@@ -1011,37 +1063,44 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/KMQueryConfig.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1839,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5554,
+      "offset": 6444,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5591,
+      "offset": 6481,
       "length": 2,
       "value": "12"
     },
     {
-      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5720,
+      "offset": 6610,
       "length": 2,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5853,
+      "offset": 6743,
       "length": 2,
       "value": "32"
     },
     {
-      "filePath": "\/Users\/mega-hy\/Desktop\/Development\/MEGA\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
+      "filePath": "\/Users\/mega-hy\/Desktop\/MEGA\/Code\/kmtransferutils\/KMTransferUtils\/Source\/MEGAKMTransferUtils.swift",
       "kind": "IntegerLiteral",
-      "offset": 5890,
+      "offset": 6780,
       "length": 6,
       "value": "10000"
     }

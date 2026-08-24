@@ -6,47 +6,47 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		LkeiMhobtYDJ+sVlzQBwRPnFAUM=
+		dOGB6x3nd/Ln1k8mKdbmlRE2Uec=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		oy4cQEi2AA2moxTWhCsQeH07XtA=
+		bBYTBO/JgrMgzEsXPXJIJn3QlWk=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		GChLbFBDCR7oHxEG33CwmarIpJM=
+		qaFi166ZV8tW3fFKzblJOVJOZ/k=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		SOzZa8xAH6SrVRF18zZ2CfmZxVw=
+		usUCRSoTkr5Cr/Rf930qgp58N/o=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		GChLbFBDCR7oHxEG33CwmarIpJM=
+		qaFi166ZV8tW3fFKzblJOVJOZ/k=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		6i+c2PEjgJJckXm7wgh5yUTcszA=
+		6RW6JRpxRAJn8YlW9f1dPHQOaQg=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		oy4cQEi2AA2moxTWhCsQeH07XtA=
+		bBYTBO/JgrMgzEsXPXJIJn3QlWk=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Tu5zHTuQiwwv68tO4uUUijCf1+I=
+		4q8zhjFlh1zu4kjMXoSN5WOKFMQ=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		FnLfd7NtNI3Ou58WtSk5ZWfjDkc=
+		+tXppfRbdFHy2roK/2gpCXb7Ehk=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Tu5zHTuQiwwv68tO4uUUijCf1+I=
+		4q8zhjFlh1zu4kjMXoSN5WOKFMQ=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		//EUDec5qyZFFoItkYhccjpY1+A=
+		TzOk4clo0a156Qlvn2EsOuJhKfI=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -55,70 +55,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vM497aJEexmq78cuWDznJuwddEE/gxzIimrVNs4rqag=
+			Xe8lFpGeJnh9QNHJiqREbNgyoHkFXzUQ8LmRWABoXao=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A5iqYDRpndOxBlOFqKFzBirsGUv9u1O8MT04Y3LFkQQ=
+			bMDXAz1Ez7myFgForC4nQf/QekJR+rId8711tCu/ViM=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gDEoorL8nhJIYpU8/z6NxOkrlC2GTcUpKLRtAqyKypA=
+			f9ZnEC9bgg7Hn2qtiGaz27RG7YUA0aA3Q2Oe1gsmGnQ=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A5iqYDRpndOxBlOFqKFzBirsGUv9u1O8MT04Y3LFkQQ=
+			bMDXAz1Ez7myFgForC4nQf/QekJR+rId8711tCu/ViM=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hhF9nNOv2KVmpM7QDafhxL0j3anXbqKwrFhR4LOIuow=
+			w1l+gDX/95oIyCUBABru28f8iXUsHvsI8dVb0a60c0w=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vM497aJEexmq78cuWDznJuwddEE/gxzIimrVNs4rqag=
+			Xe8lFpGeJnh9QNHJiqREbNgyoHkFXzUQ8LmRWABoXao=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			G3uMLyDr1k1J0jngyty1L+YCA2jUmVveraSbOIs4Xjk=
+			j89lB8vlCR8Oh7WJ0p0KCvk5rL2bPdRhTnI5P1/23Yk=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r3mmdQpQ1P1LzZYONFTTfgeJbMeGHMIl+jXVAYcEdAA=
+			qi0X0kxYBJXyJO2rKCZCNdrAzB8Xt2fplfSFFglzms8=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			G3uMLyDr1k1J0jngyty1L+YCA2jUmVveraSbOIs4Xjk=
+			j89lB8vlCR8Oh7WJ0p0KCvk5rL2bPdRhTnI5P1/23Yk=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dvV+E1zKfvEDOWwLeUQsNijLnVo6bx5/TArY8i3Mjc8=
+			mhJd6J1GjWW+JpOFU1KaFnCxvJ2wY3of+UWTUI9OUS4=
 			</data>
 		</dict>
 	</dict>

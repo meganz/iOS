@@ -8,7 +8,8 @@ extension DIContainer {
                 kmQueryConfigs: [
                     KMQueryConfig(
                         service: "MEGA",
-                        account: "sessionV3"
+                        account: "sessionV3",
+                        isPrimary: true
                     ),
                     KMQueryConfig(
                         service: "MEGA",
