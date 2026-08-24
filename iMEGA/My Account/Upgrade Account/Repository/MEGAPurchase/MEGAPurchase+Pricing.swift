@@ -45,9 +45,23 @@ extension MEGAPurchase {
     }
 
     private func promotionalOffer(for product: SKProduct) -> SKPaymentDiscount? {
-        guard let iosSignature = mobileOffer(for: product)?.iosSignature else { return nil }
-        guard !iosSignature.offerId.isEmpty, !iosSignature.keyId.isEmpty, !iosSignature.signature.isEmpty,
-              let nonce = UUID(uuidString: iosSignature.nonce), iosSignature.timestamp > 0 else {
+        guard let mobileOffer = mobileOffer(for: product) else { return nil }
+
+        // Need to guard against offer's expiryDate to avoid applying a promotional offer of a lapsed campaign.
+        // Example: In Upgrade page, when a discount campaign has lapsed, the Upgrade page stops showing offers, but
+        // MEGAPricing's existing offer may not be refresh thus the obsolete offer data still exists. In such case
+        // we can check against `expiryDate` to prevent the offer from being wrongly applied.
+        if let expiryDate = mobileOffer.expiryDate, expiryDate <= Date() {
+            MEGALogWarning("[StoreKit] Expired promotional offer for product \"\(product.productIdentifier)\", purchasing without discount")
+            return nil
+        }
+
+        guard let iosSignature = mobileOffer.iosSignature else { return nil }
+        guard !iosSignature.offerId.isEmpty,
+              !iosSignature.keyId.isEmpty,
+              !iosSignature.signature.isEmpty,
+              let nonce = UUID(uuidString: iosSignature.nonce),
+              iosSignature.timestamp > 0 else {
             MEGALogWarning("[StoreKit] Incomplete promotional offer for product \"\(product.productIdentifier)\", purchasing without discount")
             return nil
         }
