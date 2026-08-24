@@ -32,6 +32,9 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isExternalPlaybackActive: Bool = false
     private(set) var shouldShowPhotoPermissionAlert = false
     private var isHoldToSpeed = false
+    /// Whether a finger is currently on the seek bar
+    private(set) var isScrubbing = false
+    private var shouldResumeAfterScrub = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
     private var lockOverlayTimer: Timer?
@@ -182,12 +185,18 @@ extension PlayerOverlayViewModel {
 
     func performSeek(by seekTime: Int) async {
         guard duration.components.seconds > 0 else { return }
+        let target = currentTime + .seconds(seekTime)
+        await performSeek(to: max(.seconds(0), min(target, duration)))
+    }
+
+    /// The one place a seek is issued: the timeline is guarded until the seek lands, so playback
+    /// reports describing the position before it cannot snap the bar back.
+    func performSeek(to target: Duration) async {
+        guard duration.components.seconds > 0 else { return }
         isSeeking = true
         cancelAutoHideTimer()
-        updateCurrentTimeForSeek(by: seekTime)
-        guard await seekToCurrentTime() else { return }
-        // Slight delay to ensure current time updates correctly after seeking
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        currentTime = target
+        guard await player.seek(to: target.timeInterval) else { return }
         isSeeking = false
         resetAutoHide()
     }
@@ -238,17 +247,43 @@ extension PlayerOverlayViewModel {
         return min(result, 1.0)
     }
 
-    func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) {
-        guard duration.components.seconds > 0 else { return }
-        isSeeking = true
-        cancelAutoHideTimer()
-        currentTime = calculateTargetTime(from: location.x, in: frame.width)
+    func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
+        // A bar mid-layout reports a zero width, and the position/width ratio would come out NaN
+        // and clamp to zero — seeking the video back to its start.
+        guard duration.components.seconds > 0, frame.width > 0 else { return }
+        if !isScrubbing {
+            beginScrubbing()
+        }
+        // Seeking on every drag update is what makes the timeline show the frames it scrolls over.
+        await performSeek(to: calculateTargetTime(from: location.x, in: frame.width))
     }
 
     func endSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
-        let seekTimeInDuration = calculateSeekTime(from: location.x, in: frame.width)
-        let seekTime = Int(seekTimeInDuration.components.seconds)
-        await performSeek(by: seekTime)
+        guard duration.components.seconds > 0 else { return }
+        isScrubbing = false
+        // Playback is handed back first so that a drag landing on a zero-width bar — dropped below
+        // for the same NaN reason as above — is not left paused by the scrub.
+        resumeAfterScrub()
+        guard frame.width > 0 else { return }
+        await performSeek(to: calculateTargetTime(from: location.x, in: frame.width))
+    }
+
+    /// Pauses playback for the duration of the drag
+    private func beginScrubbing() {
+        isScrubbing = true
+        guard !shouldResumeAfterScrub else { return }
+        shouldResumeAfterScrub = state == .playing || state == .buffering
+        if shouldResumeAfterScrub {
+            player.pause()
+        }
+    }
+
+    private func resumeAfterScrub() {
+        guard shouldResumeAfterScrub else { return }
+        shouldResumeAfterScrub = false
+        // Handing playback back before the drag's last seek is issued costs nothing visually: the
+        // per-frame seeks already left the playhead under the finger.
+        player.play()
     }
 
     private func calculateTargetTime(
@@ -262,27 +297,6 @@ extension PlayerOverlayViewModel {
         let finalProgress = max(0, min(progress, 1.0))
         let targetTime = finalProgress * Double(durationInSeconds)
         return Duration.milliseconds(targetTime * 1000)
-    }
-
-    private func calculateSeekTime(
-        from xPosition: CGFloat,
-        in width: CGFloat
-    ) -> Duration {
-        let targetTime = calculateTargetTime(from: xPosition, in: width)
-        return targetTime - currentTime
-    }
-
-    private func updateCurrentTimeForSeek(by seconds: Int) {
-        guard duration.components.seconds > 0 else { return }
-        let seekTimeInDuration = Duration.seconds(seconds)
-        let targetTime = currentTime + seekTimeInDuration
-        let finalTargetTime = max(.seconds(0), min(targetTime, duration))
-        currentTime = finalTargetTime
-    }
-
-    private func seekToCurrentTime() async -> Bool {
-        let timeInSeconds = currentTime.components.seconds
-        return await player.seek(to: Double(timeInSeconds))
     }
 
     private func string(from duration: Duration) -> String {
@@ -646,6 +660,9 @@ extension PlayerOverlayViewModel {
         switch newState {
         /// Playback can fail while the controls are hidden, so bring them back to expose the play button.
         case .opening, .ended, .error:
+            /// A new item makes any seek still in flight moot, so the timeline is handed back to
+            /// playback rather than left waiting for a seek that no longer applies.
+            isSeeking = false
             showControls()
         default:
             break

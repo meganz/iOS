@@ -70,6 +70,11 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var seekCallCount: Int = 0
     public var seekTime: TimeInterval = 0
     public var seekResult: Bool = true
+    /// Every position passed to either `seek(to:)`, in order.
+    public var seekTimes: [TimeInterval] = []
+    /// Holds `seek(to:) async` suspended, so a test can act while a seek is still in flight.
+    public var seekDelay: Duration?
+    private var latestAwaitedSeekID = 0
     public var playNextCallCount: Int = 0
     public var playPreviousCallCount: Int = 0
     public var replayCurrentNodeCallCount: Int = 0
@@ -138,11 +143,21 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func seek(to time: TimeInterval) {
         seekCallCount += 1
         seekTime = time
+        seekTimes.append(time)
     }
 
     public func seek(to time: TimeInterval) async -> Bool {
         seekCallCount += 1
         seekTime = time
+        seekTimes.append(time)
+        latestAwaitedSeekID += 1
+        let id = latestAwaitedSeekID
+        if let seekDelay {
+            try? await Task.sleep(for: seekDelay)
+        }
+        // AVPlayer cancels the seek in flight when a newer one arrives, and the superseded call
+        // reports `false`. Modelling that is what lets tests exercise overlapping seeks.
+        guard id == latestAwaitedSeekID else { return false }
         return seekResult
     }
 

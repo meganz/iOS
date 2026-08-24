@@ -170,6 +170,7 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     public func seek(to time: TimeInterval) async -> Bool {
+        guard player.currentItem != nil else { return false }
         // A timescale of 600 is recommended because it balances precision with efficiency
         // and has been the long-standing convention in Apple’s media frameworks.
         let newTime = CMTime(seconds: time, preferredTimescale: 600)

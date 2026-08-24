@@ -301,8 +301,8 @@ struct PlayerOverlayViewModelTests {
         await sut.didTapJump(by: seconds)
 
         #expect(sut.currentTime == Duration.seconds(expectedSeekTime))
-        #expect(mockPlayer.seekTime == expectedSeekTime)
-        #expect(mockPlayer.seekCallCount == 1)
+        #expect(mockPlayer.seekTimes == [expectedSeekTime])
+        #expect(mockPlayer.seekTimes.count == 1)
     }
 
     @Test
@@ -467,8 +467,7 @@ struct PlayerOverlayViewModelTests {
         #expect(mockHapticFeedbackUseCase.feedbacks == [HapticFeedbackType.light])
         #expect(sut.isDoubleTapSeekActive == true)
         #expect(sut.doubleTapSeekSeconds == 15)
-        #expect(mockPlayer.seekCallCount == 1)
-        #expect(mockPlayer.seekTime == 65.0)
+        #expect(mockPlayer.seekTimes == [65.0])
     }
 
     @Test
@@ -487,8 +486,7 @@ struct PlayerOverlayViewModelTests {
         #expect(mockHapticFeedbackUseCase.feedbacks == [HapticFeedbackType.light])
         #expect(sut.isDoubleTapSeekActive == true)
         #expect(sut.doubleTapSeekSeconds == -15)
-        #expect(mockPlayer.seekCallCount == 1)
-        #expect(mockPlayer.seekTime == 35.0)
+        #expect(mockPlayer.seekTimes == [35.0])
     }
 
     @Test
@@ -501,17 +499,17 @@ struct PlayerOverlayViewModelTests {
         // First tap
         await sut.handleDoubleTapSeek(isForward: true)
         #expect(sut.doubleTapSeekSeconds == 15)
-        #expect(mockPlayer.seekTime == 65.0)
+        #expect(mockPlayer.seekTimes.last == 65.0)
 
         // Second tap within 3 seconds
         await sut.handleDoubleTapSeek(isForward: true)
         #expect(sut.doubleTapSeekSeconds == 30)
-        #expect(mockPlayer.seekTime == 80.0)
+        #expect(mockPlayer.seekTimes.last == 80.0)
 
         // Third tap within 3 seconds
         await sut.handleDoubleTapSeek(isForward: true)
         #expect(sut.doubleTapSeekSeconds == 45)
-        #expect(mockPlayer.seekTime == 95.0)
+        #expect(mockPlayer.seekTimes.last == 95.0)
     }
 
     @Test
@@ -524,17 +522,17 @@ struct PlayerOverlayViewModelTests {
         // First tap
         await sut.handleDoubleTapSeek(isForward: false)
         #expect(sut.doubleTapSeekSeconds == -15)
-        #expect(mockPlayer.seekTime == 35.0)
+        #expect(mockPlayer.seekTimes.last == 35.0)
 
         // Second tap within 3 seconds
         await sut.handleDoubleTapSeek(isForward: false)
         #expect(sut.doubleTapSeekSeconds == -30)
-        #expect(mockPlayer.seekTime == 20.0)
+        #expect(mockPlayer.seekTimes.last == 20.0)
 
         // Third tap within 3 seconds
         await sut.handleDoubleTapSeek(isForward: false)
         #expect(sut.doubleTapSeekSeconds == -45)
-        #expect(mockPlayer.seekTime == 5.0)
+        #expect(mockPlayer.seekTimes.last == 5.0)
     }
 
     @Test
@@ -735,23 +733,24 @@ struct PlayerOverlayViewModelTests {
     }
     
     // MARK: - Seek Bar Tests
-    
+
     @Test(arguments: [
-        (Duration.seconds(100), true),
-        (.seconds(0), false)
+        (Duration.seconds(100), [TimeInterval(50)]),
+        (.seconds(0), [])
     ])
-    func updateSeekBarDrag_whenDifferentDuration_shouldSetCorrectSeekingState(
+    func updateSeekBarDrag_shouldOnlySeekOnceTheVideoIsLoaded(
         duration: Duration,
-        expectedIsSeeking: Bool
-    ) {
-        let sut = makeSUT()
+        expectedSeekTimes: [TimeInterval]
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
         sut.duration = duration
         let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
         let location = CGPoint(x: 50, y: 10)
 
-        sut.updateSeekBarDrag(at: location, in: frame)
-        
-        #expect(sut.isSeeking == expectedIsSeeking)
+        await sut.updateSeekBarDrag(at: location, in: frame)
+
+        #expect(mockPlayer.seekTimes == expectedSeekTimes)
     }
 
     @Test(arguments: [
@@ -765,19 +764,18 @@ struct PlayerOverlayViewModelTests {
         location: CGFloat,
         expectedProgress: CGFloat,
         expectedCurrentTimeAndDurationString: String
-    ) {
+    ) async {
         let sut = makeSUT()
         sut.duration = .seconds(100)
         let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
         let location = CGPoint(x: location, y: 10)
 
-        sut.updateSeekBarDrag(at: location, in: frame)
+        await sut.updateSeekBarDrag(at: location, in: frame)
 
-        #expect(sut.isSeeking == true)
         #expect(sut.progress == expectedProgress)
         #expect(sut.currentTimeAndDurationString == expectedCurrentTimeAndDurationString)
     }
-    
+
     @Test(arguments: [
         (0, 0, 0.0, Duration.seconds(0)),
         (25, 25, 0.25, Duration.seconds(25)),
@@ -801,9 +799,319 @@ struct PlayerOverlayViewModelTests {
         await sut.endSeekBarDrag(at: location, in: frame)
 
         #expect(sut.isSeeking == false)
-        #expect(mockPlayer.seekTime == expectedSeekTime)
+        #expect(mockPlayer.seekTimes.last == expectedSeekTime)
         #expect(sut.progress == expectedProgress)
         #expect(sut.currentTime == expectedCurrentTime)
+    }
+
+    @Test
+    func updateSeekBarDrag_whenDraggingAcrossTheTimeline_shouldSeekToEveryPositionItPassesOver() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        for x in [CGFloat(10), 20, 30] {
+            await sut.updateSeekBarDrag(at: CGPoint(x: x, y: 10), in: frame)
+        }
+        await sut.endSeekBarDrag(at: CGPoint(x: 40, y: 10), in: frame)
+
+        #expect(mockPlayer.seekTimes == [10, 20, 30, 40])
+    }
+
+    @Test
+    func updateSeekBarDrag_whenDurationIsZero_shouldNotSeek() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(0)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 50, y: 10), in: frame)
+        await sut.endSeekBarDrag(at: CGPoint(x: 50, y: 10), in: frame)
+
+        #expect(mockPlayer.seekTimes.isEmpty)
+        #expect(sut.isScrubbing == false)
+    }
+
+    /// A whole-second grid would make it impossible to land on a particular frame, so the seek must
+    /// keep the sub-second part of the dragged position.
+    @Test(arguments: [
+        (CGFloat(1.5), TimeInterval(1.5)),
+        (5.5, 5.5),
+        (7.5, 7.5)
+    ])
+    func seekBarDrag_shouldKeepSubSecondPrecision(
+        location: CGFloat,
+        expectedTime: TimeInterval
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        // 1000 seconds on a 1000 point wide bar: one point is one second, so half a point lands
+        // between two seconds.
+        sut.duration = .seconds(1000)
+        let frame = CGRect(x: 0, y: 0, width: 1000, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: location, y: 10), in: frame)
+
+        #expect(mockPlayer.seekTimes == [expectedTime])
+        #expect(sut.currentTime == .milliseconds(expectedTime * 1000))
+    }
+
+    /// Playback is paused for the length of the drag, otherwise it keeps advancing past every seek
+    /// and the scrubbed frames never settle on screen.
+    @Test(arguments: [
+        (PlaybackState.playing, 1),
+        (.buffering, 1),
+        (.paused, 0)
+    ])
+    func updateSeekBarDrag_shouldPausePlaybackForTheDrag(
+        state: PlaybackState,
+        expectedPauseCallCount: Int
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = state
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 10, y: 10), in: frame)
+        await sut.updateSeekBarDrag(at: CGPoint(x: 20, y: 10), in: frame)
+
+        #expect(sut.isScrubbing == true)
+        // Pausing happens once for the whole drag, not on every drag update.
+        #expect(mockPlayer.pauseCallCount == expectedPauseCallCount)
+    }
+
+    @Test(arguments: [
+        (PlaybackState.playing, 1),
+        (.paused, 0)
+    ])
+    func endSeekBarDrag_shouldOnlyResumePlaybackThatScrubbingPaused(
+        state: PlaybackState,
+        expectedPlayCallCount: Int
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = state
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 10, y: 10), in: frame)
+        await sut.endSeekBarDrag(at: CGPoint(x: 20, y: 10), in: frame)
+
+        #expect(mockPlayer.playCallCount == expectedPlayCallCount)
+        #expect(mockPlayer.seekTimes.last == 20)
+        #expect(sut.isScrubbing == false)
+        #expect(sut.isSeeking == false)
+    }
+
+    /// Playback is handed back the moment the finger lifts, so a drag starting right after another
+    /// one pauses again instead of inheriting a resume that has already been used.
+    @Test
+    func seekBarDrag_shouldPauseAndResumePlaybackOncePerDrag() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = .playing
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 10, y: 10), in: frame)
+        await sut.updateSeekBarDrag(at: CGPoint(x: 20, y: 10), in: frame)
+        await sut.endSeekBarDrag(at: CGPoint(x: 30, y: 10), in: frame)
+
+        #expect(mockPlayer.pauseCallCount == 1)
+        #expect(mockPlayer.playCallCount == 1)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 60, y: 10), in: frame)
+        await sut.endSeekBarDrag(at: CGPoint(x: 70, y: 10), in: frame)
+
+        #expect(mockPlayer.pauseCallCount == 2)
+        #expect(mockPlayer.playCallCount == 2)
+        #expect(mockPlayer.seekTimes == [10, 20, 30, 60, 70])
+        #expect(sut.isScrubbing == false)
+        #expect(sut.isSeeking == false)
+    }
+
+    /// Playback is handed back the moment the finger lifts rather than waiting for the released
+    /// position to be reached: the per-frame seeks already left the playhead under the finger, so a
+    /// slow seek must not hold playback back. The timeline stays guarded until that seek lands.
+    @Test
+    func endSeekBarDrag_shouldResumePlaybackWithoutWaitingForTheSeek() async {
+        let mockPlayer = MockVideoPlayer()
+        mockPlayer.seekDelay = .milliseconds(300)
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = .playing
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 10, y: 10), in: frame)
+        let drag = Task { await sut.endSeekBarDrag(at: CGPoint(x: 40, y: 10), in: frame) }
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(mockPlayer.playCallCount == 1, "playback is back before the seek lands")
+        #expect(mockPlayer.seekTimes.last == 40)
+        #expect(sut.isSeeking == true, "the timeline is still guarded while the seek is in flight")
+
+        await drag.value
+
+        #expect(sut.isSeeking == false)
+    }
+
+    /// A bar mid-layout reports a zero width, and the position/width ratio would come out NaN and
+    /// clamp to zero — seeking the video back to its start. The drag must be dropped instead, and
+    /// playback handed back rather than left paused.
+    @Test
+    func seekBarDrag_whenTheBarHasNoWidthYet_shouldNotSeekToTheStart() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = .playing
+        sut.currentTime = .seconds(42)
+        let collapsed = CGRect(x: 0, y: 0, width: 0, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 0, y: 10), in: collapsed)
+        await sut.endSeekBarDrag(at: CGPoint(x: 0, y: 10), in: collapsed)
+
+        #expect(mockPlayer.seekTimes.isEmpty)
+        #expect(sut.currentTime == .seconds(42))
+        #expect(sut.isScrubbing == false)
+    }
+
+    /// The same drag arriving on a bar that does have a width must still resume playback it paused.
+    @Test
+    func seekBarDrag_whenTheBarLosesItsWidthMidDrag_shouldStillHandPlaybackBack() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.state = .playing
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+        let collapsed = CGRect(x: 0, y: 0, width: 0, height: 20)
+
+        await sut.updateSeekBarDrag(at: CGPoint(x: 30, y: 10), in: frame)
+        await sut.endSeekBarDrag(at: CGPoint(x: 30, y: 10), in: collapsed)
+
+        #expect(mockPlayer.pauseCallCount == 1)
+        #expect(mockPlayer.playCallCount == 1)
+        #expect(mockPlayer.seekTimes == [30])
+        #expect(sut.isScrubbing == false)
+    }
+
+    /// Per-frame seeks are fire and forget, so a slow player neither stalls the drag nor lets the
+    /// timeline slip out of the gesture's hands while the finger is still down.
+    @Test
+    func updateSeekBarDrag_whenThePlayerIsSlow_shouldKeepSeekingAndKeepHoldingTheTimeline() async {
+        let mockPlayer = MockVideoPlayer()
+        mockPlayer.seekDelay = .milliseconds(500)
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        // Issued the way the View issues them — each drag update in its own task — so the seeks
+        // overlap instead of queueing behind one another. The gap only fixes the order they are
+        // issued in; every seek is still in flight when the expectations below run.
+        for x in [CGFloat(10), 20, 30] {
+            Task { await sut.updateSeekBarDrag(at: CGPoint(x: x, y: 10), in: frame) }
+            try? await Task.sleep(for: .milliseconds(20))
+        }
+
+        #expect(mockPlayer.seekTimes == [10, 20, 30])
+        #expect(sut.isSeeking == true)
+        #expect(sut.isScrubbing == true)
+        #expect(mockPlayer.pauseCallCount == 0)
+    }
+
+    /// A new item makes a seek still in flight moot: keeping the timeline guarded would leave the bar
+    /// frozen for the video that just started.
+    @Test
+    func openingANewItem_shouldStopGuardingTheTimeline() async {
+        let mockPlayer = MockVideoPlayer(duration: .seconds(100))
+        mockPlayer.seekDelay = .milliseconds(300)
+        let sut = makeSUT(player: mockPlayer)
+        sut.viewWillAppear()
+        try? await Task.sleep(for: .milliseconds(50))
+
+        let seek = Task { await sut.performSeek(to: .seconds(60)) }
+        try? await Task.sleep(for: .milliseconds(50))
+        #expect(sut.isSeeking == true)
+
+        mockPlayer.state = .opening
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(sut.isSeeking == false)
+
+        await seek.value
+    }
+
+    /// Until the seek lands the player still reports the position it is playing from, and that report
+    /// must not drag the bar back from where the finger left it.
+    @Test
+    func endSeekBarDrag_whilePlayerReportsThePositionBeforeTheSeek_shouldNotSnapTheBarBack() async {
+        let mockPlayer = MockVideoPlayer(currentTime: .seconds(10), duration: .seconds(100))
+        mockPlayer.seekDelay = .milliseconds(300)
+        let sut = makeSUT(player: mockPlayer)
+        sut.viewWillAppear()
+        try? await Task.sleep(for: .milliseconds(50))
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+
+        let drag = Task { await sut.endSeekBarDrag(at: CGPoint(x: 60, y: 10), in: frame) }
+        try? await Task.sleep(for: .milliseconds(50))
+        mockPlayer.currentTime = .seconds(10)
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(sut.currentTime == .seconds(60))
+        #expect(sut.progress == 0.6)
+
+        await drag.value
+        // Once the seek has landed, playback drives the bar again.
+        mockPlayer.currentTime = .seconds(61)
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(sut.currentTime == .seconds(61))
+    }
+
+    @Test(arguments: [
+        (Duration.seconds(10), 15, TimeInterval(25)),
+        (.seconds(95), 15, 100),
+        (.seconds(5), -15, 0)
+    ])
+    func performSeek_by_shouldForwardAnAbsoluteTargetClampedToTheVideo(
+        currentTime: Duration,
+        jump: Int,
+        expectedTarget: TimeInterval
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = currentTime
+
+        await sut.performSeek(by: jump)
+
+        #expect(mockPlayer.seekTimes == [expectedTarget])
+    }
+
+    /// Repeated taps and per-frame drag updates make these calls overlap. A superseded seek can
+    /// resolve first, and it must not hand the timeline back while the newer one is still in flight.
+    @Test
+    func performSeek_whenASupersededSeekResolvesFirst_shouldNotReleaseTheTimeline() async {
+        let mockPlayer = MockVideoPlayer(currentTime: .seconds(10), duration: .seconds(100))
+        mockPlayer.seekDelay = .milliseconds(200)
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(10)
+
+        let superseded = Task { await sut.performSeek(to: .seconds(25)) }
+        try? await Task.sleep(for: .milliseconds(50))
+        mockPlayer.seekDelay = .milliseconds(500)
+        let newest = Task { await sut.performSeek(to: .seconds(40)) }
+        await superseded.value
+
+        #expect(sut.currentTime == .seconds(40))
+        #expect(sut.isSeeking == true)
+
+        await newest.value
+
+        #expect(sut.isSeeking == false)
+        #expect(mockPlayer.seekTimes == [25, 40])
     }
 
     @Test(arguments: [

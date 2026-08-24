@@ -415,10 +415,12 @@ extension PlayerOverlayView {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        viewModel.updateSeekBarDrag(
-                            at: value.location,
-                            in: geometry.frame(in: .local)
-                        )
+                        Task {
+                            await viewModel.updateSeekBarDrag(
+                                at: value.location,
+                                in: geometry.frame(in: .local)
+                            )
+                        }
                     }
                     .onEnded { value in
                         Task {
