@@ -112,7 +112,7 @@
     MEGALogDebug(@"[StoreKit] Purchase product \"%@\"", product.productIdentifier);
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
-            [SVProgressHUD show];
+            [self showBlockingHUD];
 
             __weak typeof(self) weakSelf = self;
             [self refreshPricingForProduct:product completionHandler:^(BOOL pricingRefreshed) {
@@ -120,6 +120,7 @@
                     typeof(self) strongSelf = weakSelf;
                     if (strongSelf == nil) {
                         [SVProgressHUD dismiss];
+                        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                         return;
                     }
                     if (pricingRefreshed) {
@@ -148,7 +149,7 @@
 
 - (void)restorePurchase {
     if ([SKPaymentQueue canMakePayments]) {
-        [SVProgressHUD show];
+        [self showBlockingHUD];
 
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     } else {
@@ -246,7 +247,7 @@
                     [delegate successfulPurchase:self];
                 }
 
-                [SVProgressHUD dismiss];
+                [self dismissBlockingHUD];
 
                 if (self.isPurchasingPromotedPlan) {
                     [self setIsPurchasingPromotedPlan:NO];
@@ -268,7 +269,7 @@
                     }
                 }
 
-                [SVProgressHUD dismiss];
+                [self dismissBlockingHUD];
 
                 break;
 
@@ -282,7 +283,7 @@
                     }
                 }
 
-                [SVProgressHUD dismiss];
+                [self dismissBlockingHUD];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 
                 if (self.isPurchasingPromotedPlan) {
@@ -296,6 +297,9 @@
 
             case SKPaymentTransactionStateDeferred:
                 MEGALogDebug(@"[StoreKit] Transaction deferred");
+                // Ask to Buy: no further callback arrives until the parent decides, possibly only
+                // after a relaunch, so the blocking HUD must come down now or the app stays frozen.
+                [self dismissBlockingHUD];
                 break;
 
             default:
@@ -314,7 +318,7 @@
     }
 
     if ([SVProgressHUD isVisible]) {
-        [SVProgressHUD dismiss];
+        [self dismissBlockingHUD];
     }
 }
 
@@ -326,7 +330,7 @@
         }
     }
     if ([SVProgressHUD isVisible]) {
-        [SVProgressHUD dismiss];
+        [self dismissBlockingHUD];
     }
 }
 
@@ -482,6 +486,23 @@
     for (SKPaymentTransaction *transaction in self.submittingTransactions) {
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
     }
+}
+
+#pragma mark - Blocking HUD
+
+/// Shows the progress HUD with a mask that swallows every touch, so the screen that started the
+/// payment cannot be dismissed while it is resolving. Paired with `dismissBlockingHUD`, which puts
+/// the app-wide default mask back.
+- (void)showBlockingHUD {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+}
+
+/// Dismisses the HUD and restores the default mask. Called on every path that ends a payment or a
+/// restore, so the mask is never left blocking.
+- (void)dismissBlockingHUD {
+    [SVProgressHUD dismiss];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
 }
 
 
