@@ -1280,6 +1280,8 @@ extension MockSdk {
             public let lastHandle: MEGAHandle
             public let lastSize: Int64
             public let lastMtime: Int64
+            /// Milliseconds, unlike every other timestamp the SDK takes.
+            public let lastMediaTsMs: Int64
             public let lastLabel: Int
             public let lastFav: Int
 
@@ -1288,6 +1290,7 @@ extension MockSdk {
                 lastHandle = cursor.lastHandle
                 lastSize = cursor.lastSize
                 lastMtime = cursor.lastMtime
+                lastMediaTsMs = cursor.lastMediaTsMs
                 lastLabel = cursor.lastLabel
                 lastFav = cursor.lastFav
             }

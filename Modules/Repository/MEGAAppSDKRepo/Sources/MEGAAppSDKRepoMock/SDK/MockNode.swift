@@ -9,6 +9,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let nodeBase64Handle: String?
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
+    private let nodeMediaCaptureTime: Date?
     private let _hasThumbnail: Bool
     private let isNodeExported: Bool
     private let videoDuration: Int
@@ -31,6 +32,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
                 parentHandle: MEGAHandle = .invalidHandle,
                 changeType: MEGANodeChangeType = .new,
                 modificationTime: Date? = nil,
+                mediaCaptureTime: Date? = nil,
                 hasThumbnail: Bool = false,
                 nodePath: String? = nil,
                 isNodeExported: Bool = false,
@@ -53,6 +55,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
         nodeParentHandle = parentHandle
         self.changeType = changeType
         nodeModificationTime = modificationTime
+        nodeMediaCaptureTime = mediaCaptureTime
         _hasThumbnail = hasThumbnail
         self.nodePath = nodePath
         self.isNodeExported = isNodeExported
@@ -91,6 +94,8 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     public override var parentHandle: MEGAHandle { nodeParentHandle }
     
     public override var modificationTime: Date? { nodeModificationTime }
+
+    public override var mediaCaptureTime: Date? { nodeMediaCaptureTime }
     
     public override func hasThumbnail() -> Bool { _hasThumbnail }
     

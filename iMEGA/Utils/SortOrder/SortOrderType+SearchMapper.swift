@@ -58,6 +58,7 @@ extension MEGASortOrderType {
         case .favouriteDesc: .init(key: .favourite, direction: .descending)
         case .shareCreationAsc: .init(key: .shareCreated)
         case .shareCreationDesc: .init(key: .shareCreated, direction: .descending)
+        case .mediaTsAsc, .mediaTsDesc: .init(key: .name)
         @unknown default: .init(key: .name)
         }
     }

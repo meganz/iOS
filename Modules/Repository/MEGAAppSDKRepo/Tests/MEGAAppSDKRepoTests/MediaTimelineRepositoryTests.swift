@@ -107,7 +107,12 @@ final class MediaTimelineRepositoryTests: XCTestCase {
         XCTAssertEqual(parameters.pagination, .cursor(nil))
         XCTAssertEqual(parameters.maxElements, 60)
         XCTAssertEqual(parameters.orderType, .modificationDesc)
-        XCTAssertEqual(parameters.timestampAnchorSectionOrder, MEGAListAllNodesTimestampAnchorOrder.none)
+        // A vacuous ascending anchor on the ordered column: its only effect is the SDK's
+        // `<column> > 0` guard, which keeps timestamp-less nodes — owning no date section, and
+        // filterable only after maxElements has been applied — out of the page entirely.
+        XCTAssertEqual(parameters.timestampAnchorSectionOrder, .modificationAsc)
+        XCTAssertEqual(parameters.timestampAnchorStartDate, 0)
+        XCTAssertEqual(parameters.timestampAnchorEndDate, .max)
     }
 
     func testMediaPageAfter_lastNode_buildsCursorFromItsNameHandleAndModificationTime() async throws {
@@ -261,6 +266,247 @@ final class MediaTimelineRepositoryTests: XCTestCase {
         let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
         XCTAssertEqual(parameters.timestampAnchorSectionOrder, .modificationAsc)
         XCTAssertEqual(parameters.orderType, .modificationAsc)
+    }
+
+    /// The guard has to name the column actually being ordered by, or it would exclude nodes on
+    /// the strength of a timestamp the page does not sort on.
+    func testMediaPage_guardAnchorFollowsTheOrderedColumn() async throws {
+        let cases: [(MediaTimelineSortOrderEntity, MEGAListAllNodesTimestampAnchorOrder)] = [
+            (.newest, .modificationAsc),
+            (.oldest, .modificationAsc),
+            (.newestByCaptureTime, .mediaTsAsc),
+            (.oldestByCaptureTime, .mediaTsAsc)
+        ]
+
+        for (sortOrder, expectedAnchor) in cases {
+            let sdk = MockSdk()
+            let sut = makeSUT(sdk: sdk)
+
+            _ = try await sut.mediaPage(
+                filter: .init(mediaType: .allMedia, location: .allLocations),
+                excludeSensitive: false,
+                sortOrder: sortOrder,
+                after: nil,
+                limit: 10)
+
+            let afterParameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+            XCTAssertEqual(afterParameters.timestampAnchorSectionOrder, expectedAnchor, "\(sortOrder)")
+            XCTAssertEqual(afterParameters.timestampAnchorStartDate, 0, "\(sortOrder)")
+
+            _ = try await sut.mediaPage(
+                filter: .init(mediaType: .allMedia, location: .allLocations),
+                excludeSensitive: false,
+                sortOrder: sortOrder,
+                before: NodeEntity(name: "anchor.jpg", handle: 9,
+                                   mediaCaptureTime: Date(timeIntervalSince1970: 200)),
+                limit: 10)
+
+            let beforeParameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+            XCTAssertEqual(beforeParameters.timestampAnchorSectionOrder, expectedAnchor, "\(sortOrder)")
+            XCTAssertEqual(beforeParameters.timestampAnchorStartDate, 0, "\(sortOrder)")
+        }
+    }
+
+    // MARK: - Media capture time ordering
+
+    func testDateSections_newestByCaptureTime_forwardsMediaTsDescOrder() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+
+        _ = try await sut.dateSections(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            granularity: .day,
+            excludeSensitive: false,
+            sortOrder: .newestByCaptureTime)
+
+        let parameters = try XCTUnwrap(sdk.groupAllNodesByDateQueryParameters)
+        XCTAssertEqual(parameters.orderType, .mediaTsDesc)
+        // Grouping by capture time is only accepted for a media category.
+        XCTAssertEqual(parameters.category, .allVisualMedia)
+    }
+
+    func testDateSections_oldestByCaptureTime_forwardsMediaTsAscOrder() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+
+        _ = try await sut.dateSections(
+            filter: .init(mediaType: .images, location: .allLocations),
+            granularity: .day,
+            excludeSensitive: false,
+            sortOrder: .oldestByCaptureTime)
+
+        let parameters = try XCTUnwrap(sdk.groupAllNodesByDateQueryParameters)
+        XCTAssertEqual(parameters.orderType, .mediaTsAsc)
+    }
+
+    /// The capture-time key is the one cursor field the SDK reads in milliseconds.
+    func testMediaPageAfter_captureTimeOrder_buildsCursorFromTheCaptureTimeInMilliseconds() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+        let lastNode = NodeEntity(
+            name: "IMG_0042.jpg",
+            handle: 42,
+            modificationTime: Date(timeIntervalSince1970: 1_700_000_000),
+            mediaCaptureTime: Date(timeIntervalSince1970: 1_600_000_000.25))
+
+        _ = try await sut.mediaPage(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            excludeSensitive: false,
+            sortOrder: .newestByCaptureTime,
+            after: lastNode,
+            limit: 20)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        XCTAssertEqual(parameters.orderType, .mediaTsDesc)
+        guard case .cursor(let cursor) = parameters.pagination else {
+            return XCTFail("expected a cursor page, got \(parameters.pagination)")
+        }
+        let unwrapped = try XCTUnwrap(cursor)
+        XCTAssertEqual(unwrapped.lastName, "IMG_0042.jpg")
+        XCTAssertEqual(unwrapped.lastHandle, 42)
+        XCTAssertEqual(unwrapped.lastMediaTsMs, 1_600_000_000_250)
+        XCTAssertEqual(unwrapped.lastMtime, -1, "the modification key belongs to another order and stays unset")
+    }
+
+    func testMediaPageAfter_modificationOrder_leavesTheCaptureTimeCursorKeyUnset() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+        let lastNode = NodeEntity(
+            name: "IMG_0042.jpg",
+            handle: 42,
+            modificationTime: Date(timeIntervalSince1970: 1_700_000_000),
+            mediaCaptureTime: Date(timeIntervalSince1970: 1_600_000_000))
+
+        _ = try await sut.mediaPage(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            excludeSensitive: false,
+            sortOrder: .newest,
+            after: lastNode,
+            limit: 20)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        guard case .cursor(let cursor) = parameters.pagination else {
+            return XCTFail("expected a cursor page, got \(parameters.pagination)")
+        }
+        let unwrapped = try XCTUnwrap(cursor)
+        XCTAssertEqual(unwrapped.lastMtime, 1_700_000_000)
+        XCTAssertEqual(unwrapped.lastMediaTsMs, -1)
+    }
+
+    /// A node with no capture time sits in no capture-time bucket, so it must not reach a page
+    /// ordered by capture time — even though its modification time is perfectly valid.
+    func testMediaPageAfter_captureTimeOrder_dropsNodesWithoutACaptureTime() async throws {
+        let sdk = MockSdk(nodes: [
+            MockNode(handle: 1, name: "kept.jpg",
+                     modificationTime: Date(timeIntervalSince1970: 0),
+                     mediaCaptureTime: Date(timeIntervalSince1970: 500)),
+            MockNode(handle: 2, name: "dropped.jpg",
+                     modificationTime: Date(timeIntervalSince1970: 100),
+                     mediaCaptureTime: nil)
+        ])
+        let sut = makeSUT(sdk: sdk)
+
+        let nodes = try await sut.mediaPage(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            excludeSensitive: false,
+            sortOrder: .newestByCaptureTime,
+            after: nil,
+            limit: 10)
+
+        XCTAssertEqual(nodes.map(\.handle), [1],
+                       "the drop filter must follow the column being ordered by, not the modification time")
+        XCTAssertEqual(nodes.first?.mediaCaptureTime, Date(timeIntervalSince1970: 500))
+    }
+
+    func testMediaPageBefore_newestByCaptureTime_queriesWithMediaTsAscOrder() async throws {
+        let sdk = MockSdk(nodes: [
+            MockNode(handle: 1, name: "closest.jpg", mediaCaptureTime: Date(timeIntervalSince1970: 300)),
+            MockNode(handle: 2, name: "furthest.jpg", mediaCaptureTime: Date(timeIntervalSince1970: 400))
+        ])
+        let sut = makeSUT(sdk: sdk)
+
+        let nodes = try await sut.mediaPage(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            excludeSensitive: false,
+            sortOrder: .newestByCaptureTime,
+            before: NodeEntity(
+                name: "anchor.jpg",
+                handle: 9,
+                mediaCaptureTime: Date(timeIntervalSince1970: 200)),
+            limit: 10)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        XCTAssertEqual(parameters.orderType, .mediaTsAsc,
+                       "backward paging flips the direction but must stay on the same timestamp column")
+        guard case .cursor(let cursor) = parameters.pagination else {
+            return XCTFail("expected a cursor page, got \(parameters.pagination)")
+        }
+        XCTAssertEqual(try XCTUnwrap(cursor).lastMediaTsMs, 200_000)
+        XCTAssertEqual(nodes.map(\.handle), [2, 1])
+    }
+
+    func testMediaPageBefore_oldestByCaptureTime_queriesWithMediaTsDescOrder() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+
+        _ = try await sut.mediaPage(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            excludeSensitive: false,
+            sortOrder: .oldestByCaptureTime,
+            before: NodeEntity(name: "anchor.jpg", handle: 9,
+                               mediaCaptureTime: Date(timeIntervalSince1970: 200)),
+            limit: 10)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        XCTAssertEqual(parameters.orderType, .mediaTsDesc)
+    }
+
+    func testMediaWindow_captureTimeOrder_anchorsOnTheCaptureTimeColumnInSeconds() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+
+        _ = try await sut.mediaWindow(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            section: MediaDateSectionEntity(
+                groupId: "2026-08-21",
+                startDate: Date(timeIntervalSince1970: 1_755_734_400),
+                endDate: Date(timeIntervalSince1970: 1_755_820_800),
+                count: 40),
+            excludeSensitive: false,
+            sortOrder: .newestByCaptureTime,
+            offset: 15,
+            limit: 30)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        XCTAssertEqual(parameters.timestampAnchorSectionOrder, .mediaTsDesc)
+        XCTAssertEqual(parameters.orderType, .mediaTsDesc,
+                       "the page order must match the anchor, or the page is not scoped to the bucket")
+        // The anchor bounds stay in seconds even for the millisecond-valued capture time —
+        // the engine scales them. Only the cursor's capture-time key is in milliseconds.
+        XCTAssertEqual(parameters.timestampAnchorStartDate, 1_755_734_400)
+        XCTAssertEqual(parameters.timestampAnchorEndDate, 1_755_820_800)
+        XCTAssertEqual(parameters.pagination, .offset(15))
+    }
+
+    func testMediaWindow_oldestByCaptureTime_anchorsInAscendingDirection() async throws {
+        let sdk = MockSdk()
+        let sut = makeSUT(sdk: sdk)
+
+        _ = try await sut.mediaWindow(
+            filter: .init(mediaType: .allMedia, location: .allLocations),
+            section: MediaDateSectionEntity(
+                groupId: "2026-08-21",
+                startDate: Date(timeIntervalSince1970: 1_755_734_400),
+                endDate: Date(timeIntervalSince1970: 1_755_820_800),
+                count: 40),
+            excludeSensitive: false,
+            sortOrder: .oldestByCaptureTime,
+            offset: 0,
+            limit: 10)
+
+        let parameters = try XCTUnwrap(sdk.listAllNodesByPageQueryParameters)
+        XCTAssertEqual(parameters.timestampAnchorSectionOrder, .mediaTsAsc)
+        XCTAssertEqual(parameters.orderType, .mediaTsAsc)
     }
 
     // MARK: - Scope resolution

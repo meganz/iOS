@@ -86,7 +86,10 @@ final class PhotoLibraryCollectionViewLayoutChangesMonitor {
         // copies visible at once; `uniqueKeysWithValues` turned that into a crash.
         let visiblePositions = Dictionary(
             collectionView.indexPathsForVisibleItems.compactMap {
-                photoLibraryDataSource.position(at: $0)
+                // The item's own position, not `position(at:)`: that one is dated by the day bucket
+                // so a scroll position can be resolved back to an index path, while
+                // `changedItemIndexPaths` looks the key up as `NodeEntity.position`.
+                photoLibraryDataSource.nodePosition(at: $0)
             }.map {
                 ($0, true)
             },

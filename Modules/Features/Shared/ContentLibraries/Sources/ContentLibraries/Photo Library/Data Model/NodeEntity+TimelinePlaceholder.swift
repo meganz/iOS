@@ -27,8 +27,9 @@ extension NodeEntity {
     ///   - offset: Zero-based index within the current skeleton build. Added to
     ///     `timelinePlaceholderHandleBase` to give every placeholder a unique handle,
     ///     which `PhotoDateSection.indexPath(of:)` and `PhotoScrollPosition` require.
-    ///   - date: The UTC-canonical bucket date this slot belongs to. Used as
-    ///     `modificationTime`, which drives `categoryDate` grouping and section headers.
+    ///   - date: The local day of the bucket this slot belongs to (derived from the SDK
+    ///     `groupId`, not from the bucket's start timestamp). Used as `modificationTime`,
+    ///     which drives `categoryDate` grouping and section headers.
     static func timelinePlaceholder(offset: UInt64, date: Date) -> NodeEntity {
         NodeEntity(
             changeTypes: [],

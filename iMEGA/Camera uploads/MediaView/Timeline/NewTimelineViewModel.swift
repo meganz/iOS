@@ -29,6 +29,7 @@ final class NewTimelineViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
 
     private let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)?
+    private let timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -39,7 +40,7 @@ final class NewTimelineViewModel: ObservableObject {
     private var dateSections: [MediaDateSectionEntity] = []
 
     private var skeletonFilterOptions: PhotosFilterOptionsEntity?
-    private var skeletonSortOrder: SortOrderEntity?
+    private var skeletonSortOrder: MediaTimelineSortOrderEntity?
 
     private let initialHydrationWindowSize = 60
 
@@ -85,6 +86,12 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
+    /// Order the paginated queries run in: direction from the stored sort preference, timestamp
+    /// column from ``timestampBasis``.
+    private var mediaTimelineSortOrder: MediaTimelineSortOrderEntity {
+        sortOrder.toMediaTimelineSortOrderEntity(basis: timestampBasis)
+    }
+
     var preferenceDrivenSortOrderUpdates: AnyPublisher<Void, Never> {
         preferenceDrivenSortOrderSubject.eraseToAnyPublisher()
     }
@@ -115,6 +122,7 @@ final class NewTimelineViewModel: ObservableObject {
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
+        timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis = .modificationTime,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.photoLibraryContentViewModel = photoLibraryContentViewModel
@@ -125,6 +133,7 @@ final class NewTimelineViewModel: ObservableObject {
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.mediaTimelineUseCase = mediaTimelineUseCase
+        self.timestampBasis = timestampBasis
         self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         // Read synchronously so the very first load already queries in the stored order,
@@ -178,7 +187,7 @@ final class NewTimelineViewModel: ObservableObject {
         let sectionUpdates = await mediaTimelineUseCase.monitorDateSections(
             filter: photoFilterOptions.toMediaTimelineFilterEntity(),
             granularity: .day,
-            sortOrder: sortOrder.toMediaTimelineSortOrderEntity())
+            sortOrder: mediaTimelineSortOrder)
             .compactMap { result -> [MediaDateSectionEntity]? in
                 switch result {
                 case .success(let sections):
@@ -466,7 +475,7 @@ final class NewTimelineViewModel: ObservableObject {
         using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
     ) async throws -> PhotoLibrary {
         let filter = photoFilterOptions.toMediaTimelineFilterEntity()
-        let order = sortOrder.toMediaTimelineSortOrderEntity()
+        let order = mediaTimelineSortOrder
 
         async let firstPageTask = mediaTimelineUseCase.mediaPage(
             filter: filter, sortOrder: order, after: nil, limit: initialHydrationWindowSize)
@@ -509,7 +518,7 @@ final class NewTimelineViewModel: ObservableObject {
     /// The heavy tree work (skeleton build, re-projection) runs off the main actor.
     private func resolveSkeletonLibrary(for sections: [MediaDateSectionEntity]) async -> PhotoLibrary? {
         let filterUnchanged = skeletonFilterOptions == photoFilterOptions
-            && skeletonSortOrder == sortOrder
+            && skeletonSortOrder == mediaTimelineSortOrder
         if filterUnchanged, sameShape(dateSections, sections) {
             dateSections = sections
             return nil
@@ -525,7 +534,7 @@ final class NewTimelineViewModel: ObservableObject {
 
         dateSections = sections
         skeletonFilterOptions = photoFilterOptions
-        skeletonSortOrder = sortOrder
+        skeletonSortOrder = mediaTimelineSortOrder
         timelineGeneration += 1
         sectionVersions = [:]
         return await makeSkeleton(from: sections)
@@ -700,7 +709,7 @@ final class NewTimelineViewModel: ObservableObject {
         using mediaTimelineUseCase: some MediaTimelineUseCaseProtocol
     ) async -> RunFetchResult? {
         let filter = photoFilterOptions.toMediaTimelineFilterEntity()
-        let order = sortOrder.toMediaTimelineSortOrderEntity()
+        let order = mediaTimelineSortOrder
         do {
             if let upper = run.upperNeighbour {
                 let nodes = try await mediaTimelineUseCase.mediaPage(

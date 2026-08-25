@@ -82,6 +82,7 @@ fileprivate extension NodeEntity {
             codecId                            : node.videoCodecId,
             duration                           : node.duration,
             mediaType                          : node.name?.toMediaTypeEntity(),
+            mediaCaptureTime                   : node.mediaCaptureTime,
 
             // MARK: - Photo
             latitude                           : node.latitude?.doubleValue,

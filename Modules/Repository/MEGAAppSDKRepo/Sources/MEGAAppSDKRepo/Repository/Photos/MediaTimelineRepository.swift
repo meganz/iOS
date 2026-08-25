@@ -52,6 +52,8 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
                         include: { megaFilter.locationHandles = $0 },
                         exclude: { megaFilter.excludeLocationHandles = $0 })
             megaFilter.sensitivityFilter = excludeSensitive ? .excludeSensitive : .disabled
+            // Grouping by capture time requires a media category, which `category` above always
+            // is (photo / video / all visual media) — the timeline has no other scope.
             // Nil uses UTC; use the device's current offset for local date buckets.
             megaFilter.utcOffset = TimeZone.current.iso8601UTCOffset
 
@@ -78,8 +80,10 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         try await withScope(for: filter.location, empty: []) { scope in
-            let megaFilter = makeListFilter(mediaType: filter.mediaType, excludeSensitive: excludeSensitive, scope: scope)
-            let cursor = lastNode.map { $0.toMEGASearchCursorOffset() }
+            let megaFilter = makeListFilter(
+                mediaType: filter.mediaType, excludeSensitive: excludeSensitive,
+                sortOrder: sortOrder, scope: scope)
+            let cursor = lastNode.map { $0.toMEGASearchCursorOffset(for: sortOrder) }
 
             let cancelToken = ThreadSafeCancelToken()
             return try await withTaskCancellationHandler {
@@ -90,7 +94,7 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
                         maxElements: UInt(max(0, limit)),
                         cursor: cursor,
                         cancelToken: cancelToken.value)
-                    completion(.success(droppingInvalidTimestamps(nodeList.toNodeEntities())))
+                    completion(.success(droppingInvalidTimestamps(nodeList.toNodeEntities(), for: sortOrder)))
                 }
             } onCancel: {
                 cancelToken.cancel()
@@ -106,12 +110,14 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         try await withScope(for: filter.location, empty: []) { scope in
-            let megaFilter = makeListFilter(mediaType: filter.mediaType, excludeSensitive: excludeSensitive, scope: scope)
-            let cursor = firstNode.toMEGASearchCursorOffset()
+            let megaFilter = makeListFilter(
+                mediaType: filter.mediaType, excludeSensitive: excludeSensitive,
+                sortOrder: sortOrder, scope: scope)
+            let cursor = firstNode.toMEGASearchCursorOffset(for: sortOrder)
             // Keyset backward paging: fetch with the FLIPPED order (rows on the other side of
             // the cursor), then reverse client-side back into display order. Drift-safe — the
             // cursor is a stable keyset position, unaffected by concurrent add/delete elsewhere.
-            let flippedOrderType: MEGASortOrderType = sortOrder == .newest ? .modificationAsc : .modificationDesc
+            let flippedOrderType = sortOrder.flippingDirection.toMEGASortOrderType
 
             let cancelToken = ThreadSafeCancelToken()
             return try await withTaskCancellationHandler {
@@ -122,7 +128,7 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
                         maxElements: UInt(max(0, limit)),
                         cursor: cursor,
                         cancelToken: cancelToken.value)
-                    completion(.success(Array(droppingInvalidTimestamps(nodeList.toNodeEntities()).reversed())))
+                    completion(.success(Array(droppingInvalidTimestamps(nodeList.toNodeEntities(), for: sortOrder).reversed())))
                 }
             } onCancel: {
                 cancelToken.cancel()
@@ -139,9 +145,12 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         try await withScope(for: filter.location, empty: []) { scope in
-            let megaFilter = makeListFilter(mediaType: filter.mediaType, excludeSensitive: excludeSensitive, scope: scope)
+            let megaFilter = makeListFilter(
+                mediaType: filter.mediaType, excludeSensitive: excludeSensitive,
+                sortOrder: sortOrder, scope: scope)
             // Anchor the offset window to the date bucket so a deep jump stays O(offset-within-section)
-            // instead of scanning from the top. The anchor direction follows the page order.
+            // instead of scanning from the top — replacing the vacuous guard anchor above with a
+            // real scope. The anchor direction follows the page order.
             megaFilter.timestampAnchorStartDate = Int64(section.startDate.timeIntervalSince1970)
             megaFilter.timestampAnchorEndDate = Int64(section.endDate.timeIntervalSince1970)
             megaFilter.timestampAnchorSectionOrder = sortOrder.toAnchorOrder
@@ -165,9 +174,16 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
 
     // MARK: - Page post-processing
 
-    /// Drop nodes with no valid modification time (mtime <= 0).
-    private func droppingInvalidTimestamps(_ nodes: [NodeEntity]) -> [NodeEntity] {
-        nodes.filter { $0.modificationTime.timeIntervalSince1970 > 0 }
+    private func droppingInvalidTimestamps(
+        _ nodes: [NodeEntity],
+        for sortOrder: MediaTimelineSortOrderEntity
+    ) -> [NodeEntity] {
+        switch sortOrder.timestampBasis {
+        case .modificationTime:
+            nodes.filter { $0.modificationTime.timeIntervalSince1970 > 0 }
+        case .mediaCaptureTime:
+            nodes.filter { ($0.mediaCaptureTime?.timeIntervalSince1970 ?? 0) > 0 }
+        }
     }
     
     // MARK: - Filter building
@@ -175,6 +191,7 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
     private func makeListFilter(
         mediaType: MediaTimelineFilterEntity.MediaType,
         excludeSensitive: Bool,
+        sortOrder: MediaTimelineSortOrderEntity,
         scope: ResolvedScope
     ) -> MEGAListAllNodesFilter {
         let megaFilter = MEGAListAllNodesFilter()
@@ -183,6 +200,9 @@ public struct MediaTimelineRepository: MediaTimelineRepositoryProtocol {
                     include: { megaFilter.locationHandles = $0 },
                     exclude: { megaFilter.excludeLocationHandles = $0 })
         megaFilter.sensitivityFilter = excludeSensitive ? .excludeSensitive : .disabled
+        megaFilter.timestampAnchorSectionOrder = sortOrder.toTimestampPresenceAnchorOrder
+        megaFilter.timestampAnchorStartDate = 0
+        megaFilter.timestampAnchorEndDate = .max
         return megaFilter
     }
 
@@ -284,11 +304,22 @@ private extension MEGADateSection {
 }
 
 private extension NodeEntity {
-    func toMEGASearchCursorOffset() -> MEGASearchCursorOffset {
+    /// Keyset position of this node for `sortOrder`. Only the timestamp key belonging to the
+    /// order is set — the SDK reads the others for a different order and ignores them here.
+    func toMEGASearchCursorOffset(for sortOrder: MediaTimelineSortOrderEntity) -> MEGASearchCursorOffset {
         let cursor = MEGASearchCursorOffset()
         cursor.lastName = name
         cursor.lastHandle = handle
-        cursor.lastMtime = Int64(modificationTime.timeIntervalSince1970)
+        switch sortOrder.timestampBasis {
+        case .modificationTime:
+            cursor.lastMtime = Int64(modificationTime.timeIntervalSince1970)
+        case .mediaCaptureTime:
+            // The one cursor field the SDK takes in milliseconds, not seconds. A negative
+            // value means "unset"; anchors always come out of a page that already dropped
+            // the nodes without a capture time, so the fallback is unreachable in practice.
+            cursor.lastMediaTsMs = mediaCaptureTime
+                .map { Int64(($0.timeIntervalSince1970 * 1000).rounded()) } ?? -1
+        }
         return cursor
     }
 }
@@ -304,19 +335,36 @@ private extension MediaTimelineFilterEntity.MediaType {
 }
 
 private extension MediaTimelineSortOrderEntity {
-    /// Only modification asc/desc are valid for the paginated timeline query.
+    /// Only the modification-time and capture-time orders are valid for the paginated
+    /// timeline query — the cursor carries no other sort key.
     var toMEGASortOrderType: MEGASortOrderType {
         switch self {
         case .newest: .modificationDesc
         case .oldest: .modificationAsc
+        case .newestByCaptureTime: .mediaTsDesc
+        case .oldestByCaptureTime: .mediaTsAsc
         }
     }
 
-    /// Anchor direction matches the page order (newest → enforce upper bound / walk back).
+    /// Ascending anchor on this order's own timestamp column, used purely for the `<column> > 0`
+    /// guard the SDK applies alongside every anchor. Paired with a lower bound of 0 so it scopes
+    /// nothing else — the cursor pages must stay unscoped.
+    var toTimestampPresenceAnchorOrder: MEGAListAllNodesTimestampAnchorOrder {
+        switch timestampBasis {
+        case .modificationTime: .modificationAsc
+        case .mediaCaptureTime: .mediaTsAsc
+        }
+    }
+
+    /// Anchor order matches the page order — both the timestamp column and the direction
+    /// (newest → enforce the upper bound / walk back). A mismatch would scope the page to a
+    /// different bucket than the one the offset counts within.
     var toAnchorOrder: MEGAListAllNodesTimestampAnchorOrder {
         switch self {
         case .newest: .modificationDesc
         case .oldest: .modificationAsc
+        case .newestByCaptureTime: .mediaTsDesc
+        case .oldestByCaptureTime: .mediaTsAsc
         }
     }
 }

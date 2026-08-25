@@ -114,6 +114,19 @@ final class PhotoLibrarySkeletonMapperTests: XCTestCase {
         XCTAssertNotEqual(dayNode.categoryDate, divergentStart)
     }
 
+    /// Slots must be dated by their bucket's local day, not by `startDate`: a scroll position
+    /// is resolved by matching the day it was taken in, so a slot dated outside its own bucket
+    /// would never be found again.
+    func testSkeleton_slotDatesFollowGroupId_notDivergentStartDate() {
+        let divergentStart = day("2022-11-30")
+        let sections = [MediaDateSectionEntity(
+            groupId: "2022-12-01", startDate: divergentStart, endDate: divergentStart, count: 2)]
+
+        let library = PhotoLibrary.skeleton(from: sections)
+
+        XCTAssertEqual(library.allPhotos.map(\.categoryDate), [day("2022-12-01"), day("2022-12-01")])
+    }
+
     func testSkeleton_everySlotIsPlaceholderWithUniqueHandle() {
         let library = PhotoLibrary.skeleton(from: makeSections())
         let photos = library.allPhotos

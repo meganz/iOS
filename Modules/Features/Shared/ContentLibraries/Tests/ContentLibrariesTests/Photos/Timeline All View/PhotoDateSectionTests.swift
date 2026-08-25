@@ -1,6 +1,15 @@
 @testable import ContentLibraries
+import Foundation
 import MEGADomain
+import MEGAFoundation
 import XCTest
+
+private extension Date {
+    /// The GMT day the date falls in — the `categoryDate` of the bucket holding it.
+    var gmtDay: Date {
+        get throws { try XCTUnwrap(removeTimestamp(timeZone: .GMT)) }
+    }
+}
 
 final class PhotoDateSectionTests: XCTestCase {
 
@@ -63,16 +72,46 @@ final class PhotoDateSectionTests: XCTestCase {
         XCTAssertEqual(photo, NodeEntity(handle: 5))
     }
     
+    /// The position is dated by the day bucket the item sits in, not by the node's own
+    /// timestamp — that is the date ``indexPath(of:in:)`` matches on.
     func testPositionAtIndexPath_monthSection() throws {
         let (dateSections, _) =  try makeSut(path: \.photoMonthSections)
         let position = dateSections.position(at: IndexPath(item: 0, section: 4))
-        XCTAssertEqual(position, PhotoScrollPosition(handle: 7, date: try "2018-01-23T01:01:04Z".date))
+        XCTAssertEqual(position, PhotoScrollPosition(handle: 7, date: try "2018-01-23T01:01:04Z".date.gmtDay))
     }
     
     func testPositionAtIndexPath_daySection() throws {
         let (dateSections, _) =  try makeSut(path: \.photoDaySections)
         let position = dateSections.position(at: IndexPath(item: 0, section: 2))
-        XCTAssertEqual(position, PhotoScrollPosition(handle: 2, date: try "2022-08-10T22:01:04Z".date))
+        XCTAssertEqual(position, PhotoScrollPosition(handle: 2, date: try "2022-08-10T22:01:04Z".date.gmtDay))
+    }
+
+    /// A month section holds several days; the item's position must carry its own day, not the
+    /// section's first one.
+    func testPositionAtIndexPath_monthSectionSecondDay_usesThatDaysDate() throws {
+        let (dateSections, _) =  try makeSut(path: \.photoMonthSections)
+        // Section 1 is August 2022: day 2022-08-18 followed by day 2022-08-10, so item 1 is
+        // the first item of the second day.
+        let position = dateSections.position(at: IndexPath(item: 1, section: 1))
+        XCTAssertEqual(position, PhotoScrollPosition(handle: 2, date: try "2022-08-10T22:01:04Z".date.gmtDay))
+    }
+
+    /// On the paginated timeline the buckets come from the SDK's `groupId`s, so a hydrated
+    /// node's modification time can sit in a completely different day — the position must
+    /// still round-trip back to the item it was taken from.
+    func testPositionAtIndexPath_hydratedNodeDatedOutsideItsBucket_usesTheBucketDate() throws {
+        let dayDate = try XCTUnwrap(Calendar.current.date(from: DateComponents(year: 2022, month: 8, day: 18)))
+        let sections = [MediaDateSectionEntity(
+            groupId: "2022-08-18", startDate: dayDate, endDate: dayDate, count: 2)]
+        let hydrated = NodeEntity(
+            name: "a.jpg", handle: 7, modificationTime: try "2019-03-04T10:00:00Z".date)
+        let library = PhotoLibrary.skeleton(from: sections).replacingPhotos(at: [1: hydrated])
+        let dateSections = library.photoDaySections
+
+        let position = try XCTUnwrap(dateSections.position(at: IndexPath(item: 1, section: 0)))
+
+        XCTAssertEqual(position, PhotoScrollPosition(handle: 7, date: dayDate))
+        XCTAssertEqual(dateSections.indexPath(of: position), IndexPath(item: 1, section: 0))
     }
     
     func testIndexPathOfPosition_monthSection_found() throws {

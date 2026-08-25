@@ -86,6 +86,10 @@ extension MEGASortOrderType {
             return .shareCreationAsc
         case .shareCreationDesc:
             return .shareCreationDesc
+        case .mediaTsAsc, .mediaTsDesc:
+            // Deliberately unmapped. The media capture time orders live only inside the media
+            // timeline, which selects them itself; they must never reach SortOrderEntity.
+            return .none
         @unknown default:
             return .none
         }

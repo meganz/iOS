@@ -22,17 +22,22 @@ extension PhotoLibrary {
         // Day level — one entry per non-empty section, filled with `count` placeholder slots.
         let days: [SkeletonDay] = sections.compactMap { section in
             guard section.count > 0 else { return nil }
-            let placeholders = (0..<section.count).map { _ -> NodeEntity in
-                defer { nextHandleOffset += 1 }
-                return NodeEntity.timelinePlaceholder(offset: nextHandleOffset, date: section.startDate)
-            }
             // Keep slots even if an unexpected groupId cannot be parsed.
             let dates = section.groupId.mediaSectionDates(using: calendar)
+            let dayDate = dates?.day ?? section.startDate
+            // Date the slots by the bucket they sit in, not by `startDate`: the two disagree
+            // whenever the SDK's fixed UTC offset lands the bucket start on the adjacent local
+            // day, and a slot dated outside its own bucket breaks every lookup that resolves a
+            // scroll position by day.
+            let placeholders = (0..<section.count).map { _ -> NodeEntity in
+                defer { nextHandleOffset += 1 }
+                return NodeEntity.timelinePlaceholder(offset: nextHandleOffset, date: dayDate)
+            }
             return SkeletonDay(
                 groupId: section.groupId,
                 monthDate: dates?.month ?? section.startDate,
                 yearDate: dates?.year ?? section.startDate,
-                day: PhotoByDay(categoryDate: dates?.day ?? section.startDate, contentList: placeholders))
+                day: PhotoByDay(categoryDate: dayDate, contentList: placeholders))
         }
 
         let years = days.grouped(by: { String($0.groupId.prefix(4)) }).map { yearGroup -> PhotoByYear in

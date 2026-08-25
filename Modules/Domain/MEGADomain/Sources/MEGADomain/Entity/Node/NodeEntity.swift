@@ -52,6 +52,7 @@ public struct NodeEntity: Sendable {
     public let codecId: CodecIdEntity
     public let duration: Int
     public let mediaType: MediaTypeEntity?
+    public let mediaCaptureTime: Date?
     
     // MARK: - Photo
     public let latitude: Double?
@@ -102,6 +103,7 @@ public struct NodeEntity: Sendable {
         codecId: Int,
         duration: Int,
         mediaType: MediaTypeEntity?,
+        mediaCaptureTime: Date? = nil,
         latitude: Double?,
         longitude: Double?,
         deviceId: String?,
@@ -145,6 +147,7 @@ public struct NodeEntity: Sendable {
         self.codecId = codecId
         self.duration = duration
         self.mediaType = mediaType
+        self.mediaCaptureTime = mediaCaptureTime
         self.latitude = latitude
         self.longitude = longitude
         self.deviceId = deviceId

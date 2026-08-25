@@ -1,6 +1,7 @@
 @testable import ContentLibraries
 import Foundation
 import MEGADomain
+import MEGADomainMock
 import Testing
 
 @Suite("PhotoSection changedItemIndexPaths Tests")
@@ -33,6 +34,33 @@ struct PhotoSection_changedItemIndexPathsTests {
         let new = makeSkeleton(counts: [1, 1]).photoDaySections
         // Item-count differs → caller must fall back to a full reload.
         #expect(old.changedItemIndexPaths(to: new) == nil)
+    }
+
+    /// The visibility lookup and the key it is looked up by must agree. `changedItemIndexPaths`
+    /// keys on `NodeEntity.position` (the node's own timestamp), so the caller has to build the
+    /// dictionary from `nodePosition(at:)`
+    @Test
+    func testChangedItemIndexPaths_visibleThumbnailFlip_isDetectedWhenKeyedByNodePosition() throws {
+        let skeleton = makeSkeleton(counts: [2, 1])
+        let hydrated = NodeEntity(
+            // 2022-08-18T12:00:45Z — no time zone offset makes that a local midnight.
+            handle: 99, modificationTime: Date(timeIntervalSince1970: 1_660_824_045))
+        let old = skeleton.replacingPhotos(from: 1, with: [hydrated]).photoDaySections
+        let withThumbnail = NodeEntity(
+            handle: 99, hasThumbnail: true, modificationTime: hydrated.modificationTime)
+        let new = skeleton.replacingPhotos(from: 1, with: [withThumbnail]).photoDaySections
+        let indexPath = IndexPath(item: 1, section: 0)
+
+        // Only `hasThumbnail` moved, so it is seen through the visible-cell comparison alone.
+        #expect(old.changedItemIndexPaths(to: new) == [])
+
+        let nodeKeyed = try #require(old.nodePosition(at: indexPath))
+        #expect(old.changedItemIndexPaths(to: new, visiblePositions: [nodeKeyed: true]) == [indexPath])
+
+        // The scroll-restore position is a different key by design, and must not be used here.
+        let bucketKeyed = try #require(old.position(at: indexPath))
+        #expect(bucketKeyed != nodeKeyed)
+        #expect(old.changedItemIndexPaths(to: new, visiblePositions: [bucketKeyed: true]) == [])
     }
 
     @Test
