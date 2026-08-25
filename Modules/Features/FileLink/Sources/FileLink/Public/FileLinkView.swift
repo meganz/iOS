@@ -11,7 +11,11 @@ import Transfer
 /// Entry point of the file link screen. It owns the access flow only: the screen is on top before the
 /// link is resolved, shows the skeleton while that happens, asks for a decryption key when the link
 /// was shared without one, and shows the unavailable state when the link cannot be opened.
-public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
+///
+/// `adsContent` is the ad the caller wants shown to free accounts, which this module knows nothing
+/// about: it only reserves the place the design gives it, below the file's details. Pass `EmptyView`
+/// for a screen that shows no ads.
+public struct FileLinkView<Ads, LinkUnavailable>: View where Ads: View, LinkUnavailable: View {
     public struct Dependency {
         let link: String
         /// Set when the link the user opened was an encrypted one, of which `link` is the decrypted form.
@@ -59,13 +63,16 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
     private let dependency: Dependency
     /// Built once, next to the view model, so that resolving the body does not rebuild it.
     private let previewLoader: any ThumbnailLoaderProtocol
+    @ViewBuilder let adsContent: () -> Ads
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
 
     public init(
         dependency: Dependency,
+        @ViewBuilder adsContent: @escaping () -> Ads,
         @ViewBuilder linkUnavailableContent: @escaping (LinkUnavailableReason) -> LinkUnavailable
     ) {
         self.dependency = dependency
+        self.adsContent = adsContent
         self.linkUnavailableContent = linkUnavailableContent
         previewLoader = FileLinkPreviewLoaderFactory.makePreviewLoader(nodeProvider: dependency.nodeProvider)
         _viewModel = StateObject(
@@ -147,7 +154,8 @@ public struct FileLinkView<LinkUnavailable>: View where LinkUnavailable: View {
                 // file resolved from, which is not the one the screen was opened with when the user had to
                 // type the key in.
                 shareLink: viewModel.shareLink,
-                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
+                transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
+                adsContent: adsContent
             )
             .toolbar { toolbarContent }
         case let .error(reason):

@@ -1,3 +1,4 @@
+import Accounts
 import FileLink
 import SwiftUI
 import UIKit
@@ -6,9 +7,11 @@ import UIKit
 /// skeleton is on screen while the public node is fetched.
 final class NewFileLinkViewController: UIViewController {
     private let link: String
+    private let adsBanner: AdsBannerView
 
-    init(link: String) {
+    init(link: String, adsBanner: AdsBannerView) {
         self.link = link
+        self.adsBanner = adsBanner
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -26,6 +29,7 @@ final class NewFileLinkViewController: UIViewController {
         let fileLinkViewController = UIHostingController(
             rootView: FileLinkView(
                 dependency: buildDependency(),
+                adsContent: { [adsBanner] in adsBanner },
                 linkUnavailableContent: { reason in
                     FileLinkUnavailableView(reason: reason)
                 }
@@ -44,7 +48,7 @@ final class NewFileLinkViewController: UIViewController {
         fileLinkViewController.didMove(toParent: self)
     }
 
-    private func buildDependency() -> FileLinkView<FileLinkUnavailableView>.Dependency {
+    private func buildDependency() -> FileLinkView<AdsBannerView, FileLinkUnavailableView>.Dependency {
         let nodeProvider = FileLinkNodeProvider()
         // Read now rather than when the file is opened or shared: the photo browser clears it as it closes.
         let encryptedLink = MEGALinkManager.secondaryLinkURL?.absoluteString

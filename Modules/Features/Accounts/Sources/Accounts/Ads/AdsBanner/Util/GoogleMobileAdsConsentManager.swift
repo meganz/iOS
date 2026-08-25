@@ -6,6 +6,10 @@ import MEGASwift
 
 public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
     var isPrivacyOptionsRequired: Bool { get }
+    /// Whether the ads SDK has finished starting, which is the point ads can be requested and the
+    /// point `Notification.Name.startAds` is posted. A banner that only reaches the screen after that
+    /// notification has missed it and reads this instead.
+    var isMobileAdsInitialized: Bool { get }
     func gatherConsent() async throws
     func initializeGoogleMobileAdsSDK() async
     func presentPrivacyOptionsForm() async throws -> Bool
@@ -36,7 +40,13 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     private let consentFormType: ConsentForm.Type
     private let mobileAds: MobileAds
 
+    /// Set once the SDK has come back from starting. Ads requested before that point are not served,
+    /// so this is what a banner arriving late reads to know it can ask for one.
     @Atomic public var isMobileAdsInitialized = false
+    /// Set as soon as starting is asked for, which is what keeps a second ask from starting the SDK
+    /// again while the first is still under way. Held apart from `isMobileAdsInitialized` because the
+    /// two are true at different moments, and the gap between them is a window ads cannot be requested in.
+    @Atomic private var isMobileAdsStartRequested = false
     
     var canRequestAds: Bool {
         consentInformation.canRequestAds
@@ -72,14 +82,15 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     /// Initializes the Google Mobile Ads SDK. The SDK should only be initialized once.
     public func initializeGoogleMobileAdsSDK() async {
         await withAsyncValue { completion in
-            guard canRequestAds, !isMobileAdsInitialized else {
+            guard canRequestAds, !isMobileAdsStartRequested else {
                 completion(.success)
                 return
             }
-            
-            $isMobileAdsInitialized.mutate { $0 = true }
-            
+
+            $isMobileAdsStartRequested.mutate { $0 = true }
+
             mobileAds.start { _ in
+                $isMobileAdsInitialized.mutate { $0 = true }
                 completion(.success)
             }
         }

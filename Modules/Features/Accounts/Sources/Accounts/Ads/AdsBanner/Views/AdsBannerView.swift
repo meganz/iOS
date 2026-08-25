@@ -7,12 +7,41 @@ import SwiftUI
 /// stacks it under a screen's whole content, while screens that draw the ad somewhere in the middle
 /// of their own layout embed it directly.
 public struct AdsBannerView: View {
+    /// The AdMob formats the designs ask for. Both are fixed creative sizes: the banner renders at
+    /// that width whatever the screen's is, centred, rather than stretching to fill it.
+    public enum Format {
+        /// 320x50, the slot under a screen's whole content.
+        case banner
+        /// 320x100, the area the file link gives the ad inside its own layout.
+        case largeBanner
+
+        var adSize: AdSize {
+            switch self {
+            case .banner: AdSizeBanner
+            case .largeBanner: AdSizeLargeBanner
+            }
+        }
+
+        /// The gap the bottom slot keeps between the screen's content and the ad. An embedded area is
+        /// spaced by the layout it sits in, so it adds none of its own.
+        var topSpacing: CGFloat {
+            switch self {
+            case .banner: 5
+            case .largeBanner: 0
+            }
+        }
+    }
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ObservedObject private var viewModel: AdsSlotViewModel
-    private let adSize = AdSizeBanner
+    private let format: Format
 
-    public init(viewModel: AdsSlotViewModel) {
+    public init(
+        viewModel: AdsSlotViewModel,
+        format: Format = .banner
+    ) {
         self.viewModel = viewModel
+        self.format = format
     }
 
     public var body: some View {
@@ -35,15 +64,15 @@ public struct AdsBannerView: View {
     private var banner: some View {
         HStack(alignment: .top, spacing: 0) {
             AdMobBannerView(
-                adSize: adSize,
+                adSize: format.adSize,
                 adMob: viewModel.adMob,
                 bannerViewDidReceiveAdsUpdate: { [weak viewModel] result in
                     viewModel?.bannerViewDidReceiveAdsUpdate(result: result)
                 }
             )
             .frame(
-                width: adSize.size.width,
-                height: adSize.size.height
+                width: format.adSize.size.width,
+                height: format.adSize.size.height
             )
 
             if viewModel.showCloseButton {
@@ -60,7 +89,7 @@ public struct AdsBannerView: View {
                     }
             }
         }
-        .padding(.top, 5)
+        .padding(.top, format.topSpacing)
         .frame(maxWidth: .infinity)
         // Both the height and the opacity are driven by the same value: the banner is there but
         // takes no room and shows nothing until an ad has loaded into it.
@@ -84,7 +113,12 @@ public struct AdsBannerView: View {
         .background(TokenColors.Background.page.swiftUI)
     }
 
+    /// The room the banner takes: its format's height while there is an ad on show, none otherwise.
     private var height: CGFloat {
-        viewModel.bannerHeight(isVerticallyCompact: verticalSizeClass == .compact)
+        guard viewModel.isBannerVisible(isVerticallyCompact: verticalSizeClass == .compact) else {
+            return 0
+        }
+        
+        return format.adSize.size.height
     }
 }

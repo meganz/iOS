@@ -2711,7 +2711,6 @@
 		FAB12046DE1E6A7E50000002 /* MEGAPurchaseDelegatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */; };
 		FE0000000000000000000002 /* UpgradePlansRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0000000000000000000001 /* UpgradePlansRouter.swift */; };
 		FE1EB0000000000000000001 /* NewFileLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000001 /* NewFileLinkViewController.swift */; };
-		FE1EB0000000000000000002 /* NewFileLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */; };
 		FE1EB0000000000000000003 /* MEGAFileLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */; };
 		FE1EB0000000000000000005 /* FileLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */; };
 		FE1EB0000000000000000101 /* AlbumLinkUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */; };
@@ -5594,7 +5593,6 @@
 		FAB12046DE1E6A7E50000001 /* MEGAPurchaseDelegatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPurchaseDelegatesTests.swift; sourceTree = "<group>"; };
 		FE0000000000000000000001 /* UpgradePlansRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradePlansRouter.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000001 /* NewFileLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileLinkViewController.swift; sourceTree = "<group>"; };
-		FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewFileLinkViewController+Ads.swift"; sourceTree = "<group>"; };
 		FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFileLinkBuilder.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkUnavailableView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkUnavailableView.swift; sourceTree = "<group>"; };
@@ -13729,7 +13727,6 @@
 				FE1EA000000000000000000A /* FileLinkNodeOpener.swift */,
 				FE1EA0000000000000000005 /* FileLinkUnavailableView.swift */,
 				FE1EA0000000000000000003 /* MEGAFileLinkBuilder.swift */,
-				FE1EA0000000000000000002 /* NewFileLinkViewController+Ads.swift */,
 				FE1EA0000000000000000001 /* NewFileLinkViewController.swift */,
 			);
 			path = NewFileLink;
@@ -15652,7 +15649,6 @@
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */,
 				C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */,
-				FE1EB0000000000000000002 /* NewFileLinkViewController+Ads.swift in Sources */,
 				FE1EB0000000000000000001 /* NewFileLinkViewController.swift in Sources */,
 				A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */,
 				A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */,

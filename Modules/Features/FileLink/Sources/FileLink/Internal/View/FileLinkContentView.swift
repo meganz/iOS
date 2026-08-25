@@ -7,20 +7,24 @@ import MEGASwiftUI
 import SwiftUI
 import Transfer
 
-/// The file link screen once the link has resolved: the preview area above the file's name and
-/// details, either of which opens the file.
-struct FileLinkContentView: View {
-    private enum Constants {
-        static let nameLineLimit = 3
-        /// The padding the design draws around `Open`, which does not sit on the spacing token scale.
-        static let openButtonHorizontalPadding: CGFloat = 14
-        static let openButtonVerticalPadding: CGFloat = 7
-        /// The more button is the only item of the trailing side, which is what keeps the transfer
-        /// indicator on that side rather than sending it over to the close button.
-        static let trailingItemCount = 1
-    }
+/// Nested in the view until it took a generic parameter, which stored type properties cannot live in.
+private enum Constants {
+    static let nameLineLimit = 3
+    /// What the design leaves between the ad and the actions anchored below it.
+    static let adsBottomSpacing = TokenSpacing._7
+    /// The padding the design draws around `Open`, which does not sit on the spacing token scale.
+    static let openButtonHorizontalPadding: CGFloat = 14
+    static let openButtonVerticalPadding: CGFloat = 7
+    /// The more button is the only item of the trailing side, which is what keeps the transfer
+    /// indicator on that side rather than sending it over to the close button.
+    static let trailingItemCount = 1
+}
 
+/// The file link screen once the link has resolved: the preview area above the file's name and
+/// details, either of which opens the file, and below those the place the design gives the ad.
+struct FileLinkContentView<Ads>: View where Ads: View {
     @StateObject private var viewModel: FileLinkContentViewModel
+    @ViewBuilder let adsContent: () -> Ads
 
     private let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
 
@@ -34,9 +38,11 @@ struct FileLinkContentView: View {
         fileNodeOpener: some FileLinkNodeOpenerProtocol,
         actionHandler: some FileLinkActionHandlerProtocol,
         shareLink: String,
-        transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
+        transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory,
+        @ViewBuilder adsContent: @escaping () -> Ads
     ) {
         self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
+        self.adsContent = adsContent
         _viewModel = StateObject(
             wrappedValue: FileLinkContentViewModel(
                 node: node,
@@ -57,6 +63,15 @@ struct FileLinkContentView: View {
             // instead of the name being truncated.
             details
                 .fixedSize(horizontal: false, vertical: true)
+
+            // The design hands the slack between the file's details and the ad, which sits at the
+            // bottom of the screen rather than under the details.
+            Spacer(minLength: 0)
+
+            // The ad takes no room until one has loaded, so the screen looks the same as it did
+            // before it arrives, and the same as it does for accounts that see no ads at all.
+            adsContent()
+                .padding(.bottom, Constants.adsBottomSpacing)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)

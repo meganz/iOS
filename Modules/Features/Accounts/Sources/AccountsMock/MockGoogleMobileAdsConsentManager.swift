@@ -8,12 +8,17 @@ public enum AdMobError: Error {
 
 public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol, @unchecked Sendable {
     public private(set) var isPrivacyOptionsRequired: Bool = false
+    public private(set) var isMobileAdsInitialized: Bool
     public private(set) var gatherConsentCalledCount = 0
     public private(set) var initializeGoogleMobileAdsSDKCalledCount = 0
     public private(set) var presentPrivacyOptionsFormCalledCount = 0
 
-    public init(isPrivacyOptionsRequired: Bool = false) {
+    public init(
+        isPrivacyOptionsRequired: Bool = false,
+        isMobileAdsInitialized: Bool = false
+    ) {
         self.isPrivacyOptionsRequired = isPrivacyOptionsRequired
+        self.isMobileAdsInitialized = isMobileAdsInitialized
     }
     
     public func gatherConsent() async throws {
@@ -22,6 +27,7 @@ public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentMana
     
     public func initializeGoogleMobileAdsSDK() async {
         initializeGoogleMobileAdsSDKCalledCount += 1
+        isMobileAdsInitialized = true
     }
     
     public func presentPrivacyOptionsForm() async throws -> Bool {
@@ -88,11 +94,15 @@ public final class MockAdMobConsentForm: ConsentForm, @unchecked Sendable {
 
 public final class MockMobileAds: MobileAds, @unchecked Sendable {
     public private(set) var startAdsCalledCount = 0
+    /// Asked while starting is still under way, so a test can look at the manager from inside that window.
+    public var readIsMobileAdsInitialized: (@Sendable () -> Bool)?
+    public private(set) var wasMobileAdsInitializedWhileStarting: Bool?
 
     public override init() {}
     
     public override func start(completionHandler: GADInitializationCompletionHandler?) {
         startAdsCalledCount += 1
+        wasMobileAdsInitializedWhileStarting = readIsMobileAdsInitialized?()
         completionHandler?(.init())
     }
 }

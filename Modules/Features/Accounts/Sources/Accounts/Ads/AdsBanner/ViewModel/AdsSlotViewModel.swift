@@ -24,7 +24,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var monitoringOnAccountUpdatesTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
-    private var subscriptions = Set<AnyCancellable>()
+    private(set) var subscriptions = Set<AnyCancellable>()
     
     @Published var isExternalAdsEnabled: Bool?
     @Published var displayAds: Bool = false
@@ -44,10 +44,6 @@ final public class AdsSlotViewModel: ObservableObject {
         case unknown
         case loaded
         case failed
-    }
-
-    private enum Constants {
-        static let bannerHeight: CGFloat = 50
     }
     
     public init(
@@ -100,6 +96,8 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func setupSubscriptions() {
+        subscriptions.removeAll()
+
         purchaseUseCase.submitReceiptResultPublisher
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] result in
@@ -123,16 +121,22 @@ final public class AdsSlotViewModel: ObservableObject {
             .publisher(for: .startAds)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let self else { return }
-                
-                /// Avoid redundant calls when `isExternalAdsEnabled` is already set.
-                guard isExternalAdsEnabled == nil else { return }
-                
-                Task {
-                    await determineAdsAvailability()
-                }
+                self?.determineAdsAvailabilityIfNeeded()
             }
             .store(in: &subscriptions)
+        
+        if adMobConsentManager.isMobileAdsInitialized {
+            determineAdsAvailabilityIfNeeded()
+        }
+    }
+    
+    /// Avoid redundant calls when `isExternalAdsEnabled` is already set.
+    private func determineAdsAvailabilityIfNeeded() {
+        guard isExternalAdsEnabled == nil else { return }
+        
+        Task {
+            await determineAdsAvailability()
+        }
     }
 
     // MARK: - On Account Update
@@ -254,19 +258,15 @@ final public class AdsSlotViewModel: ObservableObject {
     
     // MARK: Banner layout
     
-    /// The room the banner takes on screen, zero while there is nothing to show: ads are disabled
-    /// for the account, hidden for the current slot, there is no room for them in landscape, or no
-    /// ad has loaded yet. The views keep the banner at that zero height rather than removing it, so
-    /// that AdMob can load into it.
-    func bannerHeight(isVerticallyCompact: Bool) -> CGFloat {
-        guard isExternalAdsEnabled == true,
-              displayAds,
-              !isVerticallyCompact,
-              adsLoadingState == .loaded else {
-            return 0
-        }
-        
-        return Constants.bannerHeight
+    /// Whether the banner has anything to show. It has not while ads are disabled for the account,
+    /// hidden for the current slot, out of room in landscape, or still loading. How much room it then
+    /// takes is up to its format, so the views keep it at no height rather than removing it, leaving
+    /// AdMob somewhere to load into.
+    func isBannerVisible(isVerticallyCompact: Bool) -> Bool {
+        isExternalAdsEnabled == true
+        && displayAds
+        && !isVerticallyCompact
+        && adsLoadingState == .loaded
     }
     
     /// In the future, AdMob will have multiple unit ids per adSlot

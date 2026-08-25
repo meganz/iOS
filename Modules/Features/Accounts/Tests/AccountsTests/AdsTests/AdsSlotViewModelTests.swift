@@ -54,52 +54,105 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsValue)
     }
     
-    // MARK: - Banner layout
-    @MainActor func testBannerHeight_whenAdIsLoadedAndDisplayed_shouldReserveRoomForTheBanner() {
+    /// A banner embedded in a screen's own layout appears again every time that screen is returned to,
+    /// so the subscriptions have to be replaced rather than added to. Counted rather than driven through
+    /// the publishers because the receipt one is debounced, which would make the assertion a race.
+    @MainActor func testSetupSubscriptions_calledAgainOnReappear_shouldNotPileUpSubscriptions() {
+        let sut = makeSUT()
+        sut.setupSubscriptions()
+        let subscriptionCountAfterFirstAppearance = sut.subscriptions.count
+
+        sut.setupSubscriptions()
+
+        XCTAssertEqual(sut.subscriptions.count, subscriptionCountAfterFirstAppearance)
+    }
+
+    @MainActor func testSetupSubscriptions_whenMobileAdsAlreadyStarted_shouldDetermineAdsAvailability() {
+        // A banner embedded in a screen can reach the view tree after the ads SDK started, missing the notification.
+        let expectedAdsValue = Bool.random()
+        let sut = makeSUT(
+            isExternalAdsFlagEnabled: expectedAdsValue,
+            adMobConsentManager: MockGoogleMobileAdsConsentManager(isMobileAdsInitialized: true)
+        )
+        
+        let adsExp = expectation(description: "isExternalAdsEnabled should be determined without the notification")
+        sut.$isExternalAdsEnabled
+            .dropFirst()
+            .sink { _ in
+                adsExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.setupSubscriptions()
+        
+        wait(for: [adsExp], timeout: 1.0)
+        XCTAssertEqual(sut.isExternalAdsEnabled, expectedAdsValue)
+    }
+    
+    @MainActor func testSetupSubscriptions_whenMobileAdsHasNotStarted_shouldNotDetermineAdsAvailability() {
+        let sut = makeSUT(adMobConsentManager: MockGoogleMobileAdsConsentManager(isMobileAdsInitialized: false))
+        
+        let adsExp = expectation(description: "isExternalAdsEnabled should wait for the notification")
+        adsExp.isInverted = true
+        sut.$isExternalAdsEnabled
+            .dropFirst()
+            .sink { _ in
+                adsExp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.setupSubscriptions()
+        
+        wait(for: [adsExp], timeout: 1.0)
+        XCTAssertNil(sut.isExternalAdsEnabled)
+    }
+    
+    // MARK: - Banner visibility
+    @MainActor func testIsBannerVisible_whenAdIsLoadedAndDisplayed_shouldBeVisible() {
         let sut = makeSUT()
         sut.isExternalAdsEnabled = true
         sut.displayAds = true
         sut.adsLoadingState = .loaded
         
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 50)
+        XCTAssertTrue(sut.isBannerVisible(isVerticallyCompact: false))
     }
     
-    @MainActor func testBannerHeight_whenVerticallyCompact_shouldCollapse() {
+    @MainActor func testIsBannerVisible_whenVerticallyCompact_shouldBeHidden() {
         let sut = makeSUT()
         sut.isExternalAdsEnabled = true
         sut.displayAds = true
         sut.adsLoadingState = .loaded
         
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: true), 0)
+        XCTAssertFalse(sut.isBannerVisible(isVerticallyCompact: true))
     }
     
-    @MainActor func testBannerHeight_whenNoAdHasLoadedYet_shouldCollapse() {
+    @MainActor func testIsBannerVisible_whenNoAdHasLoadedYet_shouldBeHidden() {
         let sut = makeSUT()
         sut.isExternalAdsEnabled = true
         sut.displayAds = true
         
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+        XCTAssertFalse(sut.isBannerVisible(isVerticallyCompact: false))
         
         sut.adsLoadingState = .failed
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+        XCTAssertFalse(sut.isBannerVisible(isVerticallyCompact: false))
     }
     
-    @MainActor func testBannerHeight_whenAdsAreNotDisplayedOnThisSlot_shouldCollapse() {
+    @MainActor func testIsBannerVisible_whenAdsAreNotDisplayedOnThisSlot_shouldBeHidden() {
         let sut = makeSUT()
         sut.isExternalAdsEnabled = true
         sut.displayAds = false
         sut.adsLoadingState = .loaded
         
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+        XCTAssertFalse(sut.isBannerVisible(isVerticallyCompact: false))
     }
     
-    @MainActor func testBannerHeight_whenAdsAreDisabledForTheAccount_shouldCollapse() {
+    @MainActor func testIsBannerVisible_whenAdsAreDisabledForTheAccount_shouldBeHidden() {
         let sut = makeSUT()
         sut.isExternalAdsEnabled = false
         sut.displayAds = true
         sut.adsLoadingState = .loaded
         
-        XCTAssertEqual(sut.bannerHeight(isVerticallyCompact: false), 0)
+        XCTAssertFalse(sut.isBannerVisible(isVerticallyCompact: false))
     }
     
     // MARK: - Submit receipt

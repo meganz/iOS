@@ -647,14 +647,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
     if (MEGALinkManager.isLinkRevampEnabled) {
         // The new screen is presented before the link is resolved, so its skeleton covers the wait.
-        UIViewController *fileLinkViewController = [self newFileLinkViewControllerWithLink:fileLinkURLString];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:fileLinkViewController];
-
-        [self presentViewControllerWithAds:navigationController
-                                publicLink:fileLinkURLString
-                              isFolderLink:false
-                     adsSlotViewController:fileLinkViewController
-                         presentationStyle:UIModalPresentationFullScreen];
+        // It draws the ad in the middle of its own layout, so it does not go through the ads slot.
+        [self presentNewFileLinkViewWithLink:fileLinkURLString];
         return;
     }
 

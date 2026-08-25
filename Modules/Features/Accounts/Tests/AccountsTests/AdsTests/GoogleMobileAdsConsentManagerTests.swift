@@ -24,6 +24,19 @@ struct GoogleMobileAdsConsentManagerTests {
             #expect(!sut.isMobileAdsInitialized)
         }
         
+        /// Ads asked for before the SDK has come back from starting are not served, and a banner reads
+        /// this flag to decide it may ask, so it must not be true for the length of the start itself.
+        @Test func testIsMobileAdsInitialized_whileTheSDKIsStillStarting_shouldBeFalse() async {
+            let mockMobileAds = MockMobileAds()
+            let sut = makeSUT(mobileAds: mockMobileAds)
+            mockMobileAds.readIsMobileAdsInitialized = { sut.isMobileAdsInitialized }
+
+            await sut.initializeGoogleMobileAdsSDK()
+
+            #expect(mockMobileAds.wasMobileAdsInitializedWhileStarting == false)
+            #expect(sut.isMobileAdsInitialized)
+        }
+
         @Test func testInitializeGoogleMobileAdsSDK_shouldStartAdsOnce() async {
             let mockMobileAds = MockMobileAds()
             let sut = makeSUT(mobileAds: mockMobileAds)

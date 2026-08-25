@@ -426,8 +426,42 @@ extension MEGALinkManager {
 
 // MARK: - FileLink
 extension MEGALinkManager {
-    @objc static func newFileLinkViewController(link: String) -> UIViewController {
-        NewFileLinkViewController(link: link)
+    /// The revamped file link screen draws the ad inside its own layout, so unlike the screens that
+    /// go through `presentViewControllerWithAds` it is presented on its own, with the banner handed
+    /// to it rather than stacked underneath it.
+    @MainActor
+    @objc static func presentNewFileLinkView(link: String) {
+        let fileLinkViewController = NewFileLinkViewController(
+            link: link,
+            adsBanner: makeFileLinkAdsBanner(link: link)
+        )
+        let navigationController = MEGANavigationController(rootViewController: fileLinkViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+
+        UIApplication.mnz_visibleViewController().present(navigationController, animated: true) {
+            Task {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                await appDelegate.showAdMobConsentIfNeeded()
+            }
+        }
+    }
+
+    @MainActor
+    private static func makeFileLinkAdsBanner(link: String) -> AdsBannerView {
+        AdsBannerViewBuilder(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            ),
+            publicLink: link,
+            isFolderLink: false
+        ).build(format: .largeBanner, adsFreeViewProPlanAction: {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.showUpgradePlanPageFromAds()
+        })
     }
 
     static func buildFileLink(_ link: String, with key: String) -> String {
