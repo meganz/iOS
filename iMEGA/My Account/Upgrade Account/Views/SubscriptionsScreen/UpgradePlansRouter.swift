@@ -61,7 +61,8 @@ final class UpgradePlansRouter {
             analyticsUseCase: UpgradePlansAnalyticsUseCase(
                 tracker: DIContainer.tracker,
                 isFromAds: isFromAds,
-                remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase
+                remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
+                accountUseCase: accountUseCase
             ),
             viewType: revampViewType,
             accountDisplayName: { $0.toAccountTypeDisplayName() },

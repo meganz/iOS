@@ -15,6 +15,10 @@ public protocol UpgradePlansAnalyticsUseCaseProtocol: PlanPurchaseTracking {
     func trackDismiss()
     func trackGetStartedForFree()
     func trackCycleToggle(_ cycle: SubscriptionCycleEntity)
+    /// Reports the featured promotional offer lapsing while the user was on the screen.
+    func trackOfferTimedOut()
+    /// Reports a Pro user being shown at least one live promotional offer. Call once the plans are in.
+    func trackProUserEligibleForOffers()
 }
 
 public final class UpgradePlansAnalyticsUseCase: @unchecked Sendable {
@@ -26,6 +30,7 @@ public final class UpgradePlansAnalyticsUseCase: @unchecked Sendable {
     }
 
     private let tracker: any AnalyticsTracking
+    private let accountUseCase: any AccountUseCaseProtocol
     private let isFromAds: Bool
     private let isExternalAdsActive: Bool
 
@@ -38,9 +43,11 @@ public final class UpgradePlansAnalyticsUseCase: @unchecked Sendable {
         tracker: some AnalyticsTracking,
         isFromAds: Bool,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
         self.tracker = tracker
+        self.accountUseCase = accountUseCase
         self.isFromAds = isFromAds
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         $lastCloseAdsDate.useCase = preferenceUseCase
@@ -53,7 +60,10 @@ public final class UpgradePlansAnalyticsUseCase: @unchecked Sendable {
     // MARK: - Events
 
     public func trackScreenView() {
-        tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
+        let event: any EventIdentifier = isFreeAccount
+            ? FreeUserUpgradeAccountPlanScreenEvent()
+            : PaidUserUpgradeAccountPlanScreenEvent()
+        tracker.trackAnalyticsEvent(with: event)
     }
 
     public func trackDismiss() {
@@ -65,11 +75,42 @@ public final class UpgradePlansAnalyticsUseCase: @unchecked Sendable {
     }
 
     public func trackCycleToggle(_ cycle: SubscriptionCycleEntity) {
-        if cycle == .monthly {
-            tracker.trackAnalyticsEvent(with: UpgradeAccountPlanMonthlyPeriodTogglePressedEvent())
-        } else {
-            tracker.trackAnalyticsEvent(with: UpgradeAccountPlanYearlyPeriodTogglePressedEvent())
+        let event: any EventIdentifier = switch (cycle, isFreeAccount) {
+        case (.monthly, true): FreeUserUpgradeAccountPlanMonthlyPeriodTogglePressedEvent()
+        case (.monthly, false): PaidUserUpgradeAccountPlanMonthlyPeriodTogglePressedEvent()
+        case (_, true): FreeUserUpgradeAccountPlanYearlyPeriodTogglePressedEvent()
+        case (_, false): PaidUserUpgradeAccountPlanYearlyPeriodTogglePressedEvent()
         }
+        tracker.trackAnalyticsEvent(with: event)
+    }
+
+    public func trackOfferTimedOut() {
+        let event: any EventIdentifier = isFreeAccount
+            ? FreeUserOfferTimedOutEvent()
+            : PaidUserOfferTimedOutEvent()
+        tracker.trackAnalyticsEvent(with: event)
+    }
+
+    public func trackProUserEligibleForOffers() {
+        guard let loaded, !loaded.accountDetails.isFree, hasVisibleOffer(in: loaded) else { return }
+
+        tracker.trackAnalyticsEvent(with: PaidUserEligibleForOffersEvent())
+    }
+
+    private func hasVisibleOffer(in loaded: LoadedPlans) -> Bool {
+        loaded.plans.contains {
+            $0.applicableOffer != nil
+                && !$0.isCurrentPlan(for: loaded.accountDetails)
+                && $0.mobileOffer?.hasExpired != true
+        }
+    }
+
+    /// We use `loaded?.accountDetails` as a primary source of truth,
+    /// However when `loaded?.accountDetails` is not available (e.g: calling trackScreenView() when data is still loading),
+    /// we fallback to using the cache from `accountUseCase.currentAccountDetails`, and finally to
+    /// `true`, so an unattributable report still lands as a free user rather than being dropped.
+    private var isFreeAccount: Bool {
+        loaded?.accountDetails.isFree ?? accountUseCase.currentAccountDetails?.isFree ?? true
     }
 }
 
@@ -82,19 +123,20 @@ extension UpgradePlansAnalyticsUseCase: UpgradePlansAnalyticsUseCaseProtocol {
             trackBuyPlanForAds(accountDetails: loaded?.accountDetails)
         }
 
-        guard let plan = loaded?.plans.first(where: { $0.productIdentifier == productIdentifier }) else { return }
+        guard let loaded,
+              let plan = loaded.plans.first(where: { $0.productIdentifier == productIdentifier }),
+              let event = buyPlanEvent(for: plan.type, isFree: loaded.accountDetails.isFree) else { return }
 
-        switch plan.type {
-        case .proI:
-            tracker.trackAnalyticsEvent(with: BuyProIEvent())
-        case .proII:
-            tracker.trackAnalyticsEvent(with: BuyProIIEvent())
-        case .proIII:
-            tracker.trackAnalyticsEvent(with: BuyProIIIEvent())
-        case .lite:
-            tracker.trackAnalyticsEvent(with: BuyProLiteEvent())
-        default:
-            break
+        tracker.trackAnalyticsEvent(with: event)
+    }
+
+    private func buyPlanEvent(for type: AccountTypeEntity, isFree: Bool) -> (any EventIdentifier)? {
+        switch type {
+        case .proI: isFree ? FreeUserBuyProIEvent() : PaidUserBuyProIEvent()
+        case .proII: isFree ? FreeUserBuyProIIEvent() : PaidUserBuyProIIEvent()
+        case .proIII: isFree ? FreeUserBuyProIIIEvent() : PaidUserBuyProIIIEvent()
+        case .lite: isFree ? FreeUserBuyProLiteEvent() : PaidUserBuyProLiteEvent()
+        default: nil
         }
     }
 

@@ -55,6 +55,28 @@ struct UpgradePlansContainerViewModelTests {
         #expect(sut.viewState.isPromo)
     }
 
+    @Test("When the monitored offer lapses, it reports the offer timing out")
+    func monitorPromoExpiry_whenOfferLapses_reportsOfferTimedOut() async {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [promoPlan()], monitorExpires: true, analyticsUseCase: analyticsUseCase)
+        await sut.loadData()
+
+        await sut.monitorPromoExpiry()
+
+        #expect(analyticsUseCase.invocations.contains(.offerTimedOut))
+    }
+
+    @Test("A cancelled wait reports no offer expiry")
+    func monitorPromoExpiry_whenCancelled_reportsNoOfferExpiry() async {
+        let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
+        let sut = makeSUT(plans: [promoPlan()], monitorExpires: false, analyticsUseCase: analyticsUseCase)
+        await sut.loadData()
+
+        await sut.monitorPromoExpiry()
+
+        #expect(analyticsUseCase.invocations.contains(.offerTimedOut) == false)
+    }
+
     @Test("When the offer lapses, the flip to standard carries the selected cycle")
     func monitorPromoExpiry_flipsToStandardCarryingCycle() async {
         let sut = makeSUT(plans: [promoPlan()], monitorExpires: true)
@@ -196,14 +218,14 @@ struct UpgradePlansContainerViewModelTests {
         #expect(analyticsUseCase.invocations == [.screenView])
     }
 
-    @Test("A successful load hands the plans to the analytics use case")
+    @Test("A successful load hands the plans to the analytics use case and reports offer eligibility")
     func loadData_handsPlansToAnalytics() async {
         let analyticsUseCase = MockUpgradePlansAnalyticsUseCase()
         let sut = makeSUT(plans: [standardPlan()], analyticsUseCase: analyticsUseCase)
 
         await sut.loadData()
 
-        #expect(analyticsUseCase.invocations == [.plansDidLoad])
+        #expect(analyticsUseCase.invocations == [.plansDidLoad, .proUserEligibleForOffers])
     }
 
     // MARK: - Dismissal

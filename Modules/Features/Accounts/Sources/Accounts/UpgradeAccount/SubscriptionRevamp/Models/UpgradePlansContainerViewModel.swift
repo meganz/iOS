@@ -104,6 +104,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
 
             // Feed the tracker with the loaded data that it needs for its computation
             analyticsUseCase.plansDidLoad(plans, accountDetails: accountDetails)
+            analyticsUseCase.trackProUserEligibleForOffers()
             externalPurchaseViewModel = makeExternalPurchaseViewModel(plans: plans)
 
             let hasPromo = plans.contains { $0.applicableOffer != nil && !$0.isCurrentPlan(for: accountDetails) }
@@ -146,6 +147,7 @@ final class UpgradePlansContainerViewModel: ObservableObject {
         standardViewModel.selectedCycle = promoViewModel.selectedCycle
         viewState = .standard(standardViewModel)
         promoExpiryMonitor = nil
+        analyticsUseCase.trackOfferTimedOut()
 
         presentAlert(.promoEnded)
     }

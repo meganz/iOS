@@ -81,8 +81,8 @@ public struct PromotedPlanUseCase: PromotedPlanUseCaseProtocol {
     }
 }
 
-private extension MobileOfferEntity {
-    func isAdvertised(checksForExpiry: Bool) -> Bool {
+extension MobileOfferEntity {
+    fileprivate func isAdvertised(checksForExpiry: Bool) -> Bool {
         isAdvertisable && !(checksForExpiry && hasExpired)
     }
 

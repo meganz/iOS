@@ -11,6 +11,8 @@ final class MockUpgradePlansAnalyticsUseCase: UpgradePlansAnalyticsUseCaseProtoc
         case getStartedForFree
         case cycleToggle(SubscriptionCycleEntity)
         case buyPlan(productIdentifier: String)
+        case offerTimedOut
+        case proUserEligibleForOffers
     }
 
     private let lock = NSLock()
@@ -30,4 +32,6 @@ final class MockUpgradePlansAnalyticsUseCase: UpgradePlansAnalyticsUseCaseProtoc
     func trackGetStartedForFree() { record(.getStartedForFree) }
     func trackCycleToggle(_ cycle: SubscriptionCycleEntity) { record(.cycleToggle(cycle)) }
     func trackBuyPlan(productIdentifier: String) { record(.buyPlan(productIdentifier: productIdentifier)) }
+    func trackOfferTimedOut() { record(.offerTimedOut) }
+    func trackProUserEligibleForOffers() { record(.proUserEligibleForOffers) }
 }
