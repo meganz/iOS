@@ -26,6 +26,21 @@ public struct KMQueryConfig : Swift.Sendable, Swift.Hashable {
 public struct KMTransferConfig : Swift.Sendable {
   public init(kmQueryConfigs: [KMTransferUtils.KMQueryConfig], transferFileName: Swift.String? = nil, transferSalt: Swift.String? = nil)
 }
+public enum KMTransferError : Swift.Error, Foundation.LocalizedError, Swift.Sendable {
+  case applicationSupportUnavailable
+  case secureRandomFailed(Darwin.OSStatus)
+  case keyDerivationFailed
+  case transferFileMissing
+  case transferFileTooSmall
+  case storageWriteFailure(Darwin.OSStatus)
+  case invalidStorageEntryFormat
+  case transferFileExistDuringExport
+  case storageExistsDuringImportTransfer
+  case storageDoesNotExist
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
 public protocol KMTransferring : Swift.Sendable {
   func createTransferFile() async throws
   func importTransferFile() throws

@@ -637,6 +637,517 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "KMTransferError",
+        "printedName": "KMTransferError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "applicationSupportUnavailable",
+            "printedName": "applicationSupportUnavailable",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO29applicationSupportUnavailableyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO29applicationSupportUnavailableyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "secureRandomFailed",
+            "printedName": "secureRandomFailed",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> (Swift.Int32) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Int32) -> KMTransferUtils.KMTransferError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO18secureRandomFailedyACs5Int32VcACmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO18secureRandomFailedyACs5Int32VcACmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "keyDerivationFailed",
+            "printedName": "keyDerivationFailed",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO19keyDerivationFailedyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO19keyDerivationFailedyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "transferFileMissing",
+            "printedName": "transferFileMissing",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO19transferFileMissingyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO19transferFileMissingyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "transferFileTooSmall",
+            "printedName": "transferFileTooSmall",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO20transferFileTooSmallyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO20transferFileTooSmallyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "storageWriteFailure",
+            "printedName": "storageWriteFailure",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> (Swift.Int32) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Int32) -> KMTransferUtils.KMTransferError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int32",
+                        "printedName": "Swift.Int32",
+                        "usr": "s:s5Int32V"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO19storageWriteFailureyACs5Int32VcACmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO19storageWriteFailureyACs5Int32VcACmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "invalidStorageEntryFormat",
+            "printedName": "invalidStorageEntryFormat",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO25invalidStorageEntryFormatyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO25invalidStorageEntryFormatyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "transferFileExistDuringExport",
+            "printedName": "transferFileExistDuringExport",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO29transferFileExistDuringExportyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO29transferFileExistDuringExportyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "storageExistsDuringImportTransfer",
+            "printedName": "storageExistsDuringImportTransfer",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO33storageExistsDuringImportTransferyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO33storageExistsDuringImportTransferyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "storageDoesNotExist",
+            "printedName": "storageDoesNotExist",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(KMTransferUtils.KMTransferError.Type) -> KMTransferUtils.KMTransferError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "KMTransferError",
+                    "printedName": "KMTransferUtils.KMTransferError",
+                    "usr": "s:15KMTransferUtils0A5ErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "KMTransferUtils.KMTransferError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "KMTransferError",
+                        "printedName": "KMTransferUtils.KMTransferError",
+                        "usr": "s:15KMTransferUtils0A5ErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:15KMTransferUtils0A5ErrorO19storageDoesNotExistyA2CmF",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO19storageDoesNotExistyA2CmF",
+            "moduleName": "KMTransferUtils"
+          },
+          {
+            "kind": "Var",
+            "name": "errorDescription",
+            "printedName": "errorDescription",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:15KMTransferUtils0A5ErrorO16errorDescriptionSSSgvp",
+            "mangledName": "$s15KMTransferUtils0A5ErrorO16errorDescriptionSSSgvp",
+            "moduleName": "KMTransferUtils",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:15KMTransferUtils0A5ErrorO16errorDescriptionSSSgvg",
+                "mangledName": "$s15KMTransferUtils0A5ErrorO16errorDescriptionSSSgvg",
+                "moduleName": "KMTransferUtils",
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:15KMTransferUtils0A5ErrorO",
+        "mangledName": "$s15KMTransferUtils0A5ErrorO",
+        "moduleName": "KMTransferUtils",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "LocalizedError",
+            "printedName": "LocalizedError",
+            "usr": "s:10Foundation14LocalizedErrorP",
+            "mangledName": "$s10Foundation14LocalizedErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
