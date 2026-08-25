@@ -48,6 +48,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let didTapMoreAction: ((any PlayableNode)?) -> Void
     private let didTapRotateAction: () -> Void
     private let didTapPictureInPictureAction: () -> Void
+    private let didDragToDismissAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
@@ -56,6 +57,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
         didTapMoreAction: @escaping ((any PlayableNode)?) -> Void,
+        didDragToDismissAction: @escaping () -> Void,
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) {
@@ -65,6 +67,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         self.hapticFeedbackUseCase = hapticFeedbackUseCase
         self.didTapBackAction = didTapBackAction
         self.didTapMoreAction = didTapMoreAction
+        self.didDragToDismissAction = didDragToDismissAction
         self.didTapRotateAction = didTapRotateAction
         self.didTapPictureInPictureAction = didTapPictureInPictureAction
         self.isLoopEnabled = player.isLoopEnabled
@@ -144,11 +147,24 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
 extension PlayerOverlayViewModel {
     func didTapBack() {
+        tearDown()
+        didTapBackAction()
+    }
+
+    func didDragToDismiss(translation: CGSize, velocity: CGSize) {
+        guard PlayerDragToDismiss.shouldDismiss(translation: translation, velocity: velocity) else {
+            return
+        }
+
+        tearDown()
+        didDragToDismissAction()
+    }
+
+    private func tearDown() {
         cancellables.removeAll()
         autoHideTimer?.invalidate()
         doubleTapSeekTimer?.invalidate()
         lockOverlayTimer?.invalidate()
-        didTapBackAction()
     }
 
     func didTapMore() {

@@ -72,6 +72,15 @@ public struct PlayerOverlayView: View {
                                             viewModel.handlePinchGesture(scale: scale)
                                         }
                                 )
+                                .gesture(
+                                    DragGesture()
+                                        .onEnded { drag in
+                                            viewModel.didDragToDismiss(
+                                                translation: drag.translation,
+                                                velocity: drag.velocity
+                                            )
+                                        }
+                                )
                         )
                     
                     if viewModel.isExternalPlaybackActive {

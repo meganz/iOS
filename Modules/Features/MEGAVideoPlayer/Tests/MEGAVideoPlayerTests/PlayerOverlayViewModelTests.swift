@@ -24,6 +24,7 @@ struct PlayerOverlayViewModelTests {
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol = MockHapticFeedbackUseCase(),
         didTapBackAction: @escaping () -> Void = {},
         didTapMoreAction: @escaping ((any PlayableNode)?) -> Void = { _ in },
+        didDragToDismissAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
@@ -34,6 +35,7 @@ struct PlayerOverlayViewModelTests {
             hapticFeedbackUseCase: hapticFeedbackUseCase,
             didTapBackAction: didTapBackAction,
             didTapMoreAction: didTapMoreAction,
+            didDragToDismissAction: didDragToDismissAction,
             didTapRotateAction: didTapRotateAction,
             didTapPictureInPictureAction: didTapPictureInPictureAction
         )
@@ -1504,5 +1506,41 @@ struct PlayerOverlayViewModelTests {
         sut.didTapPlayPrevious()
 
         #expect(player.playPreviousCallCount == 1)
+    }
+
+    // MARK: - Drag To Dismiss Tests
+
+    @Test
+    func didDragToDismiss_whenTheDragIsCommitted_shouldCallAction() {
+        var didDragToDismissActionCallTimes = 0
+        let sut = makeSUT(
+            didDragToDismissAction: {
+                didDragToDismissActionCallTimes += 1
+            }
+        )
+
+        sut.didDragToDismiss(
+            translation: CGSize(width: 0, height: PlayerDragToDismiss.distanceThreshold),
+            velocity: .zero
+        )
+
+        #expect(didDragToDismissActionCallTimes == 1)
+    }
+
+    @Test
+    func didDragToDismiss_whenTheDragIsTooShort_shouldNotCallAction() {
+        var didDragToDismissActionCallTimes = 0
+        let sut = makeSUT(
+            didDragToDismissAction: {
+                didDragToDismissActionCallTimes += 1
+            }
+        )
+
+        sut.didDragToDismiss(
+            translation: CGSize(width: 0, height: PlayerDragToDismiss.distanceThreshold - 1),
+            velocity: .zero
+        )
+
+        #expect(didDragToDismissActionCallTimes == 0)
     }
 }

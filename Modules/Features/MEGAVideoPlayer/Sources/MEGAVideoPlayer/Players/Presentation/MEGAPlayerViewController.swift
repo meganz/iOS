@@ -73,11 +73,13 @@ public final class MEGAPlayerViewController: UIViewController {
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
                 hapticFeedbackUseCase: HapticFeedbackUseCase(),
                 didTapBackAction: { [weak self] in
-                    self?.viewModel.viewWillDismiss()
-                    self?.viewModel.dismissAction?()
+                    self?.dismissPlayer()
                 },
                 didTapMoreAction: { [weak self] node in
                     self?.viewModel.moreAction?(node)
+                },
+                didDragToDismissAction: { [weak self] in
+                    self?.dismissPlayer()
                 },
                 didTapRotateAction: { [weak self] in
                     self?.toggleOrientation()
@@ -156,6 +158,14 @@ public final class MEGAPlayerViewController: UIViewController {
         } else {
             pipController.startPictureInPicture()
         }
+    }
+
+    // MARK: - Dismissal
+
+    /// Shared by the back button and the drag down gesture, so both leave the same way.
+    private func dismissPlayer() {
+        viewModel.viewWillDismiss()
+        viewModel.dismissAction?()
     }
 }
 
