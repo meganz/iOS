@@ -5200,3 +5200,5 @@
 "cameraUploads.timeline.sort.newestByDateTaken"="Newest by date taken";
 /* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
 "cameraUploads.timeline.sort.oldestByDateTaken"="Oldest by date taken";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Transfers paused. Awaiting for network to resume.";

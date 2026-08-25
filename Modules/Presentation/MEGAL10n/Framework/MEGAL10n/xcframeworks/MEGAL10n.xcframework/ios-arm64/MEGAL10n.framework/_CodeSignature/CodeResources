@@ -6,7 +6,7 @@
 	<dict>
 		<key>Base.lproj/Localizable.strings</key>
 		<data>
-		6eR0yDq8lce1buCxnMufVeAE754=
+		zN7naU2E6okKyHbuDrj3DlV3Vos=
 		</data>
 		<key>Base.lproj/Localizable.stringsdict</key>
 		<data>
@@ -14,27 +14,27 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		isnu110GAkyiFYjq+wrJ1MIySUI=
+		azTHe9iOPE4Mo2XvrmmQPsATJJg=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		Ex2cEqn13aphCw0J6yL+pqgSOio=
+		d5JNcY7ad3raKo0NSnKRlf8kcd8=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		jBd0KpwtCr6pH/gEIAzIM4sHMnU=
+		n7zu9xWrTN8mwqiw6n5BuV1ztOk=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		KabrN4IEMVrAgwjE4KEd4O7d2Wg=
+		rDBBSu8zCrbkl/xVciOgmKOMAZI=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		jBd0KpwtCr6pH/gEIAzIM4sHMnU=
+		n7zu9xWrTN8mwqiw6n5BuV1ztOk=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		gB0sbpNp+4B5BGWul5WneFLF73M=
+		Iu1P9tuh974dznSCIeSgF+Mbh8Y=
 		</data>
 		<key>ar.lproj/Localizable.strings</key>
 		<dict>
@@ -76,7 +76,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6eR0yDq8lce1buCxnMufVeAE754=
+			zN7naU2E6okKyHbuDrj3DlV3Vos=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -385,7 +385,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GezzWJAAZfx6ULkMjwwNF8qS7Eg3AH1DGXNh7v+ffGo=
+			+Q+318XxXZ45+4e1b21P1z2cjHKNT7jhTo5Oj5iVGeE=
 			</data>
 		</dict>
 		<key>Base.lproj/Localizable.stringsdict</key>
@@ -399,35 +399,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pwhmd7cj/u8aEdjSLHlIJU99GvSSFDGap7JgljovqnI=
+			Ff2Q5VCwTjGBVnnYQali/61iaYvqSC6NxhbC/X3izCI=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/5tdbbIZ5MjzPLJ2lR7Z3YXKBOsaJjhhuuz64vpM9wc=
+			TH9kGofF52r8uTd8OTTmcYBodZN9PBaHU/Eutx8RW7M=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			o7omvTqWX+pNT8alCi5ZO9biSBrZmTS04Z+RhCF/bkQ=
+			NOkTnQ3DiCp7K4Ynd8KX3cpNw5py9RQORfzsKgyPhGE=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/5tdbbIZ5MjzPLJ2lR7Z3YXKBOsaJjhhuuz64vpM9wc=
+			TH9kGofF52r8uTd8OTTmcYBodZN9PBaHU/Eutx8RW7M=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ST2UDDHst4g1CkirhYNnFp5DeeA/DWneoHZbVkXeUzs=
+			rMAf7uyjIhmIw3pA7kzU7mBrBR6U/+wRSfnIH5JQquA=
 			</data>
 		</dict>
 		<key>ar.lproj/Localizable.strings</key>
@@ -470,7 +470,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GezzWJAAZfx6ULkMjwwNF8qS7Eg3AH1DGXNh7v+ffGo=
+			+Q+318XxXZ45+4e1b21P1z2cjHKNT7jhTo5Oj5iVGeE=
 			</data>
 			<key>optional</key>
 			<true/>
