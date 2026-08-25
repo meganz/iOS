@@ -14,7 +14,7 @@ import SwiftUI
     public let visiblePhotoIndexRange = CurrentValueSubject<Range<Int>?, Never>(nil)
     @Published public var selectedMode: PhotoLibraryViewMode = .all {
         didSet {
-            guard selectedMode != oldValue else { return }
+            guard selectedMode != oldValue, tracksViewModeChange else { return }
             tracker.trackViewModeChange(selectedMode)
         }
     }
@@ -35,6 +35,13 @@ import SwiftUI
     )
     
     private let tracker: any AnalyticsTracking
+    
+    /// The view mode events name the Media screen and are counted as its traffic, so a screen that only
+    /// borrows the picker stays out of them -- taps on an album link would otherwise be indistinguishable
+    /// from timeline taps. It can start reporting once the analytics repo defines events of its own.
+    private var tracksViewModeChange: Bool {
+        contentMode != .albumLink
+    }
     
     lazy var allCollectionViewModel = PhotoLibraryModeAllCollectionViewModel(libraryViewModel: self)
     
@@ -60,7 +67,14 @@ import SwiftUI
 
 extension PhotoLibraryContentViewModel {
     var shouldShowPhotoLibraryPicker: Bool {
-        ![.album, .albumPicker, .albumLink, .recentBucket].contains(contentMode)
+        configuration?.showsViewModePicker
+            ?? ![.album, .albumPicker, .albumLink, .recentBucket].contains(contentMode)
+    }
+    
+    /// Whether the picker gives its space back while selecting, rather than only fading out.
+    /// The modes that do are the ones whose selection mode brings a bottom toolbar of its own.
+    var shouldHidePickerWhileEditing: Bool {
+        [.library, .albumLink].contains(contentMode)
     }
     
     public var isPhotoLibraryEmpty: Bool {

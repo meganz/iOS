@@ -96,14 +96,14 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         self.collectionView = collectionView
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
-            // First section is rendered as an empty placeholder only when the global zoom header
-            // is showing the date in its place. Without a global header (e.g. the rolled-back album
-            // view) the section must keep its own date label.
-            let isFirstSection = representer.globalHeaderType != .none
+            // First section is rendered as an empty placeholder only when the global header is
+            // showing the date in its place. Whenever it is not (no global header at all, or a
+            // sort header), the section must keep its own date label.
+            let isFirstSection = representer.globalHeaderType.showsSectionDate
                 && indexPath.section == 0
 
             // Disable interaction so pinned section headers don't intercept touches meant for the global zoom header above them.
-            header.isUserInteractionEnabled = representer.globalHeaderType != .dateAndZoom
+            header.isUserInteractionEnabled = !representer.globalHeaderType.showsSectionDate
             let isAlbumRollback = representer.contentMode == .album && !AlbumLayoutGate.isMasonryLayoutEnabled
             header.contentConfiguration = UIHostingConfiguration {
                 if isFirstSection {
@@ -237,10 +237,28 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         return UIHostingConfiguration {
             switch globalHeaderType {
-            case let .sort(sortViewModel):
-                PhotoLibraryGlobalHeaderView {
-                    SortHeaderViewWrapper(config: sortViewModel.config, sortOrder: sortViewModel.currentSortOrder(), handler: sortViewModel.onSortOrderChanged)
-                }
+            case let .sortAndZoom(sortViewModel):
+                PhotoLibraryGlobalHeaderView(
+                    leftContent: {
+                        SortHeaderViewWrapper(
+                            config: sortViewModel.config,
+                            sortOrder: sortViewModel.currentSortOrder(),
+                            handler: sortViewModel.onSortOrderChanged
+                        )
+                    },
+                    rightContent: {
+                        ZoomMenuControlWrapper(
+                            zoomState: Binding(
+                                get: { self.viewModel.zoomState },
+                                set: { self.viewModel.zoomState = $0 }
+                            ),
+                            isEditing: self.viewModel.isEditing
+                        )
+                        // The sort control brings its own leading inset; this matches it on the
+                        // trailing side so the zoom button sits where the date header puts it.
+                        .padding(.trailing, TokenSpacing._5)
+                    }
+                )
             case .dateAndZoom:
                 PhotoLibraryGlobalHeaderView(
                     title: title,
@@ -264,9 +282,8 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             return
         }
 
-        // In album mode with custom header, don't update the title dynamically
-        let isAlbumMode = representer.contentMode == .album
-        guard !isAlbumMode else {
+        // Only the date header renders a title; a sort header has nothing to track.
+        guard representer.globalHeaderType.showsSectionDate else {
             return
         }
 

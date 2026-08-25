@@ -1,4 +1,5 @@
 import Combine
+import ContentLibraries
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -303,6 +304,25 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectButtonOpacity, 0.0, accuracy: 0.1)
         
         sut.photoLibraryContentViewModel.selection.isHidden = false
+        XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
+    }
+    
+    @MainActor
+    func testSelectButtonOpacity_onViewModeChange_shouldOnlyShowTheButtonInTheAllPhotosView() async throws {
+        let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
+        
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: publicAlbumUseCase)
+        await sut.loadPublicAlbum()
+        XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
+        
+        for viewMode in [PhotoLibraryViewMode.year, .month, .day] {
+            sut.photoLibraryContentViewModel.selectedMode = viewMode
+            XCTAssertEqual(sut.selectButtonOpacity, 0.0, accuracy: 0.1,
+                           "Selection is not available in the \(viewMode) view")
+        }
+        
+        sut.photoLibraryContentViewModel.selectedMode = .all
         XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
     }
     
@@ -938,6 +958,80 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testGlobalHeaderType_linkRevampEnabled_shouldBeSortAndZoomHeader() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        guard case .sortAndZoom = sut.photoLibraryContentViewModel.globalHeaderType else {
+            XCTFail("Expected the sort and zoom global header, got \(sut.photoLibraryContentViewModel.globalHeaderType)")
+            return
+        }
+    }
+    
+    @MainActor
+    func testGlobalHeaderType_linkRevampDisabled_shouldKeepDateAndZoomHeader() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: false]))
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.globalHeaderType, .dateAndZoom)
+    }
+    
+    @MainActor
+    func testUpdateSortOrder_onOldestFirst_shouldRemapLoadedPhotos() async throws {
+        let photos = try makePhotosWithDistinctModificationTimes()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library,
+                       photos.toPhotoLibrary(withSortType: .modificationDesc))
+        
+        sut.updateSortOrder(.modificationAsc)
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library,
+                       photos.toPhotoLibrary(withSortType: .modificationAsc))
+    }
+    
+    @MainActor
+    func testUpdateSortOrder_onUnchangedSortOrder_shouldLeaveLibraryUntouched() async throws {
+        let photos = try makePhotosWithDistinctModificationTimes()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        
+        // Watched for a new emission rather than compared by value: re-mapping the same sort order
+        // produces an equal library, so only the absence of an emission shows the call was turned away.
+        let exp = expectation(description: "Should not re-map the library")
+        exp.isInverted = true
+        sut.photoLibraryContentViewModel.$library
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.updateSortOrder(.modificationDesc)
+        
+        await fulfillment(of: [exp], timeout: 0.25)
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library,
+                       photos.toPhotoLibrary(withSortType: .modificationDesc))
+    }
+    
+    @MainActor
     private func makeImportAlbumViewModel(
         publicLink: URL,
         publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
@@ -993,6 +1087,16 @@ final class ImportAlbumViewModelTests: XCTestCase {
                     modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .video),
          NodeEntity(name: "test_image_4.jpg", handle: 7, hasThumbnail: true,
                     modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image)
+        ]
+    }
+    
+    private func makePhotosWithDistinctModificationTimes() throws -> [NodeEntity] {
+        [NodeEntity(name: "test_image_1.png", handle: 1, hasThumbnail: true,
+                    modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image),
+         NodeEntity(name: "test_video_1.mp4", handle: 4, hasThumbnail: true,
+                    modificationTime: try "2023-02-14T10:00:00Z".date, mediaType: .video),
+         NodeEntity(name: "test_image_4.jpg", handle: 7, hasThumbnail: true,
+                    modificationTime: try "2023-03-30T08:30:00Z".date, mediaType: .image)
         ]
     }
     

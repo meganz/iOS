@@ -76,9 +76,8 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         
         // Use a placeholder header for the first section when media revamp is enabled
         // This allows tracking when the first section is visible without showing duplicate content
-        let isFirstSection = isFirstSection(sectionIndex)
-        configureSectionHeader(for: section, isPlaceholder: isFirstSection)
-        applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
+        configureSectionHeader(for: section, isPlaceholder: usesPlaceholderSectionHeader(sectionIndex))
+        applyGlobalHeaderTopInset(to: section, sectionIndex: sectionIndex)
         
         return section
     }
@@ -102,9 +101,8 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = spacing
         
-        let isFirstSection = isFirstSection(sectionIndex)
-        configureSectionHeader(for: section, isPlaceholder: isFirstSection)
-        applyGlobalHeaderTopInset(to: section, isFirstSection: isFirstSection)
+        configureSectionHeader(for: section, isPlaceholder: usesPlaceholderSectionHeader(sectionIndex))
+        applyGlobalHeaderTopInset(to: section, sectionIndex: sectionIndex)
         
         return section
     }
@@ -129,7 +127,10 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
             elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind,
             alignment: .topLeading
         )
-        sectionHeader.pinToVisibleBounds = true
+        // A global header that renders the date sits above the pinned date headers on purpose, and
+        // there is nothing above them at all when there is no global header. But a sort header would
+        // simply swallow them, so there the date has to scroll with its section rather than pin.
+        sectionHeader.pinToVisibleBounds = photoGlobalHeaderType.showsSectionDate || photoGlobalHeaderType == .none
         sectionHeader.zIndex = 2
         section.boundarySupplementaryItems = [sectionHeader]
     }
@@ -166,19 +167,15 @@ struct PhotoLibraryCollectionLayoutBuilder: Equatable {
         return section
     }
     
-    private func isFirstSection(_ sectionIndex: Int) -> Bool {
-        // The first section uses a placeholder header so its date is rendered by
-        // the pinned global zoom header instead. Without a global header (e.g. the
-        // rolled-back album view) there is no other surface to show the date, so
-        // it must keep its real header.
-        photoGlobalHeaderType != .none && sectionIndex == 0
+    private func usesPlaceholderSectionHeader(_ sectionIndex: Int) -> Bool {
+        photoGlobalHeaderType.showsSectionDate && sectionIndex == 0
     }
     
-    private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, isFirstSection: Bool) {
-        // Add top inset for first section to account for the pinned global header only when banner is displayed
-        if isFirstSection && bannerType != nil && photoGlobalHeaderType != .none {
-            section.contentInsets.top = PhotoLibrarySupplementaryElementKind.globalHeaderHeight
-        }
+    /// Gives the top section back the room the pinned global header takes, which it only needs once a
+    /// banner has pushed that header down over the content.
+    private func applyGlobalHeaderTopInset(to section: NSCollectionLayoutSection, sectionIndex: Int) {
+        guard sectionIndex == 0, photoGlobalHeaderType != .none, bannerType != nil else { return }
+        section.contentInsets.top = PhotoLibrarySupplementaryElementKind.globalHeaderHeight
     }
     
     private func configureSectionSortHeader(for section: NSCollectionLayoutSection) {

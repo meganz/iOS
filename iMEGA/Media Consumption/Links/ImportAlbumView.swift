@@ -39,7 +39,6 @@ struct ImportAlbumView: View {
         }
     }
     
-    
     private var albumContent: some View {
         NavigationStack {
             albumBody
@@ -222,7 +221,9 @@ struct ImportAlbumView: View {
                 Image(uiImage: MEGAAssets.UIImage.selectAllItems)
             }
             .opacity(selectButtonOpacity)
-            .disabled(viewModel.isAlbumEmpty)
+            // A button faded to nothing still takes taps, and outside the all photos view a tap would
+            // put the screen into a selection the year, month and day views have no way to show.
+            .disabled(viewModel.isAlbumEmpty || viewModel.selectButtonOpacity == 0)
         }
     }
     

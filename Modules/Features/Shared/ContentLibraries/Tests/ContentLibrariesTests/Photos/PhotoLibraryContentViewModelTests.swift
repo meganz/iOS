@@ -12,7 +12,7 @@ struct PhotoLibraryContentViewModelTests {
         (.albumLink, false),
         (.library, true),
         (.mediaDiscovery, true),
-        (.mediaDiscoveryFolderLink, true),
+        (.mediaDiscoveryFolderLink, true)
     ])
     func shouldShowPhotoLibraryPicker(mode: PhotoLibraryContentMode, expectedResult: Bool) {
         let sut = Self.makeSUT(contentMode: mode)
@@ -74,6 +74,20 @@ struct PhotoLibraryContentViewModelTests {
                 MediaScreenAllFilterSelectedEvent()
             ]
         )
+    }
+    
+    @MainActor
+    @Test("The album link borrows the picker but not the Media screen's filter events")
+    func libraryViewModeChangeOnAlbumLinkTracksNothing() {
+        let tracker = MockTracker()
+        let sut = Self.makeSUT(contentMode: .albumLink, tracker: tracker)
+        
+        sut.selectedMode = .day
+        sut.selectedMode = .month
+        sut.selectedMode = .year
+        sut.selectedMode = .all
+        
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
     }
     
     @MainActor

@@ -36,7 +36,7 @@ public struct PhotoLibraryContentView: View {
         if viewModel.shouldShowPhotoLibraryPicker {
             photoContent()
                 .safeAreaInset(edge: .bottom) {
-                    if editMode.isEditing && viewModel.contentMode == .library {
+                    if editMode.isEditing && viewModel.shouldHidePickerWhileEditing {
                         EmptyView()
                     } else {
                         PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)

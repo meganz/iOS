@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIComponent
 import QuotaWarnings
 import SwiftUI
 
@@ -30,6 +31,11 @@ final class ImportAlbumViewModel: ObservableObject {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
+    /// The album's nodes as they came off the link, kept so a sort change can re-map the library
+    /// without asking for them again.
+    private var publicAlbumPhotos: [NodeEntity] = []
+    /// Deliberately not persisted: a public link starts on newest-first every time.
+    private var photoSortOrder: SortOrderEntity = .modificationDesc
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
     private var renamedAlbum: String?
@@ -40,8 +46,27 @@ final class ImportAlbumViewModel: ObservableObject {
     private(set) var reservedAlbumNames: [String]?
     
     let publicLink: URL
-    let photoLibraryContentViewModel: PhotoLibraryContentViewModel
     let showImportToolbarButton: Bool
+    
+    private(set) lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(
+        library: PhotoLibrary(),
+        contentMode: .albumLink,
+        globalHeaderType: isLinkRevampEnabled ? .sortAndZoom(headerSortViewModel) : .dateAndZoom,
+        configuration: PhotoLibraryContentConfiguration(showsViewModePicker: isLinkRevampEnabled)
+    )
+    
+    private lazy var headerSortViewModel = PhotoHeaderSortViewModel(
+        config: SortHeaderConfig(
+            title: Strings.Localizable.sortTitle,
+            options: [MEGAUIComponent.SortOrder.Key.lastModified].sortOptions
+        ),
+        currentSortOrder: { [weak self] in
+            (self?.photoSortOrder ?? .modificationDesc).toUIComponentSortOrderEntity()
+        },
+        onSortOrderChanged: { [weak self] sortOrder in
+            self?.updateSortOrder(sortOrder.toDomainSortOrderEntity())
+        }
+    )
     
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
@@ -143,8 +168,6 @@ final class ImportAlbumViewModel: ObservableObject {
         self.appDelegateRouter = appDelegateRouter
         self.featureFlagProvider = featureFlagProvider
         
-        photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
-                                                                    contentMode: .albumLink)
         showImportToolbarButton = accountUseCase.isLoggedIn()
         
         subscribeToSelection()
@@ -305,7 +328,17 @@ final class ImportAlbumViewModel: ObservableObject {
         }
     }
     
+    func updateSortOrder(_ newSortOrder: SortOrderEntity) {
+        guard photoSortOrder != newSortOrder else { return }
+        photoSortOrder = newSortOrder
+        applySortOrderToLibrary()
+    }
+    
     // MARK: Private
+    
+    private func applySortOrderToLibrary() {
+        photoLibraryContentViewModel.library = publicAlbumPhotos.toPhotoLibrary(withSortType: photoSortOrder)
+    }
     
     private func isAlbumNameInConflict(_ name: String) async -> Bool {
         let reservedNames = await albumNameUseCase.reservedAlbumNames()
@@ -320,7 +353,8 @@ final class ImportAlbumViewModel: ObservableObject {
             publicAlbumName = publicAlbum.set.name
             let photos = await publicCollectionUseCase.publicNodes(publicAlbum.setElements)
             try Task.checkCancellation()
-            photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .modificationDesc)
+            publicAlbumPhotos = photos
+            applySortOrderToLibrary()
             publicLinkStatus = .loaded
             tracker.trackAnalyticsEvent(
                 with: ShareLinkOpenedEvent(
@@ -451,12 +485,16 @@ final class ImportAlbumViewModel: ObservableObject {
             .assign(to: &$isSelectionEnabled)
     }
     
+    /// The zoom bar the revamp adds brings the year, month and day views with it, and none of them can
+    /// show a selection -- so the select button goes away outside the all photos view, the same way the
+    /// timeline and media discovery hide theirs through `PhotoLibraryPublisher`.
     private func subscribeToSelectionHidden() {
         photoLibraryContentViewModel.$library
             .map(\.isEmpty)
-            .combineLatest(photoLibraryContentViewModel.selection.$isHidden)
-            .map { isLibraryEmpty, selectionHidden in
-                if selectionHidden {
+            .combineLatest(photoLibraryContentViewModel.selection.$isHidden,
+                           photoLibraryContentViewModel.$selectedMode)
+            .map { isLibraryEmpty, selectionHidden, selectedMode in
+                if selectionHidden || selectedMode != .all {
                     return 0.0
                 }
                 return isLibraryEmpty ? Constants.disabledOpacity : 1
