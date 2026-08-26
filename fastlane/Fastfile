@@ -178,7 +178,6 @@ platform :ios do
       archive_path: "archive",
       xcargs: '-skipPackagePluginValidation',
       export_options: {
-        iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
         provisioningProfiles: {
           "mega.ios": "match AppStore mega.ios",
@@ -370,7 +369,6 @@ platform :ios do
       archive_path: "archive",
       xcargs: '-skipPackagePluginValidation',
       export_options: {
-        iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
         provisioningProfiles: {
           "mega.ios.qa": "match AdHoc mega.ios.qa",
