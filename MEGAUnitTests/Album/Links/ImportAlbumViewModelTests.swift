@@ -1032,6 +1032,131 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testShareableLink_onKeyTypedIn_shouldCarryTheDecryptionKey() async throws {
+        let link = try requireDecryptionKeyAlbumLink
+        let key = "Nt8-bopPB8em4cOlKas"
+        let sut = makeImportAlbumViewModel(
+            publicLink: link,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 5)))))
+        
+        XCTAssertEqual(sut.shareableLink, link)
+        
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = key
+        await sut.loadWithNewDecryptionKey()
+        
+        // Sharing the link the screen was opened with would hand the recipient one they cannot open.
+        XCTAssertEqual(sut.shareableLink, try XCTUnwrap(URL(string: link.absoluteString + "#" + key)))
+    }
+    
+    @MainActor
+    func testShouldShowMoreOptionsButton_onLinkRevampFlag_shouldFollowIt() throws {
+        for isEnabled in [true, false] {
+            let sut = makeImportAlbumViewModel(
+                publicLink: try validFullAlbumLink,
+                featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: isEnabled]))
+            
+            XCTAssertEqual(sut.shouldShowMoreOptionsButton, isEnabled)
+        }
+    }
+    
+    @MainActor
+    func testMoreOptions_whenLoggedIn_shouldOfferEveryRow() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        XCTAssertEqual(sut.moreOptions, [.select, .saveToMEGA, .shareLink])
+    }
+    
+    @MainActor
+    func testMoreOptions_whenLoggedOut_shouldDropTheRowsThatNeedAnAccount() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            accountUseCase: MockAccountUseCase(isLoggedIn: false),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        XCTAssertEqual(sut.moreOptions, [.select, .shareLink])
+    }
+    
+    @MainActor
+    func testDisabledMoreOptions_beforeTheAlbumLoads_shouldDisableEveryRow() throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        XCTAssertEqual(sut.disabledMoreOptions, [.select, .saveToMEGA, .shareLink])
+        XCTAssertTrue(sut.isMoreOptionsButtonDisabled)
+    }
+    
+    @MainActor
+    func testDisabledMoreOptions_onLoadedAlbumWithPhotos_shouldEnableEveryRow() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertTrue(sut.disabledMoreOptions.isEmpty)
+        XCTAssertFalse(sut.isMoreOptionsButtonDisabled)
+    }
+    
+    @MainActor
+    func testDisabledMoreOptions_outsideTheAllPhotosView_shouldDisableOnlySelect() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        
+        for viewMode in [PhotoLibraryViewMode.year, .month, .day] {
+            sut.photoLibraryContentViewModel.selectedMode = viewMode
+            XCTAssertEqual(sut.disabledMoreOptions, [.select],
+                           "Selection is not available in the \(viewMode) view")
+        }
+        
+        sut.photoLibraryContentViewModel.selectedMode = .all
+        XCTAssertTrue(sut.disabledMoreOptions.isEmpty)
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onSelect_shouldEnterSelectionMode() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.handle(moreOption: .select)
+        
+        XCTAssertTrue(sut.photoLibraryContentViewModel.selection.editMode.isEditing)
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onShareLink_shouldLeaveTheSharingToTheSheet() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.handle(moreOption: .shareLink)
+        
+        XCTAssertFalse(sut.showShareLink)
+    }
+    
+    @MainActor
     private func makeImportAlbumViewModel(
         publicLink: URL,
         publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
@@ -1045,6 +1170,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
+        thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1062,6 +1188,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             tracker: tracker,
             monitorUseCase: monitorUseCase,
             appDelegateRouter: appDelegateRouter,
+            thumbnailLoader: thumbnailLoader,
             featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
@@ -1182,6 +1309,7 @@ struct ImportAlbumViewModelTestSuite {
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
+        thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ImportAlbumViewModel {
         .init(
@@ -1197,6 +1325,7 @@ struct ImportAlbumViewModelTestSuite {
             tracker: tracker,
             monitorUseCase: monitorUseCase,
             appDelegateRouter: appDelegateRouter,
+            thumbnailLoader: thumbnailLoader,
             featureFlagProvider: featureFlagProvider)
     }
 }

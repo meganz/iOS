@@ -95,7 +95,19 @@ struct ImportAlbumView: View {
                 .ignoresSafeArea(edges: .bottom)
             }
             .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
-            .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
+            .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.shareableLink])
+            .albumLinkMoreOptionsSheet(
+                isPresented: $viewModel.showMoreOptions,
+                title: viewModel.publicAlbumName ?? Strings.Localizable.albumLink,
+                subtitle: Strings.Localizable.albumLink,
+                cover: viewModel.albumCover,
+                link: viewModel.shareableLink.absoluteString,
+                options: viewModel.moreOptions,
+                disabledOptions: viewModel.disabledMoreOptions,
+                selectionHandler: { option in
+                    Task { await viewModel.handle(moreOption: option) }
+                }
+            )
     }
     
     @ViewBuilder
@@ -214,17 +226,43 @@ struct ImportAlbumView: View {
             Button(Strings.Localizable.cancel) {
                 viewModel.enablePhotoLibraryEditMode(false)
             }
+        } else if viewModel.shouldShowMoreOptionsButton {
+            moreOptionsButton
         } else {
-            Button {
-                viewModel.enablePhotoLibraryEditMode(true)
-            } label: {
-                Image(uiImage: MEGAAssets.UIImage.selectAllItems)
-            }
-            .opacity(selectButtonOpacity)
-            // A button faded to nothing still takes taps, and outside the all photos view a tap would
-            // put the screen into a selection the year, month and day views have no way to show.
-            .disabled(viewModel.isAlbumEmpty || viewModel.selectButtonOpacity == 0)
+            selectButton
         }
+    }
+    
+    /// The revamp swaps the select button for a more button: selecting is one of the rows of the sheet it
+    /// opens, alongside the album's other actions.
+    private var moreOptionsButton: some View {
+        Button {
+            viewModel.showMoreOptions = true
+        } label: {
+            AlbumLinkMoreOptionsLabel()
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+        }
+        .opacity(moreOptionsButtonOpacity)
+        .disabled(viewModel.isMoreOptionsButtonDisabled)
+    }
+    
+    private var moreOptionsButtonOpacity: Double {
+        guard !isLiquidGlassSupported else {
+            return 1
+        }
+        return viewModel.isMoreOptionsButtonDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1
+    }
+    
+    private var selectButton: some View {
+        Button {
+            viewModel.enablePhotoLibraryEditMode(true)
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.selectAllItems)
+        }
+        .opacity(selectButtonOpacity)
+        // A button faded to nothing still takes taps, and outside the all photos view a tap would
+        // put the screen into a selection the year, month and day views have no way to show.
+        .disabled(viewModel.isAlbumEmpty || viewModel.selectButtonOpacity == 0)
     }
     
     /// Under Liquid Glass the button carries its own glass capsule, and fading the button fades the

@@ -1,5 +1,6 @@
 import Accounts
 import ChatRepo
+import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAudioPlayer
@@ -110,7 +111,8 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             tracker: DIContainer.tracker,
             monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            appDelegateRouter: AppDelegateRouter()
+            appDelegateRouter: AppDelegateRouter(),
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .albumLink)
         )
         
         let navigationController = MEGANavigationController(

@@ -28,6 +28,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private let appDelegateRouter: any AppDelegateRouting
+    private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
@@ -81,6 +82,8 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
     @Published var showStorageQuotaWillExceed = false
+    @Published var showMoreOptions = false
+    @Published private(set) var albumCover: Image?
 
     private var isQuotaWarningsRevampEnabled: Bool {
         DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosQuotaWarningsRevamp)
@@ -99,8 +102,15 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var isShareLinkButtonDisabled = true
     @Published private(set) var isConnectedToNetworkUntilContentLoaded = true
     
+    /// The link to hand out, which is not always the one the screen was opened with: a link that arrives
+    /// without its decryption key gets it back once the user types the key in, and sharing the bare link
+    /// would give the recipient something they cannot open.
+    var shareableLink: URL {
+        publicLinkWithDecryptionKey ?? publicLink
+    }
+    
     private var albumLink: String {
-        (publicLinkWithDecryptionKey ?? publicLink).absoluteString
+        shareableLink.absoluteString
     }
     
     private var albumName: String? {
@@ -141,6 +151,44 @@ final class ImportAlbumViewModel: ObservableObject {
         Strings.Localizable.AlbumLink.Alert.RenameAlbum.message(publicAlbumName ?? "")
     }
     
+    var shouldShowMoreOptionsButton: Bool {
+        isLinkRevampEnabled
+    }
+    
+    var moreOptions: [AlbumLinkMoreOption] {
+        var options: [AlbumLinkMoreOption] = [.select]
+        if accountUseCase.isLoggedIn() {
+            options.append(.saveToMEGA)
+        }
+        options.append(.shareLink)
+        return options
+    }
+    
+    /// The rows follow the buttons they were moved from: the ones that act on the photos wait for photos
+    /// to act on, and Share link waits only for the link to resolve.
+    ///
+    /// Select carries one condition of its own. The zoom bar can put the screen in the year, month or day
+    /// view, and none of them can show a selection -- the same reason the select button this sheet
+    /// replaced fades out there.
+    var disabledMoreOptions: Set<AlbumLinkMoreOption> {
+        var disabled = Set<AlbumLinkMoreOption>()
+        if isToolbarButtonsDisabled {
+            disabled.formUnion([.select, .saveToMEGA])
+        }
+        if photoLibraryContentViewModel.selectedMode != .all {
+            disabled.insert(.select)
+        }
+        if isShareLinkButtonDisabled {
+            disabled.insert(.shareLink)
+        }
+        return disabled
+    }
+    
+    /// Disabled only once every row it opens onto is, so an empty album can still have its link shared.
+    var isMoreOptionsButtonDisabled: Bool {
+        isToolbarButtonsDisabled && isShareLinkButtonDisabled
+    }
+    
     init(publicLink: URL,
          publicCollectionUseCase: some PublicCollectionUseCaseProtocol,
          albumNameUseCase: some AlbumNameUseCaseProtocol,
@@ -153,6 +201,7 @@ final class ImportAlbumViewModel: ObservableObject {
          tracker: some AnalyticsTracking,
          monitorUseCase: some NetworkMonitorUseCaseProtocol,
          appDelegateRouter: some AppDelegateRouting,
+         thumbnailLoader: any ThumbnailLoaderProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
@@ -166,6 +215,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.monitorUseCase = monitorUseCase
         self.appDelegateRouter = appDelegateRouter
+        self.thumbnailLoader = thumbnailLoader
         self.featureFlagProvider = featureFlagProvider
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
@@ -226,6 +276,21 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func selectAllPhotos() {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
+    }
+    
+    /// One entry point for every row of the more options sheet, so the view does not have to know which
+    /// action a row stands for.
+    func handle(moreOption: AlbumLinkMoreOption) async {
+        switch moreOption {
+        case .select:
+            enablePhotoLibraryEditMode(true)
+        case .saveToMEGA:
+            await importAlbum()
+        case .shareLink:
+            // Shared straight from the sheet's own row, which hands the system share sheet the
+            // anchoring it needs on iPad.
+            break
+        }
     }
     
     func importAlbum() async {
@@ -363,12 +428,25 @@ final class ImportAlbumViewModel: ObservableObject {
                 )
             )
             tracker.trackAnalyticsEvent(with: DIContainer.importAlbumContentLoadedEvent)
+            await loadAlbumCover(set: publicAlbum.set, setElements: publicAlbum.setElements, photos: photos)
         } catch is CancellationError {
             MEGALogError("[Import Album] loadPublicAlbumContents cancelled")
         } catch {
             handleLoadError(error)
             MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
         }
+    }
+    
+    /// The set names its cover by element rather than by node, so the element is resolved first. An album
+    /// whose cover was never set falls back to its first photo, which is what the album cards do.
+    private func loadAlbumCover(set: SetEntity, setElements: [SetElementEntity], photos: [NodeEntity]) async {
+        let coverNodeId = setElements.first { $0.handle == set.coverId }?.nodeId
+        guard let cover = photos.first(where: { $0.handle == coverNodeId }) ?? photos.first else {
+            return
+        }
+        // Annotated so the single-image overload is picked over the protocol's async sequence one.
+        let container: (any ImageContaining)? = try? await thumbnailLoader.loadImage(for: cover, type: .thumbnail)
+        albumCover = container?.image
     }
     
     private func decryptionKeyRequired() -> Bool {
