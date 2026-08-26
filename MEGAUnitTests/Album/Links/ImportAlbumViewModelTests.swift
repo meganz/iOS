@@ -785,6 +785,63 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testExportPhotos_whenSelectionModeIsActive_shouldExportSelectedItems() async throws {
+        let exportRouter = MockAlbumLinkExportRouter()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: makePublicAlbumUseCase(nodes: try makePhotos()),
+                                           exportRouter: exportRouter)
+        await sut.loadPublicAlbum()
+        
+        let selectedPhotos = try Array(makePhotos().prefix(2))
+        sut.enablePhotoLibraryEditMode(true)
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(selectedPhotos)
+        
+        await sut.exportPhotos()
+        
+        XCTAssertEqual(exportRouter.exportedPhotos.map { Set($0) }, [Set(selectedPhotos)])
+    }
+    
+    @MainActor
+    func testExportPhotos_whenSelectionModeNotActive_shouldExportAllItemsInAlbum() async throws {
+        let photos = try makePhotos()
+        let exportRouter = MockAlbumLinkExportRouter()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: makePublicAlbumUseCase(nodes: photos),
+                                           exportRouter: exportRouter)
+        await sut.loadPublicAlbum()
+        
+        await sut.exportPhotos()
+        
+        XCTAssertEqual(exportRouter.exportedPhotos.map { Set($0) }, [Set(photos)])
+    }
+    
+    @MainActor
+    func testExportPhotos_emptyAlbum_shouldNotStartAnExport() async throws {
+        let exportRouter = MockAlbumLinkExportRouter()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           exportRouter: exportRouter)
+        await sut.loadPublicAlbum()
+        
+        await sut.exportPhotos()
+        
+        XCTAssertTrue(exportRouter.exportedPhotos.isEmpty)
+    }
+    
+    @MainActor
+    func testExportPhotos_noInterNetConnection_shouldToggleNoInternetConnectionAndNotExport() async throws {
+        let exportRouter = MockAlbumLinkExportRouter()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: MockNetworkMonitorUseCase(connected: false),
+                                           exportRouter: exportRouter)
+        XCTAssertFalse(sut.showNoInternetConnection)
+        
+        await sut.exportPhotos()
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
+        XCTAssertTrue(exportRouter.exportedPhotos.isEmpty)
+    }
+    
+    @MainActor
     func testStopAlbumLinkPreview_deinit_shouldBeCalled() async throws {
         let publicAlbumUseCase = MockPublicCollectionUseCase()
         var sut: ImportAlbumViewModel? = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
@@ -1171,6 +1228,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1189,6 +1247,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             monitorUseCase: monitorUseCase,
             appDelegateRouter: appDelegateRouter,
             thumbnailLoader: thumbnailLoader,
+            exportRouter: exportRouter,
             featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
@@ -1278,6 +1337,26 @@ struct ImportAlbumViewModelTestSuite {
         }
     }
     
+    @Suite("Export Photos")
+    @MainActor
+    struct ExportPhotos {
+        @Test
+        func overDiskQuota() async {
+            let accountStorageUseCase = MockAccountStorageUseCase(isPaywalled: true)
+            let appDelegateRouter = MockAppDelegateRouter()
+            let exportRouter = MockAlbumLinkExportRouter()
+            let sut = makSUT(
+                accountStorageUseCase: accountStorageUseCase,
+                appDelegateRouter: appDelegateRouter,
+                exportRouter: exportRouter)
+            
+            await sut.exportPhotos()
+            
+            #expect(appDelegateRouter.showOverDiskQuotaCalled == 1)
+            #expect(exportRouter.exportedPhotos.isEmpty)
+        }
+    }
+    
     @Suite("Share Link")
     @MainActor
     struct ShareLinkView {
@@ -1310,6 +1389,7 @@ struct ImportAlbumViewModelTestSuite {
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
+        exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ImportAlbumViewModel {
         .init(
@@ -1326,6 +1406,16 @@ struct ImportAlbumViewModelTestSuite {
             monitorUseCase: monitorUseCase,
             appDelegateRouter: appDelegateRouter,
             thumbnailLoader: thumbnailLoader,
+            exportRouter: exportRouter,
             featureFlagProvider: featureFlagProvider)
+    }
+}
+
+private final class MockAlbumLinkExportRouter: AlbumLinkExportRouting {
+    /// One entry per call, so a run that exported nothing is told apart from one that never started.
+    private(set) var exportedPhotos: [[NodeEntity]] = []
+    
+    func export(photos: [NodeEntity]) async {
+        exportedPhotos.append(photos)
     }
 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import Transfer
 import UIKit
 
 /// Hosts `ImportAlbumView` as a child rather than presenting its `UIHostingController` directly.
@@ -27,6 +28,7 @@ final class AlbumLinkViewController: UIViewController {
         let hostingController = UIHostingController(
             rootView: ImportAlbumView(
                 viewModel: self.viewModel,
+                transferIndicatorToolbarFactory: TransferIndicatorBarItemConfigurator.toolbarFactory,
                 invokeDismiss: { [weak self] in
                     self?.dismiss(animated: true)
                 }

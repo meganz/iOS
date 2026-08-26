@@ -29,6 +29,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private let appDelegateRouter: any AppDelegateRouting
     private let thumbnailLoader: any ThumbnailLoaderProtocol
+    private let exportRouter: any AlbumLinkExportRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
@@ -202,6 +203,7 @@ final class ImportAlbumViewModel: ObservableObject {
          monitorUseCase: some NetworkMonitorUseCaseProtocol,
          appDelegateRouter: some AppDelegateRouting,
          thumbnailLoader: any ThumbnailLoaderProtocol,
+         exportRouter: some AlbumLinkExportRouting,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
@@ -216,6 +218,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.monitorUseCase = monitorUseCase
         self.appDelegateRouter = appDelegateRouter
         self.thumbnailLoader = thumbnailLoader
+        self.exportRouter = exportRouter
         self.featureFlagProvider = featureFlagProvider
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
@@ -332,6 +335,26 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
+    /// Saves the photos to the device, through the system share sheet where Save to Files lives.
+    ///
+    /// Unlike Save to MEGA, this asks nothing of the account: an album link is browsable logged out and the
+    /// download behind the export is too, the same way the file link and folder link Download buttons are.
+    func exportPhotos() async {
+        guard validateOverDiskQuota() else {
+            return
+        }
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
+        let photosToExport = photoLibraryContentViewModel.photosToAction
+
+        guard photosToExport.isNotEmpty else {
+            return
+        }
+        await exportRouter.export(photos: photosToExport)
+    }
+
     func saveToPhotos() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToDeviceButtonEvent)
         guard validateOverDiskQuota() else {

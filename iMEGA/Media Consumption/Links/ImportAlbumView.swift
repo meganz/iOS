@@ -4,12 +4,14 @@ import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
+import Transfer
 
 struct ImportAlbumView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @StateObject var viewModel: ImportAlbumViewModel
     
+    let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
     let invokeDismiss: () -> Void
     
     @State private var publicAlbumLoadingTask: Task<Void, Never>?
@@ -164,19 +166,43 @@ struct ImportAlbumView: View {
             navigationTitle
         }
         
+        transferIndicatorToolbarFactory.toolbarContent(trailingItemCount: 1)
+        
         ToolbarItem(placement: .topBarTrailing) {
             rightNavigationBarButton
         }
         
         ToolbarItemGroup(placement: .bottomBar) {
-            if viewModel.showImportToolbarButton {
-                importAlbumToolbarButton
-                Spacer()
+            if viewModel.isLinkRevampEnabled {
+                revampedBottomBar
+            } else {
+                legacyBottomBar
             }
-            saveToPhotosToolbarButton
-            Spacer()
-            shareLinkButton
         }
+    }
+
+    /// Download, Save to Photos and Save to MEGA. Share link is not here: the revamped design moves it into
+    /// the overflow menu.
+    @ViewBuilder
+    private var revampedBottomBar: some View {
+        exportToolbarButton
+        Spacer()
+        saveToPhotosToolbarButton
+        if viewModel.showImportToolbarButton {
+            Spacer()
+            saveToMEGAToolbarButton
+        }
+    }
+
+    @ViewBuilder
+    private var legacyBottomBar: some View {
+        if viewModel.showImportToolbarButton {
+            importAlbumToolbarButton
+            Spacer()
+        }
+        saveToPhotosToolbarButton
+        Spacer()
+        shareLinkButton
     }
     
     @ViewBuilder
@@ -297,6 +323,29 @@ struct ImportAlbumView: View {
             Image(uiImage: MEGAAssets.UIImage.folderArrow)
         }
         .disabled(viewModel.isToolbarButtonsDisabled)
+    }
+
+    private var exportToolbarButton: some View {
+        Button {
+            Task { await viewModel.exportPhotos() }
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.arrowDownCircle)
+        }
+        .disabled(viewModel.isToolbarButtonsDisabled)
+        .accessibilityLabel(Strings.Localizable.download)
+    }
+
+    /// The revamp's take on `importAlbumToolbarButton`: same action, the icon the design asks for. The design
+    /// draws this one inverted, which reads as a slip rather than intent -- nothing else on the screen marks
+    /// a primary action that way -- so it carries the same treatment as the two buttons beside it.
+    private var saveToMEGAToolbarButton: some View {
+        Button {
+            Task { await viewModel.importAlbum() }
+        } label: {
+            Image(uiImage: MEGAAssets.UIImage.uploadToCloud)
+        }
+        .disabled(viewModel.isToolbarButtonsDisabled)
+        .accessibilityLabel(Strings.Localizable.Link.Button.saveToMega)
     }
     
     private var saveToPhotosToolbarButton: some View {

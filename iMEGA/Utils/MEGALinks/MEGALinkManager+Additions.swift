@@ -86,6 +86,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
                 nodeRepository: nodeRepository),
             userAlbumRepository: userAlbumRepository)
         
+        // Built before the screen it presents from, so it is handed the presenter once that exists.
+        let exportRouter = AlbumLinkExportRouter(nodeProvider: nodeProvider)
+
         let vm = ImportAlbumViewModel(
             publicLink: publicLink,
             publicCollectionUseCase: PublicCollectionUseCase(
@@ -112,11 +115,15 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             tracker: DIContainer.tracker,
             monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             appDelegateRouter: AppDelegateRouter(),
-            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .albumLink)
+            thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .albumLink),
+            exportRouter: exportRouter
         )
         
+        let albumLinkViewController = AlbumLinkViewController(viewModel: vm)
+        exportRouter.presenter = albumLinkViewController
+
         let navigationController = MEGANavigationController(
-            rootViewController: AlbumLinkViewController(viewModel: vm)
+            rootViewController: albumLinkViewController
         )
         navigationController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_visibleViewController().present(navigationController, animated: true)
