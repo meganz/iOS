@@ -122,7 +122,7 @@ struct TransferRowViewModelTests {
         state.canViewInFolder = false
         let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
 
-        sut.presentActions(onRetried: {})
+        sut.presentActions(isOffline: false, onRetried: {})
 
         #expect(router.presentActionsTags == [42])
         #expect(router.presentActionsContexts.first?.canViewInFolder == false)
@@ -139,7 +139,7 @@ struct TransferRowViewModelTests {
             clearTransfersUseCase: clearUseCase
         )
 
-        sut.presentActions(onRetried: {})
+        sut.presentActions(isOffline: false, onRetried: {})
         router.lastOnClear?()
 
         #expect(clearUseCase.clearedTransferTags == [7])
@@ -153,10 +153,54 @@ struct TransferRowViewModelTests {
             rowRouter: router
         )
 
-        sut.presentActions(onRetried: {})
+        sut.presentActions(isOffline: false, onRetried: {})
 
         #expect(router.lastOnRetry != nil)
         #expect(router.lastOnClear != nil)
+    }
+
+    /// Offline, the sheet must not be a way around the disabled select-mode buttons: Retry
+    /// needs a connection, and Clear is withheld to match the bulk action for the same thing.
+    @Test("Offline strips Retry and Clear from the sheet context")
+    func presentActionsOfflineWithholdsMutatingEntries() {
+        let router = MockTransferRowRouting()
+        let entity = TransferEntity(fileName: "clip.mov", tag: 9, state: .failed)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: true)
+        let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
+
+        sut.presentActions(isOffline: true, onRetried: {})
+
+        #expect(router.presentActionsContexts.first?.canRetry == false)
+        #expect(router.presentActionsContexts.first?.canClear == false)
+    }
+
+    /// The non-mutating entries are keyed off `canViewInFolder`, which offline must leave
+    /// alone — a downloaded file is still there to be revealed and opened.
+    @Test("Offline leaves the sheet's non-mutating entries alone")
+    func presentActionsOfflineKeepsViewInFolder() {
+        let router = MockTransferRowRouting()
+        let entity = TransferEntity(fileName: "clip.mov", tag: 10, state: .complete)
+        var state = TransferEntityMapper.rowState(for: entity, isRetryable: false)
+        state.canViewInFolder = true
+        let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
+
+        sut.presentActions(isOffline: true, onRetried: {})
+
+        #expect(router.presentActionsContexts.first?.canViewInFolder == true)
+    }
+
+    /// Online, a retryable row keeps both — the gate is the connection, not the row.
+    @Test("Online keeps Retry and Clear in the sheet context")
+    func presentActionsOnlineOffersMutatingEntries() {
+        let router = MockTransferRowRouting()
+        let entity = TransferEntity(fileName: "clip.mov", tag: 11, state: .failed)
+        let state = TransferEntityMapper.rowState(for: entity, isRetryable: true)
+        let (sut, _) = Self.makeSUT(entity: entity, state: state, rowRouter: router)
+
+        sut.presentActions(isOffline: false, onRetried: {})
+
+        #expect(router.presentActionsContexts.first?.canRetry == true)
+        #expect(router.presentActionsContexts.first?.canClear == true)
     }
 
     @Test("Tapping a completed row opens the file via the row router")

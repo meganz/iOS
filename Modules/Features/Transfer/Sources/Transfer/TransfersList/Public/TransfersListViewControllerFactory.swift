@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAInfrastructure
@@ -15,6 +16,9 @@ public enum TransfersListViewControllerFactory {
     /// - Parameter rowRouter: app-implemented navigation for per-row actions (View in
     ///   folder, Open with, Share link, open file); none of those destinations are
     ///   constructible from this package, so the app injects the router.
+    /// - Parameter featureFlagProvider: supplied by the app composition root, which owns
+    ///   the build-configuration rules for local flags. Only `offlineMode` is read here,
+    ///   and only to decide whether the screen shows its offline presentation.
     /// - Parameter onClose: modal presenters pass their dismissal here instead of
     ///   attaching a UIKit bar button, so the screen can render Close as a SwiftUI
     ///   toolbar item and hand that slot to select-all while selecting. Pass nil
@@ -22,6 +26,7 @@ public enum TransfersListViewControllerFactory {
     public static func make(
         nodeUseCase: some NodeUseCaseProtocol,
         rowRouter: some TransferRowRouting,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         onClose: (@MainActor () -> Void)? = nil
     ) -> UIViewController {
         let inventoryUseCase = TransferInventoryUseCase(
@@ -91,6 +96,8 @@ public enum TransfersListViewControllerFactory {
             ),
             transferControlUseCase: DependencyInjection.transferControlUseCase,
             hapticFeedbackUseCase: HapticFeedbackUseCase(),
+            networkMonitorUseCase: DependencyInjection.networkMonitorUseCase,
+            isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled,
             onClose: onClose
         )
         let host = UIHostingController(rootView: TransfersListView(viewModel: viewModel))

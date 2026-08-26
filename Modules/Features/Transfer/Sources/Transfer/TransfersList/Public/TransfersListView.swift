@@ -7,6 +7,8 @@ import MEGAUIComponent
 import SwiftUI
 
 public struct TransfersListView: View {
+    private static let offlineSnackBarDisplayDuration: TimeInterval = Double(Int32.max)
+
     @StateObject private var viewModel: TransfersListViewModel
 
     init(viewModel: TransfersListViewModel) {
@@ -43,6 +45,9 @@ public struct TransfersListView: View {
         .task {
             await viewModel.observeTransferQuota()
         }
+        .task {
+            await viewModel.observeNetworkConnection()
+        }
         // Select mode is entered by tap-and-hold on a row, a gesture VoiceOver
         // takes for itself, and the bar it swaps in sits outside the focused
         // element — so without this the mode change happens silently.
@@ -56,6 +61,14 @@ public struct TransfersListView: View {
         .navigationBarTitleDisplayMode(viewModel.isSelectModeActive ? .inline : .large)
         .navigationBarBackButtonHidden(viewModel.isSelectModeActive)
         .snackBar($viewModel.snackBar)
+        .overlay(alignment: .bottom) {
+            if viewModel.isOffline, viewModel.snackBar == nil {
+                SnackBarView(
+                    snackBar: .constant(viewModel.offlineSnackBar),
+                    displayDuration: Self.offlineSnackBarDisplayDuration
+                )
+            }
+        }
         .alert(
             viewModel.presentingCancelConfirmation?.title ?? "",
             isPresented: isPresentingCancelConfirmation,
@@ -98,8 +111,9 @@ public struct TransfersListView: View {
                                 viewModel.togglePauseAll()
                             } label: {
                                 pauseAllIcon
-                                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                                    .foregroundStyle(topBarIconColor)
                             }
+                            .disabled(viewModel.isOffline)
                             .accessibilityLabel(viewModel.isAllPaused
                                 ? Strings.Localizable.resumeAll
                                 : Strings.Localizable.pauseAll)
@@ -119,8 +133,9 @@ public struct TransfersListView: View {
                                 }
                             } label: {
                                 MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
-                                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                                    .foregroundStyle(topBarIconColor)
                             }
+                            .disabled(viewModel.isOffline)
                             .accessibilityLabel(Strings.Localizable.more)
                         }
                     }
@@ -197,6 +212,7 @@ public struct TransfersListView: View {
                     selection: viewModel.selection,
                     icon: MEGAAssets.Image.rotateCcw,
                     label: Strings.Localizable.retry,
+                    isOfflineBlocked: viewModel.isOffline,
                     action: viewModel.retrySelectedTransfers
                 )
             }
@@ -207,6 +223,7 @@ public struct TransfersListView: View {
                     selection: viewModel.selection,
                     icon: MEGAAssets.Image.rubbishBinInMenu,
                     label: Strings.Localizable.cancel,
+                    isOfflineBlocked: viewModel.isOffline,
                     action: viewModel.confirmCancelSelectedTransfers
                 )
             case .completed, .failed:
@@ -214,6 +231,7 @@ public struct TransfersListView: View {
                     selection: viewModel.selection,
                     icon: MEGAAssets.Image.monoEraserMediumThinOutline,
                     label: Strings.Localizable.clear,
+                    isOfflineBlocked: viewModel.isOffline,
                     action: viewModel.clearSelectedTransfers
                 )
             }
@@ -237,6 +255,12 @@ public struct TransfersListView: View {
         case .clearAll: viewModel.clearAllTransfers()
         case .retryAll: Task { await viewModel.retryAllTransfers() }
         }
+    }
+
+    private var topBarIconColor: Color {
+        viewModel.isOffline
+            ? TokenColors.Icon.disabled.swiftUI
+            : TokenColors.Icon.primary.swiftUI
     }
 
     private var pauseAllIcon: Image {
@@ -283,6 +307,7 @@ public struct TransfersListView: View {
             .environment(\.editMode, $viewModel.editMode)
             .environment(\.isAllTransfersPaused, viewModel.isAllPaused)
             .environment(\.isTransferOverquota, viewModel.isTransferOverquota)
+            .environment(\.isTransfersOffline, viewModel.isOffline)
     }
 
     private var tabBar: some View {
@@ -361,6 +386,7 @@ private struct SelectModeActionButton: View {
     @ObservedObject var selection: TransferSelection
     let icon: Image
     let label: String
+    let isOfflineBlocked: Bool
     let action: @MainActor () -> Void
 
     var body: some View {
@@ -379,6 +405,6 @@ private struct SelectModeActionButton: View {
     }
 
     private var isEnabled: Bool {
-        !selection.isEmpty
+        !selection.isEmpty && !isOfflineBlocked
     }
 }

@@ -48,6 +48,7 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
                     nodeRepository: NodeRepository.newRepo
                 ),
                 rowRouter: router,
+                featureFlagProvider: DIContainer.featureFlagProvider,
                 onClose: { dismissModal?() }
             )
         } else {

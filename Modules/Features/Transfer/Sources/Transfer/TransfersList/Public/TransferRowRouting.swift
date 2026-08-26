@@ -9,14 +9,26 @@ public struct TransferRowActionContext: Sendable {
     public let detail: String
     public let canViewInFolder: Bool
     /// Whether the sheet offers Retry on a failed/cancelled row. `false` for uploads
-    /// whose staged source file no longer exists — retrying them can only fail.
+    /// whose staged source file no longer exists — retrying them can only fail, and
+    /// while offline, where nothing can be re-queued.
     public let canRetry: Bool
+    /// Whether the sheet offers Clear. `false` while offline, matching the select-mode
+    /// Clear button, so a row cannot be mutated from the sheet when the bulk action for
+    /// the same thing is disabled.
+    public let canClear: Bool
 
-    public init(name: String, detail: String, canViewInFolder: Bool, canRetry: Bool = false) {
+    public init(
+        name: String,
+        detail: String,
+        canViewInFolder: Bool,
+        canRetry: Bool = false,
+        canClear: Bool = true
+    ) {
         self.name = name
         self.detail = detail
         self.canViewInFolder = canViewInFolder
         self.canRetry = canRetry
+        self.canClear = canClear
     }
 }
 

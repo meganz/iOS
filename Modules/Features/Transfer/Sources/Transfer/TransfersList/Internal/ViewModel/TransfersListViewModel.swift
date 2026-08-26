@@ -1,9 +1,11 @@
+import AsyncAlgorithms
 import Combine
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAInfrastructure
 import MEGAL10n
+import MEGASwift
 import MEGASwiftUI
 import MEGAUIComponent
 import MEGAUIKit
@@ -45,6 +47,12 @@ public final class TransfersListViewModel: ObservableObject {
     /// disabling; unaffected by the banner being dismissed.
     @Published private(set) var isTransferOverquota: Bool
 
+    @Published private(set) var isOffline: Bool
+    
+    var offlineSnackBar: SnackBar {
+        SnackBar(message: Strings.Localizable.Transfers.Snackbar.pausedAwaitingNetwork)
+    }
+
     let dependency: TransferTabDependency
     private let transferListUseCase: any TransferListUseCaseProtocol
     private let monitorPresenceUseCase: any MonitorTransferTabPresenceUseCaseProtocol
@@ -52,6 +60,8 @@ public final class TransfersListViewModel: ObservableObject {
     private let transferQuotaUseCase: any TransferQuotaUseCaseProtocol
     private let transferControlUseCase: any TransferControlUseCaseProtocol
     private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let isNewOfflineModeEnabled: Bool
 
     private var isStorageOverquota: Bool
     /// Session-only: the transfer banner reappears on next launch if still over quota.
@@ -65,6 +75,8 @@ public final class TransfersListViewModel: ObservableObject {
         transferQuotaUseCase: some TransferQuotaUseCaseProtocol,
         transferControlUseCase: some TransferControlUseCaseProtocol,
         hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        isNewOfflineModeEnabled: Bool,
         onClose: (@MainActor () -> Void)? = nil
     ) {
         self.dependency = dependency
@@ -74,8 +86,11 @@ public final class TransfersListViewModel: ObservableObject {
         self.transferQuotaUseCase = transferQuotaUseCase
         self.transferControlUseCase = transferControlUseCase
         self.hapticFeedbackUseCase = hapticFeedbackUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
+        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
         self.onClose = onClose
         self.isAllPaused = transferListUseCase.areTransfersPaused()
+        self.isOffline = isNewOfflineModeEnabled && !networkMonitorUseCase.isConnected()
         self.isTransferOverquota = transferQuotaUseCase.isOverquota
         self.isStorageOverquota = Self.isOverStorageQuota(accountStorageUseCase)
         self.overQuotaBanner = Self.banner(
@@ -95,6 +110,18 @@ public final class TransfersListViewModel: ObservableObject {
             if isSelectModeActive, isCurrentTabEmpty {
                 exitSelectMode()
             }
+        }
+    }
+
+    // MARK: - Connectivity
+
+    func observeNetworkConnection() async {
+        guard isNewOfflineModeEnabled else { return }
+        for await isConnected in networkMonitorUseCase
+            .connectionSequence
+            .prepend(networkMonitorUseCase.isConnected())
+            .removeDuplicates() {
+            isOffline = !isConnected
         }
     }
 

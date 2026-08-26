@@ -90,12 +90,18 @@ public final class TransferRowViewModel: ObservableObject, Identifiable {
 
     /// Presents the per-row action sheet. `onRetried` is invoked after the sheet's
     /// Retry action lands in the engine, so the screen can show the retry snackbar.
-    func presentActions(onRetried: @MainActor @escaping () -> Void) {
+    ///
+    /// - Parameter isOffline: strips the sheet's mutating entries. Retry needs a
+    ///   connection, and Clear is withheld to match the select-mode Clear button, so the
+    ///   sheet can't be used to do what the bulk action for the same thing refuses.
+    ///   Non-mutating entries (View in folder, Open with, Share link) are left alone.
+    func presentActions(isOffline: Bool, onRetried: @MainActor @escaping () -> Void) {
         let context = TransferRowActionContext(
             name: state.fileName,
             detail: state.subtitle,
             canViewInFolder: state.canViewInFolder,
-            canRetry: state.isRetryable
+            canRetry: state.isRetryable && !isOffline,
+            canClear: !isOffline
         )
         rowRouter.presentActions(
             for: transfer,

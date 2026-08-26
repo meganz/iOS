@@ -14,4 +14,8 @@ enum DependencyInjection {
     static var transferControlUseCase: some TransferControlUseCaseProtocol {
         TransferControlUseCase(repo: TransferControlRepository.newRepo)
     }
+
+    static var networkMonitorUseCase: some NetworkMonitorUseCaseProtocol {
+        NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+    }
 }

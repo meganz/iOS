@@ -31,6 +31,7 @@ struct TransferResultRowView: View {
     let onSelectRequested: @MainActor () -> Void
     @Environment(\.isAllTransfersPaused) private var isAllTransfersPaused
     @Environment(\.isTransferOverquota) private var isTransferOverquota
+    @Environment(\.isTransfersOffline) private var isOffline
     @Environment(\.editMode) private var editMode
 
     /// In select mode the row shows the native leading checkbox and nothing may
@@ -44,6 +45,25 @@ struct TransferResultRowView: View {
     /// exhausted (nothing can progress until the user upgrades).
     private var isPauseResumeDisabled: Bool {
         isAllTransfersPaused || isTransferOverquota
+    }
+
+    /// Pause/resume cannot start anything while offline either, and the persistent
+    /// offline snackbar already says why, so the control is simply inert there.
+    private var isPauseResumeInert: Bool {
+        isPauseResumeDisabled || isOffline
+    }
+
+    private var isMoreInert: Bool {
+        isOffline && !isCompleted
+    }
+
+    /// What the row renders, which is the engine's state except while offline: nothing
+    /// can transfer without a connection, so in-flight rows all read as Paused
+    private var displayState: TransferRowState {
+        guard isOffline, !isReadOnly else { return viewModel.state }
+        var state = viewModel.state
+        state.status = .paused
+        return state
     }
 
     private var isCompleted: Bool {
@@ -84,12 +104,12 @@ struct TransferResultRowView: View {
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            if !isSelecting {
+            if !isSelecting, !isOffline {
                 swipeAction
             }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            if !isSelecting, viewModel.state.isRetryable {
+            if !isSelecting, !isOffline, viewModel.state.isRetryable {
                 retrySwipeAction
             }
         }
@@ -146,7 +166,7 @@ struct TransferResultRowView: View {
                         .truncationMode(.middle)
                 }
 
-                Text(viewModel.state.subtitle)
+                Text(displayState.subtitle)
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(subtitleColor)
                     .lineLimit(1)
@@ -154,8 +174,8 @@ struct TransferResultRowView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(viewModel.state.accessibilityLabel)
-        .accessibilityValue(viewModel.state.accessibilityValue)
+        .accessibilityLabel(displayState.accessibilityLabel)
+        .accessibilityValue(displayState.accessibilityValue)
         .accessibilityAddTraits(summaryTraits)
         // Select mode is only reachable by tap-and-hold, and VoiceOver keeps that
         // gesture for itself — an affordance behind a gesture needs a spoken
@@ -288,14 +308,17 @@ struct TransferResultRowView: View {
     private var trailingAction: some View {
         if isReadOnly {
             Button {
-                viewModel.presentActions(onRetried: onRetried)
+                viewModel.presentActions(isOffline: isOffline, onRetried: onRetried)
             } label: {
                 MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
-                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                    .foregroundStyle(isMoreInert
+                        ? TokenColors.Icon.disabled.swiftUI
+                        : TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 24, height: 24)
                     .expandedHitTarget()
             }
             .buttonStyle(.plain)
+            .disabled(isMoreInert)
             .accessibilityLabel(Strings.Localizable.more)
         } else {
             pauseResumeButton
@@ -307,18 +330,18 @@ struct TransferResultRowView: View {
             Task { await viewModel.togglePauseResume() }
         } label: {
             trailingImage
-                .foregroundStyle(isPauseResumeDisabled
+                .foregroundStyle(isPauseResumeInert
                     ? TokenColors.Icon.disabled.swiftUI
                     : TokenColors.Icon.secondary.swiftUI)
                 .frame(width: TokenSpacing._7, height: TokenSpacing._7)
                 .expandedHitTarget()
         }
         .buttonStyle(.plain)
-        .disabled(isPauseResumeDisabled)
+        .disabled(isPauseResumeInert)
         // Named for what pressing it does, not for the state the row is in. The
         // button is icon-only, so without a label VoiceOver falls back to the
         // asset's own name and reads out "pause-medium-thin-outline".
-        .accessibilityLabel(viewModel.state.status == .paused
+        .accessibilityLabel(displayState.status == .paused
             ? Strings.Localizable.resume
             : Strings.Localizable.pause)
     }
@@ -326,14 +349,14 @@ struct TransferResultRowView: View {
     /// Failed rows show their state label in red; every other status (including
     /// the user-cancelled grey label) uses the standard secondary tint.
     private var subtitleColor: Color {
-        switch viewModel.state.status {
+        switch displayState.status {
         case .failed: TokenColors.Support.error.swiftUI
         case .queued, .active, .paused, .completed, .cancelled: TokenColors.Text.secondary.swiftUI
         }
     }
 
     private var progressTint: Color {
-        switch viewModel.state.status {
+        switch displayState.status {
         case .failed, .cancelled: TokenColors.Support.error.swiftUI
         case .paused, .queued: TokenColors.Text.secondary.swiftUI
         case .active, .completed: TokenColors.Support.success.swiftUI
@@ -341,7 +364,7 @@ struct TransferResultRowView: View {
     }
 
     private var trailingImage: Image {
-        switch viewModel.state.status {
+        switch displayState.status {
         case .active, .queued: MEGAAssets.Image.pauseMediumThinOutline
         case .paused: MEGAAssets.Image.monoPlayMediumThinOutline
         case .completed, .failed, .cancelled: MEGAAssets.Image.monoMoreHorizontalMediumThinOutline
@@ -372,6 +395,10 @@ private struct IsTransferOverquotaKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct IsTransfersOfflineKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension EnvironmentValues {
     var isAllTransfersPaused: Bool {
         get { self[IsAllTransfersPausedKey.self] }
@@ -381,5 +408,10 @@ extension EnvironmentValues {
     var isTransferOverquota: Bool {
         get { self[IsTransferOverquotaKey.self] }
         set { self[IsTransferOverquotaKey.self] = newValue }
+    }
+
+    var isTransfersOffline: Bool {
+        get { self[IsTransfersOfflineKey.self] }
+        set { self[IsTransfersOfflineKey.self] = newValue }
     }
 }

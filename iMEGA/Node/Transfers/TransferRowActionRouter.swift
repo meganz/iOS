@@ -41,8 +41,10 @@ final class TransferRowActionRouter: TransferRowRouting {
         onClear: @MainActor @escaping () -> Void
     ) {
         guard let presenter = navigationController, let presenterView = presenter.view else { return }
+        let actions = sheetActions(for: transfer, context: context, onRetry: onRetry, onClear: onClear)
+        guard !actions.isEmpty else { return }
         let sheet = TransferActionsSheetViewController(
-            actions: sheetActions(for: transfer, context: context, onRetry: onRetry, onClear: onClear),
+            actions: actions,
             icon: MEGAAssets.UIImage.image(forFileName: context.name),
             name: context.name,
             detail: context.detail,
@@ -88,14 +90,18 @@ final class TransferRowActionRouter: TransferRowRouting {
             actions.append(action(Strings.Localizable.General.MenuAction.ShareLink.title(1), MEGAAssets.UIImage.link01) { [weak self] in
                 self?.shareLink(for: transfer)
             })
-            actions.append(clear)
+            if context.canClear {
+                actions.append(clear)
+            }
             return actions
         default:
             var actions: [ActionSheetAction] = []
             if context.canRetry {
                 actions.append(action(Strings.Localizable.retry, MEGAAssets.UIImage.rotateCcw, handler: onRetry))
             }
-            actions.append(clear)
+            if context.canClear {
+                actions.append(clear)
+            }
             return actions
         }
     }

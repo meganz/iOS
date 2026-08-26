@@ -39,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *completedButton;
 @property (weak, nonatomic) IBOutlet UIView *completedLineView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarBottomConstraint;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
 
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *selectedTransfers;
@@ -174,7 +173,7 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
             [self.clearAllButton setTitle:self.areTransfersPaused ? LocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : LocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
-            self.clearAllButton.enabled = true;
+            self.clearAllButton.enabled = !self.areActionsBlockedOffline;
             break;
             
         case TransfersWidgetSelectedCompleted:
@@ -192,17 +191,17 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll: {
             BOOL hasActiveTransfers = [self hasActiveTransfers];
-            self.editBarButtonItem.enabled = hasActiveTransfers;
+            self.editBarButtonItem.enabled = [self isEditBarButtonEnabledWithTransfers:hasActiveTransfers];
             self.cancelBarButtonItem.enabled = hasActiveTransfers;
-            self.toolbar.hidden = !hasActiveTransfers;
+            [self applyToolbarHidden:!hasActiveTransfers];
             break;
         }
             
         case TransfersWidgetSelectedCompleted: {
             BOOL hasCompletedTransfers = [self hasCompletedTransfers];
-            self.editBarButtonItem.enabled = hasCompletedTransfers;
-            self.toolbar.hidden = !hasCompletedTransfers;
-            self.clearAllButton.enabled = !self.tableView.isEditing || (hasCompletedTransfers && self.selectedTransfers.count > 0);
+            self.editBarButtonItem.enabled = [self isEditBarButtonEnabledWithTransfers:hasCompletedTransfers];
+            [self applyToolbarHidden:!hasCompletedTransfers];
+            self.clearAllButton.enabled = (!self.tableView.isEditing || (hasCompletedTransfers && self.selectedTransfers.count > 0)) && !self.areActionsBlockedOffline;
             break;
         }
     }
@@ -342,7 +341,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (tableView.isEditing) {
             [self.selectedTransfers addObject:transfer];
-            self.clearAllButton.enabled = true;
+            self.clearAllButton.enabled = !self.areActionsBlockedOffline;
             return;
         }
         
@@ -535,6 +534,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
+    [self updateOfflineSnackBar];
     
     [self reloadView];
 }
@@ -542,6 +542,18 @@ static TransfersWidgetViewController* instance = nil;
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     self.pauseBarButtonItem.enabled = boolValue;
     self.cancelBarButtonItem.enabled = boolValue;
+}
+
+- (BOOL)areActionsBlockedOffline {
+    return self.isNewOfflineModeEnabled && !MEGAReachabilityManager.isReachable;
+}
+
+- (BOOL)isEditBarButtonEnabledWithTransfers:(BOOL)hasTransfers {
+    if (self.tableView.isEditing) {
+        return YES;
+    }
+
+    return hasTransfers && !self.areActionsBlockedOffline;
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
@@ -554,7 +566,7 @@ static TransfersWidgetViewController* instance = nil;
                 [self updateEmptyStateIfNeeded];
                 if (![self hasActiveTransfers]) {
                     [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
-                    self.toolbar.hidden = YES;
+                    [self applyToolbarHidden:YES];
                 }
             }
         } else {
@@ -569,7 +581,7 @@ static TransfersWidgetViewController* instance = nil;
             }
             
             [self updateEmptyStateIfNeeded];
-            self.toolbar.hidden = NO;
+            [self applyToolbarHidden:NO];
         }
     }
 }

@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAInfrastructure
 import MEGAInfrastructureMocks
+import MEGAL10n
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -775,6 +776,132 @@ struct TransfersListViewModelOverQuotaTests {
     }
 }
 
+@Suite("TransfersListViewModel offline")
+@MainActor
+struct TransfersListViewModelOfflineTests {
+
+    @Test func isOffline_reflectsTheCurrentPathOnInit() {
+        #expect(!makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true)).isOffline)
+        #expect(makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)).isOffline)
+    }
+
+    @Test func observeNetworkConnection_followsPathChanges() async {
+        let sut = makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(
+            connected: true,
+            connectionSequence: [false, true, false].async.eraseToAnyAsyncSequence()
+        ))
+
+        await sut.observeNetworkConnection()
+
+        #expect(sut.isOffline)
+    }
+
+    /// Going offline is a presentation change only: the engine keeps its transfers
+    /// in retrying and resumes them itself when the path returns.
+    @Test func goingOffline_doesNotTouchTheTransferEngine() async {
+        let useCase = MockTransferListUseCase(paused: false)
+        let sut = makeSUT(
+            useCase: useCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(
+                connected: true,
+                connectionSequence: [false].async.eraseToAnyAsyncSequence()
+            )
+        )
+
+        await sut.observeNetworkConnection()
+
+        #expect(sut.isOffline)
+        #expect(useCase.pauseTransfersCalledTimes == 0)
+        #expect(useCase.resumeTransfersCalledTimes == 0)
+        #expect(!sut.isAllPaused)
+    }
+
+    /// Everything offline mode adds to this screen sits behind one flag, so with it
+    /// off the screen never enters the offline presentation at all.
+    @Test func flagOff_staysOnlineEvenWithNoNetworkPath() async {
+        let sut = makeSUT(
+            networkMonitorUseCase: MockNetworkMonitorUseCase(
+                connected: false,
+                connectionSequence: [false].async.eraseToAnyAsyncSequence()
+            ),
+            isNewOfflineModeEnabled: false
+        )
+
+        #expect(!sut.isOffline)
+
+        await sut.observeNetworkConnection()
+
+        #expect(!sut.isOffline)
+    }
+
+    /// `connectionSequence` does not replay, and the initializer reads the path before the
+    /// view's task subscribes to it. A change landing in that window reaches neither, so it
+    /// used to be dropped and the screen stayed stale until the next transition. The double
+    /// reports connected to the initializer and disconnected to the re-read, with a stream
+    /// that emits nothing at all — the only thing that can carry the change is the prepend.
+    @Test func observeNetworkConnection_appliesAPathChangeMissedBetweenInitAndSubscription() async {
+        let sut = makeSUT(networkMonitorUseCase: ShiftingNetworkMonitorUseCase(reads: [true, false]))
+
+        #expect(!sut.isOffline)
+
+        await sut.observeNetworkConnection()
+
+        #expect(sut.isOffline)
+    }
+
+    /// The prepended snapshot only exists to close that window, so when the stream goes on
+    /// to report the same path it must not be treated as a second transition.
+    @Test func observeNetworkConnection_settlesOnTheLastPathWhenTheStreamRepeatsThePrependedOne() async {
+        let sut = makeSUT(networkMonitorUseCase: ShiftingNetworkMonitorUseCase(
+            reads: [true, false],
+            connectionSequence: [false, false, true].async.eraseToAnyAsyncSequence()
+        ))
+
+        await sut.observeNetworkConnection()
+
+        #expect(!sut.isOffline)
+    }
+
+    /// The offline snackbar is state, not an event: the view keeps it up for as long as
+    /// `isOffline`, so it must not carry an action and must not go through `snackBar`,
+    /// which is the transient, self-dismissing slot.
+    @Test func offlineSnackBar_isAnActionlessExplanationKeptOutOfTheTransientSlot() {
+        let sut = makeSUT(networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false))
+
+        #expect(sut.isOffline)
+        #expect(sut.offlineSnackBar.message == Strings.Localizable.Transfers.Snackbar.pausedAwaitingNetwork)
+        #expect(sut.offlineSnackBar.action == nil)
+        #expect(sut.snackBar == nil)
+    }
+}
+
+/// Test double whose `isConnected()` answers differently on successive reads.
+///
+/// `TransfersListViewModel` reads the path twice — once in its initializer, once in the
+/// prepend inside `observeNetworkConnection` — and the bug being pinned is a change that
+/// lands between the two. `MockNetworkMonitorUseCase` holds `connected` as a constant, so
+/// it cannot express that; this one walks a script of reads and then holds the last value.
+private final class ShiftingNetworkMonitorUseCase: NetworkMonitorUseCaseProtocol, @unchecked Sendable {
+    let connectionSequence: AnyAsyncSequence<Bool>
+    private let reads: [Bool]
+    private var nextRead = 0
+
+    init(
+        reads: [Bool],
+        connectionSequence: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    ) {
+        self.reads = reads
+        self.connectionSequence = connectionSequence
+    }
+
+    func isConnected() -> Bool {
+        defer { nextRead = min(nextRead + 1, reads.count - 1) }
+        return reads[nextRead]
+    }
+
+    func isConnectedViaWiFi() -> Bool { false }
+}
+
 // MARK: - Helpers
 
 @MainActor
@@ -791,6 +918,8 @@ private func makeSUT(
     transferControlUseCase: MockTransferControlUseCase = MockTransferControlUseCase(),
     itemsUseCase: MockMonitorTransferTabItemsUseCase = MockMonitorTransferTabItemsUseCase(),
     hapticFeedbackUseCase: MockHapticFeedbackUseCase = MockHapticFeedbackUseCase(),
+    networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+    isNewOfflineModeEnabled: Bool = true,
     onClose: (@MainActor () -> Void)? = nil
 ) -> TransfersListViewModel {
     let seed = TransferTabPresence(
@@ -812,6 +941,8 @@ private func makeSUT(
         transferQuotaUseCase: transferQuotaUseCase,
         transferControlUseCase: transferControlUseCase,
         hapticFeedbackUseCase: hapticFeedbackUseCase,
+        networkMonitorUseCase: networkMonitorUseCase,
+        isNewOfflineModeEnabled: isNewOfflineModeEnabled,
         onClose: onClose
     )
 }

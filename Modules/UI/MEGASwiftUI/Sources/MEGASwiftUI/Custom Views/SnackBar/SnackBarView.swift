@@ -3,13 +3,14 @@ import MEGADesignToken
 import SwiftUI
 
 public struct SnackBarView: View {
-    
+    public static let defaultDisplayDuration: TimeInterval = 4
+
     @Binding private var snackBar: SnackBar?
     private let displayDuration: TimeInterval
     @State private var restartAutoHideSubject = PassthroughSubject<Void, Never>()
     
     public init(snackBar: Binding<SnackBar?>,
-                displayDuration: TimeInterval = 4) {
+                displayDuration: TimeInterval = SnackBarView.defaultDisplayDuration) {
         self._snackBar = snackBar
         self.displayDuration = displayDuration
     }

@@ -27,7 +27,8 @@ final class TransfersRouter {
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
                 ),
-                rowRouter: rowRouter
+                rowRouter: rowRouter,
+                featureFlagProvider: featureFlagProvider
             )
             // Transfers is pushed onto this nav controller; row actions push/present from it.
             rowRouter.navigationController = navigationController

@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 import MEGARepo
+import MEGASwiftUI
 import Transfer
 import UIKit
 
@@ -262,6 +263,24 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     }
     
     // MARK: - NavigationBarButtons
+
+    @objc var isNewOfflineModeEnabled: Bool {
+        DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+    }
+
+    @objc func updateOfflineSnackBar() {
+        guard isNewOfflineModeEnabled, view.window != nil else { return }
+
+        if MEGAReachabilityManager.isReachable() {
+            dismissSnackBar()
+        } else {
+            showSnackBar(
+                snackBar: SnackBar(message: Strings.Localizable.Transfers.Snackbar.pausedAwaitingNetwork),
+                displayDuration: OfflineSnackBar.displayDuration
+            )
+        }
+    }
+
     @objc func updateNavBarButtonAppearance() {
         CrashlyticsLogger.log(category: .transfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")
         
@@ -279,6 +298,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         CrashlyticsLogger.log(category: .transfersWidget, "Transfers widget did appear with navigation bar: \(String(describing: navigationController?.navigationBar))")
+        updateOfflineSnackBar()
     }
 }
 
@@ -311,5 +331,29 @@ extension TransfersWidgetViewController: MEGANavigationControllerDelegate {
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.showMiniPlayer()
         }
+    }
+}
+
+private enum OfflineSnackBar {
+    /// Far beyond any session, so the snackbar never hides itself: only regaining the
+    /// connection may take it away.
+    static let displayDuration = TimeInterval(Int32.max)
+}
+
+// MARK: - SnackBarLayoutCustomizable
+
+extension TransfersWidgetViewController: SnackBarLayoutCustomizable {
+    /// Lifts the snackbar clear of the bottom toolbar, which carries Pause All / Clear All.
+    /// The toolbar keeps its layout while hidden, so its height is only added when it shows.
+    var additionalSnackBarBottomInset: CGFloat {
+        guard let toolbar, !toolbar.isHidden else { return 0 }
+        return toolbar.frame.height
+    }
+
+    @objc func applyToolbarHidden(_ hidden: Bool) {
+        guard let toolbar, toolbar.isHidden != hidden else { return }
+
+        toolbar.isHidden = hidden
+        refreshSnackBarBottomInset(animated: true)
     }
 }

@@ -8,7 +8,7 @@ extension View {
     ///   - snackBar: SnackBar Binding to show and remove snack bar item. When the snack auto disappears the binding will be set to nil.
     ///   - displayDuration: Duration in seconds for the Snack to remain visible before auto removal
     /// - Returns: A modified view that will attach an overlay with snack bare presentation logic embedded.
-    public func snackBar(_ snackBar: Binding<SnackBar?>, displayDuration: TimeInterval = 4) -> some View {
+    public func snackBar(_ snackBar: Binding<SnackBar?>, displayDuration: TimeInterval = SnackBarView.defaultDisplayDuration) -> some View {
         modifier(SnackBarViewModifier(snackBar: snackBar, displayDuration: displayDuration))
     }
 }

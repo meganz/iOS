@@ -31,8 +31,9 @@ extension UIViewController {
     /// Show snack bar with a given SnackBar model. 
     /// Note: There's only one snack bar at a time for a view controller. The current showing snack bar, if any, will be removed before showing the new one
     /// - Parameter snackBar: a SnackBar model to be used for showing snack bar
-    func showSnackBar(snackBar: SnackBar) {
-        showSnackBarView(snackBar)
+    /// - Parameter displayDuration: how long it stays before hiding itself
+    func showSnackBar(snackBar: SnackBar, displayDuration: TimeInterval = SnackBarView.defaultDisplayDuration) {
+        showSnackBarView(snackBar, displayDuration: displayDuration)
     }
     
     /// Dismiss current showing snack bar, if any.
@@ -90,22 +91,22 @@ extension UIViewController {
     }
     
     fileprivate func showSnackBarView(with message: String, action: SnackBar.Action? = nil) {
-        showSnackBarView(SnackBar(message: message, action: action))
+        showSnackBarView(SnackBar(message: message, action: action), displayDuration: SnackBarView.defaultDisplayDuration)
     }
             
-    private func showSnackBarView(_ snackBar: SnackBar) {
+    private func showSnackBarView(_ snackBar: SnackBar, displayDuration: TimeInterval) {
         MEGALogInfo("[\(type(of: self))] Show SnackBar message: \(snackBar.message)")
         if let currentSnackBarHosting {
             // Push new snack message to existing view
             currentSnackBarHosting.send(snackBar: snackBar)
         } else {
             // Create and present new snackBar view
-            buildSnackBarContainer(with: snackBar)
+            buildSnackBarContainer(with: snackBar, displayDuration: displayDuration)
         }
     }
     
-    private func buildSnackBarContainer(with snackBar: SnackBar) {
-        let snackBarContainer = SnackBarHostingController(snackBar: snackBar)
+    private func buildSnackBarContainer(with snackBar: SnackBar, displayDuration: TimeInterval) {
+        let snackBarContainer = SnackBarHostingController(snackBar: snackBar, displayDuration: displayDuration)
         addSnackBarContainer(snackBarContainer)
         animateShowingSnackBarView(snackBarContainer.view)
     }
@@ -148,9 +149,10 @@ extension UIViewController {
 private struct SnackBarHostingView: View {
     
     @StateObject var snackMessageHandler: SnackBarHostingController.SnackMessageHandler
+    let displayDuration: TimeInterval
     
     var body: some View {
-        SnackBarView(snackBar: $snackMessageHandler.snackBar)
+        SnackBarView(snackBar: $snackMessageHandler.snackBar, displayDuration: displayDuration)
     }
 }
 
@@ -193,9 +195,12 @@ private final class SnackBarHostingController: UIHostingController<SnackBarHosti
     private var snackMessageHandler: SnackMessageHandler?
     private var subscriptions: Set<AnyCancellable> = []
     
-    convenience init(snackBar: SnackBar) {
+    convenience init(snackBar: SnackBar, displayDuration: TimeInterval) {
         let snackMessageHandler = SnackMessageHandler(snackBar: snackBar)
-        self.init(rootView: SnackBarHostingView(snackMessageHandler: snackMessageHandler))
+        self.init(rootView: SnackBarHostingView(
+            snackMessageHandler: snackMessageHandler,
+            displayDuration: displayDuration
+        ))
         self.snackMessageHandler = snackMessageHandler
         
         autoDismissOnNoSnacks(in: snackMessageHandler)
