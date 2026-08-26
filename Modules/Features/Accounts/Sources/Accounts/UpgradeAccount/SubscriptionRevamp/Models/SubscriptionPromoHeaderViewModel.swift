@@ -49,7 +49,6 @@ struct SubscriptionPromoHeaderViewModel {
     }
 
     var countdownDeadline: Date? {
-        guard let plan, plan.hasValidPromotionalOffer else { return nil }
-        return plan.mobileOffer?.expiryDate
+        plan?.promotionExpiryDate
     }
 }

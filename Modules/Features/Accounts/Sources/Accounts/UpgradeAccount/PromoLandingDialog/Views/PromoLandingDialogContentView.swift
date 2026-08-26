@@ -34,6 +34,7 @@ public struct PromoLandingDialogContentView: View {
             PromoLandingDialogFooterView(
                 title: viewModel.card.buttonTitle,
                 productIdentifier: viewModel.card.productIdentifier,
+                isOfferExpired: viewModel.isOfferExpired,
                 planPurchaser: viewModel.planPurchaser,
                 purchaseTracker: viewModel.purchaseTracker,
                 onPurchased: { viewModel.purchaseCompleted() },
@@ -41,6 +42,7 @@ public struct PromoLandingDialogContentView: View {
             )
         }
         .onAppear { viewModel.onAppear() }
+        .task { await viewModel.monitorOfferExpiry() }
     }
 
     // MARK: - Layout

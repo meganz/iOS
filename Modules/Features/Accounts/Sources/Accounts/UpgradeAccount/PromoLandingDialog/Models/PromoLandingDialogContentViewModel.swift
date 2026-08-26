@@ -11,21 +11,13 @@ final class PromoLandingDialogContentViewModel: ObservableObject {
         case shown(action: @MainActor () -> Void)
     }
 
-    let viewAllPlans: ViewAllPlans
+    @Published private(set) var isOfferExpired: Bool
 
     private let dependency: PromoLandingDialogContentView.Dependency
 
     init(dependency: PromoLandingDialogContentView.Dependency) {
         self.dependency = dependency
-
-        let analytics = dependency.analytics
-        let viewAllPlansAction = dependency.viewAllPlansAction
-        self.viewAllPlans = dependency.hasMultipleOffers
-            ? .shown(action: {
-                analytics.trackViewAllPlansButtonPressed()
-                viewAllPlansAction()
-            })
-            : .hidden
+        self.isOfferExpired = dependency.promoExpiryTimer?.hasAlreadyExpired ?? false
     }
 
     // MARK: - Content
@@ -40,6 +32,27 @@ final class PromoLandingDialogContentViewModel: ObservableObject {
 
     var purchaseTracker: any PlanPurchaseTracking {
         dependency.analytics
+    }
+
+    var viewAllPlans: ViewAllPlans {
+        guard dependency.hasMultipleOffers || isOfferExpired else { return .hidden }
+
+        let analytics = dependency.analytics
+        let viewAllPlansAction = dependency.viewAllPlansAction
+        return .shown(action: {
+            analytics.trackViewAllPlansButtonPressed()
+            viewAllPlansAction()
+        })
+    }
+
+    // MARK: - Offer expiry
+
+    /// Waits out the countdown so the footer can swap the buy button for "View all plans" the moment the offer lapses.
+    func monitorOfferExpiry() async {
+        guard let timer = dependency.promoExpiryTimer else { return }
+        guard await timer.waitUntilExpired() else { return }
+        guard !Task.isCancelled else { return }
+        isOfferExpired = true
     }
 
     // MARK: - Actions

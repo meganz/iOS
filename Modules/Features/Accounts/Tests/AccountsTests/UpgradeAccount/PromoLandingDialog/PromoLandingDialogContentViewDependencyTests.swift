@@ -34,6 +34,7 @@ struct PromoLandingDialogContentViewDependencyTests {
             planPurchaser: MockPlanPurchasing(),
             dismissAction: {},
             viewAllPlansAction: viewAllPlansAction,
+            makePromoExpiryTimer: PromoExpiryTimer.init(deadline:),
             tracker: tracker
         )
     }

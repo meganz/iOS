@@ -9,9 +9,15 @@ struct SubscriptionCountdownTimerView: View {
         self.deadline = deadline
     }
 
+    /// The ticks count the offer down; this pins the display to zero the instant it lapses, driven by
+    /// the same timer as the footer so the two cannot disagree about when that is.
+    @State private var isDeadlinePassed = false
+
     var body: some View {
         TimelineView(.periodic(from: .now, by: 60)) { context in
-            let countdown = SubscriptionCountdown.remaining(until: deadline, from: context.date)
+            let countdown = isDeadlinePassed
+                ? SubscriptionCountdown(days: 0, hours: 0, minutes: 0)
+                : SubscriptionCountdown.remaining(until: deadline, from: context.date)
 
             HStack(spacing: 0) {
                 unit(value: countdown.days, label: Strings.Localizable.SubscriptionPurchase.Revamp.Countdown.days(countdown.days))
@@ -23,6 +29,10 @@ struct SubscriptionCountdownTimerView: View {
             .padding(.vertical, TokenSpacing._5)
             .frame(maxWidth: .infinity)
             .background(TokenColors.Brand.containerDefault.swiftUI, in: RoundedRectangle(cornerRadius: TokenRadius.medium))
+        }
+        .task {
+            guard await PromoExpiryTimer(deadline: deadline).waitUntilExpired() else { return }
+            isDeadlinePassed = true
         }
     }
 

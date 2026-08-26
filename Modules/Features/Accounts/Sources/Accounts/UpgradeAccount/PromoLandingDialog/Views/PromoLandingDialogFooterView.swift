@@ -7,6 +7,7 @@ import SwiftUI
 struct PromoLandingDialogFooterView: View {
     let title: String
     let productIdentifier: String
+    let isOfferExpired: Bool
     let viewAllPlans: PromoLandingDialogContentViewModel.ViewAllPlans
 
     @StateObject private var purchaseViewModel: PlanPurchaseViewModel
@@ -14,6 +15,7 @@ struct PromoLandingDialogFooterView: View {
     init(
         title: String,
         productIdentifier: String,
+        isOfferExpired: Bool,
         planPurchaser: some PlanPurchasing,
         purchaseTracker: some PlanPurchaseTracking,
         onPurchased: @escaping @MainActor () -> Void,
@@ -21,6 +23,7 @@ struct PromoLandingDialogFooterView: View {
     ) {
         self.title = title
         self.productIdentifier = productIdentifier
+        self.isOfferExpired = isOfferExpired
         self.viewAllPlans = viewAllPlans
         _purchaseViewModel = StateObject(
             wrappedValue: PlanPurchaseViewModel(
@@ -33,12 +36,14 @@ struct PromoLandingDialogFooterView: View {
 
     var body: some View {
         VStack(spacing: TokenSpacing._5) {
-            PlanPurchaseButton(
-                purchaseViewModel: purchaseViewModel,
-                title: title,
-                productIdentifier: productIdentifier,
-                style: .brand
-            )
+            if !isOfferExpired {
+                PlanPurchaseButton(
+                    purchaseViewModel: purchaseViewModel,
+                    title: title,
+                    productIdentifier: productIdentifier,
+                    style: .brand
+                )
+            }
             viewAllPlansButton
         }
         .maxWidthForWideScreen()
@@ -55,7 +60,7 @@ struct PromoLandingDialogFooterView: View {
         if case .shown(let action) = viewAllPlans {
             MEGAButton(
                 Strings.Localizable.QuotaWarning.RecommendedPlan.Button.viewAllPlans,
-                type: .textOnly,
+                type: isOfferExpired ? .primary : .textOnly,
                 state: purchaseViewModel.isPurchasing ? .disabled : .default,
                 action: { action() }
             )
