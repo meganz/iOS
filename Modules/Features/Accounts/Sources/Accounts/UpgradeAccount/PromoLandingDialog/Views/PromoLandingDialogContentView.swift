@@ -20,6 +20,14 @@ public struct PromoLandingDialogContentView: View {
         isRegularHeight ? 0 : TokenSpacing._11
     }
 
+    private var compactFooterLeadingInset: CGFloat {
+        isRegularHeight ? 0 : compactContentLeadingPadding
+    }
+
+    private var footerIgnoredEdges: Edge.Set {
+        isRegularHeight ? [] : .leading
+    }
+
     public var body: some View {
         ZStack(alignment: .topLeading) {
             layoutView
@@ -40,6 +48,8 @@ public struct PromoLandingDialogContentView: View {
                 onPurchased: { viewModel.purchaseCompleted() },
                 viewAllPlans: viewModel.viewAllPlans
             )
+            .padding(.leading, compactFooterLeadingInset)
+            .ignoresSafeArea(edges: footerIgnoredEdges)
         }
         .onAppear { viewModel.onAppear() }
         .task { await viewModel.monitorOfferExpiry() }
