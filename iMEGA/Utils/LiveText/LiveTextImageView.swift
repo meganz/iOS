@@ -9,6 +9,8 @@ final class LiveTextImageView: SDAnimatedImageView {
     private let imageAnalyzer = ImageAnalyzer()
     
     private var hasCompletedAnalysis = false
+    
+    private var analysisTask: Task<Void, Never>?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,22 +20,34 @@ final class LiveTextImageView: SDAnimatedImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        analysisTask?.cancel()
+    }
+    
     @MainActor
     func startAnalysis() {
         guard let image, !hasCompletedAnalysis else { return }
 
         addInteraction(interaction)
         
-        Task {
+        // Keep at most one analysis in flight
+        analysisTask?.cancel()
+        
+        let analyzer = imageAnalyzer
+        analysisTask = Task { [weak self] in
             let configuration = ImageAnalyzer.Configuration([.text, .machineReadableCode])
             
             do {
-                let analysis = try await imageAnalyzer.analyze(image, configuration: configuration)
+                let analysis = try await analyzer.analyze(image, configuration: configuration)
+                guard !Task.isCancelled, let self else { return }
+                analysisTask = nil
                 hasCompletedAnalysis = true
                 guard analysis.hasResults(for: [.text, .machineReadableCode]) else { return }
                 interaction.analysis = analysis
                 interaction.preferredInteractionTypes = .automatic
             } catch {
+                guard !Task.isCancelled, let self else { return }
+                analysisTask = nil
                 MEGALogError("Error in live text analysis: \(error.localizedDescription)")
             }
         }
