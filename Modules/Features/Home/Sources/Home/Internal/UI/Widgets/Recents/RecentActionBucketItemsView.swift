@@ -15,6 +15,7 @@ struct RecentActionBucketItemsView: View {
         let downloadedNodesListener: any DownloadedNodesListening
         let selectionHandler: any NodeSelectionHandling
         let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
+        let offlineActionGuard: any OfflineActionGuarding
         let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
         let moreActionsPresenter: any MoreNodeActionsPresenting
@@ -37,7 +38,8 @@ struct RecentActionBucketItemsView: View {
                 dependency: RecentActionBucketItemsViewModel.Dependency(
                     bucket: dependency.bucket,
                     resultMapper: dependency.resultMapper,
-                    downloadedNodesListener: dependency.downloadedNodesListener
+                    downloadedNodesListener: dependency.downloadedNodesListener,
+                    offlineActionGuard: dependency.offlineActionGuard
                 )
             )
         )

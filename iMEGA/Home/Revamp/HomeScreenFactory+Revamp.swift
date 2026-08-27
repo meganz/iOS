@@ -44,6 +44,8 @@ extension HomeScreenFactory {
 
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
 
+        let offlineActionGuard = makeOfflineActionGuard()
+
         let favouritesSelectActionSubject = PassthroughSubject<HandleEntity, Never>()
         let favouritesNodesActionHandler = FavouritesNodesActionHandler(
             navigationController: navigationController,
@@ -51,6 +53,7 @@ extension HomeScreenFactory {
             favouriteUseCase: favouriteUseCase,
             backupsUseCase: backupsUseCase,
             sdk: MEGASdk.sharedSdk,
+            offlineActionGuard: offlineActionGuard,
             onSelectAction: { favouritesSelectActionSubject.send($0) }
         )
 
@@ -62,9 +65,12 @@ extension HomeScreenFactory {
 
         let nodeRouter = HomeSearchResultRouter(
             navigationController: navigationController,
-            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navigationController,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+            nodeActionViewControllerDelegate: OfflineAwareNodeActionDelegate(
+                wrapping: NodeActionViewControllerGenericDelegate(
+                    viewController: navigationController,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController)
+                ),
+                offlineActionGuard: offlineActionGuard
             ),
             backupsUseCase: backupsUseCase,
             nodeUseCase: nodeUseCase
@@ -72,10 +78,14 @@ extension HomeScreenFactory {
         
         let searchResultsProvider = makeResultsProvider(
             parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
-            navigationController: navigationController
+            navigationController: navigationController,
+            offlineActionGuard: offlineActionGuard
         )
         
-        let searchResultMapper = makeSearchResultMapper(with: navigationController)
+        let searchResultMapper = makeSearchResultMapper(
+            with: navigationController,
+            offlineActionGuard: offlineActionGuard
+        )
         
         let nodeActions = NodeActions.makeActions(sdk: .shared, navigationController: navigationController)
         
@@ -83,7 +93,8 @@ extension HomeScreenFactory {
             navigationController: navigationController,
             nodeUseCase: nodeUseCase,
             backupsUseCase: backupsUseCase,
-            sdk: MEGASdk.sharedSdk
+            sdk: MEGASdk.sharedSdk,
+            offlineActionGuard: offlineActionGuard
         )
 
         let recentActionBucketLocationHandler = RecentActionBucketLocationHandler(
@@ -128,7 +139,8 @@ extension HomeScreenFactory {
                 navigationController: navigationController,
                 nodeActions: nodeActions,
                 locationHandler: recentActionBucketLocationHandler,
-                showsShowInLocationAction: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
+                showsShowInLocationAction: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo),
+                offlineActionGuard: offlineActionGuard
             ),
             recentActionBucketMoreActionsPresenter: recentActionBucketMoreActionsPresenter,
             photoLibraryContentViewRouter: PhotoLibraryContentViewRouter(contentMode: .recentBucket),
@@ -143,6 +155,10 @@ extension HomeScreenFactory {
         navigationController.viewControllers = [hostingController]
 
         return navigationController
+    }
+
+    private func makeOfflineActionGuard() -> OfflineActionGuard {
+        OfflineActionGuard(isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled)
     }
 
     private func makeHomeAddMenuActionHandler(
@@ -170,7 +186,8 @@ extension HomeScreenFactory {
     }
     
     private func makeSearchResultMapper(
-        with navigationController: UINavigationController
+        with navigationController: UINavigationController,
+        offlineActionGuard: some OfflineActionGuarding
     ) -> SearchResultMapper {
         SearchResultMapper(
             sdk: MEGASdk.sharedSdk,
@@ -196,7 +213,8 @@ extension HomeScreenFactory {
             nodeActions: NodeActions.makeActions(
                 sdk: MEGASdk.sharedSdk,
                 navigationController: navigationController
-            )
+            ),
+            offlineActionGuard: offlineActionGuard
         )
     }
 
@@ -204,22 +222,26 @@ extension HomeScreenFactory {
         navigationController: MEGANavigationController,
         nodeActions: NodeActions,
         locationHandler: some NodeLocationHandling,
-        showsShowInLocationAction: Bool
+        showsShowInLocationAction: Bool,
+        offlineActionGuard: some OfflineActionGuarding
     ) -> RecentActionBucketNodesActionHandler {
         let nodeRouter = HomeSearchResultRouter(
             navigationController: navigationController,
-            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navigationController,
-                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-                nodeActionListener: { nodeActionType, nodes in
-                    if nodeActionType == .hide {
-                        DIContainer.tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
-                    } else if nodeActionType == .showInLocation, let handle = nodes.first?.handle {
-                        MainActor.assumeIsolated {
-                            locationHandler.showInLocation(of: handle)
+            nodeActionViewControllerDelegate: OfflineAwareNodeActionDelegate(
+                wrapping: NodeActionViewControllerGenericDelegate(
+                    viewController: navigationController,
+                    moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                    nodeActionListener: { nodeActionType, nodes in
+                        if nodeActionType == .hide {
+                            DIContainer.tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
+                        } else if nodeActionType == .showInLocation, let handle = nodes.first?.handle {
+                            MainActor.assumeIsolated {
+                                locationHandler.showInLocation(of: handle)
+                            }
                         }
                     }
-                }
+                ),
+                offlineActionGuard: offlineActionGuard
             ),
             backupsUseCase: backupsUseCase,
             nodeUseCase: nodeUseCase,

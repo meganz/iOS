@@ -20,6 +20,7 @@ public struct FavouritesView: View {
         let nodesActionHandler: any NodesActionHandling
         let nodeSelectionHandler: any NodeSelectionHandling
         let makeOfflineNodeTapDispatcher: () -> OfflineAwareNodeTapDispatcher
+        let offlineActionGuard: any OfflineActionGuarding
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let selectActionPublisher: AnyPublisher<HandleEntity, Never>
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
@@ -34,6 +35,7 @@ public struct FavouritesView: View {
             nodesActionHandler: some NodesActionHandling,
             nodeSelectionHandler: some NodeSelectionHandling,
             makeOfflineNodeTapDispatcher: @escaping () -> OfflineAwareNodeTapDispatcher,
+            offlineActionGuard: some OfflineActionGuarding,
             moreActionsPresenter: some MoreNodeActionsPresenting,
             selectActionPublisher: AnyPublisher<HandleEntity, Never>,
             transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
@@ -47,6 +49,7 @@ public struct FavouritesView: View {
             self.nodesActionHandler = nodesActionHandler
             self.nodeSelectionHandler = nodeSelectionHandler
             self.makeOfflineNodeTapDispatcher = makeOfflineNodeTapDispatcher
+            self.offlineActionGuard = offlineActionGuard
             self.moreActionsPresenter = moreActionsPresenter
             self.selectActionPublisher = selectActionPublisher
             self.transferIndicatorToolbarFactory = transferIndicatorToolbarFactory
@@ -76,7 +79,8 @@ public struct FavouritesView: View {
                             nodeUseCase: dependency.nodeUseCase
                         )
                     ),
-                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
+                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
+                    offlineActionGuard: dependency.offlineActionGuard
                 )
             )
         )

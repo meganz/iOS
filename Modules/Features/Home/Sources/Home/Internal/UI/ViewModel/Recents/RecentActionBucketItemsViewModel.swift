@@ -14,6 +14,7 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         let bucket: RecentActionBucketEntity
         let resultMapper: any RecentActionBucketItemResultMapping
         let downloadedNodesListener: any DownloadedNodesListening
+        let offlineActionGuard: any OfflineActionGuarding
         let titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase()
     }
 
@@ -101,7 +102,12 @@ final class RecentActionBucketItemsViewModel: ObservableObject {
         $bottomBarAction
             .compactMap { [weak self] action in
                 guard let action, let self else { return nil }
-                return action.toNodesAction(handles: selectedNodes)
+                let nodesAction = action.toNodesAction(handles: selectedNodes)
+
+                guard !nodesAction.requiresConnection
+                        || dependency.offlineActionGuard.allowsActionRequiringConnection() else { return nil }
+
+                return nodesAction
             }
             .assign(to: &$nodesAction)
         

@@ -23,6 +23,7 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
     private let titleUseCase: any RecentActionBucketItemsTitleUseCaseProtocol
     private let bucketItemsUseCase: any RecentActionBucketItemsUseCaseProtocol
     private let bucketItemsUpdateUseCase: any RecentActionBucketItemsUpdateUseCaseProtocol
+    private let offlineActionGuard: any OfflineActionGuarding
     private var cancellables: Set<AnyCancellable> = []
     
     init(
@@ -30,6 +31,7 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
         titleUseCase: some RecentActionBucketItemsTitleUseCaseProtocol = RecentActionBucketItemsTitleUseCase(),
         bucketItemsUpdateUseCase: some RecentActionBucketItemsUpdateUseCaseProtocol = RecentActionBucketItemsUpdateUseCase(),
         bucketItemsUseCase: some RecentActionBucketItemsUseCaseProtocol = RecentActionBucketItemsUseCase(),
+        offlineActionGuard: some OfflineActionGuarding,
     ) {
         self.bucket = bucket
         self.titleUseCase = titleUseCase
@@ -42,6 +44,7 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
             globalHeaderType: .none
         )
         self.bucketItemsUseCase = bucketItemsUseCase
+        self.offlineActionGuard = offlineActionGuard
 
         photoLibraryContentViewModel
             .selection
@@ -80,7 +83,12 @@ final class RecentActionBucketMediaViewModel: ObservableObject {
         $bottomBarAction
             .compactMap { [weak self] action in
                 guard let action, let self else { return nil }
-                return action.toNodesAction(handles: Set(selectedPhotos.keys))
+                let nodesAction = action.toNodesAction(handles: Set(selectedPhotos.keys))
+
+                guard !nodesAction.requiresConnection
+                        || offlineActionGuard.allowsActionRequiringConnection() else { return nil }
+
+                return nodesAction
             }
             .assign(to: &$nodesAction)
 

@@ -14,6 +14,7 @@ struct RecentActionBucketMediaView: View {
         let router: any PhotoLibraryContentViewRouting
         let locationHandler: any NodeLocationHandling
         let nodeActionHandler: any NodesActionHandling
+        let offlineActionGuard: any OfflineActionGuarding
         let moreActionsPresenter: any MoreNodeActionsPresenting
         let transferIndicatorToolbarFactory: TransferIndicatorToolbarFactory
         let isHomeRevampPhaseTwoEnabled: Bool
@@ -35,7 +36,10 @@ struct RecentActionBucketMediaView: View {
         self.bucket = bucket
         self.headerTitle = headerTitle
         _viewModel = StateObject(
-            wrappedValue: RecentActionBucketMediaViewModel(bucket: bucket)
+            wrappedValue: RecentActionBucketMediaViewModel(
+                bucket: bucket,
+                offlineActionGuard: dependency.offlineActionGuard
+            )
         )
     }
 

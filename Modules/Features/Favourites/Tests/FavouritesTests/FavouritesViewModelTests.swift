@@ -398,16 +398,50 @@ struct FavouritesViewModelTests {
         #expect(sut.selection?.siblings == [1, 2, 3])
     }
 
+    // MARK: - Offline
+
+    /// The blocked action must not reach `$nodesAction`: the view dispatches that publisher to the
+    /// action handler, and the view model leaves edit mode off the same publisher, so anything less
+    /// would still throw the user's selection away (IOS-12410).
+    @Test("a bulk action the offline guard blocks keeps the selection and edit mode")
+    func blockedBulkActionKeepsSelection() async throws {
+        let sut = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: false))
+        sut.editMode = .active
+        sut.selectedNodeHandles = [1, 2]
+
+        sut.bottomBarAction = .download
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        #expect(sut.nodesAction == nil)
+        #expect(sut.editMode == .active)
+        #expect(sut.selectedNodeHandles == [1, 2])
+    }
+
+    @Test("a bulk action the offline guard allows still runs")
+    func allowedBulkActionIsForwarded() async throws {
+        let sut = makeSUT(offlineActionGuard: MockOfflineActionGuard(allowsAction: true))
+        sut.selectedNodeHandles = [1, 2]
+
+        sut.bottomBarAction = .download
+
+        try await waitForCondition {
+            if case .download = sut.nodesAction { return true }
+            return false
+        }
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
-        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase()
+        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(),
+        offlineActionGuard: MockOfflineActionGuard = MockOfflineActionGuard()
     ) -> FavouritesViewModel {
         FavouritesViewModel(
             dependency: .init(
                 resultsProvider: MockSearchResultsProviding(),
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-                tracker: MockTracker()
+                tracker: MockTracker(),
+                offlineActionGuard: offlineActionGuard
             )
         )
     }

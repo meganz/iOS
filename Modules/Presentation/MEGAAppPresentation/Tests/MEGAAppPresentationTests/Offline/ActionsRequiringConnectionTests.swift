@@ -34,6 +34,14 @@ final class ActionsRequiringConnectionTests: XCTestCase {
         XCTAssertTrue(UploadAddActionEntity.allCases.allSatisfy(\.requiresConnection))
     }
 
+    func testNodesAction_allRequireConnection() {
+        let handles: Set<HandleEntity> = [1]
+        assertRequiresConnection([
+            .download(handles), .toggleFavourites(handles), .shareLink(handles), .copy(handles),
+            .move(handles), .moveToRubbishBin(handles), .sendToChat(handles)
+        ] as [NodesAction])
+    }
+
     // MARK: - Helpers
 
     private func assertRequiresConnection<T>(
@@ -66,3 +74,4 @@ extension QuickActionEntity: RequiresConnectionReporting {}
 extension DisplayActionEntity: RequiresConnectionReporting {}
 extension RubbishBinActionEntity: RequiresConnectionReporting {}
 extension UploadAddActionEntity: RequiresConnectionReporting {}
+extension NodesAction: RequiresConnectionReporting {}

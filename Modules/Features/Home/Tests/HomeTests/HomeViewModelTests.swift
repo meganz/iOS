@@ -90,7 +90,8 @@ struct HomeViewModelTests {
 private func makeSUT(
     isNewOfflineModeEnabled: Bool = false,
     isConnected: Bool = true,
-    offlineFileOpenGuard: MockOfflineFileOpenGuard = MockOfflineFileOpenGuard(isActive: false)
+    offlineFileOpenGuard: MockOfflineFileOpenGuard = MockOfflineFileOpenGuard(isActive: false),
+    offlineActionGuard: MockOfflineActionGuard = MockOfflineActionGuard()
 ) -> HomeViewModel {
     HomeViewModel(
         homeDeepLink: HomeDeepLink(),
@@ -99,7 +100,8 @@ private func makeSUT(
         tracker: MockTracker(),
         featureFlagProvider: MockFeatureFlagProvider(list: [.offlineMode: isNewOfflineModeEnabled]),
         nodeUseCase: MockNodeDataUseCase(nodes: [NodeEntity(name: "report.pdf", handle: 1, isFile: true)]),
-        offlineFileOpenGuard: offlineFileOpenGuard
+        offlineFileOpenGuard: offlineFileOpenGuard,
+        offlineActionGuard: offlineActionGuard
     )
 }
 

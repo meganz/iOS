@@ -17,6 +17,8 @@ final class HomeViewModel: ObservableObject {
 
     let offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher
 
+    let offlineActionGuard: any OfflineActionGuarding
+
     private let offlineFileOpenGuard: any OfflineFileOpenGuarding
     private let nodeUseCase: any NodeUseCaseProtocol
     private let homeDeepLink: HomeDeepLink
@@ -43,6 +45,9 @@ final class HomeViewModel: ObservableObject {
                 networkMonitorUseCase: networkMonitoringUseCase,
                 nodeUseCase: nodeUseCase,
                 thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            ),
+            offlineActionGuard: OfflineActionGuard(
+                isNewOfflineModeEnabled: featureFlagProvider.isNewOfflineModeEnabled
             )
         )
     }
@@ -54,7 +59,8 @@ final class HomeViewModel: ObservableObject {
         tracker: some AnalyticsTracking,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        offlineFileOpenGuard: some OfflineFileOpenGuarding
+        offlineFileOpenGuard: some OfflineFileOpenGuarding,
+        offlineActionGuard: some OfflineActionGuarding
     ) {
         self.homeDeepLink = homeDeepLink
         self.networkMonitoringUseCase = networkMonitoringUseCase
@@ -64,6 +70,7 @@ final class HomeViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
         self.offlineFileOpenGuard = offlineFileOpenGuard
+        self.offlineActionGuard = offlineActionGuard
         self.nodeUseCase = nodeUseCase
         self.offlineNodeTapDispatcher = OfflineAwareNodeTapDispatcher(
             offlineFileOpenGuard: offlineFileOpenGuard,

@@ -72,6 +72,15 @@ public struct HomeView: View {
         )
     }
 
+    /// The add menu behind the floating + button and behind the Recents empty state's Upload
+    /// button, wrapped so that every action prompts instead of failing while offline
+    private var homeAddMenuActionHandler: some HomeAddMenuActionHandling {
+        OfflineAwareHomeAddMenuActionHandler(
+            wrapping: dependency.homeAddMenuActionHandler,
+            offlineActionGuard: viewModel.offlineActionGuard
+        )
+    }
+
     public init(
         dependency: Dependency,
         homeDeepLink: HomeDeepLink,
@@ -146,7 +155,7 @@ public struct HomeView: View {
             }
             .sheet(isPresented: $viewModel.presentHomeActions) {
                 HomeMenuActionsSheetView(
-                                        actionHandler: dependency.homeAddMenuActionHandler,
+                                        actionHandler: homeAddMenuActionHandler,
                                         isPresented: $viewModel.presentHomeActions
                                     )
             }
@@ -250,6 +259,7 @@ public struct HomeView: View {
                         nodesActionHandler: dependency.favouritesNodesActionHandler,
                         nodeSelectionHandler: dependency.favouritesNodeSelectionAction,
                         makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
+                        offlineActionGuard: viewModel.offlineActionGuard,
                         moreActionsPresenter: dependency.favouritesMoreActionsPresenter,
                         selectActionPublisher: dependency.favouritesSelectActionPublisher,
                         transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory
@@ -318,6 +328,7 @@ public struct HomeView: View {
                 downloadedNodesListener: dependency.downloadedNodesListener,
                 selectionHandler: dependency.recentActionBucketNodeSelectionHandler,
                 makeOfflineNodeTapDispatcher: viewModel.makeOfflineNodeTapDispatcher,
+                offlineActionGuard: viewModel.offlineActionGuard,
                 locationHandler: dependency.recentActionBucketLocationHandler,
                 nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
                 moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
@@ -334,6 +345,7 @@ public struct HomeView: View {
                 router: dependency.photoLibraryContentViewRouter,
                 locationHandler: dependency.recentActionBucketLocationHandler,
                 nodeActionHandler: dependency.recentActionBucketNodesActionHandler,
+                offlineActionGuard: viewModel.offlineActionGuard,
                 moreActionsPresenter: dependency.recentActionBucketMoreActionsPresenter,
                 transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
                 isHomeRevampPhaseTwoEnabled: isHomeRevampPhase2Enabled
@@ -381,7 +393,7 @@ public struct HomeView: View {
                             transferIndicatorToolbarFactory: dependency.transferIndicatorToolbarFactory,
                             isHomeRevampPhaseTwoEnabled: dependency.featureFlagProvider.isFeatureFlagEnabled(for: .iosHomeRevampPhaseTwo)
                         ),
-                        addMenuActionHandler: dependency.homeAddMenuActionHandler
+                        addMenuActionHandler: homeAddMenuActionHandler
                     )
                 case .viewedLinks, .continueWhereYouLeft, .doMoreWithMega:
                     if isHomeRevampPhase2Enabled {

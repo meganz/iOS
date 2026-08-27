@@ -15,25 +15,30 @@ package final class FavouritesViewModel: ObservableObject {
         let resultsProvider: any SearchResultsProviding
         let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
         let tracker: any AnalyticsTracking
+        let offlineActionGuard: any OfflineActionGuarding
 
         init(
             resultsProvider: some SearchResultsProviding,
-            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol
+            sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+            offlineActionGuard: some OfflineActionGuarding
         ) {
             self.init(
                 resultsProvider: resultsProvider,
                 sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-                tracker: DIContainer.tracker)
+                tracker: DIContainer.tracker,
+                offlineActionGuard: offlineActionGuard)
         }
 
         package init(
             resultsProvider: any SearchResultsProviding,
             sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-            tracker: some AnalyticsTracking
+            tracker: some AnalyticsTracking,
+            offlineActionGuard: some OfflineActionGuarding
         ) {
             self.resultsProvider = resultsProvider
             self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
             self.tracker = tracker
+            self.offlineActionGuard = offlineActionGuard
         }
     }
 
@@ -178,16 +183,21 @@ package final class FavouritesViewModel: ObservableObject {
             .dropFirst()
             .compactMap { [weak self] action in
                 guard let self, let action else { return nil }
-                return switch action {
+                let nodesAction: NodesAction = switch action {
                 case .download:
-                    NodesAction.download(selectedNodeHandles)
+                    .download(selectedNodeHandles)
                 case .shareLink:
-                    NodesAction.shareLink(selectedNodeHandles)
+                    .shareLink(selectedNodeHandles)
                 case .moveToRubbishBin:
-                    NodesAction.moveToRubbishBin(selectedNodeHandles)
+                    .moveToRubbishBin(selectedNodeHandles)
                 case .sendToChat:
-                    NodesAction.sendToChat(selectedNodeHandles)
+                    .sendToChat(selectedNodeHandles)
                 }
+
+                guard !nodesAction.requiresConnection
+                        || dependency.offlineActionGuard.allowsActionRequiringConnection() else { return nil }
+
+                return nodesAction
             }
             .assign(to: &$nodesAction)
     }

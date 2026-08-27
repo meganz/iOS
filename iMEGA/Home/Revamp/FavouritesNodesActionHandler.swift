@@ -9,6 +9,8 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
     private let favouriteUseCase: any NodeFavouriteActionUseCaseProtocol
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let sdk: MEGASdk
+    /// Blocks the action sheets' actions that need a connection while offline (IOS-12410)
+    private let offlineActionGuard: any OfflineActionGuarding
     private let onSelectAction: (HandleEntity) -> Void
 
     init(
@@ -17,6 +19,7 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
         favouriteUseCase: any NodeFavouriteActionUseCaseProtocol,
         backupsUseCase: some BackupsUseCaseProtocol,
         sdk: MEGASdk,
+        offlineActionGuard: some OfflineActionGuarding,
         onSelectAction: @escaping (HandleEntity) -> Void = { _ in }
     ) {
         self.navigationController = navigationController
@@ -24,6 +27,7 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
         self.favouriteUseCase = favouriteUseCase
         self.backupsUseCase = backupsUseCase
         self.sdk = sdk
+        self.offlineActionGuard = offlineActionGuard
         self.onSelectAction = onSelectAction
     }
 
@@ -51,17 +55,20 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
             nodeRepository: NodeRepository.newRepo
         )
         let isBackupNode = backupsUseCase.isBackupNodeHandle(action.handle)
-        let delegate = NodeActionViewControllerGenericDelegate(
-            viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-            nodeActionListener: { actionType, _ in
-                switch actionType {
-                case .select:
-                    onSelectAction(action.handle)
-                default:
-                    break
+        let delegate = OfflineAwareNodeActionDelegate(
+            wrapping: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                nodeActionListener: { actionType, _ in
+                    switch actionType {
+                    case .select:
+                        onSelectAction(action.handle)
+                    default:
+                        break
+                    }
                 }
-            }
+            ),
+            offlineActionGuard: offlineActionGuard
         )
         guard let nodeActionViewController = NodeActionViewController(
             node: action.handle,
@@ -152,12 +159,15 @@ struct FavouritesNodesActionHandler: NodesActionHandling, MoreNodeActionsPresent
     private func showMore(for nodeHandles: Set<HandleEntity>, completion: @escaping () -> Void) {
         guard let navigationController, let nodes = nodes(from: nodeHandles) else { return }
 
-        let delegate = NodeActionViewControllerGenericDelegate(
-            viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-            nodeActionListener: { _, _ in
-                completion()
-            }
+        let delegate = OfflineAwareNodeActionDelegate(
+            wrapping: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                nodeActionListener: { _, _ in
+                    completion()
+                }
+            ),
+            offlineActionGuard: offlineActionGuard
         )
         let nodeActionsViewController = NodeActionViewController(
             nodes: nodes.compactMap { $0.toMEGANode(in: sdk) },

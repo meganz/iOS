@@ -66,3 +66,17 @@ public extension UploadAddActionEntity {
         }
     }
 }
+
+public extension NodesAction {
+    /// The bulk actions a screen's select mode runs on the chosen nodes (IOS-12410). Every one of
+    /// them either changes remote state or has to start a transfer, so none survives being offline.
+    ///
+    /// `NodeAction` — the "···" button — deliberately has no counterpart here: it only opens the
+    /// action sheet, whose own actions are guarded one by one behind its delegate.
+    var requiresConnection: Bool {
+        switch self {
+        case .download, .toggleFavourites, .shareLink, .copy, .move, .moveToRubbishBin, .sendToChat:
+            true
+        }
+    }
+}
