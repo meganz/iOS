@@ -3810,10 +3810,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>few</key>
+        <key>one</key>
         <string>День</string>
+        <key>few</key>
+        <string>Дня</string>
         <key>many</key>
-        <string>Дни</string>
+        <string>Дней</string>
       </dict>
     </dict>
     <key>subscriptionPurchase.revamp.countdown.hours</key>
@@ -3826,8 +3828,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Час</string>
+        <key>few</key>
+        <string>Часа</string>
         <key>many</key>
-        <string>Часы</string>
+        <string>Часов</string>
       </dict>
     </dict>
     <key>subscriptionPurchase.revamp.countdown.minutes</key>
@@ -3840,8 +3846,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>many</key>
+        <key>one</key>
+        <string>Минута</string>
+        <key>few</key>
         <string>Минуты</string>
+        <key>many</key>
+        <string>Минут</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
@@ -3891,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A]/месяц за первый %d месяц, затем [B]/месяц</string>
+        <string>[A]/месяц за первые %d месяц, затем [B]/месяц</string>
         <key>few</key>
         <string>[A]/месяц за первые %d месяца, затем [B]/месяц</string>
         <key>many</key>
@@ -3909,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] за первый %d месяц, затем [B]/месяц</string>
+        <string>[A] за первые %d месяц, затем [B]/месяц</string>
         <key>few</key>
         <string>[A] за первые %d месяца, затем [B]/месяц</string>
         <key>many</key>
@@ -3945,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] за первый %d месяц, затем [B] ежегодно</string>
+        <string>[A] за первые %d месяц, затем [B] ежегодно</string>
         <key>few</key>
         <string>[A] за первые %d месяца, затем [B] ежегодно</string>
         <key>many</key>
@@ -3981,9 +3991,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] [B] for %d month</string>
-        <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B] на %d месяц</string>
+        <key>few</key>
+        <string>[A] [B] на %d месяца</string>
+        <key>many</key>
+        <string>[A] [B] на %d месяцев</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3997,9 +4009,43 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] [B] for %d year</string>
+        <string>[A] [B] на %d год</string>
+        <key>few</key>
+        <string>[A] [B] на %d года</string>
+        <key>many</key>
+        <string>[A] [B] на %d лет</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

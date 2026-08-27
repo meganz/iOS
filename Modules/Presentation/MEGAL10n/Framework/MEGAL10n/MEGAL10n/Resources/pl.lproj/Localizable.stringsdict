@@ -3810,8 +3810,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>few</key>
+        <key>one</key>
         <string>Dzień</string>
+        <key>few</key>
+        <string>Dni</string>
         <key>many</key>
         <string>Dni</string>
       </dict>
@@ -3826,10 +3828,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>few</key>
+        <key>one</key>
         <string>Godzina</string>
-        <key>many</key>
+        <key>few</key>
         <string>Godziny</string>
+        <key>many</key>
+        <string>Godzin</string>
       </dict>
     </dict>
     <key>subscriptionPurchase.revamp.countdown.minutes</key>
@@ -3842,8 +3846,12 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>many</key>
+        <key>one</key>
+        <string>Minuta</string>
+        <key>few</key>
         <string>Minuty</string>
+        <key>many</key>
+        <string>Minut</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForMonths</key>
@@ -3893,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A]/miesiąc przez pierwszy %d miesiąc, potem [B]/miesiąc</string>
+        <string>[A]/miesiąc przez pierwszy miesiąc, potem [B]/miesiąc</string>
         <key>few</key>
         <string>[A]/miesiąc przez pierwsze %d miesiące, potem [B]/miesiąc</string>
         <key>many</key>
@@ -3911,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] za pierwszy %d miesiąc, potem [B]/miesiąc</string>
+        <string>[A] za pierwszy miesiąc, potem [B]/miesiąc</string>
         <key>few</key>
         <string>[A] za pierwsze %d miesiące, potem [B]/miesiąc</string>
         <key>many</key>
@@ -3947,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] za pierwszy %d miesiąc, potem [B] naliczane rocznie</string>
+        <string>[A] za pierwszy miesiąc, potem [B] naliczane rocznie</string>
         <key>few</key>
         <string>[A] za pierwsze %d miesiące, potem [B] naliczane rocznie</string>
         <key>many</key>
@@ -4006,6 +4014,38 @@
         <string>[A] [B] przez %d lata</string>
         <key>many</key>
         <string>[A] [B] przez %d lat</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

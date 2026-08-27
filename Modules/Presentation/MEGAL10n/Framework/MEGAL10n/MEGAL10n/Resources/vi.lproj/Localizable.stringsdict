@@ -41,7 +41,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.removedItemCount</key>
@@ -69,7 +69,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.folderCount</key>
@@ -83,7 +83,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d thư mục</string>
+        <string>%d thư mục</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.folderCount</key>
@@ -97,7 +97,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d thư mục</string>
+        <string>%d thư mục</string>
       </dict>
     </dict>
     <key>sharedItems.link.accessInfo</key>
@@ -125,7 +125,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đường liên kết đã được ghi vào bảng nhớ tạm</string>
+        <string>Đường liên kết đã ghi vào bảng nhớ tạm</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -139,7 +139,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Các đường liên kết đã được tạo và ghi vào bảng nhớ tạm</string>
+        <string>Các đường liên kết đã tạo và ghi vào bảng nhớ tạm</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -153,7 +153,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Áp dụng cho tất cả %d mục trùng lặp</string>
+        <string>Áp dụng cho tất cả %d mục trùng lặp</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -167,7 +167,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>tiếng</string>
+        <string>giờ</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -307,7 +307,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -321,7 +321,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d thư mục</string>
+        <string>%d thư mục</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -349,7 +349,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>• %d tệp tin</string>
+        <string>• %d tệp tin</string>
       </dict>
     </dict>
     <key>general.format.count.items</key>
@@ -419,7 +419,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hình ảnh</string>
+        <string>%d hình ảnh</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -475,7 +475,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d tệp tin</string>
+        <string>%d tệp tin</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -489,7 +489,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Loại bỏ đường liên kết</string>
+        <string>Loại bỏ đường liên kết</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.message.success</key>
@@ -503,7 +503,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đường liên kết đã bị loại bỏ</string>
+        <string>Đường liên kết đã loại bỏ</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
@@ -881,7 +881,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Bộ album sẽ bị xóa nhưng các nội dung có trong mỗi bộ sẽ vẫn giữ lại trên Dòng Thời Gian của bạn.</string>
+        <string>Bộ album sẽ bị xóa nhưng các nội dung có trong mỗi bộ sẽ vẫn giữ lại trên Dòng Thời Gian của bạn.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumSuccess</key>
@@ -965,7 +965,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đường liên kết đã bị loại bỏ</string>
+        <string>Đường liên kết đã loại bỏ</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.until</key>
@@ -2883,7 +2883,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d/%[A] đã hoàn tất</string>
+        <string>%d trong tổng [A] đã hoàn tất</string>
       </dict>
     </dict>
     <key>recents.bucketDetails.subtitle</key>
@@ -3009,7 +3009,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] cho %d tháng</string>
+        <string>[A] trọn %d tháng</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.localCurrencyForYears</key>
@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thu phí [A]/tháng cho %d tháng đầu tiên, sau đó là [B] mỗi tháng</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thu phí [A] cho %d tháng đầu tiên, sau đó là [B] mỗi tháng</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3061,7 +3065,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thanh toán [A] cho %d năm đầu tiên, [B]/tháng sau</string>
+        <string>Thu phí [A] cho %d năm đầu tiên, sau đó là [B]/tháng</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>Thu phí [A] cho %d tháng đầu tiên, sau đó là [B] hằng năm</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3087,7 +3093,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Thanh toán [A] cho %d năm đầu tiên, [B] được tính phí hàng năm sau</string>
+        <string>Thu phí [A] cho %d năm đầu tiên, sau đó sẽ thu [B] hàng năm</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
@@ -3101,7 +3107,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B] trọn %d tháng</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3115,7 +3121,35 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>[A] [B] cho %d năm</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

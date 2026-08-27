@@ -4016,5 +4016,37 @@
         <string>[A] [B] durante %d anos</string>
       </dict>
     </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

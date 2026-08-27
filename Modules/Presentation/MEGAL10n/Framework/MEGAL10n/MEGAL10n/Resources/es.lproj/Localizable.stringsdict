@@ -3901,7 +3901,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se cobran [A]/mes durante el primer %d mes, después [B]/mes</string>
+        <string>Se cobran [A]/mes durante el primer mes, después [B]/mes</string>
         <key>many</key>
         <string>Se cobran [A]/mes durante los primeros %d meses, después [B]/mes</string>
         <key>other</key>
@@ -3919,7 +3919,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se cobran [A] durante el primer %d mes, después [B]/mes</string>
+        <string>Se cobran [A] durante el primer mes, después [B]/mes</string>
         <key>many</key>
         <string>Se cobran [A] durante los primeros %d meses, después [B]/mes</string>
         <key>other</key>
@@ -3955,7 +3955,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Se cobran [A] durante el primer %d mes, después se cobran [B] anualmente</string>
+        <string>Se cobran [A] durante el primer mes, después se cobran [B] anualmente</string>
         <key>many</key>
         <string>Se cobran [A] durante los primeros %d meses, después se cobran [B] anualmente</string>
         <key>other</key>
@@ -4014,6 +4014,38 @@
         <string>[A] [B] para %d años</string>
         <key>other</key>
         <string>[A] [B] para %d años</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

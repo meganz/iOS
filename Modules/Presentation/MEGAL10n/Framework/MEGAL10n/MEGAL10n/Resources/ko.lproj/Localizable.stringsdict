@@ -3065,7 +3065,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>첫 %d년간은 [A]로 청구, 이후 월 [B]</string>
+        <string>첫 %d년 동안 [A]로 청구, 이후 월 [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3093,7 +3093,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>첫 %d년간은 [A]로 청구, 이후 연 [B]</string>
+        <string>첫 %d년 동안 [A]로 청구, 이후 연 [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
@@ -3107,7 +3107,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>%d개월 동안 [A] [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3121,7 +3121,35 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>%d년 동안 [A] [B]</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

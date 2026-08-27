@@ -3349,7 +3349,7 @@
     <key>achievementDetails.bonusExpiration.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@dagen@</string>
+      <string>%#@days@</string>
       <key>days</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -3388,6 +3388,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Dag</string>
         <key>other</key>
         <string>Dagen</string>
       </dict>
@@ -3402,6 +3404,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Uur</string>
         <key>other</key>
         <string>Uren</string>
       </dict>
@@ -3416,6 +3420,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>Minuut</string>
         <key>other</key>
         <string>Minuten</string>
       </dict>
@@ -3463,9 +3469,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A]/maand voor de eerste %d maand, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A]/maand voor de eerste maand, daarna [B]/maand</string>
         <key>other</key>
-        <string>[A]/maand voor de eerste %d maanden, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A]/maand voor de eerste %d maanden, daarna [B]/maand</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3479,9 +3485,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] voor de eerste %d maand, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A] voor de eerste maand, daarna [B]/maand</string>
         <key>other</key>
-        <string>[A] voor de eerste %d maanden, daarna [B]/maand</string>
+        <string>Gefactuureerd op [A] voor de eerste %d maanden, daarna [B]/maand</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3511,9 +3517,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] voor de eerste %d maand, daarna jaarlijks [B]</string>
+        <string>Gefactuureerd op[A] voor de eerste maand, daarna jaarlijks [B] in rekening gebracht</string>
         <key>other</key>
-        <string>[A] voor de eerste %d maanden, daarna jaarlijks [B]</string>
+        <string>Gefactuureerd op [A] voor de eerste %d maanden, daarna jaarlijks [B] in rekening gebracht</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3562,6 +3568,38 @@
         <string>[A] [B] for %d jaar</string>
         <key>other</key>
         <string>[A] [B] voor %d jaar</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

@@ -559,7 +559,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>分享链接</string>
+        <string>共享链接</string>
       </dict>
     </dict>
     <key>general.menuAction.manageLink.title</key>
@@ -979,7 +979,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d天的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -993,7 +993,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[B][StartDate][/B]起，每%d天的[B][StartTime]到[EndTime][/B]</string>
+        <string>[B][StartDate][/B]起，每%d天的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -1007,7 +1007,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -1021,7 +1021,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d周[WeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -1035,7 +1035,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]到[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -1049,7 +1049,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]至[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d周[WeekDaysList]和[LastWeekDay]的[B][StartTime]至[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -1077,7 +1077,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d月第[MonthDay]天的[B][StartTime]至[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d月第[MonthDay]天的[B][StartTime]至[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -1091,7 +1091,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate]到[UntilDate][/B]，每%d月第一个星期一的[B][StartTime]至EndTime][/B]</string>
+        <string>从[B][StartDate]到[UntilDate][/B]，每%d月第一个星期一的[B][StartTime]至EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -1105,7 +1105,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>从[B][StartDate][/B]起，每%d月第一个星期一的[B][StartTime]至[EndTime][/B]</string>
+        <string>从[B][StartDate][/B]起，每%d月第一个星期一的[B][StartTime]至[EndTime][/B]生效</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -3107,7 +3107,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B]，有效期为 %d 个月</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3121,7 +3121,35 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>[A] [B]，有效期为 %d 年</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

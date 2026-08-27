@@ -111,7 +111,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>ผู้ที่มีลิงก์นี้สามารถดูและดาวน์โหลดข้อมูลของคุณได้</string>
+        <string>ทุกคนที่มีลิงก์นี้สามารถดูและดาวน์โหลดข้อมูลของคุณได้</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -153,7 +153,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>ใช้กับรายการที่ซ้ำกัน</string>
+        <string>ใช้กับรายการที่ซ้ำทั้งหมด %d รายการ</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -2757,7 +2757,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>แม้เราจะส่งอีเมลแจ้งคุณเมื่อวันที่ [date] แล้ว แต่พื้นที่จัดเก็บยังคงเต็ม ปัจจุบันมีไฟล์ %d ไฟล์ซึ่งใช้พื้นที่ [storageSpace] ในคลาวด์ไดร์ฟ และบัญชีของคุณถูกล็อก กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บและปลดล็อกบัญชี หากไม่ดำเนินการโดยเร็ว ข้อมูลของคุณจะถูกลบ อัปเกรดตอนนี้เพื่อปกป้องไฟล์ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บ[/A] </string>
+        <string>แม้เราจะติดต่อคุณทางอีเมลไปแล้วเมื่อ [date] แต่พื้นที่จัดเก็บข้อมูลยังคงเต็มอยู่ ปัจจุบันคุณมีไฟล์จำนวน %d ไฟล์ ซึ่งใช้พื้นที่ไป [storageSpace] ในคลาวด์ไดร์ฟ และระบบได้ล็อกบัญชีของคุณแล้ว กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บข้อมูลและปลดล็อกบัญชี หากไม่ดำเนินการในเร็วๆ นี้ ข้อมูลของคุณอาจถูกลบถาวร อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บข้อมูล[/A] </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2771,7 +2771,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>แม้เราจะแจ้งเตือนทางอีเมลหลายครั้งแล้ว แต่พื้นที่จัดเก็บของคุณยังคงเต็ม คุณมีไฟล์ %d รายการที่ใช้พื้นที่ [storageSpace] ในคลาวด์ไดร์ฟ และบัญชีของคุณถูกล็อก กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บและปลดล็อกบัญชี หากคุณไม่รีบดำเนินการ ข้อมูลของคุณจะถูกลบ อัปเกรดทันทีเพื่อปกป้องไฟล์ของคุณ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บ[/A] </string>
+        <string>แม้เราจะติดต่อคุณทางอีเมลไปแล้วหลายครั้ง แต่พื้นที่จัดเก็บข้อมูลยังคงเต็มอยู่ ปัจจุบันคุณมีไฟล์จำนวน %d ไฟล์ ซึ่งใช้พื้นที่ไป [storageSpace] ในคลาวด์ไดร์ฟ และระบบได้ล็อกบัญชีของคุณแล้ว กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บข้อมูลและปลดล็อกบัญชี หากไม่ดำเนินการในเร็วๆ นี้ ข้อมูลของคุณอาจถูกลบถาวร อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บข้อมูล[/A] </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2785,7 +2785,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>แม้เราจะแจ้งเตือนทางอีเมลแล้ว แต่พื้นที่จัดเก็บของคุณยังคงเต็ม คุณมีไฟล์ %d รายการที่ใช้พื้นที่ [storageSpace] ในคลาวด์ไดร์ฟ และบัญชีของคุณถูกล็อก กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บและปลดล็อกบัญชี หากคุณไม่รีบดำเนินการ ข้อมูลของคุณจะถูกลบ อัปเกรดทันทีเพื่อปกป้องไฟล์ของคุณ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บ[/A]</string>
+        <string>แม้เราจะติดต่อคุณทางอีเมลไปแล้ว แต่พื้นที่จัดเก็บข้อมูลยังคงเต็มอยู่ ปัจจุบันคุณมีไฟล์จำนวน %d ไฟล์ ซึ่งใช้พื้นที่ไป [storageSpace] ในคลาวด์ไดร์ฟ และระบบได้ล็อกบัญชีของคุณแล้ว กรุณาอัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่จัดเก็บข้อมูลและปลดล็อกบัญชี หากไม่ดำเนินการในเร็วๆ นี้ ข้อมูลของคุณอาจถูกลบถาวร อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]ดูข้อมูลเพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่จัดเก็บข้อมูล[/A]</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3036,6 +3036,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A]/เดือน ในช่วง %d เดือนแรก หลังจากนั้น [B]/เดือน</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalMonths</key>
@@ -3048,6 +3050,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A] ในช่วง %d เดือนแรก หลังจากนั้น [B]/เดือน</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledMonthlyTotalYears</key>
@@ -3074,6 +3078,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>other</key>
+        <string>คิดค่าบริการ [A] ในช่วง %d เดือนแรก หลังจากนั้นคิดค่าบริการรายปี [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyYears</key>
@@ -3101,7 +3107,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d months</string>
+        <string>[A] [B] เป็นเวลา %d เดือน</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForYears</key>
@@ -3115,7 +3121,35 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[A] [B] for %d years</string>
+        <string>[A] [B] เป็นเวลา %d ปี</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>

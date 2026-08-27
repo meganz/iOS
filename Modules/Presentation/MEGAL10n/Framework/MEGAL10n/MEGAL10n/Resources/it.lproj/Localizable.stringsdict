@@ -3901,9 +3901,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fatturato a [A]/mese per il primo %d mese, poi [B]/mese</string>
+        <string>Fatturato a [A]/mese per il primo mese, poi [B]/mese</string>
         <key>many</key>
-        <string>Fatturato a [A]/mese per i primi %d mesi, poi [B]/mese</string>
+        <string>Fatturato a [A]/mese per i primi %d di mesi, poi [B]/mese</string>
         <key>other</key>
         <string>Fatturato a [A]/mese per i primi %d mesi, poi [B]/mese</string>
       </dict>
@@ -3919,9 +3919,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fatturato a [A] per il primo %d mese, poi [B]/mese</string>
+        <string>Fatturato a [A] per il primo mese, poi [B]/mese</string>
         <key>many</key>
-        <string>Fatturato a [A] per i primi %d mesi, poi [B]/mese</string>
+        <string>Fatturato a [A] per i primi %d di mesi, poi [B]/mese</string>
         <key>other</key>
         <string>Fatturato a [A] per i primi %d mesi, poi [B]/mese</string>
       </dict>
@@ -3955,9 +3955,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Fatturato a [A] per il primo %d mese, poi [B] fatturato annualmente</string>
+        <string>Fatturato a [A] per il primo mese, poi [B] fatturato annualmente</string>
         <key>many</key>
-        <string>Fatturato a [A] per i primi %d mesi, poi [B] fatturato annualmente</string>
+        <string>Fatturato a [A] per i primi %d di mesi, poi [B] fatturato annualmente</string>
         <key>other</key>
         <string>Fatturato a [A] per i primi %d mesi, poi [B] fatturato annualmente</string>
       </dict>
@@ -4014,6 +4014,38 @@
         <string>[A] [B] per %d di anni</string>
         <key>other</key>
         <string>[A] [B] per %d anni</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file didn’t download</string>
+        <key>other</key>
+        <string>%d files didn’t download</string>
+      </dict>
+    </dict>
+    <key>link.download.incomplete.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <key>other</key>
+        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
       </dict>
     </dict>
   </dict>
