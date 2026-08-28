@@ -35,11 +35,8 @@ extension Array where Element: PhotoDateSection {
     /// altogether. Taking the date from the bucket keeps `position(at:) → indexPath(of:)` a
     /// round trip, so the grid returns to where the user left it.
     ///
-    /// Covers the grid only. The Day / Month / Year cards build their positions from
-    /// ``PhotoChronologicalCategory/position``, which still dates them by the cover node's own
-    /// timestamp, so a card → grid jump cannot resolve once the buckets follow another column.
-    /// That half moves to the cover photo's day bucket in IOS-12482, which lands before the
-    /// capture-time basis becomes selectable.
+    /// The Day / Month / Year cards reach the same date from the other side, through
+    /// ``PhotoChronologicalCategory/coverDayDate``, so a card → grid jump resolves too.
     func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
         guard let photo = photo(at: indexPath) else { return nil }
         guard let dayDate = dayCategoryDate(at: indexPath) else { return photo.position }

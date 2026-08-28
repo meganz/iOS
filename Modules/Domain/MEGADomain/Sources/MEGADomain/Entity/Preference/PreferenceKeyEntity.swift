@@ -63,4 +63,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol, Sendable {
     case storageAlmostFullOnAppOpenDialogLastShownDate
     case storageAlmostFullAfterUploadDialogShownCount
     case storageAlmostFullAfterUploadDialogLastShownDate
+    case mediaTimelineSortedByDateTaken
 }

@@ -131,6 +131,28 @@ final class ContextMenuActionsTests: XCTestCase {
         }
     }
     
+    /// Like ``decomposeMenuIntoActions(menu:)`` but keeps the action entities, so a test can
+    /// assert their checkmark state and not only their type.
+    private func decomposeMenuIntoActionEntities(menu: CMEntity) -> [CMActionEntity] {
+        menu.children.compactMap {
+            if let action = $0 as? CMActionEntity {
+                return [action]
+            } else if let menu = $0 as? CMEntity {
+                return decomposeMenuIntoActionEntities(menu: menu)
+            }
+            return nil
+        }.reduce([], +)
+    }
+
+    private func filterMediaTimelineSortActions(from menuActions: [CMElementTypeEntity]) -> [MediaTimelineSortOrderEntity] {
+        menuActions.compactMap {
+            if case let .mediaTimelineSort(action) = $0 {
+                return action
+            }
+            return nil
+        }
+    }
+
     private func filterPhotoFilterOptions(from menuActions: [CMElementTypeEntity]) -> [PhotosFilterOptionsEntity] {
         menuActions.compactMap {
             if case let .photoFilter(option) = $0 {
@@ -816,5 +838,54 @@ final class ContextMenuActionsTests: XCTestCase {
             .cloudDrive,
             .cameraUploads
         ])
+
+        XCTAssertTrue(filterMediaTimelineSortActions(from: actions).isEmpty,
+                      "Without a timeline sort type the menu keeps the shared newest / oldest pair")
+    }
+
+    func testMediaTabTimeline_withMediaTimelineSortType_replacesTheSharedSortPairWithBothAxes() throws {
+        let menuEntity = try XCTUnwrap(
+            ContextMenuBuilder()
+                .setType(.menu(type: .mediaTabTimeline))
+                .setSortType(.modificationDesc)
+                .setIsCameraUploadExplorer(true)
+                .setSelectedPhotosFilterOptionsEntity([.allLocations, .allMedia])
+                .setMediaTimelineSortType(.newestByCaptureTime)
+                .build()
+        )
+
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+
+        XCTAssertEqual(filterMediaTimelineSortActions(from: actions), [
+            .newest,
+            .oldest,
+            .newestByCaptureTime,
+            .oldestByCaptureTime
+        ])
+        XCTAssertTrue(filterSortActions(from: actions).isEmpty,
+                      "The capture-time orders cannot travel as a SortOrderEntity, so the shared pair is gone")
+        // The row's subtitle is rendered from this, so it must name the active order — both axes.
+        XCTAssertEqual(menuEntity.children.compactMap { ($0 as? CMEntity)?.currentMediaTimelineSortType },
+                       [.newestByCaptureTime])
+        XCTAssertNil(menuEntity.children.compactMap { ($0 as? CMEntity)?.currentSortType }.first)
+    }
+
+    func testMediaTabTimeline_withMediaTimelineSortType_checksOnlyTheActiveOrder() throws {
+        let menuEntity = try XCTUnwrap(
+            ContextMenuBuilder()
+                .setType(.menu(type: .mediaTabTimeline))
+                .setIsCameraUploadExplorer(true)
+                .setMediaTimelineSortType(.oldestByCaptureTime)
+                .build()
+        )
+
+        let states = decomposeMenuIntoActionEntities(menu: menuEntity)
+            .compactMap { action -> (MediaTimelineSortOrderEntity, CMActionState)? in
+                guard case let .mediaTimelineSort(sortOrder) = action.type else { return nil }
+                return (sortOrder, action.state)
+            }
+
+        XCTAssertEqual(states.filter { $0.1 == .on }.map(\.0), [.oldestByCaptureTime])
+        XCTAssertEqual(states.count, 4)
     }
 }

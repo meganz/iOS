@@ -59,6 +59,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
             .setSelectedVideoLocationFilter(config.selectedVideoLocationFilter)
             .setSelectedVideoDurationFilter(config.selectedVideoDurationFilter)
             .setSelectedPhotosFilterOptionsEntity(config.selectedPhotoFilter)
+            .setMediaTimelineSortType(config.mediaTimelineSortType)
             .build()
     }
 }

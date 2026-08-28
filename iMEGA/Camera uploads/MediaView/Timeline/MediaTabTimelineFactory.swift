@@ -71,6 +71,12 @@ enum MediaTabTimelineFactory {
                 sensitiveNodeUseCase: sensitiveNodeUseCase)
             : nil
 
+        // Read here, at the composition root, like the pagination flag above. It alone decides
+        // whether the timeline offers a capture-time order: both paths honour one, the paginated
+        // by having the SDK order and bucket by it, the eager by grouping its loaded nodes by it.
+        let isDateTakenSortEnabled = DIContainer.remoteFeatureFlagUseCase
+            .isFeatureFlagEnabled(for: .iosMediaTimelineDateTaken)
+
         let timelineViewModel = NewTimelineViewModel(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
             photoLibraryContentViewRouter: photoLibraryContentViewRouter,
@@ -79,7 +85,8 @@ enum MediaTabTimelineFactory {
             nodeUseCase: nodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            mediaTimelineUseCase: mediaTimelineUseCase)
+            mediaTimelineUseCase: mediaTimelineUseCase,
+            isDateTakenSortEnabled: isDateTakenSortEnabled)
         
         return MediaTimelineTabContentViewModel(
             timelineViewModel: timelineViewModel,

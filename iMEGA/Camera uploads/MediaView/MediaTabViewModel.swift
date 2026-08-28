@@ -134,7 +134,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             quickActionsMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             videoFilterMenuDelegate: self,
-            photoFilterOptionDelegate: self
+            photoFilterOptionDelegate: self,
+            mediaTimelineSortMenuDelegate: self
         )
     }
 
@@ -255,6 +256,18 @@ extension MediaTabViewModel: DisplayMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleSortAction(sortType)
+        }
+
+        updateNavigationBarForCurrentTab()
+    }
+}
+
+// MARK: - MediaTimelineSortMenuDelegate
+
+extension MediaTabViewModel: MediaTimelineSortMenuDelegate {
+    func mediaTimelineSortMenu(didSelect sortOrder: MediaTimelineSortOrderEntity) {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
+            tabViewModel.handleMediaTimelineSortAction(sortOrder)
         }
 
         updateNavigationBarForCurrentTab()

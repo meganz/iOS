@@ -100,6 +100,9 @@ public struct CMConfigEntity: Sendable {
     public var selectedVideoLocationFilter: VideoLocationFilterEntity?
     public var selectedVideoDurationFilter: VideoDurationFilterEntity?
     public var selectedPhotoFilter: PhotosFilterOptionsEntity?
+    /// Current order of the paginated media timeline. Non-nil switches its sort menu to the
+    /// timeline's own two-axis actions; nil keeps the shared newest / oldest pair.
+    public var mediaTimelineSortType: MediaTimelineSortOrderEntity?
 
     public init(
         menuType: CMElementTypeEntity,
@@ -155,7 +158,8 @@ public struct CMConfigEntity: Sendable {
         showSortingOptionsAndViewModes: Bool = true,
         selectedVideoLocationFilter: VideoLocationFilterEntity? = nil,
         selectedVideoDurationFilter: VideoDurationFilterEntity? = nil,
-        selectedPhotoFilter: PhotosFilterOptionsEntity? = nil
+        selectedPhotoFilter: PhotosFilterOptionsEntity? = nil,
+        mediaTimelineSortType: MediaTimelineSortOrderEntity? = nil
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -211,5 +215,6 @@ public struct CMConfigEntity: Sendable {
         self.selectedVideoLocationFilter = selectedVideoLocationFilter
         self.selectedVideoDurationFilter = selectedVideoDurationFilter
         self.selectedPhotoFilter = selectedPhotoFilter
+        self.mediaTimelineSortType = mediaTimelineSortType
     }
 }

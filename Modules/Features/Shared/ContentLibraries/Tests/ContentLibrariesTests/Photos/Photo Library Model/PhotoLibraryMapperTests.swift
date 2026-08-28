@@ -43,6 +43,50 @@ class PhotoLibraryMapperTests: XCTestCase {
         ]
     }
     
+    // MARK: - Media capture time basis
+
+    /// Ordering and bucketing must both follow the requested column: these nodes' capture times
+    /// run opposite to their modification times, so the two bases produce opposite grids.
+    func testMapping_mediaCaptureTimeBasis_ordersAndBucketsByTheCaptureTime() throws {
+        let nodes = [
+            NodeEntity(name: "a.jpg", handle: 1,
+                       modificationTime: try "2022-01-05T10:00:00Z".date,
+                       mediaCaptureTime: try "2024-03-09T10:00:00Z".date),
+            NodeEntity(name: "b.jpg", handle: 2,
+                       modificationTime: try "2024-01-05T10:00:00Z".date,
+                       mediaCaptureTime: try "2022-06-07T10:00:00Z".date)
+        ]
+
+        let byModification = nodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
+        XCTAssertEqual(byModification.allPhotos.map(\.handle), [2, 1])
+        XCTAssertEqual(byModification.photoByYearList.map(\.categoryDate),
+                       [try "2024-01-01T00:00:00Z".date.year, try "2022-01-01T00:00:00Z".date.year])
+
+        let byCapture = nodes.toPhotoLibrary(
+            withSortType: .modificationDesc, timestampBasis: .mediaCaptureTime, in: .GMT)
+        XCTAssertEqual(byCapture.allPhotos.map(\.handle), [1, 2])
+        XCTAssertEqual(byCapture.photosByDayList.map(\.categoryDate),
+                       [try "2024-03-09T10:00:00Z".date.day, try "2022-06-07T10:00:00Z".date.day])
+    }
+
+    /// A node the SDK could date from neither its name nor its modification / creation time keeps
+    /// its modification time here rather than vanishing — unlike the paginated timeline, which can
+    /// only render what the SDK's date sections counted.
+    func testMapping_mediaCaptureTimeBasis_nodeWithoutACaptureTimeFallsBackToModificationTime() throws {
+        let dated = NodeEntity(name: "a.jpg", handle: 1,
+                               modificationTime: try "2022-01-05T10:00:00Z".date,
+                               mediaCaptureTime: try "2024-03-09T10:00:00Z".date)
+        let undated = NodeEntity(name: "b.jpg", handle: 2,
+                                 modificationTime: try "2023-02-06T10:00:00Z".date)
+
+        let library = [dated, undated].toPhotoLibrary(
+            withSortType: .modificationDesc, timestampBasis: .mediaCaptureTime, in: .GMT)
+
+        XCTAssertEqual(library.allPhotos.map(\.handle), [1, 2])
+        XCTAssertEqual(library.photosByDayList.map(\.categoryDate),
+                       [try "2024-03-09T10:00:00Z".date.day, try "2023-02-06T10:00:00Z".date.day])
+    }
+
     func testMapping_sort_oldest() throws {
         let photoLibrary = nodes.toPhotoLibrary(withSortType: .modificationAsc, in: .GMT)
         XCTAssertEqual(Set(photoLibrary.allPhotos), Set(nodes))

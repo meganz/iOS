@@ -72,6 +72,11 @@ protocol PhotoFilterOptionDelegate: AnyObject {
 }
 
 @MainActor
+protocol MediaTimelineSortMenuDelegate: AnyObject {
+    func mediaTimelineSortMenu(didSelect sortOrder: MediaTimelineSortOrderEntity)
+}
+
+@MainActor
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: (any DisplayMenuDelegate)?
     weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?
@@ -85,6 +90,7 @@ final class ContextMenuManager: NSObject {
     weak var videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)?
     weak var videoFilterMenuDelegate: (any VideoFilterMenuDelegate)?
     weak var photoFilterOptionDelegate: (any PhotoFilterOptionDelegate)?
+    weak var mediaTimelineSortMenuDelegate: (any MediaTimelineSortMenuDelegate)?
 
     private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
@@ -100,7 +106,8 @@ final class ContextMenuManager: NSObject {
          albumMenuDelegate: (any AlbumMenuDelegate)? = nil,
          videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)? = nil,
          videoFilterMenuDelegate: (any VideoFilterMenuDelegate)? = nil,
-         photoFilterOptionDelegate: (any PhotoFilterOptionDelegate)? = nil
+         photoFilterOptionDelegate: (any PhotoFilterOptionDelegate)? = nil,
+         mediaTimelineSortMenuDelegate: (any MediaTimelineSortMenuDelegate)? = nil
     ) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
@@ -115,6 +122,7 @@ final class ContextMenuManager: NSObject {
         self.videoPlaylistMenuDelegate = videoPlaylistMenuDelegate
         self.videoFilterMenuDelegate = videoFilterMenuDelegate
         self.photoFilterOptionDelegate = photoFilterOptionDelegate
+        self.mediaTimelineSortMenuDelegate = mediaTimelineSortMenuDelegate
     }
     
     // MARK: - Configure functions
@@ -185,6 +193,9 @@ final class ContextMenuManager: NSObject {
 
         case .photoFilter(let option):
             photoFilterOptionDelegate?.photoFilter(option: option)
+
+        case .mediaTimelineSort(let sortOrder):
+            mediaTimelineSortMenuDelegate?.mediaTimelineSortMenu(didSelect: sortOrder)
         default:
             break
         }

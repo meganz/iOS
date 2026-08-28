@@ -29,7 +29,11 @@ final class NewTimelineViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
 
     private let mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)?
-    private let timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis
+    /// Whether the timeline may offer — and query by — the media capture time at all.
+    private let isDateTakenSortEnabled: Bool
+
+    @PreferenceWrapper(key: PreferenceKeyEntity.mediaTimelineSortedByDateTaken, defaultValue: false)
+    private var sortsByDateTaken: Bool
     
     private var isInitialLoadComplete = false
     private var pendingNodeUpdates: [NodeEntity] = []
@@ -86,10 +90,19 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
-    /// Order the paginated queries run in: direction from the stored sort preference, timestamp
-    /// column from ``timestampBasis``.
+    /// Order the paginated queries run in: direction from the shared sort preference, timestamp
+    /// from ``timestampBasis``.
     private var mediaTimelineSortOrder: MediaTimelineSortOrderEntity {
         sortOrder.toMediaTimelineSortOrderEntity(basis: timestampBasis)
+    }
+
+    private var timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis {
+        isDateTakenSortEnabled && sortsByDateTaken ? .mediaCaptureTime : .modificationTime
+    }
+
+    var mediaTimelineSortType: MediaTimelineSortOrderEntity? {
+        guard isDateTakenSortEnabled else { return nil }
+        return mediaTimelineSortOrder
     }
 
     var preferenceDrivenSortOrderUpdates: AnyPublisher<Void, Never> {
@@ -122,7 +135,7 @@ final class NewTimelineViewModel: ObservableObject {
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
-        timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis = .modificationTime,
+        isDateTakenSortEnabled: Bool = false,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.photoLibraryContentViewModel = photoLibraryContentViewModel
@@ -133,9 +146,10 @@ final class NewTimelineViewModel: ObservableObject {
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.mediaTimelineUseCase = mediaTimelineUseCase
-        self.timestampBasis = timestampBasis
+        self.isDateTakenSortEnabled = isDateTakenSortEnabled
         self.tracker = tracker
         $isCameraUploadsEnabled.useCase = preferenceUseCase
+        $sortsByDateTaken.useCase = preferenceUseCase
         // Read synchronously so the very first load already queries in the stored order,
         // instead of loading in the default order and reloading once the monitor emits.
         sortOrder = timelineSortOrder(from: sortOrderPreferenceUseCase.sortOrder(for: .cameraUploadExplorerFeed))
@@ -359,6 +373,37 @@ final class NewTimelineViewModel: ObservableObject {
         applySortOrder(newSortOrder)
     }
 
+    func updateMediaTimelineSortOrder(_ newSortOrder: MediaTimelineSortOrderEntity) {
+        guard newSortOrder != mediaTimelineSortOrder else { return }
+        let basisChanged = newSortOrder.timestampBasis != timestampBasis
+        sortsByDateTaken = newSortOrder.timestampBasis == .mediaCaptureTime
+
+        let newDirection: SortOrderEntity = newSortOrder.isNewestFirst ? .modificationDesc : .modificationAsc
+        if newDirection != sortOrder {
+            updateSortOrder(newDirection)
+        } else if basisChanged {
+            applyTimestampBasis()
+        }
+    }
+    
+    private func applyTimestampBasis() {
+        timelineQueryId = UUID()
+
+        guard mediaTimelineUseCase == nil else {
+            loadPhotosTaskId = UUID()
+            return
+        }
+
+        let photos = photoLibraryContentViewModel.library.allPhotos
+        sortPhotoLibraryTask = Task { @MainActor in
+            let updatedPhotoLibrary = await buildPhotoLibrary(nodes: photos, sortOrder: sortOrder)
+
+            try Task.checkCancellation()
+
+            commitLibrary(updatedPhotoLibrary)
+        }
+    }
+    
     /// Keeps the timeline in step with the stored sort preference: emits the saved order on
     /// subscription and again whenever it changes elsewhere — which happens when the user's sorting
     /// basis is "same for all" and another screen changes the sort. The View owns this task, so it is
@@ -896,8 +941,9 @@ final class NewTimelineViewModel: ObservableObject {
         nodes: [NodeEntity],
         sortOrder: SortOrderEntity
     ) async -> PhotoLibrary {
-        await Task.detached(priority: .userInitiated) {
-            nodes.toPhotoLibrary(withSortType: sortOrder)
+        let timestampBasis = timestampBasis
+        return await Task.detached(priority: .userInitiated) {
+            nodes.toPhotoLibrary(withSortType: sortOrder, timestampBasis: timestampBasis)
         }.value
     }
     

@@ -46,6 +46,7 @@ protocol MediaTabContextMenuActionHandler: AnyObject {
 
     func handleDisplayAction(_ action: DisplayActionEntity)
     func handleSortAction(_ sortType: SortOrderType)
+    func handleMediaTimelineSortAction(_ sortOrder: MediaTimelineSortOrderEntity)
     func handleQuickAction(_ action: QuickActionEntity)
     func handleVideoLocationFilter(_ filter: VideoLocationFilterEntity)
     func handleVideoDurationFilter(_ filter: VideoDurationFilterEntity)
@@ -94,6 +95,10 @@ extension MediaTabContextMenuActionHandler {
 
     func handleSortAction(_ sortType: SortOrderType) {
         // Default: do nothing
+    }
+
+    func handleMediaTimelineSortAction(_ sortOrder: MediaTimelineSortOrderEntity) {
+        // Default: do nothing — only the paginated timeline offers the two-axis sort menu.
     }
 
     func handleQuickAction(_ action: QuickActionEntity) {

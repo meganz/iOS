@@ -2,6 +2,16 @@
 import MEGADomain
 import XCTest
 
+private extension Array where Element: PhotoChronologicalCategory {
+    /// Marks the category whose cover photo is `node` as visible, the way the card views do: the
+    /// scroll tracker is keyed by `category.position`, which is dated by the cover photo's day
+    /// bucket rather than by the node's own timestamp. A node that covers no category yields a nil
+    /// key, matching nothing — the same "not visible" outcome the card views would produce.
+    func visiblePositions(forCategoryCovering node: NodeEntity) -> [PhotoScrollPosition?: Bool] {
+        [first { $0.coverPhoto == node }?.position: true]
+    }
+}
+
 final class PhotoChronologicalCategory_photoByYear_refreshTests: XCTestCase {
     
     func testShouldRefresh_photoByYearAndEmpty_noRefresh() throws {
@@ -197,7 +207,8 @@ final class PhotoChronologicalCategory_photoByYear_refreshTests: XCTestCase {
         ]
         
         for node in visibleAndRefreshableNodes {
-            XCTAssertTrue(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
+            XCTAssertTrue(testCategories.shouldRefresh(
+                to: newCategories, visiblePositions: testCategories.visiblePositions(forCategoryCovering: node)))
         }
         
         let visibleAndNonRefreshNodes = [
@@ -209,7 +220,8 @@ final class PhotoChronologicalCategory_photoByYear_refreshTests: XCTestCase {
         ]
         
         for node in visibleAndNonRefreshNodes {
-            XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
+            XCTAssertFalse(testCategories.shouldRefresh(
+                to: newCategories, visiblePositions: testCategories.visiblePositions(forCategoryCovering: node)))
         }
     }
 }

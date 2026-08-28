@@ -30,4 +30,8 @@ public class PhotoDateSection: PhotoSection {
     public var attributedTitle: AttributedString {
         AttributedString()
     }
+
+    /// A section's `contentList` is its days concatenated, so the cover photo belongs to the
+    /// first day — not to the section's own `categoryDate`, which is a month at month zoom.
+    public var coverDayDate: Date? { photoByDayList.first?.categoryDate }
 }

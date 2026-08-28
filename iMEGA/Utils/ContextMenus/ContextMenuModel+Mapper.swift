@@ -2,6 +2,19 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
+private extension MediaTimelineSortOrderEntity {
+    /// Names both axes, so it reads correctly as a menu item and as the sort row's subtitle —
+    /// where the direction alone would leave the timestamp invisible until the menu is opened.
+    var localizedTitle: String {
+        switch self {
+        case .newest: Strings.Localizable.CameraUploads.Timeline.Sort.newestByLastModified
+        case .oldest: Strings.Localizable.CameraUploads.Timeline.Sort.oldestByLastModified
+        case .newestByCaptureTime: Strings.Localizable.CameraUploads.Timeline.Sort.newestByDateTaken
+        case .oldestByCaptureTime: Strings.Localizable.CameraUploads.Timeline.Sort.oldestByDateTaken
+        }
+    }
+}
+
 extension CMActionEntity {
     func toContextMenuModel() -> ContextMenuModel {
         ContextMenuModel(type: type,
@@ -16,7 +29,8 @@ extension CMEntity {
                          displayInline: displayInline,
                          children: toContextMenuModels(children),
                          currentChatStatus: currentChatStatus?.localizedIdentifier,
-                         currentSortType: currentSortType?.toSortOrderType().localizedString,
+                         currentSortType: currentMediaTimelineSortType?.localizedTitle
+                            ?? currentSortType?.toSortOrderType().localizedString,
                          dndRemainingTime: dndRemainingTime,
                          currentFilterType: currentFilterType?.toFilterType().localizedString,
                          currentVideoLocationFilter: currentVideoLocationFilter?.localizedTitle,
@@ -76,6 +90,8 @@ extension ContextMenuModel {
             return dataForVideoDurationFilter(filter: filter)
         case .photoFilter(let option):
             return dataForMediaOption(option: option)
+        case .mediaTimelineSort(let sortOrder):
+            return dataForMediaTimelineSortType(sortOrder: sortOrder)
         default:
             return nil
         }
@@ -197,6 +213,29 @@ extension ContextMenuModel {
         }
     }
     
+    /// The direction icons are shared with the newest / oldest actions of every other sort menu;
+    /// only the titles name the timestamp the order buckets by.
+    private func dataForMediaTimelineSortType(sortOrder: MediaTimelineSortOrderEntity) -> ContextMenuDataModel {
+        switch sortOrder {
+        case .newest:
+            return ContextMenuDataModel(identifier: "mediaTimelineNewestByLastModified",
+                                        title: sortOrder.localizedTitle,
+                                        image: MEGAAssets.UIImage.newest)
+        case .oldest:
+            return ContextMenuDataModel(identifier: "mediaTimelineOldestByLastModified",
+                                        title: sortOrder.localizedTitle,
+                                        image: MEGAAssets.UIImage.oldest)
+        case .newestByCaptureTime:
+            return ContextMenuDataModel(identifier: "mediaTimelineNewestByDateTaken",
+                                        title: sortOrder.localizedTitle,
+                                        image: MEGAAssets.UIImage.newest)
+        case .oldestByCaptureTime:
+            return ContextMenuDataModel(identifier: "mediaTimelineOldestByDateTaken",
+                                        title: sortOrder.localizedTitle,
+                                        image: MEGAAssets.UIImage.oldest)
+        }
+    }
+
     private func dataForFilterType(filterType: FilterEntity) -> ContextMenuDataModel? {
         switch filterType {
         case .allMedia:

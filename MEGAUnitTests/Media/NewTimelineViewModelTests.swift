@@ -968,6 +968,7 @@ struct NewTimelineViewModelTests {
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(),
         mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
+        isDateTakenSortEnabled: Bool = false,
         tracker: some AnalyticsTracking = MockTracker()
     ) -> NewTimelineViewModel {
         .init(
@@ -980,7 +981,218 @@ struct NewTimelineViewModelTests {
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             mediaTimelineUseCase: mediaTimelineUseCase,
+            isDateTakenSortEnabled: isDateTakenSortEnabled,
             tracker: tracker
         )
+    }
+
+    /// The timeline's sort order carries two axes: the direction, which lives in the shared sort
+    /// preference, and the timestamp, which is the timeline's own local preference and only exists
+    /// while the feature flag is on.
+    @MainActor
+    @Suite
+    struct MediaTimelineSortOrder {
+        private static let dateTakenKey = PreferenceKeyEntity.mediaTimelineSortedByDateTaken.rawValue
+
+        private static func makeSections() -> [MediaDateSectionEntity] {
+            [MediaDateSectionEntity(
+                groupId: "2026-08-21",
+                startDate: Date(timeIntervalSince1970: 1_755_734_400),
+                endDate: Date(timeIntervalSince1970: 1_755_820_800),
+                count: 2)]
+        }
+
+        @Test("The menu offers nothing while the flag is off, even on the paginated path")
+        func sortTypeIsNilWhenFlagIsOff() {
+            let sut = makeSUT(
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: false)
+
+            #expect(sut.mediaTimelineSortType == nil)
+        }
+
+        @Test("The eager path offers the order too — it groups its loaded nodes by the timestamp")
+        func sortTypeIsOfferedOnTheEagerPathAsWell() {
+            let sut = makeSUT(mediaTimelineUseCase: nil, isDateTakenSortEnabled: true)
+
+            #expect(sut.mediaTimelineSortType == .newest)
+        }
+
+        @Test("The eager path orders and buckets by the stored timestamp")
+        func eagerPathHonoursTheStoredTimestamp() async {
+            // Capture times run opposite to modification times, so the two bases invert the grid.
+            let photos = [
+                NodeEntity(name: "a.jpg", handle: 1, hasThumbnail: true,
+                           modificationTime: Date(timeIntervalSince1970: 1_000_000),
+                           mediaCaptureTime: Date(timeIntervalSince1970: 3_000_000)),
+                NodeEntity(name: "b.jpg", handle: 2, hasThumbnail: true,
+                           modificationTime: Date(timeIntervalSince1970: 2_000_000),
+                           mediaCaptureTime: Date(timeIntervalSince1970: 500_000))
+            ]
+            let sut = makeSUT(
+                preferenceUseCase: MockPreferenceUseCase(dict: [Self.dateTakenKey: true]),
+                photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: photos),
+                mediaTimelineUseCase: nil,
+                isDateTakenSortEnabled: true)
+
+            await sut.loadPhotos()
+
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.map(\.handle) == [1, 2])
+        }
+
+        @Test("Changing only the timestamp re-groups the loaded nodes instead of reloading them")
+        func eagerPathTimestampChangeReSortsInPlace() async throws {
+            let photos = [
+                NodeEntity(name: "a.jpg", handle: 1, hasThumbnail: true,
+                           modificationTime: Date(timeIntervalSince1970: 1_000_000),
+                           mediaCaptureTime: Date(timeIntervalSince1970: 3_000_000)),
+                NodeEntity(name: "b.jpg", handle: 2, hasThumbnail: true,
+                           modificationTime: Date(timeIntervalSince1970: 2_000_000),
+                           mediaCaptureTime: Date(timeIntervalSince1970: 500_000))
+            ]
+            let sut = makeSUT(
+                photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: photos),
+                mediaTimelineUseCase: nil,
+                isDateTakenSortEnabled: true)
+            await sut.loadPhotos()
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.map(\.handle) == [2, 1])
+            let loadId = sut.loadPhotosTaskId
+
+            sut.updateMediaTimelineSortOrder(.newestByCaptureTime)
+            try await sut.sortPhotoLibraryTask?.value
+
+            #expect(sut.photoLibraryContentViewModel.library.allPhotos.map(\.handle) == [1, 2])
+            #expect(sut.loadPhotosTaskId == loadId, "the eager path already holds every node")
+        }
+
+        @Test("Direction comes from the shared preference, timestamp from the local one",
+              arguments: [
+                (SortOrderEntity.modificationDesc, true, MediaTimelineSortOrderEntity.newestByCaptureTime),
+                (.modificationAsc, true, .oldestByCaptureTime),
+                (.modificationDesc, false, .newest),
+                (.modificationAsc, false, .oldest)
+              ])
+        func sortTypeCombinesBothAxes(
+            storedDirection: SortOrderEntity,
+            storedDateTaken: Bool,
+            expected: MediaTimelineSortOrderEntity
+        ) {
+            let sut = makeSUT(
+                preferenceUseCase: MockPreferenceUseCase(dict: [Self.dateTakenKey: storedDateTaken]),
+                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: storedDirection),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: true)
+
+            #expect(sut.mediaTimelineSortType == expected)
+        }
+
+        @Test("A stored date-taken choice is ignored — not cleared — while the flag is off")
+        func storedChoiceIsOverriddenWhileTheFlagIsOff() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let preferenceUseCase = MockPreferenceUseCase(dict: [Self.dateTakenKey: true])
+            let sut = makeSUT(
+                preferenceUseCase: preferenceUseCase,
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()),
+                    recorder: recorder),
+                isDateTakenSortEnabled: false)
+
+            await sut.loadPhotos()
+
+            let queried = await recorder.sortOrders
+            #expect(!queried.isEmpty)
+            #expect(queried.allSatisfy { $0 == .newest })
+            // The choice survives for when the flag comes back.
+            #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == true)
+        }
+
+        @Test("With the flag on, the stored choice reaches the query")
+        func storedChoiceReachesTheQuery() async {
+            let recorder = MediaTimelineUseCaseRecorder()
+            let sut = makeSUT(
+                preferenceUseCase: MockPreferenceUseCase(dict: [Self.dateTakenKey: true]),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(
+                    dateSectionsResult: .success(Self.makeSections()),
+                    recorder: recorder),
+                isDateTakenSortEnabled: true)
+
+            await sut.loadPhotos()
+
+            let queried = await recorder.sortOrders
+            #expect(!queried.isEmpty)
+            #expect(queried.allSatisfy { $0 == .newestByCaptureTime })
+        }
+
+        @Test("Changing only the timestamp persists it locally and reloads, leaving the shared preference alone")
+        func timestampOnlyChangePersistsLocallyAndReloads() {
+            let preferenceUseCase = MockPreferenceUseCase()
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(
+                preferenceUseCase: preferenceUseCase,
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: true)
+            let loadId = sut.loadPhotosTaskId
+            let queryId = sut.timelineQueryId
+
+            sut.updateMediaTimelineSortOrder(.newestByCaptureTime)
+
+            #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == true)
+            #expect(sut.mediaTimelineSortType == .newestByCaptureTime)
+            #expect(sut.loadPhotosTaskId != loadId)
+            #expect(sut.timelineQueryId != queryId)
+            // The direction did not move, so nothing may be written to the cross-screen preference.
+            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+        }
+
+        @Test("Changing the direction writes it to the shared preference, as the newest / oldest menu always has")
+        func directionChangeWritesTheSharedPreference() {
+            let preferenceUseCase = MockPreferenceUseCase()
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(
+                preferenceUseCase: preferenceUseCase,
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: true)
+
+            sut.updateMediaTimelineSortOrder(.oldestByCaptureTime)
+
+            #expect(sortOrderPreferenceUseCase.messages.contains(
+                .save(sortOrder: .modificationAsc, for: .cameraUploadExplorerFeed)))
+            #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == true)
+            #expect(sut.mediaTimelineSortType == .oldestByCaptureTime)
+        }
+
+        @Test("Switching back to the modification time clears the local choice")
+        func switchingBackClearsTheLocalChoice() {
+            let preferenceUseCase = MockPreferenceUseCase(dict: [Self.dateTakenKey: true])
+            let sut = makeSUT(
+                preferenceUseCase: preferenceUseCase,
+                sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc),
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: true)
+
+            sut.updateMediaTimelineSortOrder(.newest)
+
+            #expect(preferenceUseCase.dict[Self.dateTakenKey] as? Bool == false)
+            #expect(sut.mediaTimelineSortType == .newest)
+        }
+
+        @Test("Re-picking the active order changes nothing")
+        func rePickingTheActiveOrderIsANoOp() {
+            let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .modificationDesc)
+            let sut = makeSUT(
+                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                isDateTakenSortEnabled: true)
+            let loadId = sut.loadPhotosTaskId
+            let queryId = sut.timelineQueryId
+
+            sut.updateMediaTimelineSortOrder(.newest)
+
+            #expect(sut.loadPhotosTaskId == loadId)
+            #expect(sut.timelineQueryId == queryId)
+            #expect(sortOrderPreferenceUseCase.saveSortOrderCallCount == 0)
+        }
     }
 }

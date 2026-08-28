@@ -112,6 +112,55 @@ struct MediaTimelineTabContentViewModelTests {
                 ]
             )
         }
+
+        @Test
+        func mediaTimelineSortAction() {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                timelineViewModel: makeTimelineViewModel(
+                    mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                    isDateTakenSortEnabled: true),
+                tracker: tracker)
+            #expect(sut.contextMenuConfiguration()?.mediaTimelineSortType == .newest)
+
+            sut.handleMediaTimelineSortAction(.oldestByCaptureTime)
+
+            #expect(sut.timelineViewModel.mediaTimelineSortType == .oldestByCaptureTime)
+            #expect(sut.contextMenuConfiguration()?.mediaTimelineSortType == .oldestByCaptureTime)
+            // The direction keeps reporting through the events the newest / oldest menu sent.
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [MediaScreenSortByOldestSelectedEvent()]
+            )
+        }
+
+        /// The direction events pre-date this menu and count direction picks; a switch that only
+        /// moves the timestamp must not inflate them.
+        @Test
+        func mediaTimelineSortAction_timestampOnlyChange_reportsNothing() {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                timelineViewModel: makeTimelineViewModel(
+                    mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                    isDateTakenSortEnabled: true),
+                tracker: tracker)
+            #expect(sut.timelineViewModel.mediaTimelineSortType == .newest)
+
+            sut.handleMediaTimelineSortAction(.newestByCaptureTime)
+
+            #expect(sut.timelineViewModel.mediaTimelineSortType == .newestByCaptureTime)
+            #expect(tracker.trackedEventIdentifiers.isEmpty)
+        }
+
+        @Test
+        func menuOffersNoTimelineSortWhileTheFlagIsOff() {
+            let sut = makeSUT(
+                timelineViewModel: makeTimelineViewModel(
+                    mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                    isDateTakenSortEnabled: false))
+
+            #expect(sut.contextMenuConfiguration()?.mediaTimelineSortType == nil)
+        }
         
         @Test(.disabled("Flaky"))
         func photoLocationOption() async throws {
@@ -407,7 +456,9 @@ struct MediaTimelineTabContentViewModelTests {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase()
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(),
+        mediaTimelineUseCase: (any MediaTimelineUseCaseProtocol)? = nil,
+        isDateTakenSortEnabled: Bool = false
     ) -> NewTimelineViewModel {
         .init(
             photoLibraryContentViewModel: photoLibraryContentViewModel,
@@ -417,7 +468,9 @@ struct MediaTimelineTabContentViewModelTests {
             photoLibraryUseCase: photoLibraryUseCase,
             nodeUseCase: nodeUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            mediaTimelineUseCase: mediaTimelineUseCase,
+            isDateTakenSortEnabled: isDateTakenSortEnabled
         )
     }
 }

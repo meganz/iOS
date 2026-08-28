@@ -8,15 +8,29 @@ public protocol PhotoChronologicalCategory: Identifiable, Equatable, Refreshable
     
     var categoryDate: Date { get }
     var coverPhoto: NodeEntity? { get }
+
+    /// `categoryDate` of the day bucket the cover photo sits in — the date every scroll position
+    /// is expressed in, because that is what `indexPath(of:)` and the card views match on. It is
+    /// resolved down the tree rather than taken from the cover node's own `categoryDate`: on the
+    /// paginated timeline the buckets come from the SDK's `groupId`s, so a node's modification
+    /// time frequently lands on another day than the bucket rendering it — and when the timeline
+    /// is ordered by media capture time, on another timestamp column entirely.
+    var coverDayDate: Date? { get }
 }
 
 extension PhotoChronologicalCategory {
+    /// Year and month levels inherit the day of their first descendant; the day level and the
+    /// leaf node override this.
+    public var coverDayDate: Date? {
+        contentList.first?.coverDayDate
+    }
+
     var position: PhotoScrollPosition? {
-        guard let photo = coverPhoto else {
+        guard let photo = coverPhoto, let coverDayDate else {
             return nil
         }
         
-        return PhotoScrollPosition(handle: photo.handle, date: photo.categoryDate)
+        return PhotoScrollPosition(handle: photo.handle, date: coverDayDate)
     }
     
     public var id: PhotoScrollPosition? {
@@ -66,6 +80,10 @@ public struct PhotoByDay: PhotoChronologicalCategory, Sendable {
         self.categoryDate = categoryDate
         self.contentList = contentList
     }
+
+    /// The day bucket is this category, so the recursion stops here rather than falling through
+    /// to a leaf node's own timestamp.
+    public var coverDayDate: Date? { categoryDate }
 }
 
 extension NodeEntity: @retroactive RefreshableWhenVisible {}
@@ -75,6 +93,10 @@ extension NodeEntity: PhotoChronologicalCategory {
     public var categoryDate: Date {
         modificationTime
     }
+
+    /// A node knows nothing about the bucket rendering it, so it can only answer with its own
+    /// date. Every caller that has a tree resolves the day from the enclosing `PhotoByDay`.
+    public var coverDayDate: Date? { categoryDate }
     
     public var coverPhoto: NodeEntity? {
         self

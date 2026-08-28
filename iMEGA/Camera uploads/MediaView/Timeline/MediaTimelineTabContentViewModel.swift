@@ -175,7 +175,8 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuProvider {
             isCameraUploadExplorer: true,
             isEmptyState: timelineViewModel.photoLibraryContentViewModel.isPhotoLibraryEmpty,
             isCameraUploadsEnabled: timelineViewModel.isCameraUploadsEnabled,
-            selectedPhotoFilter: timelineViewModel.photoFilterOptions
+            selectedPhotoFilter: timelineViewModel.photoFilterOptions,
+            mediaTimelineSortType: timelineViewModel.mediaTimelineSortType
         )
     }
 }
@@ -206,6 +207,27 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
         }
         
         timelineViewModel.updateSortOrder(sortType.toSortOrderEntity())
+    }
+
+    func handleMediaTimelineSortAction(_ sortOrder: MediaTimelineSortOrderEntity) {
+        trackDirectionChange(to: sortOrder)
+        timelineViewModel.updateMediaTimelineSortOrder(sortOrder)
+    }
+
+    /// Reports a direction change with the events the newest / oldest menu has always sent, so the
+    /// metric survives that menu being replaced by this one. A timestamp-only switch reports
+    /// nothing: the timestamp axis has no event of its own yet, and borrowing the direction event
+    /// for it would inflate a metric that has only ever counted direction picks.
+    private func trackDirectionChange(to sortOrder: MediaTimelineSortOrderEntity) {
+        guard sortOrder.isNewestFirst != timelineViewModel.mediaTimelineSortType?.isNewestFirst else {
+            return
+        }
+
+        if sortOrder.isNewestFirst {
+            tracker.trackAnalyticsEvent(with: MediaScreenSortByNewestSelectedEvent())
+        } else {
+            tracker.trackAnalyticsEvent(with: MediaScreenSortByOldestSelectedEvent())
+        }
     }
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {

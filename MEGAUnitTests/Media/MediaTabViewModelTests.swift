@@ -129,6 +129,19 @@ struct MediaTabViewModelTests {
     
     @MainActor
     @Test
+    func handleMediaTimelineSort() async throws {
+        let contentViewModel = MockMediaTabContentViewModel()
+        let sut = Self.makeSUT(
+            tabViewModels: [.timeline: contentViewModel]
+        )
+
+        sut.mediaTimelineSortMenu(didSelect: .oldestByCaptureTime)
+
+        #expect(contentViewModel.handledMediaTimelineSortOrder == .oldestByCaptureTime)
+    }
+
+    @MainActor
+    @Test
     func toolbarUpdatePublisherUpdatesToolbarConfig() async throws {
         let contentViewModel = MockMediaTabContentViewModel(
             toolBarActions: [.shareLink, .delete]
@@ -366,6 +379,7 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
     private let nodeActionDisplayMode: DisplayMode
     private(set) var handledAction: MediaBottomToolbarAction?
     private(set) var handledPhotosFilterOptions: PhotosFilterOptionsEntity?
+    private(set) var handledMediaTimelineSortOrder: MediaTimelineSortOrderEntity?
     
     init(
         itemViewModels: [NavigationBarItemViewModel] = [],
@@ -380,7 +394,11 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
     }
 }
 
-extension MockMediaTabContentViewModel: MediaTabContextMenuActionHandler { }
+extension MockMediaTabContentViewModel: MediaTabContextMenuActionHandler {
+    func handleMediaTimelineSortAction(_ sortOrder: MediaTimelineSortOrderEntity) {
+        handledMediaTimelineSortOrder = sortOrder
+    }
+}
 
 extension MockMediaTabContentViewModel: MediaTabNavigationBarItemProvider {
     

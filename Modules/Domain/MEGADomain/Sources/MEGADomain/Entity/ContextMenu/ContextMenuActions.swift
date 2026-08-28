@@ -31,6 +31,10 @@ public enum CMElementTypeEntity: Equatable, Sendable {
     case videoLocationFilter(actionType: VideoLocationFilterEntity)
     case videoDurationFilter(actionType: VideoDurationFilterEntity)
     case photoFilter(option: PhotosFilterOptionsEntity)
+    /// Sort action of the paginated media timeline, carrying both axes it offers:
+    /// direction and the timestamp it buckets by. Separate from `sort`, whose
+    /// `SortOrderEntity` is the shared, cross-screen sort preference.
+    case mediaTimelineSort(actionType: MediaTimelineSortOrderEntity)
     case unknown
 }
 

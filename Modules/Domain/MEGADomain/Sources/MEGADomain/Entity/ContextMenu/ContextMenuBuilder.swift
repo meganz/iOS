@@ -51,6 +51,7 @@ public final class ContextMenuBuilder {
     private var selectedVideoLocationFilter: VideoLocationFilterEntity = .allLocation
     private var selectedVideoDurationFilter: VideoDurationFilterEntity = .allDurations
     private var selectedPhotosFilterOptionsEntity: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
+    private var mediaTimelineSortType: MediaTimelineSortOrderEntity?
 
     public init() {}
     
@@ -314,6 +315,11 @@ public final class ContextMenuBuilder {
         return self
     }
 
+    public func setMediaTimelineSortType(_ sortType: MediaTimelineSortOrderEntity?) -> ContextMenuBuilder {
+        self.mediaTimelineSortType = sortType
+        return self
+    }
+
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -444,7 +450,15 @@ public final class ContextMenuBuilder {
         } else {
             var sortMenuActions = [sortNameAscending, sortNameDescending]
             
-            if isCameraUploadExplorer || isAlbum || viewMode == .mediaDiscovery {
+            if let mediaTimelineSortType {
+                // The timeline offers a direction and a timestamp, so its menu lists the
+                // combinations rather than the shared newest / oldest pair, and the row's subtitle
+                // names the whole combination — `currentSortType` is a SortOrderEntity and could
+                // only ever have said "Newest", leaving the timestamp invisible until opened.
+                return CMEntity(type: .display(actionType: .sort),
+                                currentMediaTimelineSortType: mediaTimelineSortType,
+                                children: mediaTimelineSortActions(for: mediaTimelineSortType))
+            } else if isCameraUploadExplorer || isAlbum || viewMode == .mediaDiscovery {
                 sortMenuActions = [sortNewest, sortOldest]
             } else if isVideosRevampExplorerVideoPlaylists {
                 sortMenuActions = [sortNewest, sortOldest]
@@ -930,6 +944,16 @@ public final class ContextMenuBuilder {
             children: displayActionsMenuChildren)
     }
     
+    /// The paginated timeline's sort actions: every combination of direction and timestamp, with
+    /// the active one checked. Kept flat — the two axes are shown multiplied out rather than as
+    /// separate groups, so exactly one item carries the checkmark.
+    private func mediaTimelineSortActions(for current: MediaTimelineSortOrderEntity) -> [CMActionEntity] {
+        [.newest, .oldest, .newestByCaptureTime, .oldestByCaptureTime].map { sortOrder in
+            CMActionEntity(type: .mediaTimelineSort(actionType: sortOrder),
+                           state: sortOrder == current ? .on : .off)
+        }
+    }
+
     private func mediaFiltersMenu() -> CMElement {
         CMEntity(
             children: [mediaOptionsFilter(), mediaLocationFilter()])

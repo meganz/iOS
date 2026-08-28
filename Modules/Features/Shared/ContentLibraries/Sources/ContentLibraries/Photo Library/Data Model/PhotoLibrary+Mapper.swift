@@ -2,19 +2,34 @@ import Foundation
 import MEGADomain
 
 extension Array where Element == NodeEntity {
-    public func toPhotoLibrary(withSortType type: SortOrderEntity, in timeZone: TimeZone? = nil) -> PhotoLibrary {
+    /// Groups and orders the nodes into the day / month / year tree the timeline renders.
+    ///
+    /// - Parameter timestampBasis: which timestamp to order and bucket by. A node with no media
+    ///   capture time falls back to its modification time rather than disappearing: the SDK
+    ///   derives the capture time from the file name and already falls back to the modification
+    ///   and creation times itself, so a missing one means no usable timestamp at all.
+    public func toPhotoLibrary(
+        withSortType type: SortOrderEntity,
+        timestampBasis: MediaTimelineSortOrderEntity.TimestampBasis = .modificationTime,
+        in timeZone: TimeZone? = nil
+    ) -> PhotoLibrary {
+        let timestamp: (NodeEntity) -> Date = switch timestampBasis {
+        case .modificationTime: { $0.modificationTime }
+        case .mediaCaptureTime: { $0.mediaCaptureTime ?? $0.modificationTime }
+        }
+
         var photos = self
         photos.sort {
-            if $0.modificationTime == $1.modificationTime {
+            if timestamp($0) == timestamp($1) {
                 return $0.handle > $1.handle
             } else {
-                return type == .modificationAsc ? $0.modificationTime < $1.modificationTime : $0.modificationTime > $1.modificationTime
+                return type == .modificationAsc ? timestamp($0) < timestamp($1) : timestamp($0) > timestamp($1)
             }
         }
         
         var tempDayDict = [Date: PhotoByDayDataProvider]()
         for node in photos where node.fileExtensionGroup.isVisualMedia {
-            guard let day = node.categoryDate.removeTimestamp(timeZone: timeZone) else { continue }
+            guard let day = timestamp(node).removeTimestamp(timeZone: timeZone) else { continue }
             if let photoByDay = tempDayDict[day] {
                 photoByDay.photos.append(node)
             } else {

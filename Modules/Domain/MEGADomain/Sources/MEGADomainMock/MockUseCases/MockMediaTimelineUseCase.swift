@@ -35,12 +35,14 @@ public actor MediaTimelineUseCaseRecorder {
     public private(set) var pageAfterCalls: [PageAfterCall] = []
     public private(set) var pageBeforeCalls: [PageBeforeCall] = []
     public private(set) var windowCalls: [WindowCall] = []
+    public private(set) var sortOrders: [MediaTimelineSortOrderEntity] = []
 
     public init() {}
 
     func record(_ call: PageAfterCall) { pageAfterCalls.append(call) }
     func record(_ call: PageBeforeCall) { pageBeforeCalls.append(call) }
     func record(_ call: WindowCall) { windowCalls.append(call) }
+    func record(sortOrder: MediaTimelineSortOrderEntity) { sortOrders.append(sortOrder) }
 
     /// Drop everything recorded so far. The initial load eagerly fetches the first window
     /// (`mediaPage(after: nil)`); call this after it to assert on a later, scroll-driven
@@ -49,6 +51,7 @@ public actor MediaTimelineUseCaseRecorder {
         pageAfterCalls.removeAll()
         pageBeforeCalls.removeAll()
         windowCalls.removeAll()
+        sortOrders.removeAll()
     }
 }
 
@@ -91,7 +94,8 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         granularity: MediaDateGranularityEntity,
         sortOrder: MediaTimelineSortOrderEntity
     ) async throws -> [MediaDateSectionEntity] {
-        try dateSectionsResult.get()
+        await recorder?.record(sortOrder: sortOrder)
+        return try dateSectionsResult.get()
     }
 
     public func mediaPage(
@@ -101,6 +105,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(after: lastNode, limit: limit))
+        await recorder?.record(sortOrder: sortOrder)
         await onFetch?()
         return try mediaPageResult.get()
     }
@@ -112,6 +117,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(before: firstNode, limit: limit))
+        await recorder?.record(sortOrder: sortOrder)
         await onFetch?()
         return try mediaPageBeforeResult.get()
     }
@@ -124,6 +130,7 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         limit: Int
     ) async throws -> [NodeEntity] {
         await recorder?.record(.init(section: section, offset: offset, limit: limit))
+        await recorder?.record(sortOrder: sortOrder)
         await onFetch?()
         return try mediaWindowResult.get()
     }
@@ -133,7 +140,8 @@ public struct MockMediaTimelineUseCase: MediaTimelineUseCaseProtocol {
         granularity: MediaDateGranularityEntity,
         sortOrder: MediaTimelineSortOrderEntity
     ) async -> AnyAsyncSequence<Result<[MediaDateSectionEntity], any Error>> {
-        monitorDateSectionsSequence
+        await recorder?.record(sortOrder: sortOrder)
+        return monitorDateSectionsSequence
     }
 
     public func excludeSensitives() async -> Bool {
