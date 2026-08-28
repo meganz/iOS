@@ -823,6 +823,7 @@
 		6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
 		6D51603130293F8600ECEDC2 /* AppActionsRequiringConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D51603030293F8600ECEDC1 /* AppActionsRequiringConnectionTests.swift */; };
+		679F2FDFB5787FB4FCA14346 /* FilesExplorerOfflineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA534F09B7ACDD0E4D1483 /* FilesExplorerOfflineTests.swift */; };
 		6D5B40732D0420DC0088E7CC /* RubbishBinSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -3685,6 +3686,7 @@
 		6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCallsSettingsView.swift; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D51603030293F8600ECEDC1 /* AppActionsRequiringConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppActionsRequiringConnectionTests.swift; sourceTree = "<group>"; };
+		53EA534F09B7ACDD0E4D1483 /* FilesExplorerOfflineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerOfflineTests.swift; sourceTree = "<group>"; };
 		6D5B40722D0420D80088E7CC /* RubbishBinSettingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8753,6 +8755,7 @@
 			isa = PBXGroup;
 			children = (
 				6D51603030293F8600ECEDC1 /* AppActionsRequiringConnectionTests.swift */,
+				53EA534F09B7ACDD0E4D1483 /* FilesExplorerOfflineTests.swift */,
 				94C65C0938285315D170D0E3 /* OfflineAwareNodeActionDelegateTests.swift */,
 			);
 			path = OfflineMode;
@@ -16803,6 +16806,7 @@
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
 				835EBCD12DCA0B7C00AD1E57 /* FileLinkViewModelTests.swift in Sources */,
+				679F2FDFB5787FB4FCA14346 /* FilesExplorerOfflineTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,

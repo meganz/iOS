@@ -29,6 +29,8 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     override var displayMode: DisplayMode { .cloudDrive }
 
+    override var offlineActionGuard: any OfflineActionGuarding { viewModel.offlineActionGuard }
+
     init(viewModel: FilesExplorerViewModel,
          delegate: some FilesExplorerViewControllerDelegate) {
         self.viewModel = viewModel
@@ -59,10 +61,13 @@ class FilesExplorerViewController: ExplorerBaseViewController {
             self?.selectNodes(selectedNodes)
         }
 
-        let delegate = NodeActionViewControllerGenericDelegate(
-            viewController: navigationController,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-            nodeActionListener: nodeActionResponder.nodeActionListener()
+        let delegate = OfflineAwareNodeActionDelegate(
+            wrapping: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
+                nodeActionListener: nodeActionResponder.nodeActionListener()
+            ),
+            offlineActionGuard: offlineActionGuard
         )
         let vc = NodeActionViewController(node: node,
                                           delegate: delegate,

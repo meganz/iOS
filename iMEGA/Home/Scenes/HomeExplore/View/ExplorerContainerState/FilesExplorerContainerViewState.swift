@@ -17,13 +17,12 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     }
     
     private var filesExplorerViewController: FilesExplorerViewController? {
-        return childViewController as? FilesExplorerViewController
+        assert(explorerViewControllers.count < 2, "multiple view controllers added to container")
+        return explorerViewControllers.first
     }
-    
-    var childViewController: UIViewController? {
-        assert(containerViewController.children.count < 2,
-               "multiple view controllers added to container")
-        return containerViewController.children.first
+
+    private var explorerViewControllers: [FilesExplorerViewController] {
+        containerViewController.children.compactMap { $0 as? FilesExplorerViewController }
     }
 
     init(containerViewController: FilesExplorerContainerViewController,
@@ -46,7 +45,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
 
     func add(content: UIViewController) {
         containerViewController.addChild(content)
-        containerViewController.view.wrap(content.view)
+        containerViewController.contentContainerView.wrap(content.view)
         content.didMove(toParent: containerViewController)
     }
 
@@ -68,7 +67,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     }
     
     func removeChildrenFromContainerIfNeeded() {
-        containerViewController.children.forEach { remove(content: $0)}
+        explorerViewControllers.forEach { remove(content: $0) }
     }
     
     func setViewModePreference(_ preference: ViewModePreferenceEntity) {

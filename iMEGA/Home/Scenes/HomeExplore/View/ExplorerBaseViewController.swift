@@ -18,6 +18,8 @@ class ExplorerBaseViewController: UIViewController {
     }
     
     var displayMode: DisplayMode { .unknown }
+
+    var offlineActionGuard: any OfflineActionGuarding { OfflineActionGuard.neverBlocking }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,12 @@ class ExplorerBaseViewController: UIViewController {
         registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: ExplorerBaseViewController, _: UITraitCollection) in
             AppearanceManager.forceToolbarUpdate(viewController.toolbar)
         }
+    }
+
+    /// - Returns: true when the action may run. Otherwise the standard no-connection prompt has
+    /// already been shown and the caller must do nothing.
+    func allowsActionRequiringConnection() -> Bool {
+        offlineActionGuard.allowsActionRequiringConnection()
     }
 
     func showToolbar() {
@@ -101,7 +109,8 @@ class ExplorerBaseViewController: UIViewController {
     
     fileprivate func downloadBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
+              !selectedNodes.isEmpty,
+              allowsActionRequiringConnection() else {
             return
         }
         
@@ -112,7 +121,8 @@ class ExplorerBaseViewController: UIViewController {
     
     fileprivate func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
+              !selectedNodes.isEmpty,
+              allowsActionRequiringConnection() else {
             return
         }
         SaveToPhotosCoordinator.SVProgressErrorOnly()
@@ -123,7 +133,8 @@ class ExplorerBaseViewController: UIViewController {
     
     fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
+              !selectedNodes.isEmpty,
+              allowsActionRequiringConnection() else {
             return
         }
         
@@ -137,6 +148,7 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func deleteButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,
+              allowsActionRequiringConnection(),
               let rubbishBinNode = MEGASdk.shared.rubbishNode else {
             return
         }
@@ -166,6 +178,7 @@ class ExplorerBaseViewController: UIViewController {
     private func openBrowserViewController(withAction action: BrowserAction) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,
+              allowsActionRequiringConnection(),
               let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
               let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
             return
@@ -192,7 +205,8 @@ class ExplorerBaseViewController: UIViewController {
     
     fileprivate func didPressedExportFile(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
+              !selectedNodes.isEmpty,
+              allowsActionRequiringConnection() else {
             return
         }
         
@@ -203,7 +217,8 @@ class ExplorerBaseViewController: UIViewController {
     
     fileprivate func didPressedSendToChat(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
-              !selectedNodes.isEmpty else {
+              !selectedNodes.isEmpty,
+              allowsActionRequiringConnection() else {
             return
         }
         guard let navigationController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
@@ -318,6 +333,7 @@ extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
     
     private func handleNodesAction(action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
         guard let sender = sender as? UIBarButtonItem else { return }
+        guard !action.requiresConnection || allowsActionRequiringConnection() else { return }
         switch action {
         case .download:
             downloadBarButtonPressed(sender)

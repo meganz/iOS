@@ -39,6 +39,10 @@ final class FilesExplorerViewModel: ViewModelType {
     }
     
     private let router: FilesExplorerRouter
+
+    let offlineActionGuard: any OfflineActionGuarding
+    private let offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher
+
     private let useCase: any FilesSearchUseCaseProtocol
     private let nodeDownloadUpdatesUseCase: any NodeDownloadUpdatesUseCaseProtocol
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
@@ -120,12 +124,16 @@ final class FilesExplorerViewModel: ViewModelType {
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         nodeProvider: some MEGANodeProviderProtocol,
         sortHeaderConfig: SortHeaderConfig,
+        offlineActionGuard: some OfflineActionGuarding,
+        offlineNodeTapDispatcher: OfflineAwareNodeTapDispatcher,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         notificationCenter: NotificationCenter = .default,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.explorerType = explorerType
         self.router = router
+        self.offlineActionGuard = offlineActionGuard
+        self.offlineNodeTapDispatcher = offlineNodeTapDispatcher
         self.useCase = useCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
@@ -189,6 +197,7 @@ final class FilesExplorerViewModel: ViewModelType {
             viewTypePreference = ViewModePreferenceEntity(rawValue: viewType) == .thumbnail ? .grid : .list
             configureContextMenus()
         case .downloadNode(let node):
+            guard offlineActionGuard.allowsActionRequiringConnection() else { return }
             router.showDownloadTransfer(node: node)
         case .onSortHeaderViewPressed:
             tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
@@ -248,6 +257,12 @@ final class FilesExplorerViewModel: ViewModelType {
 	}
     
     private func didSelect(node: MEGANode, allNodes: [MEGANode]) {
+        offlineNodeTapDispatcher.dispatch(nodeHandle: node.handle, isFolder: node.isFolder()) { [weak self] _ in
+            self?.open(node: node, allNodes: allNodes)
+        }
+    }
+
+    private func open(node: MEGANode, allNodes: [MEGANode]) {
         let isSearching = !(searchText ?? "").isEmpty
         let sourcePage: NodeSourcePage = isSearching
             ? .search
@@ -340,6 +355,7 @@ extension FilesExplorerViewModel: DisplayMenuDelegate, UploadAddMenuDelegate {
     }
     
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {
+        guard !action.requiresConnection || offlineActionGuard.allowsActionRequiringConnection() else { return }
         invokeCommand?(.didSelect(action))
     }
 }

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -172,6 +173,11 @@ extension DocAndAudioListSource {
     }
     
     private func moveToRubbishBin(node: MEGANode) {
+        guard delegate?.offlineActionGuard.allowsActionRequiringConnection() ?? true else {
+            tableView.setEditing(false, animated: true)
+            return
+        }
+
         node.mnz_moveToTheRubbishBin { [weak self] in
             guard let self else { return }
             Task { @MainActor in

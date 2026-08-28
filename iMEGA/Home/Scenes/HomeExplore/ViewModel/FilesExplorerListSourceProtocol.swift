@@ -1,6 +1,8 @@
+import MEGAAppPresentation
 import MEGADomain
 
 protocol FilesExplorerListSourceDelegate: UIViewController {
+    var offlineActionGuard: any OfflineActionGuarding { get }
     func showMoreOptions(forNode node: MEGANode, sender: UIView)
     func didSelect(node: MEGANode, atIndexPath indexPath: IndexPath, allNodes: [MEGANode])
     func didDeselect(node: MEGANode, atIndexPath indexPath: IndexPath, allNodes: [MEGANode])

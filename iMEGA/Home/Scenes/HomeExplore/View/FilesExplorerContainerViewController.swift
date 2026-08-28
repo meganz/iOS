@@ -20,6 +20,13 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private let viewModel: FilesExplorerViewModel
     private var uploadViewModel: HomeUploadingViewModel?
     private let viewPreference: ViewPreference
+    private let isNewOfflineModeEnabled: Bool
+
+    /// The slot the explorers are swapped into, so the banner can sit beside them rather than on
+    /// top of whichever one is currently showing.
+    private(set) lazy var contentContainerView = UIView()
+
+    private lazy var noInternetBannerViewController = NoInternetBannerHostingController()
     
     private var contextBarButtonItem = UIBarButtonItem()
     private var uploadAddBarButtonItem = UIBarButtonItem()
@@ -46,9 +53,14 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     // MARK: -
     
-    init(viewModel: FilesExplorerViewModel, viewPreference: ViewPreference) {
+    init(
+        viewModel: FilesExplorerViewModel,
+        viewPreference: ViewPreference,
+        isNewOfflineModeEnabled: Bool = DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+    ) {
         self.viewModel = viewModel
         self.viewPreference = viewPreference
+        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
         super.init(nibName: nil, bundle: nil)
         if self.viewModel.getExplorerType() == .allDocs, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreferenceEntity.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
@@ -63,6 +75,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpContentLayout()
         currentState.showContent()
         configureNavigationBarButtons()
         configureSearchBar()
@@ -74,6 +87,30 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         registerForTraitChanges(UITraitCollection.systemTraitsAffectingColorAppearance) { (viewController: FilesExplorerContainerViewController, _: UITraitCollection) in
             AppearanceManager.forceSearchBarUpdate(viewController.searchController.searchBar)
         }
+    }
+
+    // MARK: - Offline mode banner
+
+    private func setUpContentLayout() {
+        guard isNewOfflineModeEnabled else {
+            view.wrap(contentContainerView)
+            return
+        }
+
+        addChild(noInternetBannerViewController)
+        let stackView = UIStackView(arrangedSubviews: [
+            noInternetBannerViewController.view,
+            contentContainerView
+        ])
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        [stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+         stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ].activate()
+        noInternetBannerViewController.didMove(toParent: self)
     }
 
     // MARK: - Bar Buttons    

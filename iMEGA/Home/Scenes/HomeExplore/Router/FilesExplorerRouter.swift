@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import MEGAUIComponent
 import SwiftUI
 import Video
@@ -40,6 +41,22 @@ struct FilesExplorerRouter {
                                          nodeRepository: NodeRepository.newRepo)
         let nodeDownloadUpdatesUseCase = NodeDownloadUpdatesUseCase(repo: NodeTransferRepository.newRepo)
         let createContextMenuUseCase = CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+
+        let isNewOfflineModeEnabled = featureFlagProvider.isNewOfflineModeEnabled
+        let nodeUseCase = NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+        let offlineNodeTapDispatcher = OfflineAwareNodeTapDispatcher(
+            offlineFileOpenGuard: OfflineFileOpenGuard(
+                isNewOfflineModeEnabled: isNewOfflineModeEnabled,
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                nodeUseCase: nodeUseCase,
+                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+            ),
+            nodeUseCase: nodeUseCase
+        )
         
         let viewModel = FilesExplorerViewModel(
             explorerType: explorerType,
@@ -57,11 +74,19 @@ struct FilesExplorerRouter {
             sortHeaderConfig: SortHeaderConfig(
                 title: Strings.Localizable.sortTitle,
                 options: SearchResultsSortOptionFactory.makeAll()
-            )
+            ),
+            offlineActionGuard: OfflineActionGuard(isNewOfflineModeEnabled: isNewOfflineModeEnabled),
+            offlineNodeTapDispatcher: offlineNodeTapDispatcher
         )
         let preference: FilesExplorerContainerViewController.ViewPreference = explorerType == .video ? .list : .both
-        let vc = FilesExplorerContainerViewController(viewModel: viewModel,
-                                                      viewPreference: preference)
+        let vc = FilesExplorerContainerViewController(
+            viewModel: viewModel,
+            viewPreference: preference,
+            isNewOfflineModeEnabled: isNewOfflineModeEnabled
+        )
+        offlineNodeTapDispatcher.showFileUnavailableSnackBar = { [weak vc] in
+            vc?.showSnackBar(message: Strings.Localizable.CloudDrive.Offline.fileNotAvailableOffline)
+        }
         navController.pushViewController(vc, animated: true)
     }
     
