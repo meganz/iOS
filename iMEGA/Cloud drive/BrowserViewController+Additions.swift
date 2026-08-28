@@ -104,7 +104,7 @@ extension BrowserViewController {
                 }
             } else {
                 if parentNode == nil || parentNode?.type == .root {
-                    return (Strings.Localizable.cloudDrive, false)
+                    return (browserAction == .saveToCloudDrive ? accountRootTitle : Strings.Localizable.cloudDrive, false)
                 } else {
                     return (parentNode?.name ?? "", false)
                 }

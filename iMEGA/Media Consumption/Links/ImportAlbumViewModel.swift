@@ -30,6 +30,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let appDelegateRouter: any AppDelegateRouting
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let exportRouter: any AlbumLinkExportRouting
+    private let onboardingRouter: any AlbumLinkImportOnboardingRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
@@ -122,6 +123,12 @@ final class ImportAlbumViewModel: ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .linkRevamp)
     }
     
+    /// The revamp swaps the icon-only bottom toolbar for a single anchored `Save to MEGA` button. Selection
+    /// mode keeps the pre-revamp toolbar -- its redesign belongs to a separate ticket.
+    var showsAnchoredButtons: Bool {
+        isLinkRevampEnabled && !isSelectionEnabled
+    }
+    
     var shouldShowLinkUnavailable: Bool {
         isLinkRevampEnabled && publicLinkStatus == .invalid
     }
@@ -156,27 +163,21 @@ final class ImportAlbumViewModel: ObservableObject {
         isLinkRevampEnabled
     }
     
+    /// Save to MEGA is not among them: the sheet only opens outside a selection, which is exactly where the
+    /// anchored button already offers it, so a row here would sit under a button saying the same thing.
     var moreOptions: [AlbumLinkMoreOption] {
-        var options: [AlbumLinkMoreOption] = [.select]
-        if accountUseCase.isLoggedIn() {
-            options.append(.saveToMEGA)
-        }
-        options.append(.shareLink)
-        return options
+        [.select, .shareLink]
     }
     
-    /// The rows follow the buttons they were moved from: the ones that act on the photos wait for photos
-    /// to act on, and Share link waits only for the link to resolve.
+    /// The rows follow the buttons they were moved from: Select waits for photos to select, and Share link
+    /// waits only for the link to resolve.
     ///
     /// Select carries one condition of its own. The zoom bar can put the screen in the year, month or day
     /// view, and none of them can show a selection -- the same reason the select button this sheet
     /// replaced fades out there.
     var disabledMoreOptions: Set<AlbumLinkMoreOption> {
         var disabled = Set<AlbumLinkMoreOption>()
-        if isToolbarButtonsDisabled {
-            disabled.formUnion([.select, .saveToMEGA])
-        }
-        if photoLibraryContentViewModel.selectedMode != .all {
+        if isToolbarButtonsDisabled || photoLibraryContentViewModel.selectedMode != .all {
             disabled.insert(.select)
         }
         if isShareLinkButtonDisabled {
@@ -204,6 +205,7 @@ final class ImportAlbumViewModel: ObservableObject {
          appDelegateRouter: some AppDelegateRouting,
          thumbnailLoader: any ThumbnailLoaderProtocol,
          exportRouter: some AlbumLinkExportRouting,
+         onboardingRouter: some AlbumLinkImportOnboardingRouting = AlbumLinkImportOnboardingRouter(),
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
@@ -219,6 +221,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.appDelegateRouter = appDelegateRouter
         self.thumbnailLoader = thumbnailLoader
         self.exportRouter = exportRouter
+        self.onboardingRouter = onboardingRouter
         self.featureFlagProvider = featureFlagProvider
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
@@ -283,12 +286,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     /// One entry point for every row of the more options sheet, so the view does not have to know which
     /// action a row stands for.
-    func handle(moreOption: AlbumLinkMoreOption) async {
+    func handle(moreOption: AlbumLinkMoreOption) {
         switch moreOption {
         case .select:
             enablePhotoLibraryEditMode(true)
-        case .saveToMEGA:
-            await importAlbum()
         case .shareLink:
             // Shared straight from the sheet's own row, which hands the system share sheet the
             // anchoring it needs on iPad.
@@ -298,6 +299,12 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func importAlbum() async {
         tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToCloudDriveButtonEvent)
+        // The anchored button is offered to logged out visitors as well, so there is no cloud drive to
+        // pick a destination in yet -- they are sent to sign in first.
+        guard accountUseCase.isLoggedIn() else {
+            onboardingRouter.showOnboarding()
+            return
+        }
         guard validateOverDiskQuota() else {
             return
         }

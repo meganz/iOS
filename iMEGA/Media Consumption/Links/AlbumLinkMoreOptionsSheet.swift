@@ -7,10 +7,10 @@ import SwiftUI
 ///
 /// The design also lists a Report row. It has no flow, string or tracking in the app yet, so it is left
 /// out until it gets a ticket of its own -- the same as on the file and folder links.
-/// Save to Photos is not among them either: the design keeps it on the bottom bar, which this sheet does not touch.
+/// Save to Photos is not among them either: the design keeps it on the bottom bar, which this sheet does not
+/// touch. Nor is Save to MEGA, which the anchored button offers wherever this sheet can be opened.
 enum AlbumLinkMoreOption: Identifiable, Hashable {
     case select
-    case saveToMEGA
     case shareLink
 
     var id: Self { self }
@@ -19,8 +19,6 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             Strings.Localizable.select
-        case .saveToMEGA:
-            Strings.Localizable.Link.Button.saveToMega
         case .shareLink:
             Strings.Localizable.General.MenuAction.ShareLink.title(1)
         }
@@ -30,8 +28,6 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             MEGAAssets.Image.checkCircle
-        case .saveToMEGA:
-            MEGAAssets.Image.uploadToCloud
         case .shareLink:
             MEGAAssets.Image.link01
         }
@@ -260,7 +256,7 @@ private struct ContentHeightPreferenceKey: PreferenceKey {
                 subtitle: Strings.Localizable.albumLink,
                 cover: nil,
                 link: "https://mega.nz/collection/abcdefgh#key",
-                options: [.select, .saveToMEGA, .shareLink],
+                options: [.select, .shareLink],
                 disabledOptions: [],
                 selectionHandler: { _ in }
             )

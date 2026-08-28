@@ -557,6 +557,54 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testImportAlbum_userNotLoggedIn_shouldShowOnboardingInsteadOfTheDestinationPicker() async throws {
+        let onboardingRouter = MockAlbumLinkImportOnboardingRouter()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           accountUseCase: MockAccountUseCase(isLoggedIn: false),
+                                           onboardingRouter: onboardingRouter)
+
+        await sut.importAlbum()
+
+        XCTAssertEqual(onboardingRouter.showOnboardingCalled, 1)
+        XCTAssertFalse(sut.showImportAlbumLocation)
+    }
+
+    @MainActor
+    func testImportAlbum_userLoggedIn_shouldNotShowOnboarding() async throws {
+        let onboardingRouter = MockAlbumLinkImportOnboardingRouter()
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 3, name: "valid album name")
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: publicAlbumUseCase,
+                                           accountUseCase: MockAccountUseCase(isLoggedIn: true),
+                                           onboardingRouter: onboardingRouter)
+        await sut.loadPublicAlbum()
+
+        await sut.importAlbum()
+
+        XCTAssertEqual(onboardingRouter.showOnboardingCalled, 0)
+        XCTAssertTrue(sut.showImportAlbumLocation)
+    }
+
+    @MainActor
+    func testShowsAnchoredButtons_linkRevampEnabled_shouldOnlyShowOutsideSelection() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        XCTAssertTrue(sut.showsAnchoredButtons)
+
+        sut.photoLibraryContentViewModel.selection.editMode = .active
+
+        XCTAssertFalse(sut.showsAnchoredButtons)
+    }
+
+    @MainActor
+    func testShowsAnchoredButtons_linkRevampDisabled_shouldKeepTheBottomToolbar() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: false]))
+
+        XCTAssertFalse(sut.showsAnchoredButtons)
+    }
+
+    @MainActor
     func testRenameAlbum_newNameProvided_shouldShowImportAlbumLocationAndUseNewNameDuringImport() async throws {
         let newAlbumName = "The new album name"
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
@@ -1118,24 +1166,18 @@ final class ImportAlbumViewModelTests: XCTestCase {
         }
     }
     
+    /// Save to MEGA is deliberately absent: the anchored button carries it wherever the sheet can be
+    /// opened, so the rows no longer depend on whether there is a session.
     @MainActor
-    func testMoreOptions_whenLoggedIn_shouldOfferEveryRow() throws {
-        let sut = makeImportAlbumViewModel(
-            publicLink: try validFullAlbumLink,
-            accountUseCase: MockAccountUseCase(isLoggedIn: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
-        
-        XCTAssertEqual(sut.moreOptions, [.select, .saveToMEGA, .shareLink])
-    }
-    
-    @MainActor
-    func testMoreOptions_whenLoggedOut_shouldDropTheRowsThatNeedAnAccount() throws {
-        let sut = makeImportAlbumViewModel(
-            publicLink: try validFullAlbumLink,
-            accountUseCase: MockAccountUseCase(isLoggedIn: false),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
-        
-        XCTAssertEqual(sut.moreOptions, [.select, .shareLink])
+    func testMoreOptions_whetherLoggedInOrOut_shouldOfferSelectAndShareLink() throws {
+        for isLoggedIn in [true, false] {
+            let sut = makeImportAlbumViewModel(
+                publicLink: try validFullAlbumLink,
+                accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn),
+                featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            
+            XCTAssertEqual(sut.moreOptions, [.select, .shareLink], "logged in: \(isLoggedIn)")
+        }
     }
     
     @MainActor
@@ -1145,7 +1187,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
         
-        XCTAssertEqual(sut.disabledMoreOptions, [.select, .saveToMEGA, .shareLink])
+        XCTAssertEqual(sut.disabledMoreOptions, [.select, .shareLink])
         XCTAssertTrue(sut.isMoreOptionsButtonDisabled)
     }
     
@@ -1197,7 +1239,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
         
-        await sut.handle(moreOption: .select)
+        sut.handle(moreOption: .select)
         
         XCTAssertTrue(sut.photoLibraryContentViewModel.selection.editMode.isEditing)
     }
@@ -1208,7 +1250,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
         
-        await sut.handle(moreOption: .shareLink)
+        sut.handle(moreOption: .shareLink)
         
         XCTAssertFalse(sut.showShareLink)
     }
@@ -1229,6 +1271,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
+        onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1248,6 +1291,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             appDelegateRouter: appDelegateRouter,
             thumbnailLoader: thumbnailLoader,
             exportRouter: exportRouter,
+            onboardingRouter: onboardingRouter,
             featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
@@ -1390,6 +1434,7 @@ struct ImportAlbumViewModelTestSuite {
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
+        onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ImportAlbumViewModel {
         .init(
@@ -1407,6 +1452,7 @@ struct ImportAlbumViewModelTestSuite {
             appDelegateRouter: appDelegateRouter,
             thumbnailLoader: thumbnailLoader,
             exportRouter: exportRouter,
+            onboardingRouter: onboardingRouter,
             featureFlagProvider: featureFlagProvider)
     }
 }
@@ -1417,5 +1463,15 @@ private final class MockAlbumLinkExportRouter: AlbumLinkExportRouting {
     
     func export(photos: [NodeEntity]) async {
         exportedPhotos.append(photos)
+    }
+}
+
+private final class MockAlbumLinkImportOnboardingRouter: AlbumLinkImportOnboardingRouting {
+    private(set) var showOnboardingCalled = 0
+    
+    nonisolated init() {}
+    
+    func showOnboarding() {
+        showOnboardingCalled += 1
     }
 }

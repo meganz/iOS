@@ -16,6 +16,10 @@ struct ImportAlbumView: View {
     
     @State private var publicAlbumLoadingTask: Task<Void, Never>?
     
+    /// Read here rather than where it is used because this is the last place that still sees it -- see
+    /// `AlbumLinkAnchoredButtons.bottomSafeAreaInset`.
+    @State private var bottomSafeAreaInset: CGFloat = 0
+    
     var body: some View {
         
         Group {
@@ -45,9 +49,33 @@ struct ImportAlbumView: View {
         NavigationStack {
             albumBody
                 .navigationBarTitleDisplayMode(.inline)
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    anchoredButtons
+                }
                 .toolbar { toolbarContent }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { bottomSafeAreaInset = proxy.safeAreaInsets.bottom }
+                    .onChange(of: proxy.safeAreaInsets.bottom) { _, inset in
+                        bottomSafeAreaInset = inset
+                    }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var anchoredButtons: some View {
+        if viewModel.showsAnchoredButtons {
+            AlbumLinkAnchoredButtons(
+                isDisabled: viewModel.isToolbarButtonsDisabled,
+                bottomSafeAreaInset: bottomSafeAreaInset
+            ) {
+                Task { await viewModel.importAlbum() }
+            }
+        }
     }
     
     private var albumBody: some View {
@@ -106,9 +134,7 @@ struct ImportAlbumView: View {
                 link: viewModel.shareableLink.absoluteString,
                 options: viewModel.moreOptions,
                 disabledOptions: viewModel.disabledMoreOptions,
-                selectionHandler: { option in
-                    Task { await viewModel.handle(moreOption: option) }
-                }
+                selectionHandler: { viewModel.handle(moreOption: $0) }
             )
     }
     
@@ -172,26 +198,30 @@ struct ImportAlbumView: View {
             rightNavigationBarButton
         }
         
-        ToolbarItemGroup(placement: .bottomBar) {
-            if viewModel.isLinkRevampEnabled {
-                revampedBottomBar
-            } else {
-                legacyBottomBar
+        // The revamp's anchored `Save to MEGA` button stands in for the whole bottom bar outside a
+        // selection, so the toolbar is only declared where it is still the only thing on offer.
+        if !viewModel.showsAnchoredButtons {
+            ToolbarItemGroup(placement: .bottomBar) {
+                if viewModel.isLinkRevampEnabled {
+                    revampedBottomBar
+                } else {
+                    legacyBottomBar
+                }
             }
         }
     }
 
     /// Download, Save to Photos and Save to MEGA. Share link is not here: the revamped design moves it into
     /// the overflow menu.
+    /// Save to MEGA is offered to logged out visitors too, the same as the anchored button this bar stands
+    /// in for during a selection: the tap takes them to onboarding rather than to a destination picker.
     @ViewBuilder
     private var revampedBottomBar: some View {
         exportToolbarButton
         Spacer()
         saveToPhotosToolbarButton
-        if viewModel.showImportToolbarButton {
-            Spacer()
-            saveToMEGAToolbarButton
-        }
+        Spacer()
+        saveToMEGAToolbarButton
     }
 
     @ViewBuilder
