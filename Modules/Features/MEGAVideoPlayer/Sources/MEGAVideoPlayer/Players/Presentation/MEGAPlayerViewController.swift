@@ -10,8 +10,22 @@ public final class MEGAPlayerViewController: UIViewController {
     private let viewModel: MEGAPlayerViewModel
     private var pipController: AVPictureInPictureController?
 
-    public init(viewModel: MEGAPlayerViewModel) {
+    private var isPictureInPictureSessionActive: Bool {
+        VideoPlayerPictureInPictureSession.isHosted(by: self)
+    }
+
+    private var isOffScreen: Bool {
+        isBeingDismissed || viewIfLoaded?.window == nil
+    }
+
+    private let pictureInPicturePresenter: @MainActor () -> UIViewController?
+
+    public init(
+        viewModel: MEGAPlayerViewModel,
+        pictureInPicturePresenter: @escaping @MainActor () -> UIViewController?
+    ) {
         self.viewModel = viewModel
+        self.pictureInPicturePresenter = pictureInPicturePresenter
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -117,6 +131,21 @@ public final class MEGAPlayerViewController: UIViewController {
 
     private func setupPictureInPicture() {
         pipController = viewModel.player.loadPIPController()
+        pipController?.delegate = self
+    }
+
+    /// Takes the window down and stops whatever was feeding it
+    func endPictureInPictureSession() {
+        pipController?.stopPictureInPicture()
+        endPlaybackIfOffScreen()
+    }
+
+    /// A session that ends with the player nowhere on screen has nothing left to play into, so playback
+    /// ends with it. One the user restored — or never left — carries on full screen.
+    private func endPlaybackIfOffScreen() {
+        guard isOffScreen else { return }
+
+        viewModel.viewWillDismiss()
     }
 
     // MARK: - Orientation
@@ -163,9 +192,73 @@ public final class MEGAPlayerViewController: UIViewController {
     // MARK: - Dismissal
 
     /// Shared by the back button and the drag down gesture, so both leave the same way.
+    ///
+    /// While a Picture in Picture session is running, leaving takes away only the screen: the video
+    /// keeps playing in its window until the user closes or restores it.
     private func dismissPlayer() {
-        viewModel.viewWillDismiss()
+        if !isPictureInPictureSessionActive {
+            viewModel.viewWillDismiss()
+        }
+
         viewModel.dismissAction?()
+    }
+}
+
+// MARK: - PictureInPictureHost
+
+extension MEGAPlayerViewController: PictureInPictureHost {}
+
+// MARK: - AVPictureInPictureControllerDelegate
+
+// AVKit calls its delegate on the main thread, so the conformance is main actor isolated even though
+// the Objective-C protocol carries no isolation of its own.
+extension MEGAPlayerViewController: @preconcurrency AVPictureInPictureControllerDelegate {
+    public func pictureInPictureControllerWillStartPictureInPicture(
+        _ pictureInPictureController: AVPictureInPictureController
+    ) {
+        VideoPlayerPictureInPictureSession.begin(hostedBy: self)
+    }
+
+    public func pictureInPictureController(
+        _ pictureInPictureController: AVPictureInPictureController,
+        restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+    ) {
+        // A session already torn down on this side — because the next video is opening — has nothing
+        // left to restore, and must not put this player back over the one replacing it.
+        guard isPictureInPictureSessionActive else {
+            completionHandler(false)
+            return
+        }
+
+        guard isOffScreen else {
+            completionHandler(true)
+            return
+        }
+
+        guard let presenter = pictureInPicturePresenter() else {
+            completionHandler(false)
+            return
+        }
+
+        presenter.present(self, animated: true) { completionHandler(true) }
+    }
+
+    public func pictureInPictureControllerDidStopPictureInPicture(
+        _ pictureInPictureController: AVPictureInPictureController
+    ) {
+        endPlaybackIfOffScreen()
+        VideoPlayerPictureInPictureSession.relinquish(by: self)
+    }
+
+    public func pictureInPictureController(
+        _ pictureInPictureController: AVPictureInPictureController,
+        failedToStartPictureInPictureWithError error: any Error
+    ) {
+        // The session counts as running from `willStart`, so a player dismissed during the start
+        // transition has already skipped its teardown on the way out, waiting for the window to take
+        // over. No window arrived, so it has to happen here.
+        endPlaybackIfOffScreen()
+        VideoPlayerPictureInPictureSession.relinquish(by: self)
     }
 }
 
@@ -175,10 +268,15 @@ import SwiftUI
 
 public struct MEGAPlayerView: UIViewControllerRepresentable {
     let viewModel: MEGAPlayerViewModel
+    let pictureInPicturePresenter: @MainActor () -> UIViewController?
     @Environment(\.dismiss) private var dismiss
 
-    public init(viewModel: MEGAPlayerViewModel) {
+    public init(
+        viewModel: MEGAPlayerViewModel,
+        pictureInPicturePresenter: @escaping @MainActor () -> UIViewController?
+    ) {
         self.viewModel = viewModel
+        self.pictureInPicturePresenter = pictureInPicturePresenter
     }
 
     public func makeUIViewController(context: Context) -> MEGAPlayerViewController {
@@ -186,7 +284,8 @@ public struct MEGAPlayerView: UIViewControllerRepresentable {
             dismiss()
         }
         let controller = MEGAPlayerViewController(
-            viewModel: viewModel
+            viewModel: viewModel,
+            pictureInPicturePresenter: pictureInPicturePresenter
         )
         return controller
     }

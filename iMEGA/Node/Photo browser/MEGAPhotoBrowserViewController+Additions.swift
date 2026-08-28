@@ -102,7 +102,8 @@ extension MEGAPhotoBrowserViewController {
                     )
                 )
                 let playerVC = MEGAPlayerViewController(
-                    viewModel: playerViewModel
+                    viewModel: playerViewModel,
+                    pictureInPicturePresenter: { UIApplication.mnz_presentingViewController() }
                 )
                 playerViewModel.moreAction = { [weak self, weak playerVC] playableNode in
                     guard let self,

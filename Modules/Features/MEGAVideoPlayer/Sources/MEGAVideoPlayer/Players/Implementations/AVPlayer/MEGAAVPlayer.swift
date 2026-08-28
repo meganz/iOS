@@ -283,6 +283,8 @@ extension MEGAAVPlayer: VideoRenderable {
 
 extension MEGAAVPlayer: NodeLoadable {
     public func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
+        VideoPlayerPictureInPictureSession.endRunningSession()
+
         self.nodes = nodes
         monitorVideoNodesUpdate(for: nodes)
         playNode(node)
