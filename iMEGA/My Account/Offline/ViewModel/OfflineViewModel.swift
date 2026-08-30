@@ -133,7 +133,8 @@ final class OfflineViewModel: NSObject, ViewModelType {
             if url.hasDirectoryPath {
                 megaStore.deleteOfflineAppearancePreference(path: relativePath)
             }
-            if let offlineNode = megaStore.fetchOfflineNode(withPath: relativePath) {
+            // A local file can be backed by more than one offline node when several cloud nodes share its content
+            for offlineNode in megaStore.fetchOfflineNodes(withPath: relativePath) {
                 megaStore.remove(offlineNode)
             }
         } catch {

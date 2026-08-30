@@ -189,6 +189,23 @@ final class OfflineViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testAction_removeOfflineItems_whenPathHasSeveralOfflineNodes_shouldRemoveAllOfThem() async {
+        let config = TestConfig(
+            offlineUseCase: {
+                let useCase = MockOfflineUseCase()
+                useCase.stubbedRelativePath = relativePath
+                return useCase
+            }(),
+            megaStore: MockMEGAStore(offlineNodesWithPath: [makeOfflineNode, makeOfflineNode]),
+            urls: [URL(fileURLWithPath: filepath, isDirectory: false)],
+            expectedCommand: .reloadUI,
+            removeCalled: 2
+        )
+        
+        await executeRemoveOfflineItemsTest(config: config)
+    }
+    
+    @MainActor
     func testAction_removeOfflineItems_shouldHandleErrorsGracefully() async {
         let config = TestConfig(
             offlineUseCase: {

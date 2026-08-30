@@ -121,7 +121,11 @@
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
-    if (self.managedObjectContext == nil) return nil;
+    return [[self fetchOfflineNodesWithPath:path] firstObject];
+}
+
+- (NSArray<MOOfflineNode *> *)fetchOfflineNodesWithPath:(NSString *)path {
+    if (self.managedObjectContext == nil) return @[];
     
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
@@ -132,9 +136,9 @@
     [request setPredicate:predicate];
     
     NSError *error;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray<MOOfflineNode *> *array = [self.managedObjectContext executeFetchRequest:request error:&error];
 
-    return [array firstObject];
+    return array ?: @[];
 }
 
 

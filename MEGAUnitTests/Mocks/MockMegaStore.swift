@@ -11,6 +11,7 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     
     private let fetchOfflineNodes: [MOOfflineNode]?
     private let offlineNode: MOOfflineNode?
+    private let offlineNodesWithPath: [MOOfflineNode]?
     
     lazy var inMemoryContainer: NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
@@ -30,10 +31,12 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     
     init(
         fetchOfflineNodes: [MOOfflineNode]? = nil,
-        offlineNode: MOOfflineNode? = nil
+        offlineNode: MOOfflineNode? = nil,
+        offlineNodesWithPath: [MOOfflineNode]? = nil
     ) {
         self.fetchOfflineNodes = fetchOfflineNodes
         self.offlineNode = offlineNode
+        self.offlineNodesWithPath = offlineNodesWithPath
     }
     
     @objc override func fetchCloudAppearancePreference(handle: UInt64) -> CloudAppearancePreference? {
@@ -70,7 +73,11 @@ final class MockMEGAStore: MEGAStore, @unchecked Sendable {
     }
     
     override func fetchOfflineNode(withPath path: String) -> MOOfflineNode? {
-        offlineNode
+        fetchOfflineNodes(withPath: path).first
+    }
+    
+    override func fetchOfflineNodes(withPath path: String) -> [MOOfflineNode] {
+        offlineNodesWithPath ?? [offlineNode].compactMap { $0 }
     }
     
     override func remove(_ offlineNode: MOOfflineNode) {

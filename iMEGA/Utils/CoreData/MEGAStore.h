@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
 - (nullable MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
+- (NSArray<MOOfflineNode *> *)fetchOfflineNodesWithPath:(NSString *)path;
 - (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
 - (nullable MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context;
 - (nullable MOOfflineNode *)offlineNodeWithHandle:(NSString *)base64Handle;
