@@ -8,9 +8,14 @@ public struct KMTransferQASettingsView: View {
     @State private var isLoading: Bool = true
 
     private let kmTransferUtils: any KMTransferring
+    private let onSimulateMigratedState: (() -> Void)?
 
-    public init(kmTransferUtils: some KMTransferring) {
+    public init(
+        kmTransferUtils: some KMTransferring,
+        onSimulateMigratedState: (() -> Void)? = nil
+    ) {
         self.kmTransferUtils = kmTransferUtils
+        self.onSimulateMigratedState = onSimulateMigratedState
     }
 
     public var body: some View {
@@ -27,9 +32,9 @@ public struct KMTransferQASettingsView: View {
             ProgressView()
         } else {
             ScrollView {
-                if let kmQueryConfigs {
-                    if !kmQueryConfigs.isEmpty {
-                        VStack(spacing: 30) {
+                VStack(spacing: 30) {
+                    if let kmQueryConfigs {
+                        if !kmQueryConfigs.isEmpty {
                             Text("All the KM items in transfer file")
                                 .bold()
                             Text("Format: service + account + group (optional)")
@@ -38,26 +43,36 @@ public struct KMTransferQASettingsView: View {
                                     kmQueryRow(kmQueryConfig: kmQueryConfig)
                                 }
                             }
-
                             deleteTransferFileButton
-                        }
-                        .padding(.horizontal, 16)
-                    } else {
-                        VStack(spacing: 30) {
+                        } else {
                             Text("There are no KM items in transfer file")
                                 .bold()
                             deleteTransferFileButton
                         }
-                        .padding(.horizontal, 16)
-                    }
-                } else {
-                    VStack(spacing: 30) {
+                    } else {
                         Text("There are no KM transfer file")
                             .bold()
                         createTransferFileButton
                     }
-                    .padding(.horizontal, 16)
+
+                    if let onSimulateMigratedState {
+                        simulateMigratedStateSection(onSimulateMigratedState)
+                    }
                 }
+                .padding(.horizontal, 16)
+            }
+        }
+    }
+
+    private func simulateMigratedStateSection(_ action: @escaping () -> Void) -> some View {
+        VStack(spacing: 8) {
+            Text("Migration debug")
+                .bold()
+            Text("Deletes sessionV3 + passcode from the current keychain group, keeps statsid + transfer file. Then kill & relaunch to exercise the import.")
+                .font(.caption)
+                .multilineTextAlignment(.center)
+            MEGAButton("Simulate migrated keychain state") {
+                action()
             }
         }
     }

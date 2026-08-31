@@ -3,6 +3,8 @@
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGASwiftUI
+import os
+import SAMKeychain
 import Settings
 import SwiftUI
 
@@ -50,7 +52,8 @@ struct QASettingsView: View {
 
             NavigationLink {
                 KMTransferQASettingsView(
-                    kmTransferUtils: DIContainer.kmTransferUtils
+                    kmTransferUtils: DIContainer.kmTransferUtils,
+                    onSimulateMigratedState: { Self.simulateMigratedKeychainState() }
                 )
             } label: {
                 Text("KM Transfer QA Settings")
@@ -79,6 +82,26 @@ struct QASettingsView: View {
         }
         .listStyle(.grouped)
         .background()
+    }
+
+    /// Deletes sessionV3 and the passcode items from the current keychain group while
+    /// keeping statsid and the backup file, so the next launch exercises the import
+    /// path exactly as after a keychain-group change. Passcode items are removed via
+    /// SAMKeychain directly: the LTHPasscodeViewController path would rewrite the
+    /// backup file from the now-session-less keychain and destroy the scenario.
+    private static func simulateMigratedKeychainState() {
+        let log = Logger(subsystem: "mega.ios.migration", category: "qa")
+        let sessionDeleted = SAMKeychain.deletePassword(forService: "MEGA", account: "sessionV3")
+        let passcodeAccounts = [
+            "demoPasscode", "demoPasscodeTimerStart", "passcodeTimerDuration",
+            "passcodeIsSimple", "passcodeType", "allowUnlockWithTouchID"
+        ]
+        var passcodeDeleted = 0
+        for account in passcodeAccounts where SAMKeychain.deletePassword(forService: "demoServiceName", account: account) {
+            passcodeDeleted += 1
+        }
+        let statsidStillPresent = SAMKeychain.password(forService: "MEGA", account: "statsid") != nil
+        log.error("simulate: sessionDeleted=\(sessionDeleted, privacy: .public) passcodeDeleted=\(passcodeDeleted, privacy: .public)/6 statsidStillPresent=\(statsidStillPresent, privacy: .public) — kill and relaunch to run the import")
     }
 }
 #endif

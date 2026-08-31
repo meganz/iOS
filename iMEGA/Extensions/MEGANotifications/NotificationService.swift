@@ -45,6 +45,7 @@ final class NotificationService: UNNotificationServiceExtension, MEGAChatNotific
     // MARK: - UNNotificationServiceExtension
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        Self.logMigrationState()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
 
         if request.content.isStartScheduledMeetingNotification == true {
@@ -553,5 +554,29 @@ final class NotificationService: UNNotificationServiceExtension, MEGAChatNotific
             
         }
         memoryPressureSource.resume()
+    }
+}
+
+// MARK: - Migration diagnostics
+
+import os
+import Security
+
+extension NotificationService {
+    static func logMigrationState() {
+        let migrationLog = Logger(subsystem: "mega.ios.migration", category: "nse")
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: "MEGA",
+            kSecAttrAccount: "sessionV3",
+            kSecReturnAttributes: true
+        ]
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        let agrp = (result as? [CFString: Any])?[kSecAttrAccessGroup] as? String ?? "-"
+        let container = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: "group.mega.ios")?
+            .lastPathComponent ?? "unresolved"
+        migrationLog.error("sessionV3 status=\(status, privacy: .public) agrp=\(agrp, privacy: .public) group=\(container, privacy: .public)")
     }
 }

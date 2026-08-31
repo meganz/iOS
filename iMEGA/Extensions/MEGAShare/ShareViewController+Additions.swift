@@ -4,10 +4,31 @@ import MEGADomain
 import MEGAL10n
 import MEGARepo
 import MEGASDKRepo
+import os
+import Security
+
+private let migrationLog = Logger(subsystem: "mega.ios.migration", category: "share")
 
 extension ShareViewController {
     @objc func injectSDKRepoDependencies() {
         MEGASDKRepo.DependencyInjection.sharedSdk = .shared
+    }
+
+    @objc func logMigrationState() {
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: "MEGA",
+            kSecAttrAccount: "sessionV3",
+            kSecReturnAttributes: true
+        ]
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        let agrp = (result as? [CFString: Any])?[kSecAttrAccessGroup] as? String ?? "-"
+        let container = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: "group.mega.ios")?
+            .lastPathComponent ?? "unresolved"
+        let firstRun = UserDefaults(suiteName: "group.mega.ios")?.string(forKey: "FirstRun") ?? "-"
+        migrationLog.error("sessionV3 status=\(status, privacy: .public) agrp=\(agrp, privacy: .public) group=\(container, privacy: .public) firstRun=\(firstRun, privacy: .public)")
     }
 
     @objc func successSendToChatMessage(attachments: [ShareAttachment], receiverCount: Int) -> String {

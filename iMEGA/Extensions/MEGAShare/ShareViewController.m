@@ -80,7 +80,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    [self logMigrationState];
+
 #if defined(DEBUG) || defined(QA_CONFIG)
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
