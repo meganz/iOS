@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 import SwiftUI
 
 @MainActor
@@ -10,15 +11,17 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
     @Published private(set) var discountBanner: DiscountBannerContent?
 
     private let bannerUseCase: any UserBannerUseCaseProtocol
-    private let discountBannerUseCase: any DiscountBannerUseCaseProtocol
+    private let discountBannerUseCase: any HomeDiscountBannerUseCaseProtocol
     private let discountBannerMapper: DiscountBannerContentMapper
     private let cache: PromotionalBannerCache
     private let tracker: any AnalyticsTracking
+    private let planPurchases: AnyAsyncSequence<Void>
+    private var monitorPlanPurchasesTask: Task<Void, Never>?
 
     convenience init(promotedPlanProvider: @escaping @Sendable () async throws -> PlanEntity?) {
         self.init(
             bannerUseCase: UserBannerUseCase(userBannerRepository: BannerRepository.newRepo),
-            discountBannerUseCase: DiscountBannerUseCase(promotedPlanProvider: promotedPlanProvider),
+            discountBannerUseCase: HomeDiscountBannerUseCase(promotedPlanProvider: promotedPlanProvider),
             cache: .shared,
             tracker: DIContainer.tracker
         )
@@ -26,15 +29,17 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
 
     package init(
         bannerUseCase: some UserBannerUseCaseProtocol,
-        discountBannerUseCase: some DiscountBannerUseCaseProtocol,
+        discountBannerUseCase: some HomeDiscountBannerUseCaseProtocol,
         discountBannerMapper: DiscountBannerContentMapper = DiscountBannerContentMapper(),
         cache: PromotionalBannerCache = .shared,
-        tracker: some AnalyticsTracking
+        tracker: some AnalyticsTracking,
+        planPurchases: AnyAsyncSequence<Void> = NotificationCenter.purchaseSuccesses()
     ) {
         self.bannerUseCase = bannerUseCase
         self.discountBannerUseCase = discountBannerUseCase
         self.discountBannerMapper = discountBannerMapper
         self.cache = cache
+        self.planPurchases = planPurchases
         // Make use of previously fetched cache and display them to the UI immediately
         // instead of having to re-fetch them which cause snappy UI glitch each time
         // the view is re-rendered
@@ -43,12 +48,42 @@ final class PromotionalBannersWidgetViewModel: ObservableObject {
         if let cached = cache.cachedPromotedPlan, !discountBannerUseCase.isDismissed(cached) {
             discountBanner = discountBannerMapper.map(cached)
         }
+
+        // Listen for purchases in init() instead of .task() because purchases can happen in other
+        // screens of the app
+        listenToPlanPurchases()
+    }
+
+    deinit {
+        monitorPlanPurchasesTask?.cancel()
     }
 
     func onTask() async {
         async let remoteBanners: Void = loadBanners()
         async let discountBanner: Void = loadDiscountBanner()
         _ = await (remoteBanners, discountBanner)
+    }
+
+    /// Hides the discount banner as soon as a purchase succeeds, rather than leaving the offer on
+    /// screen until the offer is next re-fetched.
+    private func listenToPlanPurchases() {
+        monitorPlanPurchasesTask?.cancel()
+        monitorPlanPurchasesTask = Task { @MainActor [weak self, planPurchases] in
+            for await _ in planPurchases {
+                self?.dismissDiscountBannerAfterPurchase()
+            }
+        }
+    }
+
+    /// Records the dismissal the same way closing the banner does, so a campaign the user has converted
+    /// on stays away even if the offer is briefly still on the account. The cached plan is read before it
+    /// is cleared, otherwise there would be nothing left to record against.
+    private func dismissDiscountBannerAfterPurchase() {
+        if let plan = cache.cachedPromotedPlan {
+            discountBannerUseCase.dismiss(plan)
+        }
+        cache.clearPromotedPlan()
+        discountBanner = nil
     }
 
     func trackDiscountBannerDisplayed() {

@@ -1119,6 +1119,28 @@ struct AccountMenuViewModelTests {
         #expect(banner.content.actionTitle == Strings.Localizable.Home.PromotionalBanners.DiscountBanner.grabDeal)
     }
 
+    /// Driven by the purchase announcement rather than the receipt result, which only arrives once the
+    /// receipt has been submitted to the API and would leave the offer on screen meanwhile.
+    @Test("A successful purchase hides the discount banner and records the dismissal")
+    func planPurchase_hidesTheDiscountBanner() async throws {
+        let (purchases, purchase) = AsyncStream<Void>.makeStream()
+        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
+        let sut = makeSUT(
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50)),
+            planPurchases: purchases.eraseToAnyAsyncSequence()
+        )
+
+        await sut.onTask()
+        #expect(sut.discountBanner != nil)
+
+        purchase.yield()
+
+        try await waitUntil(timeout: 10, await MainActor.run { sut.discountBanner != nil })
+        #expect(sut.discountBanner == nil)
+        #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
+    }
+
     @Test("Shows no discount banner when no plan is promoted")
     func showsNoDiscountBannerWithoutPromotedPlan() async {
         let sut = makeSUT(
@@ -1218,28 +1240,6 @@ struct AccountMenuViewModelTests {
         #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
     }
 
-    @Test("A successful purchase hides the discount banner and records the dismissal")
-    func successfulPurchaseHidesDiscountBanner() async throws {
-        let submitReceiptResultSubject = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
-        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
-        let sut = makeSUT(
-            purchaseUseCase: MockAccountPlanPurchaseUseCase(submitReceiptResultPublisher: submitReceiptResultSubject),
-            discountBannerUseCase: discountBannerUseCase,
-            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
-        )
-        await sut.onTask()
-        #expect(sut.discountBanner != nil)
-
-        submitReceiptResultSubject.send(.success(()))
-
-        try await waitUntil(
-            await MainActor.run {
-                sut.discountBanner != nil
-            }
-        )
-        #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
-    }
-
     @Test("A failed purchase leaves the discount banner in place")
     func failedPurchaseKeepsDiscountBanner() async throws {
         let submitReceiptResultSubject = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
@@ -1263,6 +1263,27 @@ struct AccountMenuViewModelTests {
         #expect(discountBannerUseCase.dismissedPlans.isEmpty)
     }
 
+    /// Restore Purchases submits a receipt but never posts the purchase notification, so the receipt
+    /// result is the only signal that reaches the banner on that route.
+    @Test("A successful receipt submission hides the discount banner and records the dismissal")
+    func receiptSuccess_hidesTheDiscountBanner() async throws {
+        let submitReceiptResultSubject = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let discountBannerUseCase = MockMenuDiscountBannerUseCase(promotedPlanResult: .success(.menuBannerPlan()))
+        let sut = makeSUT(
+            purchaseUseCase: MockAccountPlanPurchaseUseCase(submitReceiptResultPublisher: submitReceiptResultSubject),
+            discountBannerUseCase: discountBannerUseCase,
+            discountBannerMapper: .stub(planPrice: .discounted(percentage: 50))
+        )
+        await sut.onTask()
+        #expect(sut.discountBanner != nil)
+
+        submitReceiptResultSubject.send(.success(()))
+
+        try await waitUntil(timeout: 10, await MainActor.run { sut.discountBanner != nil })
+        #expect(sut.discountBanner == nil)
+        #expect(discountBannerUseCase.dismissedPlans.map { $0.mobileOffer?.campaignId } == [7])
+    }
+
     private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
@@ -1281,7 +1302,8 @@ struct AccountMenuViewModelTests {
         sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 },
         fullNameHandler: @escaping (CurrentUserSource) -> String = { _ in "" },
         discountBannerUseCase: some MenuDiscountBannerUseCaseProtocol = MockMenuDiscountBannerUseCase(),
-        discountBannerMapper: MenuDiscountBannerContentMapper = .stub(planPrice: .monthly(.init(price: 9.99, currency: "EUR")))
+        discountBannerMapper: MenuDiscountBannerContentMapper = .stub(planPrice: .monthly(.init(price: 9.99, currency: "EUR"))),
+        planPurchases: AnyAsyncSequence<Void> = AsyncStream<Void> { $0.finish() }.eraseToAnyAsyncSequence()
     ) -> SUT {
         let currentUserSource = CurrentUserSource(sdk: MockSdk())
         return AccountMenuViewModel(
@@ -1300,7 +1322,8 @@ struct AccountMenuViewModelTests {
             logoutHandler: logoutHandler,
             sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler,
             discountBannerUseCase: discountBannerUseCase,
-            discountBannerMapper: discountBannerMapper
+            discountBannerMapper: discountBannerMapper,
+            planPurchases: planPurchases
         )
     }
 

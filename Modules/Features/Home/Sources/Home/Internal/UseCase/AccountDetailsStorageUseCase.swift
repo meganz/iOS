@@ -1,6 +1,7 @@
 @preconcurrency import Combine
 
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
 
@@ -29,7 +30,7 @@ package final class AccountDetailsStorageUseCase: AccountDetailsStorageUseCasePr
     package init(
         accountUseCase: some AccountUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        planPurchases: AnyAsyncSequence<Void> = NotificationCenter.purchaseSuccesses
+        planPurchases: AnyAsyncSequence<Void> = NotificationCenter.purchaseSuccesses()
     ) {
         self.accountUseCase = accountUseCase
 

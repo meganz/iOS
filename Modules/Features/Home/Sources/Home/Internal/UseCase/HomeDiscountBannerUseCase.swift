@@ -3,7 +3,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
 
-protocol DiscountBannerUseCaseProtocol: Sendable {
+protocol HomeDiscountBannerUseCaseProtocol: Sendable {
     /// The plan whose campaign may be advertised, or `nil` when there is none or the current account
     /// has already dismissed the one on offer.
     func promotedPlan() async throws -> PlanEntity?
@@ -16,7 +16,7 @@ protocol DiscountBannerUseCaseProtocol: Sendable {
     func dismiss(_ plan: PlanEntity)
 }
 
-package struct DiscountBannerUseCase: DiscountBannerUseCaseProtocol {
+package struct HomeDiscountBannerUseCase: HomeDiscountBannerUseCaseProtocol {
     @PreferenceWrapper(key: PreferenceKeyEntity.homeDiscountBannerDismissedCampaignIds, defaultValue: [:])
     private var dismissedCampaignIds: [String: UInt64]
 

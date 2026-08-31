@@ -113,10 +113,12 @@ public final class AccountMenuViewModel: ObservableObject {
     private var onUserAlertsUpdatesTask: Task<Void, any Error>?
     private var monitorSubmitReceiptAfterPurchaseTask: Task<Void, Never>?
     private var monitorSubmitReceiptResultTask: Task<Void, Never>?
+    private var monitorPlanPurchasesTask: Task<Void, Never>?
     private var monitorConnectionTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let discountBannerUseCase: any MenuDiscountBannerUseCaseProtocol
     private let discountBannerMapper: MenuDiscountBannerContentMapper
+    private let planPurchases: AnyAsyncSequence<Void>
     private var subscriptions: Set<AnyCancellable> = []
 
     @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
@@ -242,7 +244,8 @@ public final class AccountMenuViewModel: ObservableObject {
         logoutHandler: @escaping () async -> Void,
         sharedItemsNotificationCountHandler: @escaping () -> Int,
         discountBannerUseCase: some MenuDiscountBannerUseCaseProtocol,
-        discountBannerMapper: MenuDiscountBannerContentMapper = MenuDiscountBannerContentMapper()
+        discountBannerMapper: MenuDiscountBannerContentMapper = MenuDiscountBannerContentMapper(),
+        planPurchases: AnyAsyncSequence<Void> = NotificationCenter.purchaseSuccesses()
     ) {
         self.router = router
         self.tracker = tracker
@@ -259,6 +262,7 @@ public final class AccountMenuViewModel: ObservableObject {
         self.notificationsUseCase = notificationsUseCase
         self.discountBannerUseCase = discountBannerUseCase
         self.discountBannerMapper = discountBannerMapper
+        self.planPurchases = planPurchases
 
         isAccountUpdating = accountUseCase.isMonitoringRefreshAccount || purchaseUseCase.isSubmittingReceiptAfterPurchase
         isConnected = networkMonitorUseCase.isConnected()
@@ -274,6 +278,7 @@ public final class AccountMenuViewModel: ObservableObject {
         registerPurchaseDelegate()
         listenToSubmitReceiptAfterPurchase()
         listenToSubmitReceiptResult()
+        listenToPlanPurchases()
         listenToPrivacySuiteExpanded()
         monitorConnectionState()
     }
@@ -285,6 +290,7 @@ public final class AccountMenuViewModel: ObservableObject {
         onContactRequestsUpdatesTask?.cancel()
         monitorSubmitReceiptAfterPurchaseTask?.cancel()
         monitorSubmitReceiptResultTask?.cancel()
+        monitorPlanPurchasesTask?.cancel()
         monitorConnectionTask?.cancel()
         Task { [purchaseUseCase] in
             await purchaseUseCase.deRegisterRestoreDelegate()
@@ -752,10 +758,24 @@ public final class AccountMenuViewModel: ObservableObject {
                 .values
             for await result in submitReceiptResultSequence {
                 purchaseUseCase.endMonitoringPurchaseReceipt()
+                // Restore Purchases submits a receipt too, but never posts the purchase notification
+                // that `listenToPlanPurchases` watches, so the banner is dismissed from here as well.
+                // Redundant after a plain purchase, where the banner is already gone by now.
                 if case .success = result {
                     self?.dismissDiscountBanner()
                 }
                 await self?.fetchUpdatedAccountDetailsAndUpdateUI(monitorUpdate: true)
+            }
+        }
+    }
+
+    /// Hides the discount banner as soon as the purchase succeeds. The receipt result arrives much later,
+    /// because it waits on the receipt being submitted to the API, which left the offer on screen meanwhile.
+    private func listenToPlanPurchases() {
+        monitorPlanPurchasesTask?.cancel()
+        monitorPlanPurchasesTask = Task { @MainActor [weak self, planPurchases] in
+            for await _ in planPurchases {
+                self?.dismissDiscountBanner()
             }
         }
     }
