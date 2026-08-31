@@ -170,7 +170,9 @@ extension AppDelegate {
         return (status, attrs?[kSecAttrAccessGroup] as? String ?? "-", attrs?[kSecValueData] as? Data)
     }
 
-    private static func itemCount(service: String) -> Int {
+    // A plain count would collapse "keychain readable but empty" and "read failed
+    // (locked device, access-group issue)" into the same 0 — keep them apart.
+    private static func itemCount(service: String) -> String {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -178,10 +180,15 @@ extension AppDelegate {
             kSecReturnAttributes: true
         ]
         var result: AnyObject?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let items = result as? [[CFString: Any]]
-        else { return 0 }
-        return items.count
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        switch status {
+        case errSecSuccess:
+            return "\((result as? [[CFString: Any]])?.count ?? 0)"
+        case errSecItemNotFound:
+            return "0"
+        default:
+            return "err:\(status)"
+        }
     }
 
     private static func defaultAccessGroup() -> String {
