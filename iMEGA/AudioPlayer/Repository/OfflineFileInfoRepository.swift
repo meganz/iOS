@@ -11,6 +11,11 @@ protocol OfflineInfoRepositoryProtocol: Sendable {
     /// - Parameter node: The audio node to look up.
     /// - Returns: A file `URL` if the node has an offline copy; otherwise `nil`.
     func offlineFileURL(for node: MEGANode) -> URL?
+
+    /// Resolves the local offline file URLs for many audio nodes in one read of the offline store.
+    /// - Parameter nodes: The audio nodes to look up.
+    /// - Returns: The file `URL` for each node that has an offline copy; nodes without one are absent.
+    func offlineFileURLs(for nodes: [MEGANode]) -> [MEGANode: URL]
     
     /// Determines whether a given audio node is available offline.
     /// - Parameter node: The audio node to check.
@@ -47,6 +52,22 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
                 return fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath: tmpFilePath) : nil
             } else {
                 return nil
+            }
+        }
+    }
+
+    func offlineFileURLs(for nodes: [MEGANode]) -> [MEGANode: URL] {
+        let localPaths = megaStore.offlineLocalPaths(for: nodes)
+
+        return nodes.reduce(into: [MEGANode: URL]()) { result, node in
+            if let offlinePath = localPaths[node].map({ Helper.pathForOffline().append(pathComponent: $0) }),
+               fileManager.fileExists(atPath: offlinePath) {
+                result[node] = URL(fileURLWithPath: offlinePath)
+            } else if let base64Handle = node.base64Handle, let name = node.name {
+                let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: base64Handle)
+                let tmpFilePath = nodeFolderPath.append(pathComponent: name)
+
+                result[node] = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath: tmpFilePath) : nil
             }
         }
     }

@@ -1582,6 +1582,7 @@
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */; };
+		2E9D6B0741C58A9276FB3D18 /* OfflineAudioPlaybackSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A19E58B2D0F3164AD7E20 /* OfflineAudioPlaybackSourceTests.swift */; };
 		9B0F8DA501E832B36E0E4FC8 /* OfflineAwareNodeActionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C65C0938285315D170D0E3 /* OfflineAwareNodeActionDelegateTests.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -4341,6 +4342,7 @@
 		94BF69152CAFFA800052F1D5 /* MockUserBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserBannerUseCase.swift; sourceTree = "<group>"; };
 		94C2203E2CA2FEA000B16650 /* ChatLinkPresentationItemSourceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSourceFactory.swift; sourceTree = "<group>"; };
 		94C220402CA2FFB900B16650 /* TrackingEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingEvents.swift; sourceTree = "<group>"; };
+		7C4A19E58B2D0F3164AD7E20 /* OfflineAudioPlaybackSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAudioPlaybackSourceTests.swift; sourceTree = "<group>"; };
 		94C65C0938285315D170D0E3 /* OfflineAwareNodeActionDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAwareNodeActionDelegateTests.swift; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
@@ -8762,6 +8764,7 @@
 			children = (
 				6D51603030293F8600ECEDC1 /* AppActionsRequiringConnectionTests.swift */,
 				53EA534F09B7ACDD0E4D1483 /* FilesExplorerOfflineTests.swift */,
+				7C4A19E58B2D0F3164AD7E20 /* OfflineAudioPlaybackSourceTests.swift */,
 				94C65C0938285315D170D0E3 /* OfflineAwareNodeActionDelegateTests.swift */,
 			);
 			path = OfflineMode;
@@ -16981,6 +16984,7 @@
 				BF30EF3E2BB56942004B5EBF /* NoInternetViewModelTests.swift in Sources */,
 				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
+				2E9D6B0741C58A9276FB3D18 /* OfflineAudioPlaybackSourceTests.swift in Sources */,
 				9B0F8DA501E832B36E0E4FC8 /* OfflineAwareNodeActionDelegateTests.swift in Sources */,
 				94EF2DCE2CAD9FC00061071E /* OfflineFileEntity.swift in Sources */,
 				94CFB3C02D11E2A30064D846 /* OfflineFileFetcherRepositoryTests.swift in Sources */,

@@ -21,8 +21,9 @@ public final class MEGAAudioPlayerViewRouter {
     ///   generic delegate.
     /// - `.fileLink` → `NodeActionViewController` with
     ///   `FileLinkActionViewControllerDelegate`.
-    /// - `.offline` → never fires (the player hides the three-dot button
-    ///   for offline playback, matching legacy behaviour).
+    /// - `.offlineNode` → the node behind the local copy, played offline
+    /// - `.offline` → never fires (the player hides the three-dot button for the Offline screen's
+    ///   playback, matching legacy behaviour — those files stand for no node).
     public typealias ActionsHandler = @MainActor (_ hostVC: UIViewController, _ track: PlaybackTrack) -> Void
 
     private weak var presenter: UIViewController?

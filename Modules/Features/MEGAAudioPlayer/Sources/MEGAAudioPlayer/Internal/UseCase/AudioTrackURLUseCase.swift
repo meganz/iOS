@@ -25,6 +25,7 @@ struct AudioTrackURLUseCase: AudioTrackURLUseCaseProtocol {
 
     func url(for track: PlaybackTrack) -> URL? {
         if case .offline(let file) = track { return file }
+        if case .offlineNode(_, let file) = track { return file }
         guard let node = track.streamingNode else { return nil }
         return streamingRepository.streamingURL(for: node)
     }
@@ -38,7 +39,7 @@ extension PlaybackTrack {
     /// have no node behind them.
     var streamingNode: StreamingNode? {
         switch self {
-        case .offline:
+        case .offline, .offlineNode:
             return nil
         case .account(let node):
             return .account(NodeEntityAdapter(node))

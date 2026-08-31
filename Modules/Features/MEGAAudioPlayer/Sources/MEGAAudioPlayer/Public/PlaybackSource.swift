@@ -16,6 +16,20 @@ public enum PlaybackSource: Sendable {
     /// than handles the account SDK cannot resolve.
     case folderLink(node: any PlayableNode, queue: [any PlayableNode] = [])
     case offlineFiles(file: URL, queue: [URL])
+    /// Cloud nodes played from the local copies saved on the device, which is what makes them
+    /// playable with no connection
+    case offlineNodes(node: OfflineNodeFile, queue: [OfflineNodeFile])
     case recents(node: NodeEntity, queue: [NodeEntity])
     case searchResult(node: NodeEntity)
+}
+
+/// A cloud node paired with the local copy its bytes are read from.
+public struct OfflineNodeFile: Sendable, Equatable {
+    public let node: NodeEntity
+    public let file: URL
+
+    public init(node: NodeEntity, file: URL) {
+        self.node = node
+        self.file = file
+    }
 }

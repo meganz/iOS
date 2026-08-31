@@ -1,6 +1,8 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAudioPlayer
+import MEGADomain
+import MEGARepo
 
 extension MEGANode {
     @MainActor
@@ -100,6 +102,8 @@ extension MEGANode {
                                             messageId: NSNumber?,
                                             allNodes: [MEGANode]?,
                                             sourcePage: NodeSourcePage) -> PlaybackSource? {
+        let allNodes = allNodes?.filter { $0.name?.fileExtensionGroup.isAudio == true && $0.mnz_isPlayable() }
+
         if isFolderLink, let node {
             // Folder link nodes belong to the folder link SDK instance, so the account SDK cannot resolve
             // their handles. Authorizing here attaches the node key and lets the authorized objects travel
@@ -122,7 +126,13 @@ extension MEGANode {
             return .chatMessage(node: node.toNodeEntity())
         }
         if let node {
-            let queue = (allNodes ?? []).map { $0.toNodeEntity() }
+            let queueNodes = sourcePage == .search ? [] : (allNodes ?? [])
+
+            if let offlineSource = Self.makeOfflinePlaybackSource(node: node, allNodes: queueNodes) {
+                return offlineSource
+            }
+
+            let queue = queueNodes.map { $0.toNodeEntity() }
             switch sourcePage {
             case .recents:
                 return .recents(node: node.toNodeEntity(), queue: queue)
@@ -135,6 +145,34 @@ extension MEGANode {
             }
         }
         return nil
+    }
+
+    /// The source for a node tapped while the device is offline
+    /// - Parameter allNodes: the queue candidates, already filtered to playable audio by the caller
+    /// - Returns: the local source to play instead, or `nil` when playback should carry on exactly
+    ///   as it does online
+    @MainActor
+    static func makeOfflinePlaybackSource(
+        node: MEGANode,
+        allNodes: [MEGANode],
+        isNewOfflineModeEnabled: Bool = DIContainer.featureFlagProvider.isNewOfflineModeEnabled,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+        offlineFileURLs: ([MEGANode]) -> [MEGANode: URL] = OfflineInfoRepository().offlineFileURLs
+    ) -> PlaybackSource? {
+        guard isNewOfflineModeEnabled, !networkMonitorUseCase.isConnected() else { return nil }
+
+        let urls = offlineFileURLs([node] + allNodes)
+
+        guard let file = urls[node] else { return nil }
+
+        let queue = allNodes.compactMap { sibling in
+            urls[sibling].map { OfflineNodeFile(node: sibling.toNodeEntity(), file: $0) }
+        }
+
+        return .offlineNodes(
+            node: OfflineNodeFile(node: node.toNodeEntity(), file: file),
+            queue: queue
+        )
     }
 
     @MainActor

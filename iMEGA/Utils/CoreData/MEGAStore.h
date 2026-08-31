@@ -18,6 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) MEGACoreDataStack *stack;
 
+/// The context associated with the main queue.
+@property (readonly, nullable) NSManagedObjectContext *managedObjectContext;
+
+/// A new private-queue context.
+- (nullable NSManagedObjectContext *)newBackgroundObjectContext;
+
 #pragma mark - Singleton Lifecycle
 
 + (MEGAStore *)shareInstance;

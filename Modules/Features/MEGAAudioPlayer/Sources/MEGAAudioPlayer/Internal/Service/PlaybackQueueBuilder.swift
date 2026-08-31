@@ -20,6 +20,14 @@ enum PlaybackQueueBuilder {
         case .offlineFiles(let file, let queue):
             return offlineQueue(initial: file, queue: queue)
 
+        case .offlineNodes(let node, let queue):
+            return nodeQueue(
+                initial: node,
+                queue: queue,
+                name: { $0.node.name },
+                wrap: { .offlineNode($0.node, file: $0.file) }
+            )
+
         case .fileLink(let url, let node):
             return PlaybackQueue(tracks: [.fileLink(url: url, node: node)], currentIndex: 0)
         }

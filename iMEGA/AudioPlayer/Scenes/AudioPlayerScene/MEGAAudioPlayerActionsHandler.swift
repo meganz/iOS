@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAudioPlayer
 import MEGADomain
@@ -8,6 +9,10 @@ import UIKit
 /// taps the three-dot button on the revamped audio player.
 @MainActor
 enum MEGAAudioPlayerActionsHandler {
+    private static var offlineActionGuard: OfflineActionGuard {
+        OfflineActionGuard(isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled)
+    }
+
     static func make() -> MEGAAudioPlayerViewRouter.ActionsHandler {
         { hostVC, track in
             switch track {
@@ -17,9 +22,11 @@ enum MEGAAudioPlayerActionsHandler {
                 presentFolderLinkNodeAction(for: node, on: hostVC)
             case .fileLink(let url, _):
                 presentFileLinkAction(for: url, on: hostVC)
+            case .offlineNode(let node, _):
+                // Played from disk, but still a cloud node
+                presentAccountNodeAction(for: node, on: hostVC)
             case .offline:
-                // The player hides the three-dot for offline playback, matching
-                // legacy. This branch only runs if that invariant breaks.
+                // The Offline screen's files stand for no node
                 break
             }
         }
@@ -59,10 +66,13 @@ enum MEGAAudioPlayerActionsHandler {
         isBackupNode: Bool,
         isNodeFromFolderLink: Bool
     ) {
-        let delegate = NodeActionViewControllerGenericDelegate(
-            viewController: hostVC,
-            isNodeFromFolderLink: isNodeFromFolderLink,
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: hostVC)
+        let delegate = OfflineAwareNodeActionDelegate(
+            wrapping: NodeActionViewControllerGenericDelegate(
+                viewController: hostVC,
+                isNodeFromFolderLink: isNodeFromFolderLink,
+                moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: hostVC)
+            ),
+            offlineActionGuard: offlineActionGuard
         )
         let vc = PortraitNodeActionViewController(
             node: node,
@@ -90,7 +100,10 @@ enum MEGAAudioPlayerActionsHandler {
             }
             guard let node, let hostVC else { return }
             let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
-            let delegate = FileLinkActionViewControllerDelegate(link: link, viewController: hostVC)
+            let delegate = OfflineAwareNodeActionDelegate(
+                wrapping: FileLinkActionViewControllerDelegate(link: link, viewController: hostVC),
+                offlineActionGuard: offlineActionGuard
+            )
             let vc = PortraitNodeActionViewController(
                 node: node,
                 delegate: delegate,

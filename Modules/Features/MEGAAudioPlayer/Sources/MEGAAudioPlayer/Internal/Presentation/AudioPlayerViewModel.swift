@@ -111,7 +111,7 @@ final class AudioPlayerViewModel: ObservableObject {
         switch currentSource {
         case .fileLink, .searchResult, .chatMessage, .none:
             false
-        case .allAudios, .cloudNode, .folderLink, .offlineFiles, .recents:
+        case .allAudios, .cloudNode, .folderLink, .offlineFiles, .offlineNodes, .recents:
             true
         }
     }

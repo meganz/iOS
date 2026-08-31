@@ -121,7 +121,10 @@ final class AudioPlaybackService {
     }
 
     private func startStreamingServerIfNeeded(for source: PlaybackSource) {
-        if case .offlineFiles = source { return }
+        switch source {
+        case .offlineFiles, .offlineNodes: return
+        default: break
+        }
         guard !streamingRepository.isServerRunning else { return }
         streamingRepository.startServer()
     }
@@ -187,6 +190,7 @@ final class AudioPlaybackService {
         case let .folderLink(node): return node.fingerprint
         case let .fileLink(_, node): return node?.fingerprint
         case .offline: return nil
+        case let .offlineNode(node, _): return node.fingerprint
         }
     }
 
@@ -365,7 +369,8 @@ extension AudioPlaybackService: PlaybackStateObservable {
 
 extension AudioPlaybackService: PlaybackControllable {
     func play(source: PlaybackSource) {
-        if currentSource != nil, source.initialTrack.id == playbackQueue.current?.id {
+        if currentSource != nil,
+           source.initialTrack.playbackIdentity == playbackQueue.current?.playbackIdentity {
             return
         }
 
