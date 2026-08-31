@@ -223,20 +223,6 @@ struct AudioPlaybackServiceTakenDownTests {
         URL(fileURLWithPath: "/tmp/track\(index).mp3")
     }
 
-    /// Yields until `condition` holds. Waiting on the outcome itself keeps the
-    /// test independent of how many scheduler turns the resolution task needs;
-    /// the cap only exists so a genuine regression fails instead of hanging.
-    private func wait(
-        until condition: () -> Bool,
-        sourceLocation: SourceLocation = #_sourceLocation
-    ) async {
-        for _ in 0..<1000 {
-            if condition() { return }
-            await Task.yield()
-        }
-        Issue.record("Timed out waiting for the expected state", sourceLocation: sourceLocation)
-    }
-
     private func makeSUT(
         engine: MockPlaybackEngine,
         takenDown: [URL]

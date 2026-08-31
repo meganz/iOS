@@ -101,7 +101,8 @@ final class AudioPlayerViewModel: ObservableObject {
 
     // MARK: - Taken-down file
 
-    /// Drives the TakenDown alert. Acknowledging it ends the session, which is what closes this screen.
+    /// Drives the TakenDown alert. Acknowledging it moves the queue on past the
+    /// unavailable track — see ``confirmTakenDownAlert()``.
     @Published var isTakenDownAlertPresented: Bool = false
 
     private(set) var playlistListTopY: CGFloat = 0
@@ -294,10 +295,21 @@ final class AudioPlayerViewModel: ObservableObject {
         onDismiss?()
     }
 
-    /// Acknowledging the taken-down alert. Ending the session clears the current source
+    /// Acknowledging the taken-down alert: move on to the next track and drop the
+    /// unavailable one from the queue
     func confirmTakenDownAlert() {
         isTakenDownAlertPresented = false
-        service?.stop()
+        guard let service else { return }
+
+        let queue = service.currentQueue
+        guard queue.tracks.count > 1, let unavailableTrackID = queue.current?.id else {
+            service.stop()
+            return
+        }
+
+        service.playNext()
+        // Only removable once playback has moved off it.
+        service.removeTrack(withID: unavailableTrackID)
     }
 
     func didTapMore() {

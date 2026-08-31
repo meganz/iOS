@@ -65,6 +65,11 @@ protocol PlaybackControllable {
     func toggleShuffle()
     func stop()
 
+    /// Take a track out of the queue, leaving whatever is playing untouched.
+    /// - Returns: `true` when the track was removed, `false` when no track matched the ID or it is the one currently playing.
+    @discardableResult
+    func removeTrack(withID id: String) -> Bool
+
     func resumeFromPrompt()
     func restartFromPrompt()
 }

@@ -45,8 +45,8 @@ final class AudioPlaybackService {
     /// superseded track can detect it lost the race and drop its result.
     private var playGeneration = 0
     
-    /// Snapshot of the queue in its pre-shuffle order, kept while shuffle is on
-    private var unshuffledQueue: PlaybackQueue?
+    /// The queue's pre-shuffle track order, kept while shuffle is on
+    private var unshuffledTracks: [PlaybackTrack]?
 
     private var resumeEvaluationCancellable: AnyCancellable?
     
@@ -371,7 +371,7 @@ extension AudioPlaybackService: PlaybackControllable {
 
         saveCurrentPlaybackPositionIfNeeded()
         currentSource = source
-        unshuffledQueue = nil
+        unshuffledTracks = nil
         isShuffleOnSubject.send(false)
         trackResolver.reset()
         playbackQueue = PlaybackQueueBuilder.build(from: source)
@@ -491,6 +491,24 @@ extension AudioPlaybackService: PlaybackControllable {
         playbackQueue = playbackQueue.moving(from: source, toOffset: destination)
     }
 
+    /// Drops a track from the queue and re-anchors the index on whatever is playing
+    @discardableResult
+    func removeTrack(withID id: String) -> Bool {
+        let queue = playbackQueue
+        guard let index = queue.tracks.firstIndex(where: { $0.id == id }),
+              index != queue.currentIndex else { return false }
+
+        var tracks = queue.tracks
+        tracks.remove(at: index)
+        let currentID = queue.current?.id
+        let currentIndex = currentID
+            .flatMap { current in tracks.firstIndex { $0.id == current } }
+            ?? queue.currentIndex
+        playbackQueue = PlaybackQueue(tracks: tracks, currentIndex: currentIndex)
+        unshuffledTracks = unshuffledTracks?.filter { $0.id != id }
+        return true
+    }
+
     func cycleRepeat() {
         repeatModeSubject.send(repeatModeSubject.value.next)
     }
@@ -582,7 +600,7 @@ extension AudioPlaybackService: PlaybackControllable {
     private func shuffleUpcoming() {
         let queue = playbackQueue
         guard queue.current != nil else { return }
-        unshuffledQueue = queue
+        unshuffledTracks = queue.tracks
 
         let played = queue.tracks[...queue.currentIndex]
         let upcoming = queue.tracks[(queue.currentIndex + 1)...].shuffled()
@@ -593,11 +611,11 @@ extension AudioPlaybackService: PlaybackControllable {
     }
 
     private func restoreOriginalOrder() {
-        guard let original = unshuffledQueue else { return }
-        unshuffledQueue = nil
+        guard let originalTracks = unshuffledTracks else { return }
+        unshuffledTracks = nil
         let currentID = playbackQueue.current?.id
-        let restoredIndex = original.tracks.firstIndex { $0.id == currentID } ?? original.currentIndex
-        playbackQueue = PlaybackQueue(tracks: original.tracks, currentIndex: restoredIndex)
+        let restoredIndex = originalTracks.firstIndex { $0.id == currentID } ?? playbackQueue.currentIndex
+        playbackQueue = PlaybackQueue(tracks: originalTracks, currentIndex: restoredIndex)
     }
 
     func resumeFromPrompt() {
@@ -637,7 +655,7 @@ extension AudioPlaybackService: PlaybackControllable {
         playbackBlockedSubject.send(nil)
         Task { [metadataCache] in await metadataCache.removeAll() }
         playGeneration += 1
-        unshuffledQueue = nil
+        unshuffledTracks = nil
         isShuffleOnSubject.send(false)
         playbackQueue = .empty
         title = ""
