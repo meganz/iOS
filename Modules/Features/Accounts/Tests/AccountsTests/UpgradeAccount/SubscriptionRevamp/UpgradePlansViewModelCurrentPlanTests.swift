@@ -1,6 +1,8 @@
 @testable import Accounts
+import Foundation
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import Testing
 
 @MainActor
@@ -69,6 +71,52 @@ struct UpgradePlansViewModelCurrentPlanTests {
             userCycle: .monthly
         )
         #expect(sut.highlightedPlanCard != nil)
+    }
+
+    // MARK: - featuredPlan
+
+    @Test("There is no featured plan on the standard page, even with a single discounted plan")
+    func featuredPlanIsNilOnStandardPage() {
+        let sut = makeSUT(plans: [plan(.proII, .yearly, discounted: true)], isPromo: false)
+        #expect(sut.featuredPlan == nil)
+        #expect(sut.highlightedPlanCard == nil)
+    }
+
+    @Test("The single discounted plan is the featured plan on the promo page")
+    func featuredPlanIsTheDiscountedPlanOnPromoPage() {
+        let discounted = plan(.proII, .yearly, discounted: true)
+        let sut = makeSUT(plans: [discounted], isPromo: true)
+        #expect(sut.featuredPlan == discounted)
+    }
+
+    // MARK: - promoHeader
+
+    /// A yearly plan discounted by a 1-year pay-up-front intro offer, so each plan carries its own percentage.
+    private func discountedYearlyPlan(_ type: AccountTypeEntity, price: Decimal, introPrice: Decimal) -> PlanEntity {
+        PlanEntity(
+            type: type,
+            subscriptionCycle: .yearly,
+            price: price,
+            introductoryOffer: SubscriptionOfferEntity(
+                price: introPrice,
+                period: .init(unit: .year, value: 1),
+                periodCount: 1,
+                paymentMode: .payUpFront
+            )
+        )
+    }
+
+    @Test("The promo header skips the current plan when picking the deepest discount")
+    func promoHeaderSkipsCurrentPlan() {
+        let current = discountedYearlyPlan(.proI, price: 100, introPrice: 20)
+        let sut = makeSUT(
+            plans: [current, discountedYearlyPlan(.proII, price: 100, introPrice: 60)],
+            proLevel: .proI,
+            userCycle: .yearly
+        )
+        #expect(
+            sut.promoHeader?.subtitle == Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer("40%")
+        )
     }
 
     // MARK: - planCards

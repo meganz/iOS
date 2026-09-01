@@ -63,7 +63,7 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     /// The featured hero card, shown only when exactly one plan is discounted.
     private(set) lazy var highlightedPlanCard: SubscriptionRevampPromoPlanCardModel? = {
-        guard isPromo, let featuredPlan else { return nil }
+        guard let featuredPlan else { return nil }
         return SubscriptionPromoPlanCardPresenter(
             plan: featuredPlan,
             displayName: displayName
@@ -119,17 +119,27 @@ public final class UpgradePlansViewModel: ObservableObject {
         plans.filter { $0.applicableOffer != nil }
     }
 
-    /// The single discounted plan when `offerCount == 1`; `nil` for zero or multiple (rendered inline).
-    /// Never the user's current plan, so the hero card cannot feature a plan the user already owns.
-    private var featuredPlan: PlanEntity? {
-        guard discountedPlans.count == 1, let plan = discountedPlans.first, !plan.isCurrentPlan(for: accountDetails) else { return nil }
+    /// The single discounted plan when `offerCount == 1`; `nil` for zero or multiple (rendered inline),
+    /// and on the standard page. Never the user's current plan, so the hero card cannot feature a plan
+    /// the user already owns.
+    var featuredPlan: PlanEntity? {
+        guard isPromo,
+              discountedPlans.count == 1,
+              let plan = discountedPlans.first,
+              !plan.isCurrentPlan(for: accountDetails) else { return nil }
         return plan
+    }
+
+    /// The plan the user already owns. Never rendered as a card, so no advertised discount may come from it.
+    var currentPlan: PlanEntity? {
+        plans.first { $0.isCurrentPlan(for: accountDetails) }
     }
 
     // The plan whose info is to be shown in the promo header
     private var promoHeaderPlan: PlanEntity? {
         let badgePresenter = SubscriptionOfferBadgePresenter()
         return discountedPlans
+            .filter { !$0.isCurrentPlan(for: accountDetails) }
             .max { (badgePresenter.discountPercentage(for: $0) ?? 0) < (badgePresenter.discountPercentage(for: $1) ?? 0) }
     }
 }

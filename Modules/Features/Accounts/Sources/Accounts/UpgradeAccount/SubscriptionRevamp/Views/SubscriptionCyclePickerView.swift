@@ -5,6 +5,8 @@ import SwiftUI
 struct SubscriptionCyclePickerView: View {
     struct Dependency {
         let plans: [PlanEntity]
+        let featuredPlan: PlanEntity?
+        let currentPlan: PlanEntity?
         let tracker: any UpgradePlansAnalyticsUseCaseProtocol
     }
 
@@ -12,7 +14,12 @@ struct SubscriptionCyclePickerView: View {
     @Binding private var selection: SubscriptionCycleEntity
 
     init(dependency: Dependency, selection: Binding<SubscriptionCycleEntity>) {
-        self.viewModel = SubscriptionCycleViewModel(plans: dependency.plans, tracker: dependency.tracker)
+        self.viewModel = SubscriptionCycleViewModel(
+            plans: dependency.plans,
+            featuredPlan: dependency.featuredPlan,
+            currentPlan: dependency.currentPlan,
+            tracker: dependency.tracker
+        )
         self._selection = selection
     }
 

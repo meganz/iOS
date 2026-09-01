@@ -78,7 +78,12 @@ struct SubscriptionContentSectionsView: View {
 
     private var cyclePicker: some View {
         SubscriptionCyclePickerView(
-            dependency: .init(plans: viewModel.plans, tracker: dependency.analyticsUseCase),
+            dependency: .init(
+                plans: viewModel.plans,
+                featuredPlan: viewModel.featuredPlan,
+                currentPlan: viewModel.currentPlan,
+                tracker: dependency.analyticsUseCase
+            ),
             selection: $viewModel.selectedCycle
         )
         .frame(maxWidth: .infinity, alignment: .leading)
