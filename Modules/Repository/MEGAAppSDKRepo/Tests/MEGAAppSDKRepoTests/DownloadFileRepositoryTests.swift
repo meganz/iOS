@@ -50,3 +50,74 @@ struct DownloadFileRepositoryTests {
         )
     }
 }
+
+/// Covers where `downloadFile` finds the node it is asked for. It cannot suspend to look one up, so a
+/// source that is in no SDK tree -- a public album link's photos -- has to hand its nodes over resolved.
+@Suite("DownloadFileRepository node resolution")
+struct DownloadFileRepositoryNodeResolutionTests {
+    private static let photoNode = MockNode(handle: 5, name: "photo.jpg")
+    private static let destination = URL(fileURLWithPath: "/tmp/Documents")
+
+    private static func makeSUT(
+        accountNodes: [MEGANode] = [],
+        preresolvedNodes: [HandleEntity: MEGANode] = [:]
+    ) -> DownloadFileRepository {
+        DownloadFileRepository(sdk: MockSdk(nodes: accountNodes), preresolvedNodes: preresolvedNodes)
+    }
+
+    @Test("a node that is only in the resolved nodes is downloaded rather than looked up")
+    func preresolvedNode_isDownloaded() async {
+        let sut = Self.makeSUT(preresolvedNodes: [Self.photoNode.handle: Self.photoNode])
+
+        let downloadedNodeHandle = await Self.download(Self.photoNode.handle, with: sut)
+
+        #expect(downloadedNodeHandle == Self.photoNode.handle)
+    }
+
+    @Test("a node in the account tree is still downloaded when nothing was resolved up front")
+    func accountNode_isDownloaded() async {
+        let sut = Self.makeSUT(accountNodes: [Self.photoNode])
+
+        let downloadedNodeHandle = await Self.download(Self.photoNode.handle, with: sut)
+
+        #expect(downloadedNodeHandle == Self.photoNode.handle)
+    }
+
+    @Test("a node in neither the resolved nodes nor the account tree fails before any transfer starts")
+    func unresolvableNode_throws() {
+        let sut = Self.makeSUT()
+
+        #expect(throws: TransferErrorEntity.couldNotFindNodeByHandle) {
+            _ = try sut.downloadFile(
+                forNodeHandle: Self.photoNode.handle,
+                to: Self.destination,
+                filename: nil,
+                appdata: nil,
+                startFirst: false
+            )
+        }
+    }
+
+    /// The handle the finished transfer carries, which is what says which node the SDK was handed.
+    private static func download(
+        _ handle: HandleEntity,
+        with sut: DownloadFileRepository
+    ) async -> HandleEntity? {
+        guard let stream = try? sut.downloadFile(
+            forNodeHandle: handle,
+            to: destination,
+            filename: nil,
+            appdata: nil,
+            startFirst: false
+        ) else {
+            return nil
+        }
+
+        for await event in stream {
+            if case .finish(let transfer) = event {
+                return transfer.nodeHandle
+            }
+        }
+        return nil
+    }
+}

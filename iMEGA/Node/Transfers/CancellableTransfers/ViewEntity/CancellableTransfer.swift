@@ -8,6 +8,9 @@ import MEGASwift
     let chatId: HandleEntity
     let fileLinkURL: URL?
     let localFileURL: URL?
+    /// Carried only by the sources whose node cannot be looked up by handle, so the download has something
+    /// to work from. A public album link's photos are the case today.
+    let nodeEntity: NodeEntity?
     let appData: String?
     let priority: Bool
     let isFile: Bool
@@ -22,6 +25,7 @@ import MEGASwift
         parentHandle: HandleEntity = .invalid,
         fileLinkURL: URL? = nil,
         localFileURL: URL? = nil,
+        nodeEntity: NodeEntity? = nil,
         name: String? = nil,
         appData: String? = nil,
         priority: Bool = false,
@@ -35,6 +39,7 @@ import MEGASwift
         self.chatId = .invalid
         self.fileLinkURL = fileLinkURL
         self.localFileURL = localFileURL
+        self.nodeEntity = nodeEntity
         self.appData = appData
         self.priority = priority
         self.isFile = isFile
@@ -51,6 +56,7 @@ import MEGASwift
         self.chatId = chatId
         self.fileLinkURL = fileLinkURL
         self.localFileURL = localFileURL
+        self.nodeEntity = nil
         self.appData = appData
         self.priority = priority
         self.isFile = isFile

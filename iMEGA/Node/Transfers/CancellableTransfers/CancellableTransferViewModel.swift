@@ -2,6 +2,7 @@ import Combine
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGASwift
 
 protocol TransferWidgetRouting: Routing {
     func prepareTransfersWidget()
@@ -298,12 +299,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     private func startFileDownloads() async {
         fileTransfers.forEach { transferViewEntity in
             do {
-                let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
-                    forNodeHandle: transferViewEntity.handle,
-                    filename: transferViewEntity.name,
-                    appData: transferViewEntity.appData,
-                    startFirst: transferViewEntity.priority
-                )
+                let downloadStream = try offlineDownloadStream(for: transferViewEntity)
                 Task {
                     for await event in downloadStream {
                         guard !Task.isCancelled else { return }
@@ -319,13 +315,43 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                     }
                 }
             } catch {
-                transferViewEntity.setState(.failed)
-                if let error = error as? TransferErrorEntity,
-                   error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                    transferErrors.append(error)
-                }
+                recordOfflineDownloadFailure(error, for: transferViewEntity)
                 continueFolderTransfersIfNeeded()
             }
+        }
+    }
+    
+    /// Where the node comes from is the only thing that varies between the sources this screen downloads
+    /// for: a source whose nodes cannot be looked up again -- a public album link's photos, which live in
+    /// no node tree -- carries the entity its own screen resolved, and everything else looks its own up.
+    private func offlineDownloadStream(for transferViewEntity: CancellableTransfer) throws -> AnyAsyncSequence<TransferEventEntity> {
+        if let nodeEntity = transferViewEntity.nodeEntity {
+            try downloadNodeUseCase.downloadFileToOffline(
+                nodeEntity,
+                filename: transferViewEntity.name,
+                appData: transferViewEntity.appData,
+                startFirst: transferViewEntity.priority
+            )
+        } else {
+            try downloadNodeUseCase.downloadFileToOffline(
+                forNodeHandle: transferViewEntity.handle,
+                filename: transferViewEntity.name,
+                appData: transferViewEntity.appData,
+                startFirst: transferViewEntity.priority
+            )
+        }
+    }
+    
+    /// A file already in Offline, or one recovered from the temp folder, is not a failed download: the
+    /// user asked for it to be there and it is. Everything else is a failure to report.
+    private func recordOfflineDownloadFailure(_ error: any Error, for transferViewEntity: CancellableTransfer) {
+        let transferError = error as? TransferErrorEntity
+        
+        if transferError == .alreadyDownloaded || transferError == .copiedFromTempFolder {
+            transferViewEntity.setState(.complete)
+        } else {
+            transferViewEntity.setState(.failed)
+            transferErrors.append(transferError ?? .generic)
         }
     }
     
@@ -366,16 +392,9 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     }
     
     private func startFolderDownloads() async {
-        
         folderTransfers.forEach { transferViewEntity in
             do {
-                let downloadStream = try downloadNodeUseCase.downloadFileToOffline(
-                    forNodeHandle: transferViewEntity.handle,
-                    filename: transferViewEntity.name,
-                    appData: transferViewEntity.appData,
-                    startFirst: transferViewEntity.priority
-                )
-                
+                let downloadStream = try offlineDownloadStream(for: transferViewEntity)
                 Task {
                     for await event in downloadStream {
                         guard !Task.isCancelled else { return }
@@ -396,13 +415,8 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                         }
                     }
                 }
-                
             } catch {
-                transferViewEntity.setState(.failed)
-                if let error = error as? TransferErrorEntity,
-                   error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                    transferErrors.append(error)
-                }
+                recordOfflineDownloadFailure(error, for: transferViewEntity)
                 checkIfAllTransfersStartedTransferring()
             }
         }

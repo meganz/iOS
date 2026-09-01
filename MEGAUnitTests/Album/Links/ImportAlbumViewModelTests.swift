@@ -1167,16 +1167,16 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     /// Save to MEGA is deliberately absent: the anchored button carries it wherever the sheet can be
-    /// opened, so the rows no longer depend on whether there is a session.
+    /// opened. Copy to Offline is there without a session too -- what it does about that is its own test.
     @MainActor
-    func testMoreOptions_whetherLoggedInOrOut_shouldOfferSelectAndShareLink() throws {
+    func testMoreOptions_whetherLoggedInOrOut_shouldOfferTheSameRows() throws {
         for isLoggedIn in [true, false] {
             let sut = makeImportAlbumViewModel(
                 publicLink: try validFullAlbumLink,
                 accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn),
                 featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
             
-            XCTAssertEqual(sut.moreOptions, [.select, .shareLink], "logged in: \(isLoggedIn)")
+            XCTAssertEqual(sut.moreOptions, [.select, .copyToOffline, .shareLink], "logged in: \(isLoggedIn)")
         }
     }
     
@@ -1187,7 +1187,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
         
-        XCTAssertEqual(sut.disabledMoreOptions, [.select, .shareLink])
+        XCTAssertEqual(sut.disabledMoreOptions, [.select, .copyToOffline, .shareLink])
         XCTAssertTrue(sut.isMoreOptionsButtonDisabled)
     }
     
@@ -1245,6 +1245,125 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testHandleMoreOption_onCopyToOfflineWhileLoggedOut_shouldSendTheUserToSignInRatherThanCopy() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let onboardingRouter = MockAlbumLinkImportOnboardingRouter()
+        let offlineRouter = MockAlbumLinkOfflineRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: false),
+            onboardingRouter: onboardingRouter,
+            offlineRouter: offlineRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+        
+        XCTAssertEqual(onboardingRouter.showOnboardingCalled, 1)
+        XCTAssertNil(offlineRouter.copiedPhotos)
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onCopyToOfflineTappedAgainWhileRunning_shouldIgnoreTheSecondTap() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let offlineRouter = MockAlbumLinkOfflineRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            offlineRouter: offlineRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        // The loading indicator does not block touches, so the sheet can be reopened and the row tapped
+        // again while the photos are still being resolved.
+        offlineRouter.whileCopying = { [weak sut] in
+            sut?.handle(moreOption: .copyToOffline)
+        }
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+        
+        XCTAssertEqual(offlineRouter.copyToOfflineCalled, 1)
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onCopyToOfflineInASelection_shouldSendOnlyTheSelectedPhotos() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let offlineRouter = MockAlbumLinkOfflineRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            offlineRouter: offlineRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        sut.enablePhotoLibraryEditMode(true)
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([try XCTUnwrap(photos.first)])
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+        
+        XCTAssertEqual(offlineRouter.copiedPhotos, [try XCTUnwrap(photos.first)])
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onCopyToOffline_shouldSendEveryPhotoToTheRouter() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let offlineRouter = MockAlbumLinkOfflineRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            offlineRouter: offlineRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+        
+        // Compared by handle rather than by array: the photos are sent in the order the library lays
+        // them out, which is not the order they were loaded in.
+        XCTAssertEqual(offlineRouter.copiedPhotos?.map(\.handle).sorted(), photos.map(\.handle).sorted())
+    }
+    
+    @MainActor
+    func testHandleMoreOption_onCopyToOfflineWithoutNetwork_shouldNotStartATransfer() async throws {
+        let photos = try makePhotos()
+        let albumUseCase = MockPublicCollectionUseCase(
+            publicAlbumResult: .success(makeSharedAlbumEntity(set: SetEntity(handle: 2, name: "Lisbon"))),
+            nodes: photos)
+        let offlineRouter = MockAlbumLinkOfflineRouter()
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: albumUseCase,
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            monitorUseCase: MockNetworkMonitorUseCase(connected: false),
+            offlineRouter: offlineRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+        
+        await sut.loadPublicAlbum()
+        sut.handle(moreOption: .copyToOffline)
+        await sut.copyToOfflineTask?.value
+        
+        XCTAssertNil(offlineRouter.copiedPhotos)
+        XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
+    @MainActor
     func testHandleMoreOption_onShareLink_shouldLeaveTheSharingToTheSheet() async throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
@@ -1272,6 +1391,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
+        offlineRouter: some AlbumLinkOfflineRouting = MockAlbumLinkOfflineRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -1292,6 +1412,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             thumbnailLoader: thumbnailLoader,
             exportRouter: exportRouter,
             onboardingRouter: onboardingRouter,
+            offlineRouter: offlineRouter,
             featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
@@ -1435,6 +1556,7 @@ struct ImportAlbumViewModelTestSuite {
         thumbnailLoader: any ThumbnailLoaderProtocol = MockThumbnailLoader(),
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
+        offlineRouter: some AlbumLinkOfflineRouting = MockAlbumLinkOfflineRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ImportAlbumViewModel {
         .init(
@@ -1453,6 +1575,7 @@ struct ImportAlbumViewModelTestSuite {
             thumbnailLoader: thumbnailLoader,
             exportRouter: exportRouter,
             onboardingRouter: onboardingRouter,
+            offlineRouter: offlineRouter,
             featureFlagProvider: featureFlagProvider)
     }
 }
@@ -1473,5 +1596,18 @@ private final class MockAlbumLinkImportOnboardingRouter: AlbumLinkImportOnboardi
     
     func showOnboarding() {
         showOnboardingCalled += 1
+    }
+}
+
+private final class MockAlbumLinkOfflineRouter: AlbumLinkOfflineRouting {
+    private(set) var copiedPhotos: [NodeEntity]?
+    private(set) var copyToOfflineCalled = 0
+    /// Run while the copy is still in flight, so a test can tap the row again before the first tap is done.
+    var whileCopying: (() async -> Void)?
+    
+    func copyToOffline(photos: [NodeEntity]) async {
+        copyToOfflineCalled += 1
+        copiedPhotos = photos
+        await whileCopying?()
     }
 }

@@ -1,10 +1,22 @@
 import Foundation
-import MEGASwift
 import MEGAPreference
+import MEGASwift
 
 public protocol DownloadNodeUseCaseProtocol: Sendable {
     func downloadFileToOffline(
         forNodeHandle handle: HandleEntity,
+        filename: String?,
+        appData: String?,
+        startFirst: Bool
+    ) throws -> AnyAsyncSequence<TransferEventEntity>
+    
+    /// Downloads an already resolved node to Offline.
+    ///
+    /// For the sources whose nodes cannot be looked up again: a public album link's photos come from a set
+    /// preview and are in neither the account tree nor the folder link SDK, so the entity the caller
+    /// already holds is the only handle on them there is.
+    func downloadFileToOffline(
+        _ node: NodeEntity,
         filename: String?,
         appData: String?,
         startFirst: Bool
@@ -66,11 +78,14 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     }
     
     public func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appData: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {
-
         guard let node = nodeRepository.nodeForHandle(handle) else {
             throw TransferErrorEntity.couldNotFindNodeByHandle
         }
         
+        return try downloadFileToOffline(node, filename: filename, appData: appData, startFirst: startFirst)
+    }
+    
+    public func downloadFileToOffline(_ node: NodeEntity, filename: String?, appData: String?, startFirst: Bool) throws -> AnyAsyncSequence<TransferEventEntity> {
         if !shouldDownloadToGallery(name: node.name) {
             if node.isFile {
                 guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
@@ -81,7 +96,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                 if fileSystemRepository.fileExists(at: tempUrl) {
                     let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
                     if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
-                        offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
+                        offlineFilesRepository.createOfflineFile(name: node.name, for: node.handle)
                         throw TransferErrorEntity.copiedFromTempFolder
                     }
                 }
@@ -93,7 +108,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         }
 
         return try downloadFileRepository.downloadFile(
-            forNodeHandle: handle,
+            forNodeHandle: node.handle,
             to: fileSystemRepository.documentsDirectory(),
             filename: filename,
             appdata: appData,

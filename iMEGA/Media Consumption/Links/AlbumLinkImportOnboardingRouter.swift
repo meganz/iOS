@@ -1,7 +1,7 @@
 import UIKit
 
-/// Takes a logged out `Save to MEGA` tap on the album link to onboarding, the same way the file and
-/// folder link imports do through `ImportLinkRouter`.
+/// Takes a logged out tap on an album link action that needs an account -- `Save to MEGA`, `Copy to
+/// Offline` -- to onboarding, the same way the file and folder link imports do through `ImportLinkRouter`.
 ///
 /// Unlike those two, the album is not reopened once the user signs in: carrying an action across a login
 /// means claiming a `LinkOption` and a matching branch in `MEGALinkManager.processSelectedOptionOnLink`,

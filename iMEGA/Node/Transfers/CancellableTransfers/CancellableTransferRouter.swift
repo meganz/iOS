@@ -42,14 +42,29 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     private(set) var transfers: [CancellableTransfer]
     private(set) var transferType: CancellableTransferType
     private(set) var isFolderLink: Bool
+    private let preresolvedNodes: [HandleEntity: MEGANode]
     private var wrapper: CancellableTransferControllerWrapper<CancellableTransferViewModel>?
     private weak var presentedAlert: UIAlertController?
 
-    init(presenter: UIViewController, transfers: [CancellableTransfer], transferType: CancellableTransferType, isFolderLink: Bool = false) {
+    /// - Parameter preresolvedNodes: The transfers' nodes, for a source that cannot look them up in any
+    ///   SDK tree -- a public album link's photos come from a set preview, and its own screen is what
+    ///   resolves them. Left out, the download looks its nodes up in the account tree as usual.
+    init(presenter: UIViewController,
+         transfers: [CancellableTransfer],
+         transferType: CancellableTransferType,
+         isFolderLink: Bool = false,
+         preresolvedNodes: [HandleEntity: MEGANode] = [:]) {
         self.presenter = presenter
         self.transfers = transfers
         self.transferType = transferType
         self.isFolderLink = isFolderLink
+        self.preresolvedNodes = preresolvedNodes
+    }
+    
+    private func makeDownloadFileRepository(sdk: MEGASdk) -> DownloadFileRepository {
+        DownloadFileRepository(sdk: sdk,
+                               sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil,
+                               preresolvedNodes: preresolvedNodes)
     }
     
     func build() -> UIViewController {
@@ -66,7 +81,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
             router: self,
             uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo),
             downloadNodeUseCase: DownloadNodeUseCase(
-                downloadFileRepository: DownloadFileRepository(sdk: sdk, sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil),
+                downloadFileRepository: makeDownloadFileRepository(sdk: sdk),
                 offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk, folderSizeCalculator: FolderSizeCalculator()),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,

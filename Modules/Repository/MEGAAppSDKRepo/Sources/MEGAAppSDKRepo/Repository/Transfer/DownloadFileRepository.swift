@@ -16,12 +16,21 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk?
     private let nodeProvider: any MEGANodeProviderProtocol
+    private let preresolvedNodes: [HandleEntity: MEGANode]
     private let cancelToken = ThreadSafeCancelToken()
 
-    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk? = nil, nodeProvider: some MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk)) {
+    /// - Parameter preresolvedNodes: Nodes the caller has already resolved, for the sources that cannot be
+    ///   looked up in any SDK tree -- a public album link's photos come from a set preview, and fetching
+    ///   one suspends, which the transfers this repository starts synchronously cannot do. Resolving them
+    ///   up front is what keeps that suspension at the album screen instead of down here.
+    public init(sdk: MEGASdk,
+                sharedFolderSdk: MEGASdk? = nil,
+                nodeProvider: any MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk),
+                preresolvedNodes: [HandleEntity: MEGANode] = [:]) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
         self.nodeProvider = nodeProvider
+        self.preresolvedNodes = preresolvedNodes
     }
     
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
@@ -105,18 +114,40 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     }
 
     private func megaNode(for nodeHandle: HandleEntity) async throws -> MEGANode {
-        if let sharedFolderSdk {
-            guard let node = sharedFolderSdk.node(forHandle: nodeHandle),
-                  let sharedNode = sharedFolderSdk.authorizeNode(node) else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            return sharedNode
-        } else {
-            guard let node = await nodeProvider.node(for: nodeHandle) else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            return node
+        if let sharedFolderNode = try sharedFolderNode(for: nodeHandle) {
+            return sharedFolderNode
         }
+        
+        guard let node = await nodeProvider.node(for: nodeHandle) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        return node
+    }
+    
+    /// The node for a transfer that has to be started without suspending.
+    ///
+    /// Everything the account owns is in the tree already, so only a source that is outside it has to be
+    /// resolved ahead of time and handed over as `preresolvedNodes`.
+    private func resolvedMEGANode(for nodeHandle: HandleEntity) throws -> MEGANode {
+        if let sharedFolderNode = try sharedFolderNode(for: nodeHandle) {
+            return sharedFolderNode
+        }
+        
+        guard let node = preresolvedNodes[nodeHandle] ?? sdk.node(forHandle: nodeHandle) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        return node
+    }
+    
+    /// The authorized node, when this repository is downloading out of a folder link. `nil` when it is not.
+    private func sharedFolderNode(for nodeHandle: HandleEntity) throws -> MEGANode? {
+        guard let sharedFolderSdk else { return nil }
+        
+        guard let node = sharedFolderSdk.node(forHandle: nodeHandle),
+              let sharedNode = sharedFolderSdk.authorizeNode(node) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        return sharedNode
     }
 
     private func startDownload(
@@ -200,33 +231,35 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         appdata: String?,
         startFirst: Bool
     ) throws -> AnyAsyncSequence<TransferEventEntity> {
+        let megaNode = try resolvedMEGANode(for: handle)
         
-        var megaNode: MEGANode
-        var nodeName: String
-        
-        if let sharedFolderSdk = sharedFolderSdk {
-            guard let node = sharedFolderSdk.node(forHandle: handle),
-                  let sharedNode = sharedFolderSdk.authorizeNode(node),
-                  let name = node.name
-            else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            nodeName = name
-            megaNode = sharedNode
-        } else {
-            guard let node = sdk.node(forHandle: handle),
-                  let name = node.name
-            else {
-                throw TransferErrorEntity.couldNotFindNodeByHandle
-            }
-            nodeName = name
-            megaNode = node
+        guard let nodeName = megaNode.name else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
         }
         
+        return downloadEvents(
+            of: megaNode,
+            named: nodeName,
+            to: url,
+            filename: filename,
+            appdata: appdata,
+            startFirst: startFirst
+        )
+    }
+    
+    /// The transfer, reported as it runs.
+    private func downloadEvents(
+        of megaNode: MEGANode,
+        named nodeName: String,
+        to url: URL,
+        filename: String?,
+        appdata: String?,
+        startFirst: Bool
+    ) -> AnyAsyncSequence<TransferEventEntity> {
         let offlineNameString = sdk.escapeFsIncompatible(nodeName, destinationPath: url.path)
         let filePath = url.path + "/" + (offlineNameString ?? nodeName)
         
-        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+        return AsyncThrowingStream(TransferEventEntity.self) { continuation in
             let transferDelegate = TransferDelegate { result in
                 switch result {
                 case .success(let transferEntity):
@@ -261,8 +294,6 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                 delegate: transferDelegate
             )
         }.eraseToAnyAsyncSequence()
-        
-        return sequence        
     }
     
     public func downloadFileLink(

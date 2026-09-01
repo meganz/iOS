@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import XCTest
 
 final class CancellableTransferViewModelTests: XCTestCase {
@@ -41,6 +42,75 @@ final class CancellableTransferViewModelTests: XCTestCase {
             transferType: .download)
         
         test(viewModel: viewModel, action: .didTapCancelButton, expectedCommands: [.cancelling])
+    }
+    
+    @MainActor func testAction_onViewReady_transferCarryingItsNode_shouldDownloadThatNodeRatherThanLookItUp() {
+        let photo = NodeEntity(name: "photo.jpg", handle: 5, isFile: true)
+        let transfer = CancellableTransfer(handle: photo.handle, nodeEntity: photo, name: photo.name, type: .download)
+        let downloadNodeUseCase = MockDownloadNodeUseCase(
+            result: .success(TransferEntity(type: .download, path: "Documents/")))
+        let viewModel = makeSUT(
+            downloadNodeUseCase: downloadNodeUseCase,
+            transfers: [transfer],
+            transferType: .download)
+        
+        viewModel.dispatch(.onViewReady)
+        
+        // The lookup by handle searches the account tree, where an album link's photos are not, so which
+        // of the two routes a transfer takes is the whole point of carrying the node.
+        evaluate { downloadNodeUseCase.downloadedNodes == [photo] }
+    }
+    
+    @MainActor func testAction_onViewReady_transferWithoutItsNode_shouldLookTheNodeUpByHandle() {
+        let transfer = CancellableTransfer(handle: 5, name: "photo.jpg", type: .download)
+        let downloadNodeUseCase = MockDownloadNodeUseCase(
+            result: .success(TransferEntity(type: .download, path: "Documents/")))
+        let router = MockCancellableTransferRouter()
+        let viewModel = makeSUT(
+            router: router,
+            downloadNodeUseCase: downloadNodeUseCase,
+            transfers: [transfer],
+            transferType: .download)
+        
+        viewModel.dispatch(.onViewReady)
+        
+        evaluate { router.transferSuccess_calledTimes == 1 }
+        XCTAssertTrue(downloadNodeUseCase.downloadedNodes.isEmpty)
+    }
+    
+    @MainActor func testAction_onViewReady_fileAlreadyInOffline_shouldFinishAsASuccessRatherThanLeaveTheAlertUp() {
+        let photo = NodeEntity(name: "photo.jpg", handle: 5, isFile: true)
+        let transfer = CancellableTransfer(handle: photo.handle, nodeEntity: photo, name: photo.name, type: .download)
+        let downloadNodeUseCase = MockDownloadNodeUseCase(result: .failure(.alreadyDownloaded))
+        let router = MockCancellableTransferRouter()
+        let viewModel = makeSUT(
+            router: router,
+            downloadNodeUseCase: downloadNodeUseCase,
+            transfers: [transfer],
+            transferType: .download)
+        
+        viewModel.dispatch(.onViewReady)
+        
+        // Nothing ever streams for a file that is already there, so completion has to come from the catch.
+        evaluate { router.transferSuccess_calledTimes == 1 }
+        XCTAssertEqual(transfer.state, .complete)
+    }
+    
+    @MainActor func testAction_onViewReady_fileFailingToDownload_shouldReportTheFailure() {
+        let photo = NodeEntity(name: "photo.jpg", handle: 5, isFile: true)
+        let transfer = CancellableTransfer(handle: photo.handle, nodeEntity: photo, name: photo.name, type: .download)
+        let downloadNodeUseCase = MockDownloadNodeUseCase(result: .failure(.couldNotFindNodeByHandle))
+        let router = MockCancellableTransferRouter()
+        let viewModel = makeSUT(
+            router: router,
+            downloadNodeUseCase: downloadNodeUseCase,
+            transfers: [transfer],
+            transferType: .download)
+        
+        viewModel.dispatch(.onViewReady)
+        
+        evaluate { router.transferFailed_calledTimes == 1 }
+        XCTAssertEqual(transfer.state, .failed)
     }
     
     @MainActor func test_sendDownloadAnalyticsStats_non_multimedia_nodes() {

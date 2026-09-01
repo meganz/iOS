@@ -11,6 +11,7 @@ import SwiftUI
 /// touch. Nor is Save to MEGA, which the anchored button offers wherever this sheet can be opened.
 enum AlbumLinkMoreOption: Identifiable, Hashable {
     case select
+    case copyToOffline
     case shareLink
 
     var id: Self { self }
@@ -19,6 +20,8 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             Strings.Localizable.select
+        case .copyToOffline:
+            Strings.Localizable.Link.Button.copyToOffline
         case .shareLink:
             Strings.Localizable.General.MenuAction.ShareLink.title(1)
         }
@@ -28,6 +31,8 @@ enum AlbumLinkMoreOption: Identifiable, Hashable {
         switch self {
         case .select:
             MEGAAssets.Image.checkCircle
+        case .copyToOffline:
+            MEGAAssets.Image.cloudDownload
         case .shareLink:
             MEGAAssets.Image.link01
         }
@@ -256,7 +261,7 @@ private struct ContentHeightPreferenceKey: PreferenceKey {
                 subtitle: Strings.Localizable.albumLink,
                 cover: nil,
                 link: "https://mega.nz/collection/abcdefgh#key",
-                options: [.select, .shareLink],
+                options: [.select, .copyToOffline, .shareLink],
                 disabledOptions: [],
                 selectionHandler: { _ in }
             )

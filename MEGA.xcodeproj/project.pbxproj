@@ -534,6 +534,7 @@
 		328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C15352A3975C8002499CE /* ImportAlbumView.swift */; };
 		328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */; };
 		328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */; };
+		FE1EB0000000000000000109 /* AlbumLinkOfflineRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000109 /* AlbumLinkOfflineRouterTests.swift */; };
 		328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */; };
 		328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */; };
 		328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */; };
@@ -2722,6 +2723,7 @@
 		FE1EB0000000000000000107 /* AlbumLinkImportOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000107 /* AlbumLinkImportOnboardingRouter.swift */; };
 		FE1EB0000000000000000102 /* AlbumLinkEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */; };
 		FE1EB0000000000000000105 /* AlbumLinkMoreOptionsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000105 /* AlbumLinkMoreOptionsSheet.swift */; };
+		FE1EB0000000000000000108 /* AlbumLinkOfflineRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000108 /* AlbumLinkOfflineRouter.swift */; };
 		FE1EB0000000000000000009 /* LinkUnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */; };
 		FE1EB000000000000000000A /* FileLinkNodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000A /* FileLinkNodeOpener.swift */; };
 		FE1EB000000000000000000B /* FileLinkActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1EA000000000000000000B /* FileLinkActionHandler.swift */; };
@@ -3343,6 +3345,7 @@
 		328C15352A3975C8002499CE /* ImportAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumView.swift; sourceTree = "<group>"; };
 		328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumViewModel.swift; sourceTree = "<group>"; };
 		328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumViewModelTests.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000109 /* AlbumLinkOfflineRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkOfflineRouterTests.swift; sourceTree = "<group>"; };
 		328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPublicLinkStatus.swift; sourceTree = "<group>"; };
 		328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesSearchRepositoryTests.swift; sourceTree = "<group>"; };
 		328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewModelTests.swift; sourceTree = "<group>"; };
@@ -5610,6 +5613,7 @@
 		FE1EA0000000000000000107 /* AlbumLinkImportOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkImportOnboardingRouter.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000102 /* AlbumLinkEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkEmptyView.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000105 /* AlbumLinkMoreOptionsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkMoreOptionsSheet.swift; sourceTree = "<group>"; };
+		FE1EA0000000000000000108 /* AlbumLinkOfflineRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumLinkOfflineRouter.swift; sourceTree = "<group>"; };
 		FE1EA0000000000000000009 /* LinkUnavailableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUnavailableContentView.swift; sourceTree = "<group>"; };
 		FE1EA000000000000000000A /* FileLinkNodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkNodeOpener.swift; sourceTree = "<group>"; };
 		FE1EA000000000000000000B /* FileLinkActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkActionHandler.swift; sourceTree = "<group>"; };
@@ -7067,6 +7071,7 @@
 				FE1EA0000000000000000104 /* AlbumLinkExportRouter.swift */,
 				FE1EA0000000000000000107 /* AlbumLinkImportOnboardingRouter.swift */,
 				FE1EA0000000000000000105 /* AlbumLinkMoreOptionsSheet.swift */,
+				FE1EA0000000000000000108 /* AlbumLinkOfflineRouter.swift */,
 				FE1EA0000000000000000101 /* AlbumLinkUnavailableView.swift */,
 				FE1EA0000000000000000103 /* AlbumLinkViewController.swift */,
 				328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */,
@@ -7079,6 +7084,7 @@
 		328C15392A398998002499CE /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				FE1EA0000000000000000109 /* AlbumLinkOfflineRouterTests.swift */,
 				328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */,
 			);
 			path = Links;
@@ -14707,6 +14713,7 @@
 				FE1EB0000000000000000104 /* AlbumLinkExportRouter.swift in Sources */,
 				FE1EB0000000000000000107 /* AlbumLinkImportOnboardingRouter.swift in Sources */,
 				FE1EB0000000000000000105 /* AlbumLinkMoreOptionsSheet.swift in Sources */,
+				FE1EB0000000000000000108 /* AlbumLinkOfflineRouter.swift in Sources */,
 				FE1EB0000000000000000101 /* AlbumLinkUnavailableView.swift in Sources */,
 				FE1EB0000000000000000103 /* AlbumLinkViewController.swift in Sources */,
 				12397E212820C4A600A30CCC /* AlbumListView.swift in Sources */,
@@ -16704,6 +16711,7 @@
 				3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */,
 				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
+				FE1EB0000000000000000109 /* AlbumLinkOfflineRouterTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,

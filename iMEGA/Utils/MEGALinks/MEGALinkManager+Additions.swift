@@ -116,7 +116,8 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
             monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             appDelegateRouter: AppDelegateRouter(),
             thumbnailLoader: ThumbnailLoaderFactory.makeThumbnailLoader(mode: .albumLink),
-            exportRouter: exportRouter
+            exportRouter: exportRouter,
+            offlineRouter: AlbumLinkOfflineRouter(nodeProvider: nodeProvider)
         )
         
         let albumLinkViewController = AlbumLinkViewController(viewModel: vm)

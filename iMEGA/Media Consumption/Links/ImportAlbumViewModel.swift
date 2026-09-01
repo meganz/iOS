@@ -31,6 +31,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let exportRouter: any AlbumLinkExportRouting
     private let onboardingRouter: any AlbumLinkImportOnboardingRouting
+    private let offlineRouter: any AlbumLinkOfflineRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var publicLinkWithDecryptionKey: URL?
@@ -46,6 +47,7 @@ final class ImportAlbumViewModel: ObservableObject {
     
     // Public State
     private(set) var importAlbumTask: Task<Void, Never>?
+    private(set) var copyToOfflineTask: Task<Void, Never>?
     private(set) var reservedAlbumNames: [String]?
     
     let publicLink: URL
@@ -165,19 +167,25 @@ final class ImportAlbumViewModel: ObservableObject {
     
     /// Save to MEGA is not among them: the sheet only opens outside a selection, which is exactly where the
     /// anchored button already offers it, so a row here would sit under a button saying the same thing.
+    ///
+    /// Copy to Offline needs an account and is still offered without one, the way the anchored button is:
+    /// a row that disappears leaves nothing to explain why, where a tap can send the visitor to sign in.
     var moreOptions: [AlbumLinkMoreOption] {
-        [.select, .shareLink]
+        [.select, .copyToOffline, .shareLink]
     }
     
-    /// The rows follow the buttons they were moved from: Select waits for photos to select, and Share link
-    /// waits only for the link to resolve.
+    /// The rows follow the buttons they were moved from: the ones that act on the photos wait for photos
+    /// to act on, and Share link waits only for the link to resolve.
     ///
     /// Select carries one condition of its own. The zoom bar can put the screen in the year, month or day
     /// view, and none of them can show a selection -- the same reason the select button this sheet
     /// replaced fades out there.
     var disabledMoreOptions: Set<AlbumLinkMoreOption> {
         var disabled = Set<AlbumLinkMoreOption>()
-        if isToolbarButtonsDisabled || photoLibraryContentViewModel.selectedMode != .all {
+        if isToolbarButtonsDisabled {
+            disabled.formUnion([.select, .copyToOffline])
+        }
+        if photoLibraryContentViewModel.selectedMode != .all {
             disabled.insert(.select)
         }
         if isShareLinkButtonDisabled {
@@ -206,6 +214,7 @@ final class ImportAlbumViewModel: ObservableObject {
          thumbnailLoader: any ThumbnailLoaderProtocol,
          exportRouter: some AlbumLinkExportRouting,
          onboardingRouter: some AlbumLinkImportOnboardingRouting = AlbumLinkImportOnboardingRouter(),
+         offlineRouter: some AlbumLinkOfflineRouting,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
@@ -222,6 +231,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.thumbnailLoader = thumbnailLoader
         self.exportRouter = exportRouter
         self.onboardingRouter = onboardingRouter
+        self.offlineRouter = offlineRouter
         self.featureFlagProvider = featureFlagProvider
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
@@ -235,6 +245,8 @@ final class ImportAlbumViewModel: ObservableObject {
         publicCollectionUseCase.stopCollectionLinkPreview()
         networkMonitorTask?.cancel()
         networkMonitorTask = nil
+        copyToOfflineTask?.cancel()
+        copyToOfflineTask = nil
     }
     
     func onViewAppear() {
@@ -290,6 +302,8 @@ final class ImportAlbumViewModel: ObservableObject {
         switch moreOption {
         case .select:
             enablePhotoLibraryEditMode(true)
+        case .copyToOffline:
+            copyToOffline()
         case .shareLink:
             // Shared straight from the sheet's own row, which hands the system share sheet the
             // anchoring it needs on iPad.
@@ -430,6 +444,40 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     // MARK: Private
+    
+    private func copyToOffline() {
+        // Offline is the account's own storage, so there is nowhere to put the photos yet -- the same
+        // reason the anchored Save to MEGA button sends a logged out visitor to sign in first.
+        guard accountUseCase.isLoggedIn() else {
+            onboardingRouter.showOnboarding()
+            return
+        }
+        guard validateOverDiskQuota() else {
+            return
+        }
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
+        let photos = photoLibraryContentViewModel.photosToAction
+        guard photos.isNotEmpty, copyToOfflineTask == nil else {
+            return
+        }
+        
+        copyToOfflineTask = Task { [weak self] in
+            guard let self else { return }
+            defer { cancelCopyToOfflineTask() }
+            
+            toggleLoading()
+            await offlineRouter.copyToOffline(photos: photos)
+            toggleLoading()
+        }
+    }
+    
+    private func cancelCopyToOfflineTask() {
+        copyToOfflineTask?.cancel()
+        copyToOfflineTask = nil
+    }
     
     private func applySortOrderToLibrary() {
         photoLibraryContentViewModel.library = publicAlbumPhotos.toPhotoLibrary(withSortType: photoSortOrder)
