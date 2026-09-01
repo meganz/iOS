@@ -210,24 +210,8 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     }
 
     func handleMediaTimelineSortAction(_ sortOrder: MediaTimelineSortOrderEntity) {
-        trackDirectionChange(to: sortOrder)
+        tracker.trackAnalyticsEvent(with: sortOrder.selectedEvent)
         timelineViewModel.updateMediaTimelineSortOrder(sortOrder)
-    }
-
-    /// Reports a direction change with the events the newest / oldest menu has always sent, so the
-    /// metric survives that menu being replaced by this one. A timestamp-only switch reports
-    /// nothing: the timestamp axis has no event of its own yet, and borrowing the direction event
-    /// for it would inflate a metric that has only ever counted direction picks.
-    private func trackDirectionChange(to sortOrder: MediaTimelineSortOrderEntity) {
-        guard sortOrder.isNewestFirst != timelineViewModel.mediaTimelineSortType?.isNewestFirst else {
-            return
-        }
-
-        if sortOrder.isNewestFirst {
-            tracker.trackAnalyticsEvent(with: MediaScreenSortByNewestSelectedEvent())
-        } else {
-            tracker.trackAnalyticsEvent(with: MediaScreenSortByOldestSelectedEvent())
-        }
     }
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
@@ -298,5 +282,20 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationTitleProvider {
         return sharedResourceProvider.selectionTitlePublisher(
             selectionCountPublisher: selectionCountPublisher,
             inactiveEditModeTitle: inactiveEditModeTitle)
+    }
+}
+
+private extension MediaTimelineSortOrderEntity {
+    /// The event for the menu item carrying this order — one per item, reported on every tap, as
+    /// the newest / oldest menu has always done. The two modification-time orders keep the
+    /// original events: that menu offered no other timestamp, so they have always meant "by last
+    /// modified", and renaming them would have cost their stable identifiers.
+    var selectedEvent: any EventIdentifier {
+        switch self {
+        case .newest: MediaScreenSortByNewestSelectedEvent()
+        case .oldest: MediaScreenSortByOldestSelectedEvent()
+        case .newestByCaptureTime: MediaScreenSortByNewestDateTakenSelectedEvent()
+        case .oldestByCaptureTime: MediaScreenSortByOldestDateTakenSelectedEvent()
+        }
     }
 }

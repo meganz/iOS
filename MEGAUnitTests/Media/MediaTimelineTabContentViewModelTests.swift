@@ -127,17 +127,16 @@ struct MediaTimelineTabContentViewModelTests {
 
             #expect(sut.timelineViewModel.mediaTimelineSortType == .oldestByCaptureTime)
             #expect(sut.contextMenuConfiguration()?.mediaTimelineSortType == .oldestByCaptureTime)
-            // The direction keeps reporting through the events the newest / oldest menu sent.
             Test.assertTrackAnalyticsEventCalled(
                 trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-                with: [MediaScreenSortByOldestSelectedEvent()]
+                with: [MediaScreenSortByOldestDateTakenSelectedEvent()]
             )
         }
 
-        /// The direction events pre-date this menu and count direction picks; a switch that only
-        /// moves the timestamp must not inflate them.
+        /// One event per menu item: the timestamp axis has its own pair, so a switch that only
+        /// moves the timestamp reports that item rather than borrowing a direction event.
         @Test
-        func mediaTimelineSortAction_timestampOnlyChange_reportsNothing() {
+        func mediaTimelineSortAction_timestampOnlyChange_reportsTheItemItsOwnEvent() {
             let tracker = MockTracker()
             let sut = makeSUT(
                 timelineViewModel: makeTimelineViewModel(
@@ -149,7 +148,36 @@ struct MediaTimelineTabContentViewModelTests {
             sut.handleMediaTimelineSortAction(.newestByCaptureTime)
 
             #expect(sut.timelineViewModel.mediaTimelineSortType == .newestByCaptureTime)
-            #expect(tracker.trackedEventIdentifiers.isEmpty)
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [MediaScreenSortByNewestDateTakenSelectedEvent()]
+            )
+        }
+
+        /// The modification-time items keep the events that menu has always sent.
+        @Test
+        func mediaTimelineSortAction_everyItemReportsItsOwnEvent() {
+            let tracker = MockTracker()
+            let sut = makeSUT(
+                timelineViewModel: makeTimelineViewModel(
+                    mediaTimelineUseCase: MockMediaTimelineUseCase(),
+                    isDateTakenSortEnabled: true),
+                tracker: tracker)
+
+            sut.handleMediaTimelineSortAction(.oldest)
+            sut.handleMediaTimelineSortAction(.newestByCaptureTime)
+            sut.handleMediaTimelineSortAction(.oldestByCaptureTime)
+            sut.handleMediaTimelineSortAction(.newest)
+
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [
+                    MediaScreenSortByOldestSelectedEvent(),
+                    MediaScreenSortByNewestDateTakenSelectedEvent(),
+                    MediaScreenSortByOldestDateTakenSelectedEvent(),
+                    MediaScreenSortByNewestSelectedEvent()
+                ]
+            )
         }
 
         @Test
