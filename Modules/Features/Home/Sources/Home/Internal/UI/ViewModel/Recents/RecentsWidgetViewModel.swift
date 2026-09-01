@@ -9,7 +9,7 @@ import MEGAPreference
 @MainActor
 final class RecentsWidgetViewModel: ObservableObject {
 
-    @Published private(set) var state: RecentWidgetUseCaseState = .hidden
+    @Published private(set) var state: RecentWidgetUseCaseState
 
     @PreferenceWrapper(key: PreferenceKeyEntity.showRecents, defaultValue: true, useCase: PreferenceUseCase.default)
     private var showRecentsPreference: Bool
@@ -33,6 +33,7 @@ final class RecentsWidgetViewModel: ObservableObject {
         self.recentsActionsStatesUseCase = recentsActionsStatesUseCase
         self.clearRecentActionHistoryUseCase = clearRecentActionHistoryUseCase
         self.tracker = tracker
+        state = recentsActionsStatesUseCase.initialState
     }
 
     func onTask() async {
@@ -43,6 +44,7 @@ final class RecentsWidgetViewModel: ObservableObject {
     func didTapShowActivityButton() async {
         showRecentsPreference = true
         tracker.trackAnalyticsEvent(with: ShowRecentActivityMenuItemEvent())
+        state = .loading
         await refreshState()
     }
 

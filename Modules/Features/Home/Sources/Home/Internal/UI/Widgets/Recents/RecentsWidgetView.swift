@@ -295,74 +295,100 @@ private struct ErrorRecentsContentView: View {
     }
 }
 
+private enum RecentsSkeleton {
+    static let color = TokenColors.Text.primary.swiftUI
+    static let iconSize: CGFloat = 32
+}
+
+private extension View {
+    func recentsSkeletonContainer() -> some View {
+        padding(.horizontal, TokenSpacing._5)
+            .padding(.vertical, TokenSpacing._3)
+            .shimmering()
+            .allowsHitTesting(false)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Strings.Localizable.loading)
+    }
+}
+
+private struct RecentsSkeletonIcon: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: TokenRadius.medium)
+            .fill(RecentsSkeleton.color)
+            .frame(width: RecentsSkeleton.iconSize, height: RecentsSkeleton.iconSize)
+    }
+}
+
+private struct RecentsSkeletonLine: View {
+    enum Style {
+        case title
+        case subtitle
+
+        var metrics: (height: CGFloat, textStyle: Font.TextStyle) {
+            switch self {
+            case .title: (16, .subheadline)
+            case .subtitle: (12, .caption)
+            }
+        }
+    }
+
+    private let width: CGFloat?
+    @ScaledMetric private var height: CGFloat
+
+    init(_ style: Style, width: CGFloat? = nil) {
+        self.width = width
+        _height = ScaledMetric(wrappedValue: style.metrics.height, relativeTo: style.metrics.textStyle)
+    }
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: TokenRadius.small)
+            .fill(RecentsSkeleton.color)
+            .frame(width: width, height: height)
+    }
+}
+
 private struct LegacyRecentsLoadingContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
             ForEach(0..<2, id: \.self) { _ in
                 HStack(spacing: TokenSpacing._4) {
-                    RoundedRectangle(cornerRadius: 6)
-                        .frame(width: 32, height: 32)
+                    RecentsSkeletonIcon()
 
                     VStack(alignment: .leading, spacing: TokenSpacing._1) {
-                        Text(String(repeating: " ", count: 20))
-                            .font(.subheadline)
-
-                        Text(String(repeating: " ", count: 12))
-                            .font(.caption)
+                        RecentsSkeletonLine(.title, width: 156)
+                        RecentsSkeletonLine(.subtitle, width: 81)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
-        .padding(.horizontal, TokenSpacing._5)
-        .padding(.vertical, TokenSpacing._3)
-        .redacted(reason: .placeholder)
-        .shimmering()
+        .recentsSkeletonContainer()
     }
 }
 
 private struct RecentsLoadingContentView: View {
-    private enum Constants {
-        static let iconSize: CGFloat = 32
-        static let iconCornerRadius: CGFloat = 6
-        static let lineCornerRadius: CGFloat = 4
-        static let titleHeight: CGFloat = 16
-        static let subtitleHeight: CGFloat = 12
-        static let sectionLabelWidth: CGFloat = 62
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._4) {
-            RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                .frame(width: Constants.sectionLabelWidth, height: Constants.titleHeight)
+            RecentsSkeletonLine(.title, width: 62)
             recentRow(extraSubtitleLines: 0)
             recentRow(extraSubtitleLines: 0)
 
-            RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                .frame(width: Constants.sectionLabelWidth, height: Constants.titleHeight)
+            RecentsSkeletonLine(.title, width: 62)
             recentRow(extraSubtitleLines: 1)
             recentRow(extraSubtitleLines: 1)
         }
-        .padding(.horizontal, TokenSpacing._5)
-        .padding(.vertical, TokenSpacing._3)
-        .redacted(reason: .placeholder)
-        .shimmering()
+        .recentsSkeletonContainer()
     }
 
     private func recentRow(extraSubtitleLines: Int) -> some View {
         HStack(spacing: TokenSpacing._4) {
-            RoundedRectangle(cornerRadius: Constants.iconCornerRadius)
-                .frame(width: Constants.iconSize, height: Constants.iconSize)
+            RecentsSkeletonIcon()
 
             VStack(alignment: .leading, spacing: TokenSpacing._1) {
-                RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: Constants.titleHeight)
+                RecentsSkeletonLine(.title)
 
                 ForEach(0..<(extraSubtitleLines + 1), id: \.self) { _ in
-                    RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: Constants.subtitleHeight)
+                    RecentsSkeletonLine(.subtitle)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

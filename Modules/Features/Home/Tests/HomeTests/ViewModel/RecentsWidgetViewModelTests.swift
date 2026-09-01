@@ -1,8 +1,8 @@
 import Foundation
-import MEGASwift
-import Testing
-import os
 @testable import Home
+import MEGASwift
+import os
+import Testing
 
 @Suite("RecentsWidgetViewModelTests")
 @MainActor
@@ -16,7 +16,7 @@ struct RecentsWidgetViewModelTests {
             await sut.didTapRetryButton()
         }
 
-        await Task.yield()
+        await useCase.waitForContinuation()
 
         guard case .loading = sut.state else {
             Issue.record("Expected loading state before the retry finishes")
@@ -32,13 +32,13 @@ struct RecentsWidgetViewModelTests {
         }
     }
 
-    @Test("initial state is hidden before onTask completes")
-    func initialStateIsHiddenBeforeOnTaskCompletes() async {
+    @Test("initial state is loading before onTask completes")
+    func initialStateIsLoadingBeforeOnTaskCompletes() async {
         let useCase = MockRecentsActionsStatesUseCase()
         let sut = makeSUT(recentsActionsStatesUseCase: useCase)
 
-        guard case .hidden = sut.state else {
-            Issue.record("Expected hidden as the initial state")
+        guard case .loading = sut.state else {
+            Issue.record("Expected loading as the initial state")
             return
         }
 
@@ -48,18 +48,18 @@ struct RecentsWidgetViewModelTests {
 
         await useCase.waitForContinuation()
 
-        guard case .hidden = sut.state else {
-            Issue.record("Expected hidden state while onTask is still waiting for the first refresh")
+        guard case .loading = sut.state else {
+            Issue.record("Expected loading state while onTask is still waiting for the first refresh")
             task.cancel()
             await task.value
             return
         }
 
-        var sawInitialHidden = false
+        var sawInitialLoading = false
         var observedEmpty = false
         for await state in sut.$state.values {
-            if !sawInitialHidden {
-                sawInitialHidden = true
+            if !sawInitialLoading {
+                sawInitialLoading = true
                 useCase.resume(with: .empty)
                 continue
             }
@@ -78,6 +78,43 @@ struct RecentsWidgetViewModelTests {
 
         task.cancel()
         await task.value
+    }
+
+    @Test("initial state is taken from the use case")
+    func initialStateIsTakenFromUseCase() {
+        let sut = makeSUT(recentsActionsStatesUseCase: MockRecentsActionsStatesUseCase(initialState: .hidden))
+
+        guard case .hidden = sut.state else {
+            Issue.record("Expected the use case initial state to seed the view model")
+            return
+        }
+    }
+
+    @Test("showing activity enters loading state before applying the refreshed result")
+    func showingActivityEntersLoadingStateBeforeApplyingRefreshedResult() async {
+        let useCase = MockRecentsActionsStatesUseCase(initialState: .hidden)
+        let sut = makeSUT(recentsActionsStatesUseCase: useCase)
+
+        let task = Task {
+            await sut.didTapShowActivityButton()
+        }
+
+        await useCase.waitForContinuation()
+
+        guard case .loading = sut.state else {
+            Issue.record("Expected loading state before the refresh finishes")
+            useCase.resume(with: .empty)
+            await task.value
+            return
+        }
+
+        useCase.resume(with: .empty)
+        await task.value
+
+        guard case .empty = sut.state else {
+            Issue.record("Expected empty state after showing activity finishes")
+            return
+        }
     }
 
     private func makeSUT(
@@ -99,6 +136,12 @@ private final class MockRecentsActionsStatesUseCase: RecentsActionsStatesUseCase
     }
 
     private let state = OSAllocatedUnfairLock(initialState: State())
+
+    let initialState: RecentWidgetUseCaseState
+
+    init(initialState: RecentWidgetUseCaseState = .loading) {
+        self.initialState = initialState
+    }
 
     var states: AnyAsyncSequence<RecentWidgetUseCaseState> {
         AsyncStream<RecentWidgetUseCaseState> { _ in }.eraseToAnyAsyncSequence()

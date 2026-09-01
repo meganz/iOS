@@ -6,6 +6,7 @@ import MEGAPreference
 import MEGASwift
 
 protocol RecentsActionsStatesUseCaseProtocol: Sendable {
+    var initialState: RecentWidgetUseCaseState { get }
     /// Returns an async sequence that emits when recent action buckets should be refreshed.
     /// The sequence automatically throttles rapid updates, emitting at most once per interval.
     var states: AnyAsyncSequence<RecentWidgetUseCaseState> { get }
@@ -55,6 +56,10 @@ struct RecentsActionsStatesUseCase: RecentsActionsStatesUseCaseProtocol {
         self.recentNodesUseCase = recentNodesUseCase
         self.throttleInterval = throttleInterval
         $showRecentsPreference.useCase = preferenceUseCase
+    }
+
+    var initialState: RecentWidgetUseCaseState {
+        showRecentsPreference ? .loading : .hidden
     }
 
     var states: AnyAsyncSequence<RecentWidgetUseCaseState> {
