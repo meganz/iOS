@@ -235,9 +235,13 @@
     } else if (self.isLink && self.node) {
         [self downloadFromFolderLink:@[self.node]];
     } else if (self.chatId && self.messageId) {
-        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self];
+        [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self completion:^(enum CancellableDownloadOutcome outcome) {
+            [PreviewDocumentViewController showDownloadOutcome:outcome];
+        }];
     } else if (self.node != nil) {
-        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.node] presenter:self isFolderLink:self.isLink];
+        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[self.node] presenter:self isFolderLink:self.isLink completion:^(enum CancellableDownloadOutcome outcome) {
+            [PreviewDocumentViewController showDownloadOutcome:outcome];
+        }];
     }
 }
 

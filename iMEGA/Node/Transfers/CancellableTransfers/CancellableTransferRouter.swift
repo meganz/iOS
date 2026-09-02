@@ -45,6 +45,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     private let preresolvedNodes: [HandleEntity: MEGANode]
     private var wrapper: CancellableTransferControllerWrapper<CancellableTransferViewModel>?
     private weak var presentedAlert: UIAlertController?
+    var onDownloadCompleted: (@MainActor (CancellableDownloadOutcome) -> Void)?
 
     /// - Parameter preresolvedNodes: The transfers' nodes, for a source that cannot look them up in any
     ///   SDK tree -- a public album link's photos come from a set preview, and its own screen is what
@@ -116,16 +117,33 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     
     /// Whether `presenter?.dismiss()` would close this router's own cancel-transfer alert.
     private var canDismissTransfersAlert: Bool {
-        guard let presented = presenter?.presentedViewController, presented === presentedAlert else {
+        guard let presented = presenter?.presentedViewController,
+              presented === presentedAlert,
+              // An alert already dismissing itself, e.g. because its Cancel button was tapped,
+              // stays the presented controller. Dismissing it again is ignored and the completion
+              // never runs, so callers must not wait on it.
+              !presented.isBeingDismissed else {
             return false
         }
         return presented.presentedViewController == nil
     }
     
-    func transferSuccess(with message: String, dismiss: Bool) {
-        if dismiss, canDismissTransfersAlert {
-            presenter?.dismiss(animated: true)
+    func transferSuccess(with message: String, dismiss: Bool, downloadOutcome: CancellableDownloadOutcome?) {
+        guard dismiss, canDismissTransfersAlert else {
+            report(downloadOutcome)
+            return
         }
+
+        // The alert stays the topmost view controller until its animation ends, so a listener
+        // presenting on it would lose its UI with the alert.
+        presenter?.dismiss(animated: true) { [weak self] in
+            self?.report(downloadOutcome)
+        }
+    }
+
+    private func report(_ downloadOutcome: CancellableDownloadOutcome?) {
+        guard let downloadOutcome else { return }
+        onDownloadCompleted?(downloadOutcome)
     }
     
     func transferCancelled(with message: String, dismiss: Bool) {

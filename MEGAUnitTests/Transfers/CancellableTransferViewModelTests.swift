@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGATest
+import Testing
 import XCTest
 
 final class CancellableTransferViewModelTests: XCTestCase {
@@ -174,6 +175,12 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
     var transferFailed_calledTimes = 0
     var transferCompletedWithError_calledTimes = 0
     var prepareTransfersWidget_calledTimes = 0
+    var downloadOutcome_receivedTimes = 0
+    var lastDownloadOutcome: CancellableDownloadOutcome?
+
+    /// Fired by every terminal callback so tests can await the asynchronous flow instead of polling.
+    /// Awaiting one specific outcome would hang the run when a regression takes another branch.
+    var onTerminalCallback: (() -> Void)?
 
     nonisolated init() { }
     
@@ -181,23 +188,137 @@ final class MockCancellableTransferRouter: CancellableTransferRouting, TransferW
         showTransfersAlert_calledTimes += 1
     }
     
-    func transferSuccess(with message: String, dismiss: Bool) {
+    func transferSuccess(with message: String, dismiss: Bool, downloadOutcome: CancellableDownloadOutcome?) {
         transferSuccess_calledTimes += 1
+        if let downloadOutcome {
+            downloadOutcome_receivedTimes += 1
+            lastDownloadOutcome = downloadOutcome
+        }
+        onTerminalCallback?()
     }
-    
+
     func transferCancelled(with message: String, dismiss: Bool) {
         transferCancelled_calledTimes += 1
+        onTerminalCallback?()
     }
-    
+
     func transferFailed(error: String, dismiss: Bool) {
         transferFailed_calledTimes += 1
+        onTerminalCallback?()
     }
-    
+
     func transferCompletedWithError(error: String, dismiss: Bool) {
         transferCompletedWithError_calledTimes += 1
+        onTerminalCallback?()
     }
     
     func prepareTransfersWidget() {
         prepareTransfersWidget_calledTimes += 1
+    }
+}
+
+@Suite("CancellableTransferViewModel download outcome")
+@MainActor
+struct CancellableTransferDownloadOutcomeTests {
+
+    @Test("Reports saved when a download is already in Offline")
+    func reportsSavedWhenAlreadyDownloaded() async {
+        let router = MockCancellableTransferRouter()
+        let sut = makeSUT(router: router, result: .failure(.alreadyDownloaded), transferCount: 2)
+
+        await awaitCompletion(router: router, sut: sut)
+
+        #expect(router.downloadOutcome_receivedTimes == 1)
+        #expect(router.lastDownloadOutcome == .saved)
+    }
+
+    @Test("Reports saved when a download is copied from the temp cache")
+    func reportsSavedWhenCopiedFromTempFolder() async {
+        let router = MockCancellableTransferRouter()
+        let sut = makeSUT(router: router, result: .failure(.copiedFromTempFolder), transferCount: 1)
+
+        await awaitCompletion(router: router, sut: sut)
+
+        #expect(router.lastDownloadOutcome == .saved)
+    }
+
+    @Test("Reports transferQueued when the transfers actually queue")
+    func reportsTransferQueuedWhenTransfersQueue() async {
+        let router = MockCancellableTransferRouter()
+        // `.complete` so the transfers register as started. `.none` would never satisfy
+        // `fileTransfersStarted()`, so completion would never be reached.
+        let sut = makeSUT(router: router, result: .success(TransferEntity(nodeHandle: 1, state: .complete)), transferCount: 2)
+
+        await awaitCompletion(router: router, sut: sut)
+
+        #expect(router.lastDownloadOutcome == .transferQueued)
+    }
+
+    @Test("Does not report an outcome when the download fails")
+    func doesNotReportOutcomeOnFailure() async {
+        let router = MockCancellableTransferRouter()
+        let sut = makeSUT(router: router, result: .failure(.couldNotFindNodeByHandle), transferCount: 1)
+
+        await awaitCompletion(router: router, sut: sut)
+
+        #expect(router.transferFailed_calledTimes == 1)
+        #expect(router.downloadOutcome_receivedTimes == 0)
+    }
+
+    @Test("Reports no download outcome for uploads")
+    func reportsNoOutcomeForUploads() {
+        let router = MockCancellableTransferRouter()
+        let transfer = CancellableTransfer(
+            localFileURL: URL(fileURLWithPath: "PathToFile"),
+            name: "file.txt",
+            type: .upload
+        )
+        let sut = CancellableTransferViewModel(
+            router: router,
+            uploadFileUseCase: MockUploadFileUseCase(uploadFileResult: .success(())),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            mediaUseCase: MockMediaUseCase(),
+            analyticsEventUseCase: MockAnalyticsEventUseCase(),
+            overDiskQuotaChecker: MockOverDiskQuotaChecker(),
+            transfers: [transfer],
+            transferType: .upload
+        )
+
+        sut.dispatch(.onViewReady)
+
+        #expect(router.transferSuccess_calledTimes == 1)
+        #expect(router.downloadOutcome_receivedTimes == 0)
+    }
+
+    // MARK: - Helpers
+
+    private func makeSUT(
+        router: MockCancellableTransferRouter,
+        result: Result<TransferEntity, TransferErrorEntity>,
+        transferCount: Int
+    ) -> CancellableTransferViewModel {
+        let transfers = (0..<transferCount).map { CancellableTransfer(handle: HandleEntity($0), type: .download) }
+        return CancellableTransferViewModel(
+            router: router,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(result: result),
+            mediaUseCase: MockMediaUseCase(),
+            analyticsEventUseCase: MockAnalyticsEventUseCase(),
+            overDiskQuotaChecker: MockOverDiskQuotaChecker(),
+            transfers: transfers,
+            transferType: .download
+        )
+    }
+
+    /// Resumes on whichever terminal callback the view model reaches, so a regression that takes a
+    /// different branch fails an expectation instead of hanging the run.
+    private func awaitCompletion(
+        router: MockCancellableTransferRouter,
+        sut: CancellableTransferViewModel
+    ) async {
+        await withCheckedContinuation { continuation in
+            router.onTerminalCallback = { continuation.resume() }
+            sut.dispatch(.onViewReady)
+        }
     }
 }

@@ -40,7 +40,7 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
         presenter.present(build(), animated: true)
     }
     
-    func transferSuccess(with message: String, dismiss: Bool) {
+    func transferSuccess(with message: String, dismiss: Bool, downloadOutcome: CancellableDownloadOutcome?) {
         if dismiss {
             presenter?.dismiss(animated: true, completion: {
                 SVProgressHUD.showSuccess(withStatus: message)

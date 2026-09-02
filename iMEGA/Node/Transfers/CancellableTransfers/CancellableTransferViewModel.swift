@@ -28,7 +28,9 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     private var isAlertBlocked: Bool = false
 
     private var transferErrors = [TransferErrorEntity]()
-    
+
+    private var savedWithoutTransferCount = 0
+
     private var alertSubscription: AnyCancellable?
     
     private var alertPresented = false
@@ -135,6 +137,18 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             }
     }
     
+    private func recordDownloadOutcome(for error: TransferErrorEntity) {
+        if error == .copiedFromTempFolder || error == .alreadyDownloaded {
+            savedWithoutTransferCount += 1
+        }
+    }
+
+    /// A batch is only "saved" when nothing queued an SDK transfer, otherwise the caller would
+    /// announce "Saved" over downloads that are still running.
+    private func resolvedDownloadOutcome() -> CancellableDownloadOutcome {
+        savedWithoutTransferCount >= transfers.count ? .saved : .transferQueued
+    }
+
     private func fileTransfersStarted() -> Bool {
         fileTransfers.filter({ $0.state != .none }).count == fileTransfers.count
     }
@@ -184,9 +198,9 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
         } else if transferErrors.isEmpty {
             switch transferType {
             case .download, .downloadChat, .downloadFileLink:
-                router.transferSuccess(with: Strings.Localizable.downloadStarted, dismiss: alertPresented)
+                router.transferSuccess(with: Strings.Localizable.downloadStarted, dismiss: alertPresented, downloadOutcome: resolvedDownloadOutcome())
             case .upload:
-                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage, dismiss: alertPresented)
+                router.transferSuccess(with: Strings.Localizable.uploadStartedMessage, dismiss: alertPresented, downloadOutcome: nil)
             }
         } else if transferErrors.count < transfers.count {
             router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
@@ -278,12 +292,17 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
                 }
             }
         } catch let error as TransferErrorEntity {
+            transferViewEntity.setState(.failed)
             if error != .alreadyDownloaded && error != .copiedFromTempFolder {
                 transferErrors.append(error)
             }
+            recordDownloadOutcome(for: error)
             continueFolderTransfersIfNeeded()
         } catch {
             MEGALogError("Download chat file failed: \(error.localizedDescription)")
+            transferViewEntity.setState(.failed)
+            transferErrors.append(.generic)
+            continueFolderTransfersIfNeeded()
         }
     }
     
@@ -353,6 +372,10 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             transferViewEntity.setState(.failed)
             transferErrors.append(transferError ?? .generic)
         }
+
+        if let transferError {
+            recordDownloadOutcome(for: transferError)
+        }
     }
     
     private func startFileLinkDownload() async {
@@ -383,9 +406,11 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
             }
         } catch {
             transferViewEntity.setState(.failed)
-            if let error = error as? TransferErrorEntity,
-                error != .alreadyDownloaded && error != .copiedFromTempFolder {
-                transferErrors.append(error)
+            if let error = error as? TransferErrorEntity {
+                if error != .alreadyDownloaded && error != .copiedFromTempFolder {
+                    transferErrors.append(error)
+                }
+                recordDownloadOutcome(for: error)
             }
             manageTransfersCompletion()
         }

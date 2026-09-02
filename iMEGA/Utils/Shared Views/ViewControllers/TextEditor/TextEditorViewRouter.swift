@@ -2,6 +2,7 @@ import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 import MEGAPreference
 import MEGARepo
 
@@ -205,8 +206,12 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         }
         
         let transfer = CancellableTransfer(handle: node.handle, name: node.name, appData: nil, priority: false, isFile: node.isFile, type: .download)
-        
-        CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false).start()
+
+        let transferRouter = CancellableTransferRouter(presenter: navigationController, transfers: [transfer], transferType: .download, isFolderLink: false)
+        transferRouter.onDownloadCompleted = { outcome in
+            UIApplication.mnz_visibleViewController().showSnackBar(message: outcome.message)
+        }
+        transferRouter.start()
     }
     
     func sendToChat(node: MEGANode) {

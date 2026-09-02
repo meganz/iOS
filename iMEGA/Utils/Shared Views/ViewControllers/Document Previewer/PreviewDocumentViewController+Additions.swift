@@ -144,6 +144,13 @@ extension PreviewDocumentViewController {
     }
 }
 
+extension PreviewDocumentViewController {
+    // Static so the feedback survives closing the preview before the transfer resolves.
+    @objc static func showDownloadOutcome(_ outcome: CancellableDownloadOutcome) {
+        UIApplication.mnz_visibleViewController().showSnackBar(message: outcome.message)
+    }
+}
+
 extension PreviewDocumentViewController: MEGAGlobalDelegate {
     nonisolated public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let nodes = nodeList?.toNodeArray() else { return }

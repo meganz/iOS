@@ -87,7 +87,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     private func manageTransfersCompletion() {
         processingComplete = true
         if transferErrors.isEmpty {
-            router.transferSuccess(with: successShareMessage, dismiss: alertPresented)
+            router.transferSuccess(with: successShareMessage, dismiss: alertPresented, downloadOutcome: nil)
         } else if transferErrors.count < transfers.count {
             router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
         } else {
