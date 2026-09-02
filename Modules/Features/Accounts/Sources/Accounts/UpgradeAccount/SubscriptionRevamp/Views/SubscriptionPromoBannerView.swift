@@ -6,6 +6,7 @@ import SwiftUI
 struct SubscriptionPromoBannerView: View {
     private let height: CGFloat = 280
     private let edgeBlurRadius: CGFloat = 5
+    private let padContentUpwardShift: CGFloat = 50
 
     var body: some View {
         Color.clear
@@ -24,11 +25,14 @@ struct SubscriptionPromoBannerView: View {
             .subscriptionHeaderBottomFade()
     }
 
+    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
+
     private var bannerImage: some View {
-        MEGAAssets.Image.promoBannerCentered
+        (isPad ? MEGAAssets.Image.promoBannerIpad : MEGAAssets.Image.promoBannerCentered)
             .resizable()
-            .aspectRatio(contentMode: .fit)
+            .aspectRatio(contentMode: isPad ? .fill : .fit)
             .frame(maxWidth: .infinity)
+            .offset(y: isPad ? -padContentUpwardShift : 0)
     }
 
     private var sharpBodyMask: LinearGradient {

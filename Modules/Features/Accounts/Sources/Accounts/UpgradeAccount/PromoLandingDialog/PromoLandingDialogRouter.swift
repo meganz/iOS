@@ -46,6 +46,7 @@ public final class PromoLandingDialogRouter: Routing {
         )
 
         let hostingController = PromoDialogBlockingHostingController(rootView: view)
+        hostingController.modalPresentationStyle = UIDevice.current.userInterfaceIdiom == .pad ? .fullScreen : .automatic
         presentedController = hostingController
         return hostingController
     }

@@ -9,8 +9,6 @@ import SwiftUI
 /// shared plan/feature/benefit sections. Driven by mock data.
 public struct SubscriptionPromoView: View {
 
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-
     private let dependency: RevampUpgradePlansDependency
     private let viewModel: UpgradePlansViewModel
     private let purchaseViewModel: PlanPurchaseViewModel
@@ -33,13 +31,13 @@ public struct SubscriptionPromoView: View {
 
     public var body: some View {
         SubscriptionBaseView(
-            compactHeaderImage: MEGAAssets.Image.promoBanner,
+            leadingHeaderImage: MEGAAssets.Image.promoBanner,
             dependency: dependency,
             dismiss: dismiss,
             regularHeader: {
                 promoBanner
-            }, content: {
-                promoHero
+            }, content: { isSideBySide in
+                promoHero(isSideBySide: isSideBySide)
                 highlightedPlanCard
                     .padding(.vertical, TokenSpacing._4)
                 SubscriptionContentSectionsView(
@@ -60,10 +58,10 @@ public struct SubscriptionPromoView: View {
     }
 
     @ViewBuilder
-    private var promoHero: some View {
+    private func promoHero(isSideBySide: Bool) -> some View {
         if let promoHeader = viewModel.promoHeader {
             SubscriptionPromoHeaderView(viewModel: promoHeader)
-                .blendIntoHeader(offset: TokenSpacing._16, isCompact: verticalSizeClass == .compact)
+                .blendIntoHeader(offset: TokenSpacing._16, isSideBySide: isSideBySide)
         }
     }
 

@@ -19,9 +19,9 @@ extension View {
         }
     }
 
-    /// Pulls the intro title up into the header so it blends with the image in
-    /// regular height. In compact height the header sits alongside, so no offset.
-    func blendIntoHeader(offset: CGFloat, isCompact: Bool) -> some View {
-        padding(.top, isCompact ? 0 : -offset)
+    /// Pulls the intro title up into the header so it blends with the image when the
+    /// header sits above the content. In the side-by-side layout there is none, so no offset.
+    func blendIntoHeader(offset: CGFloat, isSideBySide: Bool) -> some View {
+        padding(.top, isSideBySide ? 0 : -offset)
     }
 }

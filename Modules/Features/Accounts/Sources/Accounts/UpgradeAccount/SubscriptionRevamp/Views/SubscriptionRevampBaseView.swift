@@ -6,7 +6,7 @@ import SwiftUI
 ///
 /// Owns the navigation header (close / "Maybe later" dismiss button, scroll-driven
 /// glass background), the scroll container with its scroll-position tracking, and
-/// the regular/compact size-class layouts. The promo and standard pages supply
+/// the stacked / side-by-side layouts. The promo and standard pages supply
 /// only what differs: the header image and the scrollable content.
 struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -14,40 +14,39 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
     @State private var topInset: CGFloat = 0
 
     private let compactContentLeadingPadding: CGFloat = 250
+    private let padLandscapeContentLeadingPadding: CGFloat = 391
     private let coordinateSpaceName = "SubscriptionRevampScroll"
     private let topOffsetThreshold: CGFloat = 5
 
-    private let compactHeaderImage: Image
+    private let leadingHeaderImage: Image
     private let dependency: RevampUpgradePlansDependency
     private let dismiss: (UpgradePlansDismissReason) -> Void
     private let regularHeader: RegularHeader
-    private let content: Content
+    private let content: (Bool) -> Content
 
     init(
-        compactHeaderImage: Image,
+        leadingHeaderImage: Image,
         dependency: RevampUpgradePlansDependency,
         dismiss: @escaping (UpgradePlansDismissReason) -> Void,
         @ViewBuilder regularHeader: () -> RegularHeader,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: @escaping (Bool) -> Content
     ) {
-        self.compactHeaderImage = compactHeaderImage
+        self.leadingHeaderImage = leadingHeaderImage
         self.dependency = dependency
         self.dismiss = dismiss
         self.regularHeader = regularHeader()
-        self.content = content()
+        self.content = content
     }
 
-    private var isRegularHeight: Bool { verticalSizeClass != .compact }
-
-    private var compactTopInset: CGFloat {
-        isRegularHeight ? 0 : TokenSpacing._11
-    }
+    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
 
     var body: some View {
         ZStack(alignment: .top) {
-            layoutView
-                .background(TokenColors.Background.page.swiftUI)
-                .ignoresSafeArea()
+            GeometryReader { proxy in
+                layoutView(isPadLandscape: isPad && proxy.size.width > proxy.size.height)
+            }
+            .background(TokenColors.Background.page.swiftUI)
+            .ignoresSafeArea()
 
             SubscriptionNavigationHeader(dependency: dependency, isAtTop: isAtTop, dismiss: dismiss)
         }
@@ -56,23 +55,27 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
     // MARK: - Layout
 
     @ViewBuilder
-    private var layoutView: some View {
-        if verticalSizeClass == .compact {
-            SubscriptionCompactHeightLayout(
-                leadingPadding: compactContentLeadingPadding,
-                headerBackground: compactHeaderBackground,
-                scrollContent: scrollContent
+    private func layoutView(isPadLandscape: Bool) -> some View {
+        if verticalSizeClass == .compact || isPadLandscape {
+            SubscriptionSideBySideLayout(
+                leadingPadding: leadingPadding(isPadLandscape: isPadLandscape),
+                headerBackground: headerBackground(isPadLandscape: isPadLandscape),
+                scrollContent: scrollContent(isSideBySide: true, isPadLandscape: isPadLandscape)
             )
         } else {
-            scrollContent
+            scrollContent(isSideBySide: false, isPadLandscape: false)
         }
     }
 
-    private var compactHeaderBackground: some View {
-        compactHeaderImage
+    private func leadingPadding(isPadLandscape: Bool) -> CGFloat {
+        isPadLandscape ? padLandscapeContentLeadingPadding : compactContentLeadingPadding
+    }
+
+    private func headerBackground(isPadLandscape: Bool) -> some View {
+        leadingHeaderImage
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: compactContentLeadingPadding)
+            .frame(width: leadingPadding(isPadLandscape: isPadLandscape))
             .clipped()
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(TokenColors.Background.page.swiftUI)
@@ -81,21 +84,22 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
 
     // MARK: - Scroll content
 
-    private var scrollContent: some View {
+    private func scrollContent(isSideBySide: Bool, isPadLandscape: Bool) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                if isRegularHeight {
+            VStack(alignment: .center, spacing: 0) {
+                if !isSideBySide {
                     regularHeader
                 }
 
                 VStack(alignment: .leading, spacing: 0) {
-                    content
+                    content(isSideBySide)
+                        .if(!isPadLandscape) { $0.maxWidthForWideScreen() }
                 }
                 .padding(.horizontal, TokenSpacing._5)
             }
-            .padding(.top, compactTopInset)
+            .padding(.top, isSideBySide ? TokenSpacing._11 : 0)
             .padding(.bottom, TokenSpacing._2)
-            .maxWidthForWideScreen()
+
             .onScrollNearTop(
                 coordinateSpaceName: coordinateSpaceName,
                 topInset: topInset,
@@ -114,7 +118,7 @@ struct SubscriptionBaseView<RegularHeader: View, Content: View>: View {
 
 // MARK: - Layout containers
 
-private struct SubscriptionCompactHeightLayout<
+private struct SubscriptionSideBySideLayout<
     HeaderBackground: View,
     ScrollContent: View
 >: View {

@@ -9,8 +9,6 @@ import SwiftUI
 /// A plain landscape header image, the "Upgrade to MEGA Pro" title, then the
 /// shared plan/feature/benefit sections. Driven by mock data.
 public struct SubscriptionStandardView: View {
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-
     private let dependency: RevampUpgradePlansDependency
     private let viewModel: UpgradePlansViewModel
     private let purchaseViewModel: PlanPurchaseViewModel
@@ -33,13 +31,13 @@ public struct SubscriptionStandardView: View {
 
     public var body: some View {
         SubscriptionBaseView(
-            compactHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape,
+            leadingHeaderImage: MEGAAssets.Image.subscriptionImageHeaderLandscape,
             dependency: dependency,
             dismiss: dismiss
         ) {
             headerImage
-        } content: {
-            titleHeader
+        } content: { isSideBySide in
+            titleHeader(isSideBySide: isSideBySide)
             SubscriptionContentSectionsView(
                 dependency: dependency,
                 viewModel: viewModel,
@@ -66,10 +64,10 @@ public struct SubscriptionStandardView: View {
             .subscriptionHeaderBottomFade()
     }
 
-    private var titleHeader: some View {
+    private func titleHeader(isSideBySide: Bool) -> some View {
         Text(Strings.Localizable.SubscriptionPurchase.title)
             .font(.title.bold())
             .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            .blendIntoHeader(offset: TokenSpacing._11, isCompact: verticalSizeClass == .compact)
+            .blendIntoHeader(offset: TokenSpacing._11, isSideBySide: isSideBySide)
     }
 }

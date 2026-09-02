@@ -5,8 +5,10 @@ import SwiftUI
 
 public struct PromoLandingDialogContentView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @State private var isPadLandscape = false
 
     private let compactContentLeadingPadding: CGFloat = 250
+    private let padLandscapeContentLeadingPadding: CGFloat = 391
 
     @StateObject private var viewModel: PromoLandingDialogContentViewModel
 
@@ -14,18 +16,24 @@ public struct PromoLandingDialogContentView: View {
         _viewModel = StateObject(wrappedValue: PromoLandingDialogContentViewModel(dependency: dependency))
     }
 
-    private var isRegularHeight: Bool { verticalSizeClass != .compact }
+    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
 
-    private var compactTopInset: CGFloat {
-        isRegularHeight ? 0 : TokenSpacing._11
+    private var isSideBySide: Bool { verticalSizeClass == .compact || isPadLandscape }
+
+    private var contentLeadingPadding: CGFloat {
+        isPadLandscape ? padLandscapeContentLeadingPadding : compactContentLeadingPadding
     }
 
-    private var compactFooterLeadingInset: CGFloat {
-        isRegularHeight ? 0 : compactContentLeadingPadding
+    private var sideBySideTopInset: CGFloat {
+        isSideBySide ? TokenSpacing._11 : 0
+    }
+
+    private var footerLeadingInset: CGFloat {
+        isSideBySide ? contentLeadingPadding : 0
     }
 
     private var footerIgnoredEdges: Edge.Set {
-        isRegularHeight ? [] : .leading
+        isSideBySide ? .leading : []
     }
 
     public var body: some View {
@@ -48,9 +56,10 @@ public struct PromoLandingDialogContentView: View {
                 onPurchased: { viewModel.purchaseCompleted() },
                 viewAllPlans: viewModel.viewAllPlans
             )
-            .padding(.leading, compactFooterLeadingInset)
+            .padding(.leading, footerLeadingInset)
             .ignoresSafeArea(edges: footerIgnoredEdges)
         }
+        .background { orientationReader }
         .onAppear { viewModel.onAppear() }
         .task { await viewModel.monitorOfferExpiry() }
     }
@@ -59,17 +68,27 @@ public struct PromoLandingDialogContentView: View {
 
     private var layoutView: some View {
         scrollContent
-            .padding(.leading, isRegularHeight ? 0 : compactContentLeadingPadding)
+            .padding(.leading, isSideBySide ? contentLeadingPadding : 0)
             .background(alignment: .topLeading) {
-                compactHeaderBackground.opacity(isRegularHeight ? 0 : 1)
+                leadingHeaderBackground.opacity(isSideBySide ? 1 : 0)
             }
     }
 
-    private var compactHeaderBackground: some View {
+    private var orientationReader: some View {
+        GeometryReader { proxy in
+            Color.clear
+                .onChange(of: proxy.size, initial: true) { _, size in
+                    isPadLandscape = isPad && size.width > size.height
+                }
+        }
+        .ignoresSafeArea()
+    }
+
+    private var leadingHeaderBackground: some View {
         MEGAAssets.Image.promoBanner
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: compactContentLeadingPadding)
+            .frame(width: contentLeadingPadding)
             .clipped()
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(TokenColors.Background.page.swiftUI)
@@ -80,22 +99,22 @@ public struct PromoLandingDialogContentView: View {
 
     private var scrollContent: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                if isRegularHeight {
+            VStack(alignment: .center, spacing: 0) {
+                if !isSideBySide {
                     SubscriptionPromoBannerView()
                 }
 
                 VStack(alignment: .leading, spacing: 0) {
                     SubscriptionPromoHeaderView(viewModel: viewModel.header)
-                        .blendIntoHeader(offset: TokenSpacing._16, isCompact: !isRegularHeight)
+                        .blendIntoHeader(offset: TokenSpacing._16, isSideBySide: isSideBySide)
                     SubscriptionPromoPlanCardView(card: viewModel.card)
                         .padding(.vertical, TokenSpacing._4)
                 }
                 .padding(.horizontal, TokenSpacing._5)
+                .if(!isPadLandscape) { $0.maxWidthForWideScreen() }
             }
-            .padding(.top, compactTopInset)
+            .padding(.top, sideBySideTopInset)
             .padding(.bottom, TokenSpacing._2)
-            .maxWidthForWideScreen()
         }
     }
 }

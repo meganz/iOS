@@ -39,7 +39,7 @@ final class AppOpenPromoLandingDialogRouter {
         )
 
         let hostingController = PromoLandingDialogContentHostingController(dependency: dependency)
-        hostingController.modalPresentationStyle = .automatic
+        hostingController.modalPresentationStyle = UIDevice.current.userInterfaceIdiom == .pad ? .fullScreen : .automatic
         presenter.presentWhenSettled(hostingController)
         return true
     }

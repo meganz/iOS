@@ -16,7 +16,6 @@ struct PromoLandingDialogLoadingView: View {
             SubscriptionPlanCardPlaceholderView()
         }
         .padding(.horizontal, TokenSpacing._5)
-        .maxWidthForWideScreen()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(TokenColors.Background.page.swiftUI)
         .safeAreaInset(edge: .top, spacing: 0) {
