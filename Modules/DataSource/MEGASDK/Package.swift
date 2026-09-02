@@ -11,51 +11,28 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MEGASdkCpp",
-            targets: ["MEGASdkCpp"]),
-        .library(
             name: "MEGASdk",
-            targets: ["MEGASdk"])
-    ],
-    dependencies: [
+            targets: ["MEGASdk"]
+        ),
+        .library(
+            name: "MEGAThirdParty",
+            targets: ["libmegathirdparty"]
+        )
     ],
     targets: [
         .target(
-            name: "MEGASdkCpp",
+            name: "MEGASdk",
             dependencies: [
-                "libmega"
+                "libmegasdk",
+                "libmegathirdparty"
             ],
-            path: "Sources/MEGASDK",
-            exclude: [
-                "Package.swift",
-                "bindings",
-                "cmake",
-                "contrib",
-                "examples",
-                "src/android",
-                "src/common/client_adapter_with_sync.cpp",
-                "src/common/platform/windows",
-                "src/file_service/documentation",
-                "src/fuse/supported",
-                "third_party/utf8proc/utf8proc_data.c",
-                "src/win32",
-                "tests",
-                "tools"
-            ],
+            path: "Sources/MEGASDK/bindings/ios",
             cxxSettings: [
-                .headerSearchPath("bindings/ios"),
-                .headerSearchPath("include/mega/osx"),
-                .headerSearchPath("include/mega/posix"),
-                .headerSearchPath("src/common/platform/posix"),
-                .headerSearchPath("src/file_service"),
-                .headerSearchPath("src/fuse/unsupported"),
-                .headerSearchPath("third_party"),
+                .headerSearchPath("Private"),
                 .define("ENABLE_CHAT"),
-                .define("HAVE_LIBUV"),
-                .define("NDEBUG", .when(configuration: .release))
+                .define("HAVE_LIBUV")
             ],
             linkerSettings: [
-                // Frameworks
                 .linkedFramework("QuickLookThumbnailing"),
                 .linkedFramework("AVFoundation"),
                 .linkedFramework("CoreFoundation"),
@@ -70,21 +47,15 @@ let package = Package(
                 .linkedLibrary("sqlite3")
             ]
         ),
-        .target(
-            name: "MEGASdk",
-            dependencies: ["MEGASdkCpp"],
-            path: "Sources/MEGASDK/bindings/ios",
-            cxxSettings: [
-                .headerSearchPath("../../include"),
-                .headerSearchPath("Private"),
-                .define("ENABLE_CHAT"),
-                .define("HAVE_LIBUV")
-            ]
+        .binaryTarget(
+            name: "libmegasdk",
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegasdk.xcframework.20260827.083835.zip",
+            checksum: "0b4a1096407190affd18545dfd936c0c18913188287602be16a03222950453bb"
         ),
         .binaryTarget(
-            name: "libmega",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmega_25_12_12.xcframework.zip",
-            checksum: "f1e94204bf47c79f65733bc5e9b9606857448a1645c88a59d106c643fac38b92"
+            name: "libmegathirdparty",
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegathirdparty.xcframework.20260827.083835.zip",
+            checksum: "406800c8885358ef700ab91de8ea9815b54c8715475fe4536e898cf017627a73"
         )
     ],
     cxxLanguageStandard: .cxx17

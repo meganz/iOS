@@ -5,6 +5,8 @@ import PackageDescription
 let package = Package(
     name: "MEGASDK",
     platforms: [
+        // Stays at .v16 because MEGASharedRepo packages (still .v16) depend on this package;
+        // bump to .v17 together with MEGASharedRepo.
         .iOS(.v16)
     ],
     products: [
@@ -21,7 +23,7 @@ let package = Package(
         .target(
             name: "MEGASdkCpp",
             dependencies: [
-                "libmega"
+                "libmegathirdparty"
             ],
             path: "Sources/MEGASDK",
             exclude: [
@@ -35,7 +37,7 @@ let package = Package(
                 "src/common/platform/windows",
                 "src/file_service/documentation",
                 "src/fuse/supported",
-                "src/mega_utf8proc_data.c",
+                "third_party/utf8proc/utf8proc_data.c",
                 "src/win32",
                 "tests",
                 "tools"
@@ -47,10 +49,10 @@ let package = Package(
                 .headerSearchPath("src/common/platform/posix"),
                 .headerSearchPath("src/file_service"),
                 .headerSearchPath("src/fuse/unsupported"),
-                .headerSearchPath("third_party/ccronexpr"),
-                .headerSearchPath("third_party/csv"),
+                .headerSearchPath("third_party"),
                 .define("ENABLE_CHAT"),
                 .define("HAVE_LIBUV"),
+                .define("MEGA_USE_WSUPLOAD"),
                 .define("NDEBUG", .when(configuration: .release))
             ],
             linkerSettings: [
@@ -81,9 +83,9 @@ let package = Package(
             ]
         ),
         .binaryTarget(
-            name: "libmega",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmega_25_12_12.xcframework.zip",
-            checksum: "f1e94204bf47c79f65733bc5e9b9606857448a1645c88a59d106c643fac38b92"
+            name: "libmegathirdparty",
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegathirdparty.xcframework.20260827.083835.zip",
+            checksum: "406800c8885358ef700ab91de8ea9815b54c8715475fe4536e898cf017627a73"
         )
     ],
     cxxLanguageStandard: .cxx17

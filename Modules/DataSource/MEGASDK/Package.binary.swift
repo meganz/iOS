@@ -5,6 +5,8 @@ import PackageDescription
 let package = Package(
     name: "MEGASDK",
     platforms: [
+        // Stays at .v16 because MEGASharedRepo packages (still .v16) depend on this package;
+        // bump to .v17 together with MEGASharedRepo.
         .iOS(.v16)
     ],
     products: [
@@ -47,13 +49,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libmegasdk",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/test/libmegasdk-IOS-11012-13cd3f6e62ec0f99591f76e9541225c3c4cb7e702b455c2d64c7654939c67095.xcframework.zip",
-            checksum: "13cd3f6e62ec0f99591f76e9541225c3c4cb7e702b455c2d64c7654939c67095"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegasdk.xcframework.20260827.083835.zip",
+            checksum: "0b4a1096407190affd18545dfd936c0c18913188287602be16a03222950453bb"
         ),
         .binaryTarget(
             name: "libmegathirdparty",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/test/libmegathirdparty-IOS-11012-f3bca5a0f000302e67d264e7b8044a8d9dc8789abf47ce979a5e20222c691047.xcframework.zip",
-            checksum: "f3bca5a0f000302e67d264e7b8044a8d9dc8789abf47ce979a5e20222c691047"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegathirdparty.xcframework.20260827.083835.zip",
+            checksum: "406800c8885358ef700ab91de8ea9815b54c8715475fe4536e898cf017627a73"
         )
     ],
     cxxLanguageStandard: .cxx17

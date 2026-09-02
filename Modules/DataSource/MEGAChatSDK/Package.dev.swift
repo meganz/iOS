@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "MEGAChatSDK",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v17)
     ],
     products: [
         .library(
@@ -45,6 +45,7 @@ let package = Package(
                 .headerSearchPath("bindings/Objective-C/3rdparty/webrtc/third_party/libyuv/include"),
                 .define("ENABLE_CHAT"),
                 .define("HAVE_CONFIG_H"),
+                .define("MEGA_USE_WSUPLOAD"),
                 .define("_DARWIN_C_SOURCE"),
                 .define("ENABLE_WEBRTC"),
                 .define("WEBRTC_POSIX"),
