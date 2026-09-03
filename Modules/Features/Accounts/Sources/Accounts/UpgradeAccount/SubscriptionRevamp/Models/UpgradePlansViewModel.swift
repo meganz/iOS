@@ -19,7 +19,7 @@ public final class UpgradePlansViewModel: ObservableObject {
     private let isExternalPurchaseAvailable: Bool
     private let recommendedPlanUseCase: any RecommendedUpgradePlanUseCaseProtocol
 
-    /// The billing cycle currently selected in the picker, always yearly by default.
+    /// The billing cycle currently selected in the picker, preselected to the discounted cycle.
     @Published var selectedCycle: SubscriptionCycleEntity = .yearly
 
     init(
@@ -40,6 +40,7 @@ public final class UpgradePlansViewModel: ObservableObject {
         self.displayName = displayName
         self.isExternalPurchaseAvailable = isExternalPurchaseAvailable
         self.recommendedPlanUseCase = recommendedPlanUseCase
+        self.selectedCycle = defaultSelectedCycle
     }
 
     private var currentPlanPresenter: SubscriptionCurrentPlanPresenter {
@@ -81,8 +82,11 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     // MARK: - Default cycle selection
 
-    /// The billing cycle to preselect, always yearly.
-    var defaultSelectedCycle: SubscriptionCycleEntity { .yearly }
+    /// The billing cycle to preselect: the one carrying a discount, yearly when both or neither do.
+    var defaultSelectedCycle: SubscriptionCycleEntity {
+        let discountedCycles = Set(discountedPlans.map(\.subscriptionCycle))
+        return discountedCycles == [.monthly] ? .monthly : .yearly
+    }
 
     var freePlanCard: SubscriptionFreePlanCardModel? {
         guard case .onboarding(let isFreeAccountFirstLogin) = viewType else { return nil }
