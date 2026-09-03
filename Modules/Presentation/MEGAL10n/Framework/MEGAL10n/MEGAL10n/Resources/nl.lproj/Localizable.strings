@@ -4955,7 +4955,7 @@
 /* The explanation for "How it works" with Desktop app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.desktopApp.incomplete.explanation.label"="Installeer de MEGA desktop-applicatie en ontvang %1$@ gratis extra opslagruimte, %2$@.\nDe desktop-applicatie is beschikbaar voor Windows, macOS en Linux.";
 /* The explanation for "How it works" with Mobile app when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
-"achievementDetails.mobileApp.incomplete.explanation.label"="Installeer een van de MEGA mobiele applicaties en ontvang 1% gratis extra opslagruimte, 2% gratis. \nDe mobiele applicaties zijn beschikbaar voor iOS en Android.";
+"achievementDetails.mobileApp.incomplete.explanation.label"="Installeer een van de MEGA mobiele applicaties en ontvang %1$@ gratis extra opslagruimte, %2$@ gratis. \nDe mobiele applicaties zijn beschikbaar voor iOS en Android.";
 /* The explanation for "How it works" with VPN app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
 "achievementDetails.vpnFreeTrial.incomplete.explanation.label"="Installeer één van de MEGA VPN-applicaties en start een gratis proefperiode.U krijgt dan %1$@ extra opslagruimte, %2$@";
 /* The explanation for "How it works" with Pass app free trial when the achievement is incomplete.  %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -5160,3 +5160,51 @@
 "subscriptionPurchase.revamp.loadError.message"="Er is een probleem opgetreden bij het laden van uw abonnementen. Probeer het opnieuw.";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Probeer nogmaals";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Kan geen verbinding maken";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Controleer uw internetverbinding en probeer het opnieuw.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Krijg %2$@ korting\n%3$@/maand gedurende %4$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Pak aanbiedieding";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="OK, ik snap het";
+/* A label for the Pause button. */
+"pause"="Pauzeren";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Niet genoeg opslag";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="Download gestopt";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="Er was onvoldoende opslagruimte op uw apparaat tijdens het downloaden. Maak wat ruimte vrij en probeer het opnieuw.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Probeer nogmaals";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="Voor deze download is ongeveer %1$@ vrije ruimte nodig, en uw apparaat heeft %2$@. Maak wat ruimte vrij en probeer het opnieuw.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Beperkte overdrachtstegoed";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="Uw datalimiet raakt mogelijk op. Hierdoor kunnen uw downloads of streams worden onderbroken. Upgrade uw abonnement voor meer overdrachtstegoed. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Upgrade uw abonnement om meer overdrachtstegoed te krijgen. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Beheer uw abonnement bij %@ voor meer overdrachtstegoed";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="Het album is niet toegankelijk";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="Het album was verwijderd";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="De link naar het album is door de eigenaar uitgeschakeld";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="De link is ongeldig of bestaat niet";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Laatst gewijzigd: nieuwste eerst";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Laatst gewijzigd: oudste eerst";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Datum van opname: nieuwste eerst";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Datum van opname: oudste eerst";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Overdrachten gepauzeerd. Wachten op netwerkverbinding";

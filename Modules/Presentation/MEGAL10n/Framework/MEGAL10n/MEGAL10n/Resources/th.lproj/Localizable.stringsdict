@@ -3065,7 +3065,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>คิดค่าบริการ [A] สำหรับปีแรก %d ปี, [B]/เดือน หลังจากนั้น</string>
+        <string>คิดค่าบริการ [A] สำหรับ %d ปีแรก หลังจากนั้นคิด [B]/เดือน</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.introBilledYearlyMonths</key>
@@ -3093,7 +3093,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>คิดค่าบริการ [A] สำหรับปีแรก %d ปี, [B] ถูกเรียกเก็บเป็นรายปีหลังจากนั้น</string>
+        <string>คิดค่าบริการ [A] สำหรับ %d ปีแรก หลังจากนั้นคิดค่าบริการรายปี [B]</string>
       </dict>
     </dict>
     <key>upgradeAccountPlan.plan.details.pricing.discountPriceForMonths</key>
@@ -3135,7 +3135,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>ดาวน์โหลด %d ไฟล์ไม่สำเร็จ</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -3149,7 +3149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>ดาวน์โหลดแล้ว %d ไฟล์ ตรวจสอบการโอนย้ายเพื่อดูว่าไฟล์ใดขาดหายไป จากนั้นดาวน์โหลดทีละไฟล์</string>
       </dict>
     </dict>
   </dict>

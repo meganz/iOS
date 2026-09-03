@@ -693,7 +693,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
+"privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -985,7 +985,7 @@
 /* Menu item */
 "help"="Trợ Giúp";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Trung Tâm Hướng Dẫn";
+"helpCentreLabel"="Trung Tâm Hướng Dẫn";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Tham Gia Beta";
 /* Title to rate the app */
@@ -1717,13 +1717,13 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Lưu videos vào Ảnh";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì vào mục Ngoại Tuyến.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì vào mục Ngoại Tuyến.";
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Camêra";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Lưu vào Ảnh";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào thư viện phương tiện số của máy.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào thư viện phương tiện số của máy.";
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
@@ -2293,7 +2293,7 @@
 /* Over Disk Quota of number of days */
 "%d days"="%d ngày";
 /* Over Disk Quota of must act immediately to save your data */
-"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Bạn cần hành động ngay để giữ dữ liệu của mình.</warn><body>";
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>Bạn cần hành động ngay để giữ dữ liệu của mình.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Quý khách còn lại <warn>%@</warn> để nâng cấp.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
@@ -2483,9 +2483,9 @@
 /* Cookie dialog title to manage cookies */
 "dialog.cookies.title.manageCookies"="Quản lý cookies";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự để giúp chúng tôi cải thiện dịch vụ của mình. Tìm hiểu thêm về [A]Chính Sách Cookie[/A] của chúng tôi.";
+"dialog.cookies.description.cookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự nhằm để cải thiện dịch vụ. Tìm hiểu thêm về [A]Chính Sách Cookie[/A] của chúng tôi.";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự để giúp chúng tôi cải thiện dịch vụ của mình và cho mục đích quảng cáo. Với việc tiếp tục sử dụng MEGA là bạn đồng ý với các điều khoản được cập nhật nêu trong [A]Chính Sách Cookie[/A].";
+"dialog.cookies.description.adsCookiePolicy"="Chúng tôi sử dụng cookies và các công nghệ tương tự nhằm để cải thiện dịch vụ và cho mục đích quảng cáo. Với việc tiếp tục sử dụng MEGA là bạn đồng ý với các điều khoản được cập nhật nêu trong [A]Chính Sách Cookie[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Chấp Nhận Cookies";
 /* Cookie dialog footer description */
@@ -3027,7 +3027,7 @@
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="Tiếp tục truyền";
 /* Restart option for Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.restart"="Phát từ đầu";
+"media.audio.playbackContinuation.dialog.restart"="Phát từ đầu";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ đã tham gia";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -4511,7 +4511,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="MEGA Pass và MEGA VPN";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục";
+"ads.adFree.content.additionalSecurity.message"="Giúp cuộc sống trực tuyến của bạn an toàn hơn, nhanh hơn và dễ dàng hơn với trình quản lý mật khẩu và VPN tốc độ cao của chúng tôi";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Xem các gói Pro";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4555,7 +4555,7 @@
 /* Title for mute chat notifications */
 "settings.chat.notifications.muteNotifications.title"="Tắt tiếng thông báo";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.image.title"="Chất lượng hình ảnh";
+"settings.chat.mediaQuality.image.title"="Chất lượng hình ảnh";
 /* Description of Automatic Image Quality option */
 "settings.chat.mediaQuality.image.option.auto"="Gửi hình ảnh với chất lượng được chỉnh tối ưu khi dùng mạng di động nhưng gửi với kích thước gốc khi dùng Wi-Fi";
 /* Description of Optimised Image Quality option */
@@ -4945,7 +4945,7 @@
 /* Status shown on the transfer Live Activity (lock screen / Dynamic Island) when a transfer needs the user's attention — e.g., paused over-quota state. */
 "transfer.liveActivity.requiresAttention"="Phiên truyền tải cần sự chú ý";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Music. Tapping switches to Podcast mode. */
-"media.audio.player.podcastMode"="Chế độ podcast";
+"media.audio.player.podcastMode"="Chế độ đài tiếng nói";
 /* Label of the mode-toggle pill in the audio player bottom bar when current mode is Podcast. Tapping switches to Music mode. */
 "media.audio.player.musicMode"="Chế độ nghe nhạc";
 /* The subtitle for Achievement Details screen, %1$@ is the amount of additional storage, %2$@ is the duration of the reward, either "valid for xxx days" or "valid permanently" */
@@ -5043,90 +5043,168 @@
 /* Header on the audio player queue panel showing the performer of the current track. %@ is the artist name (may be a band or individual, e.g. "Arcy Drive"). For example: "Playing from Arcy Drive". */
 "media.audio.player.playlist.playingFrom"="Đang phát từ %@";
 /* Navigation bar subtitle shown under the screen title while the app is applying a batch of updates from the server. Keep it short. */
-"cloudDrive.navigationBar.updating"="Đang cập nhật…";
+"cloudDrive.navigationBar.updating"="Đang cập nhật…";
 /* Title of a banner shown on the Transfers screen when the user has run out of transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.transfer.title"="Tăng hạn mức truyền tải";
+"transfers.overQuotaBanner.transfer.title"="Nhận thêm băng thông truyền tải";
 /* Title of a banner shown on the Transfers screen when the user has run out of storage quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.storage.title"="Nhận thêm hạn mức lưu trữ";
+"transfers.overQuotaBanner.storage.title"="Nhận thêm băng thông lưu trữ";
 /* Title of a banner shown on the Transfers screen when the user has run out of both storage and transfer quota. Tapping the banner leads to upgrade options. */
-"transfers.overQuotaBanner.both.title"="Nhận thêm không gian lưu trữ và băng thông truyền tải";
+"transfers.overQuotaBanner.both.title"="Nhận thêm không gian lưu trữ và băng thông truyền tải";
 /* Navigation bar title for Choose Default Launch Tab screen */
-"home.customization.defaultLaunchTab.title"="Tab khởi động mặc định";
+"home.customization.defaultLaunchTab.title"="Tab khởi động mặc định";
 /* Status line shown on the current-plan card when a one-off plan expires. %@ is the expiry date, e.g. 8 July 2027. */
 "account.profile.expiry.future"="Hết hạn vào %@";
 /* Section header above the list of Pro plan features on the revamped upgrade page */
 "subscriptionPurchase.revamp.features.title"="Tại sao nên dùng Pro?";
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.yearly"="Gói đăng ký hàng năm";
+"subscriptionPurchase.revamp.cycle.yearly"="Gói đăng ký hàng năm";
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
 "general.undo"="Hoàn tác";
 /* Title shown at the top of the Upgrade page where the user selects a MEGA Pro subscription plan. */
-"subscriptionPurchase.title"="Nâng cấp lên MEGA Pro";
+"subscriptionPurchase.title"="Nâng cấp lên MEGA Pro";
 /* Description for the MEGA VPN Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.vpn.description"="Giữ an toàn trực tuyến với MEGA VPN";
+"subscriptionPurchase.feature.vpn.description"="Giữ an toàn trực tuyến với MEGA VPN";
 /* Description for the MEGA Pass password-manager Pro feature on the subscription purchase page. */
-"subscriptionPurchase.feature.pass.description"="Giữ an toàn cho mật khẩu với MEGA Pass";
+"subscriptionPurchase.feature.pass.description"="Giữ an toàn cho mật khẩu với MEGA Pass";
 /* Short success banner shown when internet connectivity is restored */
-"general.noInternet.backOnline"="Trực tuyến trở lại";
+"general.noInternet.backOnline"="Trực tuyến trở lại";
 /* Title of the transfer quota warning dialog when the transfer quota has been exceeded. */
-"quotaWarning.transfer.exceeded.title"="Vượt mức băng thông truyền tải";
+"quotaWarning.transfer.exceeded.title"="Vượt mức băng thông truyền tải";
 /* DSN-3116 quota warning dialogs. Title of the button that retries loading the quota warning dialog after a connection failure. */
 "quotaWarning.error.button.tryAgain"="Thử lại";
 /* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.monthly"="Gói đăng ký hàng tháng";
+"subscriptionPurchase.revamp.cycle.monthly"="Gói đăng ký hàng tháng";
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
-"subscriptionPurchase.revamp.cycle.saving"="Tiết kiệm lên đến %@";
+"subscriptionPurchase.revamp.cycle.saving"="Tiết kiệm lên đến %@";
 /* DSN-3116 quota warning dialogs. Subtitle shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.subtitle"="Hãy thử lại sau để kiểm tra dung lượng lưu trữ và hạn ngạch truyền tải của bạn, và nâng cấp gói nếu cần.";
+"quotaWarning.error.subtitle"="Hãy thử lại sau để kiểm tra lượng lưu trữ và băng thông truyền tải của mình, và nâng cấp gói nếu cần.";
 /* Title for the call-to-action button to purchase a subscription plan. %@ is replaced with the plan name (e.g. "Pro I"). */
 "subscriptionPurchase.button.getPlan"="Nhận %@";
 /* Description for the transfer-quota Pro feature on the subscription purchase page. %@ is the transfer quota amount, e.g. "8 TB". */
-"subscriptionPurchase.feature.transfer.description"="Hạn ngạch truyền tải lên tới %@";
+"subscriptionPurchase.feature.transfer.description"="Băng thông truyền tải lên tới %@";
 /* Snackbar shown when tapping a file that would need downloading while the device is offline */
-"cloudDrive.offline.fileNotAvailableOffline"="Tệp không có sẵn khi ngoại tuyến";
+"cloudDrive.offline.fileNotAvailableOffline"="Tệp không có sẵn khi ngoại tuyến";
 /* Text shown on the video player overlay while the video is playing on an external AirPlay device. %@ is the AirPlay device name. */
-"videoPlayer.airPlay.indicator.playingOnDevice"="Video này đang phát trên một thiết bị ngoài.";
+"videoPlayer.airPlay.indicator.playingOnDevice"="Video này đang phát trên một thiết bị ngoại vi";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedDownload.subtitle"="Do đó, việc tải xuống của bạn có thể bị gián đoạn. Nâng cấp gói để có thêm hạn ngạch truyền tải. %@";
+"quotaWarning.transfer.limitedDownload.subtitle"="Do đó, phiên tải xuống của bạn có thể sẽ bị gián đoạn. Nâng cấp gói để nhận được nhiều băng thông truyền tải hơn. %@";
 /* DSN-3116 quota warning dialogs. Title of the button that opens the full list of available plans. */
-"quotaWarning.recommendedPlan.button.viewAllPlans"="Xem tất cả các gói";
+"quotaWarning.recommendedPlan.button.viewAllPlans"="Xem tất cả các gói";
 /* The AirPlay video player option in bottom more menu */
 "videoPlayer.airPlay.bottomSheet.title"="AirPlay";
 /* DSN-3116 quota warning dialogs. Title of the storage quota warning dialog. %d is the percentage of storage used, e.g. 80. */
-"quotaWarning.storage.title"="Dung lượng lưu trữ của bạn đang %d%% đầy";
+"quotaWarning.storage.title"="Không gian lưu trữ hiện đã đầy %d%%";
 /* Subtitle of the storage quota warning dialog shown when storage is almost full. */
 "quotaWarning.storage.almostFull.subtitle"="Nâng cấp gói của bạn trước khi hết dung lượng.";
 /* Subtitle of the storage quota warning dialog shown when storage is full (logged in or reloaded). */
 "quotaWarning.storage.full.subtitle"="Nâng cấp gói để có thêm dung lượng lưu trữ và tải lên nhiều tệp hơn";
 /* Subtitle of the storage quota warning dialog shown when storage is full and the user tries to upload more. */
-"quotaWarning.storage.full.uploading.subtitle"="Bạn đã hết dung lượng lưu trữ. Nâng cấp gói của bạn để tiếp tục tải lên";
+"quotaWarning.storage.full.uploading.subtitle"="Bạn đã hết không gian lưu trữ. Nâng cấp gói của mình để tiếp tục tải lên";
 /* Subtitle of the storage quota warning dialog shown for the highest plan (Pro 3), where upgrading for more storage is not applicable. Shown when storage is almost full or full. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.storage.manage.subtitle"="Dọn dung lượng trong Drive đám mây, hoặc quản lý gói của bạn tại %@ để có thêm dung lượng";
 /* Title of the transfer quota warning dialog for free accounts when the transfer quota is running low. */
-"quotaWarning.transfer.runningLow.title"="Hạn ngạch truyền tải của bạn đang cạn";
+"quotaWarning.transfer.runningLow.title"="Băng thông truyền tải sắp cạn kiệt";
 /* Title of the transfer quota warning dialog for paid accounts when the transfer quota is running low. %d is the percentage of transfer quota used, e.g. 80. */
-"quotaWarning.transfer.percentUsed.title"="Bạn đã sử dụng %d%% hạn ngạch truyền tải";
+"quotaWarning.transfer.percentUsed.title"="Bạn đã sử dụng %d%% băng thông truyền tải";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.limitedStreaming.subtitle"="Kết quả là việc phát media có thể bị gián đoạn. Nâng cấp gói của bạn để có thêm hạn mức truyền tải. %@";
+"quotaWarning.transfer.limitedStreaming.subtitle"="Do đó, truyền phát phương tiện số có thể sẽ bị gián đoạn. Nâng cấp gói để có thêm nhiều băng thông truyền tải hơn. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while downloading. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.downloadExceeded.subtitle"="Để tiếp tục tải xuống, hãy nâng cấp gói để có thêm hạn ngạch truyền tải. %@";
+"quotaWarning.transfer.downloadExceeded.subtitle"="Để tiếp tục tải xuống, hãy nâng cấp gói của mình để có thêm băng thông truyền tải. %@";
 /* Subtitle of the transfer quota warning dialog when the transfer quota is exceeded while streaming media. %@ is the tappable "Learn more." link. */
-"quotaWarning.transfer.streamingExceeded.subtitle"="Để tiếp tục phát media, hãy nâng cấp gói để có thêm hạn ngạch truyền tải. %@";
+"quotaWarning.transfer.streamingExceeded.subtitle"="Để tiếp tục phát nội dung đa phương tiện, xin hãy nâng cấp gói để có thêm băng thông. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="Kết quả là việc tải xuống của bạn có thể bị gián đoạn. Quản lý gói của bạn tại %@ để có thêm hạn mức truyền tải";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="Do đó, phiên tải xuống của bạn có thể sẽ bị gián đoạn. Quản lý gói đăng ký tại %@để có thêm nhiều băng thông hơn";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Kết quả là việc phát media có thể bị gián đoạn. Quản lý gói của bạn tại %@ để có thêm hạn mức truyền tải";
+"quotaWarning.transfer.limitedStreaming.manage.subtitle"="Kết quả là việc phát nội dung đa phương tiện có thể bị gián đoạn. Quản lý gói đăng ký tại %@ để có thêm băng thông truyền tải";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Để tiếp tục tải xuống, quản lý gói của bạn tại %@ để có thêm hạn mức truyền tải";
+"quotaWarning.transfer.downloadExceeded.manage.subtitle"="Để tiếp tục tải xuống, xin hãy nâng cấp gói tại %@ để có thêm lượng truyền tải";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Để tiếp tục phát media, quản lý gói của bạn tại %@ để có thêm hạn mức truyền tải";
+"quotaWarning.transfer.streamingExceeded.manage.subtitle"="Để tiếp tục phát nội dung đa phương tiện, xin hãy quản lý gói tại %@ để có thêm băng thông";
 /* DSN-3116 quota warning dialogs. Tag shown on the recommended upgrade plan card indicating it is the best-value plan for the user. */
-"quotaWarning.recommendedPlan.tag.bestForYou"="Phù hợp nhất với bạn";
+"quotaWarning.recommendedPlan.tag.bestForYou"="Phù hợp nhất với bạn";
 /* DSN-3116 quota warning dialogs. Title of the primary button to upgrade to the recommended plan. %@ is the plan name, e.g. "Pro I". */
-"quotaWarning.recommendedPlan.button.upgradeToPlan"="Nâng cấp lên %@";
+"quotaWarning.recommendedPlan.button.upgradeToPlan"="Nâng cấp lên %@";
 /* DSN-3116 quota warning dialogs. Title shown when the quota warning dialog fails to load because the device could not connect. */
-"quotaWarning.error.title"="Không thể kết nối";
+"quotaWarning.error.title"="Không thể kết nối";
 /* Badge shown on the current-plan card when a plan is expiring within one month, on the revamped upgrade page */
 "subscriptionPurchase.revamp.badge.expiring"="Sắp hết hạn";
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="Xem các gói";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="Nhập mật khẩu";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="Ưu đãi đặc biệt";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Lưu vào MEGA";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Thử lại";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="Nhập mật khẩu để mở liên kết này. Bạn không nhớ mật khẩu? Liên hệ với người gửi.";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="Nhập mật khẩu để mở liên kết này. Bạn không nhớ mật khẩu? Liên hệ với người gửi.";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/tháng";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/năm";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Sao chép về Ngoại Tuyến";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Ưu đãi này đã kết thúc";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="Ưu đãi kết thúc vào %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Ưu đãi này hiện không còn nữa. Hãy xem các gói khác của chúng tôi.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Hoặc tiết kiệm lên tới %@ trên trang web của chúng tôi";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="Không thể tải nội dung";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Chúng tôi gặp sự cố khi tải các gói đăng ký. Vui lòng thử lại.";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Kiểm tra kết nối mạng rồi thử lại.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Giảm tới %2$@\n%3$@/tháng cho gói %4$@";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Không thể kết nối";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Nhận ưu đãi";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="OK, hiểu rồi";
+/* A label for the Pause button. */
+"pause"="Tạm dừng";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Thử lại";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="Tải xuống đã dừng";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Quản lý gói tại %@ để có thêm lượng truyền tải";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Không đủ không gian";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Lượng băng thông truyền tải có hạn";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="Thiết bị hết dung lượng lưu trữ trong quá trình tải xuống. Xin hãy giải phóng bớt dung lượng và thử lại.";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="Không thể truy cập album";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="Bản tải xuống này cần khoảng %1$@ dung lượng trống, trong khi thiết bị của bạn chỉ có %2$@. Giải phóng thêm dung lượng và thử lại.";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="Hạn mức truyền tải của bạn có thể sắp hết. Do đó, các lượt tải xuống hoặc phát trực tuyến của bạn có thể bị gián đoạn. Nâng cấp gói để có thêm hạn mức truyền tải. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Nâng cấp gói để có thêm hạn mức truyền tải. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="Album đã bị xóa";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="Liên kết album đã bị chủ sở hữu vô hiệu hóa";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="Liên kết không hợp lệ hoặc không tồn tại";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Sửa đổi lần cuối: mới nhất trước";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Sửa đổi lần cuối: cũ nhất trước";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Ngày chụp: mới nhất trước";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Ngày chụp: cũ nhất trước";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Đã tạm dừng truyền tải. Đang chờ kết nối mạng";

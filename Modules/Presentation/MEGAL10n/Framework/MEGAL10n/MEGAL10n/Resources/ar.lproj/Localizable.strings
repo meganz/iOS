@@ -5130,3 +5130,81 @@
 "subscriptionPurchase.revamp.badge.expiring"="قريب الانتهاء";
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="عرض الباقات";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"link.decryptionKey.alert.message"="أدخل المفتاح لفتح هذا الرابط.\nلا تمتلكه؟ تواصل مع المُرسل.";
+/* Alert title shown on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"link.password.alert.title"="أدخل كلمة المرور";
+/* Alert message shown on the Password Decrypt dialog as an instruction for the user. */
+"link.password.alert.message"="أدخل كلمة المرور لفتح هذا الرابط. لا تملكها؟ اتصل بالمرسل.";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="حفظ في ميغا MEGA";
+/* Small badge/tag shown above the title on the revamped promotional upgrade header */
+"subscriptionPurchase.revamp.promo.specialOffer"="عرض خاص";
+/* On Upgrade Account Plan screen. Discounted price line for a monthly offer that is charged every month. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceMonthlyRate"="[A] [B]/شهرياً";
+/* On Upgrade Account Plan screen. Discounted price line for a yearly offer that is charged every year. [A] is the undiscounted price, shown struck through. [B] is the price actually charged. */
+"upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/سنة";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="انسخ إلى وضع عدم الاتصال";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="انتهى هذا العرض";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="ينتهي العرض في %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="هذا العرض لم يعد متاحاً. اطّلع على باقاتنا بدلاً من ذلك.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="أو وفر حتى %@ على موقعنا";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="تعذّر تحميل المحتوى";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="واجهنا مشكلة أثناء تحميل باقاتك. يرجى المحاولة مرة أخرى.";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="حاول مرة أخرى";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="تعذّر الاتصال";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="تحقق من اتصال الإنترنت الخاص بك وحاول مرة أخرى.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · احصل على خصم بقيمة %2$@\n%3$@/شهرياً لمدة %4$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="اغتنم الفرصة";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="حسنًا، فهمت ذلك";
+/* A label for the Pause button. */
+"pause"="توقيف مؤقتاً";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="لا توجد مساحة تخزين كافية";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="تم إيقاف التنزيل";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="نفذت مساحة التخزين على جهازك أثناء التنزيل. أفرغ بعض المساحة وجرب مرة أخرى.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="حاول مرة أخرى";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="هذا التنزيل يحتاج إلى حوالي %1$@ من مساحة التخزين الحرة وجهازك يحتوي على %2$@. قم بتعديل بعض المساحة ثم حاول مرة أخرى.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="حجم تراسل معطيات محدود";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="قد يكون حجم تراسل المعطيات لديك منخفض. ونتيجة لذلك، قد تتقطع التنزيلات أو البث لديك. قم بترقية باقتك للحصول على حجم تراسل المعطيات إضافي. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="قم بترقية باقتك للحصول على حجم تراسل أكبر. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="قم بإدارة باقتك من خلال %@ للحصول على حجم تراسل معطيات إضافي";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="لا يمكن الوصول إلى الألبوم";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="تم حذف الألبوم";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="تم تعطيل رابط الألبوم من قبل المالك";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="الرابط غير صالح أو غير موجود";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="آخر تعديل: الأحدث أولاً";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="آخر تعديل: الأقدم أولاً";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="تاريخ الالتقاط: الأحدث أولاً";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="تاريخ الالتقاط: الأقدم أولاً";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="تم إيقاف عمليات النقل مؤقتًا. في انتظار الاتصال بالشبكة";

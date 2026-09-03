@@ -1977,7 +1977,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificato da %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” e altri %ld ";
+"home.recent.multipleFileTitle"="“%@” e altri %ld";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creato da %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -3905,7 +3905,7 @@
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Massima flessibilità di archiviazione";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN ";
+"onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Rimani nel privato anche quando sei online grazie alla nostra VPN ad alta velocità.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
@@ -4179,7 +4179,7 @@
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
 "rewind.for.pro.users"="Fino a %d giorni";
 /* MEGA VPN title */
-"mega.vpn.title"="MEGA VPN ";
+"mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
 "callAndMeeting.duration.title"="Durata delle chiamate e dei meeting";
 /* Call and meeting duration for free users */
@@ -4655,7 +4655,7 @@
 /* Description for the second subscription feature: how shared users can use your quota */
 "subscriptionPurchase.feature.two.description"="Le persone con cui condividi gli oggetti possono utilizzare la tua banda di trasferimento per scaricare e trasmettere file in streaming";
 /* Title for the third subscription feature: MEGA VPN service */
-"subscriptionPurchase.feature.three.title"="MEGA VPN ";
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
 "subscriptionPurchase.feature.three.description"="Resta al sicuro online con la nostra VPN ad alta velocità, veloce e semplice da usare";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
@@ -4683,7 +4683,7 @@
 /* Button title for offline files in menu */
 "accountMenu.offlineFiles"="File offline";
 /* Button title for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonTitle"="MEGA VPN ";
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
 /* Button subtitle for MEGA VPN in menu */
 "accountMenu.megaVPN.buttonSubtitle"="VPN ad alta velocità";
 /* Button title for MEGA Pass in menu */
@@ -4753,7 +4753,7 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Dimensione";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Offerta del Black Friday: %@ di sconto ";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Offerta del Black Friday: %@ di sconto";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="Sconto del %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
@@ -5117,7 +5117,7 @@
 /* Subtitle of the transfer quota warning dialog when the transfer quota is running low while streaming media. %@ is the tappable "Learn more." link. */
 "quotaWarning.transfer.limitedStreaming.subtitle"="Come risultato la riproduzione del file multimediale potrebbe essere interrotta. Effettua l'upgrade del tuo piano per ottenere più banda di trasferimento. %@";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
-"quotaWarning.transfer.limitedDownload.manage.subtitle"="Come risultato il tuo download potrebbe essere interrotto. Gestisci il tuo piano su %@ per avere più banda di trasferimento.";
+"quotaWarning.transfer.limitedDownload.manage.subtitle"="Come risultato il tuo download potrebbe essere interrotto. Gestisci il tuo piano su %@ per avere più banda di trasferimento";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is running low while streaming media. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.transfer.limitedStreaming.manage.subtitle"="Come risultato la riproduzione del file multimediale potrebbe essere interrotta. Gestisci il tuo piano su %@ per avere più banda di trasferimento";
 /* Subtitle of the transfer quota warning dialog for the highest plan (Pro 3) when the transfer quota is exceeded while downloading. Upgrading is not applicable, so the user is directed to manage their plan. %@ is the tappable MEGA web domain, e.g. "mega.io". */
@@ -5142,3 +5142,69 @@
 "upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/anno";
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="Vedi piani";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="Salva in MEGA";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="Questa offerta è terminata";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Riprova";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="Copia in Offline";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="L'offerta scade il %@";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="Questa offerta non è più disponibile. Dai un'occhiata ai nostri piani.";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Oppure risparmia fino a %@ sul nostro sito";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="Impossibile caricare il contenuto";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Si è verificato un problema durante il caricamento dei tuoi piani. Per favore, riprova.";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="OK, capito";
+/* A label for the Pause button. */
+"pause"="Pausa";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Impossibile connettersi";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Controlla la tua connessione internet e riprova.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Ottieni %2$@ di sconto\n%3$@/mese per %4$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Prendi l'offerta";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Non hai abbastanza spazio";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="Download interrotto";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="Il tuo dispositivo ha terminato lo spazio disponibile durante il download. Libera un po' di spazio e riprova.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Riprova";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="Questo download ha bisogno di circa %1$@ di spazio libero, mentre il tuo dispositivo ha %2$@. Libera un po' di spazio e riprova.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Banda di trasferimento limitata";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="La tua banda di trasferimento disponibile potrebbe essere quasi terminata. Come risultato, i tuoi download o le tue riproduzioni potrebbero essere interrotti. Effettua l'upgrade del tuo piano per più banda di trasferimento. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Effettua l'upgrade del tuo piano per ottenere più banda di trasferimento. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Gestisci il tuo piano su %@ per maggior banda di trasferimento";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="Impossibile accedere all'album";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="L'album è stato eliminato";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="Il link dell'album è stato disabilitato dal proprietario";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="Il link non è valido o non esiste";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Ultima modifica: prima i più nuovi";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Ultima modifica: prima i più vecchi";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Data di scatto: prima i più nuovi";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Data di scatto: prima i più vecchi";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Trasferimenti messi in pausa. In attesa di una connessione funzionante";

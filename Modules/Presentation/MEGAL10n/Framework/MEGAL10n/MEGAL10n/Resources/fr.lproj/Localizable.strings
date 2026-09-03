@@ -3771,7 +3771,7 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="Acheter un nouvel abonnement";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[A]%% % utilisé de [B] To";
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% sur [B] To utilisés";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Le quota de transfert disponible est limité";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
@@ -5156,3 +5156,55 @@
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Ou économisez jusqu'à %@ sur notre site web";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="Réessayer";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="Impossible de charger le contenu";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Nous avons rencontré un problème lors du chargement de vos abonnements. Veuillez réessayer.";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="D’accord, j’ai compris";
+/* A label for the Pause button. */
+"pause"="Mettre en pause";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Impossible de se connecter";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="Vérifiez votre connexion Internet et réessayez.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · Obtenez %2$@ de réduction\n%4$@ pour %3$@/mois";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Profiter de l'offre";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Pas assez de stockage";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="Téléchargement arrêté";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="Votre appareil est à court d'espace de stockage pendant le téléchargement. Libérez de l'espace et réessayez.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Réessayer";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="Ce téléchargement nécessite environ %1$@ d'espace libre et votre appareil dispose de %2$@. Libérez un peu d'espace et réessayez.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Quota de transfert limité";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="Votre quota de transfert peut être sur le point d'être épuisé. En conséquence, vos téléchargements ou vos lectures pourraient être interrompus. Mettez à niveau votre abonnement pour obtenir un quota de transfert plus élevé. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Mettez à niveau votre abonnement pour obtenir un quota de transfert plus élevé. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Gérez votre abonnement sur %@ pour obtenir un quota de transfert plus élevé";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="Impossible d'accéder à l'album";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="L'album a été supprimé";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="Le lien de l'album est désactivé par le propriétaire";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="Le lien est invalide ou n'existe pas";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Date de prise : la plus récente";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Date de prise : la plus ancienne";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Dernière modification : le plus récent";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Dernière modification : le plus ancien";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Transferts en pause. En attente d'une connexion réseau";

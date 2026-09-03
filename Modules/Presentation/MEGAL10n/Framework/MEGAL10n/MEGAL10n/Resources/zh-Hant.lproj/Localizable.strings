@@ -3137,7 +3137,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B]將[A]的權限更改為[S]主持人[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A]被[B]更改為[S]標準與會者[/S]";
+"chat.message.changedRole.standard"="[A]被[B]更改為[S]一般與會者[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="標準";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,7 +3181,7 @@
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="允許非主持人新增參與者";
 /* Start conversation: Schedule meeting context menu */
-"meetings.startConversation.contextMenu.scheduleMeeting"="安排會議";
+"meetings.startConversation.contextMenu.scheduleMeeting"="預定會議";
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="由於多次侵犯版權的指控，您的MEGA帳戶已被停權。這意味著您無法存取您的帳戶或當中的資料。\n\n檢查您的電子郵件收件匣，瞭解有關如何提交恢復存取申請的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
@@ -3261,13 +3261,13 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="會議";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B]邀請您參加會議，排程時間：";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B]邀請您參加會議，預定時間：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議時間為";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議描述";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]已取消[/B]以下會議排程";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]已取消[/B]以下預定會議";
 /* In app notification description representing the day was changed for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]已更新[/B]會議日期為";
 /* In app notification description representing the time was changed for one off meeting */
@@ -3277,7 +3277,7 @@
 /* In app notification description for cancelled recurring meeting */
 "inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] 取消[/B]會議及其所有事件";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加週期性會議，排程時間：";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加週期性會議，預定時間：";
 /* In app notification description for multiple fields update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議為";
 /* In app notification description for description Field update in recurring meeting. */
@@ -3299,7 +3299,7 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][StartDate]起[WeekDay][/B]的[B][StartTime]到[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]已取消[/B]以下事件排程";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]已取消[/B]以下預定事件";
 /* In app notification description when an occurence is updated in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]已更新[/B]事件為";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
@@ -3357,7 +3357,7 @@
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.descriptionWithDuration"="會議進行中 · %@";
 /* Schedule meeting view title */
-"meetings.scheduleMeeting.title"="安排會議";
+"meetings.scheduleMeeting.title"="預定會議";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="會議名稱";
 /* Schedule meeting start field */
@@ -3675,7 +3675,7 @@
 /* Success message when cancelling an scheduled meeting with messages in chat room */
 "meetings.scheduled.cancelAlert.success.withMessages"="會議已取消";
 /* Description for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.description"="只有此事件會被取消。所有其它事件將按照排程進行。";
+"meetings.scheduled.cancelAlert.occurrence.description"="只有此事件會被取消。所有其它事件將按照預定進行。";
 /* Confirm cancel option for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.option.confirm"="取消事件";
 /* Success message when cancelling an occurrence */
@@ -3699,9 +3699,9 @@
 /* Name of the screen of contact info shown when back button is long pressed */
 "contactInfo.backButton.menu"="聯絡資訊";
 /* Create meeting tip view title */
-"meetings.scheduleMeeting.createMeetingTip.title"="安排會議";
+"meetings.scheduleMeeting.createMeetingTip.title"="預定會議";
 /* Create meeting tip view message */
-"meetings.scheduleMeeting.createMeetingTip.message"="您現在可以安排單次和週期性會議。";
+"meetings.scheduleMeeting.createMeetingTip.message"="您現在可以預定單次和週期性會議。";
 /* Scheduled meeting tip view dismiss action button title */
 "meetings.scheduleMeeting.tipView.gotIt"="知道了";
 /* Start meeting tip view title */
@@ -4425,7 +4425,7 @@
 /* Button title to start new meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.startMeetingNow"="立即開始會議";
 /* Button title to schedule a meeting on meetings screen when empty */
-"chat.meetings.emptyState.v2.button.scheduleMeeting"="安排會議";
+"chat.meetings.emptyState.v2.button.scheduleMeeting"="預定會議";
 /* App Store Screenshots string - Image 1 */
 "appstore.screenshot1"="你口袋裡的隱私保護力";
 /* App Store Screenshots string - Image 2 */
@@ -4985,7 +4985,7 @@
 /* The title of the Continue where you left widget in Customise Home screen */
 "home.customization.widget.continueWhereYouLeftOff"="從上次中斷的地方繼續";
 /* The title of the Do more with MEGA widget in Customise Home screen */
-"home.customization.widget.doMoreWithMega"="MEGA常用功能";
+"home.customization.widget.doMoreWithMega"="MEGA更多功能";
 /* The title of the Viewed link widget in Customise Home screen */
 "home.customization.widget.viewedLinks"="已檢視的連結";
 /* The title of the Account status widget in Customise Home screen */
@@ -5059,7 +5059,7 @@
 /* Cycle label shown next to the plan name for a monthly subscription on the revamped upgrade page */
 "subscriptionPurchase.revamp.cycle.monthly"="每月訂閱";
 /* Cycle label shown next to the plan name for a yearly subscription on the revamped upgrade page */
-"subscriptionPurchase.revamp.cycle.yearly"="年繳訂閱";
+"subscriptionPurchase.revamp.cycle.yearly"="年付訂閱";
 /* Saving badge shown on the yearly option of the billing-cycle picker. %@ is the savings percentage, e.g. 16%. */
 "subscriptionPurchase.revamp.cycle.saving"="最多可省%@";
 /* Text for a button that reverts the previous action, e.g. undoing the cancellation of a transfer in the Transfers screen */
@@ -5142,3 +5142,69 @@
 "upgradeAccountPlan.plan.details.pricing.discountPriceYearlyRate"="[A] [B]/年";
 /* Title of the button on the offer expiration alert in revamped Upgrade screen. */
 "subscriptionPurchase.revamp.promo.button.viewPlans"="檢視方案";
+/* Title of the button on a link screen that copies the linked content into the user's own MEGA Cloud drive. */
+"link.button.saveToMega"="儲存到MEGA";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="再試一次";
+/* Title of the action, on a folder link, that downloads the selected content into the app’s Offline section. */
+"link.button.copyToOffline"="複製到離線";
+/* Message shown on the Upgrade screen's alert when the special offer is no longer available. */
+"subscriptionPurchase.revamp.promo.offerEnded"="此優惠已結束";
+/* Shown on the revamped promotional upgrade screen with the offer expiry date. %@ is the date the offer ends. */
+"subscriptionPurchase.revamp.promo.offerEndsOn"="優惠於 %@ 結束";
+/* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
+"subscriptionPurchase.revamp.promo.offerEnded.message"="此優惠已不再提供。請查看我們的方案。";
+/* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="或到我們網站購買，最高可省%@";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="無法載入內容";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="載入您的方案時出現問題。請再試一次。";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="好的，明白了";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="無法連線";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="好康搶購";
+/* A label for the Pause button. */
+"pause"="暫停";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="重試";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="有限的傳輸配額";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="無法存取相簿";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="檢查網路連線後重試。";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · 立減%2$@\n%3$@/月，為期%4$@";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="儲存空間不足";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="下載已停止";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="下載過程中裝置儲存空間不足。騰出一些空間後重試。";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="此次下載需要約%1$@可用空間，但裝置僅有%2$@。騰出一些空間後重試。";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="您的傳輸配額可能即將用完，導致下載或串流播放可能中斷。升級方案以取得更多傳輸配額。%@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="升級方案以取得更多傳輸配額。%@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="在%@管理您的方案以取得更多傳輸配額";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="相簿已刪除";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="相簿連結已被擁有者停用";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="連結無效或不存在";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="最後修改：最新優先";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="最後修改：最舊優先";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="拍攝日期：最新優先";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="拍攝日期：最舊優先";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="傳輸已暫停。正在等待網路連線";

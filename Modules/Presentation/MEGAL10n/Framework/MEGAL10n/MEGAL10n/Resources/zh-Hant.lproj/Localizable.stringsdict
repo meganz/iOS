@@ -3135,7 +3135,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>無法下載%d個檔案</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -3149,7 +3149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>已下載%d個檔案。在傳輸中查看缺失的檔案，然後逐一下載。</string>
       </dict>
     </dict>
   </dict>

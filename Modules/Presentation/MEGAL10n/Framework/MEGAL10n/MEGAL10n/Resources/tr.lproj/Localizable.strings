@@ -1129,9 +1129,9 @@
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Profilinizi değiştirdiniz";
 /* Hint text for the first name (Placeholder) */
-"firstName"="Adı";
+"firstName"="Ad";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Soyadı";
+"lastName"="Soyad";
 /* Title for "Local" used space. */
 "localLabel"="Yerel";
 /* Title for MEGA "Available" space. */
@@ -1801,15 +1801,15 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Öğe kaydedilemedi";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Şifreleme anahtarı döndürme";
+"Encrypted Key Rotation"="Şifreleme anahtarı rotasyonu";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Şifreleme anahtarı döndürmeyi etkinleştir";
+"Enable Encrypted Key Rotation"="Şifreleme anahtarı rotasyonunu etkinleştir";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Sohbet bağlantısı al";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Şifreleme anahtarı döndürme biraz daha güvenlidir ancak sohbet bağlantısı oluşturmanıza izin vermez ve yeni katılımcılar geçmiş mesajları görmez.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Şifreleme anahtarı rotasyonu biraz daha güvenlidir ancak sohbet bağlantısı oluşturmanıza izin vermez ve yeni katılımcılar geçmiş mesajları görmez.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="100’den fazla katılımcının olduğu sohbetlerde şifreleme anahtarı döndürmesi devre dışı bırakılır.";
+"Key rotation is disabled for conversations with more than 100 participants."="100’den fazla katılımcının olduğu sohbetlerde şifreleme anahtarı rotasyonu devre dışı bırakılır.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Sohbet bağlantısı oluşturmak için gruba bir ad vermelisiniz.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1821,7 +1821,7 @@
 /* Users previewing a public chat */
 "Observers"="Gözlemciler";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@, şifreleme anahtarı döndürmeyi etkinleştirdi.";
+"%@ enabled Encrypted Key Rotation"="%@, şifreleme anahtarı rotasyonunu etkinleştirdi.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ bir sohbet bağlantısı oluşturdu";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -3235,7 +3235,7 @@
 /* Title for manage chat history option in meeting info */
 "meetings.info.manageChatHistory"="Sohbet geçmişini yönet";
 /* Title for enable encryption key rotation option in meeting info */
-"meetings.info.keyRotation.title"="Şifreleme anahtarı döndürmeyi etkinleştir";
+"meetings.info.keyRotation.title"="Şifreleme anahtarı rotasyonunu etkinleştir";
 /* Description for enable encryption key rotation option in meeting info */
 "meetings.info.keyRotation.description"="Anahtar döndürmesi biraz daha güvenlidir ancak sohbet bağlantısı oluşturmanıza izin vermez ve yeni katılımcılardan gelen geçmiş mesajları gizler.";
 /* Title for a button to send a file to a chat */
@@ -4147,7 +4147,7 @@
 /* Hidden files and folders onboarding content hide important message */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Tek bir kolay adımla hassas dosyaları ve klasörleri gizlilik için saklayabilirsiniz.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Gözden uzak";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Gözden ırak";
 /* Hidden files and folders onboarding content exclude from timeline section message */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Gizli dosyaları yalnızca siz; ister tek tek, ister Ayarlar’dan gizli öğeleri geçici olarak göstererek ortaya çıkarabilirsiniz.";
 /* Hidden files and folders onboarding content out of sight title */
@@ -4513,7 +4513,7 @@
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.message"="Şifre yöneticimiz ve yüksek hızlı VPN’imiz ile çevrim içi hayatınızı daha güvenli, daha hızlı ve daha kolay hale getirin";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
-"ads.adFree.button.viewProPlans"="Pro planlarını görüntüle";
+"ads.adFree.button.viewProPlans"="Pro planları görüntüle";
 /* Ad-free experience screen button title that will dismiss page */
 "ads.adFree.button.skip"="Atla";
 /* Add to album empty message */
@@ -4577,7 +4577,7 @@
 /* Hidden files and folders onboarding content item one message */
 "onboarding.hiddenFilesAndFolders.content.item.one.message"="Tek bir kolay adımda gizlilik için hassas dosyaları ve klasörleri gizleyebilirsiniz";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Gözden uzak";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Gözden ırak";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Gizli dosyaları göstermek için uygulama ayarlarınızda \"Dosya Yönetimi\" -> \"Kullanıcı arayüzü\" altındaki \"Gizli öğeleri göster\" ayarını açın.";
 /* Hidden files and folders onboarding content item three title */
@@ -5154,3 +5154,57 @@
 "subscriptionPurchase.revamp.promo.offerEnded.message"="Bu teklif artık geçerli değil. Bunun yerine planlarımıza göz atın.";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
 "subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="Veya web sitemizde %@ tasarruf edin";
+/* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.title"="İçerik yüklenemedi";
+/* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
+"subscriptionPurchase.revamp.loadError.message"="Planlarınız yüklenirken bir sorunla karşılaştık. Lütfen tekrar deneyin.";
+/* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
+"subscriptionPurchase.revamp.loadError.button.tryAgain"="Tekrar dene";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="Bağlanılamadı";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="İnternet bağlantınızı kontrol edip tekrar deneyin.";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · %2$@ indirim kazanın\n%4$@ için ayda %3$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="Fırsatı yakala";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="Tamam";
+/* A label for the Pause button. */
+"pause"="Duraklat";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="Yetersiz depolama alanı";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="İndirme durduruldu";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="İndirme sırasında cihazınızda depolama alanı tükendi. Biraz alan açın ve tekrar deneyin.";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="Tekrar dene";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="Bu indirme işlemi yaklaşık %1$@ boş alan gerektiriyor, cihazınızda ise %2$@ var. Biraz alan açın ve tekrar deneyin.";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="Sınırlı aktarım kotası";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="Aktarım kotanız azalıyor olabilir. Sonuç olarak, indirmeleriniz veya akışlarınız kesintiye uğrayabilir. Daha fazla aktarım kotası için planınızı yükseltin. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="Daha fazla aktarım kotası almak için planınızı yükseltin. %@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="Daha fazla aktarım kotası için planınızı %@ adresinden yönetin";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="Albüme erişilemiyor";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="Albüm silindi";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="Albüm bağlantısı, sahibi tarafından devre dışı bırakıldı";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="Bağlantı geçersiz veya mevcut değil";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="Son değiştirilme: önce en yeni";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="Son değiştirilme: önce en eski";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="Çekim tarihi: önce en yeni";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="Çekim tarihi: önce en eski";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="Aktarımlar duraklatıldı. Ağ bağlantısı bekleniyor";

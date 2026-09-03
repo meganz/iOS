@@ -3581,9 +3581,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file didn’t download</string>
+        <string>Datei konnte nicht heruntergeladen werden</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>%d Dateien konnten nicht heruntergeladen werden</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -3597,9 +3597,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d Datei heruntergeladen. Sieh in Übertragungen nach, welche Dateien fehlen, und lade sie dann einzeln herunter.</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d Dateien heruntergeladen. Sieh in Übertragungen nach, welche Dateien fehlen, und lade sie dann einzeln herunter.</string>
       </dict>
     </dict>
   </dict>

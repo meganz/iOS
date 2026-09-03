@@ -5184,21 +5184,21 @@
 "quotaWarning.transfer.limited.subtitle"="Upgrade your plan to get more transfer quota. %@";
 /* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "quotaWarning.transfer.limited.manage.subtitle"="Manage your plan at %@ for more transfer quota";
-/* Title of the screen shown when an album link cannot be opened. */
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.cannotBeAccessed"="Album cannot be accessed";
-/* First of the reasons listed on the screen shown when an album link cannot be opened. */
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.unavailableReason1"="The album was deleted";
-/* Second of the reasons listed on the screen shown when an album link cannot be opened. */
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.unavailableReason2"="The album link is disabled by the owner";
-/* Third of the reasons listed on the screen shown when an album link cannot be opened. */
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
 "albumLink.unavailableReason3"="The link is invalid or doesn’t exist";
 /* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
-"cameraUploads.timeline.sort.newestByLastModified"="Newest by last modified";
+"cameraUploads.timeline.sort.newestByLastModified"="Last modified: newest first";
 /* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
-"cameraUploads.timeline.sort.oldestByLastModified"="Oldest by last modified";
+"cameraUploads.timeline.sort.oldestByLastModified"="Last modified: oldest first";
 /* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
-"cameraUploads.timeline.sort.newestByDateTaken"="Newest by date taken";
+"cameraUploads.timeline.sort.newestByDateTaken"="Date taken: newest first";
 /* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
-"cameraUploads.timeline.sort.oldestByDateTaken"="Oldest by date taken";
+"cameraUploads.timeline.sort.oldestByDateTaken"="Date taken: oldest first";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
-"transfers.snackbar.pausedAwaitingNetwork"="Transfers paused. Awaiting for network to resume.";
+"transfers.snackbar.pausedAwaitingNetwork"="Transfers paused. Waiting for a network connection";

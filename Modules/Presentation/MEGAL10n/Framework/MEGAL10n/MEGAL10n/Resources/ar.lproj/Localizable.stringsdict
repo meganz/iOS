@@ -5365,11 +5365,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>%#@ignore@</string>
+        <string>تعذّر تنزيل أي ملف</string>
         <key>one</key>
-        <string>%d file didn’t download</string>
+        <string>تعذّر تنزيل الملف</string>
+        <key>two</key>
+        <string>تعذّر تنزيل الملفين</string>
+        <key>few</key>
+        <string>تعذّر تنزيل %d ملفات</string>
+        <key>many</key>
+        <string>تعذّر تنزيل %d ملفًا</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>تعذّر تنزيل %d ملف</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -5383,11 +5389,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>%#@ignore@</string>
+        <string>لم يتم تنزيل أي ملف. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
         <key>one</key>
-        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>تم تنزيل ملف واحد. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
+        <key>two</key>
+        <string>تم تنزيل ملفين. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
+        <key>few</key>
+        <string>تم تنزيل %d ملفات. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
+        <key>many</key>
+        <string>تم تنزيل %d ملفًا. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>تم تنزيل %d ملف. تحقق من قسم النقل لمعرفة الملفات المفقودة، ثم نزّلها كل على حدة.</string>
       </dict>
     </dict>
   </dict>

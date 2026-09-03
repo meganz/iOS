@@ -5153,10 +5153,58 @@
 /* Message of the alert shown on the revamped Upgrade screen when the promotional offer has expired. */
 "subscriptionPurchase.revamp.promo.offerEnded.message"="このキャンペーンは終了しました。他のプランをご覧ください。";
 /* Title of the button on a plan card that opens the MEGA website to buy the plan; %@ is the discount, e.g. "15%" */
-"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="弊社のウェブサイトでご購入いただくと最大%@割引になります";
+"subscriptionPurchase.revamp.button.buyOnWebsite.saveUpTo"="または弊社のウェブサイトでは最大%@割引になります";
 /* Title of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
 "subscriptionPurchase.revamp.loadError.title"="プランを読み込めませんでした";
 /* Message of the alert shown on the revamped Upgrade screen when the Pro plans could not be loaded. */
 "subscriptionPurchase.revamp.loadError.message"="プラン情報の読み込み中に問題が発生しました。もう一度お試しください。";
 /* Title of the button on the load error alert of the revamped Upgrade screen that retries loading the Pro plans. */
 "subscriptionPurchase.revamp.loadError.button.tryAgain"="再試行";
+/* Title of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.title"="接続できませんでした";
+/* Message of the error state shown on the promotional offer landing dialog when the offer could not be loaded. */
+"subscriptionPurchase.revamp.promo.loadError.message"="インターネット接続を確認して、もう一度お試しください。";
+/* Text of the discount banner on the Home screen, shown over two lines. The placeholders are the offer campaign name, e.g. "Black Friday", the discount amount, e.g. "50%", the discounted monthly price, e.g. "€4.99", and the plan name, e.g. "Pro I". */
+"home.promotionalBanners.discountBanner.message"="%1$@ · %2$@OFF\n%4$@が月額%3$@";
+/* Title of the button on the discount banner on the Home screen that opens the Upgrade screen. */
+"home.promotionalBanners.discountBanner.grabDeal"="特別セールを利用する";
+/* Button that dismisses the alert warning that a download would not fit on the device. */
+"link.download.notEnoughStorage.button.dismiss"="はい、わかりました。";
+/* A label for the Pause button. */
+"pause"="一時停止";
+/* Title of the alert shown before a folder link download that would not fit on the device. */
+"link.download.notEnoughStorage.title"="空き容量が不足しています";
+/* Title of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.title"="ダウンロードが停止しました";
+/* Message of the alert shown when the device runs out of storage while a download is in progress. */
+"link.download.stopped.message"="ダウンロード中にデバイスの空き容量が不足しました。空き容量を増やしてから、もう一度お試しください。";
+/* Button that starts a download again after it stopped because the device ran out of storage. */
+"link.download.stopped.button.tryAgain"="再試行";
+/* Message of the alert shown before a folder link download that would not fit on the device. %1$@ is the space the download needs, for example "1.2 GB". %2$@ is the space still free on the device. */
+"link.download.notEnoughStorage.message"="このダウンロードには約%1$@の空き容量が必要ですが、デバイスの空き容量は%2$@です。空き容量を増やしてから、もう一度お試しください。";
+/* DSN-3116 quota warning dialogs. Title of the transfer quota warning dialog when the transfer quota is running low and no usage figure is available (signed-out or free accounts). */
+"quotaWarning.transfer.limited.title"="転送容量制限のお知らせ";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for signed-out or free accounts. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.free.subtitle"="転送容量が残り少なくなっている可能性があります。そのため、ダウンロードやストリーミングが中断される場合があります。より多くの転送容量をご利用いただくには、プランをアップグレードしてください。%@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for paid accounts that can still upgrade. %@ is the tappable "Learn more" link. */
+"quotaWarning.transfer.limited.subtitle"="より多くの転送容量をご利用いただくには、プランをアップグレードしてください。%@";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"quotaWarning.transfer.limited.manage.subtitle"="より多くの転送容量をご利用いただくには、%@でプランを管理してください。";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.cannotBeAccessed"="アルバムにアクセスできません";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason1"="アルバムは削除されました";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason2"="アルバムへのリンクは所有者によって無効化されています";
+/* DSN-3116 quota warning dialogs. Subtitle of the transfer quota warning dialog when the transfer quota is running low, for the highest plan (Pro 3) where upgrading for more transfer quota is not applicable. %@ is the tappable MEGA web domain, e.g. "mega.io". */
+"albumLink.unavailableReason3"="リンクが無効であるか、存在しません";
+/* Sort option in the media timeline menu: newest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.newestByLastModified"="最終更新日：新しい順";
+/* Sort option in the media timeline menu: oldest first, ordered by when the file was last modified. */
+"cameraUploads.timeline.sort.oldestByLastModified"="最終更新日：古い順";
+/* Sort option in the media timeline menu: newest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.newestByDateTaken"="撮影日：新しい順";
+/* Sort option in the media timeline menu: oldest first, ordered by when the photo or video was taken. */
+"cameraUploads.timeline.sort.oldestByDateTaken"="撮影日：古い順";
+/* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
+"transfers.snackbar.pausedAwaitingNetwork"="転送を一時停止しました。ネットワーク接続を待機中";

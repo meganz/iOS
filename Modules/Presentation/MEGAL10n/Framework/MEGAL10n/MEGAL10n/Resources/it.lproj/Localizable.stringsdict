@@ -2695,11 +2695,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Valido per %d giorno</string>
+        <string>Valido per %d giorno.</string>
         <key>many</key>
-        <string>Valido per %d di giorni</string>
+        <string>Valido per %d di giorni.</string>
         <key>other</key>
-        <string>Valido per %d giorni</string>
+        <string>Valido per %d giorni.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -4027,9 +4027,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file didn’t download</string>
+        <string>Impossibile scaricare il file</string>
+        <key>many</key>
+        <string>Impossibile scaricare %d di file</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>Impossibile scaricare %d file</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -4043,9 +4045,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d file scaricato. Controlla i Trasferimenti per vedere quali file mancano, poi scaricali singolarmente.</string>
+        <key>many</key>
+        <string>%d di file scaricati. Controlla i Trasferimenti per vedere quali file mancano, poi scaricali singolarmente.</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d file scaricati. Controlla i Trasferimenti per vedere quali file mancano, poi scaricali singolarmente.</string>
       </dict>
     </dict>
   </dict>

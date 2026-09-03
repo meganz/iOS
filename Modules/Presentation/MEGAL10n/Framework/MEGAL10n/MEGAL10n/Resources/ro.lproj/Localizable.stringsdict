@@ -4027,9 +4027,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file didn’t download</string>
+        <string>Fișierul nu a putut fi descărcat</string>
+        <key>few</key>
+        <string>%d fișiere nu au putut fi descărcate</string>
         <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>%d de fișiere nu au putut fi descărcate</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -4043,9 +4045,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d fișier descărcat. Verifică Transferuri pentru a vedea ce fișiere lipsesc, apoi descarcă-le individual.</string>
+        <key>few</key>
+        <string>%d fișiere descărcate. Verifică Transferuri pentru a vedea ce fișiere lipsesc, apoi descarcă-le individual.</string>
         <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d de fișiere descărcate. Verifică Transferuri pentru a vedea ce fișiere lipsesc, apoi descarcă-le individual.</string>
       </dict>
     </dict>
   </dict>

@@ -4027,9 +4027,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file didn’t download</string>
-        <key>other</key>
-        <string>%d files didn’t download</string>
+        <string>Не удалось скачать файл</string>
+        <key>few</key>
+        <string>Не удалось скачать %d файла</string>
+        <key>many</key>
+        <string>Не удалось скачать %d файлов</string>
       </dict>
     </dict>
     <key>link.download.incomplete.message</key>
@@ -4043,9 +4045,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file downloaded. Check Transfers to see what’s missing and retry them individually.</string>
-        <key>other</key>
-        <string>%d files downloaded. Check Transfers to see what’s missing and retry them individually.</string>
+        <string>%d файл загружен. Проверьте Передачи, чтобы узнать, каких файлов не хватает, и загрузите их по отдельности.</string>
+        <key>few</key>
+        <string>%d файла загружено. Проверьте Передачи, чтобы узнать, каких файлов не хватает, и загрузите их по отдельности.</string>
+        <key>many</key>
+        <string>%d файлов загружено. Проверьте Передачи, чтобы узнать, каких файлов не хватает, и загрузите их по отдельности.</string>
       </dict>
     </dict>
   </dict>
