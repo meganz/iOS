@@ -32,7 +32,6 @@ final class ImportAlbumViewModel: ObservableObject {
     private let exportRouter: any AlbumLinkExportRouting
     private let onboardingRouter: any AlbumLinkImportOnboardingRouting
     private let offlineRouter: any AlbumLinkOfflineRouting
-    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private var publicLinkWithDecryptionKey: URL?
     /// The album's nodes as they came off the link, kept so a sort change can re-map the library
@@ -76,14 +75,12 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
             showingDecryptionKeyAlert = newValue == .requireDecryptionKey
-            showCannotAccessAlbumAlert = !isLinkRevampEnabled && newValue == .invalid
         }
     }
     @Published var publicLinkDecryptionKey = ""
     @Published var showingDecryptionKeyAlert = false
     @Published var showInvalidDecryptionKeyAlert = false
     @Published var showShareLink = false
-    @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
     @Published var showStorageQuotaWillExceed = false
     @Published var showMoreOptions = false
@@ -121,9 +118,7 @@ final class ImportAlbumViewModel: ObservableObject {
         renamedAlbum ?? publicAlbumName
     }
     
-    var isLinkRevampEnabled: Bool {
-        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosLinkRevamp)
-    }
+    let isLinkRevampEnabled: Bool
     
     /// The revamp swaps the icon-only bottom toolbar for a single anchored `Save to MEGA` button. Selection
     /// mode keeps the pre-revamp toolbar -- its redesign belongs to a separate ticket.
@@ -131,8 +126,11 @@ final class ImportAlbumViewModel: ObservableObject {
         isLinkRevampEnabled && !isSelectionEnabled
     }
     
+    /// Not gated on the link revamp: `AlbumLinkUnavailableView` draws the legacy layout too. Gating it
+    /// left the invalid state with no UI of its own for everyone the flag had not reached -- an album
+    /// content view faded to nothing, with only an alert to say what had happened.
     var shouldShowLinkUnavailable: Bool {
-        isLinkRevampEnabled && publicLinkStatus == .invalid
+        publicLinkStatus == .invalid
     }
     
     var decryptionKeyAlertMessage: String {
@@ -232,7 +230,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.exportRouter = exportRouter
         self.onboardingRouter = onboardingRouter
         self.offlineRouter = offlineRouter
-        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        isLinkRevampEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosLinkRevamp)
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
         
