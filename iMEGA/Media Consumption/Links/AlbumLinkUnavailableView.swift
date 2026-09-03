@@ -4,27 +4,44 @@ import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
-/// Unavailable state of an album link. It is only reached with the link revamp flag on: without it
-/// the album link reports the same failure as an alert.
+/// Unavailable state of an album link.
+///
+/// The revamped layout is the shared unavailable page the file link and the folder link show, while
+/// the flag is off keeps the copy the album link has always used for an invalid link -- which used
+/// to be shown as an alert over the album content, and was dropped by SwiftUI once the screen's
+/// other modals moved onto the same view.
 struct AlbumLinkUnavailableView: View {
     private enum Constants {
         /// Not localised, as in the file link: it is the brand, not a word.
         static let brandTitle = "MEGA"
+        static let legacyImageWidth: CGFloat = 200
+        static let legacyImageHeight: CGFloat = 120
+        static let legacyContentMaxWidth: CGFloat = 414
     }
 
+    let isLinkRevampEnabled: Bool
     let onClose: () -> Void
 
     var body: some View {
         NavigationStack {
-            fullScreenContent
+            unavailableContent
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
-                // The design draws the bar as transparent page background, with only the close
-                // button carrying a glass capsule.
-                .hideNavigationToolbarBackground()
                 .toolbar { toolbarContent }
         }
         .tint(TokenColors.Icon.primary.swiftUI)
+    }
+
+    @ViewBuilder
+    private var unavailableContent: some View {
+        if isLinkRevampEnabled {
+            // The design draws the bar as transparent page background, with only the close button
+            // carrying a glass capsule.
+            fullScreenContent
+                .hideNavigationToolbarBackground()
+        } else {
+            legacyContent
+        }
     }
 
     /// Centres the unavailable state on the whole screen rather than on the area below the
@@ -40,6 +57,32 @@ struct AlbumLinkUnavailableView: View {
         .ignoresSafeArea()
     }
 
+    /// The pre-revamp copy, laid out the way the legacy file and folder links lay their unavailable
+    /// state out: the same illustration over the title and the reason.
+    private var legacyContent: some View {
+        VStack(spacing: TokenSpacing._7) {
+            Image(uiImage: MEGAAssets.UIImage.invalidLink)
+                .resizable()
+                .scaledToFit()
+                .frame(width: Constants.legacyImageWidth, height: Constants.legacyImageHeight)
+
+            VStack(spacing: TokenSpacing._5) {
+                Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title)
+                    .font(.headline)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+
+                Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message)
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
+            .multilineTextAlignment(.center)
+        }
+        .padding(.horizontal, TokenSpacing._9)
+        .frame(maxWidth: Constants.legacyContentMaxWidth)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(TokenColors.Background.page.swiftUI)
+    }
+
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
@@ -51,17 +94,27 @@ struct AlbumLinkUnavailableView: View {
         }
     }
 
+    /// The revamp names the brand above the kind of link. The legacy screen only ever showed the
+    /// kind of link, so that is what stays there while the flag is off.
+    @ViewBuilder
     private var titleView: some View {
-        VStack {
-            Text(Constants.brandTitle)
+        if isLinkRevampEnabled {
+            VStack {
+                Text(Constants.brandTitle)
+                    .font(.headline)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .lineLimit(1)
+
+                Text(Strings.Localizable.albumLink)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .lineLimit(1)
+            }
+        } else {
+            Text(Strings.Localizable.albumLink)
                 .font(.headline)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                .lineLimit(1)
-
-            Text(Strings.Localizable.albumLink)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .lineLimit(1)
         }
     }
@@ -89,6 +142,10 @@ struct AlbumLinkUnavailableView: View {
     }
 }
 
-#Preview {
-    AlbumLinkUnavailableView(onClose: {})
+#Preview("Link revamp") {
+    AlbumLinkUnavailableView(isLinkRevampEnabled: true, onClose: {})
+}
+
+#Preview("Legacy") {
+    AlbumLinkUnavailableView(isLinkRevampEnabled: false, onClose: {})
 }

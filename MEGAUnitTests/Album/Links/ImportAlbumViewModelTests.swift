@@ -103,7 +103,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testLoadPublicAlbum_onSharedAlbumError_shouldShowCannotAccessAlbumAlert() async throws {
+    func testLoadPublicAlbum_onSharedAlbumError_shouldShowUnavailablePage() async throws {
         let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
@@ -113,7 +113,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.onViewAppear()
 
         XCTAssertEqual(sut.publicLinkStatus, .none)
-        XCTAssertFalse(sut.showCannotAccessAlbumAlert)
+        XCTAssertFalse(sut.shouldShowLinkUnavailable)
 
         let exp = expectation(description: "link status should switch to in progress to invalid")
         exp.expectedFulfillmentCount = 2
@@ -130,7 +130,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
         
         XCTAssertEqual(linkStatusResults, [.inProgress, .invalid])
-        XCTAssertTrue(sut.showCannotAccessAlbumAlert)
+        XCTAssertTrue(sut.shouldShowLinkUnavailable)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [AlbumImportScreenEvent()]
@@ -980,7 +980,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testLoadPublicAlbum_onLinkRevampEnabledAndSharedAlbumError_shouldShowUnavailablePageInsteadOfAlert() async throws {
+    func testLoadPublicAlbum_onLinkRevampEnabledAndSharedAlbumError_shouldShowUnavailablePage() async throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: MockPublicCollectionUseCase(
@@ -991,8 +991,35 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.publicLinkStatus, .invalid)
         XCTAssertTrue(sut.shouldShowLinkUnavailable)
-        XCTAssertFalse(sut.showCannotAccessAlbumAlert)
         XCTAssertFalse(sut.showInvalidDecryptionKeyAlert)
+    }
+    
+    @MainActor
+    func testLoadPublicAlbum_onLinkRevampDisabledAndSharedAlbumError_shouldStillShowUnavailablePage() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicCollectionUseCase: MockPublicCollectionUseCase(
+                publicAlbumResult: .failure(SharedCollectionErrorEntity.resourceNotFound)),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: false]))
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertEqual(sut.publicLinkStatus, .invalid)
+        XCTAssertTrue(sut.shouldShowLinkUnavailable)
+    }
+    
+    @MainActor
+    func testIsLinkRevampEnabled_readRepeatedly_shouldResolveTheRemoteFlagOnce() throws {
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true])
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
+        
+        _ = sut.showsAnchoredButtons
+        _ = sut.shouldShowMoreOptionsButton
+        
+        XCTAssertTrue(sut.isLinkRevampEnabled)
+        XCTAssertEqual(remoteFeatureFlagUseCase.flagsPassedIn.filter { $0 == .iosLinkRevamp }.count, 1)
     }
     
     @MainActor
@@ -1041,7 +1068,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.loadWithNewDecryptionKey()
         
         XCTAssertEqual(sut.publicLinkStatus, .invalid)
-        XCTAssertTrue(sut.showCannotAccessAlbumAlert)
+        XCTAssertTrue(sut.shouldShowLinkUnavailable)
         XCTAssertFalse(sut.showInvalidDecryptionKeyAlert)
     }
     

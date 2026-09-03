@@ -26,7 +26,8 @@ struct ImportAlbumView: View {
             if viewModel.shouldShowLinkUnavailable {
                 // Closing from here dismisses without resetting the link status: resetting it would
                 // put the album content back on screen, and with it the request that failed.
-                AlbumLinkUnavailableView(onClose: invokeDismiss)
+                AlbumLinkUnavailableView(isLinkRevampEnabled: viewModel.isLinkRevampEnabled,
+                                         onClose: invokeDismiss)
             } else {
                 albumContent
             }
@@ -168,12 +169,6 @@ struct ImportAlbumView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .opacity(viewModel.shouldShowPhotoLibraryContent ? 1.0 : 0)
             }
-        }
-        .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
-            Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
-                  message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
-                  dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
-                                         action: dismissImportAlbumScreen))
         }
         .task {
             await viewModel.loadPublicAlbum()
