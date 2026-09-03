@@ -32,11 +32,11 @@ struct UpgradePlansViewModelTests {
         )
     }
 
-    @Test("A discount on the monthly cycle only still preselects yearly")
-    func monthlyOnlyDiscountPreselectsYearly() {
+    @Test("A discount on the monthly cycle only preselects monthly")
+    func monthlyOnlyDiscountPreselectsMonthly() {
         let sut = makeSUT(plans: [plan(.monthly, discounted: true), plan(.yearly)], userCycle: .monthly)
-        #expect(sut.defaultSelectedCycle == .yearly)
-        #expect(sut.selectedCycle == .yearly)
+        #expect(sut.defaultSelectedCycle == .monthly)
+        #expect(sut.selectedCycle == .monthly)
     }
 
     @Test("A discount on the yearly cycle only preselects yearly")
