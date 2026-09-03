@@ -17,12 +17,13 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case iosHomeRevampPhaseTwo = "iOS Home Revamp Phase Two"
     case newTransfers = "New Transfers"
     case offlineMode = "Offline Mode"
-
+    
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:
     /// - For some features, we want to release them without having to remove their flags from code as a risk management measure.
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
     public static let rolledOutKeys: Set<FeatureFlagKey> = [
+        .offlineMode,
         .cameraUploadsRevamp,
         .dotAppDomain
     ]
