@@ -32,7 +32,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let exportRouter: any AlbumLinkExportRouting
     private let onboardingRouter: any AlbumLinkImportOnboardingRouting
     private let offlineRouter: any AlbumLinkOfflineRouting
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private var publicLinkWithDecryptionKey: URL?
     /// The album's nodes as they came off the link, kept so a sort change can re-map the library
@@ -122,7 +122,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     var isLinkRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .linkRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosLinkRevamp)
     }
     
     /// The revamp swaps the icon-only bottom toolbar for a single anchored `Save to MEGA` button. Selection
@@ -215,7 +215,7 @@ final class ImportAlbumViewModel: ObservableObject {
          exportRouter: some AlbumLinkExportRouting,
          onboardingRouter: some AlbumLinkImportOnboardingRouting = AlbumLinkImportOnboardingRouter(),
          offlineRouter: some AlbumLinkOfflineRouting,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase) {
         self.publicLink = publicLink
         self.publicCollectionUseCase = publicCollectionUseCase
         self.albumNameUseCase = albumNameUseCase
@@ -232,7 +232,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.exportRouter = exportRouter
         self.onboardingRouter = onboardingRouter
         self.offlineRouter = offlineRouter
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         
         showImportToolbarButton = accountUseCase.isLoggedIn()
         

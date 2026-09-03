@@ -19,4 +19,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosMediaTimelineDateTaken = "imtdt"
     case iosQuotaWarningsRevamp = "iqwr"
     case iosUpgradeAccountPlanRevamp = "iuapr"
+    case iosLinkRevamp = "ilr"
 }

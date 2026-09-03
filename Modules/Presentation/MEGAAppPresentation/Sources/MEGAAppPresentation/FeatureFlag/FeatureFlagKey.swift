@@ -17,7 +17,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case iosHomeRevampPhaseTwo = "iOS Home Revamp Phase Two"
     case newTransfers = "New Transfers"
     case offlineMode = "Offline Mode"
-    case linkRevamp = "Link Revamp"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

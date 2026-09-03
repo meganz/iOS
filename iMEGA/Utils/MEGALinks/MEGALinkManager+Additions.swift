@@ -419,7 +419,7 @@ extension MEGALinkManager {
 // MARK: - Link Revamp
 extension MEGALinkManager {
     @objc static var isLinkRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .linkRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosLinkRevamp)
     }
 }
 

@@ -588,7 +588,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testShowsAnchoredButtons_linkRevampEnabled_shouldOnlyShowOutsideSelection() throws {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+                                           remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         XCTAssertTrue(sut.showsAnchoredButtons)
 
         sut.photoLibraryContentViewModel.selection.editMode = .active
@@ -599,7 +599,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     @MainActor
     func testShowsAnchoredButtons_linkRevampDisabled_shouldKeepTheBottomToolbar() throws {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: false]))
+                                           remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: false]))
 
         XCTAssertFalse(sut.showsAnchoredButtons)
     }
@@ -965,7 +965,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testDecryptionKeyAlertCopy_onLinkRevampEnabled_shouldUseTheSharedRevampedCopy() throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try requireDecryptionKeyAlbumLink,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         XCTAssertEqual(sut.decryptionKeyAlertMessage, Strings.Localizable.Link.DecryptionKey.Alert.message)
         XCTAssertEqual(sut.decryptionKeyAlertPlaceholder, Strings.Localizable.decryptionKey)
@@ -985,7 +985,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: MockPublicCollectionUseCase(
                 publicAlbumResult: .failure(SharedCollectionErrorEntity.couldNotBeReadOrDecrypted)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         
@@ -1001,7 +1001,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try requireDecryptionKeyAlbumLink,
             publicCollectionUseCase: MockPublicCollectionUseCase(
                 publicAlbumResult: .failure(SharedCollectionErrorEntity.malformed)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "invalid-key"
         
@@ -1019,7 +1019,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try requireDecryptionKeyAlbumLink,
             publicCollectionUseCase: MockPublicCollectionUseCase(
                 publicAlbumResult: .failure(SharedCollectionErrorEntity.resourceNotFound)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
         
@@ -1051,7 +1051,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try requireDecryptionKeyAlbumLink,
             publicCollectionUseCase: MockPublicCollectionUseCase(
                 publicAlbumResult: .failure(SharedCollectionErrorEntity.malformed)),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "invalid-key"
         await sut.loadWithNewDecryptionKey()
@@ -1066,7 +1066,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testGlobalHeaderType_linkRevampEnabled_shouldBeSortAndZoomHeader() throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         guard case .sortAndZoom = sut.photoLibraryContentViewModel.globalHeaderType else {
             XCTFail("Expected the sort and zoom global header, got \(sut.photoLibraryContentViewModel.globalHeaderType)")
@@ -1078,7 +1078,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testGlobalHeaderType_linkRevampDisabled_shouldKeepDateAndZoomHeader() throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: false]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: false]))
         
         XCTAssertEqual(sut.photoLibraryContentViewModel.globalHeaderType, .dateAndZoom)
     }
@@ -1092,7 +1092,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: albumUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         
@@ -1114,7 +1114,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: albumUseCase,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         
@@ -1160,7 +1160,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         for isEnabled in [true, false] {
             let sut = makeImportAlbumViewModel(
                 publicLink: try validFullAlbumLink,
-                featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: isEnabled]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: isEnabled]))
             
             XCTAssertEqual(sut.shouldShowMoreOptionsButton, isEnabled)
         }
@@ -1174,7 +1174,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             let sut = makeImportAlbumViewModel(
                 publicLink: try validFullAlbumLink,
                 accountUseCase: MockAccountUseCase(isLoggedIn: isLoggedIn),
-                featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
             
             XCTAssertEqual(sut.moreOptions, [.select, .copyToOffline, .shareLink], "logged in: \(isLoggedIn)")
         }
@@ -1185,7 +1185,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         XCTAssertEqual(sut.disabledMoreOptions, [.select, .copyToOffline, .shareLink])
         XCTAssertTrue(sut.isMoreOptionsButtonDisabled)
@@ -1201,7 +1201,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: albumUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         
@@ -1219,7 +1219,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicLink: try validFullAlbumLink,
             publicCollectionUseCase: albumUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         
@@ -1237,7 +1237,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testHandleMoreOption_onSelect_shouldEnterSelectionMode() async throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         sut.handle(moreOption: .select)
         
@@ -1258,7 +1258,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: false),
             onboardingRouter: onboardingRouter,
             offlineRouter: offlineRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         sut.handle(moreOption: .copyToOffline)
@@ -1280,7 +1280,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicCollectionUseCase: albumUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             offlineRouter: offlineRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         // The loading indicator does not block touches, so the sheet can be reopened and the row tapped
@@ -1306,7 +1306,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicCollectionUseCase: albumUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             offlineRouter: offlineRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         sut.enablePhotoLibraryEditMode(true)
@@ -1329,7 +1329,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             publicCollectionUseCase: albumUseCase,
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             offlineRouter: offlineRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         sut.handle(moreOption: .copyToOffline)
@@ -1353,7 +1353,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             monitorUseCase: MockNetworkMonitorUseCase(connected: false),
             offlineRouter: offlineRouter,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         await sut.loadPublicAlbum()
         sut.handle(moreOption: .copyToOffline)
@@ -1367,7 +1367,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testHandleMoreOption_onShareLink_shouldLeaveTheSharingToTheSheet() async throws {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.linkRevamp: true]))
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
         
         sut.handle(moreOption: .shareLink)
         
@@ -1392,7 +1392,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
         offlineRouter: some AlbumLinkOfflineRouting = MockAlbumLinkOfflineRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> ImportAlbumViewModel {
@@ -1413,7 +1413,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             exportRouter: exportRouter,
             onboardingRouter: onboardingRouter,
             offlineRouter: offlineRouter,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
@@ -1557,7 +1557,7 @@ struct ImportAlbumViewModelTestSuite {
         exportRouter: some AlbumLinkExportRouting = MockAlbumLinkExportRouter(),
         onboardingRouter: some AlbumLinkImportOnboardingRouting = MockAlbumLinkImportOnboardingRouter(),
         offlineRouter: some AlbumLinkOfflineRouting = MockAlbumLinkOfflineRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> ImportAlbumViewModel {
         .init(
             publicLink: publicLink,
@@ -1576,7 +1576,7 @@ struct ImportAlbumViewModelTestSuite {
             exportRouter: exportRouter,
             onboardingRouter: onboardingRouter,
             offlineRouter: offlineRouter,
-            featureFlagProvider: featureFlagProvider)
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase)
     }
 }
 
