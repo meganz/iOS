@@ -88,6 +88,55 @@ struct SubscriptionPlanCardsPresenterTests {
         #expect(card.transfer.contains("8 TB"))
     }
 
+    // MARK: - Recommended ribbon (standard page)
+
+    private func makeStandardSUT(
+        plans: [PlanEntity],
+        recommendedPlanType: AccountTypeEntity?
+    ) -> SubscriptionPlanCardsPresenter {
+        SubscriptionPlanCardsPresenter(
+            plans: plans,
+            pageType: .standard(recommendedPlanType: recommendedPlanType),
+            displayName: { $0.toAccountTypeDisplayName() },
+            externalPurchase: nil
+        )
+    }
+
+    @Test("The recommended tier carries the recommended ribbon and is the primary action")
+    func recommendedTierIsRibbonedAndPrimary() throws {
+        let sut = makeStandardSUT(plans: [plan(.proI, .monthly), plan(.proII, .monthly)], recommendedPlanType: .proII)
+        let cards = sut.cards(for: .monthly)
+        let recommended = try #require(cards.first { $0.title == AccountTypeEntity.proII.toAccountTypeDisplayName() })
+        let other = try #require(cards.first { $0.title == AccountTypeEntity.proI.toAccountTypeDisplayName() })
+
+        #expect(recommended.ribbon == .recommended)
+        #expect(recommended.isPrimaryAction)
+        #expect(other.ribbon == nil)
+        #expect(other.isPrimaryAction == false)
+    }
+
+    @Test("Without a recommended tier no card is ribboned or primary")
+    func noRecommendedTierLeavesEveryCardSecondary() {
+        let sut = makeStandardSUT(plans: [plan(.proI, .monthly), plan(.proII, .monthly)], recommendedPlanType: nil)
+        let cards = sut.cards(for: .monthly)
+
+        #expect(cards.allSatisfy { $0.ribbon == nil })
+        #expect(cards.allSatisfy { !$0.isPrimaryAction })
+    }
+
+    /// Offer badges belong to the promo page: a discount on the standard page must not produce a ribbon
+    /// of its own, otherwise two plans would compete for the reader's eye.
+    @Test("A discounted plan on the standard page carries no offer ribbon")
+    func standardPageIgnoresOfferBadges() throws {
+        let sut = makeStandardSUT(
+            plans: [externalPurchasePlan(introductoryOffer: introOffer())],
+            recommendedPlanType: nil
+        )
+        let card = try #require(sut.cards(for: .monthly).first)
+
+        #expect(card.ribbon == nil)
+    }
+
     // MARK: - Buy on our website
 
     @Test("Without the external purchase capability no card offers the buy on our website button")

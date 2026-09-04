@@ -449,4 +449,67 @@ struct RecommendedUpgradePlanUseCaseTests {
             try sut.recommendForNewAccount(from: [])
         }
     }
+
+    // MARK: - Cycle target
+
+    /// The supplied cycle replaces the account's own: a monthly subscriber asking for yearly gets a yearly plan.
+    @Test func specificCycle_overridesTheAccountCycle() {
+        let plans = [
+            plan(type: .proI, name: "Pro I", cycle: .monthly, price: 10),
+            plan(type: .essential, name: "Essential", cycle: .yearly, price: 40),   // cheapest yearly → wins
+            plan(type: .proII, name: "Pro II", cycle: .yearly, price: 200)
+        ]
+        let account = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
+
+        #expect(sut.recommend(for: account, from: plans, cycleTarget: .specific(cycle: .yearly))?.name == "Essential")
+    }
+
+    /// Naming the cycle `.fromCurrentUser` would have derived anyway must not change the answer.
+    @Test func specificCycle_matchingTheAccountCycle_matchesFromCurrentUser() {
+        let plans = [
+            plan(type: .proII, name: "Pro II", cycle: .monthly, price: 20),
+            plan(type: .proIII, name: "Pro III", cycle: .monthly, price: 30),
+            plan(type: .essential, name: "Essential", cycle: .yearly, price: 40)
+        ]
+        let account = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
+
+        let specific = sut.recommend(for: account, from: plans, cycleTarget: .specific(cycle: .monthly))
+        let fromCurrentUser = sut.recommend(for: account, from: plans, cycleTarget: .fromCurrentUser)
+
+        #expect(specific?.name == fromCurrentUser?.name)
+        #expect(specific?.name == "Pro II")
+    }
+
+    /// The asymmetric catalog: a tier sold yearly with no monthly counterpart. Each cycle must be answered
+    /// from its own plans, so the monthly list is not left without a recommendation.
+    @Test func specificCycle_asymmetricCatalog_answersEachCycleFromItsOwnPlans() {
+        let plans = [
+            plan(type: .lite, name: "Pro Lite", cycle: .yearly, price: 30),         // no monthly counterpart
+            plan(type: .proI, name: "Pro I", cycle: .yearly, price: 100),
+            plan(type: .proI, name: "Pro I", cycle: .monthly, price: 10),
+            plan(type: .proII, name: "Pro II", cycle: .monthly, price: 20)
+        ]
+        let account = AccountDetailsEntity.build(proLevel: .free)
+
+        #expect(sut.recommend(for: account, from: plans, cycleTarget: .specific(cycle: .yearly))?.name == "Pro Lite")
+        #expect(sut.recommend(for: account, from: plans, cycleTarget: .specific(cycle: .monthly))?.name == "Pro I")
+    }
+
+    @Test func specificCycle_noPlanInThatCycle_returnsNil() {
+        let plans = [plan(type: .proI, name: "Pro I", cycle: .yearly, price: 100)]
+
+        #expect(sut.recommend(for: .build(proLevel: .free), from: plans, cycleTarget: .specific(cycle: .monthly)) == nil)
+    }
+
+    /// The headroom rule is shared with `.fromCurrentUser`, so it still excludes plans that do not
+    /// clear the account's allowance in the requested cycle.
+    @Test func specificCycle_stillAppliesTheStorageAndTransferHeadroomRule() {
+        let plans = [
+            plan(type: .lite, name: "Pro Lite", cycle: .monthly, price: 5, storageLimit: 400, transferLimit: 400),
+            plan(type: .proI, name: "Pro I", cycle: .monthly, price: 10, storageLimit: 2048, transferLimit: 2048)
+        ]
+        let account = AccountDetailsEntity.build(storageMax: 500.gigabytesToBytes(), transferMax: 500.gigabytesToBytes())
+
+        #expect(sut.recommend(for: account, from: plans, cycleTarget: .specific(cycle: .monthly))?.name == "Pro I")
+    }
 }
