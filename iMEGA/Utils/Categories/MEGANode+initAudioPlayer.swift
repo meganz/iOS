@@ -51,7 +51,7 @@ extension MEGANode {
             return
         }
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp) {
             if let source = makeRevampedPlaybackSource(node: node,
                                                        fileLink: fileLink,
                                                        isFolderLink: isFolderLink,

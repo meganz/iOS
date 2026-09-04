@@ -36,7 +36,7 @@ final class NewFolderLinkViewController: UIViewController, AudioPlayerPresenterP
     }
     
     private var isAudioPlayerRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp)
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp)
     }
 
     private func attachFolderLinkView() {

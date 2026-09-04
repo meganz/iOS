@@ -8,18 +8,21 @@ import UIKit
 final class TransfersRouter {
     private weak var navigationController: UINavigationController?
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     init(
         navigationController: UINavigationController?,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.navigationController = navigationController
         self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
 
     func showTransfers() {
         let transferVC: UIViewController
-        if featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) || remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransfersRevamp) {
             let rowRouter = TransferRowActionRouter()
             transferVC = TransfersListViewControllerFactory.make(
                 nodeUseCase: NodeUseCase(
