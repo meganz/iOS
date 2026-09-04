@@ -18,7 +18,8 @@ public final class MockRecommendedUpgradePlanUseCase: RecommendedUpgradePlanUseC
 
     public func recommend(
         for accountDetails: AccountDetailsEntity,
-        from plans: [PlanEntity]
+        from plans: [PlanEntity],
+        cycleTarget: RecommendedPlanCycleTarget
     ) -> RecommendedUpgradePlanEntity? {
         recommendCalled += 1
         return recommendation

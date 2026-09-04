@@ -94,20 +94,26 @@ public final class UpgradePlansViewModel: ObservableObject {
 
     // MARK: - Plan cards
 
-    /// The tier tagged as recommended; `nil` on the promo page and when no plan clears the account's quota.
-    /// Resolved to a type so the ribbon follows the cycle picker - the use case targets a single cycle.
-    private lazy var recommendedPlanType: AccountTypeEntity? = {
+    /// The tier tagged as recommended in the given cycle; `nil` on the promo page and when that cycle
+    /// offers no plan clearing the account's quota.
+    /// Resolved per cycle, not once: the two catalogs need not hold the same tiers, so a tier recommended
+    /// in one cycle may be missing from the other, which would leave that list with no ribbon at all.
+    private func recommendedPlanType(for cycle: SubscriptionCycleEntity) -> AccountTypeEntity? {
         guard !isPromo,
-              let recommended = recommendedPlanUseCase.recommend(for: accountDetails, from: plans) else { return nil }
+              let recommended = recommendedPlanUseCase.recommend(
+                  for: accountDetails,
+                  from: plans,
+                  cycleTarget: .specific(cycle: cycle)
+              ) else { return nil }
         return plans.first { $0.productIdentifier == recommended.productIdentifier }?.type
-    }()
+    }
 
     func planCards(for cycle: SubscriptionCycleEntity) -> [SubscriptionPlanCardModel] {
         SubscriptionPlanCardsPresenter(
             plans: plans.filter { !$0.isCurrentPlan(for: accountDetails) },
             pageType: isPromo
                 ? .promo(featuredPlan: featuredPlan)
-                : .standard(recommendedPlanType: recommendedPlanType),
+                : .standard(recommendedPlanType: recommendedPlanType(for: cycle)),
             displayName: displayName,
             externalPurchase: isExternalPurchaseAvailable ? ExternalPurchasePresenter() : nil
         ).cards(for: cycle)
