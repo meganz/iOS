@@ -891,6 +891,15 @@ extension AppDelegate {
         DIContainer.isReachablePromptingIfNot = {
             MEGAReachabilityManager.isReachableHUDIfNot()
         }
+        
+        let offlineInfoRepository = OfflineInfoRepository()
+        MEGAAudioPlayerSession.registerLocalFileURLProvider { node in
+            guard let megaNode = (node as? MEGANode) ?? MEGASdk.shared.node(forHandle: node.handle),
+                  offlineInfoRepository.isNodeAvailableOffline(megaNode),
+                  let url = offlineInfoRepository.offlineFileURL(for: megaNode),
+                  FileManager.default.fileExists(atPath: url.path) else { return nil }
+            return url
+        }
     }
 }
 
