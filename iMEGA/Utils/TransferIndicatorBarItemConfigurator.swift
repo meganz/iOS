@@ -37,7 +37,7 @@ final class TransferIndicatorBarItemConfigurator: NSObject {
         // screen renders Close itself and calls this, rather than us attaching a
         // UIKit bar button it could not swap out while selecting.
         var dismissModal: (@MainActor () -> Void)?
-        let isNewTransfers = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers)
+        let isNewTransfers = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosTransfersRevamp)
         if isNewTransfers {
             let router = TransferRowActionRouter()
             rowRouter = router

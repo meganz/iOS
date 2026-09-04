@@ -2,6 +2,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAFoundation
 import Transfer
 
 extension AppDelegate {
@@ -20,6 +21,16 @@ extension AppDelegate {
             SharedTransferIndicator.configure()
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newTransfers) {
                 SharedTransferFinishRecorder.shared.configure()
+            } else {
+                Task {
+                    let isTransfersRevampEnabled = await AsyncUtils.timeout(30, default: false) {
+                        await DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabledAfterReady(for: .iosTransfersRevamp)
+                    }
+
+                    guard isTransfersRevampEnabled else { return }
+
+                    SharedTransferFinishRecorder.shared.configure()
+                }
             }
         }
     }

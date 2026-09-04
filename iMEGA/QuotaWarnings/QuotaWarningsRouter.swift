@@ -253,7 +253,7 @@ extension QuotaWarningsRouter {
                             AudioPlayerManager.shared.closePlayer()
                         }
                     }
-                    if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) {
+                    if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp) {
                         MEGAAudioPlayerSession.stop()
                     }
                 }

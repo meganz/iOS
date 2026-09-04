@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAudioPlayer
+import MEGADomain
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private var currentPresenter: (any AudioPlayerPresenterProtocol)? {
@@ -155,7 +156,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
 
     private var isAudioPlayerRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp)
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .audioPlayerRevamp) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAudioPlayerRevamp)
     }
 
     private func updateRevampedMiniPlayerInset(for viewController: UIViewController) -> Bool {
