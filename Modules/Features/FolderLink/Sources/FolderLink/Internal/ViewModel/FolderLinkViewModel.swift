@@ -13,11 +13,13 @@ package final class FolderLinkViewModel: ObservableObject {
         let folderLinkFlowUseCase: any FolderLinkFlowUseCaseProtocol
         let pendingConnectionsRetryUseCase: any FolderLinkPendingConnectionsRetryUseCaseProtocol
         let networkUseCase: any NetworkMonitorUseCaseProtocol
-        
+        let isLinkRevampEnabled: Bool
+
         init(
             link: String,
             folderLinkBuilder: some FolderLinkBuilderProtocol,
-            folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol
+            folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol,
+            isLinkRevampEnabled: Bool
         ) {
             let folderLinkFlowUseCase = FolderLinkFlowUseCase(
                 folderLinkLoginUseCase: FolderLinkLoginUseCase(),
@@ -31,7 +33,8 @@ package final class FolderLinkViewModel: ObservableObject {
                 folderLinkLogoutPolicy: folderLinkLogoutPolicy,
                 folderLinkFlowUseCase: folderLinkFlowUseCase,
                 pendingConnectionsRetryUseCase: FolderLinkPendingConnectionsRetryUseCase(),
-                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+                networkUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                isLinkRevampEnabled: isLinkRevampEnabled
             )
         }
         
@@ -41,13 +44,15 @@ package final class FolderLinkViewModel: ObservableObject {
             folderLinkLogoutPolicy: some FolderLinkLogoutPolicyProtocol,
             folderLinkFlowUseCase: some FolderLinkFlowUseCaseProtocol,
             pendingConnectionsRetryUseCase: some FolderLinkPendingConnectionsRetryUseCaseProtocol,
-            networkUseCase: some NetworkMonitorUseCaseProtocol
+            networkUseCase: some NetworkMonitorUseCaseProtocol,
+            isLinkRevampEnabled: Bool
         ) {
             self.link = link
             self.folderLinkLogoutPolicy = folderLinkLogoutPolicy
             self.folderLinkFlowUseCase = folderLinkFlowUseCase
             self.pendingConnectionsRetryUseCase = pendingConnectionsRetryUseCase
             self.networkUseCase = networkUseCase
+            self.isLinkRevampEnabled = isLinkRevampEnabled
         }
     }
     
@@ -86,7 +91,18 @@ package final class FolderLinkViewModel: ObservableObject {
             with: ShareLinkOpenedEvent(linkType: .folder, authStatus: authStatus)
         )
     }
-    
+
+    /// Reported as soon as the screen is up, before the link has resolved, so that a link which never
+    /// opens -- taken down, expired, or missing its key -- is counted too. `trackFolderLinkOpened()` is
+    /// the other half: it only fires once the folder's contents are on screen.
+    ///
+    /// Only the revamp reports it, so that the denominator matches the file link's, whose screen view
+    /// event cannot reach the pre-revamp arm at all -- that one is a different view controller.
+    package func trackScreenView() {
+        guard dependency.isLinkRevampEnabled else { return }
+        tracker.trackAnalyticsEvent(with: FolderLinkScreenEvent())
+    }
+
     package func onAppear() async {
         for await connected in dependency.networkUseCase.connectionSequence {
             isNetworkConnected = connected

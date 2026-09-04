@@ -49,7 +49,8 @@ struct FolderLinkResultsView<DismissButton>: View where DismissButton: View {
                     nodeHandle: dependency.handle,
                     link: dependency.link,
                     searchResultsProvidingBuilder: dependency.searchResultsProvidingBuilder,
-                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase
+                    sortOrderPreferenceUseCase: dependency.sortOrderPreferenceUseCase,
+                    isLinkRevampEnabled: dependency.isLinkRevampEnabled
                 ),
                 viewMode: viewMode
             )

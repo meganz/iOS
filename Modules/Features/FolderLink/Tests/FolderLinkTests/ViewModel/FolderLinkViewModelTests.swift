@@ -1,6 +1,9 @@
 import FolderLink
+@preconcurrency import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import Testing
 
 @Suite("FolderLinkViewModel Tests")
@@ -149,13 +152,58 @@ struct FolderLinkViewModelTests {
         }
     }
 
+    // MARK: - Analytics
+
+    @Test("the screen reports itself as soon as it is up, before the link has resolved")
+    func trackScreenView_reportsScreenViewEvent() {
+        let tracker = MockTracker()
+        let sut = FolderLinkViewModelTests.makeSUT(tracker: tracker)
+
+        sut.trackScreenView()
+
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [FolderLinkScreenEvent()]
+        )
+    }
+
+    /// This view serves both arms of the rollout, unlike the file link whose pre-revamp screen is a
+    /// different view controller. Without the gate the control arm would report the revamp's exposure.
+    @Test("the pre-revamp screen reports no screen view event")
+    func trackScreenView_whenLinkRevampDisabled_reportsNothing() {
+        let tracker = MockTracker()
+        let sut = FolderLinkViewModelTests.makeSUT(tracker: tracker, isLinkRevampEnabled: false)
+
+        sut.trackScreenView()
+
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
+    }
+
+    /// The opened event is the numerator of the funnel the screen view event gives a denominator to, so a
+    /// link that never opens must not report it.
+    @Test("an unavailable link is not reported as opened")
+    func start_failure_doesNotReportFolderLinkOpened() async {
+        let tracker = MockTracker()
+        let sut = FolderLinkViewModelTests.makeSUT(
+            folderLinkFlowUseCase: MockFolderLinkFlowUseCase(initialStartResult: .failure(.linkUnavailable(.expired))),
+            tracker: tracker
+        )
+
+        await sut.startLoadingFolderLink()
+
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
+    }
+
     // MARK: - Helpers
     private static func makeSUT(
         folderLinkFlowUseCase: MockFolderLinkFlowUseCase = MockFolderLinkFlowUseCase(),
         folderLinkBuilder: MockFolderlinkBuilder = MockFolderlinkBuilder(),
         folderLinkLogoutPolicy: MockFolderLinkLogoutPolicy = MockFolderLinkLogoutPolicy(),
         networkUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
-        pendingConnectionsRetryUseCase: MockFolderLinkPendingConnectionsRetryUseCase = MockFolderLinkPendingConnectionsRetryUseCase()
+        pendingConnectionsRetryUseCase: MockFolderLinkPendingConnectionsRetryUseCase = MockFolderLinkPendingConnectionsRetryUseCase(),
+        tracker: MockTracker = MockTracker(),
+        accountUseCase: MockAccountUseCase = MockAccountUseCase(),
+        isLinkRevampEnabled: Bool = true
     ) -> FolderLinkViewModel {
         let dependency = FolderLinkViewModel.Dependency(
             link: "some_link",
@@ -163,8 +211,9 @@ struct FolderLinkViewModelTests {
             folderLinkLogoutPolicy: folderLinkLogoutPolicy,
             folderLinkFlowUseCase: folderLinkFlowUseCase,
             pendingConnectionsRetryUseCase: pendingConnectionsRetryUseCase,
-            networkUseCase: networkUseCase
+            networkUseCase: networkUseCase,
+            isLinkRevampEnabled: isLinkRevampEnabled
         )
-        return FolderLinkViewModel(dependency: dependency)
+        return FolderLinkViewModel(dependency: dependency, tracker: tracker, accountUseCase: accountUseCase)
     }
 }

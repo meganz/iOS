@@ -16,6 +16,7 @@ final class FolderLinkMediaDiscoveryViewModelTests {
         editModeUseCase: MockFolderLinkEditModeUseCase = MockFolderLinkEditModeUseCase(),
         bottomBarUseCase: MockFolderLinkBottomBarUseCase = MockFolderLinkBottomBarUseCase(),
         quickActionUseCase: MockFolderLinkQuickActionUseCase = MockFolderLinkQuickActionUseCase(),
+        isLinkRevampEnabled: Bool = true,
         viewMode: SearchResultsViewMode = .list,
         viewModeUpdate: @escaping (SearchResultsViewMode) -> Void = { _ in }
     ) -> FolderLinkMediaDiscoveryViewModel {
@@ -26,7 +27,8 @@ final class FolderLinkMediaDiscoveryViewModelTests {
             trackingUseCase: trackingUseCase,
             editModeUseCase: editModeUseCase,
             bottomBarUseCase: bottomBarUseCase,
-            quickActionUseCase: quickActionUseCase
+            quickActionUseCase: quickActionUseCase,
+            isLinkRevampEnabled: isLinkRevampEnabled
         )
         let viewModeBinding: Binding<SearchResultsViewMode> = Binding(
             get: { viewMode },
@@ -329,6 +331,67 @@ final class FolderLinkMediaDiscoveryViewModelTests {
             
             // Then
             XCTAssertTrue(trackingUseCase.trackSortHeaderPressedCalled)
+        }
+
+        /// While browsing, the only place a bottom bar action can come from is the anchored buttons.
+        func testBottomBarAction_whenNotEditing_isReportedAsAnchoredButton() {
+            // Given
+            let trackingUseCase = MockFolderLinkTrackingUseCase()
+            let sut = makeSUT(trackingUseCase: trackingUseCase)
+            sut.editMode = .inactive
+
+            // When
+            sut.bottomBarAction = .downloadToFiles
+
+            // Then
+            XCTAssertEqual(trackingUseCase.trackedBottomBarActions.map(\.action), [.downloadToFiles])
+            XCTAssertEqual(trackingUseCase.trackedBottomBarActions.map(\.source), [.anchoredButton])
+        }
+
+        /// While selecting, the anchored buttons are gone and the toolbar buttons are the only source. The
+        /// `$nodesAction` subscriber drops edit mode right after, so this also guards the entry point being
+        /// read before that happens.
+        func testBottomBarAction_whenEditing_isReportedAsSelectionToolbar() {
+            // Given
+            let trackingUseCase = MockFolderLinkTrackingUseCase()
+            let sut = makeSUT(trackingUseCase: trackingUseCase)
+            sut.editMode = .active
+
+            // When
+            sut.bottomBarAction = .addToCloudDrive
+
+            // Then
+            XCTAssertEqual(trackingUseCase.trackedBottomBarActions.map(\.action), [.addToCloudDrive])
+            XCTAssertEqual(trackingUseCase.trackedBottomBarActions.map(\.source), [.selectionToolbar])
+        }
+
+        func testQuickAction_isReportedAsMoreOptionsMenu() {
+            // Given
+            let trackingUseCase = MockFolderLinkTrackingUseCase()
+            let sut = makeSUT(trackingUseCase: trackingUseCase)
+
+            // When
+            sut.quickAction = .addToCloudDrive
+
+            // Then
+            XCTAssertEqual(trackingUseCase.trackedQuickActions.map(\.action), [.addToCloudDrive])
+            XCTAssertEqual(trackingUseCase.trackedQuickActions.map(\.source), [.moreOptionsMenu])
+        }
+
+        /// The pre-revamp bottom bar and menu drive the very same published actions, and neither was ever
+        /// tracked, so the revamp's events must not be reported for them.
+        func testActions_whenLinkRevampDisabled_areNotReported() {
+            // Given
+            let trackingUseCase = MockFolderLinkTrackingUseCase()
+            let sut = makeSUT(trackingUseCase: trackingUseCase, isLinkRevampEnabled: false)
+
+            // When
+            sut.bottomBarAction = .addToCloudDrive
+            sut.quickAction = .addToCloudDrive
+
+            // Then
+            XCTAssertTrue(trackingUseCase.trackedBottomBarActions.isEmpty)
+            XCTAssertTrue(trackingUseCase.trackedQuickActions.isEmpty)
         }
     }
     

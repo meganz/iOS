@@ -31,11 +31,12 @@ package final class FileLinkContentViewModel: ObservableObject {
     private let thumbnailLoader: any ThumbnailLoaderProtocol
     private let fileNodeOpener: any FileLinkNodeOpenerProtocol
     private let actionHandler: any FileLinkActionHandlerProtocol
+    private let trackingUseCase: any FileLinkTrackingUseCaseProtocol
     /// Not published: nothing on screen changes while a file is being opened, this only keeps a second
     /// ask from getting through. See `openFile()`.
     private var isOpeningFile = false
     /// The options whose action has been started and has not come back yet. Not published for the same
-    /// reason. See `handle(moreOption:)`.
+    /// reason. See `handle(moreOption:from:)`.
     private var actionsInFlight: Set<FileLinkMoreOption> = []
 
     package init(
@@ -43,13 +44,15 @@ package final class FileLinkContentViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         fileNodeOpener: some FileLinkNodeOpenerProtocol,
         actionHandler: some FileLinkActionHandlerProtocol,
-        shareLink: String
+        shareLink: String,
+        trackingUseCase: some FileLinkTrackingUseCaseProtocol = FileLinkTrackingUseCase()
     ) {
         self.node = node
         self.thumbnailLoader = thumbnailLoader
         self.fileNodeOpener = fileNodeOpener
         self.actionHandler = actionHandler
         self.shareLink = shareLink
+        self.trackingUseCase = trackingUseCase
         name = node.name
         details = Self.details(for: node)
         moreOptions = Self.moreOptions(for: node)
@@ -81,8 +84,12 @@ package final class FileLinkContentViewModel: ObservableObject {
     /// Runs an option, picked either in the more options sheet or from one of the anchored buttons. Share
     /// link is not one of them: the sheet hands that row to `ShareLink`, which shares `shareLink` without
     /// going through here.
-    package func handle(moreOption: FileLinkMoreOption) async {
+    ///
+    /// `source` only decides which event is reported: the two entry points run the very same action, and
+    /// the events are split so the anchored buttons can be measured against the sheet.
+    package func handle(moreOption: FileLinkMoreOption, from source: FileLinkActionSource) async {
         guard let action = moreOption.action(shareLink: shareLink) else { return }
+        trackingUseCase.trackAction(moreOption, from: source)
         guard actionsInFlight.insert(moreOption).inserted else { return }
         defer { actionsInFlight.remove(moreOption) }
 

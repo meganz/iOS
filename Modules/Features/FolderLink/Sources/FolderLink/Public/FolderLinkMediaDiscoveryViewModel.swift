@@ -25,6 +25,7 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
         let editModeUseCase: any FolderLinkEditModeUseCaseProtocol
         let bottomBarUseCase: any FolderLinkBottomBarUseCaseProtocol
         let quickActionUseCase: any FolderLinkQuickActionUseCaseProtocol
+        let isLinkRevampEnabled: Bool
 
         package init(
             handle: HandleEntity,
@@ -33,7 +34,8 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
             trackingUseCase: some FolderLinkTrackingUseCaseProtocol,
             editModeUseCase: some FolderLinkEditModeUseCaseProtocol,
             bottomBarUseCase: some FolderLinkBottomBarUseCaseProtocol,
-            quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol
+            quickActionUseCase: some FolderLinkQuickActionUseCaseProtocol,
+            isLinkRevampEnabled: Bool
         ) {
             self.handle = handle
             self.link = link
@@ -42,9 +44,10 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
             self.editModeUseCase = editModeUseCase
             self.bottomBarUseCase = bottomBarUseCase
             self.quickActionUseCase = quickActionUseCase
+            self.isLinkRevampEnabled = isLinkRevampEnabled
         }
 
-        init(handle: HandleEntity, link: String) {
+        init(handle: HandleEntity, link: String, isLinkRevampEnabled: Bool) {
             self.init(
                 handle: handle,
                 link: link,
@@ -52,7 +55,8 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
                 trackingUseCase: FolderLinkTrackingUseCase(),
                 editModeUseCase: FolderLinkEditModeUseCase(),
                 bottomBarUseCase: FolderLinkBottomBarUseCase(),
-                quickActionUseCase: FolderLinkQuickActionUseCase()
+                quickActionUseCase: FolderLinkQuickActionUseCase(),
+                isLinkRevampEnabled: isLinkRevampEnabled
             )
         }
     }
@@ -169,8 +173,13 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
         // actions these always carry the folder's own handle.
         $quickAction
             .compactMap { $0 }
-            .map { action in
-                switch action {
+            .map { action -> FolderLinkNodesAction in
+                // Only the revamped sheet is tracked; the pre-revamp menu drives the same actions and was
+                // never tracked.
+                if dependency.isLinkRevampEnabled {
+                    dependency.trackingUseCase.trackQuickAction(action, from: .moreOptionsMenu)
+                }
+                return switch action {
                 case .addToCloudDrive:
                     FolderLinkNodesAction.addToCloudDrive([dependency.handle])
                 case .makeAvailableOffline:
@@ -184,24 +193,7 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
         $bottomBarAction
             .compactMap { $0 }
             .compactMap { [weak self] action in
-                guard let self else { return nil }
-                // Browsing has no selection: the anchored buttons and the sheet act on the folder itself.
-                let nodes = editMode.isEditing ? Set(selectedPhotos.map(\.handle)) : [dependency.handle]
-                return switch action {
-                case .addToCloudDrive:
-                    FolderLinkNodesAction.addToCloudDrive(nodes)
-                case .makeAvailableOffline:
-                    FolderLinkNodesAction.makeAvailableOffline(nodes)
-                case .downloadToFiles:
-                    FolderLinkNodesAction.downloadToFiles(nodes)
-                case .saveToPhotos:
-                    // While browsing, this hands Save to Photos the folder itself rather than the media
-                    // inside it, and `SaveMediaToPhotosUseCase` downloads whatever it is given as a file
-                    // instead of walking the tree — so the row does nothing for a folder. Left alone rather
-                    // than fixed here because the list/grid screen maps it exactly the same way, and one
-                    // screen walking the tree while the other does not is worse than both being wrong.
-                    FolderLinkNodesAction.saveToPhotos(nodes)
-                }
+                self?.nodesAction(for: action)
             }
             .assign(to: &$nodesAction)
         
@@ -220,6 +212,42 @@ public final class FolderLinkMediaDiscoveryViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    /// Maps a bottom bar action to the nodes action it runs, and reports it in the same step.
+    ///
+    /// The two entry points write the same `bottomBarAction`, so they are told apart by `editMode`: the
+    /// anchored buttons only show while browsing, the toolbar buttons only while selecting. That has to be
+    /// read here, where the action is being handled, rather than from a subscription of its own -- the
+    /// `$nodesAction` subscriber resets `editMode`, and a separate subscription could be notified after it.
+    private func nodesAction(for action: FolderLinkBottomBarAction) -> FolderLinkNodesAction {
+        let isEditing = editMode.isEditing
+        // Only the revamped chrome is tracked; the pre-revamp bottom bar drives the same actions and was
+        // never tracked.
+        if dependency.isLinkRevampEnabled {
+            dependency.trackingUseCase.trackBottomBarAction(
+                action,
+                from: isEditing ? .selectionToolbar : .anchoredButton
+            )
+        }
+
+        // Browsing has no selection: the anchored buttons and the sheet act on the folder itself.
+        let nodes = isEditing ? Set(selectedPhotos.map(\.handle)) : [dependency.handle]
+        return switch action {
+        case .addToCloudDrive:
+            FolderLinkNodesAction.addToCloudDrive(nodes)
+        case .makeAvailableOffline:
+            FolderLinkNodesAction.makeAvailableOffline(nodes)
+        case .downloadToFiles:
+            FolderLinkNodesAction.downloadToFiles(nodes)
+        case .saveToPhotos:
+            // While browsing, this hands Save to Photos the folder itself rather than the media inside it,
+            // and `SaveMediaToPhotosUseCase` downloads whatever it is given as a file instead of walking
+            // the tree — so the row does nothing for a folder. Left alone rather than fixed here because
+            // the list/grid screen maps it exactly the same way, and one screen walking the tree while the
+            // other does not is worse than both being wrong.
+            FolderLinkNodesAction.saveToPhotos(nodes)
+        }
+    }
+
     package func toggleSelectAll() {
         selectAll.toggle()
     }

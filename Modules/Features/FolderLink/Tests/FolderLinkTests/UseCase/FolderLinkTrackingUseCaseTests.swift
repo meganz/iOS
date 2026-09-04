@@ -1,8 +1,8 @@
 import FolderLink
 @preconcurrency import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
-import MEGAUIComponent
 import MEGATest
+import MEGAUIComponent
 import Search
 import Testing
 
@@ -10,6 +10,85 @@ import Testing
 struct FolderLinkTrackingUseCaseTests {
     let tracker = MockTracker()
     
+    // MARK: - trackBottomBarAction
+
+    @Test(
+        "Sends the event the bottom bar action and its entry point map to",
+        arguments: zip(
+            [
+                (FolderLinkBottomBarAction.addToCloudDrive, FolderLinkActionSource.anchoredButton),
+                (.addToCloudDrive, .selectionToolbar),
+                (.downloadToFiles, .anchoredButton),
+                (.downloadToFiles, .selectionToolbar)
+            ],
+            [
+                FolderLinkSaveToMegaAnchoredButtonPressedEvent(),
+                FolderLinkSaveToMegaSelectionToolbarButtonPressedEvent(),
+                FolderLinkDownloadAnchoredButtonPressedEvent(),
+                FolderLinkDownloadSelectionToolbarButtonPressedEvent()
+            ] as [any EventIdentifier]
+        )
+    )
+    func trackBottomBarAction(
+        input: (action: FolderLinkBottomBarAction, source: FolderLinkActionSource),
+        event: any EventIdentifier
+    ) {
+        let sut = FolderLinkTrackingUseCase(tracker: tracker)
+
+        sut.trackBottomBarAction(input.action, from: input.source)
+
+        Test.assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [event])
+    }
+
+    /// Copy to Offline and Save to Photos sat on the pre-revamp bottom bar untracked, and this ticket only
+    /// adds what the revamp introduced.
+    @Test(
+        "Sends nothing for the bottom bar actions that carry no event",
+        arguments: [
+            (FolderLinkBottomBarAction.makeAvailableOffline, FolderLinkActionSource.anchoredButton),
+            (.makeAvailableOffline, .selectionToolbar),
+            (.saveToPhotos, .selectionToolbar),
+            (.addToCloudDrive, .moreOptionsMenu)
+        ]
+    )
+    func trackBottomBarAction_untrackedCombination_sendsNothing(
+        input: (action: FolderLinkBottomBarAction, source: FolderLinkActionSource)
+    ) {
+        let sut = FolderLinkTrackingUseCase(tracker: tracker)
+
+        sut.trackBottomBarAction(input.action, from: input.source)
+
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
+    }
+
+    // MARK: - trackQuickAction
+
+    @Test("Sends FolderLinkSaveToMegaMoreOptionsButtonPressedEvent for Save to MEGA in the sheet")
+    func trackQuickAction_saveToMEGA() {
+        let sut = FolderLinkTrackingUseCase(tracker: tracker)
+
+        sut.trackQuickAction(.addToCloudDrive, from: .moreOptionsMenu)
+
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [FolderLinkSaveToMegaMoreOptionsButtonPressedEvent()]
+        )
+    }
+
+    /// Send to chat is reported by the app layer, and Copy to Offline keeps its pre-revamp treatment of
+    /// not being tracked.
+    @Test(
+        "Sends nothing for the quick actions that carry no event",
+        arguments: [FolderLinkQuickAction.makeAvailableOffline, .sendToChat]
+    )
+    func trackQuickAction_untrackedAction_sendsNothing(action: FolderLinkQuickAction) {
+        let sut = FolderLinkTrackingUseCase(tracker: tracker)
+
+        sut.trackQuickAction(action, from: .moreOptionsMenu)
+
+        #expect(tracker.trackedEventIdentifiers.isEmpty)
+    }
+
     @Test("Sends SortButtonPressedEvent")
     func trackSortHeaderPressed() {
         let sut = FolderLinkTrackingUseCase(tracker: tracker)
@@ -57,7 +136,7 @@ struct FolderLinkTrackingUseCaseTests {
                 SortOrder(key: .shareCreated, direction: .ascending),
                 SortOrder(key: .shareCreated, direction: .descending),
                 SortOrder(key: .dateAdded, direction: .ascending),
-                SortOrder(key: .dateAdded, direction: .descending),
+                SortOrder(key: .dateAdded, direction: .descending)
             ],
             [
                 SortByNameMenuItemEvent(),

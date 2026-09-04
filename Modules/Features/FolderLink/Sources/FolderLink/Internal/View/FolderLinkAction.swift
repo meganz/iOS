@@ -6,7 +6,7 @@ import SwiftUI
 /// There is also Share Link quick action but not added here,
 /// because it is handled natively using [ShareLink](https://developer.apple.com/documentation/SwiftUI/ShareLink) SwiftUI view
 /// Check the ShareLinkButton usage in FolderLinkResultsView
-package enum FolderLinkQuickAction {
+package enum FolderLinkQuickAction: Sendable {
     case addToCloudDrive
     case makeAvailableOffline
     case sendToChat
@@ -16,7 +16,7 @@ package enum FolderLinkQuickAction {
 /// There is also Share Link quick action but not added here,
 /// because it is handled natively using [ShareLink](https://developer.apple.com/documentation/SwiftUI/ShareLink) SwiftUI view
 /// Check the ShareLinkButton usage in FolderLinkResultsView
-package enum FolderLinkBottomBarAction {
+package enum FolderLinkBottomBarAction: Sendable {
     case makeAvailableOffline
     /// Saves to the device rather than to the Offline section, through the system share sheet where
     /// Save to Files lives. Named apart from `makeAvailableOffline` so the two destinations do not read

@@ -38,6 +38,7 @@ let package = Package(
 
         // Infra
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGATest")
     ],
@@ -55,6 +56,7 @@ let package = Package(
                 "MEGAAppSDKRepo",
                 "MEGARepo",
                 .product(name: "MEGASdk", package: "MEGASDK"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 "MEGASwift",
                 "MEGADesignToken"
             ]

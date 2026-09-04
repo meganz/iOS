@@ -188,7 +188,7 @@ struct FileLinkContentViewModelTests {
         let actionHandler = MockFileLinkActionHandler()
         let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg", handle: 42), actionHandler: actionHandler)
 
-        await sut.handle(moreOption: option)
+        await sut.handle(moreOption: option, from: .moreOptionsMenu)
 
         #expect(actionHandler.handledActions == [.init(action: action, nodeHandle: 42)])
     }
@@ -203,7 +203,7 @@ struct FileLinkContentViewModelTests {
             shareLink: "https://mega.nz/file/abc#key"
         )
 
-        await sut.handle(moreOption: .sendToChat)
+        await sut.handle(moreOption: .sendToChat, from: .moreOptionsMenu)
 
         #expect(
             actionHandler.handledActions
@@ -217,7 +217,7 @@ struct FileLinkContentViewModelTests {
         let actionHandler = MockFileLinkActionHandler()
         let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), actionHandler: actionHandler)
 
-        await sut.handle(moreOption: .shareLink)
+        await sut.handle(moreOption: .shareLink, from: .moreOptionsMenu)
 
         #expect(actionHandler.handledActions.isEmpty)
     }
@@ -228,9 +228,9 @@ struct FileLinkContentViewModelTests {
     func handleMoreOption_whileTheSameActionIsRunning_runsOnce() async {
         let actionHandler = MockFileLinkActionHandler()
         let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
-        actionHandler.whileHandling = { await sut.handle(moreOption: .saveToMEGA) }
+        actionHandler.whileHandling = { await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton) }
 
-        await sut.handle(moreOption: .saveToMEGA)
+        await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton)
 
         #expect(actionHandler.handledActions == [.init(action: .saveToMEGA, nodeHandle: 42)])
     }
@@ -240,8 +240,8 @@ struct FileLinkContentViewModelTests {
         let actionHandler = MockFileLinkActionHandler()
         let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
 
-        await sut.handle(moreOption: .saveToMEGA)
-        await sut.handle(moreOption: .saveToMEGA)
+        await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton)
+        await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton)
 
         #expect(
             actionHandler.handledActions
@@ -257,10 +257,10 @@ struct FileLinkContentViewModelTests {
         let sut = makeSUT(node: NodeEntity(name: "roadmap.pdf", handle: 42), actionHandler: actionHandler)
         actionHandler.whileHandling = {
             actionHandler.whileHandling = nil
-            await sut.handle(moreOption: .saveToMEGA)
+            await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton)
         }
 
-        await sut.handle(moreOption: .download)
+        await sut.handle(moreOption: .download, from: .anchoredButton)
 
         #expect(
             actionHandler.handledActions
@@ -275,13 +275,61 @@ struct FileLinkContentViewModelTests {
         #expect(sut.shareLink == "https://mega.nz/file/abc#key")
     }
 
+    // MARK: - Analytics
+
+    @Test(
+        "an action picked from an anchored button is reported as such",
+        arguments: [FileLinkMoreOption.saveToMEGA, .download]
+    )
+    func handleMoreOption_fromAnchoredButton_isReportedWithThatSource(option: FileLinkMoreOption) async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), trackingUseCase: trackingUseCase)
+
+        await sut.handle(moreOption: option, from: .anchoredButton)
+
+        #expect(trackingUseCase.trackedActions.map(\.option) == [option])
+        #expect(trackingUseCase.trackedActions.map(\.source) == [.anchoredButton])
+    }
+
+    @Test(
+        "an action picked in the more options sheet is reported as such",
+        arguments: [FileLinkMoreOption.saveToMEGA, .saveToPhotos, .download, .copyToOffline]
+    )
+    func handleMoreOption_fromMoreOptionsSheet_isReportedWithThatSource(option: FileLinkMoreOption) async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let sut = makeSUT(node: NodeEntity(name: "elcapitan.jpeg"), trackingUseCase: trackingUseCase)
+
+        await sut.handle(moreOption: option, from: .moreOptionsMenu)
+
+        #expect(trackingUseCase.trackedActions.map(\.option) == [option])
+        #expect(trackingUseCase.trackedActions.map(\.source) == [.moreOptionsMenu])
+    }
+
+    /// A tap is a tap: the guard only keeps the action from running twice, it does not swallow the press.
+    @Test("a second tap on an action already under way is still reported")
+    func handleMoreOption_whileTheSameActionIsRunning_reportsBothTaps() async {
+        let trackingUseCase = MockFileLinkTrackingUseCase()
+        let actionHandler = MockFileLinkActionHandler()
+        let sut = makeSUT(
+            node: NodeEntity(name: "roadmap.pdf"),
+            actionHandler: actionHandler,
+            trackingUseCase: trackingUseCase
+        )
+        actionHandler.whileHandling = { await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton) }
+
+        await sut.handle(moreOption: .saveToMEGA, from: .anchoredButton)
+
+        #expect(trackingUseCase.trackedActions.count == 2)
+    }
+
     private func makeSUT(
         node: NodeEntity,
         loadedPreview: ImageContainer? = nil,
         thumbnailLoader: MockThumbnailLoader? = nil,
         fileNodeOpener: MockFileLinkNodeOpener = MockFileLinkNodeOpener(),
         actionHandler: MockFileLinkActionHandler = MockFileLinkActionHandler(),
-        shareLink: String = "https://mega.nz/file/abc"
+        shareLink: String = "https://mega.nz/file/abc",
+        trackingUseCase: MockFileLinkTrackingUseCase = MockFileLinkTrackingUseCase()
     ) -> FileLinkContentViewModel {
         let loader = thumbnailLoader ?? MockThumbnailLoader(
             loadImage: loadedPreview.map {
@@ -293,7 +341,8 @@ struct FileLinkContentViewModelTests {
             thumbnailLoader: loader,
             fileNodeOpener: fileNodeOpener,
             actionHandler: actionHandler,
-            shareLink: shareLink
+            shareLink: shareLink,
+            trackingUseCase: trackingUseCase
         )
     }
 
