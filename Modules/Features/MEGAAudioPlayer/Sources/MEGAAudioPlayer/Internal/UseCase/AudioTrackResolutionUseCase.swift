@@ -18,9 +18,9 @@ enum AudioURLResolution: Equatable {
 /// engine is allowed to play it.
 @MainActor
 protocol AudioTrackResolutionUseCaseProtocol {
-    /// The verdict when it is already known without a round-trip — an offline
-    /// file, a track probed earlier this session, or one with no address at all.
-    /// `nil` means ``resolve(_:)`` has to go and ask.
+    /// The verdict when it is already known without a round-trip — a track playing
+    /// from a file on the device, one probed earlier this session, or one with no
+    /// address at all. `nil` means ``resolve(_:)`` has to go and ask.
     func cachedResolution(for track: PlaybackTrack) -> AudioURLResolution?
 
     func resolve(_ track: PlaybackTrack) async -> AudioURLResolution
@@ -51,7 +51,7 @@ final class AudioTrackResolutionUseCase: AudioTrackResolutionUseCaseProtocol {
 
     func cachedResolution(for track: PlaybackTrack) -> AudioURLResolution? {
         guard let url = urlUseCase.url(for: track) else { return .unresolved }
-        guard track.streamingNode != nil else { return .resolved(url) }
+        guard !url.isFileURL else { return .resolved(url) }
         guard let isTakenDown = verdicts[track.id] else { return nil }
         return isTakenDown ? .takenDown : .resolved(url)
     }

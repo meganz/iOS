@@ -1,12 +1,23 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 import UIKit
 
 enum DependencyInjection {
     static var streamingRepository: some AudioStreamingRepositoryProtocol {
         AudioStreamingRepository.newRepo
     }
+
+    /// Resolves a node's on-device copy
+    static var localFileURLProvider: @Sendable (any PlayableNode) -> URL? {
+        get { localFileURLProviderStorage.wrappedValue }
+        set { localFileURLProviderStorage.mutate { $0 = newValue } }
+    }
+
+    private static let localFileURLProviderStorage = Atomic<@Sendable (any PlayableNode) -> URL?>(
+        wrappedValue: { _ in nil }
+    )
 
     static var nodeAvailabilityRepository: some AudioNodeAvailabilityRepositoryProtocol {
         AudioNodeAvailabilityRepository.newRepo

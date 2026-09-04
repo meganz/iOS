@@ -3,13 +3,7 @@ import MEGADomain
 
 // MARK: - Protocol
 
-/// Builds the address a track's bytes are read from.
-///
-/// Synchronous and pure: no network, no authorization check. For node-backed
-/// tracks this is a local HTTP-server link, which is built the same way whether
-/// or not the node is still available — a blocked node yields a URL whose reads
-/// simply fail. Playback admission is a separate concern, see
-/// ``AudioTrackResolutionUseCaseProtocol``.
+/// Builds the address a track's bytes are read from
 protocol AudioTrackURLUseCaseProtocol: Sendable {
     func url(for track: PlaybackTrack) -> URL?
 }
@@ -18,15 +12,28 @@ protocol AudioTrackURLUseCaseProtocol: Sendable {
 
 struct AudioTrackURLUseCase: AudioTrackURLUseCaseProtocol {
     private let streamingRepository: any AudioStreamingRepositoryProtocol
+    private let localFileURL: @Sendable (any PlayableNode) -> URL?
 
-    init(streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository) {
+    init(
+        streamingRepository: some AudioStreamingRepositoryProtocol = DependencyInjection.streamingRepository,
+        localFileURL: @escaping @Sendable (any PlayableNode) -> URL? = DependencyInjection.localFileURLProvider
+    ) {
         self.streamingRepository = streamingRepository
+        self.localFileURL = localFileURL
     }
 
     func url(for track: PlaybackTrack) -> URL? {
         if case .offline(let file) = track { return file }
         if case .offlineNode(_, let file) = track { return file }
         guard let node = track.streamingNode else { return nil }
+
+        // An account node the user already has on the device is read from that copy rather than
+        // streamed back from the API: it starts instantly, costs no transfer quota
+        if case .account(let accountNode) = node,
+           let localFile = localFileURL(accountNode) {
+            return localFile
+        }
+
         return streamingRepository.streamingURL(for: node)
     }
 }
