@@ -49,13 +49,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libmegasdk",
-            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegasdk.xcframework.20260827.083835.zip",
-            checksum: "0b4a1096407190affd18545dfd936c0c18913188287602be16a03222950453bb"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260904.073516/libmegasdk.xcframework.20260904.073516.zip",
+            checksum: "a128faef0971e18e87cdbc0f01c48f51d652218ae23c20e0d6618405075682aa"
         ),
         .binaryTarget(
             name: "libmegathirdparty",
-            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260827.083835/libmegathirdparty.xcframework.20260827.083835.zip",
-            checksum: "406800c8885358ef700ab91de8ea9815b54c8715475fe4536e898cf017627a73"
+            url: "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcframework/20260904.073516/libmegathirdparty.xcframework.20260904.073516.zip",
+            checksum: "094368eb97c3fe2cb99d0ec24dedd5fa13e542e6eaf1d562bc50b62b2a23918e"
         )
     ],
     cxxLanguageStandard: .cxx17
