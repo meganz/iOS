@@ -20,6 +20,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import MEGARepo
+import MEGAVideoPlayer
 import PushKit
 import QuotaWarnings
 import SafariServices
@@ -892,8 +893,16 @@ extension AppDelegate {
             MEGAReachabilityManager.isReachableHUDIfNot()
         }
         
+        let localFileURLProvider = Self.localFileURLProvider()
+        MEGAAudioPlayerSession.registerLocalFileURLProvider(localFileURLProvider)
+        MEGAVideoPlayer.DependencyInjection.localFileURLProvider = localFileURLProvider
+    }
+
+    /// Looks up the on-device copy of a node, so media the user has already downloaded plays from
+    /// that file instead of being streamed back
+    private static func localFileURLProvider() -> @Sendable (any PlayableNode) -> URL? {
         let offlineInfoRepository = OfflineInfoRepository()
-        MEGAAudioPlayerSession.registerLocalFileURLProvider { node in
+        return { node in
             guard let megaNode = (node as? MEGANode) ?? MEGASdk.shared.node(forHandle: node.handle),
                   offlineInfoRepository.isNodeAvailableOffline(megaNode),
                   let url = offlineInfoRepository.offlineFileURL(for: megaNode),

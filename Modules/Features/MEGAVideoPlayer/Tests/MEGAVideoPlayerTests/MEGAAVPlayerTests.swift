@@ -94,6 +94,67 @@ struct MEGAAVPlayerTests {
         #expect(sut.nodeName == node1.name)
     }
 
+    // MARK: - Local file playback
+
+    @Test
+    func loadNode_whenNodeHasLocalCopy_shouldPlayItWithoutStreaming() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let localFile = URL(fileURLWithPath: "/tmp/v1.mp4")
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in localFile })
+
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        #expect(streamingUseCase.startStreamingCallCount == 0)
+        #expect(streamingUseCase.streamingLinkCallCount == 0)
+    }
+
+    @Test
+    func loadNode_whenNodeHasNoLocalCopy_shouldStartStreamingServerAndAskForALink() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in nil })
+
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        #expect(streamingUseCase.startStreamingCallCount == 1)
+        #expect(streamingUseCase.streamingLinkCallCount == 1)
+    }
+
+    @Test
+    func loadNode_whenNodeHasNoLocalCopyAndServerAlreadyRunning_shouldNotStartItAgain() async {
+        let streamingUseCase = MockStreamingUseCase()
+        streamingUseCase.isStreaming = true
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in nil })
+
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        #expect(streamingUseCase.startStreamingCallCount == 0)
+        #expect(streamingUseCase.streamingLinkCallCount == 1)
+    }
+
+    @Test
+    func loadNode_whenNodeHasNoLocalCopyAndNoStreamingLink_shouldReportError() async {
+        let streamingUseCase = MockStreamingUseCase()
+        streamingUseCase.streamingLink = nil
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in nil })
+
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        #expect(sut.state == .error("Failed to get streaming link for node"))
+    }
+
+    @Test
+    func replayCurrentNode_whenNodeHasLocalCopy_shouldReplayItWithoutStreaming() async {
+        let streamingUseCase = MockStreamingUseCase()
+        let localFile = URL(fileURLWithPath: "/tmp/v1.mp4")
+        let sut = makeSUT(streamingUseCase: streamingUseCase, localFileURL: { _ in localFile })
+        sut.loadNodeAndMonitorUpdate(for: MockPlayableNode(name: "v1.mp4"), monitor: [MockPlayableNode]())
+
+        sut.replayCurrentNode()
+
+        #expect(streamingUseCase.startStreamingCallCount == 0)
+        #expect(streamingUseCase.streamingLinkCallCount == 0)
+    }
+
     // MARK: - Helper
 
     @Test
@@ -146,6 +207,7 @@ struct MEGAAVPlayerTests {
 
     private func makeSUT(
         streamingUseCase: some StreamingUseCaseProtocol = MockStreamingUseCase(),
+        localFileURL: @escaping @Sendable (any PlayableNode) -> URL? = { _ in nil },
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase(),
         videoNodesUseCase: some VideoNodesUseCaseProtocol =
             MockVideoNodesUseCase(),
@@ -153,6 +215,7 @@ struct MEGAAVPlayerTests {
     ) -> MEGAAVPlayer {
         return MEGAAVPlayer(
             streamingUseCase: streamingUseCase,
+            localFileURL: localFileURL,
             notificationCenter: .default,
             resumePlaybackPositionUseCase: resumePlaybackPositionUseCase,
             videoNodesUseCase: videoNodesUseCase,

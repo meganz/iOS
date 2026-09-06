@@ -5,6 +5,7 @@ public final class MockStreamingUseCase: StreamingUseCaseProtocol, @unchecked Se
     public var startStreamingCallCount = 0
     public var stopStreamingCallCount = 0
     public var streamingLink: URL? = URL(string: "test_URL")
+    public var streamingLinkCallCount = 0
     public var updateThrottleBitrateCalls: [(totalBitrate: Float, playbackRate: Float)] = []
     public var resetThrottleBitrateCallCount = 0
 
@@ -27,7 +28,8 @@ public final class MockStreamingUseCase: StreamingUseCaseProtocol, @unchecked Se
     }
 
     public func streamingLink(for node: any PlayableNode) -> URL? {
-        streamingLink
+        streamingLinkCallCount += 1
+        return streamingLink
     }
 
     @discardableResult
