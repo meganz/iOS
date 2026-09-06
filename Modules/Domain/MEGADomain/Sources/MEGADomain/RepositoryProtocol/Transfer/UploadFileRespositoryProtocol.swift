@@ -73,6 +73,21 @@ public protocol UploadFileRepositoryProtocol: Sendable {
     /// - Throws: An error if the upload fails.
     func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent>
     
+    /// Uploads a batch of files and folders and reports the state of that batch.
+    ///
+    /// The mirror of `DownloadFileRepositoryProtocol.download(batch:)` and, until the SDK gains a
+    /// batch upload of its own, the stand-in for one: the events of the batch's items are folded
+    /// here into the events of a single transfer, so that a caller reads an upload batch exactly
+    /// as it reads a download one: folder updates that count the whole batch, and a
+    /// transferring-files stage reached once every item of it has started.
+    ///
+    /// - Parameter batch: Every root of the batch, each with its own parent folder.
+    /// - Returns: The batch's transfer events. Asking for the sequence is what starts the batch.
+    ///   A batch that got nowhere ends the sequence with the error that stopped it, rather than
+    ///   reporting the failure as an event, which is what `CancellableTransferStateMapper` reads
+    ///   as the batch having failed.
+    func upload(batch: [UploadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error>
+
     /// Cancels a specified transfer.
     ///
     /// - Parameter transfer: The transfer entity to cancel.

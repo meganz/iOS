@@ -104,6 +104,11 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         }
     }
 
+    /// Will be implemented in next MRs
+    public func download(batch: [DownloadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+    }
+    
     private func fileCount(of node: MEGANode) async -> Int {
         // Whichever SDK the node came from, since only that one has it in its tree — see `megaNode(for:)`.
         await withAsyncValue { completion in

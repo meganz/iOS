@@ -111,11 +111,22 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
             cancellableTransferUseCase: makeCancellableTransferUseCase(),
             overDiskQuotaChecker: makeOverDiskQuotaChecker(),
             transfers: transfers,
-            transferType: transferType)
+            transferType: transferType
+        )
     }
 
     private func makeCancellableTransferUseCase() -> any CancellableTransferUseCaseProtocol {
-        CancellableTransferUseCase()
+        switch transferType {
+        case .download, .downloadChat, .downloadFileLink:
+            CancellableDownloadTransferUseCase(
+                downloadFileRepository: DownloadFileRepository.newRepo,
+                fileSystemRepository: FileSystemRepository.sharedRepo
+            )
+        case .upload:
+            CancellableUploadTransferUseCase(
+                uploadFileRepository: UploadFileRepository(sdk: MEGASdk.shared)
+            )
+        }
     }
     
     private func makeOverDiskQuotaChecker() -> some OverDiskQuotaChecking {

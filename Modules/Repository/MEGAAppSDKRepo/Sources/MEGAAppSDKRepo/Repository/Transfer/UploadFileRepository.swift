@@ -81,6 +81,13 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
         }
     }
     
+    // MARK: - Batch upload
+
+    /// Will be implemented in next MRs
+    public func upload(batch: [UploadBatchItemEntity]) -> AnyAsyncThrowingSequence<TransferEventEntity, any Error> {
+        EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence()
+    }
+    
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
         let stream = AsyncThrowingStream<FileUploadEvent, any Error> { continuation in
             let start: (TransferEntity) -> Void = { transferEntity in

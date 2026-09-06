@@ -13,13 +13,3 @@ public protocol CancellableTransferUseCaseProtocol: Sendable {
     /// Cancels the transfers started by this instance.
     func cancel()
 }
-
-public struct CancellableTransferUseCase: CancellableTransferUseCaseProtocol {
-    public init() {}
-    
-    public func start(transfers: [CancellableTransferEntity]) -> AnyAsyncSequence<CancellableTransferStateEntity> {
-        EmptyAsyncSequence().eraseToAnyAsyncSequence()
-    }
-    
-    public func cancel() {}
-}
