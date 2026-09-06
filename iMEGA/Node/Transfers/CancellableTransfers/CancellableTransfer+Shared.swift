@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAL10n
+import UIKit
 
 /// The outcome of a download transfer so listeners can react to it.
 /// Currently we only handle `.transferQueued` and `.saved`.
@@ -44,4 +45,24 @@ enum Command: Equatable, CommandType {
     case creatingFolders(createdFolders: UInt, totalFolders: UInt)
     case transferring
     case cancelling
+}
+
+/// Alias for `Command`, so the constraints below can name it without shadowing
+/// `ViewModelType.Command`.
+typealias CancellableTransferViewCommand = Command
+
+/// Shape shared by every view model driving `CancellableTransferControllerWrapper`.
+///
+/// Pinning `Action` and `Command` lets the wrapper dispatch and receive them directly,
+/// instead of casting through `ViewModelType`'s associated types.
+protocol CancellableTransferViewModelProtocol: ViewModelType
+where Action == CancellableTransferViewAction, Command == CancellableTransferViewCommand {}
+
+/// View-model-agnostic face of `CancellableTransferControllerWrapper`, so a router can hold
+/// a wrapper without naming the concrete view model type it was built with.
+@MainActor
+protocol CancellableTransferControllerWrapping {
+    func createViewController() -> UIViewController
+    func viewIsReady()
+    func cancelAlertController() -> UIAlertController
 }

@@ -43,7 +43,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     private(set) var transferType: CancellableTransferType
     private(set) var isFolderLink: Bool
     private let preresolvedNodes: [HandleEntity: MEGANode]
-    private var wrapper: CancellableTransferControllerWrapper<CancellableTransferViewModel>?
+    private var wrapper: (any CancellableTransferControllerWrapping)?
     private weak var presentedAlert: UIAlertController?
     var onDownloadCompleted: (@MainActor (CancellableDownloadOutcome) -> Void)?
 
@@ -69,16 +69,25 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdk.shared
-        let nodeRepository = NodeRepository.newRepo
-        let fileSystemRepository = FileSystemRepository.sharedRepo
-        let overDiskQuotaChecker = OverDiskQuotaChecker(
+        let wrapper = CancellableTransferControllerWrapper(viewModel: makeViewModel())
+        self.wrapper = wrapper
+        return wrapper.createViewController()
+    }
+    
+    private func makeOverDiskQuotaChecker() -> some OverDiskQuotaChecking {
+        OverDiskQuotaChecker(
             accountStorageUseCase: AccountStorageUseCase(
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: PreferenceUseCase.default),
             appDelegateRouter: AppDelegateRouter())
+    }
+    
+    private func makeViewModel() -> CancellableTransferViewModel {
+        let sdk = MEGASdk.shared
+        let nodeRepository = NodeRepository.newRepo
+        let fileSystemRepository = FileSystemRepository.sharedRepo
         
-        let viewModel = CancellableTransferViewModel(
+        return CancellableTransferViewModel(
             router: self,
             uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo),
             downloadNodeUseCase: DownloadNodeUseCase(
@@ -95,13 +104,9 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 downloadChatRepository: DownloadChatRepository.newRepo), 
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
-            overDiskQuotaChecker: overDiskQuotaChecker,
+            overDiskQuotaChecker: makeOverDiskQuotaChecker(),
             transfers: transfers,
             transferType: transferType)
-        
-        let wrapper = CancellableTransferControllerWrapper(viewModel: viewModel)
-        self.wrapper = wrapper
-        return wrapper.createViewController()
     }
     
     @objc func start() {

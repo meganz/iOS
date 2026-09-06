@@ -9,7 +9,7 @@ protocol TransferWidgetRouting: Routing {
 }
 
 @MainActor
-final class CancellableTransferViewModel: ViewModelType, Sendable {
+final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, Sendable {
     typealias routingProtocols = CancellableTransferRouting & TransferWidgetRouting
 
     private let uploadFileUseCase: any UploadFileUseCaseProtocol

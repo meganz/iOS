@@ -3,7 +3,7 @@ import MEGAL10n
 import UIKit
 
 @MainActor
-final class CancellableTransferControllerWrapper<U: ViewModelType>: NSObject {
+final class CancellableTransferControllerWrapper<U: CancellableTransferViewModelProtocol>: NSObject, CancellableTransferControllerWrapping {
     private var viewModel: U
     private var cancelTransferAlertController = UIAlertController(
         title: Strings.Localizable.Transfers.Cancellable.scanning,
@@ -20,18 +20,16 @@ final class CancellableTransferControllerWrapper<U: ViewModelType>: NSObject {
     }
 
     func viewIsReady() {
-        guard let onViewReady = CancellableTransferViewAction.onViewReady as? U.Action else { return }
-        viewModel.dispatch(onViewReady)
+        viewModel.dispatch(.onViewReady)
     }
     
     private func createAlertController() -> UIAlertController {
         viewModel.invokeCommand = { [weak self] in
-            guard let command = $0 as? Command else { return }
-            self?.executeCommand(command)
+            self?.executeCommand($0)
         }
 
         cancelTransferAlertController.addAction(UIAlertAction(title: Strings.Localizable.Transfers.Cancellable.cancel, style: .cancel) { _ in
-            self.viewModel.dispatch(CancellableTransferViewAction.didTapCancelButton as! U.Action)
+            self.viewModel.dispatch(.didTapCancelButton)
         })
 
         return cancelTransferAlertController

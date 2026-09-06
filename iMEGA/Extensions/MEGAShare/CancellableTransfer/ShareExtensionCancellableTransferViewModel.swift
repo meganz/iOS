@@ -3,7 +3,7 @@ import MEGADomain
 import MEGAL10n
 
 @MainActor
-final class ShareExtensionCancellableTransferViewModel: ViewModelType {
+final class ShareExtensionCancellableTransferViewModel: CancellableTransferViewModelProtocol {
     
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     
