@@ -11,14 +11,12 @@ import MEGASwift
 public struct StreamingTransferQuotaStateProvider: TransferQuotaStateProviding {
     private let eventUpdates: @Sendable () -> AnyAsyncSequence<EventEntity>
 
-    public init() {
-        self.init {
-            merge(
-                MEGAUpdateHandlerManager.shared.eventUpdates,
-                MEGAUpdateHandlerManager.sharedFolderLink.eventUpdates
-            )
-            .eraseToAnyAsyncSequence()
-        }
+    public static let shared = StreamingTransferQuotaStateProvider {
+        merge(
+            MEGAUpdateHandlerManager.shared.eventUpdates,
+            MEGAUpdateHandlerManager.sharedFolderLink.eventUpdates
+        )
+        .eraseToAnyAsyncSequence()
     }
 
     init(eventUpdates: @escaping @Sendable () -> AnyAsyncSequence<EventEntity>) {

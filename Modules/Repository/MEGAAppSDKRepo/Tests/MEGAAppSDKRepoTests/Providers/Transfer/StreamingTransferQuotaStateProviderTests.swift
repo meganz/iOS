@@ -109,11 +109,11 @@ struct StreamingTransferQuotaStateProviderTests {
         #expect(await provider.states.collectAll() == [.red])
     }
 
-    // MARK: - Default instance
+    // MARK: - Shared instance
 
-    @Test("The default provider merges both SDK instances and tears down cleanly")
-    func defaultProviderMergesBothSDKInstances() async {
-        let sut = StreamingTransferQuotaStateProvider()
+    @Test("The shared provider merges both SDK instances and tears down cleanly")
+    func sharedProviderMergesBothSDKInstances() async {
+        let sut = StreamingTransferQuotaStateProvider.shared
 
         let subscription = Task {
             for await _ in sut.states { }

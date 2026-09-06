@@ -290,4 +290,36 @@ struct DailyDialogAllowanceTests {
             ])
         }
     }
+
+    /// Pins the product wiring of the two transfer triggers, and above all that they are two budgets:
+    /// a warning raised by a download must not silence the one a stream would raise, or the reverse.
+    @Suite("Transfer almost-full allowances")
+    struct TransferAlmostFullAllowanceTests {
+        @Test("The download prediction draws on its own keys and allows one a day")
+        func limitedDownload() {
+            let sut = DailyDialogAllowance.transferAlmostFullLimitedDownload
+
+            #expect(sut.shownCountKey == .transferAlmostFullLimitedDownloadDialogShownCount)
+            #expect(sut.lastShownDateKey == .transferAlmostFullLimitedDownloadDialogLastShownDate)
+            #expect(sut.dailyLimit == 1)
+        }
+
+        @Test("Streaming draws on its own keys and allows one a day")
+        func limitedStreaming() {
+            let sut = DailyDialogAllowance.transferAlmostFullLimitedStreaming
+
+            #expect(sut.shownCountKey == .transferAlmostFullLimitedStreamingDialogShownCount)
+            #expect(sut.lastShownDateKey == .transferAlmostFullLimitedStreamingDialogLastShownDate)
+            #expect(sut.dailyLimit == 1)
+        }
+
+        @Test("Download and streaming keep separate budgets")
+        func budgetsAreSeparate() {
+            let download = DailyDialogAllowance.transferAlmostFullLimitedDownload
+            let streaming = DailyDialogAllowance.transferAlmostFullLimitedStreaming
+
+            #expect(download.shownCountKey != streaming.shownCountKey)
+            #expect(download.lastShownDateKey != streaming.lastShownDateKey)
+        }
+    }
 }

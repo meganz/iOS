@@ -102,3 +102,24 @@ extension DailyDialogAllowance {
         [.storageAlmostFullOnAppOpen, .storageAlmostFullAfterUpload]
     }
 }
+
+// MARK: - Transfer almost-full allowances
+extension DailyDialogAllowance {
+    /// Spent when the almost-full transfer dialog is shown for a download
+    static var transferAlmostFullLimitedDownload: DailyDialogAllowance {
+        DailyDialogAllowance(
+            shownCountKey: .transferAlmostFullLimitedDownloadDialogShownCount,
+            lastShownDateKey: .transferAlmostFullLimitedDownloadDialogLastShownDate,
+            dailyLimit: 1
+        )
+    }
+
+    /// Spent when the almost-full transfer dialog is shown for a streaming
+    static var transferAlmostFullLimitedStreaming: DailyDialogAllowance {
+        DailyDialogAllowance(
+            shownCountKey: .transferAlmostFullLimitedStreamingDialogShownCount,
+            lastShownDateKey: .transferAlmostFullLimitedStreamingDialogLastShownDate,
+            dailyLimit: 1
+        )
+    }
+}
