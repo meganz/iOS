@@ -524,10 +524,15 @@ extension AppDelegate {
         // filters by level, so the hooks must forward regardless of the logs setting to
         // preserve the behaviour MEGARepo code had when it called MEGALog* directly.
         setupRepoLogging()
+        registerLoggers()
         let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appEnvironment: AppEnvironmentUseCase.shared)
         if logUseCase.shouldEnableLogs() {
             enableLogs()
         }
+    }
+
+    private func registerLoggers() {
+        MEGALog.register(loggers: [MEGASdkLogger()])
     }
 
     private func setupRepoLogging() {
