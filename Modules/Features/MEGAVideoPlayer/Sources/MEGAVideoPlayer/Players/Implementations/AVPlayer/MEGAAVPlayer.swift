@@ -52,6 +52,7 @@ public final class MEGAAVPlayer {
     private var throttleConfigurationTask: Task<Void, Never>?
 
     private let streamingUseCase: any StreamingUseCaseProtocol
+    private let localFileURL: @Sendable (any PlayableNode) -> URL?
     private let notificationCenter: NotificationCenter
     private let resumePlaybackPositionUseCase: any ResumePlaybackPositionUseCaseProtocol
     private let videoNodesUseCase: any VideoNodesUseCaseProtocol
@@ -59,12 +60,14 @@ public final class MEGAAVPlayer {
 
     public init(
         streamingUseCase: some StreamingUseCaseProtocol,
+        localFileURL: @escaping @Sendable (any PlayableNode) -> URL? = DependencyInjection.localFileURLProvider,
         notificationCenter: NotificationCenter,
         resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol,
         videoNodesUseCase: some VideoNodesUseCaseProtocol,
         videoPlaybackLoopUseCase: some VideoPlaybackLoopUseCaseProtocol
     ) {
         self.streamingUseCase = streamingUseCase
+        self.localFileURL = localFileURL
         self.notificationCenter = notificationCenter
         self.resumePlaybackPositionUseCase = resumePlaybackPositionUseCase
         self.videoNodesUseCase = videoNodesUseCase
@@ -302,11 +305,13 @@ extension MEGAAVPlayer: NodeLoadable {
     }
 
     private func playNode(_ node: some PlayableNode) {
-        if !streamingUseCase.isStreaming {
+        let localURL = localFileURL(node)
+
+        if localURL == nil, !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
 
-        guard let url = streamingUseCase.streamingLink(for: node) else {
+        guard let url = localURL ?? streamingUseCase.streamingLink(for: node) else {
             let errorMessage = "Failed to get streaming link for node"
             state = .error(errorMessage)
             playbackDebugMessage(errorMessage)
@@ -316,8 +321,7 @@ extension MEGAAVPlayer: NodeLoadable {
         currentTime = .seconds(-1)
         duration = .seconds(-1)
         currentURL = url
-        let itemURL = player.isExternalPlaybackActive ? url.updatedURLWithCurrentAddress() : url
-        let playerItem = AVPlayerItem(url: itemURL)
+        let playerItem = AVPlayerItem(url: itemURL(for: url))
         player.replaceCurrentItem(with: playerItem)
 
         observe(for: playerItem)
@@ -341,11 +345,13 @@ extension MEGAAVPlayer: NodeLoadable {
 
         let replayPosition = TimeInterval(currentTime.components.seconds)
 
-        if !streamingUseCase.isStreaming {
+        let localURL = localFileURL(node)
+
+        if localURL == nil, !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
 
-        guard let url = streamingUseCase.streamingLink(for: node) else {
+        guard let url = localURL ?? streamingUseCase.streamingLink(for: node) else {
             let errorMessage = "Failed to get streaming link for node"
             state = .error(errorMessage)
             playbackDebugMessage(errorMessage)
@@ -353,8 +359,7 @@ extension MEGAAVPlayer: NodeLoadable {
         }
         state = .opening
         currentURL = url
-        let itemURL = player.isExternalPlaybackActive ? url.updatedURLWithCurrentAddress() : url
-        let playerItem = AVPlayerItem(url: itemURL)
+        let playerItem = AVPlayerItem(url: itemURL(for: url))
         player.replaceCurrentItem(with: playerItem)
 
         observe(for: playerItem)
@@ -364,6 +369,15 @@ extension MEGAAVPlayer: NodeLoadable {
         }
 
         play()
+    }
+
+    private var isPlayingLocalFile: Bool {
+        currentURL?.isFileURL == true
+    }
+
+    private func itemURL(for url: URL) -> URL {
+        guard player.isExternalPlaybackActive, !url.isFileURL else { return url }
+        return url.updatedURLWithCurrentAddress()
     }
 
     private func monitorVideoNodesUpdate(for nodes: [some PlayableNode]) {
@@ -552,6 +566,8 @@ extension MEGAAVPlayer {
     private func configureThrottleBitrate(for playerItem: AVPlayerItem) {
         throttleConfigurationTask?.cancel()
 
+        guard !isPlayingLocalFile else { return }
+
         let asset = playerItem.asset
 
         throttleConfigurationTask = Task { [weak self] in
@@ -700,6 +716,12 @@ extension MEGAAVPlayer: ExternalPlaybackObservable {
                 guard state.old != state.new else { return }
                 guard let self else { return }
                 playbackDebugMessage("External playback active: \(state.new)")
+
+                guard !isPlayingLocalFile else {
+                    updateExternalPlaybackState(activated: state.new)
+                    return
+                }
+
                 let isPlaying = player.rate > 0
                 player.pause()
                 DispatchQueue.main.async { [weak self] in

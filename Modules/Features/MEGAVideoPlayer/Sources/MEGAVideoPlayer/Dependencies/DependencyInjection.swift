@@ -1,7 +1,9 @@
+import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
+import MEGASwift
 
 public enum DependencyInjection {
     public static var streamingUseCase: some StreamingUseCaseProtocol {
@@ -9,6 +11,15 @@ public enum DependencyInjection {
             repository: StreamingRepository.newRepo
         )
     }
+
+    public static var localFileURLProvider: @Sendable (any PlayableNode) -> URL? {
+        get { localFileURLProviderStorage.wrappedValue }
+        set { localFileURLProviderStorage.mutate { $0 = newValue } }
+    }
+
+    private static let localFileURLProviderStorage = Atomic<@Sendable (any PlayableNode) -> URL?>(
+        wrappedValue: { _ in nil }
+    )
 
     public static var playbackReporter: some PlaybackReporting {
         MEGALogPlaybackReporter()
