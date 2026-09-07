@@ -185,6 +185,8 @@ static NSString *kPath = @"kPath";
         return;
     }
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     [self.offline itemTapped:cell.nameLabel.text atIndexPath:indexPath];
 }
