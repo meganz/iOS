@@ -6,7 +6,12 @@ import UIKit
 
 @MainActor
 public final class MEGAAVPlayer {
-    private let player = AVPlayer()
+    private let player: AVPlayer = {
+        let player = AVPlayer()
+        /// Kept playing once the app is off screen
+        player.audiovisualBackgroundPlaybackPolicy = .continuesIfPossible
+        return player
+    }()
     private var playerLayer: AVPlayerLayer?
     public var currentNode: (any PlayableNode)?
     private var nodes: [any PlayableNode]?
