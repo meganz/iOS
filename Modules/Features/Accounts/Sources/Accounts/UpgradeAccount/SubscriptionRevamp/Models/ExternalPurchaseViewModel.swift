@@ -67,6 +67,9 @@ final class ExternalPurchaseViewModel: ObservableObject, PlanPurchaseAlertPresen
             presentedAlert = .websitePurchaseFailed
         case .cancelled:
             isPurchasing = false
+        case .promotionalOfferUnavailable:
+            // no-opt, this outcome is not reachable with external-purchase flow
+            break
         }
     }
 }

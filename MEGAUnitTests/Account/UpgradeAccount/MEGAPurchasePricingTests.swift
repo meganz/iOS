@@ -1,6 +1,7 @@
+@testable import MEGA
 import MEGAAppSDKRepoMock
 import MEGADomainMock
-@testable import MEGA
+import MEGARepo
 import StoreKit
 import Testing
 
@@ -107,66 +108,166 @@ struct MEGAPurchasePricingTests {
         #expect(sut.mobileOffer(for: MockSKProduct(identifier: "pro1.oneMonth"))?.iosSignature?.offerId == "promo-1")
     }
 
-    // MARK: - refreshPricing(forProduct:)
-
-    /// A signature is only valid for about a day, so a product carrying one is always re-signed before it
-    /// reaches the payment queue.
-    @Test("refreshes the pricing before purchasing a product that carries a promotional offer")
-    func refreshPricing_forAPromotionalOffer_refreshesAndSucceeds() async {
+    /// The expiry is what stops a lapsed campaign from being applied later, so it has to survive the lookup.
+    @Test("reads the expiry of an offer that carries one")
+    func mobileOffer_forAnOfferWithAnExpiry_readsItsExpiryDate() {
         let sut = makeSUT(pricingProducts: [
-            MockPricingProduct(iOSID: "pro1.oneMonth", mobileOffer: MockMobileOffer(id: "black-friday", iosSignature: MockMobileOfferIosSignature()))
+            MockPricingProduct(
+                iOSID: "pro1.oneMonth",
+                mobileOffer: MockMobileOffer(id: "black-friday", expiryTimestamp: 1_700_000_000)
+            )
         ])
-        let requester = MockPricingRequester()
 
-        let refreshed = await sut.refreshPricing(forProduct: MockSKProduct(identifier: "pro1.oneMonth"), requester: requester)
+        let expiryDate = sut.mobileOffer(for: MockSKProduct(identifier: "pro1.oneMonth"))?.expiryDate
 
-        #expect(refreshed)
-        #expect(requester.refreshPricingCalled == 1)
+        #expect(expiryDate == Date(timeIntervalSince1970: 1_700_000_000))
     }
 
-    /// Reporting the failure is what makes the caller fall back to purchasing without the discount rather
-    /// than sending StoreKit a signature that may no longer be valid.
-    @Test("reports a failed refresh")
-    func refreshPricing_whenTheRefreshFails_reportsIt() async {
+    @Test("reads no expiry for an offer that carries none")
+    func mobileOffer_forAnOfferWithoutAnExpiry_isNil() {
         let sut = makeSUT(pricingProducts: [
-            MockPricingProduct(iOSID: "pro1.oneMonth", mobileOffer: MockMobileOffer(id: "black-friday", iosSignature: MockMobileOfferIosSignature()))
+            MockPricingProduct(iOSID: "pro1.oneMonth", mobileOffer: MockMobileOffer(id: "black-friday"))
         ])
-        let requester = MockPricingRequester(result: .failure(CancellationError()))
 
-        let refreshed = await sut.refreshPricing(forProduct: MockSKProduct(identifier: "pro1.oneMonth"), requester: requester)
-
-        #expect(refreshed == false)
-        #expect(requester.refreshPricingCalled == 1)
+        #expect(sut.mobileOffer(for: MockSKProduct(identifier: "pro1.oneMonth"))?.expiryDate == nil)
     }
+}
 
-    /// Nothing needs re-signing here, so spending a pricing request before every ordinary purchase would
-    /// only delay the payment sheet.
-    @Test("purchases without a refresh when the product carries no promotional offer")
-    func refreshPricing_withoutAPromotionalOffer_doesNotRefresh() async {
-        let sut = makeSUT(pricingProducts: [
-            MockPricingProduct(iOSID: "pro1.oneMonth"),
-            MockPricingProduct(iOSID: "pro2.oneMonth", mobileOffer: MockMobileOffer(id: "intro-offer"))
-        ])
-        let requester = MockPricingRequester()
+/// Covers the two decisions `MEGAPurchase` makes before a payment reaches StoreKit: whether a promotional
+/// offer should be attached at all, and what the resolution does when the App Store tells it nothing.
+@Suite("MEGAPurchase promotional offer gate")
+struct MEGAPurchasePromotionalOfferTests {
 
-        // A plan with no offer at all, and a plan whose offer is introductory rather than promotional:
-        // neither carries a signature, so neither has anything to re-sign.
-        let refreshedForPlanWithoutAnOffer = await sut.refreshPricing(forProduct: MockSKProduct(identifier: "pro1.oneMonth"), requester: requester)
-        let refreshedForIntroOffer = await sut.refreshPricing(forProduct: MockSKProduct(identifier: "pro2.oneMonth"), requester: requester)
+    // MARK: - shouldApplyPromotionalOffer(forProduct:eligibility:)
 
-        #expect(refreshedForPlanWithoutAnOffer)
-        #expect(refreshedForIntroOffer)
-        #expect(requester.refreshPricingCalled == 0)
-    }
-
-    @Test("purchases without a refresh when the product is not in the pricing")
-    func refreshPricing_forAProductMissingFromThePricing_doesNotRefresh() async {
+    /// Reading the customer's redeemability walks their whole transaction history, so a product that
+    /// carries no offer must not pay for it.
+    @Test("takes the normal path, without asking StoreKit, for a product carrying no offer")
+    func shouldApplyPromotionalOffer_forAProductWithoutAnOffer_isFalseWithoutAskingStoreKit() async {
         let sut = makeSUT(pricingIdentifiers: ["pro1.oneMonth"])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply == false)
+        #expect(eligibility.canRedeemPromotionalOfferCalled == 0)
+    }
+
+    /// An introductory offer carries no signature, so it must not send the purchase down the promotional
+    /// path where a signature is what gets attached.
+    @Test("takes the normal path for an offer that carries no signature")
+    func shouldApplyPromotionalOffer_forAnUnsignedOffer_isFalse() async {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(iOSID: "pro1.oneMonth", mobileOffer: MockMobileOffer(id: "intro-offer"))
+        ])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply == false)
+        #expect(eligibility.canRedeemPromotionalOfferCalled == 0)
+    }
+
+    @Test("takes the normal path for a product the pricing does not list")
+    func shouldApplyPromotionalOffer_forAProductMissingFromThePricing_isFalse() async {
+        let sut = makeSUT(pricingIdentifiers: ["pro1.oneMonth"])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro3.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply == false)
+        #expect(eligibility.canRedeemPromotionalOfferCalled == 0)
+    }
+
+    /// Only a subscriber whose subscription Apple never revoked can redeem a promotional offer. Everyone
+    /// else was shown the plan's normal price and buys at it, rather than being turned away at checkout.
+    @Test("takes the normal path when the customer cannot redeem a promotional offer")
+    func shouldApplyPromotionalOffer_whenTheCustomerCannotRedeem_isFalse() async {
+        let sut = makeSUT(pricingProducts: [signedOfferProduct])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: false)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply == false)
+        #expect(eligibility.canRedeemPromotionalOfferCalled == 1)
+    }
+
+    @Test("takes the promotional path for a signed offer and a customer who can redeem it")
+    func shouldApplyPromotionalOffer_forASignedOfferAndARedeemingCustomer_isTrue() async {
+        let sut = makeSUT(pricingProducts: [signedOfferProduct])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply)
+        #expect(eligibility.canRedeemPromotionalOfferCalled == 1)
+    }
+
+    /// A lapsed campaign is rejected further in, by the resolution, which abandons the purchase loudly. The
+    /// gate deliberately lets it through rather than quietly charging the full price of a discounted card.
+    @Test("takes the promotional path even for an offer whose campaign has lapsed")
+    func shouldApplyPromotionalOffer_forAnExpiredOffer_isTrue() async {
+        let sut = makeSUT(pricingProducts: [
+            MockPricingProduct(
+                iOSID: "pro1.oneMonth",
+                mobileOffer: MockMobileOffer(
+                    id: "black-friday",
+                    expiryTimestamp: 1,
+                    iosSignature: MockMobileOfferIosSignature()
+                )
+            )
+        ])
+        let eligibility = MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true)
+
+        let shouldApply = await sut.shouldApplyPromotionalOffer(
+            forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+            eligibility: eligibility
+        )
+
+        #expect(shouldApply)
+    }
+
+    // MARK: - promotionalOffer(forProduct:eligibility:subscriptionInfoProvider:requester:)
+
+    /// The lookup swallows its errors, so an unreachable App Store and an unknown product arrive the same
+    /// way. Neither can confirm the advertised discount, so the purchase is abandoned rather than charged
+    /// at full price.
+    @Test("abandons the purchase when the App Store returns no subscription information")
+    func promotionalOffer_withoutSubscriptionInformation_throwsSubscriptionInfoNotAvailable() async {
+        let sut = makeSUT(pricingProducts: [signedOfferProduct])
         let requester = MockPricingRequester()
 
-        let refreshed = await sut.refreshPricing(forProduct: MockSKProduct(identifier: "pro3.oneMonth"), requester: requester)
+        do {
+            _ = try await sut.promotionalOffer(
+                forProduct: MockSKProduct(identifier: "pro1.oneMonth"),
+                eligibility: MockStoreKitSubscriptionEligibility(canRedeemPromotionalOffer: true),
+                subscriptionInfoProvider: MockStoreKitSubscriptionInfoProvider(),
+                requester: requester
+            )
+            Issue.record("Expected the resolution to abandon the purchase")
+        } catch {
+            guard case .subscriptionInfoNotAvailable = error else {
+                Issue.record("Expected .subscriptionInfoNotAvailable, got \(error)")
+                return
+            }
+        }
 
-        #expect(refreshed)
+        // The signature is only re-signed once a promotional offer is still in play.
         #expect(requester.refreshPricingCalled == 0)
     }
 }
@@ -187,5 +288,43 @@ private extension MockSKProduct {
     /// Only the identifier matters to a pricing lookup; the price is there because `SKProduct` has one.
     convenience init(identifier: String) {
         self.init(identifier: identifier, price: "1", priceLocale: Locale(identifier: "en_US"))
+    }
+}
+
+private var signedOfferProduct: MockPricingProduct {
+    MockPricingProduct(
+        iOSID: "pro1.oneMonth",
+        mobileOffer: MockMobileOffer(id: "black-friday", iosSignature: MockMobileOfferIosSignature())
+    )
+}
+
+private final class MockStoreKitSubscriptionEligibility: StoreKitSubscriptionEligibilityChecking, @unchecked Sendable {
+    private let canRedeem: Bool
+    private(set) var canRedeemPromotionalOfferCalled = 0
+
+    init(canRedeemPromotionalOffer: Bool) {
+        canRedeem = canRedeemPromotionalOffer
+    }
+
+    func canRedeemPromotionalOffer() async -> Bool {
+        canRedeemPromotionalOfferCalled += 1
+        return canRedeem
+    }
+
+    func activeSubscriptionGroupIDs() async -> Set<String> { [] }
+
+    func isIntroductoryOfferRedeemable(
+        for subscription: Product.SubscriptionInfo,
+        activeGroupIDs: Set<String>
+    ) async -> Bool {
+        false
+    }
+}
+
+/// `Product.SubscriptionInfo` has no public initialiser, so a stub can only report the App Store saying
+/// nothing. The paths that need a real one stay out of reach until the lookup returns plain values.
+private struct MockStoreKitSubscriptionInfoProvider: StoreKitSubscriptionInfoProviding {
+    func subscriptionInfo(forProductIdentifier productIdentifier: String) async -> Product.SubscriptionInfo? {
+        nil
     }
 }

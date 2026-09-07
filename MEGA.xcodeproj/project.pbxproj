@@ -2195,6 +2195,7 @@
 		BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB93F2803AF5500C21F11 /* SAMKeychain */; };
 		BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9412803AF6000C21F11 /* SAMKeychain */; };
 		BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */; };
+		BF0DB7A12DCC0BBB00869BF4 /* MEGAPurchase+Offers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DB7A02DCC0BBB00869BF4 /* MEGAPurchase+Offers.swift */; };
 		BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */; };
 		BF0DB7912DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */; };
 		BF0FE7512DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */; };
@@ -5103,6 +5104,7 @@
 		BF0BD6072C530748003E608A /* NodeDescriptionCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellController.swift; sourceTree = "<group>"; };
 		BF0BD60C2C5307AD003E608A /* NodeDescriptionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterView.swift; sourceTree = "<group>"; };
 		BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOccurrenceNotification.swift; sourceTree = "<group>"; };
+		BF0DB7A02DCC0BBB00869BF4 /* MEGAPurchase+Offers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Offers.swift"; sourceTree = "<group>"; };
 		BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Pricing.swift"; sourceTree = "<group>"; };
 		BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Delegates.swift"; sourceTree = "<group>"; };
 		BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseHeaderView.swift; sourceTree = "<group>"; };
@@ -11682,6 +11684,7 @@
 			children = (
 				16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */,
 				BF0DB7902DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift */,
+				BF0DB7A02DCC0BBB00869BF4 /* MEGAPurchase+Offers.swift */,
 				BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */,
 				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
 				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
@@ -15580,6 +15583,7 @@
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
 				16886B382E20B67A0096D21D /* MEGAPurchase+CheckCancellation.swift in Sources */,
 				BF0DB7912DCC0BBB00869BF4 /* MEGAPurchase+Delegates.swift in Sources */,
+				BF0DB7A12DCC0BBB00869BF4 /* MEGAPurchase+Offers.swift in Sources */,
 				BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */,
 				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
 				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,

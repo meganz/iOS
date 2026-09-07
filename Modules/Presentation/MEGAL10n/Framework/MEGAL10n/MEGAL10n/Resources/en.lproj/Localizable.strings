@@ -5202,3 +5202,7 @@
 "cameraUploads.timeline.sort.oldestByDateTaken"="Date taken: oldest first";
 /* Message shown in a snackbar on the Transfers screen when the device has no internet connection */
 "transfers.snackbar.pausedAwaitingNetwork"="Transfers paused. Waiting for a network connection";
+/* Alert title shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.title"="Offer unavailable";
+/* Dialog message shown when the promotional offer cannot be resolved at checkout. */
+"account.upgrade.offerUnavailable.message"="This offer isn't available right now. Try again later.";
