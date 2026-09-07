@@ -5143,6 +5143,9 @@ public enum Strings {
         public static let requiresAttention: Swift.String
         public static let uploadingFiles: Swift.String
       }
+      public enum Progress {
+        public static let percentageOfTotal: Swift.String
+      }
       public enum Sharing {
         public static let title: Swift.String
       }

@@ -60,12 +60,12 @@ public struct TransferRowState: Sendable, Equatable {
             let done = Self.byteFormatStyle.format(transferredBytes)
             let total = Self.byteFormatStyle.format(totalBytes)
             let speedText = Self.byteFormatStyle.format(speed)
-            return "\(arrow) \(percent)% · \(done) of \(total) · \(speedText)/s"
+            return "\(arrow) \(percent)% · \(Self.progressText(completedSize: done, totalSize: total)) · \(speedText)/s"
         case .paused:
             let percent = Int((progress * 100).rounded())
             let done = Self.byteFormatStyle.format(transferredBytes)
             let total = Self.byteFormatStyle.format(totalBytes)
-            return "\(arrow) \(percent)% · \(done) of \(total) · Paused"
+            return "\(arrow) \(percent)% · \(Self.progressText(completedSize: done, totalSize: total)) · \(Strings.Localizable.paused)"
         case .queued:
             return "\(arrow) Queued"
         case .failed:
@@ -77,6 +77,16 @@ public struct TransferRowState: Sendable, Equatable {
             guard let finishDate else { return total }
             return "\(total) · \(DateFormatter.dateMediumTimeShort().localisedString(from: finishDate))"
         }
+    }
+
+    static func progressText(
+        localizedFormat: String = Strings.Localizable.Transfer.Progress.percentageOfTotal,
+        completedSize: String,
+        totalSize: String
+    ) -> String {
+        localizedFormat
+            .replacingOccurrences(of: "[A]", with: completedSize)
+            .replacingOccurrences(of: "[B]", with: totalSize)
     }
 
     // MARK: - Accessibility

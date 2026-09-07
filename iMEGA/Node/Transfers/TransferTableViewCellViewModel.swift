@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGARepo
 import MEGASwift
 import UIKit
@@ -69,6 +70,30 @@ import UIKit
     /// and `countLimit` handle cleanup.
     @objc static func evictUploadThumbnail(forPath path: String) {
         thumbnailCache.removeObject(forKey: "ul_\(path)" as NSString)
+    }
+
+    @objc static func percentageCompletedString(
+        for transfer: MEGATransfer,
+        percentage: Float
+    ) -> String {
+        percentageCompletedString(
+            transferEntity: transfer.toTransferEntity(),
+            percentage: percentage
+        )
+    }
+
+    static func percentageCompletedString(
+        transferEntity: TransferEntity,
+        percentage: Float,
+        localizedFormat: String = Strings.Localizable.Transfer.Progress.percentageOfTotal
+    ) -> String {
+        let fileSize = String.memoryStyleString(
+            fromByteCount: Int64(transferEntity.totalBytes)
+        )
+        let percentageString = String(format: "%.f %%", percentage * 100)
+        return localizedFormat
+            .replacingOccurrences(of: "[A]", with: percentageString)
+            .replacingOccurrences(of: "[B]", with: fileSize)
     }
 
     func cancelThumbnailLoading() {

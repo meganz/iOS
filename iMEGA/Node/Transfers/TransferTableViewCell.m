@@ -100,8 +100,9 @@
     }
     
     self.progressView.progress = percentage;
-    NSString *fileSize = [NSString memoryStyleStringFromByteCount:transfer.totalBytes];
-    NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %% of %@ ", percentage  * 100, fileSize];
+    NSString *percentageCompleted = [TransferTableViewCellViewModel percentageCompletedStringFor:transfer percentage:percentage];
+    percentageCompleted = [percentageCompleted stringByAppendingString:@" "];
+
     NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:percentageColor}];
     
     if (transfer.state == MEGATransferStateActive && ![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
