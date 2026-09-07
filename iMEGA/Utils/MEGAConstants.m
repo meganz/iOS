@@ -123,7 +123,6 @@ NSString * const MEGAExtensionsDBExportApplicationSupportMissingEvent = @"ext_db
 NSString * const MEGAExtensionsDBExportAppGroupMissingEvent = @"ext_db_export_app_group_missing";
 NSString * const MEGAExtensionsDBExportGroupDirFailedEvent = @"ext_db_export_group_dir_failed";
 NSString * const MEGAExtensionsDBExportEnumerateFailedEvent = @"ext_db_export_enumerate_failed";
-NSString * const MEGAExtensionsDBExportCopyFailedEvent = @"ext_db_export_copy_failed";
 
 #pragma mark - MEGA Activity Types
 

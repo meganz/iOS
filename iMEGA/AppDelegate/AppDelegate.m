@@ -896,20 +896,24 @@
             [self logSeedExportEvent:MEGAExtensionsDBExportEnumerateFailedEvent error:error];
             return;
         }
+
+        [SeedExportReporter reportMissingTreeDatabaseIfNeededWithApplicationSupportContent:applicationSupportContent];
+
         for (NSString *filename in applicationSupportContent) {
             if ([filename containsString:@"megaclient_statecache"] || [filename containsString:@"karere"]) {
+                NSString *sourcePath = [applicationSupportDirectoryString stringByAppendingPathComponent:filename];
                 NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
                 [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
                 NSError *copyError;
-                if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&copyError]) {
+                if ([fileManager copyItemAtPath:sourcePath toPath:destinationPath error:&copyError]) {
                     MEGALogDebug(@"Copy file %@", filename);
                 } else {
+                    // Only the node (file tree) database is reported; the reporter drops every other file.
                     MEGALogError(@"Copy item at path failed with error: %@", copyError);
-                    [self logSeedExportEvent:MEGAExtensionsDBExportCopyFailedEvent error:copyError];
-                    [self recordSeedExportCopyFailureWithError:copyError
-                                                      filename:filename
-                                                    sourcePath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename]
-                                               destinationPath:destinationPath];
+                    [SeedExportReporter reportCopyFailureWithError:copyError
+                                                         filename:filename
+                                                       sourcePath:sourcePath
+                                                 groupSupportPath:groupSupportPath];
                 }
             }
         }
@@ -923,49 +927,6 @@
         parameters[@"error_domain"] = error.domain ?: @"unknown";
     }
     [FIRAnalytics logEventWithName:eventName parameters:parameters.count > 0 ? parameters : nil];
-}
-
-- (void)recordSeedExportCopyFailureWithError:(NSError *)error
-                                    filename:(NSString *)filename
-                                  sourcePath:(NSString *)sourcePath
-                             destinationPath:(NSString *)destinationPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSMutableDictionary<NSString *, id> *userInfo = [NSMutableDictionary dictionary];
-
-    // Report a fixed file_type rather than the raw filename
-    NSString *fileType = @"unknown";
-    if ([filename containsString:@"megaclient_statecache"]) {
-        fileType = @"statecache";
-    } else if ([filename containsString:@"karere"]) {
-        fileType = @"karere";
-    }
-    userInfo[@"file_type"] = fileType;
-
-    NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
-    if ([underlyingError isKindOfClass:NSError.class]) {
-        userInfo[@"underlying_error_code"] = @(underlyingError.code);
-        userInfo[@"underlying_error_domain"] = underlyingError.domain ?: @"unknown";
-    }
-
-    NSNumber *sourceSize = [fileManager attributesOfItemAtPath:sourcePath error:nil][NSFileSize];
-    if (sourceSize != nil) {
-        userInfo[@"source_size"] = sourceSize;
-    }
-
-    NSNumber *freeSpace = [fileManager attributesOfFileSystemForPath:destinationPath.stringByDeletingLastPathComponent error:nil][NSFileSystemFreeSize];
-    if (freeSpace != nil) {
-        userInfo[@"group_free_space"] = freeSpace;
-    }
-
-    // A destination that still exists after the failed copy points at the pre-copy remove having failed.
-    userInfo[@"destination_exists"] = @([fileManager fileExistsAtPath:destinationPath]);
-
-    // Log the file_type only — never the raw filename or the full source/destination paths, which can be sensitive.
-    [CrashlyticsLogger logWithCategory:LogCategoryAppLifecycle
-                                   msg:[NSString stringWithFormat:@"Extensions DB export copy failed for %@", fileType]
-                                  file:@(__FILENAME__)
-                              function:@(__FUNCTION__)];
-    [[FIRCrashlytics crashlytics] recordError:error userInfo:userInfo];
 }
 
 - (void)presentInviteContactCustomAlertViewController {
