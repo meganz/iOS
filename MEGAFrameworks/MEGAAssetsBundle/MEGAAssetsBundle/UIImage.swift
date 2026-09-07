@@ -431,6 +431,7 @@ public struct MEGAUIImageBundle {
     public static var link01: UIImage { UIImage.link01 }
     public static var linkOff01: UIImage { UIImage.linkOff01 }
     public static var listSmall: UIImage { UIImage.listSmall }
+    public static var listSmallMediumThinSolid: UIImage { UIImage.listSmallMediumThinSolid }
     public static var image04: UIImage { UIImage.image04 }
     public static var messagePlus: UIImage { UIImage.messagePlus }
     public static var moreHorizontal: UIImage { UIImage.moreHorizontal }
@@ -440,6 +441,7 @@ public struct MEGAUIImageBundle {
     public static var photosApp: UIImage { UIImage.photosApp }
     public static var rectangleStackPlus: UIImage { UIImage.rectangleStackPlus }
     public static var squares4: UIImage { UIImage.squares4 }
+    public static var squares9: UIImage { UIImage.squares9 }
     public static var tagSimple: UIImage { UIImage.tagSimple }
     public static var trash: UIImage { UIImage.trash }
     public static var glassCloud: UIImage { UIImage.glassCloud }
@@ -454,6 +456,7 @@ public struct MEGAUIImageBundle {
     public static var glassShareIn: UIImage { UIImage.glassShareIn }
     public static var glassShareOut: UIImage { UIImage.glassShareOut }
     public static var glassLink: UIImage { UIImage.glassLink }
+    public static var glassErrorCircle: UIImage { UIImage.glassErrorCircle }
     public static var heartOutline: UIImage { UIImage.heartOutline }
     public static var linkOff02: UIImage { UIImage.linkOff02 }
     public static var removeShareMono: UIImage { UIImage.removeShareMono }

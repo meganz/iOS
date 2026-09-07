@@ -5208,3 +5208,23 @@
 "account.upgrade.offerUnavailable.title"="Offer unavailable";
 /* Dialog message shown when the promotional offer cannot be resolved at checkout. */
 "account.upgrade.offerUnavailable.message"="This offer isn't available right now. Try again later.";
+/* Header of the table of contents panel in the PDF preview */
+"pdfPreview.contents"="Contents";
+/* Page indicator in the PDF preview. %1$d is the current page number, %2$d is the total page count */
+"pdfPreview.pageOfTotal"="%1$d of %2$d";
+/* Title of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.title"="Can’t preview this file";
+/* Message of the fullscreen error state shown when a file preview cannot be rendered */
+"general.preview.error.message"="Something went wrong loading this preview.";
+/* Button that retries the failed operation */
+"general.button.tryAgain"="Try again";
+/* Title of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.title"="This PDF is damaged";
+/* Message of the alert shown when a PDF cannot be opened because the file is damaged */
+"pdfPreview.damaged.message"="The file is damaged and can’t be opened. If someone else sent it to you, ask them to send a new copy.";
+/* Title of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.title"="Enter password";
+/* Message of the alert asking for the password of a password-protected PDF */
+"pdfPreview.password.message"="This PDF is password protected.";
+/* Validation error shown under the password field when the entered PDF password is wrong */
+"pdfPreview.password.invalid"="Invalid password";

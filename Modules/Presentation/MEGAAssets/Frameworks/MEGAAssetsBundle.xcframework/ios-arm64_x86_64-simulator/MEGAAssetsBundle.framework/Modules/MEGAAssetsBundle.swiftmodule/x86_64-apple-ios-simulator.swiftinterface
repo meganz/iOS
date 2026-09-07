@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.3.1 effective-5.10 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
 // swift-module-flags: -target x86_64-apple-ios17.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.1
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -796,6 +796,9 @@ public struct MEGAImageBundle {
   public static var listSmall: SwiftUICore.Image {
     get
   }
+  public static var listSmallMediumThinSolid: SwiftUICore.Image {
+    get
+  }
   public static var image04: SwiftUICore.Image {
     get
   }
@@ -821,6 +824,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var squares4: SwiftUICore.Image {
+    get
+  }
+  public static var squares9: SwiftUICore.Image {
     get
   }
   public static var tagSimple: SwiftUICore.Image {
@@ -869,6 +875,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var glassClock: SwiftUICore.Image {
+    get
+  }
+  public static var glassErrorCircle: SwiftUICore.Image {
     get
   }
   public static var rotateCcw: SwiftUICore.Image {
@@ -2564,6 +2573,9 @@ public struct MEGAUIImageBundle {
   public static var listSmall: UIKit.UIImage {
     get
   }
+  public static var listSmallMediumThinSolid: UIKit.UIImage {
+    get
+  }
   public static var image04: UIKit.UIImage {
     get
   }
@@ -2589,6 +2601,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var squares4: UIKit.UIImage {
+    get
+  }
+  public static var squares9: UIKit.UIImage {
     get
   }
   public static var tagSimple: UIKit.UIImage {
@@ -2631,6 +2646,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var glassLink: UIKit.UIImage {
+    get
+  }
+  public static var glassErrorCircle: UIKit.UIImage {
     get
   }
   public static var heartOutline: UIKit.UIImage {

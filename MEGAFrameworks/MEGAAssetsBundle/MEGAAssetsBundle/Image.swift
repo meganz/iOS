@@ -260,6 +260,7 @@ public struct MEGAImageBundle {
     public static var link01: Image { Image(.link01) }
     public static var linkOff01: Image { Image(.linkOff01) }
     public static var listSmall: Image { Image(.listSmall) }
+    public static var listSmallMediumThinSolid: Image { Image(.listSmallMediumThinSolid) }
     public static var image04: Image { Image(.image04) }
     public static var messagePlus: Image { Image(.messagePlus) }
     public static var moreHorizontal: Image { Image(.moreHorizontal) }
@@ -269,6 +270,7 @@ public struct MEGAImageBundle {
     public static var photosApp: Image { Image(.photosApp) }
     public static var rectangleStackPlus: Image { Image(.rectangleStackPlus) }
     public static var squares4: Image { Image(.squares4) }
+    public static var squares9: Image { Image(.squares9) }
     public static var tagSimple: Image { Image(.tagSimple) }
     public static var trash: Image { Image(.trash) }
     public static var glassCloud: Image { Image(.glassCloud) }
@@ -285,6 +287,7 @@ public struct MEGAImageBundle {
     public static var glassVideo: Image { Image(.glassVideo) }
     public static var glassNoCloud: Image { Image(.glassNoCloud) }
     public static var glassClock: Image { Image(.glassClock) }
+    public static var glassErrorCircle: Image { Image(.glassErrorCircle) }
     public static var rotateCcw: Image { Image(.rotateCcw) }
     public static var searchSmall: Image { Image(.searchSmall) }
     public static var x: Image { Image(.x) }

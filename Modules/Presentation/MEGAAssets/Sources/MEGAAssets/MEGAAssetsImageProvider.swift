@@ -62,6 +62,7 @@ extension MEGAAssets {
         public static var offlineEmptyState: SwiftUI.Image { MEGAImageBundle.offlineEmptyState }
         public static var filetypeGeneric: SwiftUI.Image { MEGAImageBundle.filetypeGeneric }
         public static var filetypeGenericStack: SwiftUI.Image { MEGAImageBundle.filetypeGenericStack }
+        public static var filetypePdf: SwiftUI.Image { MEGAImageBundle.filetypePdf }
         public static var versioned: SwiftUI.Image { MEGAImageBundle.versioned }
         public static var recentUpload: SwiftUI.Image { MEGAImageBundle.recentUpload }
         public static var standardDisclosureIndicatorDesignToken: SwiftUI.Image { MEGAImageBundle.standardDisclosureIndicatorDesignToken }
@@ -183,6 +184,7 @@ extension MEGAAssets {
         public static var glassPlaylist: SwiftUI.Image { MEGAImageBundle.glassPlaylist }
         public static var splashScreenMEGALogo: SwiftUI.Image { MEGAImageBundle.splashScreenMEGALogo }
         public static var glassSearch: SwiftUI.Image { MEGAImageBundle.glassSearch }
+        public static var glassErrorIcon: SwiftUI.Image { MEGAImageBundle.glassErrorCircle }
         public static var noteToSelf: SwiftUI.Image { MEGAImageBundle.noteToSelf }
         public static var noteToSelfSmall: SwiftUI.Image { MEGAImageBundle.noteToSelfSmall }
         public static var noteToSelfBlue: SwiftUI.Image { MEGAImageBundle.noteToSelfBlue }
@@ -281,6 +283,7 @@ extension MEGAAssets {
         public static var link01: SwiftUI.Image { MEGAImageBundle.link01 }
         public static var linkOff01: SwiftUI.Image { MEGAImageBundle.linkOff01 }
         public static var listSmall: SwiftUI.Image { MEGAImageBundle.listSmall }
+        public static var listSmallMediumThinSolid: SwiftUI.Image { MEGAImageBundle.listSmallMediumThinSolid }
         public static var photoPlaceholder: SwiftUI.Image { MEGAImageBundle.image04 }
         public static var messagePlus: SwiftUI.Image { MEGAImageBundle.messagePlus }
         public static var moreHorizontal: SwiftUI.Image { MEGAImageBundle.moreHorizontal }
@@ -290,6 +293,7 @@ extension MEGAAssets {
         public static var photosApp: SwiftUI.Image { MEGAImageBundle.photosApp }
         public static var rectangleStackPlus: SwiftUI.Image { MEGAImageBundle.rectangleStackPlus }
         public static var squares4: SwiftUI.Image { MEGAImageBundle.squares4 }
+        public static var squares9: SwiftUI.Image { MEGAImageBundle.squares9 }
         public static var tagSimple: SwiftUI.Image { MEGAImageBundle.tagSimple }
         public static var trash: SwiftUI.Image { MEGAImageBundle.trash }
         public static var uploadToCloud: SwiftUI.Image { MEGAImageBundle.uploadToCloud }
@@ -448,6 +452,7 @@ extension MEGAAssets {
         public static var folderChat: UIKit.UIImage { MEGAUIImageBundle.folderChat }
         public static var filetypeFolderCamera: UIKit.UIImage { MEGAUIImageBundle.filetypeFolderCamera }
         public static var filetypeGeneric: UIKit.UIImage { MEGAUIImageBundle.filetypeGeneric }
+        public static var filetypePdf: UIKit.UIImage { MEGAUIImageBundle.filetypePdf }
         public static var folderUsers: UIKit.UIImage { MEGAUIImageBundle.folderUsers }
         public static var filetypeFolder: UIKit.UIImage { MEGAUIImageBundle.filetypeFolder }
         public static var export: UIKit.UIImage { MEGAUIImageBundle.export }
@@ -803,6 +808,7 @@ extension MEGAAssets {
         public static var link01: UIKit.UIImage { MEGAUIImageBundle.link01 }
         public static var linkOff01: UIKit.UIImage { MEGAUIImageBundle.linkOff01 }
         public static var listSmall: UIKit.UIImage { MEGAUIImageBundle.listSmall }
+        public static var listSmallMediumThinSolid: UIKit.UIImage { MEGAUIImageBundle.listSmallMediumThinSolid }
         public static var photoPlaceholder: UIKit.UIImage { MEGAUIImageBundle.image04 }
         public static var messagePlus: UIKit.UIImage { MEGAUIImageBundle.messagePlus }
         public static var moreHorizontal: UIKit.UIImage { MEGAUIImageBundle.moreHorizontal }
@@ -812,6 +818,7 @@ extension MEGAAssets {
         public static var photosApp: UIKit.UIImage { MEGAUIImageBundle.photosApp }
         public static var rectangleStackPlus: UIKit.UIImage { MEGAUIImageBundle.rectangleStackPlus }
         public static var squares4: UIKit.UIImage { MEGAUIImageBundle.squares4 }
+        public static var squares9: UIKit.UIImage { MEGAUIImageBundle.squares9 }
         public static var tagSimple: UIKit.UIImage { MEGAUIImageBundle.tagSimple }
         public static var trash: UIKit.UIImage { MEGAUIImageBundle.trash }
         public static var uploadToCloud: UIKit.UIImage { MEGAUIImageBundle.uploadToCloud }
@@ -827,6 +834,7 @@ extension MEGAAssets {
         public static var glassShareIn: UIKit.UIImage { MEGAUIImageBundle.glassShareIn }
         public static var glassShareOut: UIKit.UIImage { MEGAUIImageBundle.glassShareOut }
         public static var glassLink: UIKit.UIImage { MEGAUIImageBundle.glassLink }
+        public static var glassErrorCircle: UIKit.UIImage { MEGAUIImageBundle.glassErrorCircle }
         public static var heartOutline: UIKit.UIImage { MEGAUIImageBundle.heartOutline }
         public static var linkOff02: UIKit.UIImage { MEGAUIImageBundle.linkOff02 }
         public static var rotateCcw: UIKit.UIImage { MEGAUIImageBundle.rotateCcw }
