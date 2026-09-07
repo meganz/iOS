@@ -11,6 +11,9 @@ extension EnvironmentValues {
     /// see it. The anchored buttons cannot read it themselves: `safeAreaInset` hands its content a region
     /// that already sits above the safe area, so the value there is zero.
     @Entry var folderLinkBottomSafeAreaInset: CGFloat = 0
+
+    /// Whether a mini player is docked below the anchored buttons — likewise invisible from inside the inset.
+    @Entry var folderLinkMiniPlayerDocked: Bool = false
 }
 
 struct FolderLinkAnchoredButtons: View {
@@ -18,6 +21,7 @@ struct FolderLinkAnchoredButtons: View {
     let isDisabled: Bool
 
     @Environment(\.folderLinkBottomSafeAreaInset) private var bottomSafeAreaInset
+    @Environment(\.folderLinkMiniPlayerDocked) private var isMiniPlayerDocked
 
     var body: some View {
         MEGABottomAnchoredButtons(
@@ -46,9 +50,12 @@ struct FolderLinkAnchoredButtons: View {
         .background(TokenColors.Background.page.swiftUI.ignoresSafeArea(edges: .bottom))
         // The design anchors the row to the bottom edge of the screen, with the component's own padding
         // as the only gap, while `safeAreaInset` places it above the home indicator strip and stacks that
-        // padding on top. Cancelling the inset drops the row back down by exactly that strip. Only the
-        // device inset is cancelled, so a docked mini player still pushes the row up above itself.
-        .padding(.bottom, -bottomSafeAreaInset)
+        // padding on top. Cancelling the inset drops the row back down by exactly that strip.
+        .padding(.bottom, bottomPadding)
+    }
+
+    private var bottomPadding: CGFloat {
+        isMiniPlayerDocked ? 0 : -bottomSafeAreaInset
     }
 
     private var buttonState: MEGAButtonState {

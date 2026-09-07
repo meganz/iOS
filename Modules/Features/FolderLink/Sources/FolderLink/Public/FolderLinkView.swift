@@ -60,6 +60,9 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     /// Read here rather than where it is used because this is the last place that still sees it — see
     /// `EnvironmentValues.folderLinkBottomSafeAreaInset`.
     @State private var bottomSafeAreaInset: CGFloat = 0
+
+    /// How tall the docked mini player is right now
+    @State private var miniPlayerHeight: CGFloat = 0
     
     private let dependency: Dependency
     @ViewBuilder let linkUnavailableContent: (LinkUnavailableReason) -> LinkUnavailable
@@ -107,6 +110,7 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
             }
         }
         .environment(\.folderLinkBottomSafeAreaInset, bottomSafeAreaInset)
+        .environment(\.folderLinkMiniPlayerDocked, miniPlayerHeight > 0)
         .environment(\.networkConnected, viewModel.isNetworkConnected)
         .task {
             await viewModel.onAppear()
@@ -294,6 +298,15 @@ public struct FolderLinkView<LinkUnavailable, MediaDiscovery, MiniPlayer>: View 
     /// to nothing, so the inset costs nothing when no audio is playing.
     private var miniPlayerView: some View {
         miniPlayerContent(miniPlayerViewModel)
+            .background {
+                GeometryReader { proxy in
+                    Color.clear
+                        .onAppear { miniPlayerHeight = proxy.size.height }
+                        .onChange(of: proxy.size.height) { _, height in
+                            miniPlayerHeight = height
+                        }
+                }
+            }
     }
     
     private func folderLinkResultsDependency<DismissButton>(
