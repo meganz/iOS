@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
 import MEGASwift
+import StoreKit
 
 final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol, Sendable {
 
@@ -78,6 +79,13 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
     func purchasePlan(productIdentifier: String) async {
         guard let products = purchase.products as? [SKProduct],
               let productPlan = products.first(where: { $0.productIdentifier == productIdentifier }) else {
+            MEGALogError("[StoreKit] Product \"\(productIdentifier)\" is not in the loaded catalogue, cannot purchase it")
+            purchasePlanResultSourcePublisher.send(
+                .failure(AccountPlanErrorEntity(
+                    errorCode: SKError.Code.storeProductNotAvailable.rawValue,
+                    errorMessage: "The product is not in the loaded catalogue"
+                ))
+            )
             return
         }
         purchase.purchaseProduct(productPlan)

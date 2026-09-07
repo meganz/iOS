@@ -19,6 +19,12 @@ private struct PlanPurchaseAlertModifier<ViewModel: PlanPurchaseAlertPresenting>
                 message: Text(Strings.Localizable.failedPurchaseMessage),
                 dismissButton: .default(Text(Strings.Localizable.ok))
             )
+        case .promotionalOfferUnavailable:
+            Alert(
+                title: Text(Strings.Localizable.Account.Upgrade.OfferUnavailable.title),
+                message: Text(Strings.Localizable.Account.Upgrade.OfferUnavailable.message),
+                dismissButton: .default(Text(Strings.Localizable.ok))
+            )
         case .websitePurchaseFailed:
             Alert(
                 title: Text(Strings.Localizable.somethingWentWrong),

@@ -54,6 +54,9 @@ public final class PlanPurchaseViewModel: ObservableObject, PlanPurchaseAlertPre
         case .failed:
             isPurchasing = false
             presentedAlert = .failed
+        case .promotionalOfferUnavailable:
+            isPurchasing = false
+            presentedAlert = .promotionalOfferUnavailable
         case .cancelled:
             isPurchasing = false
             // legacy logic does nothing, so keep them consistent here.

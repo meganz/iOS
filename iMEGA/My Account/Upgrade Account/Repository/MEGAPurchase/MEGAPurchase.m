@@ -113,24 +113,7 @@
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
             [self showBlockingHUD];
-
-            __weak typeof(self) weakSelf = self;
-            [self refreshPricingForProduct:product completionHandler:^(BOOL pricingRefreshed) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    typeof(self) strongSelf = weakSelf;
-                    if (strongSelf == nil) {
-                        [SVProgressHUD dismiss];
-                        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        return;
-                    }
-                    if (pricingRefreshed) {
-                        [strongSelf addPaymentForProduct:product applyPromotionalOffer:YES];
-                    } else {
-                        // [IOS-12264]: Handle refresh failure
-                        [strongSelf addPaymentForProduct:product applyPromotionalOffer:NO];
-                    }
-                });
-            }];
+            [self submitPaymentForProduct:product];
         } else {
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
 

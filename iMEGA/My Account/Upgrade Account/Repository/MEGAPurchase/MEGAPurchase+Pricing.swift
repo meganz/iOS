@@ -1,78 +1,84 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 import MEGASdk
 import StoreKit
 
 extension MEGAPurchase {
-    @objc func addPayment(forProduct product: SKProduct, applyPromotionalOffer: Bool) {
+    @objc func submitPayment(forProduct product: SKProduct) {
+        Task { @MainActor in
+            guard await shouldApplyPromotionalOffer(forProduct: product) else {
+                addPayment(forProduct: product, promotionalOffer: nil)
+                return
+            }
+
+            await submitPaymentWithPromotionalOffer(forProduct: product)
+        }
+    }
+
+    /// Whether the purchase should try to attach a promotional offer: the product has to carry a signed one
+    /// and the customer has to be able to redeem it.
+    func shouldApplyPromotionalOffer(
+        forProduct product: SKProduct,
+        eligibility: some StoreKitSubscriptionEligibilityChecking = StoreKitSubscriptionEligibility()
+    ) async -> Bool {
+        guard mobileOffer(for: product)?.iosSignature != nil else { return false }
+        return await eligibility.canRedeemPromotionalOffer()
+    }
+
+    @MainActor private func submitPaymentWithPromotionalOffer(forProduct product: SKProduct) async {
+        do throws(PromotionalOfferResolutionError) {
+            let discount = try await promotionalOffer(forProduct: product)
+            addPayment(forProduct: product, promotionalOffer: discount)
+        } catch {
+            switch error {
+            case .suppressedByIntroOffer:
+                // When intro offer is available and redeemable, we don't attach the promotional offer,
+                // StoreKit will automatically apply the intro offer at checkout
+                addPayment(forProduct: product, promotionalOffer: nil)
+            case .subscriptionInfoNotAvailable, .promotionalOfferNotAvailable:
+                abortPurchaseForPromotionalOfferError(forProduct: product)
+            }
+        }
+    }
+
+    @MainActor private func abortPurchaseForPromotionalOfferError(forProduct product: SKProduct) {
+        MEGALogError("[StoreKit] Abandoning the purchase of \"\(product.productIdentifier)\": its promotional offer could not be resolved, so it must not be charged at full price")
+
+        SVProgressHUD.dismiss()
+        SVProgressHUD.setDefaultMaskType(.none)
+
+        let promotionalOfferUnavailable = AccountPlanErrorEntity.promotionalOfferUnavailableError
+        for delegate in purchaseDelegates {
+            delegate.failedPurchase?(promotionalOfferUnavailable.errorCode, message: promotionalOfferUnavailable.errorMessage)
+        }
+
+        // User may reach this point from promoted plan purchase flow
+        // In that case we need to end that flow accordingly 
+        if isPurchasingPromotedPlan {
+            setIsPurchasingPromotedPlan(false)
+            handlePromotedPlanPurchaseResult(isSuccess: false)
+        }
+    }
+
+    private func addPayment(forProduct product: SKProduct, promotionalOffer: SKPaymentDiscount?) {
         let paymentRequest = SKMutablePayment(product: product)
         paymentRequest.applicationUsername = MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? 0) ?? ""
 
-        if applyPromotionalOffer, let promotionalOffer = promotionalOffer(for: product) {
+        if let promotionalOffer {
             MEGALogDebug("[StoreKit] Applying promotional offer \"\(promotionalOffer.identifier)\" to product \"\(product.productIdentifier)\"")
             paymentRequest.paymentDiscount = promotionalOffer
             // BE signs the promotional offer signature with "" applicationUsername so we need to
             // match that in order for the signature to work
             paymentRequest.applicationUsername = ""
+        } else {
+            MEGALogDebug("[StoreKit] Applying no promotional offer to product \"\(product.productIdentifier)\"")
         }
 
         SKPaymentQueue.default().add(paymentRequest)
-    }
-
-    /// Always refreshes pricing before purchasing a product that carries a promotional offer, so
-    /// StoreKit receives a freshly signed offer.
-    /// - Returns: `true` if the product has no promotional offer to refresh, or if the pricing was refreshed successfully;
-    ///            `false` if the refresh failed and the pricing could not be updated.
-    /// Discussion: According to Apple's documentation, a promotional offer's signature is only valid for ~24h. Therefore it's recommended to get a new signature for each purchase.
-    @objc func refreshPricing(forProduct product: SKProduct) async -> Bool {
-        await refreshPricing(forProduct: product, requester: PricingRequester.shared)
-    }
-
-    /// The injectable form of `refreshPricing(forProduct:)`. Production always goes through the shared
-    /// requester; the parameter only exists so tests can drive the refresh without the singleton.
-    func refreshPricing(forProduct product: SKProduct, requester: some PricingRequesting) async -> Bool {
-        guard mobileOffer(for: product)?.iosSignature != nil else { return true }
-
-        do {
-            try await requester.refreshPricing()
-            // IOS-12264: Handle signature refresh failure
-            return true
-        } catch {
-            MEGALogError("[MEGAPurchase] Failed to refresh the promotional offer before purchase \(error)")
-            return false
-        }
-    }
-
-    private func promotionalOffer(for product: SKProduct) -> SKPaymentDiscount? {
-        guard let mobileOffer = mobileOffer(for: product) else { return nil }
-
-        // Need to guard against offer's expiryDate to avoid applying a promotional offer of a lapsed campaign.
-        // Example: In Upgrade page, when a discount campaign has lapsed, the Upgrade page stops showing offers, but
-        // MEGAPricing's existing offer may not be refresh thus the obsolete offer data still exists. In such case
-        // we can check against `expiryDate` to prevent the offer from being wrongly applied.
-        if let expiryDate = mobileOffer.expiryDate, expiryDate <= Date() {
-            MEGALogWarning("[StoreKit] Expired promotional offer for product \"\(product.productIdentifier)\", purchasing without discount")
-            return nil
-        }
-
-        guard let iosSignature = mobileOffer.iosSignature else { return nil }
-        guard !iosSignature.offerId.isEmpty,
-              !iosSignature.keyId.isEmpty,
-              !iosSignature.signature.isEmpty,
-              let nonce = UUID(uuidString: iosSignature.nonce),
-              iosSignature.timestamp > 0 else {
-            MEGALogWarning("[StoreKit] Incomplete promotional offer for product \"\(product.productIdentifier)\", purchasing without discount")
-            return nil
-        }
-
-        return SKPaymentDiscount(
-            identifier: iosSignature.offerId,
-            keyIdentifier: iosSignature.keyId,
-            nonce: nonce,
-            signature: iosSignature.signature,
-            timestamp: NSNumber(value: iosSignature.timestamp)
-        )
+        // Marks the hand-off, so the wait that follows can be attributed to StoreKit rather than to us.
+        MEGALogDebug("[StoreKit][trace] PAYMENT SUBMITTED for \"\(product.productIdentifier)\"")
     }
 
     /// Resolves the product's index against the given pricing directly, so the offer fields are

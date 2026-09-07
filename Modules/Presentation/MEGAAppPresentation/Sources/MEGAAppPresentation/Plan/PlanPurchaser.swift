@@ -18,6 +18,8 @@ public enum PlanPurchaseOutcome: Sendable {
     case succeeded
     /// Purchase failed for a reason worth surfacing to the user (not a cancellation).
     case failed
+    /// Error when promotional offer cannot be resolved 
+    case promotionalOfferUnavailable
     /// The user cancelled the StoreKit purchase, no UI reaction needed.
     case cancelled
 }
@@ -154,10 +156,10 @@ public final class PlanPurchaser: PlanPurchasing {
         case .success:
             handlePurchaseSucceeded()
         case .failure(let error):
-            let flowError: PurchaseFlowError = if error.toPurchaseErrorStatus() == .paymentCancelled {
-                .cancelledByUser
-            } else {
-                .storeKitPurchaseFailed
+            let flowError: PurchaseFlowError = switch error.toPurchaseErrorStatus() {
+            case .promotionalOfferUnavailable: .promotionalOfferUnavailable
+            case .paymentCancelled: .cancelledByUser
+            default: .storeKitPurchaseFailed
             }
             handlePurchaseError(flowError)
         }
@@ -189,6 +191,8 @@ public final class PlanPurchaser: PlanPurchasing {
         switch error {
         case .cancelledByUser:
             outcomesSubject.send(.cancelled)
+        case .promotionalOfferUnavailable:
+            outcomesSubject.send(.promotionalOfferUnavailable)
         case .subscriptionCancellationFailed, .subscriptionStillActive, .storeKitPurchaseFailed:
             outcomesSubject.send(.failed)
         }
@@ -203,6 +207,8 @@ private enum PurchaseFlowError: Error {
     case subscriptionStillActive
     /// StoreKit reported a non-cancellation failure.
     case storeKitPurchaseFailed
+    /// The app abandoned the purchase because the plan's offer could not be confirmed.
+    case promotionalOfferUnavailable
     /// The user aborted the StoreKit purchase sheet
     case cancelledByUser
 }
