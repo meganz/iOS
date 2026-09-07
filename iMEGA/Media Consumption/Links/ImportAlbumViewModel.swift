@@ -123,7 +123,11 @@ final class ImportAlbumViewModel: ObservableObject {
     /// The revamp swaps the icon-only bottom toolbar for a single anchored `Save to MEGA` button. Selection
     /// mode keeps the pre-revamp toolbar -- its redesign belongs to a separate ticket.
     var showsAnchoredButtons: Bool {
-        isLinkRevampEnabled && !isSelectionEnabled
+        isLinkRevampEnabled && !isSelectionEnabled && !shouldShowEmptyAlbumView
+    }
+    
+    var showsBottomToolbar: Bool {
+        !isLinkRevampEnabled || isSelectionEnabled
     }
     
     /// Not gated on the link revamp: `AlbumLinkUnavailableView` draws the legacy layout too. Gating it

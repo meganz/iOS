@@ -605,6 +605,51 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
 
     @MainActor
+    func testShowsAnchoredButtons_linkRevampEnabledAndAlbumEmpty_shouldHideTheButtonWithoutBringingBackTheToolbar() async throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: makePublicAlbumUseCase(),
+                                           remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+
+        await sut.loadPublicAlbum()
+
+        XCTAssertTrue(sut.shouldShowEmptyAlbumView)
+        XCTAssertFalse(sut.showsAnchoredButtons)
+        XCTAssertFalse(sut.showsBottomToolbar)
+    }
+
+    @MainActor
+    func testShowsAnchoredButtons_linkRevampEnabledAndAlbumLoadedWithPhotos_shouldShowTheButton() async throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: makePublicAlbumUseCase(nodes: try makePhotos()),
+                                           remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+
+        await sut.loadPublicAlbum()
+
+        XCTAssertFalse(sut.shouldShowEmptyAlbumView)
+        XCTAssertTrue(sut.showsAnchoredButtons)
+        XCTAssertFalse(sut.showsBottomToolbar)
+    }
+
+    @MainActor
+    func testShowsBottomToolbar_linkRevampDisabledOrSelecting_shouldKeepTheToolbarEvenOnAnEmptyAlbum() async throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicCollectionUseCase: makePublicAlbumUseCase(),
+                                           remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: false]))
+
+        await sut.loadPublicAlbum()
+
+        XCTAssertTrue(sut.showsBottomToolbar)
+
+        let revampedSut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                                   publicCollectionUseCase: makePublicAlbumUseCase(nodes: try makePhotos()),
+                                                   remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosLinkRevamp: true]))
+        await revampedSut.loadPublicAlbum()
+        revampedSut.photoLibraryContentViewModel.selection.editMode = .active
+
+        XCTAssertTrue(revampedSut.showsBottomToolbar)
+    }
+
+    @MainActor
     func testRenameAlbum_newNameProvided_shouldShowImportAlbumLocationAndUseNewNameDuringImport() async throws {
         let newAlbumName = "The new album name"
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())

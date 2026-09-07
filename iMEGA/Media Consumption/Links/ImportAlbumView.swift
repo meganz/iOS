@@ -195,7 +195,7 @@ struct ImportAlbumView: View {
         
         // The revamp's anchored `Save to MEGA` button stands in for the whole bottom bar outside a
         // selection, so the toolbar is only declared where it is still the only thing on offer.
-        if !viewModel.showsAnchoredButtons {
+        if viewModel.showsBottomToolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 if viewModel.isLinkRevampEnabled {
                     revampedBottomBar
