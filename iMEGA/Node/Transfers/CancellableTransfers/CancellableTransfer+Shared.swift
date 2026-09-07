@@ -35,6 +35,10 @@ protocol CancellableTransferRouting: Routing {
     func transferCompletedWithError(error: String, dismiss: Bool)
 }
 
+protocol CancellableTransferFlowLifecycleRouting: Routing {
+    func transferFlowDidFinish()
+}
+
 enum CancellableTransferViewAction: ActionType {
     case onViewReady
     case didTapCancelButton

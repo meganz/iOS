@@ -7,7 +7,7 @@ import MEGAPreference
 import MEGARepo
 
 @MainActor
-final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
+final class CancellableTransferRouter: NSObject, CancellableTransferRouting, CancellableTransferFlowLifecycleRouting, TransferWidgetRouting {
     
     @MainActor
     struct Factory {
@@ -46,6 +46,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     private var wrapper: (any CancellableTransferControllerWrapping)?
     private weak var presentedAlert: UIAlertController?
     var onDownloadCompleted: (@MainActor (CancellableDownloadOutcome) -> Void)?
+    private var isFinishing = false
 
     /// - Parameter preresolvedNodes: The transfers' nodes, for a source that cannot look them up in any
     ///   SDK tree -- a public album link's photos come from a set preview, and its own screen is what
@@ -69,7 +70,12 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func build() -> UIViewController {
-        let wrapper = CancellableTransferControllerWrapper(viewModel: makeViewModel())
+        build(viewModel: makeViewModel())
+    }
+
+    // Dependency-injection seam used by lifecycle tests to avoid constructing app-wide repositories.
+    func build(viewModel: CancellableTransferViewModel) -> UIViewController {
+        let wrapper = CancellableTransferControllerWrapper(viewModel: viewModel)
         self.wrapper = wrapper
         return wrapper.createViewController()
     }
@@ -178,6 +184,21 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
             })
         } else {
             SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
+        }
+    }
+
+    /// The flow is intentionally self-retained through router -> wrapper -> view model -> router, which is
+    /// what keeps it alive after the fire-and-forget `start()` returns. Broken here, once the flow has
+    /// reached one of its terminal outcomes.
+    ///
+    /// Deferred to the next turn so the current view-model callback can return first: the wrapper is the
+    /// view model's last owner, and releasing it from inside one of its own calls is asking for trouble.
+    func transferFlowDidFinish() {
+        guard !isFinishing else { return }
+        isFinishing = true
+
+        Task { @MainActor [weak self] in
+            self?.wrapper = nil
         }
     }
     

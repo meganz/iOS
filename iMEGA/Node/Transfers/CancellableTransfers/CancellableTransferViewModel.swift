@@ -10,7 +10,7 @@ protocol TransferWidgetRouting: Routing {
 
 @MainActor
 final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, Sendable {
-    typealias routingProtocols = CancellableTransferRouting & TransferWidgetRouting
+    typealias routingProtocols = CancellableTransferRouting & CancellableTransferFlowLifecycleRouting & TransferWidgetRouting
 
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     private let downloadNodeUseCase: any DownloadNodeUseCaseProtocol
@@ -22,6 +22,8 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
     private let fileTransfers: [CancellableTransfer]
     private let folderTransfers: [CancellableTransfer]
     private let transferType: CancellableTransferType
+    private let alertPresentationDelay: TimeInterval
+    private let alertBlockingDelay: TimeInterval
     
     private var transfersCancelled: Bool = false
     private var processingComplete: Bool = false
@@ -48,7 +50,9 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
          analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
          overDiskQuotaChecker: some OverDiskQuotaChecking,
          transfers: [CancellableTransfer],
-         transferType: CancellableTransferType) {
+         transferType: CancellableTransferType,
+         alertPresentationDelay: TimeInterval = 0.8,
+         alertBlockingDelay: TimeInterval = 1.2) {
         self.router = router
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
@@ -59,13 +63,18 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
         self.fileTransfers = transfers.filter { $0.isFile }
         self.folderTransfers = transfers.filter { !$0.isFile }
         self.transferType = transferType
+        self.alertPresentationDelay = alertPresentationDelay
+        self.alertBlockingDelay = alertBlockingDelay
     }
     
     // MARK: - Dispatch action
     func dispatch(_ action: CancellableTransferViewAction) {
         switch action {
         case .onViewReady:
-            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded(), transfers.isNotEmpty else {
+                router.transferFlowDidFinish()
+                return
+            }
             router.prepareTransfersWidget()
             switch transferType {
             case .upload:
@@ -105,13 +114,16 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                 downloadNodeUseCase.cancelDownloadTransfers()
             }
             invokeCommand?(.cancelling)
+            if !isAlertBlocked {
+                manageTransfersCompletion()
+            }
         }
     }
     
     // MARK: - Private
     private func showAlertViewIfNeeded() {
         alertSubscription = Just(Void.self)
-            .delay(for: .seconds(0.8), scheduler: RunLoop.main)
+            .delay(for: .seconds(alertPresentationDelay), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 guard let self else { return }
                 guard !self.transfersCancelled, !self.processingComplete else {
@@ -127,14 +139,20 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
     private func blockAlertView() {
         isAlertBlocked = true
         alertSubscription = Just(Void.self)
-            .delay(for: .seconds(1.2), scheduler: RunLoop.main)
+            .delay(for: .seconds(alertBlockingDelay), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 guard let self else { return }
                 self.isAlertBlocked = false
-                if (self.fileTransfersStarted() && self.folderTransfers.isEmpty || self.folderTransfersStartedTransferring()) && !self.transfersCancelled {
+                if self.transfersCancelled || self.allTransfersReadyForCompletion() {
                     self.manageTransfersCompletion()
                 }
             }
+    }
+
+    private func allTransfersReadyForCompletion() -> Bool {
+        transfers.isNotEmpty
+            && fileTransfersStarted()
+            && folderTransfersStartedTransferring()
     }
     
     private func recordDownloadOutcome(for error: TransferErrorEntity) {
@@ -192,6 +210,7 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
         processingComplete = true
         alertSubscription?.cancel()
         alertSubscription = nil
+        defer { router.transferFlowDidFinish() }
         
         if transfersCancelled {
             router.transferCancelled(with: Strings.Localizable.transferCancelled, dismiss: alertPresented)
@@ -213,6 +232,8 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
     private func startFileUploads() {
         fileTransfers.forEach { transferViewEntity in
             guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                recordUploadFailure(for: transferViewEntity)
+                continueFolderTransfersIfNeeded()
                 return
             }
 
@@ -242,6 +263,8 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
     private func startFolderUploads() {
         folderTransfers.forEach { transferViewEntity in
             guard let uploadLocalURL = transferViewEntity.localFileURL else {
+                recordUploadFailure(for: transferViewEntity)
+                checkIfAllTransfersStartedTransferring()
                 return
             }
             uploadFileUseCase.uploadFile(uploadLocalURL,
@@ -268,6 +291,11 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
             }
         }
     }
+
+    private func recordUploadFailure(for transferViewEntity: CancellableTransfer) {
+        transferViewEntity.setState(.failed)
+        transferErrors.append(.generic)
+    }
     
     private func downloadChatFile(transferViewEntity: CancellableTransfer) async {
         do {
@@ -290,6 +318,10 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                 case .finish(let transferEntity):
                     transferViewEntity.setState(transferEntity.state)
                 }
+            }
+            if transferViewEntity.state == .none {
+                recordOfflineDownloadFailure(TransferErrorEntity.generic, for: transferViewEntity)
+                continueFolderTransfersIfNeeded()
             }
         } catch let error as TransferErrorEntity {
             transferViewEntity.setState(.failed)
@@ -331,6 +363,10 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                         case .finish(let transferEntity):
                             transferViewEntity.setState(transferEntity.state)
                         }
+                    }
+                    if transferViewEntity.state == .none {
+                        recordOfflineDownloadFailure(TransferErrorEntity.generic, for: transferViewEntity)
+                        continueFolderTransfersIfNeeded()
                     }
                 }
             } catch {
@@ -379,7 +415,13 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
     }
     
     private func startFileLinkDownload() async {
-        guard let transferViewEntity = fileTransfers[safe: 0], let linkUrl = transferViewEntity.fileLinkURL else {
+        guard let transferViewEntity = fileTransfers[safe: 0] else {
+            manageTransfersCompletion()
+            return
+        }
+        guard let linkUrl = transferViewEntity.fileLinkURL else {
+            recordOfflineDownloadFailure(TransferErrorEntity.generic, for: transferViewEntity)
+            manageTransfersCompletion()
             return
         }
         let fileLink = FileLinkEntity(linkURL: linkUrl)
@@ -403,6 +445,10 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                 case .finish(let transferEntity):
                     transferViewEntity.setState(transferEntity.state)
                 }
+            }
+            if transferViewEntity.state == .none {
+                recordOfflineDownloadFailure(TransferErrorEntity.generic, for: transferViewEntity)
+                manageTransfersCompletion()
             }
         } catch {
             transferViewEntity.setState(.failed)
@@ -438,6 +484,10 @@ final class CancellableTransferViewModel: CancellableTransferViewModelProtocol, 
                             transferViewEntity.setState(transferEntity.state)
                             checkIfAllTransfersStartedTransferring()
                         }
+                    }
+                    if transferViewEntity.state == .none {
+                        recordOfflineDownloadFailure(TransferErrorEntity.generic, for: transferViewEntity)
+                        checkIfAllTransfersStartedTransferring()
                     }
                 }
             } catch {

@@ -1,10 +1,45 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
 import MEGADomain
+import MEGADomainMock
+import MEGATest
 import XCTest
 
 @MainActor
 final class CancellableTransferRouterFactoryTests: XCTestCase {
+
+    func testBuild_keepsRouterAliveUntilFlowFinishes() async {
+        let presenter = UIViewController()
+        var router: CancellableTransferRouter? = CancellableTransferRouter(
+            presenter: presenter,
+            transfers: [],
+            transferType: .download)
+        weak var weakRouter: CancellableTransferRouter?
+        weakRouter = router
+        installWrapper(on: router!)
+        trackForMemoryLeaks(on: router!, timeoutNanoseconds: 100_000_000)
+
+        router = nil
+
+        XCTAssertNotNil(weakRouter)
+        weakRouter?.transferFlowDidFinish()
+        await Task.yield()
+        XCTAssertNil(weakRouter)
+    }
+
+    private func installWrapper(on router: CancellableTransferRouter) {
+        let viewModel = CancellableTransferViewModel(
+            router: router,
+            uploadFileUseCase: MockUploadFileUseCase(),
+            downloadNodeUseCase: MockDownloadNodeUseCase(),
+            mediaUseCase: MockMediaUseCase(),
+            analyticsEventUseCase: MockAnalyticsEventUseCase(),
+            overDiskQuotaChecker: MockOverDiskQuotaChecker(),
+            transfers: [],
+            transferType: .download)
+
+        _ = router.build(viewModel: viewModel)
+    }
 
     func testMake_fromFolderLink_createsFolderLinkRouterSetup() {
         let presenter = UIViewController()

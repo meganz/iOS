@@ -28,8 +28,8 @@ final class CancellableTransferControllerWrapper<U: CancellableTransferViewModel
             self?.executeCommand($0)
         }
 
-        cancelTransferAlertController.addAction(UIAlertAction(title: Strings.Localizable.Transfers.Cancellable.cancel, style: .cancel) { _ in
-            self.viewModel.dispatch(.didTapCancelButton)
+        cancelTransferAlertController.addAction(UIAlertAction(title: Strings.Localizable.Transfers.Cancellable.cancel, style: .cancel) { [weak self] _ in
+            self?.viewModel.dispatch(.didTapCancelButton)
         })
 
         return cancelTransferAlertController

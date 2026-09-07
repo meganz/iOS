@@ -121,3 +121,53 @@ struct DownloadFileRepositoryNodeResolutionTests {
         return nil
     }
 }
+
+/// Covers the file link download reporting back at all. The transfer delegate is the only thing that ends
+/// this stream, so without it a caller iterating the sequence waits on a download that is running fine.
+@Suite("DownloadFileRepository file link downloads")
+struct DownloadFileRepositoryFileLinkTests {
+    private static let fileNode = MockNode(handle: 5, name: "photo.jpg")
+    private static let fileLink = FileLinkEntity(linkURL: URL(string: "https://mega.nz/file/abcdefgh#key")!)
+    private static let destination = URL(fileURLWithPath: "/tmp/Documents")
+
+    private static func makeSUT(fileLinkNode: MEGANode?) -> DownloadFileRepository {
+        DownloadFileRepository(
+            sdk: MockSdk(fileLinkNode: fileLinkNode),
+            nodeProvider: MockMEGANodeProvider(node: fileLinkNode)
+        )
+    }
+
+    private static func downloadEvents(from sut: DownloadFileRepository) async throws -> [TransferEventEntity] {
+        let stream = try sut.downloadFileLink(
+            fileLink,
+            named: fileNode.name ?? "",
+            to: destination,
+            metaData: nil,
+            startFirst: false
+        )
+
+        return await stream.reduce(into: [TransferEventEntity]()) { $0.append($1) }
+    }
+
+    @Test("a link whose node resolves reports the transfer and ends the stream")
+    func resolvedLink_reportsTheTransferAndEnds() async throws {
+        let sut = Self.makeSUT(fileLinkNode: Self.fileNode)
+
+        let events = try await Self.downloadEvents(from: sut)
+        let started = events.contains { if case .start = $0 { true } else { false } }
+        let finished = events.contains { if case .finish = $0 { true } else { false } }
+
+        // Reaching the end at all is the point: the stream only terminates once the transfer reports back.
+        #expect(started)
+        #expect(finished)
+    }
+
+    @Test("a link whose node cannot be resolved ends the stream instead of waiting on a transfer")
+    func unresolvableLink_endsWithoutATransfer() async throws {
+        let sut = Self.makeSUT(fileLinkNode: nil)
+
+        let events = try await Self.downloadEvents(from: sut)
+
+        #expect(events.isEmpty)
+    }
+}

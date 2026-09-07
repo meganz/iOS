@@ -316,6 +316,29 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                             continuation.finish(throwing: TransferErrorEntity.couldNotFindNodeByLink)
                             return
                         }
+                        
+                        // The transfer is what ends this stream. Without a delegate feeding it the download
+                        // still runs, but nothing reports back and a caller iterating the sequence waits on
+                        // it forever. Built here rather than alongside the stream because the delegate is
+                        // not `Sendable` and so cannot be captured by the request's own callback.
+                        let transferDelegate = TransferDelegate { result in
+                            switch result {
+                            case .success(let transferEntity):
+                                continuation.yield(.finish(transferEntity))
+                                continuation.finish()
+                            case .failure(let error):
+                                continuation.finish(throwing: error)
+                            }
+                        }
+                        
+                        transferDelegate.start = { transferEntity in
+                            continuation.yield(.start(transferEntity))
+                        }
+                        
+                        transferDelegate.progress = { transferEntity in
+                            continuation.yield(.update(transferEntity))
+                        }
+                        
                         sdk.startDownloadNode(
                             node,
                             localPath: filePath,
@@ -324,7 +347,8 @@ public struct DownloadFileRepository: DownloadFileRepositoryProtocol {
                             startFirst: startFirst,
                             cancelToken: cancelToken.value,
                             collisionCheck: CollisionCheck.fingerprint,
-                            collisionResolution: CollisionResolution.newWithN
+                            collisionResolution: CollisionResolution.newWithN,
+                            delegate: transferDelegate
                         )
                     case .failure(let error):
                         continuation.finish(throwing: error)
