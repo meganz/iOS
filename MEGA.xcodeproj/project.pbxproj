@@ -1576,6 +1576,7 @@
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		998CDC862E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */; };
+		9A5E0C022E4F1A0100D3B7C1 /* SeedExportReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5E0C012E4F1A0100D3B7C1 /* SeedExportReporter.swift */; };
 		998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
 		998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
 		99B8AF712E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B8AF702E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift */; };
@@ -2687,6 +2688,7 @@
 		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
 		E7E114192B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */; };
 		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
+		9A5E0C042E4F1A0100D3B7C1 /* SeedExportDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5E0C032E4F1A0100D3B7C1 /* SeedExportDatabaseTests.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83E10291E1582E8002F3E2E /* ChatStatusTableViewController.m */; };
@@ -4413,6 +4415,7 @@
 		998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
 		998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+KMTransferUtils.swift"; sourceTree = "<group>"; };
+		9A5E0C012E4F1A0100D3B7C1 /* SeedExportReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedExportReporter.swift; sourceTree = "<group>"; };
 		998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+KMTransferUtils.swift"; sourceTree = "<group>"; };
 		99B5459ECAA21BBC9A9D816F /* AppDelegate+PromoDialog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "AppDelegate+PromoDialog.swift"; sourceTree = "<group>"; };
 		99B8AF702E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+FileOpenAnalytics.swift"; sourceTree = "<group>"; };
@@ -5546,6 +5549,7 @@
 		E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRSettingsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
+		9A5E0C032E4F1A0100D3B7C1 /* SeedExportDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedExportDatabaseTests.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -11718,6 +11722,7 @@
 				0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */,
 				B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */,
 				A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */,
+				9A5E0C012E4F1A0100D3B7C1 /* SeedExportReporter.swift */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -13601,6 +13606,7 @@
 				0E9FE3622E0B70C70003AC0F /* Authentication */,
 				0EAF3FA52D67D5EF007D4E9C /* Mocks */,
 				E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */,
+				9A5E0C032E4F1A0100D3B7C1 /* SeedExportDatabaseTests.swift */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -16072,6 +16078,7 @@
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
 				83CB60E72AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift in Sources */,
+				9A5E0C022E4F1A0100D3B7C1 /* SeedExportReporter.swift in Sources */,
 				83DE6D2129894956000503CC /* SeeMoreOccurrencesView.swift in Sources */,
 				8358334D294A1E3200394F1A /* SeeMoreParticipantsView.swift in Sources */,
 				A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */,
@@ -17066,6 +17073,7 @@
 				947DC5E62AC1CB07002C1D7C /* SearchAnalyticsTrackerTests.swift in Sources */,
 				BFFD20E72BC784AD009885F0 /* SearchResultMapperTests.swift in Sources */,
 				53A255292C3418EC00E7F10C /* SecuritySettingsViewRouterTests.swift in Sources */,
+				9A5E0C042E4F1A0100D3B7C1 /* SeedExportDatabaseTests.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				249B71DA2ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift in Sources */,
