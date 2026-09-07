@@ -10,7 +10,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
     case newSetting = "New Setting"
     case cameraUploadsRevamp = "Camera Uploads Revamp"
-    case dotAppDomain = ".app Domain"
     case videoPlayerRevamp = "Video Player Revamp"
     case audioPlayerRevamp = "Audio Player Revamp"
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
@@ -24,7 +23,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
     public static let rolledOutKeys: Set<FeatureFlagKey> = [
         .offlineMode,
-        .cameraUploadsRevamp,
-        .dotAppDomain
+        .cameraUploadsRevamp
     ]
 }

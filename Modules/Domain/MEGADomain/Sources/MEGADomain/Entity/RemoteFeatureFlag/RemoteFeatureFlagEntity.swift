@@ -3,7 +3,6 @@ public enum RemoteFeatureFlag: String, Sendable {
     case externalAds = "adse"
     case noteToSelfChat = "n2s"
     case appleExternalPurchase = "aep"
-    case dotAppDomainExtension = "site"
     case iosVideoPlayerRevamp = "ivpr"
     case iosAppPerformanceMonitoring = "iapm"
     case iosNewYearlyPlanCard = "inypc"
