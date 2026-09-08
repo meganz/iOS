@@ -627,6 +627,7 @@
         switch ([url mnz_type]) {
             case URLTypeFileLink:
             case URLTypeFolderLink:
+            case URLTypeCollection:
                 [self showSharedLinkForNoLoggedInUser:url];
                 break;
                 
