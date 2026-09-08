@@ -8,32 +8,56 @@ private let migrationLog = Logger(subsystem: "mega.ios.migration", category: "ap
 
 extension AppDelegate {
 
-    private static let usSessionLostReportedKey = "usSessionLostReported"
-
     @objc func importKMTransferFile() {
+        // The analytics below only count the app-transfer moment: the first launch under a new
+        // team prefix. It is detected by a keychain marker in the team-prefixed access group —
+        // absent exactly once after a transfer (the old marker is unreadable under the new
+        // prefix), untouched by logout and reinstall. Same-team launches (re-imports after a
+        // logout, QA cycles) keep their logs but track nothing.
+        let markerStatus = Helper.teamMarkerStatus()
+        let isCrossTeamLaunch = markerStatus == errSecItemNotFound
+        defer {
+            if isCrossTeamLaunch {
+                Helper.writeTeamMarker()
+            }
+        }
+
         Self.logMigrationState("pre")
         do {
             try DIContainer.kmTransferUtils.importTransferFile()
-            migrationLog.error("import succeeded")
+            migrationLog.error("import succeeded crossTeam=\(isCrossTeamLaunch, privacy: .public)")
             Self.logMigrationState("post")
-            DIContainer.tracker.trackAnalyticsEvent(
-                with: IOSKMTransferUSMigrationSucceededEvent()
-            )
+            // Not tracked here: the fastLogin that follows runs locallogout, which clears every
+            // SDK command still queued. handlePostLoginSetup sends it once login completed.
+            if isCrossTeamLaunch {
+                Helper.markMigrationSucceededPending()
+            }
         } catch let error as KMTransferError {
             switch error {
             case .storageExistsDuringImportTransfer:
                 migrationLog.error("import skipped: storage already populated")
             case .transferFileMissing:
-                migrationLog.error("import skipped: no backup file")
-                reportUSSessionLostIfNeeded()
+                migrationLog.error("import skipped: no backup file crossTeam=\(isCrossTeamLaunch, privacy: .public)")
+                if isCrossTeamLaunch {
+                    reportUSSessionLostIfNeeded()
+                }
             default:
+                // Safe to track right away: a failed import restores no session, so no fastLogin follows.
                 migrationLog.error("import failed: \(Self.failureReason(for: error), privacy: .public)")
-                DIContainer.tracker.trackAnalyticsEvent(
-                    with: IOSKMTransferUSMigrationFailedEvent(reason: Self.failureReason(for: error))
-                )
+                if isCrossTeamLaunch {
+                    DIContainer.tracker.trackAnalyticsEvent(
+                        with: IOSKMTransferUSMigrationFailedEvent(reason: Self.failureReason(for: error))
+                    )
+                }
             }
         } catch {
+            // Raw CryptoKit errors from the framework's decrypt() land here — a real failure.
             migrationLog.error("import failed: \(String(describing: error), privacy: .public)")
+            if isCrossTeamLaunch {
+                DIContainer.tracker.trackAnalyticsEvent(
+                    with: IOSKMTransferUSMigrationFailedEvent(reason: "unexpected")
+                )
+            }
         }
     }
 
@@ -47,6 +71,10 @@ extension AppDelegate {
                 )
             } catch KMTransferError.transferFileExistDuringExport {
                 migrationLog.error("backup create skipped: file already exists")
+            } catch KMTransferError.storageDoesNotExist {
+                // Nothing to back up yet (e.g. create ran before the session was written); the
+                // next fast-login creates it.
+                migrationLog.error("backup create skipped: nothing to back up yet")
             } catch let error as KMTransferError {
                 migrationLog.error("backup create failed: \(Self.failureReason(for: error), privacy: .public)")
             } catch {
@@ -57,24 +85,37 @@ extension AppDelegate {
 
     // MARK: - Private
 
+    /// Only reached on a cross-team first launch that found no backup file: the user was
+    /// logged in before the upgrade and the session cannot be restored.
     private func reportUSSessionLostIfNeeded() {
-        let defaults = UserDefaults.standard
-        guard !defaults.bool(forKey: Self.usSessionLostReportedKey),
+        guard !Helper.hasReportedSessionLost,
               Self.hasPriorLoginEvidence()
         else { return }
-        migrationLog.error("session lost: prior login evidence without backup")
+
+        // The framework only throws transferFileMissing when sessionV3 is already absent in the
+        // current group; assert it so a future reordering cannot turn this into a false positive.
+        let (sessionStatus, _, _) = Self.keychainItem(service: "MEGA", account: "sessionV3")
+        guard sessionStatus == errSecItemNotFound else {
+            migrationLog.error("session-lost check skipped: sessionV3 status=\(sessionStatus, privacy: .public)")
+            return
+        }
+
+        migrationLog.error("session lost: cross-team launch, prior login evidence, no backup, session unreadable")
+        // Safe to send now: no session was restored, so no fastLogin/locallogout follows on this launch.
         DIContainer.tracker.trackAnalyticsEvent(
             with: IOSKMTransferUSSessionLostEvent()
         )
-        defaults.set(true, forKey: Self.usSessionLostReportedKey)
+        Helper.markSessionLostReported()
     }
 
     private static func hasPriorLoginEvidence() -> Bool {
+        // Main statecache DB only: a live login always has it, and the SDK removes the
+        // -wal/-shm/-journal sidecars together with it, so matching them adds nothing.
         guard let appSupport = FileManager.default
             .urls(for: .applicationSupportDirectory, in: .userDomainMask)
             .first,
               let contents = try? FileManager.default.contentsOfDirectory(atPath: appSupport.path),
-              let loginStateCache = try? Regex(#"megaclient_statecache\d+_(?:status_)?[A-Za-z0-9_-]{36}\.db(?:-wal|-shm|-journal)?"#)
+              let loginStateCache = try? Regex(#"megaclient_statecache\d+_(?:status_)?[A-Za-z0-9_-]{36}\.db"#)
         else { return false }
         return contents.contains { $0.wholeMatch(of: loginStateCache) != nil }
     }
@@ -89,6 +130,8 @@ extension AppDelegate {
             "fileTooSmall"
         case .applicationSupportUnavailable:
             "appSupportUnavailable"
+        case .storageDoesNotExist:
+            "nothingToBackUp"
         default:
             "other"
         }
@@ -200,6 +243,8 @@ extension AppDelegate {
         SecItemDelete(identity as CFDictionary)
         var probe = identity
         probe[kSecValueData] = Data([1])
+        // Log-only probe, but AfterFirstUnlock keeps it resolvable on locked background launches.
+        probe[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
         probe[kSecReturnAttributes] = true
         var result: AnyObject?
         let status = SecItemAdd(probe as CFDictionary, &result)

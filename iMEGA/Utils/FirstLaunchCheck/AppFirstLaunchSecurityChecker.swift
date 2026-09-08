@@ -21,6 +21,7 @@ final class AppFirstLaunchSecurityChecker: NSObject {
             appFirstLaunchUseCase.markAppAsLaunched()
             accountCleanerUseCase.cleanCredentialSessions()
             Helper.deletePasscode()
+            Helper.clearMigrationSucceededPending()
         }
     }
 }

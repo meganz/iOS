@@ -66,8 +66,9 @@ extension AppDelegate {
         }
 
         createKMTransferFile()
+        Helper.didCompleteLogin(isFirstLogin: isFirstLogin)
     }
-    
+
     @objc func isOnboardingViewControllerAlreadyShown() -> Bool {
         isRootViewNewOnboarding()
     }

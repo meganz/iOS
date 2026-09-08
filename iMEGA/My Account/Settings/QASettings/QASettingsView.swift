@@ -89,8 +89,11 @@ struct QASettingsView: View {
     /// path exactly as after a keychain-group change. Passcode items are removed via
     /// SAMKeychain directly: the LTHPasscodeViewController path would rewrite the
     /// backup file from the now-session-less keychain and destroy the scenario.
+    /// The migration markers are removed too, so the next launch counts as a cross-team
+    /// first launch and every migration analytics event may fire again.
     private static func simulateMigratedKeychainState() {
         let log = Logger(subsystem: "mega.ios.migration", category: "qa")
+        Helper.resetMigrationMarkers()
         let sessionDeleted = SAMKeychain.deletePassword(forService: "MEGA", account: "sessionV3")
         let passcodeAccounts = [
             "demoPasscode", "demoPasscodeTimerStart", "passcodeTimerDuration",
