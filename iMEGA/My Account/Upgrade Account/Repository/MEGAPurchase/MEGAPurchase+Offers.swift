@@ -33,26 +33,38 @@ extension MEGAPurchase {
     ) async throws(PromotionalOfferResolutionError) -> SKPaymentDiscount {
         let productIdentifier = product.productIdentifier
         guard let subscriptionInfo = await subscriptionInfoProvider.subscriptionInfo(forProductIdentifier: productIdentifier) else {
-            MEGALogError("[StoreKit] No subscription information for product \"\(productIdentifier)\", aborting purchase")
+            MEGAPurchaseLogger.logMessage("No subscription information for product \"\(productIdentifier)\", aborting purchase", megaLogLevel: .error)
             throw .subscriptionInfoNotAvailable
         }
 
         // An existing, redeemable introductory offer suppresses the promotional offer, and the App Store applies its discount
         // at checkout automatically, so no promotional offer should be attached in that case.
         let activeGroupIDs = await eligibility.activeSubscriptionGroupIDs()
+        MEGAPurchaseLogger.logMessage("Active subscription group IDs: \(activeGroupIDs)")
         if await eligibility.isIntroductoryOfferRedeemable(
             for: subscriptionInfo,
             activeGroupIDs: activeGroupIDs
         ) {
-            MEGALogDebug("[StoreKit] Product \"\(productIdentifier)\" gets an introductory offer, which takes precedence over the promotional offer")
+            MEGAPurchaseLogger.logMessage("Product \"\(productIdentifier)\" gets an introductory offer, which takes precedence over the promotional offer")
             throw .suppressedByIntroOffer
         }
 
         // According to Apple, a signature has a TTL of 24h, therefore
         // we should attempt to refresh Pricing to get the latest signature data
-        try? await requester.refreshPricing()
+        do {
+            try await requester.refreshPricing()
+        } catch {
+            MEGAPurchaseLogger.logMessage(
+                "Could not refresh the pricing for \"\(productIdentifier)\", its offer signature may be stale: \(error)",
+                megaLogLevel: .warning
+            )
+        }
 
         guard let mobileOffer = mobileOffer(for: product) else {
+            MEGAPurchaseLogger.logMessage(
+                "No offer in the pricing for product \"\(productIdentifier)\", aborting promotional offer",
+                megaLogLevel: .warning
+            )
             throw .promotionalOfferNotAvailable
         }
 
@@ -61,7 +73,7 @@ extension MEGAPurchase {
         // MEGAPricing's existing offer may not be refresh thus the obsolete offer data still exists. In such case
         // we can check against `expiryDate` to prevent the offer from being wrongly applied.
         if let expiryDate = mobileOffer.expiryDate, expiryDate <= Date() {
-            MEGALogWarning("[StoreKit] Expired promotional offer for product \"\(product.productIdentifier)\", aborting promotional offer")
+            MEGAPurchaseLogger.logMessage("Expired promotional offer for product \"\(product.productIdentifier)\", aborting promotional offer", megaLogLevel: .warning)
             throw .promotionalOfferNotAvailable
         }
 
@@ -71,7 +83,7 @@ extension MEGAPurchase {
               !iosSignature.signature.isEmpty,
               let nonce = UUID(uuidString: iosSignature.nonce),
               iosSignature.timestamp > 0 else {
-            MEGALogWarning("[StoreKit] Incomplete promotional offer for product \"\(product.productIdentifier)\", aborting promotional offer")
+            MEGAPurchaseLogger.logMessage("Incomplete promotional offer for product \"\(product.productIdentifier)\", aborting promotional offer", megaLogLevel: .warning)
             throw .promotionalOfferNotAvailable
         }
         
@@ -97,7 +109,7 @@ extension MEGAPurchase {
         offerId: String
     ) async throws(PromotionalOfferResolutionError) {
         guard subscription.promotionalOffers.contains(where: { $0.id == offerId }) else {
-            MEGALogWarning("[StoreKit] Promotional offer \"\(offerId)\" is not listed against product \"\(productIdentifier)\", abandoning the purchase")
+            MEGAPurchaseLogger.logMessage("Promotional offer \"\(offerId)\" is not listed against product \"\(productIdentifier)\", abandoning the purchase", megaLogLevel: .warning)
             throw .promotionalOfferNotAvailable
         }
     }

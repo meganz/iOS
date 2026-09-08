@@ -259,6 +259,7 @@
             case SKPaymentTransactionStateFailed:
                 MEGALogError(@"[StoreKit] Transaction failed");
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
+                [self recordPurchaseError:transaction.error promotionalOfferId:transaction.payment.paymentDiscount.identifier];
 
                 for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegates) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {

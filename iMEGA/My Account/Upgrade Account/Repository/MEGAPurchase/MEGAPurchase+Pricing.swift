@@ -23,31 +23,55 @@ extension MEGAPurchase {
         forProduct product: SKProduct,
         eligibility: some StoreKitSubscriptionEligibilityChecking = StoreKitSubscriptionEligibility()
     ) async -> Bool {
-        guard mobileOffer(for: product)?.iosSignature != nil else { return false }
-        return await eligibility.canRedeemPromotionalOffer()
+        let productIdentifier = product.productIdentifier
+
+        guard mobileOffer(for: product)?.iosSignature != nil else {
+            MEGAPurchaseLogger.logMessage("Product \"\(productIdentifier)\" carries no signed promotional offer, purchasing without promotional offer")
+            return false
+        }
+
+        guard await eligibility.canRedeemPromotionalOffer() else {
+            MEGAPurchaseLogger.logMessage(
+                "Customer cannot redeem a promotional offer, purchasing \"\(productIdentifier)\" without promotional offer",
+                megaLogLevel: .warning
+            )
+            return false
+        }
+
+        return true
     }
 
     @MainActor private func submitPaymentWithPromotionalOffer(forProduct product: SKProduct) async {
         do throws(PromotionalOfferResolutionError) {
+            MEGAPurchaseLogger.logMessage("Resolving promotional offer for \(product.productIdentifier)")
             let discount = try await promotionalOffer(forProduct: product)
+            MEGAPurchaseLogger.logMessage("Successfully resolved promotional offer for \(product.productIdentifier)")
             addPayment(forProduct: product, promotionalOffer: discount)
         } catch {
             switch error {
             case .suppressedByIntroOffer:
                 // When intro offer is available and redeemable, we don't attach the promotional offer,
                 // StoreKit will automatically apply the intro offer at checkout
+                MEGAPurchaseLogger.logMessage("Skipping the promotional offer for \(product.productIdentifier): \(error)")
                 addPayment(forProduct: product, promotionalOffer: nil)
             case .subscriptionInfoNotAvailable, .promotionalOfferNotAvailable:
-                abortPurchaseForPromotionalOfferError(forProduct: product)
+                MEGAPurchaseLogger.logMessage(
+                    "Could not resolve the promotional offer for \(product.productIdentifier): \(error)",
+                    megaLogLevel: .warning
+                )
+                abortPurchaseForPromotionalOfferError(forProduct: product, error: error)
             }
         }
     }
 
-    @MainActor private func abortPurchaseForPromotionalOfferError(forProduct product: SKProduct) {
-        MEGALogError("[StoreKit] Abandoning the purchase of \"\(product.productIdentifier)\": its promotional offer could not be resolved, so it must not be charged at full price")
+    @MainActor private func abortPurchaseForPromotionalOfferError(forProduct product: SKProduct, error: any Error) {
+        MEGAPurchaseLogger.logMessage("Aborting the purchase of \"\(product.productIdentifier)\": its promotional offer could not be resolved, so it must not be charged at full price", megaLogLevel: .error)
 
+        recordPurchaseError(error, promotionalOfferId: nil)
         SVProgressHUD.dismiss()
         SVProgressHUD.setDefaultMaskType(.none)
+
+
 
         let promotionalOfferUnavailable = AccountPlanErrorEntity.promotionalOfferUnavailableError
         for delegate in purchaseDelegates {
@@ -67,18 +91,16 @@ extension MEGAPurchase {
         paymentRequest.applicationUsername = MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? 0) ?? ""
 
         if let promotionalOffer {
-            MEGALogDebug("[StoreKit] Applying promotional offer \"\(promotionalOffer.identifier)\" to product \"\(product.productIdentifier)\"")
+            MEGAPurchaseLogger.logMessage("Applying promotional offer \"\(promotionalOffer.identifier)\" to product \"\(product.productIdentifier)\"")
             paymentRequest.paymentDiscount = promotionalOffer
             // BE signs the promotional offer signature with "" applicationUsername so we need to
             // match that in order for the signature to work
             paymentRequest.applicationUsername = ""
         } else {
-            MEGALogDebug("[StoreKit] Applying no promotional offer to product \"\(product.productIdentifier)\"")
+            MEGAPurchaseLogger.logMessage("Applying no promotional offer to product \"\(product.productIdentifier)\"")
         }
 
         SKPaymentQueue.default().add(paymentRequest)
-        // Marks the hand-off, so the wait that follows can be attributed to StoreKit rather than to us.
-        MEGALogDebug("[StoreKit][trace] PAYMENT SUBMITTED for \"\(product.productIdentifier)\"")
     }
 
     /// Resolves the product's index against the given pricing directly, so the offer fields are
