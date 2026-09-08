@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
         if #available(iOS 26.0, *), !ProcessInfo.isRunningIOS26_0Beta {
             pillContent
                 .glassEffect(
-                    .regular.tint(TokenColors.Background.surface1.swiftUI.opacity(Sizes.surfaceOpacity)),
+                    .clear.tint(TokenColors.Background.surface1.swiftUI.opacity(Sizes.surfaceOpacity)),
                     in: Capsule()
                 )
         } else {
@@ -105,7 +105,7 @@ struct MiniPlayerView: View {
                 .font(.callout.weight(.semibold))
                 .lineLimit(1)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            if isPlaying {
+            if isPlaying, !vm.artist.isEmpty {
                 Text(vm.artist)
                     .font(.caption)
                     .lineLimit(1)
@@ -185,6 +185,16 @@ struct MiniPlayerView: View {
             queueTitles: ["Thinkin Bout You", "Novacane", "Aud.2314"],
             currentIndex: 1
         )
+        return vm
+    }())
+    .padding()
+    .background(Color.orange)
+}
+
+#Preview("Playing — no artist") {
+    MiniPlayerView(vm: {
+        let vm = MiniPlayerViewModel()
+        vm.preview(title: "Aud.2314", artist: "", loadingState: .playing, queueTitles: ["Aud.2314"])
         return vm
     }())
     .padding()
