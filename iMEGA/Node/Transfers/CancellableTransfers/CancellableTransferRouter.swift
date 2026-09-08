@@ -1,8 +1,10 @@
 import ChatRepo
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAFoundation
 import MEGAPreference
 import MEGARepo
 
@@ -43,6 +45,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     private(set) var transferType: CancellableTransferType
     private(set) var isFolderLink: Bool
     private let preresolvedNodes: [HandleEntity: MEGANode]
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var wrapper: (any CancellableTransferControllerWrapping)?
     private weak var presentedAlert: UIAlertController?
     var onDownloadCompleted: (@MainActor (CancellableDownloadOutcome) -> Void)?
@@ -55,12 +58,14 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
          transfers: [CancellableTransfer],
          transferType: CancellableTransferType,
          isFolderLink: Bool = false,
-         preresolvedNodes: [HandleEntity: MEGANode] = [:]) {
+         preresolvedNodes: [HandleEntity: MEGANode] = [:],
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.presenter = presenter
         self.transfers = transfers
         self.transferType = transferType
         self.isFolderLink = isFolderLink
         self.preresolvedNodes = preresolvedNodes
+        self.featureFlagProvider = featureFlagProvider
     }
     
     private func makeDownloadFileRepository(sdk: MEGASdk) -> DownloadFileRepository {
@@ -70,14 +75,47 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Can
     }
     
     func build() -> UIViewController {
-        build(viewModel: makeViewModel())
+        install(makeWrapper())
     }
 
     // Dependency-injection seam used by lifecycle tests to avoid constructing app-wide repositories.
-    func build(viewModel: CancellableTransferViewModel) -> UIViewController {
-        let wrapper = CancellableTransferControllerWrapper(viewModel: viewModel)
+    func build<T: CancellableTransferViewModelProtocol>(viewModel: T) -> UIViewController {
+        install(CancellableTransferControllerWrapper(viewModel: viewModel))
+    }
+
+    private func install(_ wrapper: some CancellableTransferControllerWrapping) -> UIViewController {
         self.wrapper = wrapper
         return wrapper.createViewController()
+    }
+    
+    private func makeWrapper() -> any CancellableTransferControllerWrapping {
+        let isRevampEnabled: Bool = featureFlagProvider.isFeatureFlagEnabled(for: .quotaWarningRevampPhaseTwo)
+        MEGALog.log(
+            level: .info,
+            message: """
+            [CancellableTransfer] building \(transferType) screen for \(transfers.count) transfer(s), \
+            isFolderLink: \(isFolderLink), revamp: \(isRevampEnabled)
+            """
+        )
+
+        if isRevampEnabled {
+            return CancellableTransferControllerWrapper(viewModel: makeRevampedViewModel())
+        } else {
+            return CancellableTransferControllerWrapper(viewModel: makeViewModel())
+        }
+    }
+    
+    private func makeRevampedViewModel() -> RevampedCancellableTransferViewModel {
+        RevampedCancellableTransferViewModel(
+            router: self,
+            cancellableTransferUseCase: makeCancellableTransferUseCase(),
+            overDiskQuotaChecker: makeOverDiskQuotaChecker(),
+            transfers: transfers,
+            transferType: transferType)
+    }
+
+    private func makeCancellableTransferUseCase() -> any CancellableTransferUseCaseProtocol {
+        CancellableTransferUseCase()
     }
     
     private func makeOverDiskQuotaChecker() -> some OverDiskQuotaChecking {
