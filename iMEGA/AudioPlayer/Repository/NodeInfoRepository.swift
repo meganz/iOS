@@ -10,6 +10,19 @@ protocol NodeInfoRepositoryProtocol: Sendable {
     /// - Returns: An array of `TrackEntity` representing audio tracks in the folder, or `nil` if the folder does not exist or cannot be read.
     func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
     
+    /// Fetches the audio tracks in a folder that can play with no connection: the nodes that have a
+    /// local copy on the device, each pointing at that file. Nodes with no copy are left out, so the
+    /// queue built while offline holds only what can actually play
+    /// - Parameter folder: The `HandleEntity` of the target folder in the current account context.
+    /// - Returns: An array of `TrackEntity`, or `nil` if the folder does not exist or cannot be read.
+    func fetchOfflineAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
+
+    /// `fetchOfflineAudioTracks(from:)` for an explicit list of nodes, resolved in one read of the
+    /// offline store.
+    /// - Parameter nodes: The candidate nodes, in the order they should play.
+    /// - Returns: A `TrackEntity` for each node that has a local copy, in the given order.
+    func offlineAudioTracks(from nodes: [MEGANode]) -> [TrackEntity]
+
     /// Fetches audio tracks from a folder-link context. The `folder` handle refers to a folder-link. Tracks are resolved and authorized for playback before being returned as `TrackEntity`s.
     /// - Parameter folder: The `HandleEntity` of the folder-link.
     /// - Returns: An array of authorized `TrackEntity` for playback, or `nil` if the folder is unavailable or cannot be read.
@@ -127,6 +140,17 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     
     func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         fetchAudioNodes(inFolder: folder).flatMap(makeAudioPlayerTracks)
+    }
+
+    func fetchOfflineAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        fetchAudioNodes(inFolder: folder).map(offlineAudioTracks)
+    }
+
+    func offlineAudioTracks(from nodes: [MEGANode]) -> [TrackEntity] {
+        let urls = offlineFileInfoRepository.offlineSavedFileURLs(for: nodes)
+        return nodes.compactMap { node in
+            urls[node].map { TrackEntity(url: $0, node: node) }
+        }
     }
     
     func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {

@@ -903,11 +903,10 @@ extension AppDelegate {
     private static func localFileURLProvider() -> @Sendable (any PlayableNode) -> URL? {
         let offlineInfoRepository = OfflineInfoRepository()
         return { node in
-            guard let megaNode = (node as? MEGANode) ?? MEGASdk.shared.node(forHandle: node.handle),
-                  offlineInfoRepository.isNodeAvailableOffline(megaNode),
-                  let url = offlineInfoRepository.offlineFileURL(for: megaNode),
-                  FileManager.default.fileExists(atPath: url.path) else { return nil }
-            return url
+            guard let megaNode = (node as? MEGANode) ?? MEGASdk.shared.node(forHandle: node.handle) else {
+                return nil
+            }
+            return offlineInfoRepository.offlineSavedFileURL(for: megaNode)
         }
     }
 }

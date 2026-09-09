@@ -44,6 +44,8 @@ final class MiniPlayerViewModel: ViewModelType {
     private let offlineInfoUseCase: any OfflineFileInfoUseCaseProtocol
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let isNewOfflineModeEnabled: Bool
     private var shouldRegisterDelegate: Bool = true
     
     private var subscriptions = Set<AnyCancellable>()
@@ -59,7 +61,9 @@ final class MiniPlayerViewModel: ViewModelType {
          streamingInfoUseCase: some StreamingInfoUseCaseProtocol,
          offlineInfoUseCase: some OfflineFileInfoUseCaseProtocol,
          playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol,
-         audioPlayerUseCase: some AudioPlayerUseCaseProtocol
+         audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
+         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+         isNewOfflineModeEnabled: Bool = DIContainer.featureFlagProvider.isNewOfflineModeEnabled
     ) {
         self.configEntity = configEntity
         self.playerHandler = playerHandler
@@ -69,6 +73,8 @@ final class MiniPlayerViewModel: ViewModelType {
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.audioPlayerUseCase = audioPlayerUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
+        self.isNewOfflineModeEnabled = isNewOfflineModeEnabled
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
         
         self.setupUpdateItemSubscription()
@@ -106,6 +112,11 @@ final class MiniPlayerViewModel: ViewModelType {
         invokeCommand?(command)
     }
     
+    /// Whether playback has to come from what is already on the device
+    private var isNetworkOffline: Bool {
+        isNewOfflineModeEnabled && !networkMonitorUseCase.isConnected()
+    }
+    
     private func isConfigNodeTakenDown() async throws -> Bool {
         guard let node = configEntity.node else { return true }
         return try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
@@ -114,11 +125,16 @@ final class MiniPlayerViewModel: ViewModelType {
     private func initializeMiniPlayer() {
         Task { [weak self] in
             guard let self, configEntity.node != nil else { return }
-            guard let isTakenDown = try? await isConfigNodeTakenDown() else { return }
             
-            if isTakenDown {
-                router?.showTermsOfServiceViolationAlert()
-                return
+            // The takedown check is an API call: with no connection it can only fail, and failing
+            // used to take the delegate registration below down with it.
+            if !isNetworkOffline {
+                guard let isTakenDown = try? await isConfigNodeTakenDown() else { return }
+                
+                if isTakenDown {
+                    router?.showTermsOfServiceViolationAlert()
+                    return
+                }
             }
             
             if shouldRegisterDelegate {
@@ -180,7 +196,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
-        if !streamingInfoUseCase.isLocalHTTPServerRunning() {
+        if !isNetworkOffline, !streamingInfoUseCase.isLocalHTTPServerRunning() {
             streamingInfoUseCase.startServer()
         }
         
@@ -188,7 +204,11 @@ final class MiniPlayerViewModel: ViewModelType {
             let currentItem = playerHandler.playerCurrentItem(),
             currentItem.node == node
         else {
-            await initialize(with: node)
+            if isNetworkOffline {
+                await initializeOffline(with: node)
+            } else {
+                await initialize(with: node)
+            }
             return
         }
         configurePlayer()
@@ -228,6 +248,26 @@ final class MiniPlayerViewModel: ViewModelType {
             }
             await initialize(tracks: children, currentTrack: currentTrack)
         }
+    }
+    
+    // MARK: - Offline Node Init
+    
+    /// Plays a node from the copy already on the device, with a queue holding only the siblings that have one too
+    private func initializeOffline(with node: MEGANode) async {
+        let queue = nodeInfoUseCase.fetchOfflineAudioTracks(from: node.parentHandle) ?? []
+        
+        if let currentTrack = queue.first(where: { $0.node?.handle == node.handle }) {
+            await initialize(tracks: queue, currentTrack: currentTrack)
+            return
+        }
+        
+        guard let track = nodeInfoUseCase.offlineAudioTracks(from: [node]).first else {
+            MEGALogError("[AudioPlayer] no local copy for the node tapped while offline, dismissing mini player")
+            dismiss()
+            return
+        }
+        
+        await initialize(tracks: [track], currentTrack: track)
     }
     
     // MARK: - Offline Files Init

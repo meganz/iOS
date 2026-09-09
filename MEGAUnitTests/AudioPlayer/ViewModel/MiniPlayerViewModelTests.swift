@@ -42,7 +42,9 @@ enum MiniPlayerTestFactory {
             streamingInfoUseCase: streamingInfoUseCase,
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
             playbackContinuationUseCase: playbackContinuationUseCase,
-            audioPlayerUseCase: audioPlayerUseCase
+            audioPlayerUseCase: audioPlayerUseCase,
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: false
         )
         return (sut, router, playerHandler, playbackContinuationUseCase, nodeInfoUseCase, streamingInfoUseCase)
     }

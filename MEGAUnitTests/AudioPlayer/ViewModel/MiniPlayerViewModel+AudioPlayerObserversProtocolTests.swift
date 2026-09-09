@@ -36,7 +36,9 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
             playbackContinuationUseCase: playbackContinuationUseCase,
-            audioPlayerUseCase: MockAudioPlayerUseCase()
+            audioPlayerUseCase: MockAudioPlayerUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true),
+            isNewOfflineModeEnabled: false
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, playbackContinuationUseCase, handler)

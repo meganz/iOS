@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import UIKit
 
 @MainActor
@@ -51,7 +52,8 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
             playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository.newRepo)
+            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
     }
     

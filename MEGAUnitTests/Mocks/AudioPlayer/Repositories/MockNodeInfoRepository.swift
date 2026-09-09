@@ -33,6 +33,14 @@ final class MockNodeInfoRepository: NodeInfoRepositoryProtocol, @unchecked Senda
         isSuccess ? TrackEntity.mockArray : nil
     }
     
+    func fetchOfflineAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        isSuccess ? TrackEntity.mockArray : nil
+    }
+
+    func offlineAudioTracks(from nodes: [MEGANode]) -> [TrackEntity] {
+        isSuccess ? TrackEntity.mockArray : []
+    }
+
     func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         isSuccess ? TrackEntity.mockArray : nil
     }

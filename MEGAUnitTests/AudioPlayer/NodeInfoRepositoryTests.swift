@@ -105,6 +105,48 @@ struct NodeInfoRepositoryTests {
         }
     }
     
+    /// The queue built while the device is offline
+    @Suite("Offline audio tracks")
+    struct OfflineAudioTracksSuite {
+        /// A record in the offline store is what makes a node "saved offline" everywhere else in the
+        /// player — `playbackURL(for:)` and the app's local-file provider both check it first — so a
+        /// node the store does not know about must not reach the queue, whatever file exists for it.
+        @Test("only the nodes saved to Offline become tracks")
+        func onlySavedNodesBecomeTracks() {
+            let nodes = [anyNode(handle: 1), anyNode(handle: 2), anyNode(handle: 3)]
+            let (sut, _, _, _, _) = makeSUT(
+                offlineInfoRepository: MockOfflineInfoRepository(availableOfflineHandles: [1, 3])
+            )
+
+            let tracks = sut.offlineAudioTracks(from: nodes)
+
+            #expect(tracks.compactMap { $0.node?.handle } == [1, 3])
+        }
+
+        @Test("a node whose saved copy cannot be resolved becomes no track")
+        func skipsNodesWithNoSavedCopy() {
+            let (sut, _, _, _, _) = makeSUT(
+                offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic), isOffline: true)
+            )
+
+            #expect(sut.offlineAudioTracks(from: [anyNode(handle: 1)]).isEmpty)
+        }
+
+        /// One read for the whole queue, however many siblings there are — the point of resolving
+        /// them in a batch rather than asking `isNodeAvailableOffline(_:)` per node.
+        @Test("the whole queue is resolved in one read of the offline store")
+        func resolvesTheQueueInOneRead() {
+            let nodes = [anyNode(handle: 1), anyNode(handle: 2), anyNode(handle: 3)]
+            let (sut, _, _, offline, _) = makeSUT(
+                offlineInfoRepository: MockOfflineInfoRepository(availableOfflineHandles: [1, 2, 3])
+            )
+
+            _ = sut.offlineAudioTracks(from: nodes)
+
+            #expect(offline.localPathfromNodeCallCount == 1)
+        }
+    }
+    
     @MainActor
     @Suite("Node → AudioPlayerItem mapping – sequence")
     struct MakeItemsSequenceSuite {

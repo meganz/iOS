@@ -12,7 +12,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private let configEntity: AudioPlayerConfigEntity
     private let presenter: UIViewController
     private let tracker: any AnalyticsTracking
-    
+    private let offlineActionGuard: any OfflineActionGuarding
+
     private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
     private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     private(set) var nodeAccessoryActionDelegate: (any NodeAccessoryActionDelegate)?
@@ -22,11 +23,15 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     init(
         configEntity: AudioPlayerConfigEntity,
         presenter: UIViewController,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        offlineActionGuard: some OfflineActionGuarding = OfflineActionGuard(
+            isNewOfflineModeEnabled: DIContainer.featureFlagProvider.isNewOfflineModeEnabled
+        )
     ) {
         self.configEntity = configEntity
         self.presenter = presenter
         self.tracker = tracker
+        self.offlineActionGuard = offlineActionGuard
         super.init()
     }
     
@@ -186,16 +191,24 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func showAction(for node: MEGANode, isFileLink: Bool, sender: Any) {
+        let nodeActionViewController = makeNodeActionViewController(for: node, isFileLink: isFileLink, sender: sender)
+        baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+    }
+
+    func makeNodeActionViewController(for node: MEGANode, isFileLink: Bool, sender: Any) -> NodeActionViewController {
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let nodeActionViewController = NodeActionViewController(
             node: node,
-            delegate: AudioPlayerViewRouterNodeActionAdapter(
-                configEntity: configEntity,
-                nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
-                fileLinkActionViewControllerDelegate: fileLinkActionViewControllerDelegate,
-                audioPlayerViewController: baseViewController
+            delegate: OfflineAwareNodeActionDelegate(
+                wrapping: AudioPlayerViewRouterNodeActionAdapter(
+                    configEntity: configEntity,
+                    nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
+                    fileLinkActionViewControllerDelegate: fileLinkActionViewControllerDelegate,
+                    audioPlayerViewController: baseViewController
+                ),
+                offlineActionGuard: offlineActionGuard
             ),
             displayMode: displayMode,
             isInVersionsView: isPlayingFromVersionView(),
@@ -204,8 +217,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             isAudioFileLink: isFileLink,
             sender: sender)
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
-        
-        baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+
+        return nodeActionViewController
     }
     
     func showTermsOfServiceViolationAlert() {
